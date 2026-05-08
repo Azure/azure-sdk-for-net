@@ -84,6 +84,58 @@ namespace Azure.Storage.DataMovement.Tests
             TContainerClient container);
 
         protected abstract TServiceClient GetAzureSasCredentialServiceClient();
+
+        /// <summary>
+        /// Creates source and destination storage resources for Copy transfers that carry
+        /// a SAS credential.
+        /// Override this method to provide resources where the source URI is authenticated
+        /// for service-to-service copy.
+        /// </summary>
+        /// <param name="size">Size of the source file to create and upload.</param>
+        /// <param name="sourceContainer">The source container client.</param>
+        /// <param name="destinationContainer">The destination container client.</param>
+        /// <param name="provider">The SAS storage resource provider.</param>
+        /// <returns>Source and destination storage resources for a copy transfer; by default, these resources do not include special copy-source authentication.</returns>
+        protected virtual async Task<(StorageResource Source, StorageResource Destination)> CreateCopyStorageResourcesWithAuthAsync(
+            long size,
+            TContainerClient sourceContainer,
+            TContainerClient destinationContainer,
+            StorageResourceProvider provider)
+        {
+            // Default implementation: create resources without special auth.
+            // Subclasses should override to provide SAS-authenticated resources.
+            return await CreateStorageResourcesAsync(
+                transferType: TransferDirection.Copy,
+                size: size,
+                localDirectory: default,
+                sourceContainer: sourceContainer,
+                destinationContainer: destinationContainer);
+        }
+
+        /// <summary>
+        /// Creates source and destination storage resources for Copy transfers that carry
+        /// a SAS credential.
+        /// Override this method to provide resources where the source URI is authenticated
+        /// for service-to-service copy.
+        /// </summary>
+        protected virtual async Task<(StorageResource Source, StorageResource Destination)> CreateCopyStorageResourceContainersWithAuthAsync(
+            long size,
+            int transferCount,
+            TContainerClient sourceContainer,
+            TContainerClient destinationContainer,
+            StorageResourceProvider provider)
+        {
+            // Default implementation: create resources without special auth.
+            // Subclasses should override to provide SAS-authenticated resources.
+            return await CreateStorageResourceContainersAsync(
+                transferType: TransferDirection.Copy,
+                size: size,
+                transferCount: transferCount,
+                sourceDirectoryPath: default,
+                destinationDirectoryPath: default,
+                sourceContainer: sourceContainer,
+                destinationContainer: destinationContainer);
+        }
         #endregion
 
         #region Helper Methods
@@ -627,7 +679,11 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TContainerClient> sourceContainer = await GetDisposingContainerAsync();
             await using IDisposingContainer<TContainerClient> destinationContainer = await GetDisposingContainerAsync();
 
-            StorageResourceProvider provider = GetStorageResourceProvider();
+            // For Copy transfers, use a SAS provider so the copy-source URL is authenticated.
+            // SharedKey clients cannot provide copy-source authentication (no SAS on URI, no OAuth Bearer).
+            StorageResourceProvider provider = transferType == TransferDirection.Copy
+                ? GetContainerSasStorageResourceProvider(sourceContainer.Container, destinationContainer.Container)
+                : GetStorageResourceProvider();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -639,12 +695,25 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager transferManager = new TransferManager(options);
             long size = DataMovementTestConstants.KB * 100;
 
-            (StorageResource sResource, StorageResource dResource) = await CreateStorageResourcesAsync(
-                transferType: transferType,
-                size: size,
-                localDirectory: localDirectory.DirectoryPath,
-                sourceContainer: sourceContainer.Container,
-                destinationContainer: destinationContainer.Container);
+            StorageResource sResource;
+            StorageResource dResource;
+            if (transferType == TransferDirection.Copy)
+            {
+                (sResource, dResource) = await CreateCopyStorageResourcesWithAuthAsync(
+                    size: size,
+                    sourceContainer: sourceContainer.Container,
+                    destinationContainer: destinationContainer.Container,
+                    provider: provider);
+            }
+            else
+            {
+                (sResource, dResource) = await CreateStorageResourcesAsync(
+                    transferType: transferType,
+                    size: size,
+                    localDirectory: localDirectory.DirectoryPath,
+                    sourceContainer: sourceContainer.Container,
+                    destinationContainer: destinationContainer.Container);
+            }
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
@@ -715,7 +784,10 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TContainerClient> sourceContainer = await GetDisposingContainerAsync();
             await using IDisposingContainer<TContainerClient> destinationContainer = await GetDisposingContainerAsync();
 
-            StorageResourceProvider provider = GetStorageResourceProvider();
+            // For Copy transfers, use a SAS provider so the copy-source URL is authenticated.
+            StorageResourceProvider provider = transferType == TransferDirection.Copy
+                ? GetContainerSasStorageResourceProvider(sourceContainer.Container, destinationContainer.Container)
+                : GetStorageResourceProvider();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -727,12 +799,25 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager transferManager = new TransferManager(options);
             long size = DataMovementTestConstants.KB * 100;
 
-            (StorageResource sResource, StorageResource dResource) = await CreateStorageResourcesAsync(
-                transferType: transferType,
-                size: size,
-                localDirectory: localDirectory.DirectoryPath,
-                sourceContainer: sourceContainer.Container,
-                destinationContainer: destinationContainer.Container);
+            StorageResource sResource;
+            StorageResource dResource;
+            if (transferType == TransferDirection.Copy)
+            {
+                (sResource, dResource) = await CreateCopyStorageResourcesWithAuthAsync(
+                    size: size,
+                    sourceContainer: sourceContainer.Container,
+                    destinationContainer: destinationContainer.Container,
+                    provider: provider);
+            }
+            else
+            {
+                (sResource, dResource) = await CreateStorageResourcesAsync(
+                    transferType: transferType,
+                    size: size,
+                    localDirectory: localDirectory.DirectoryPath,
+                    sourceContainer: sourceContainer.Container,
+                    destinationContainer: destinationContainer.Container);
+            }
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
@@ -1004,7 +1089,10 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TContainerClient> sourceContainer = await GetDisposingContainerAsync();
             await using IDisposingContainer<TContainerClient> destinationContainer = await GetDisposingContainerAsync();
 
-            StorageResourceProvider provider = GetStorageResourceProvider();
+            // For Copy transfers, use a SAS provider so the copy-source URL is authenticated.
+            StorageResourceProvider provider = transferType == TransferDirection.Copy
+                ? GetContainerSasStorageResourceProvider(sourceContainer.Container, destinationContainer.Container)
+                : GetStorageResourceProvider();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -1021,14 +1109,28 @@ namespace Azure.Storage.DataMovement.Tests
             long size = DataMovementTestConstants.KB * 4;
             int partCount = 4;
 
-            (StorageResource sResource, StorageResource dResource) = await CreateStorageResourceContainersAsync(
-                transferType: transferType,
-                size: size,
-                transferCount: partCount,
-                sourceDirectoryPath: sourceDirectory.DirectoryPath,
-                destinationDirectoryPath: destinationDirectory.DirectoryPath,
-                sourceContainer: sourceContainer.Container,
-                destinationContainer: destinationContainer.Container);
+            StorageResource sResource;
+            StorageResource dResource;
+            if (transferType == TransferDirection.Copy)
+            {
+                (sResource, dResource) = await CreateCopyStorageResourceContainersWithAuthAsync(
+                    size: size,
+                    transferCount: partCount,
+                    sourceContainer: sourceContainer.Container,
+                    destinationContainer: destinationContainer.Container,
+                    provider: provider);
+            }
+            else
+            {
+                (sResource, dResource) = await CreateStorageResourceContainersAsync(
+                    transferType: transferType,
+                    size: size,
+                    transferCount: partCount,
+                    sourceDirectoryPath: sourceDirectory.DirectoryPath,
+                    destinationDirectoryPath: destinationDirectory.DirectoryPath,
+                    sourceContainer: sourceContainer.Container,
+                    destinationContainer: destinationContainer.Container);
+            }
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
@@ -1088,7 +1190,10 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TContainerClient> sourceContainer = await GetDisposingContainerAsync();
             await using IDisposingContainer<TContainerClient> destinationContainer = await GetDisposingContainerAsync();
 
-            StorageResourceProvider provider = GetStorageResourceProvider();
+            // For Copy transfers, use a SAS provider so the copy-source URL is authenticated.
+            StorageResourceProvider provider = transferType == TransferDirection.Copy
+                ? GetContainerSasStorageResourceProvider(sourceContainer.Container, destinationContainer.Container)
+                : GetStorageResourceProvider();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -1105,14 +1210,28 @@ namespace Azure.Storage.DataMovement.Tests
             long size = DataMovementTestConstants.KB * 4;
             int partCount = 4;
 
-            (StorageResource sResource, StorageResource dResource) = await CreateStorageResourceContainersAsync(
-                transferType: transferType,
-                size: size,
-                transferCount: partCount,
-                sourceDirectoryPath: sourceDirectory.DirectoryPath,
-                destinationDirectoryPath: destinationDirectory.DirectoryPath,
-                sourceContainer: sourceContainer.Container,
-                destinationContainer: destinationContainer.Container);
+            StorageResource sResource;
+            StorageResource dResource;
+            if (transferType == TransferDirection.Copy)
+            {
+                (sResource, dResource) = await CreateCopyStorageResourceContainersWithAuthAsync(
+                    size: size,
+                    transferCount: partCount,
+                    sourceContainer: sourceContainer.Container,
+                    destinationContainer: destinationContainer.Container,
+                    provider: provider);
+            }
+            else
+            {
+                (sResource, dResource) = await CreateStorageResourceContainersAsync(
+                    transferType: transferType,
+                    size: size,
+                    transferCount: partCount,
+                    sourceDirectoryPath: sourceDirectory.DirectoryPath,
+                    destinationDirectoryPath: destinationDirectory.DirectoryPath,
+                    sourceContainer: sourceContainer.Container,
+                    destinationContainer: destinationContainer.Container);
+            }
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
