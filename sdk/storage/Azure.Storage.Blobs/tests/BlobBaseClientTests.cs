@@ -1829,29 +1829,25 @@ namespace Azure.Storage.Blobs.Test
                 trackingPolicy.TrackedRequests.Where(r => r.HasHostHeader).ToList();
 
             // When the service returns a download hint, subsequent chunk requests
-            // should be rewritten. Only assert when rewriting actually occurred
-            // (There is a chance the service may not return a layout hint in all environments).
-            if (rewrittenRequests.Count > 0)
+            // should be rewritten. Given 3MB of initial transfer size and 5MB of max
+            // transfer size, the 20MB blob should be downloaded in 1 + 4 subsequent
+            // chunks, which should be 4 rewrites.
+            Assert.AreEqual(4, rewrittenRequests.Count,
+                "Expected DataLocalityPolicy to rewrite the host on subsequent chunk requests.");
+
+            foreach (DataLocalityTrackingPolicy.RequestInfo req in rewrittenRequests)
             {
-                // Given 3MB of initial transfer size and 5MB of max transfer size,
-                // the 20MB blob should be downloaded in 1 + 4 subsequent chunks,
-                // which should 4 rewrites.
-                Assert.AreEqual(4, rewrittenRequests.Count);
+                // The URI host and port should have been rewritten to the ideal endpoint
+                Assert.AreNotEqual(originalHost, req.RequestHost,
+                    $"Request URI host should be rewritten to ideal endpoint, not '{originalHost}'");
+                Assert.Greater(req.RequestPort, 0,
+                    "Request URI port should be set by DataLocalityPolicy");
 
-                foreach (DataLocalityTrackingPolicy.RequestInfo req in rewrittenRequests)
-                {
-                    // The URI host and port should have been rewritten to the ideal endpoint
-                    Assert.AreNotEqual(originalHost, req.RequestHost,
-                        $"Request URI host should be rewritten to ideal endpoint, not '{originalHost}'");
-                    Assert.Greater(req.RequestPort, 0,
-                        "Request URI port should be set by DataLocalityPolicy");
-
-                    // The Host header must preserve the original host
-                    Assert.AreEqual(originalHost, req.HostHeaderValue,
-                        $"Host header should be the original host '{originalHost}', not the ideal endpoint");
-                    Assert.AreNotEqual(req.RequestHost, req.HostHeaderValue,
-                        "Host header should differ from the rewritten URI host");
-                }
+                // The Host header must preserve the original host
+                Assert.AreEqual(originalHost, req.HostHeaderValue,
+                    $"Host header should be the original host '{originalHost}', not the ideal endpoint");
+                Assert.AreNotEqual(req.RequestHost, req.HostHeaderValue,
+                    "Host header should differ from the rewritten URI host");
             }
         }
 

@@ -649,6 +649,7 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         public DataLakeFileReadToOptions() { }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public bool EnableDataLocality { get { throw null; } set { } }
         public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
         public Azure.Storage.DownloadTransferValidationOptions TransferValidation { get { throw null; } set { } }
     }

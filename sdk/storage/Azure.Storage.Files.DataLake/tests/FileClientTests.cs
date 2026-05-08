@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Files.DataLake.Models;
@@ -4903,6 +4904,119 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 Assert.AreEqual(data.Length, resultStream.Length);
                 TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+            }
+        }
+
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task ReadToAsync_EnableDataLocality_WithRequestAsserts()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            long size = 20 * Constants.MB;
+            byte[] data = GetRandomBuffer(size);
+
+            // Upload the file in chunks via Append/Flush.
+            int chunkSize = 4 * Constants.MB;
+            for (int offset = 0; offset < data.Length; offset += chunkSize)
+            {
+                int count = Math.Min(chunkSize, data.Length - offset);
+                using var chunk = new MemoryStream(data, offset, count);
+                await file.AppendAsync(chunk, offset);
+            }
+            await file.FlushAsync(size);
+
+            // Add a tracking policy that sits after DataLocalityPolicy in the pipeline
+            // to capture the rewritten host/port and Host header on each request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            DataLakeClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            DataLakeFileClient downloadFile = InstrumentClient(new DataLakeFileClient(
+                file.Uri,
+                Tenants.GetNewHnsSharedKeyCredentials(),
+                options));
+
+            string originalHost = file.Uri.Host;
+
+            using (var resultStream = new MemoryStream())
+            {
+                DataLakeFileReadToOptions readOptions = new()
+                {
+                    EnableDataLocality = true,
+                    TransferOptions = new StorageTransferOptions
+                    {
+                        MaximumConcurrency = 10,
+                        InitialTransferSize = 3 * Constants.MB,
+                        MaximumTransferSize = 5 * Constants.MB
+                    },
+                };
+                await downloadFile.ReadToAsync(resultStream, readOptions);
+                Assert.AreEqual(data.Length, resultStream.Length);
+                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+            }
+
+            // Filter to requests where DataLocalityPolicy rewrote the host
+            // (indicated by the presence of a Host header).
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests =
+                trackingPolicy.TrackedRequests.Where(r => r.HasHostHeader).ToList();
+
+            // When the service returns a download hint, subsequent chunk requests
+            // should be rewritten. Given 3MB of initial transfer size and 5MB of max
+            // transfer size, the 20MB file should be downloaded in 1 + 4 subsequent
+            // chunks, which should be 4 rewrites.
+            Assert.AreEqual(4, rewrittenRequests.Count,
+                "Expected DataLocalityPolicy to rewrite the host on subsequent chunk requests.");
+
+            foreach (DataLocalityTrackingPolicy.RequestInfo req in rewrittenRequests)
+            {
+                // The URI host and port should have been rewritten to the ideal endpoint
+                Assert.AreNotEqual(originalHost, req.RequestHost,
+                    $"Request URI host should be rewritten to ideal endpoint, not '{originalHost}'");
+                Assert.Greater(req.RequestPort, 0,
+                    "Request URI port should be set by DataLocalityPolicy");
+
+                // The Host header must preserve the original host
+                Assert.AreEqual(originalHost, req.HostHeaderValue,
+                    $"Host header should be the original host '{originalHost}', not the ideal endpoint");
+                Assert.AreNotEqual(req.RequestHost, req.HostHeaderValue,
+                    "Host header should differ from the rewritten URI host");
+            }
+        }
+
+        /// <summary>
+        /// Pipeline policy that records the host/port and Host header of each
+        /// outgoing request. Added as PerCall after DataLocalityPolicy to observe
+        /// the rewritten values.
+        /// </summary>
+        private class DataLocalityTrackingPolicy : HttpPipelineSynchronousPolicy
+        {
+            public List<RequestInfo> TrackedRequests { get; } = new();
+
+            public override void OnSendingRequest(HttpMessage message)
+            {
+                bool hasHostHeader = message.Request.Headers.TryGetValue("Host", out string hostValue);
+
+                lock (TrackedRequests)
+                {
+                    TrackedRequests.Add(new RequestInfo
+                    {
+                        RequestHost = message.Request.Uri.Host,
+                        RequestPort = message.Request.Uri.Port,
+                        HasHostHeader = hasHostHeader,
+                        HostHeaderValue = hostValue ?? string.Empty,
+                    });
+                }
+            }
+
+            public class RequestInfo
+            {
+                public string RequestHost { get; set; }
+                public int RequestPort { get; set; }
+                public bool HasHostHeader { get; set; }
+                public string HostHeaderValue { get; set; }
             }
         }
 

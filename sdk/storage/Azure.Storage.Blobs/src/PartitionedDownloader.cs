@@ -288,7 +288,7 @@ namespace Azure.Storage.Blobs
                 // routed to optimal endpoints.
                 if (_enableDataLocality
                     && string.Equals(
-                        initialResponse.Value.Details.DownloadHint, Constants.Blob.DownloadHintLayout, StringComparison.InvariantCulture))
+                        initialResponse.Value.Details.DownloadHint, Constants.Blob.DownloadHintLayout))
                 {
                     layoutCache = new AutoRefreshingCache<BlobLayoutSegmentCacheValue>(
                         acquire: async (acquireAsync, ct) =>
@@ -540,10 +540,8 @@ namespace Azure.Storage.Blobs
         /// Fetches the blob layout for the range using
         /// <see cref="BlobBaseClient.GetLayout"/> or <see cref="BlobBaseClient.GetLayoutAsync"/>.
         /// Eagerly materializes all layout items into a sorted array.
-        /// Returns <c>null</c> on a soft failure (400/5xx) so the caller caches the
-        /// "no locality" decision for the full TTL and avoids re-hitting a degraded
-        /// layout endpoint, or an empty array when the service explicitly indicates the
-        /// blob has no layout (204) — also cached for the full TTL.
+        /// Returns null on a soft failure (400/5xx), or an empty array
+        /// when the service explicitly indicates the blob has no layout (204).
         /// </summary>
         private async Task<BlobLayoutSegment[]> FetchLayoutInternal(
             long initialLength,
@@ -576,17 +574,14 @@ namespace Azure.Storage.Blobs
             catch (RequestFailedException ex)
                 when (ex.Status == 400 || ex.Status >= 500)
             {
-                // Soft failure (400/5xx): return null so the cache treats this as a
+                // Soft failure: return null so the cache treats this as a
                 // "no locality available" answer and caches it for the full TTL,
                 // avoiding repeated calls to a degraded layout endpoint.
                 return null;
             }
             catch (RequestFailedException)
             {
-                // Hard-fail the download for any non-soft RequestFailedException
-                // (e.g. 401/403/404/412). Locality is opportunistic for transient/
-                // server errors only; auth, not-found, and precondition failures
-                // are real signals the caller needs to see.
+                // Hard-fail the download for any non-soft RequestFailedException.
                 throw;
             }
 

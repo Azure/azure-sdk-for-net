@@ -1627,10 +1627,10 @@ namespace Azure.Storage.Blobs.Specialized
                     string idealEndpoint = null;
                     if (layoutCache != null)
                     {
-                        BlobLayoutSegmentCacheValue cached = await layoutCache
+                        BlobLayoutSegmentCacheValue cachedValue = await layoutCache
                             .GetAsync(async, cancellationToken)
                             .ConfigureAwait(false);
-                        idealEndpoint = GetIdealEndpoint(range, cached.Segments);
+                        idealEndpoint = GetIdealEndpoint(range, cachedValue.Segments);
                     }
 
                     // Add the ideal endpoint to the Http message properties so DataLocalityPolicy can route the request

@@ -27,5 +27,12 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Optional override settings for this client's <see cref="DataLakeClientOptions.TransferValidation"/> settings.
         /// </summary>
         public DownloadTransferValidationOptions TransferValidation { get; set; }
+
+        /// <summary>
+        /// When set to true, enables locality-aware routing for parallel file reads.
+        /// A Get Blob Layout call will be made to obtain the file's data layout and route
+        /// subsequent range requests to optimal endpoints. Default is false.
+        /// </summary>
+        public bool EnableDataLocality { get; set; }
     }
 }

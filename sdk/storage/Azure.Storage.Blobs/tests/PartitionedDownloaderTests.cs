@@ -488,6 +488,267 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Test]
+        public async Task DataLocality_GetLayoutSoftFailure_CachesNullAndDownloadSucceeds()
+        {
+            // Arrange - 100 byte blob; GetLayout fails with a soft (5xx) error.
+            // FetchLayoutInternal should swallow it, the cache should store a
+            // null-Segments value for the full TTL, and the download should
+            // still complete successfully (chunks fall back to the original endpoint).
+            MemoryStream stream = new MemoryStream();
+            MockDataSource dataSource = new MockDataSource(100, downloadHint: "layout");
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
+
+            var capturedCalls = new List<(HttpRange Range, AutoRefreshingCache<BlobLayoutSegmentCacheValue> LayoutCache)>();
+            SetupDownloadWithCapture(blockClient, dataSource, capturedCalls);
+
+            RequestFailedException softFailure = new RequestFailedException(
+                status: 503,
+                message: "Service unavailable",
+                errorCode: null,
+                innerException: null);
+
+            blockClient.Setup(c => c.GetLayoutAsync(
+                It.IsAny<HttpRange>(),
+                It.IsAny<BlobRequestConditions>(),
+                It.IsAny<CancellationToken>())).Throws(softFailure);
+            blockClient.Setup(c => c.GetLayout(
+                It.IsAny<HttpRange>(),
+                It.IsAny<BlobRequestConditions>(),
+                It.IsAny<CancellationToken>())).Throws(softFailure);
+
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 20
+                },
+                transferValidation: s_validationOptions,
+                enableDataLocality: true);
+
+            // Act
+            Response result = await InvokeDownloadToAsync(downloader, stream);
+
+            // Assert - content downloaded correctly despite layout failure
+            AssertContent(100, stream);
+            Assert.NotNull(result);
+
+            // Assert - chunked calls received a cache whose resolved value has null Segments
+            Assert.AreEqual(9, capturedCalls.Count, "Expected 1 initial + 8 subsequent chunk calls");
+            Assert.IsNull(capturedCalls[0].LayoutCache, "Initial download has no layout cache");
+
+            for (int i = 1; i < capturedCalls.Count; i++)
+            {
+                Assert.IsNotNull(capturedCalls[i].LayoutCache, $"Chunk {i} should have a layout cache");
+                BlobLayoutSegmentCacheValue cached = await capturedCalls[i].LayoutCache.GetAsync(async: _async, CancellationToken.None);
+                Assert.IsNull(cached.Segments, $"Chunk {i} should see null Segments after a soft GetLayout failure");
+            }
+
+            // Assert - GetLayout invoked at most once across all chunks (cache de-dups the failure)
+            if (_async)
+            {
+                blockClient.Verify(c => c.GetLayoutAsync(
+                    It.IsAny<HttpRange>(),
+                    It.IsAny<BlobRequestConditions>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
+            }
+            else
+            {
+                blockClient.Verify(c => c.GetLayout(
+                    It.IsAny<HttpRange>(),
+                    It.IsAny<BlobRequestConditions>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
+            }
+        }
+
+        [Test]
+        public async Task DataLocality_EmptyLayoutResponse_CachesEmptyArrayAndDownloadSucceeds()
+        {
+            // Arrange - 100 byte blob; service returns an explicitly-empty layout
+            // (no ranges/endpoints). FetchLayoutInternal should normalize this to
+            // an empty array, the cache should store it for the full TTL, and the
+            // download should complete with chunks falling back to the original endpoint.
+            MemoryStream stream = new MemoryStream();
+            MockDataSource dataSource = new MockDataSource(100, downloadHint: "layout");
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
+
+            var capturedCalls = new List<(HttpRange Range, AutoRefreshingCache<BlobLayoutSegmentCacheValue> LayoutCache)>();
+            SetupDownloadWithCapture(blockClient, dataSource, capturedCalls);
+
+            // Empty array → SetupGetLayout produces a BlobLayoutInfo with no ranges/endpoints
+            SetupGetLayout(blockClient, Array.Empty<BlobLayoutSegment>());
+
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 20
+                },
+                transferValidation: s_validationOptions,
+                enableDataLocality: true);
+
+            // Act
+            Response result = await InvokeDownloadToAsync(downloader, stream);
+
+            // Assert - content downloaded correctly
+            AssertContent(100, stream);
+            Assert.NotNull(result);
+
+            Assert.AreEqual(9, capturedCalls.Count, "Expected 1 initial + 8 subsequent chunk calls");
+            Assert.IsNull(capturedCalls[0].LayoutCache);
+
+            // Assert - chunked calls see an empty (non-null) Segments array
+            for (int i = 1; i < capturedCalls.Count; i++)
+            {
+                Assert.IsNotNull(capturedCalls[i].LayoutCache, $"Chunk {i} should have a layout cache");
+                BlobLayoutSegmentCacheValue cached = await capturedCalls[i].LayoutCache.GetAsync(async: _async, CancellationToken.None);
+                Assert.IsNotNull(cached.Segments, $"Chunk {i} should see a non-null empty Segments array (not soft-failure null)");
+                Assert.AreEqual(0, cached.Segments.Length, $"Chunk {i} should see an empty Segments array");
+            }
+
+            // Assert - GetLayout was called exactly once across all chunks
+            if (_async)
+            {
+                blockClient.Verify(c => c.GetLayoutAsync(
+                    It.IsAny<HttpRange>(),
+                    It.IsAny<BlobRequestConditions>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
+            }
+            else
+            {
+                blockClient.Verify(c => c.GetLayout(
+                    It.IsAny<HttpRange>(),
+                    It.IsAny<BlobRequestConditions>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
+            }
+        }
+
+        [Test]
+        public async Task DataLocality_LayoutCacheIsPerDownload_NotSharedAcrossInvocations()
+        {
+            // Arrange - one PartitionedDownloader instance, two DownloadToInternal calls.
+            // The layout cache lives inside DownloadToInternal, so each download should
+            // perform its own GetLayout — guarding against a refactor that promotes the
+            // cache to a field and accidentally shares stale layouts across downloads.
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
+
+            MockDataSource dataSource = new MockDataSource(100, downloadHint: "layout");
+            var capturedCalls = new List<(HttpRange Range, AutoRefreshingCache<BlobLayoutSegmentCacheValue> LayoutCache)>();
+            SetupDownloadWithCapture(blockClient, dataSource, capturedCalls);
+
+            BlobLayoutSegment[] segments = new[]
+            {
+                new BlobLayoutSegment { Start = 20, End = 99, Endpoint = "https://host-a:443" },
+            };
+            SetupGetLayout(blockClient, segments);
+
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 20
+                },
+                transferValidation: s_validationOptions,
+                enableDataLocality: true);
+
+            // Act - run the download twice on the same downloader. After each
+            // download, resolve the cache once to force a GetLayout invocation
+            // (DownloadStreamingInternal is mocked, so it never resolves the
+            // cache on its own).
+            MemoryStream stream1 = new MemoryStream();
+            Response result1 = await InvokeDownloadToAsync(downloader, stream1);
+            int firstDownloadCallCount = capturedCalls.Count;
+            AutoRefreshingCache<BlobLayoutSegmentCacheValue> firstDownloadCache = capturedCalls[1].LayoutCache;
+            Assert.IsNotNull(firstDownloadCache, "First download should construct a layout cache");
+            await firstDownloadCache.GetAsync(async: _async, CancellationToken.None);
+
+            MemoryStream stream2 = new MemoryStream();
+            Response result2 = await InvokeDownloadToAsync(downloader, stream2);
+            AutoRefreshingCache<BlobLayoutSegmentCacheValue> secondDownloadCache = capturedCalls[firstDownloadCallCount + 1].LayoutCache;
+            Assert.IsNotNull(secondDownloadCache, "Second download should construct a layout cache");
+            await secondDownloadCache.GetAsync(async: _async, CancellationToken.None);
+
+            // Assert - both downloads complete correctly
+            AssertContent(100, stream1);
+            AssertContent(100, stream2);
+            Assert.NotNull(result1);
+            Assert.NotNull(result2);
+
+            // Assert - the two downloads received distinct cache instances. This is
+            // what guarantees per-download isolation; GetLayout call count alone
+            // wouldn't catch a refactor that shared a single cache field — within a
+            // 5-min TTL the second download would still return the cached value
+            // without re-issuing GetLayout.
+            Assert.AreNotSame(firstDownloadCache, secondDownloadCache,
+                "Each DownloadToInternal call should construct its own AutoRefreshingCache");
+
+            // Assert - GetLayout was invoked once per download (one per cache resolve).
+            if (_async)
+            {
+                blockClient.Verify(c => c.GetLayoutAsync(
+                    It.IsAny<HttpRange>(),
+                    It.IsAny<BlobRequestConditions>(),
+                    It.IsAny<CancellationToken>()), Times.Exactly(2));
+            }
+            else
+            {
+                blockClient.Verify(c => c.GetLayout(
+                    It.IsAny<HttpRange>(),
+                    It.IsAny<BlobRequestConditions>(),
+                    It.IsAny<CancellationToken>()), Times.Exactly(2));
+            }
+        }
+
+        [Test]
+        public async Task DataLocality_OneShotDownload_DoesNotConstructLayoutCache()
+        {
+            // Arrange - blob fits entirely in the initial range. Even with data locality
+            // enabled and a download hint present, no chunked downloads occur, so
+            // GetLayout must not be called and no AutoRefreshingCache should be built.
+            MemoryStream stream = new MemoryStream();
+            MockDataSource dataSource = new MockDataSource(10, downloadHint: "layout");
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
+
+            var capturedCalls = new List<(HttpRange Range, AutoRefreshingCache<BlobLayoutSegmentCacheValue> LayoutCache)>();
+            SetupDownloadWithCapture(blockClient, dataSource, capturedCalls);
+
+            // Initial range (20) >= blob size (10) → one-shot path
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 20
+                },
+                transferValidation: s_validationOptions,
+                enableDataLocality: true);
+
+            // Act
+            Response result = await InvokeDownloadToAsync(downloader, stream);
+
+            // Assert - content correct, exactly one DownloadStreamingInternal call, no layout
+            AssertContent(10, stream);
+            Assert.NotNull(result);
+            Assert.AreEqual(1, capturedCalls.Count, "One-shot download should issue exactly one DownloadStreamingInternal call");
+            Assert.IsNull(capturedCalls[0].LayoutCache, "One-shot download should not construct a layout cache");
+
+            blockClient.Verify(c => c.GetLayoutAsync(
+                It.IsAny<HttpRange>(),
+                It.IsAny<BlobRequestConditions>(),
+                It.IsAny<CancellationToken>()), Times.Never);
+            blockClient.Verify(c => c.GetLayout(
+                It.IsAny<HttpRange>(),
+                It.IsAny<BlobRequestConditions>(),
+                It.IsAny<CancellationToken>()), Times.Never);
+        }
+
         private void AssertContent(int expectedLength, MemoryStream stream)
         {
             Assert.AreEqual(expectedLength, stream.Length);

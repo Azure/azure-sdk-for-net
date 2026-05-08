@@ -44,13 +44,8 @@ namespace Azure.Storage.Blobs.Models
         public BlobLayoutSegmentCacheValue(BlobLayoutSegment[] segments)
         {
             Segments = segments;
-            DateTimeOffset now = DateTimeOffset.UtcNow;
 
-            // Cache for the full TTL in all cases:
-            //   - Success (segments populated): valid layout, valid for the service-side TTL.
-            //   - 204 (empty segment array): service explicitly says no layout.
-            //   - Soft failure (null): treat as "no locality available for this blob right
-            //     now" and avoid hammering a degraded layout endpoint for the full TTL.
+            DateTimeOffset now = DateTimeOffset.UtcNow;
             ExpiresOn = now + LayoutLifetime;
             RefreshOn = ExpiresOn - RefreshBuffer;
         }
