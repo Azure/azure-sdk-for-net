@@ -13,18 +13,18 @@ using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class GetTopologyResultOperationSource : IOperationSource<GetTopologyResult>
+    internal class NetworkFabricTopologyResultOperationSource : IOperationSource<NetworkFabricTopologyResult>
     {
-        GetTopologyResult IOperationSource<GetTopologyResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkFabricTopologyResult IOperationSource<NetworkFabricTopologyResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return GetTopologyResult.DeserializeGetTopologyResult(document.RootElement);
+            return NetworkFabricTopologyResult.DeserializeNetworkFabricTopologyResult(document.RootElement);
         }
 
-        async ValueTask<GetTopologyResult> IOperationSource<GetTopologyResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkFabricTopologyResult> IOperationSource<NetworkFabricTopologyResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return GetTopologyResult.DeserializeGetTopologyResult(document.RootElement);
+            return NetworkFabricTopologyResult.DeserializeNetworkFabricTopologyResult(document.RootElement);
         }
     }
 }

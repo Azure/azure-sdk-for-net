@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class GetTopologyResult : IUtf8JsonSerializable, IJsonModel<GetTopologyResult>
+    public partial class NetworkFabricTopologyResult : IUtf8JsonSerializable, IJsonModel<NetworkFabricTopologyResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetTopologyResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricTopologyResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<GetTopologyResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkFabricTopologyResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetTopologyResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricTopologyResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetTopologyResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricTopologyResult)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Id))
@@ -104,19 +104,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        GetTopologyResult IJsonModel<GetTopologyResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkFabricTopologyResult IJsonModel<NetworkFabricTopologyResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetTopologyResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricTopologyResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetTopologyResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricTopologyResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGetTopologyResult(document.RootElement, options);
+            return DeserializeNetworkFabricTopologyResult(document.RootElement, options);
         }
 
-        internal static GetTopologyResult DeserializeGetTopologyResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetworkFabricTopologyResult DeserializeNetworkFabricTopologyResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GetTopologyResult(
+            return new NetworkFabricTopologyResult(
                 id,
                 name,
                 status,
@@ -245,35 +245,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<GetTopologyResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetworkFabricTopologyResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetTopologyResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricTopologyResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GetTopologyResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricTopologyResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GetTopologyResult IPersistableModel<GetTopologyResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetworkFabricTopologyResult IPersistableModel<NetworkFabricTopologyResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetTopologyResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricTopologyResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGetTopologyResult(document.RootElement, options);
+                        return DeserializeNetworkFabricTopologyResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetTopologyResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricTopologyResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<GetTopologyResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkFabricTopologyResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

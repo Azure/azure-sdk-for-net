@@ -2245,7 +2245,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GetTopologyResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkFabricTopologyResult"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -2256,12 +2256,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="getTopologyResponseUri"> Properties of the GetTopology Response. </param>
-        /// <returns> A new <see cref="Models.GetTopologyResult"/> instance for mocking. </returns>
-        public static GetTopologyResult GetTopologyResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, Uri getTopologyResponseUri = null)
+        /// <returns> A new <see cref="Models.NetworkFabricTopologyResult"/> instance for mocking. </returns>
+        public static NetworkFabricTopologyResult NetworkFabricTopologyResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, Uri getTopologyResponseUri = null)
         {
             operations ??= new List<NetworkFabricOperationStatusResult>();
 
-            return new GetTopologyResult(
+            return new NetworkFabricTopologyResult(
                 id,
                 name,
                 status,

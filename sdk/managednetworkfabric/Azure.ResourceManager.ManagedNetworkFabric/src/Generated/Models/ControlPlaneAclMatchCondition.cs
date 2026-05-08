@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="flags"> Flags that need to be matched. Example: established | initial | &lt;List-of-TCP-flags&gt;. List of eligible TCP Flags are ack, cwr, ece, fin, psh, rst, syn, urg, established. </param>
         /// <param name="icmpConfiguration"> Internet Control Message Protocol (ICMP) configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ControlPlaneAclMatchCondition(string protocolTypes, ControlPlanAclIPMatchCondition ipCondition, ControlPlaneAclTtlMatchCondition ttlMatchCondition, ControlPlaneAclPortMatchCondition portCondition, IList<string> flags, IcmpConfigurationProperties icmpConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ControlPlaneAclMatchCondition(string protocolTypes, ControlPlaneAclIPMatchCondition ipCondition, ControlPlaneAclTtlMatchCondition ttlMatchCondition, ControlPlaneAclPortMatchCondition portCondition, IList<string> flags, IcmpConfigurationProperties icmpConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProtocolTypes = protocolTypes;
             IPCondition = ipCondition;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Protocols that need to be matched. </summary>
         public string ProtocolTypes { get; set; }
         /// <summary> IP condition that needs to be matched. </summary>
-        public ControlPlanAclIPMatchCondition IPCondition { get; set; }
+        public ControlPlaneAclIPMatchCondition IPCondition { get; set; }
         /// <summary> TTL [Time To Live] values that need to be matched. </summary>
         public ControlPlaneAclTtlMatchCondition TtlMatchCondition { get; set; }
         /// <summary> Port condition that needs to be matched. </summary>

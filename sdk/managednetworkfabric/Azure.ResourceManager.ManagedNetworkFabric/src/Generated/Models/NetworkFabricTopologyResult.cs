@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> GetTopology Response. </summary>
-    public partial class GetTopologyResult
+    public partial class NetworkFabricTopologyResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GetTopologyResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricTopologyResult"/>. </summary>
         /// <param name="status"> Operation status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
-        internal GetTopologyResult(string status)
+        internal NetworkFabricTopologyResult(string status)
         {
             Argument.AssertNotNull(status, nameof(status));
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Operations = new ChangeTrackingList<NetworkFabricOperationStatusResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetTopologyResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricTopologyResult"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="properties"> Properties of the GetTopology Response. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetTopologyResult(ResourceIdentifier id, string name, string status, double? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<NetworkFabricOperationStatusResult> operations, ResponseError error, ResourceIdentifier resourceId, GetTopologyResponseProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkFabricTopologyResult(ResourceIdentifier id, string name, string status, double? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<NetworkFabricOperationStatusResult> operations, ResponseError error, ResourceIdentifier resourceId, GetTopologyResponseProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetTopologyResult"/> for deserialization. </summary>
-        internal GetTopologyResult()
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricTopologyResult"/> for deserialization. </summary>
+        internal NetworkFabricTopologyResult()
         {
         }
 

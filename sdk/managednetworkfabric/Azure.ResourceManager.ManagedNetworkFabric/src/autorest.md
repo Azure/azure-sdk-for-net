@@ -72,6 +72,7 @@ rename-mapping:
   CommitConfigurationPolicy: NetworkFabricCommitConfigurationPolicy
   CommitStage: NetworkFabricCommitStage
   ControlPlanAclIPMatchCondition: ControlPlaneAclIPMatchCondition
+  ControlPlanAclIpMatchCondition: ControlPlaneAclIPMatchCondition
   DeviceRole: NetworkFabricDeviceRole
   DeviceRoCommand: NetworkFabricDeviceReadOnlyCommand
   DeviceRwCommand: NetworkFabricDeviceReadWriteCommand
@@ -177,7 +178,6 @@ rename-mapping:
   CommitConfigurationResponse: CommitConfigurationResult
   DiscardCommitBatchOperationResponse: DiscardCommitBatchOperationResult
   ExternalNetworkUpdateBfdAdministrativeStateResponse: ExternalNetworkUpdateBfdAdministrativeStateResult
-  GetTopologyResponse: GetTopologyResult
   InternalNetworkUpdateBfdAdministrativeStateResponse: InternalNetworkUpdateBfdAdministrativeStateResult
   InternalNetworkUpdateBgpAdministrativeStateResponse: InternalNetworkUpdateBgpAdministrativeStateResult
   NeighborGroupResyncResponse: NeighborGroupResyncResult
@@ -198,6 +198,7 @@ rename-mapping:
   NetworkTapResyncResponse: NetworkTapResyncResult
   NetworkTapRuleResyncResponse: NetworkTapRuleResyncResult
   NniUpdateBfdAdministrativeStateResponse: NniUpdateBfdAdministrativeStateResult
+  GetTopologyResponse: NetworkFabricTopologyResult
   UpdateAdministrativeStateResponse: UpdateAdministrativeStateResult
   ViewDeviceConfigurationOperationResponse: ViewDeviceConfigurationOperationResult
   VpnConfigurationPatchablePropertiesOptionAProperties: VpnConfigurationPatchableOptionAProperties

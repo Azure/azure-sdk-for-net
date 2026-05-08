@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Control Plane Access Control List (ACL) IP condition properties. </summary>
-    public partial class ControlPlanAclIPMatchCondition
+    public partial class ControlPlaneAclIPMatchCondition
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ControlPlanAclIPMatchCondition"/>. </summary>
-        public ControlPlanAclIPMatchCondition()
+        /// <summary> Initializes a new instance of <see cref="ControlPlaneAclIPMatchCondition"/>. </summary>
+        public ControlPlaneAclIPMatchCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ControlPlanAclIPMatchCondition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControlPlaneAclIPMatchCondition"/>. </summary>
         /// <param name="sourceIPPrefix"> List of the source IP addresses that need to be matched. </param>
         /// <param name="destinationIPPrefix"> List of the destination IP addresses that need to be matched. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ControlPlanAclIPMatchCondition(string sourceIPPrefix, string destinationIPPrefix, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ControlPlaneAclIPMatchCondition(string sourceIPPrefix, string destinationIPPrefix, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceIPPrefix = sourceIPPrefix;
             DestinationIPPrefix = destinationIPPrefix;
