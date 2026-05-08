@@ -463,9 +463,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             var flexProperties = new ComputeScheduleFlexProperties(
                 new[]
                 {
-                    new ComputeScheduleVmSizeProfile("Standard_D2ads_v5", 0),
-                    new ComputeScheduleVmSizeProfile("Standard_E2ads_v5", 1),
-                    new ComputeScheduleVmSizeProfile("Standard_D2ds_v5", 2),
+                    new ComputeScheduleVmSizeProfile("Standard_D2ads_v5") { Rank = 0 },
+                    new ComputeScheduleVmSizeProfile("Standard_D4ads_v5") { Rank = 1 },
+                    new ComputeScheduleVmSizeProfile("Standard_D8ads_v5") { Rank = 2 }
                 },
                 ComputeScheduleOSType.Windows,
                 new ComputeSchedulePriorityProfile
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                             {
                                 StorageAccountType = StorageAccountType.StandardLRS
                             },
-                            DeleteOption = DiskDeleteOptionType.Detach,
+                            DeleteOption = DiskDeleteOptionType.Delete,
                             DiskSizeGB = 127
                         },
                         DiskControllerType = DiskControllerType.SCSI
