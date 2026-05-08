@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             TryGetApiVersion(TrafficManagerGeographicHierarchyResource.ResourceType, out string trafficManagerGeographicHierarchyApiVersion);
             _geographicHierarchiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", TrafficManagerGeographicHierarchyResource.ResourceType.Namespace, Diagnostics);
-            _geographicHierarchiesRestClient = new GeographicHierarchies(_geographicHierarchiesClientDiagnostics, Pipeline, Endpoint, trafficManagerGeographicHierarchyApiVersion ?? "2022-04-01");
+            _geographicHierarchiesRestClient = new GeographicHierarchies(_geographicHierarchiesClientDiagnostics, Pipeline, Endpoint, trafficManagerGeographicHierarchyApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
