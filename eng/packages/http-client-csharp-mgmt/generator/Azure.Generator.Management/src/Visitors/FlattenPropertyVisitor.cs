@@ -111,15 +111,11 @@ namespace Azure.Generator.Management.Visitors
         /// that construct model instances directly with defaulted arguments for values still present in the
         /// old signature.
         /// </summary>
-        internal static void FixModelFactoryBackwardCompatOverloads(
-            IReadOnlyList<MethodProvider> primaryMethodSource,
-            IReadOnlyList<MethodProvider>? methodsToFix = null)
+        internal static void FixModelFactoryBackwardCompatOverloads(IReadOnlyList<MethodProvider> methods)
         {
-            methodsToFix ??= primaryMethodSource;
-
             // Build a lookup of primary methods by name
             var primaryMethods = new Dictionary<string, MethodProvider>();
-            foreach (var method in primaryMethodSource)
+            foreach (var method in methods)
             {
                 if (!IsBackwardCompatMethod(method))
                 {
@@ -132,7 +128,7 @@ namespace Azure.Generator.Management.Visitors
                 }
             }
 
-            foreach (var method in methodsToFix)
+            foreach (var method in methods)
             {
                 if (!IsBackwardCompatMethod(method) || method.BodyStatements is null)
                 {

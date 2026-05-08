@@ -394,58 +394,6 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void TestLastContractBackwardCompatNewInstanceConstructsDroppedModelArgument()
-        {
-            var provisioningStateProperty = InputFactory.Property("provisioningState", InputPrimitiveType.String, serializedName: "provisioningState");
-            var propertiesModel = InputFactory.Model(
-                "TestProperties",
-                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
-                properties: [provisioningStateProperty]);
-
-            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
-            var parentModel = InputFactory.Model(
-                "TestResource",
-                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
-                properties: [propertiesProperty]);
-
-            var plugin = ManagementMockHelpers.LoadMockPlugin(
-                inputModels: () => [parentModel, propertiesModel]);
-
-            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
-            _ = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
-            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
-
-            var oldProvisioningStateParam = new ParameterProvider("testProvisioningState", $"", typeof(string));
-            var oldSignature = new MethodSignature(
-                "TestResource",
-                null,
-                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
-                parentProvider.Type,
-                null,
-                [oldProvisioningStateParam],
-                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
-
-            var constructorParameters = parentProvider.FullConstructor.Signature.Parameters;
-            var constructorArguments = constructorParameters
-                .Select(p => p.Name == "properties" ? Default : p.DefaultValue ?? Default)
-                .ToArray();
-            var lastContractView = new TestModelFactoryView(modelFactory.Name);
-            lastContractView.MethodsToBuild = [new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), lastContractView)];
-            SetLastContractView(modelFactory, lastContractView);
-
-            FlattenPropertyVisitor.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods, lastContractView.Methods);
-
-            var updatedMethod = lastContractView.Methods.Single();
-            var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
-            var keywordExpression = statement!.Expression as KeywordExpression;
-            var newInstance = keywordExpression!.Expression as NewInstanceExpression;
-            var propertiesIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "properties").i;
-            var propertiesArgument = newInstance!.Parameters[propertiesIndex].ToDisplayString();
-            Assert.That(propertiesArgument, Does.Contain("TestProperties"));
-            Assert.That(propertiesArgument, Does.Contain("testProvisioningState"));
-        }
-
-        [Test]
         public void TestWriterFixesSynthesizedLastContractBackwardCompatNewInstance()
         {
             var provisioningStateProperty = InputFactory.Property("provisioningState", InputPrimitiveType.String, serializedName: "provisioningState");
