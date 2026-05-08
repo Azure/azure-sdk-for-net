@@ -23,8 +23,9 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             RestClientInfo updateRestClientInfo,
             RestClientInfo getRestClientInfo,
             bool isPatch,
+            bool canUpdateTags,
             bool isAsync)
-            : base(resource, operationContext, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, isAsync,
+            : base(resource, operationContext, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, canUpdateTags, isAsync,
                    isAsync ? "SetTagsAsync" : "SetTags",
                    "Replace the tags on the resource with the given set.")
         {

@@ -34,6 +34,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected readonly FieldProvider _updateClientDiagnosticsField;
         protected readonly FieldProvider _getRestClientField;
         protected readonly bool _isPatch;
+        protected readonly bool _canUpdateTags;
         protected readonly bool _isAsync;
         protected readonly bool _isLongRunningUpdateOperation;
         protected static readonly ParameterProvider _keyParameter = new ParameterProvider("key", $"The key for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
@@ -50,6 +51,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             RestClientInfo updateRestClientInfo,
             RestClientInfo getRestClientInfo,
             bool isPatch,
+            bool canUpdateTags,
             bool isAsync,
             string methodName,
             string methodDescription)
@@ -63,6 +65,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             _updateRestClient = updateRestClientInfo.RestClientProvider;
             _getRestClient = getRestClientInfo.RestClientProvider;
             _isPatch = isPatch;
+            _canUpdateTags = canUpdateTags;
             _isAsync = isAsync;
             _isLongRunningUpdateOperation = updateMethodProvider.IsLongRunningOperation || updateMethodProvider.IsFakeLongRunningOperation;
             _updateClientDiagnosticsField = updateRestClientInfo.DiagnosticsField;
@@ -221,6 +224,18 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             bool copyExistingTags)
         {
             var statements = new List<MethodBodyStatement>();
+
+            // The Update method does not support updating tags (e.g., its body has no tags property,
+            // it has no body at all, or it does not return content). Surface this clearly at runtime
+            // by throwing NotSupportedException — the if-branch using the generic ARM TagResource
+            // still works for resources that support it via CanUseTagResource.
+            if (!_canUpdateTags)
+            {
+                statements.Add(Throw(New.Instance(
+                    typeof(System.NotSupportedException),
+                    Literal("The Update method on this resource does not support updating tags."))));
+                return statements;
+            }
 
             // Get current resource data
             statements.Add(GetResourceDataStatements("current", _resource, _isAsync, cancellationTokenParam, out var resourceDataVar));

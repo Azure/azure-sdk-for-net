@@ -380,8 +380,8 @@ namespace Azure.Generator.Management.Tests.Common
 
         /// <summary>
         /// Creates a client with a resource where the PATCH operation has a body parameter whose model
-        /// does NOT include a tags property. Tag methods should NOT be generated because the PATCH body
-        /// cannot carry tag changes.
+        /// does NOT include a tags property. Tag methods are still generated, but the else branch of
+        /// each tag method throws NotSupportedException because the Update method cannot update tags.
         /// </summary>
         public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResourcePatchBodyWithoutTags()
         {
@@ -444,8 +444,9 @@ namespace Azure.Generator.Management.Tests.Common
 
         /// <summary>
         /// Creates a client with a resource where the PATCH operation has a body with tags but
-        /// returns no content (e.g., 204 No Content). Tag methods should NOT be generated because
-        /// the tag update result cannot be obtained from the response.
+        /// returns no content (e.g., 204 No Content). Tag methods are still generated, but the else
+        /// branch of each tag method throws NotSupportedException because the tag update result
+        /// cannot be obtained from the response.
         /// </summary>
         public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResourcePatchNoContent()
         {
