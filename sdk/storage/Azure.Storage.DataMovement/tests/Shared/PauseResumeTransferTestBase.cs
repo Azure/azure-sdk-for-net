@@ -1596,6 +1596,194 @@ namespace Azure.Storage.DataMovement.Tests
             AssertCheckpointerFilesAreAccessible(checkpointerDirectory.DirectoryPath, transfer.Id);
         }
 
+        /// <summary>
+        /// Helper that sets up common mocks and infrastructure for CompleteTransferAsync failure tests.
+        /// Returns configured source/destination mocks and the resource length used.
+        /// </summary>
+        private (TransferManager TransferManager, Mock<StorageResourceItem> Source, Mock<StorageResourceItem> Destination, long ResourceLength, DisposingLocalDirectory CheckpointerDirectory)
+            SetupCompleteTransferAsyncFailureMocks()
+        {
+            DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            TransferManagerOptions options = new TransferManagerOptions()
+            {
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
+            };
+            TransferManager transferManager = new TransferManager(options);
+
+            Mock<StorageResourceCheckpointDetails> mockCheckpointDetails = new Mock<StorageResourceCheckpointDetails>();
+            mockCheckpointDetails.SetupGet(c => c.Length).Returns(0);
+
+            long resourceLength = DataMovementTestConstants.KB;
+
+            Mock<StorageResourceItem> source = new Mock<StorageResourceItem>(MockBehavior.Strict);
+            source.SetupGet(r => r.ResourceId).Returns("Mock");
+            source.SetupGet(r => r.ProviderId).Returns("mock");
+            source.Setup(r => r.IsContainer).Returns(false);
+            source.Setup(r => r.ShouldItemTransferAsync(It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
+            source.Setup(r => r.GetSourceCheckpointDetails())
+                .Returns(mockCheckpointDetails.Object);
+
+            Mock<StorageResourceItem> destination = new Mock<StorageResourceItem>(MockBehavior.Strict);
+            destination.SetupGet(r => r.ResourceId).Returns("Mock");
+            destination.SetupGet(r => r.ProviderId).Returns("mock");
+            destination.Setup(r => r.IsContainer).Returns(false);
+            destination.SetupGet(r => r.TransferType).Returns(default(TransferOrder));
+            destination.SetupGet(r => r.MaxSupportedSingleTransferSize).Returns(Constants.GB);
+            destination.SetupGet(r => r.MaxSupportedChunkSize).Returns(Constants.GB);
+            destination.SetupGet(r => r.MaxSupportedChunkCount).Returns(int.MaxValue);
+            destination.Setup(r => r.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+            destination.Setup(r => r.GetDestinationCheckpointDetails())
+                .Returns(mockCheckpointDetails.Object);
+            destination.Setup(r => r.CompleteTransferAsync(
+                It.IsAny<bool>(),
+                It.IsAny<StorageResourceCompleteTransferOptions>(),
+                It.IsAny<CancellationToken>()))
+                .ThrowsAsync(new Exception("Simulated CompleteTransferAsync failure"));
+
+            return (transferManager, source, destination, resourceLength, checkpointerDirectory);
+        }
+
+        /// <summary>
+        /// Helper that starts the transfer, waits for completion, and asserts failure behavior.
+        /// </summary>
+        private async Task AssertCompleteTransferAsyncFailureReportsFailedItem(
+            TransferManager transferManager,
+            Mock<StorageResourceItem> source,
+            Mock<StorageResourceItem> destination)
+        {
+            TransferOptions transferOptions = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
+
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                source.Object,
+                destination.Object,
+                transferOptions);
+
+            using CancellationTokenSource waitCts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await transfer.WaitForCompletionAsync(waitCts.Token);
+
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.IsTrue(transfer.Status.HasFailedItems);
+            Assert.AreEqual(1, testEventsRaised.FailedEvents.Count);
+            Assert.That(
+                testEventsRaised.FailedEvents.First().Exception.Message,
+                Does.Contain("Simulated CompleteTransferAsync failure"));
+        }
+
+        [Test]
+        public async Task CompleteTransferAsync_Upload_Failure_ReportsFailedItem()
+        {
+            // Arrange
+            (TransferManager transferManager, Mock<StorageResourceItem> source, Mock<StorageResourceItem> destination, long resourceLength, DisposingLocalDirectory checkpointerDirectory) =
+                SetupCompleteTransferAsyncFailureMocks();
+            await using (transferManager)
+            using (checkpointerDirectory)
+            {
+                source.Setup(r => r.Uri).Returns(new Uri("file:///fake/source"));
+                source.Setup(r => r.GetPropertiesAsync(It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(new StorageResourceItemProperties
+                    {
+                        ResourceLength = resourceLength,
+                    });
+                source.Setup(r => r.ReadStreamAsync(
+                    It.IsAny<long>(),
+                    It.IsAny<long?>(),
+                    It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(new StorageResourceReadStreamResult(
+                        content: new MemoryStream(new byte[resourceLength]),
+                        range: new HttpRange(0, resourceLength),
+                        properties: new StorageResourceItemProperties { ResourceLength = resourceLength }));
+
+                destination.Setup(r => r.Uri).Returns(new Uri("https://example.com/dest"));
+                destination.Setup(r => r.CopyFromStreamAsync(
+                    It.IsAny<Stream>(),
+                    It.IsAny<long>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<long>(),
+                    It.IsAny<StorageResourceWriteToOffsetOptions>(),
+                    It.IsAny<CancellationToken>()))
+                    .Returns(Task.CompletedTask);
+
+                // Act & Assert
+                await AssertCompleteTransferAsyncFailureReportsFailedItem(transferManager, source, destination);
+            }
+        }
+
+        [Test]
+        public async Task CompleteTransferAsync_Download_Failure_ReportsFailedItem()
+        {
+            // Arrange
+            (TransferManager transferManager, Mock<StorageResourceItem> source, Mock<StorageResourceItem> destination, long resourceLength, DisposingLocalDirectory checkpointerDirectory) =
+                SetupCompleteTransferAsyncFailureMocks();
+            await using (transferManager)
+            using (checkpointerDirectory)
+            {
+                source.Setup(r => r.Uri).Returns(new Uri("https://example.com/source"));
+                source.SetupGet(r => r.Length).Returns(resourceLength);
+                source.Setup(r => r.ReadStreamAsync(
+                    It.IsAny<long>(),
+                    It.IsAny<long?>(),
+                    It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(new StorageResourceReadStreamResult(
+                        content: new MemoryStream(new byte[resourceLength]),
+                        range: new HttpRange(0, resourceLength),
+                        properties: new StorageResourceItemProperties { ResourceLength = resourceLength }));
+
+                destination.Setup(r => r.Uri).Returns(new Uri("file:///fake/dest"));
+                destination.Setup(r => r.CopyFromStreamAsync(
+                    It.IsAny<Stream>(),
+                    It.IsAny<long>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<long>(),
+                    It.IsAny<StorageResourceWriteToOffsetOptions>(),
+                    It.IsAny<CancellationToken>()))
+                    .Returns(Task.CompletedTask);
+
+                // Act & Assert
+                await AssertCompleteTransferAsyncFailureReportsFailedItem(transferManager, source, destination);
+            }
+        }
+
+        [Test]
+        public async Task CompleteTransferAsync_Copy_Failure_ReportsFailedItem()
+        {
+            // Arrange
+            (TransferManager transferManager, Mock<StorageResourceItem> source, Mock<StorageResourceItem> destination, long resourceLength, DisposingLocalDirectory checkpointerDirectory) =
+                SetupCompleteTransferAsyncFailureMocks();
+            await using (transferManager)
+            using (checkpointerDirectory)
+            {
+                source.Setup(r => r.Uri).Returns(new Uri("https://example.com/source"));
+                source.Setup(r => r.GetPropertiesAsync(It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(new StorageResourceItemProperties
+                    {
+                        ResourceLength = resourceLength,
+                    });
+                source.Setup(r => r.GetCopyAuthorizationHeaderAsync(It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(default(HttpAuthorization));
+                source.Setup(r => r.GetSasWithUri()).Returns(new Uri("https://example.com/source"));
+
+                destination.Setup(r => r.Uri).Returns(new Uri("https://example.com/dest"));
+                destination.Setup(r => r.SetPermissionsAsync(
+                    It.IsAny<StorageResourceItem>(),
+                    It.IsAny<StorageResourceItemProperties>(),
+                    It.IsAny<CancellationToken>()))
+                    .Returns(Task.CompletedTask);
+                destination.Setup(r => r.CopyFromUriAsync(
+                    It.IsAny<StorageResourceItem>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<long>(),
+                    It.IsAny<StorageResourceCopyFromUriOptions>(),
+                    It.IsAny<CancellationToken>()))
+                    .Returns(Task.CompletedTask);
+
+                // Act & Assert
+                await AssertCompleteTransferAsyncFailureReportsFailedItem(transferManager, source, destination);
+            }
+        }
+
         [Test]
         [LiveOnly]
         [TestCase(TransferDirection.Upload)]
