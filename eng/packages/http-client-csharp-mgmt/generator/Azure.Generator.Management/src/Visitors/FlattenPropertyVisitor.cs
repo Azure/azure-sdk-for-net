@@ -94,7 +94,7 @@ namespace Azure.Generator.Management.Visitors
 
         private void UpdateModelFactory(ModelFactoryProvider modelFactory)
         {
-            // First pass: update primary methods (replace 'properties' param with flattened params, fix body)
+            // Update primary methods (replace 'properties' param with flattened params, fix body)
             foreach (var method in modelFactory.Methods)
             {
                 var returnType = method.Signature.ReturnType;
@@ -102,15 +102,6 @@ namespace Azure.Generator.Management.Visitors
                 {
                     UpdateModelFactoryMethod(method, propertyNameMap);
                 }
-            }
-
-            // Second pass: fix backward-compat overload bodies after primary method parameters
-            // changed during flattening. Compatibility overloads can be present on the current
-            // model factory or on the last-contract view that is rendered later by the writer.
-            FixBackwardCompatOverloads(modelFactory.Methods);
-            if (modelFactory.LastContractView?.Methods is { Count: > 0 } lastContractMethods)
-            {
-                FixBackwardCompatOverloads(modelFactory.Methods, lastContractMethods);
             }
         }
 
@@ -120,7 +111,9 @@ namespace Azure.Generator.Management.Visitors
         /// that construct model instances directly with defaulted arguments for values still present in the
         /// old signature.
         /// </summary>
-        internal static void FixBackwardCompatOverloads(IReadOnlyList<MethodProvider> primaryMethodSource, IReadOnlyList<MethodProvider>? methodsToFix = null)
+        internal static void FixModelFactoryBackwardCompatOverloads(
+            IReadOnlyList<MethodProvider> primaryMethodSource,
+            IReadOnlyList<MethodProvider>? methodsToFix = null)
         {
             methodsToFix ??= primaryMethodSource;
 

@@ -34,7 +34,6 @@ namespace Azure.Generator.Management.Visitors
                     }
                 }
                 modelFactory.Update(methods: updatedMethods);
-                FlattenPropertyVisitor.FixBackwardCompatOverloads(modelFactory.Methods);
                 return modelFactory;
             }
             return base.VisitType(type);

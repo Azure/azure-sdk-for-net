@@ -53,7 +53,7 @@ namespace Azure.Generator.Management
                 // Model factory back-compat overloads can be synthesized from LastContractView
                 // after normal visitors run. Repair them here so the final methods being written
                 // preserve arguments that were moved into flattened model properties.
-                FlattenPropertyVisitor.FixBackwardCompatOverloads(modelFactory.Methods);
+                FlattenPropertyVisitor.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
             }
 
             return base.GetWriter(provider);

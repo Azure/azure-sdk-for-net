@@ -166,12 +166,12 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         /// <summary>
-        /// Verifies that FixBackwardCompatOverloads correctly reorders arguments in
+        /// Verifies that FixModelFactoryBackwardCompatOverloads correctly reorders arguments in
         /// backward-compat overloads when the primary method's parameter order has changed
         /// after property flattening.
         /// </summary>
         [Test]
-        public void TestFixBackwardCompatOverloadsReordersArguments()
+        public void TestFixModelFactoryBackwardCompatOverloadsReordersArguments()
         {
             // Set up the mock plugin (required for ManagementClientGenerator.Instance)
             var propertiesModel = InputFactory.Model(
@@ -234,7 +234,7 @@ namespace Azure.Generator.Mgmt.Tests
             var backCompatMethod = new MethodProvider(oldSignature, backCompatBody, enclosingType);
 
             // Act: Run the fix
-            FlattenPropertyVisitor.FixBackwardCompatOverloads([primaryMethod, backCompatMethod]);
+            FlattenPropertyVisitor.FixModelFactoryBackwardCompatOverloads([primaryMethod, backCompatMethod]);
 
             // Assert: The backward-compat overload's body should now have arguments
             // in the PRIMARY method's current parameter order
@@ -301,12 +301,7 @@ namespace Azure.Generator.Mgmt.Tests
             var method = new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory);
             modelFactory.Update(methods: [method]);
 
-            var updateModelFactory = typeof(FlattenPropertyVisitor).GetMethod(
-                "UpdateModelFactory",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.That(updateModelFactory, Is.Not.Null);
-
-            updateModelFactory!.Invoke(new FlattenPropertyVisitor(), [modelFactory]);
+            FlattenPropertyVisitor.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
 
             var updatedMethod = modelFactory.Methods.Single();
             var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
@@ -381,12 +376,7 @@ namespace Azure.Generator.Mgmt.Tests
             var method = new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory);
             modelFactory.Update(methods: [method]);
 
-            var updateModelFactory = typeof(FlattenPropertyVisitor).GetMethod(
-                "UpdateModelFactory",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.That(updateModelFactory, Is.Not.Null);
-
-            updateModelFactory!.Invoke(new FlattenPropertyVisitor(), [modelFactory]);
+            FlattenPropertyVisitor.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
 
             var updatedMethod = modelFactory.Methods.Single();
             var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
@@ -443,12 +433,7 @@ namespace Azure.Generator.Mgmt.Tests
             lastContractView.MethodsToBuild = [new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), lastContractView)];
             SetLastContractView(modelFactory, lastContractView);
 
-            var updateModelFactory = typeof(FlattenPropertyVisitor).GetMethod(
-                "UpdateModelFactory",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.That(updateModelFactory, Is.Not.Null);
-
-            updateModelFactory!.Invoke(new FlattenPropertyVisitor(), [modelFactory]);
+            FlattenPropertyVisitor.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods, lastContractView.Methods);
 
             var updatedMethod = lastContractView.Methods.Single();
             var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
