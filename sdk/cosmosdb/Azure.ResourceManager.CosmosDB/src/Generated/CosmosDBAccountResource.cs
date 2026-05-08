@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBMetricDefinition> GetMetricDefinitionsAsync(string databaseRid, string collectionRid, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CosmosDBMetricDefinition> GetMetricDefinitionsCollectionsAsync(string databaseRid, string collectionRid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionGetMetricDefinitionsAsyncCollectionResultOfT(
+            return new CollectionGetMetricDefinitionsCollectionsAsyncCollectionResultOfT(
                 _collectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.CosmosDB
                 databaseRid,
                 collectionRid,
                 context,
-                "CosmosDBAccountResource.GetMetricDefinitions");
+                "CosmosDBAccountResource.GetMetricDefinitionsCollections");
         }
 
         /// <summary>
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBMetricDefinition> GetMetricDefinitions(string databaseRid, string collectionRid, CancellationToken cancellationToken = default)
+        public virtual Pageable<CosmosDBMetricDefinition> GetMetricDefinitionsCollections(string databaseRid, string collectionRid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionGetMetricDefinitionsCollectionResultOfT(
+            return new CollectionGetMetricDefinitionsCollectionsCollectionResultOfT(
                 _collectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.CosmosDB
                 databaseRid,
                 collectionRid,
                 context,
-                "CosmosDBAccountResource.GetMetricDefinitions");
+                "CosmosDBAccountResource.GetMetricDefinitionsCollections");
         }
 
         /// <summary>
@@ -1275,7 +1275,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBMetricDefinition> GetMetricDefinitionsAsync(string databaseRid, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CosmosDBMetricDefinition> GetMetricDefinitionsDatabasesAsync(string databaseRid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
@@ -1283,14 +1283,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseGetMetricDefinitionsAsyncCollectionResultOfT(
+            return new DatabaseGetMetricDefinitionsDatabasesAsyncCollectionResultOfT(
                 _databaseRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 databaseRid,
                 context,
-                "CosmosDBAccountResource.GetMetricDefinitions");
+                "CosmosDBAccountResource.GetMetricDefinitionsDatabases");
         }
 
         /// <summary>
@@ -1319,7 +1319,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBMetricDefinition> GetMetricDefinitions(string databaseRid, CancellationToken cancellationToken = default)
+        public virtual Pageable<CosmosDBMetricDefinition> GetMetricDefinitionsDatabases(string databaseRid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
@@ -1327,14 +1327,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseGetMetricDefinitionsCollectionResultOfT(
+            return new DatabaseGetMetricDefinitionsDatabasesCollectionResultOfT(
                 _databaseRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 databaseRid,
                 context,
-                "CosmosDBAccountResource.GetMetricDefinitions");
+                "CosmosDBAccountResource.GetMetricDefinitionsDatabases");
         }
 
         /// <summary>
@@ -1621,102 +1621,6 @@ namespace Azure.ResourceManager.CosmosDB
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists the connection strings for the specified Azure Cosmos DB database account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/listConnectionStrings. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DatabaseAccounts_ListConnectionStrings. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBAccountResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DatabaseAccountListConnectionStringsResult>> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _databaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.GetConnectionStrings");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _databaseAccountsRestClient.CreateGetConnectionStringsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DatabaseAccountListConnectionStringsResult> response = Response.FromValue(DatabaseAccountListConnectionStringsResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists the connection strings for the specified Azure Cosmos DB database account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/listConnectionStrings. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DatabaseAccounts_ListConnectionStrings. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBAccountResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatabaseAccountListConnectionStringsResult> GetConnectionStrings(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _databaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.GetConnectionStrings");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _databaseAccountsRestClient.CreateGetConnectionStringsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DatabaseAccountListConnectionStringsResult> response = Response.FromValue(DatabaseAccountListConnectionStringsResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
             }
             catch (Exception e)
             {

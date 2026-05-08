@@ -484,16 +484,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CosmosDBAccountReadOnlyKeyList(primaryReadonlyMasterKey, secondaryReadonlyMasterKey, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The connection strings for the given database account. </summary>
-        /// <param name="connectionStrings"> An array that contains the connection strings for the Cosmos DB account. </param>
-        /// <returns> A new <see cref="Models.DatabaseAccountListConnectionStringsResult"/> instance for mocking. </returns>
-        public static DatabaseAccountListConnectionStringsResult DatabaseAccountListConnectionStringsResult(IEnumerable<CosmosDBAccountConnectionString> connectionStrings = default)
-        {
-            connectionStrings ??= new ChangeTrackingList<CosmosDBAccountConnectionString>();
-
-            return new DatabaseAccountListConnectionStringsResult(connectionStrings.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Connection string for the Cosmos DB account. </summary>
         /// <param name="connectionString"> Value of the connection string. </param>
         /// <param name="description"> Description of the connection string. </param>

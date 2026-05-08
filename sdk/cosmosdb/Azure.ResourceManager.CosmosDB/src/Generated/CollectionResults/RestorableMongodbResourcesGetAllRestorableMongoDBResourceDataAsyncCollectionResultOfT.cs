@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly RestorableMongodbResources _client;
         private readonly Guid _subscriptionId;
         private readonly AzureLocation _location;
-        private readonly string _instanceId;
-        private readonly string _restoreLocation;
+        private readonly Guid _instanceId;
+        private readonly AzureLocation? _restoreLocation;
         private readonly string _restoreTimestampInUtc;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RestorableMongodbResourcesGetAllRestorableMongoDBResourceDataAsyncCollectionResultOfT(RestorableMongodbResources client, Guid subscriptionId, AzureLocation location, string instanceId, string restoreLocation, string restoreTimestampInUtc, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RestorableMongodbResourcesGetAllRestorableMongoDBResourceDataAsyncCollectionResultOfT(RestorableMongodbResources client, Guid subscriptionId, AzureLocation location, Guid instanceId, AzureLocation? restoreLocation, string restoreTimestampInUtc, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

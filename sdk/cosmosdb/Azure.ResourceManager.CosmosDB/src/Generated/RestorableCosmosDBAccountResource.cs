@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="location"> The location. </param>
         /// <param name="instanceId"> The instanceId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string instanceId)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, Guid instanceId)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}";
             return new ResourceIdentifier(resourceId);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorableDatabaseAccountsRestClient.CreateGetByLocationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _restorableDatabaseAccountsRestClient.CreateGetByLocationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Guid.Parse(Id.Name), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RestorableCosmosDBAccountData> response = Response.FromValue(RestorableCosmosDBAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorableDatabaseAccountsRestClient.CreateGetByLocationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _restorableDatabaseAccountsRestClient.CreateGetByLocationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Guid.Parse(Id.Name), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RestorableCosmosDBAccountData> response = Response.FromValue(RestorableCosmosDBAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableSqlDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 context,
                 "RestorableCosmosDBAccountResource.GetAll");
         }
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableSqlDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 context,
                 "RestorableCosmosDBAccountResource.GetAll");
         }
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableGremlinDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 context,
                 "RestorableCosmosDBAccountResource.GetRestorableGremlinDatabases");
         }
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableGremlinDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 context,
                 "RestorableCosmosDBAccountResource.GetRestorableGremlinDatabases");
         }
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableGremlinGraphsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 restorableGremlinDatabaseRid,
                 startTime,
                 endTime,
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableGremlinGraphsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 restorableGremlinDatabaseRid,
                 startTime,
                 endTime,
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableGremlinResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 restoreLocation,
                 restoreTimestampInUtc,
                 context,
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableGremlinResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 restoreLocation,
                 restoreTimestampInUtc,
                 context,
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableMongodbCollectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 restorableMongodbDatabaseRid,
                 startTime,
                 endTime,
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableMongodbCollectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 restorableMongodbDatabaseRid,
                 startTime,
                 endTime,
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableMongodbDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 context,
                 "RestorableCosmosDBAccountResource.GetRestorableMongoDBDatabases");
         }
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableMongodbDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 context,
                 "RestorableCosmosDBAccountResource.GetRestorableMongoDBDatabases");
         }
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableMongoDBResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableMongoDBResourceData> GetAllRestorableMongoDBResourceDataAsync(string restoreLocation = default, string restoreTimestampInUtc = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RestorableMongoDBResourceData> GetAllRestorableMongoDBResourceDataAsync(AzureLocation? restoreLocation = default, string restoreTimestampInUtc = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableMongodbResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 restoreLocation,
                 restoreTimestampInUtc,
                 context,
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableMongoDBResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableMongoDBResourceData> GetAllRestorableMongoDBResourceData(string restoreLocation = default, string restoreTimestampInUtc = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<RestorableMongoDBResourceData> GetAllRestorableMongoDBResourceData(AzureLocation? restoreLocation = default, string restoreTimestampInUtc = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableMongodbResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 restoreLocation,
                 restoreTimestampInUtc,
                 context,
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableSqlContainersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 restorableSqlDatabaseRid,
                 startTime,
                 endTime,
@@ -883,7 +883,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableSqlContainersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 restorableSqlDatabaseRid,
                 startTime,
                 endTime,
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableSqlResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableSqlResourceData> GetAllRestorableSqlResourceDataAsync(string restoreLocation = default, string restoreTimestampInUtc = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RestorableSqlResourceData> GetAllRestorableSqlResourceDataAsync(AzureLocation? restoreLocation = default, string restoreTimestampInUtc = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -926,7 +926,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableSqlResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 restoreLocation,
                 restoreTimestampInUtc,
                 context,
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableSqlResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableSqlResourceData> GetAllRestorableSqlResourceData(string restoreLocation = default, string restoreTimestampInUtc = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<RestorableSqlResourceData> GetAllRestorableSqlResourceData(AzureLocation? restoreLocation = default, string restoreTimestampInUtc = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -968,7 +968,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableSqlResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 restoreLocation,
                 restoreTimestampInUtc,
                 context,
@@ -1010,7 +1010,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableTableResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 restoreLocation,
                 restoreTimestampInUtc,
                 context,
@@ -1052,7 +1052,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableTableResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 restoreLocation,
                 restoreTimestampInUtc,
                 context,
@@ -1094,7 +1094,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableTablesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 startTime,
                 endTime,
                 context,
@@ -1136,7 +1136,7 @@ namespace Azure.ResourceManager.CosmosDB
                 _restorableTablesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
-                Id.Name,
+                Guid.Parse(Id.Name),
                 startTime,
                 endTime,
                 context,

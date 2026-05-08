@@ -196,26 +196,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*' permission. </summary>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RestorableCosmosDBAccountResource>> GetRestorableCosmosDBAccountAsync(string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorableCosmosDBAccountResource>> GetRestorableCosmosDBAccountAsync(Guid instanceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
-
             return await GetRestorableCosmosDBAccounts().GetAsync(instanceId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*' permission. </summary>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccount(string instanceId, CancellationToken cancellationToken = default)
+        public virtual Response<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccount(Guid instanceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
-
             return GetRestorableCosmosDBAccounts().Get(instanceId, cancellationToken);
         }
     }

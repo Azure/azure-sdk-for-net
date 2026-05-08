@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRestorableMongoDBResourceDataRequest(Guid subscriptionId, AzureLocation location, string instanceId, string restoreLocation, string restoreTimestampInUtc, RequestContext context)
+        internal HttpMessage CreateGetAllRestorableMongoDBResourceDataRequest(Guid subscriptionId, AzureLocation location, Guid instanceId, AzureLocation? restoreLocation, string restoreTimestampInUtc, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/providers/Microsoft.DocumentDB/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/restorableDatabaseAccounts/", false);
-            uri.AppendPath(instanceId, true);
+            uri.AppendPath(instanceId.ToString(), true);
             uri.AppendPath("/restorableMongodbResources", false);
             if (_apiVersion != null)
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
             if (restoreLocation != null)
             {
-                uri.AppendQuery("restoreLocation", restoreLocation, true);
+                uri.AppendQuery("restoreLocation", TypeFormatters.ConvertToString(restoreLocation), true);
             }
             if (restoreTimestampInUtc != null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRestorableMongoDBResourceDataRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, string instanceId, string restoreLocation, string restoreTimestampInUtc, RequestContext context)
+        internal HttpMessage CreateNextGetAllRestorableMongoDBResourceDataRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, Guid instanceId, AzureLocation? restoreLocation, string restoreTimestampInUtc, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -15,7 +15,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The connection strings for the given database account. </summary>
-    public partial class DatabaseAccountListConnectionStringsResult : IJsonModel<DatabaseAccountListConnectionStringsResult>
+    internal partial class DatabaseAccountListConnectionStringsResult : IJsonModel<DatabaseAccountListConnectionStringsResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

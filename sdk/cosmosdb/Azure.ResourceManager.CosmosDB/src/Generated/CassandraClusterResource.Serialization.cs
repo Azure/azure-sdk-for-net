@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary></summary>
-    public partial class CassandraClusterResource : IJsonModel<CassandraClusterData>
+    public partial class CassandraClusterResource : ArmResource, IJsonModel<CassandraClusterData>
     {
         private static IJsonModel<CassandraClusterData> s_dataDeserializationInstance;
 

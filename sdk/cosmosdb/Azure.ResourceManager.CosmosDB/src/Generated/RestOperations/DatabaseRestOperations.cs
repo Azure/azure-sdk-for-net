@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateGetMetricDefinitionsRequest(Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, RequestContext context)
+        internal HttpMessage CreateGetMetricDefinitionsDatabasesRequest(Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateNextGetMetricDefinitionsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, RequestContext context)
+        internal HttpMessage CreateNextGetMetricDefinitionsDatabasesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

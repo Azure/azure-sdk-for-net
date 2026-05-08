@@ -12,7 +12,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The connection strings for the given database account. </summary>
-    public partial class DatabaseAccountListConnectionStringsResult
+    internal partial class DatabaseAccountListConnectionStringsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
