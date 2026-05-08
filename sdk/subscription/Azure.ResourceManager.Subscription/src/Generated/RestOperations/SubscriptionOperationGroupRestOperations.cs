@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Subscription
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateCancelRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateCancelSubscriptionRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Subscription
             return message;
         }
 
-        internal HttpMessage CreateRenameRequest(Guid subscriptionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateRenameSubscriptionRequest(Guid subscriptionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Subscription
             return message;
         }
 
-        internal HttpMessage CreateEnableRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateEnableSubscriptionRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

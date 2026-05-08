@@ -149,104 +149,104 @@ namespace Azure.ResourceManager.Subscription
         /// The operation to cancel a subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSubscriptionSubscriptionResource.CancelAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSubscriptionSubscriptionResource.CancelSubscriptionAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CanceledSubscriptionId>> CancelAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<CanceledSubscriptionId>> CancelSubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableSubscriptionSubscriptionResource(subscriptionResource).CancelAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableSubscriptionSubscriptionResource(subscriptionResource).CancelSubscriptionAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// The operation to cancel a subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSubscriptionSubscriptionResource.Cancel(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSubscriptionSubscriptionResource.CancelSubscription(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CanceledSubscriptionId> Cancel(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<CanceledSubscriptionId> CancelSubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSubscriptionSubscriptionResource(subscriptionResource).Cancel(cancellationToken);
+            return GetMockableSubscriptionSubscriptionResource(subscriptionResource).CancelSubscription(cancellationToken);
         }
 
         /// <summary>
         /// The operation to rename a subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSubscriptionSubscriptionResource.RenameAsync(SubscriptionName, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSubscriptionSubscriptionResource.RenameSubscriptionAsync(SubscriptionName, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<RenamedSubscriptionId>> RenameAsync(this SubscriptionResource subscriptionResource, SubscriptionName body, CancellationToken cancellationToken = default)
+        public static async Task<Response<RenamedSubscriptionId>> RenameSubscriptionAsync(this SubscriptionResource subscriptionResource, SubscriptionName body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableSubscriptionSubscriptionResource(subscriptionResource).RenameAsync(body, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSubscriptionSubscriptionResource(subscriptionResource).RenameSubscriptionAsync(body, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// The operation to rename a subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSubscriptionSubscriptionResource.Rename(SubscriptionName, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSubscriptionSubscriptionResource.RenameSubscription(SubscriptionName, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<RenamedSubscriptionId> Rename(this SubscriptionResource subscriptionResource, SubscriptionName body, CancellationToken cancellationToken = default)
+        public static Response<RenamedSubscriptionId> RenameSubscription(this SubscriptionResource subscriptionResource, SubscriptionName body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSubscriptionSubscriptionResource(subscriptionResource).Rename(body, cancellationToken);
+            return GetMockableSubscriptionSubscriptionResource(subscriptionResource).RenameSubscription(body, cancellationToken);
         }
 
         /// <summary>
         /// The operation to enable a subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSubscriptionSubscriptionResource.EnableAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSubscriptionSubscriptionResource.EnableSubscriptionAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<EnabledSubscriptionId>> EnableAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<EnabledSubscriptionId>> EnableSubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableSubscriptionSubscriptionResource(subscriptionResource).EnableAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableSubscriptionSubscriptionResource(subscriptionResource).EnableSubscriptionAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// The operation to enable a subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSubscriptionSubscriptionResource.Enable(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSubscriptionSubscriptionResource.EnableSubscription(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<EnabledSubscriptionId> Enable(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<EnabledSubscriptionId> EnableSubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSubscriptionSubscriptionResource(subscriptionResource).Enable(cancellationToken);
+            return GetMockableSubscriptionSubscriptionResource(subscriptionResource).EnableSubscription(cancellationToken);
         }
 
         /// <summary>
