@@ -28,16 +28,16 @@ resource aiServices 'Microsoft.CognitiveServices/accounts@2025-04-01-preview' = 
 
 resource modelDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-10-01' = {
   parent: aiServices
-  name: 'gpt-4o-realtime-preview'
+  name: 'gpt-realtime'
   sku: {
     name: 'GlobalStandard'
     capacity: 1
   }
   properties: {
     model: {
-      name: 'gpt-4o-realtime-preview'
+      name: 'gpt-realtime'
       format: 'OpenAI'
-      version: '2025-06-03'
+      version: '2025-08-28'
     }
   }
 }
