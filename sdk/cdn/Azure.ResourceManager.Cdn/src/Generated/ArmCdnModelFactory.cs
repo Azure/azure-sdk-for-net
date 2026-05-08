@@ -231,12 +231,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="profileName"> The name of the profile which holds the endpoint. </param>
         /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="enforceMtls"> Set to Disabled by default. If set to Enabled, only custom domains with mTLS enabled can be added to child Route resources. </param>
-        /// <returns> A new <see cref="Models.FrontDoorEndpointPatch"/> instance for mocking. </returns>
-        public static FrontDoorEndpointPatch FrontDoorEndpointPatch(IDictionary<string, string> tags = default, string profileName = default, EnabledState? enabledState = default, EnforceMtlsEnabledState? enforceMtls = default)
+        /// <returns> A new <see cref="Models.FrontDoorEndpointUpdateParameters"/> instance for mocking. </returns>
+        public static FrontDoorEndpointUpdateParameters FrontDoorEndpointUpdateParameters(IDictionary<string, string> tags = default, string profileName = default, EnabledState? enabledState = default, EnforceMtlsEnabledState? enforceMtls = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new FrontDoorEndpointPatch(tags, profileName is null && enabledState is null && enforceMtls is null ? default : new FrontDoorEndpointPropertiesUpdateParameters(profileName, enabledState, enforceMtls, null), additionalBinaryDataProperties: null);
+            return new FrontDoorEndpointUpdateParameters(tags, profileName is null && enabledState is null && enforceMtls is null ? default : new FrontDoorEndpointPropertiesUpdateParameters(profileName, enabledState, enforceMtls, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Parameters required for content purge. </summary>
@@ -1099,10 +1099,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="resourceState"> Gets the ResourceState. </param>
         /// <param name="customRules"> List of rules. </param>
         /// <param name="managedRuleSets"> List of rule sets. </param>
-        /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="skuName"> Name of the pricing tier. </param>
         /// <returns> A new <see cref="Models.FrontDoorWebApplicationFirewallPolicyProperties"/> instance for mocking. </returns>
-        public static FrontDoorWebApplicationFirewallPolicyProperties FrontDoorWebApplicationFirewallPolicyProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PolicySettingsFrontDoor policySettings = default, IEnumerable<FrontendEndpointLink> frontendEndpointLinks = default, IEnumerable<CdnRoutingRuleLink> routingRuleLinks = default, IEnumerable<CdnSecurityPolicyLink> securityPolicyLinks = default, string provisioningState = default, PolicyResourceState? resourceState = default, IEnumerable<CustomRuleFrontDoor> customRules = default, IEnumerable<ManagedRuleSetFrontDoor> managedRuleSets = default, ETag? etag = default, CdnSkuName? skuName = default)
+        public static FrontDoorWebApplicationFirewallPolicyProperties FrontDoorWebApplicationFirewallPolicyProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PolicySettingsFrontDoor policySettings = default, IEnumerable<FrontendEndpointLink> frontendEndpointLinks = default, IEnumerable<CdnRoutingRuleLink> routingRuleLinks = default, IEnumerable<CdnSecurityPolicyLink> securityPolicyLinks = default, string provisioningState = default, PolicyResourceState? resourceState = default, IEnumerable<CustomRuleFrontDoor> customRules = default, IEnumerable<ManagedRuleSetFrontDoor> managedRuleSets = default, ETag? eTag = default, CdnSkuName? skuName = default)
         {
             return new FrontDoorWebApplicationFirewallPolicyProperties(
                 id,
@@ -1120,7 +1120,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     provisioningState,
                     resourceState,
                     null),
-                etag,
+                eTag,
                 skuName is null ? default : new CdnSku(skuName, null));
         }
 
@@ -2269,6 +2269,49 @@ namespace Azure.ResourceManager.Cdn.Models
             return new ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems(metric, value, percentage, additionalBinaryDataProperties: null);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="policySettings"> Describes  policySettings for policy. </param>
+        /// <param name="endpointLinks"> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </param>
+        /// <param name="extendedProperties"> Key-Value pair representing additional properties for Web Application Firewall policy. </param>
+        /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
+        /// <param name="resourceState"> Resource status of the policy. </param>
+        /// <param name="rateLimitRules"> List of rules. </param>
+        /// <param name="customRules"> List of rules. </param>
+        /// <param name="managedRuleSets"> List of rule sets. </param>
+        /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="skuName"> Name of the pricing tier. </param>
+        /// <returns> A new <see cref="Cdn.CdnWebApplicationFirewallPolicyData"/> instance for mocking. </returns>
+        public static CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WafPolicySettings policySettings = default, IEnumerable<SubResource> endpointLinks = default, IDictionary<string, string> extendedProperties = default, WebApplicationFirewallPolicyProvisioningState? provisioningState = default, PolicyResourceState? resourceState = default, IEnumerable<RateLimitRule> rateLimitRules = default, IEnumerable<CustomRule> customRules = default, IEnumerable<WafPolicyManagedRuleSet> managedRuleSets = default, ETag? eTag = default, CdnSkuName? skuName = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CdnWebApplicationFirewallPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                policySettings is null && endpointLinks is null && extendedProperties is null && provisioningState is null && resourceState is null && rateLimitRules is null && customRules is null && managedRuleSets is null ? default : new CdnWebApplicationFirewallPolicyProperties(
+                    policySettings,
+                    new RateLimitRuleList((rateLimitRules ?? new ChangeTrackingList<RateLimitRule>()).ToList(), null),
+                    new CustomRuleList((customRules ?? new ChangeTrackingList<CustomRule>()).ToList(), null),
+                    new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<WafPolicyManagedRuleSet>()).ToList(), null),
+                    (endpointLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
+                    extendedProperties,
+                    provisioningState,
+                    resourceState,
+                    null),
+                eTag,
+                new CdnSku(skuName, null));
+        }
+
         /// <summary> Defines a rate limiting rule that can be included in a waf policy. </summary>
         /// <param name="name"> Defines the name of the custom rule. </param>
         /// <param name="enabledState"> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </param>
@@ -2573,19 +2616,7 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FrontDoorCustomDomainData FrontDoorCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, ResourceIdentifier dnsZoneId, ResourceIdentifier preValidatedCustomDomainResourceId, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, IDictionary<string, string> extendedProperties, DomainValidationProperties validationProperties)
         {
-            return FrontDoorCustomDomainData(id, name, resourceType, systemData, profileName, tlsSettings, mtlsSettings: default, provisioningState, deploymentStatus, domainValidationState, hostName, extendedProperties, validationProperties, dnsZoneId, preValidatedCustomDomainResourceId);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorCustomDomainPatch"/>. </summary>
-        /// <param name="profileName"> The name of the profile which holds the domain. </param>
-        /// <param name="tlsSettings"> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </param>
-        /// <param name="dnsZoneId"> Resource reference to the Azure DNS zone. </param>
-        /// <param name="preValidatedCustomDomainResourceId"> Resource reference to the Azure resource where custom domain ownership was prevalidated. </param>
-        /// <returns> A new <see cref="Models.FrontDoorCustomDomainPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FrontDoorCustomDomainPatch FrontDoorCustomDomainPatch(string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, ResourceIdentifier dnsZoneId, ResourceIdentifier preValidatedCustomDomainResourceId)
-        {
-            return new FrontDoorCustomDomainPatch(default, additionalBinaryDataProperties: null);
+            return FrontDoorCustomDomainData(id: id, name: name, resourceType: resourceType, systemData: systemData, profileName: profileName, tlsSettings: tlsSettings, mtlsSettings: default, provisioningState: provisioningState, deploymentStatus: deploymentStatus, domainValidationState: domainValidationState, hostName: hostName, extendedProperties: extendedProperties, validationProperties: validationProperties, dnsZoneId: dnsZoneId, preValidatedCustomDomainResourceId: preValidatedCustomDomainResourceId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorEndpointData"/>. </summary>
@@ -2605,32 +2636,7 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FrontDoorEndpointData FrontDoorEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string profileName, EnabledState? enabledState, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, string hostName, DomainNameLabelScope? autoGeneratedDomainNameLabelScope)
         {
-            return FrontDoorEndpointData(id, name, resourceType, systemData, tags, location, profileName, enabledState, enforceMtls: default, provisioningState, deploymentStatus, hostName, autoGeneratedDomainNameLabelScope);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorEndpointPatch"/>. </summary>
-        /// <param name="tags"> Endpoint tags. </param>
-        /// <param name="profileName"> The name of the profile which holds the endpoint. </param>
-        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
-        /// <returns> A new <see cref="Models.FrontDoorEndpointPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FrontDoorEndpointPatch FrontDoorEndpointPatch(IDictionary<string, string> tags, string profileName, EnabledState? enabledState)
-        {
-            return FrontDoorEndpointPatch(tags, profileName, enabledState, enforceMtls: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorOriginGroupPatch"/>. </summary>
-        /// <param name="profileName"> The name of the profile which holds the origin group. </param>
-        /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
-        /// <param name="healthProbeSettings"> Health probe settings to the origin that is used to determine the health of the origin. </param>
-        /// <param name="trafficRestorationTimeInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
-        /// <param name="sessionAffinityState"> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </param>
-        /// <param name="authentication"> Authentication settings for origin in origin group. </param>
-        /// <returns> A new <see cref="Models.FrontDoorOriginGroupPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FrontDoorOriginGroupPatch FrontDoorOriginGroupPatch(string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, EnabledState? sessionAffinityState, OriginAuthenticationProperties authentication)
-        {
-            return new FrontDoorOriginGroupPatch(default, additionalBinaryDataProperties: null);
+            return FrontDoorEndpointData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, profileName: profileName, enabledState: enabledState, enforceMtls: default, provisioningState: provisioningState, deploymentStatus: deploymentStatus, hostName: hostName, autoGeneratedDomainNameLabelScope: autoGeneratedDomainNameLabelScope);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorOriginData"/>. </summary>
@@ -2655,26 +2661,7 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FrontDoorOriginData FrontDoorOriginData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string originGroupName, ResourceIdentifier originId, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus)
         {
-            return FrontDoorOriginData(id, name, resourceType, systemData, originGroupName, hostName, httpPort, httpsPort, originHostHeader, priority, weight, sharedPrivateLinkResource, originCapacityResource: default, enabledState, enforceCertificateNameCheck, provisioningState, deploymentStatus, originId);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorOriginPatch"/>. </summary>
-        /// <param name="originGroupName"> The name of the origin group which contains this origin. </param>
-        /// <param name="originId"> Resource reference to the Azure origin resource. </param>
-        /// <param name="hostName"> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </param>
-        /// <param name="httpPort"> The value of the HTTP port. Must be between 1 and 65535. </param>
-        /// <param name="httpsPort"> The value of the HTTPS port. Must be between 1 and 65535. </param>
-        /// <param name="originHostHeader"> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure Front Door origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint. </param>
-        /// <param name="priority"> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </param>
-        /// <param name="weight"> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </param>
-        /// <param name="sharedPrivateLinkResource"> The properties of the private link resource for private origin. </param>
-        /// <param name="enabledState"> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </param>
-        /// <param name="enforceCertificateNameCheck"> Whether to enable certificate name check at origin level. </param>
-        /// <returns> A new <see cref="Models.FrontDoorOriginPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FrontDoorOriginPatch FrontDoorOriginPatch(string originGroupName, ResourceIdentifier originId, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, EnabledState? enabledState, bool? enforceCertificateNameCheck)
-        {
-            return new FrontDoorOriginPatch(default, additionalBinaryDataProperties: null);
+            return FrontDoorOriginData(id: id, name: name, resourceType: resourceType, systemData: systemData, originGroupName: originGroupName, hostName: hostName, httpPort: httpPort, httpsPort: httpsPort, originHostHeader: originHostHeader, priority: priority, weight: weight, sharedPrivateLinkResource: sharedPrivateLinkResource, originCapacityResource: default, enabledState: enabledState, enforceCertificateNameCheck: enforceCertificateNameCheck, provisioningState: provisioningState, deploymentStatus: deploymentStatus, originId: originId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorRouteData"/>. </summary>
@@ -2700,7 +2687,7 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FrontDoorRouteData FrontDoorRouteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string endpointName, IEnumerable<FrontDoorActivatedResourceInfo> customDomains, ResourceIdentifier originGroupId, string originPath, IEnumerable<WritableSubResource> ruleSets, IEnumerable<FrontDoorEndpointProtocol> supportedProtocols, IEnumerable<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus)
         {
-            return FrontDoorRouteData(id, name, resourceType, systemData, endpointName, customDomains, originPath, ruleSets, supportedProtocols, patternsToMatch, cacheConfiguration, forwardingProtocol, linkToDefaultDomain, httpsRedirect, enabledState, grpcState: default, provisioningState, deploymentStatus, originGroupId);
+            return FrontDoorRouteData(id: id, name: name, resourceType: resourceType, systemData: systemData, endpointName: endpointName, customDomains: customDomains, originPath: originPath, ruleSets: ruleSets, supportedProtocols: supportedProtocols, patternsToMatch: patternsToMatch, cacheConfiguration: cacheConfiguration, forwardingProtocol: forwardingProtocol, linkToDefaultDomain: linkToDefaultDomain, httpsRedirect: httpsRedirect, enabledState: enabledState, grpcState: default, provisioningState: provisioningState, deploymentStatus: deploymentStatus, originGroupId: originGroupId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorRoutePatch"/>. </summary>
@@ -2840,7 +2827,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
         /// <param name="resourceState"> Resource status of the policy. </param>
         /// <returns> A new <see cref="Cdn.CdnWebApplicationFirewallPolicyData"/> instance for mocking. </returns>
-        public static CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, CdnSkuName? skuName = default, WafPolicySettings policySettings = default, IEnumerable<RateLimitRule> rateLimitRules = default, IEnumerable<CustomRule> customRules = default, IEnumerable<WafPolicyManagedRuleSet> managedRuleSets = default, IEnumerable<SubResource> endpointLinks = default, IDictionary<string, string> extendedProperties = default, WebApplicationFirewallPolicyProvisioningState? provisioningState = default, PolicyResourceState? resourceState = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, CdnSkuName? skuName, WafPolicySettings policySettings, IEnumerable<RateLimitRule> rateLimitRules, IEnumerable<CustomRule> customRules, IEnumerable<WafPolicyManagedRuleSet> managedRuleSets, IEnumerable<SubResource> endpointLinks, IDictionary<string, string> extendedProperties, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             rateLimitRules ??= new ChangeTrackingList<RateLimitRule>();
@@ -2921,35 +2909,7 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FrontDoorOriginGroupData FrontDoorOriginGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, EnabledState? sessionAffinityState, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus)
         {
-            return FrontDoorOriginGroupData(id, name, resourceType, systemData, profileName, loadBalancingSettings, healthProbeSettings, trafficRestorationTimeInMinutes, sessionAffinityState, authentication: default, provisioningState, deploymentStatus);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorOriginGroupPatch"/>. </summary>
-        /// <param name="profileName">
-        /// The name of the profile which holds the origin group.
-        ///             Serialized Name: AFDOriginGroupUpdateParameters.properties.profileName
-        /// </param>
-        /// <param name="loadBalancingSettings">
-        /// Load balancing settings for a backend pool
-        ///             Serialized Name: AFDOriginGroupUpdateParameters.properties.loadBalancingSettings
-        /// </param>
-        /// <param name="healthProbeSettings">
-        /// Health probe settings to the origin that is used to determine the health of the origin.
-        ///             Serialized Name: AFDOriginGroupUpdateParameters.properties.healthProbeSettings
-        /// </param>
-        /// <param name="trafficRestorationTimeInMinutes">
-        /// Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported.
-        ///             Serialized Name: AFDOriginGroupUpdateParameters.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes
-        /// </param>
-        /// <param name="sessionAffinityState">
-        /// Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'
-        ///             Serialized Name: AFDOriginGroupUpdateParameters.properties.sessionAffinityState
-        /// </param>
-        /// <returns> A new <see cref="Models.FrontDoorOriginGroupPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FrontDoorOriginGroupPatch FrontDoorOriginGroupPatch(string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, EnabledState? sessionAffinityState)
-        {
-            return new FrontDoorOriginGroupPatch(default, additionalBinaryDataProperties: null);
+            return FrontDoorOriginGroupData(id: id, name: name, resourceType: resourceType, systemData: systemData, profileName: profileName, loadBalancingSettings: loadBalancingSettings, healthProbeSettings: healthProbeSettings, trafficRestorationTimeInMinutes: trafficRestorationTimeInMinutes, sessionAffinityState: sessionAffinityState, authentication: default, provisioningState: provisioningState, deploymentStatus: deploymentStatus);
         }
 
         /// <summary> Initializes a new instance of FrontDoorCustomDomainData. </summary>
@@ -2970,7 +2930,7 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FrontDoorCustomDomainData FrontDoorCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, ResourceIdentifier dnsZoneId, ResourceIdentifier preValidatedCustomDomainResourceId, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, DomainValidationProperties validationProperties)
         {
-            return FrontDoorCustomDomainData(id, name, resourceType, systemData, profileName, tlsSettings, mtlsSettings: default, provisioningState, deploymentStatus, domainValidationState, hostName, extendedProperties: default, validationProperties, dnsZoneId, preValidatedCustomDomainResourceId);
+            return FrontDoorCustomDomainData(id: id, name: name, resourceType: resourceType, systemData: systemData, profileName: profileName, tlsSettings: tlsSettings, mtlsSettings: default, provisioningState: provisioningState, deploymentStatus: deploymentStatus, domainValidationState: domainValidationState, hostName: hostName, extendedProperties: default, validationProperties: validationProperties, dnsZoneId: dnsZoneId, preValidatedCustomDomainResourceId: preValidatedCustomDomainResourceId);
         }
     }
 }

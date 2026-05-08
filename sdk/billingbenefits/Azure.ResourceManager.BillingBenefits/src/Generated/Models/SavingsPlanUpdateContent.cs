@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> Savings plan patch request. </summary>
-    public partial class BillingBenefitsSavingsPlanPatch
+    public partial class SavingsPlanUpdateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanPatch"/>. </summary>
-        public BillingBenefitsSavingsPlanPatch()
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanUpdateContent"/>. </summary>
+        public SavingsPlanUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanUpdateContent"/>. </summary>
         /// <param name="properties"> Savings plan patch request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingBenefitsSavingsPlanPatch(BillingBenefitsSavingsPlanPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SavingsPlanUpdateContent(BillingBenefitsSavingsPlanPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
