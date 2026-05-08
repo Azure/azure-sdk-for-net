@@ -181,8 +181,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         var transmissionResult = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _fileBlobProvider, null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter);
                         result = transmissionResult.ExportResult;
-                        if (transmissionResult.WillRetry)
+                        if (result == ExportResult.Failure)
                         {
+                            // If still in a failure state after attempting to save to offline storage, enable back-off
                             _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
                         }
                     }

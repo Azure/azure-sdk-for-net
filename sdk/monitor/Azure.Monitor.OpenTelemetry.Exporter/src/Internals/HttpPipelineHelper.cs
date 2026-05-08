@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -384,6 +385,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     CustomerSdkStatsHelper.TrackDropped(droppedCounter, ResponseStatusCodes.PartialSuccess, "Partial success - non-retriable");
                 }
+
+                // If there is no partialContent, it means all items were either successful or permanently dropped (which does not need to be retried)
+                if (partialContent == null)
+                    result.ExportResult = ExportResult.Success;
 
                 return;
             }
