@@ -4,6 +4,7 @@
 using Azure.Core;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
+using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
@@ -78,10 +79,20 @@ internal class NameVisitor : ScmLibraryVisitor
 
         if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName, out var isAlsoUsedInCreate))
         {
-            newName = isAlsoUsedInCreate
-                ? $"{enclosingResourceName}CreateOrUpdateContent"
-                : $"{enclosingResourceName}Patch";
-            type.Update(name: newName);
+            // Honor user-provided @@clientName(.., "csharp") only on the patch-only path.
+            // When the same model is also used as the Create body we always rename to
+            // {Resource}CreateOrUpdateContent to keep the Create/Update parameter type
+            // consistent across the SDK surface.
+            if (isAlsoUsedInCreate)
+            {
+                newName = $"{enclosingResourceName}CreateOrUpdateContent";
+                type.Update(name: newName);
+            }
+            else if (!ClientNameOverrideHelper.HasUserProvidedClientName(model))
+            {
+                newName = $"{enclosingResourceName}Patch";
+                type.Update(name: newName);
+            }
         }
         return base.PreVisitModel(model, type);
     }
