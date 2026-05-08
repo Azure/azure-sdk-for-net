@@ -279,6 +279,8 @@ namespace Azure.AI.VoiceLive.Tests
             var nextUpdate = await GetNextUpdate<SessionUpdate>(updatesEnum).ConfigureAwait(false);
             TestContext.WriteLine($"📥 Received: {nextUpdate.GetType().Name}");
 
+            bool alreadyHaveInProgress = false;
+
             // Handle different possible outcomes
             if (nextUpdate is SessionUpdateResponseDone responseDone)
             {
@@ -325,10 +327,17 @@ namespace Azure.AI.VoiceLive.Tests
                 Assert.IsNotNull(approvalItemCreated.Item);
                 // Continue with normal flow - wait for tool execution
             }
+            else if (nextUpdate is SessionUpdateResponseMcpCallInProgress mcpInProgressEarly)
+            {
+                TestContext.WriteLine($"✅ MCP call in progress received immediately after approval for item: {mcpInProgressEarly.ItemId}");
+                Assert.IsNotNull(mcpInProgressEarly.ItemId);
+                alreadyHaveInProgress = true;
+                // Fall through to MCP execution section below - skip waiting for in-progress again
+            }
             else
             {
                 TestContext.WriteLine($"🤔 Unexpected update type: {nextUpdate.GetType().Name}");
-                Assert.Fail($"Expected either SessionUpdateConversationItemCreated or SessionUpdateResponseDone, but got {nextUpdate.GetType().Name}");
+                Assert.Fail($"Expected either SessionUpdateConversationItemCreated, SessionUpdateResponseMcpCallInProgress, or SessionUpdateResponseDone, but got {nextUpdate.GetType().Name}");
                 return;
             }
 
@@ -337,10 +346,13 @@ namespace Azure.AI.VoiceLive.Tests
 
             try
             {
-                var mcpCallInProgress = await GetNextUpdate<SessionUpdateResponseMcpCallInProgress>(updatesEnum).ConfigureAwait(false);
-                Assert.IsNotNull(mcpCallInProgress);
-                Assert.IsNotNull(mcpCallInProgress.ItemId);
-                TestContext.WriteLine($"🔄 MCP call in progress for item: {mcpCallInProgress.ItemId}");
+                if (!alreadyHaveInProgress)
+                {
+                    var mcpCallInProgress = await GetNextUpdate<SessionUpdateResponseMcpCallInProgress>(updatesEnum).ConfigureAwait(false);
+                    Assert.IsNotNull(mcpCallInProgress);
+                    Assert.IsNotNull(mcpCallInProgress.ItemId);
+                    TestContext.WriteLine($"🔄 MCP call in progress for item: {mcpCallInProgress.ItemId}");
+                }
 
                 var mcpCallCompleted = await GetNextUpdate<SessionUpdateResponseMcpCallCompleted>(updatesEnum).ConfigureAwait(false);
                 Assert.IsNotNull(mcpCallCompleted);
