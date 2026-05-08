@@ -50,18 +50,6 @@
         $(MSBuildProjectName) == 'Azure.Core.TestFramework.Tests' or
         $(MSBuildProjectName) == 'Azure.Core.Tests' or
         $(MSBuildProjectName) == 'Azure.Core.Tests.Public' or
-        $(MSBuildProjectName) == 'Azure.Data.AppConfiguration.Tests' or
-        $(MSBuildProjectName) == 'Azure.Data.SchemaRegistry.Tests' or
-        $(MSBuildProjectName) == 'Azure.Data.Tables.Tests' or
-        $(MSBuildProjectName) == 'Azure.Developer.DevCenter.Tests' or
-        $(MSBuildProjectName) == 'Azure.Developer.LoadTesting.Tests' or
-        $(MSBuildProjectName) == 'Azure.Developer.Playwright.MSTest.Tests' or
-        $(MSBuildProjectName) == 'Azure.Developer.Playwright.NUnit.Tests' or
-        $(MSBuildProjectName) == 'Azure.Developer.Playwright.Tests' or
-        $(MSBuildProjectName) == 'Azure.DigitalTwins.Core.Tests' or
-        $(MSBuildProjectName) == 'Azure.Extensions.AspNetCore.Configuration.Secrets.Tests' or
-        $(MSBuildProjectName) == 'Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests' or
-        $(MSBuildProjectName) == 'Azure.Extensions.AspNetCore.DataProtection.Keys.Tests' or
         $(MSBuildProjectName) == 'Azure.Generator.Tests' or
         $(MSBuildProjectName) == 'Azure.Generator.Tests.Common' or
         $(MSBuildProjectName) == 'Azure.GeneratorAgent.Tests' or
@@ -107,7 +95,6 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.ApiCenter.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.ApiManagement.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.AppComplianceAutomation.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.AppConfiguration.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.AppContainers.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.ApplicationInsights.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.AppNetwork.Tests' or
@@ -167,14 +154,12 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.Dell.Storage.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DependencyMap.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DesktopVirtualization.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.DevCenter.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DeviceProvisioningServices.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DeviceRegistry.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DeviceUpdate.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DevOpsInfrastructure.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DevSpaces.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DevTestLabs.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.DigitalTwins.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DisconnectedOperations.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Dns.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DnsResolver.Tests' or
@@ -223,7 +208,6 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.LabServices.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.LambdaTestHyperExecute.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.LargeInstance.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.LoadTesting.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Logic.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.MachineLearning.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.MachineLearningCompute.Tests' or
@@ -367,11 +351,9 @@
         $(MSBuildProjectName) == 'Microsoft.Azure.Core.NewtonsoftJson.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.Core.Spatial.Tests' or
-        $(MSBuildProjectName) == 'Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.PostgreSQL.Auth.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests' or
-        $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.Clients.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.EventHubs.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests' or
@@ -382,11 +364,9 @@
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Samples.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests' or
-        $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.Tables.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebPubSub.AspNetCore.Tests' or
-        $(MSBuildProjectName) == 'Microsoft.Extensions.Azure.Tests' or
         $(MSBuildProjectName) == 'OpenAI.TestFramework' or
         $(MSBuildProjectName) == 'OpenAI.TestFramework.Tests' or
         $(MSBuildProjectName) == 'System.ClientModel.SourceGeneration.Tests' or

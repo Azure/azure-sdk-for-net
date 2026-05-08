@@ -4,6 +4,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Versioning;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -139,6 +141,11 @@ namespace Azure.Identity
             if (!string.IsNullOrEmpty(RedirectUrl))
             {
                 confClientBuilder.WithRedirectUri(RedirectUrl);
+            }
+
+            if (AdditionalQueryParameters != null)
+            {
+                confClientBuilder.WithExtraQueryParameters(AdditionalQueryParameters.ToDictionary(kvp => kvp.Key, kvp => (kvp.Value.Value, kvp.Value.IncludeInCacheKey)));
             }
 
             return confClientBuilder.Build();

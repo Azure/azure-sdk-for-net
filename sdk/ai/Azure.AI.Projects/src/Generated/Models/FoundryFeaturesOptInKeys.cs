@@ -20,6 +20,8 @@ namespace Azure.AI.Projects
         /// <summary> SkillsV1Preview. </summary>
         SkillsV1Preview,
         /// <summary> ToolboxesV1Preview. </summary>
-        ToolboxesV1Preview
+        ToolboxesV1Preview,
+        /// <summary> DataGenerationJobsV1Preview. </summary>
+        DataGenerationJobsV1Preview
     }
 }

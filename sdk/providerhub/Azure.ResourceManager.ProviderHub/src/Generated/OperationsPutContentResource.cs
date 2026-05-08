@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new OperationsPutContentResourceGetAsyncCollectionResultOfT(_operationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context, "OperationsPutContentResource.Get");
+            return new MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationAsyncCollectionResultOfT(_operationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context, "OperationsPutContentResource.Get");
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new OperationsPutContentResourceGetCollectionResultOfT(_operationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context, "OperationsPutContentResource.Get");
+            return new MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationCollectionResultOfT(_operationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context, "OperationsPutContentResource.Get");
         }
 
         /// <summary>

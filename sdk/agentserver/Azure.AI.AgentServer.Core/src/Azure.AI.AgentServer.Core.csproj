@@ -17,8 +17,7 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Monitor.OpenTelemetry.AspNetCore" />
-    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
+    <PackageReference Include="Microsoft.OpenTelemetry" />
   </ItemGroup>
   <!-- Ship a global using so consumers can write AgentHost.Run<T>() with zero usings. -->
   <ItemGroup>

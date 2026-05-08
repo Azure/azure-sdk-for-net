@@ -1506,7 +1506,7 @@ namespace Azure.ResourceManager.DataBox.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DeviceErasureDetails DeviceErasureDetails(DataBoxStageStatus? deviceErasureStatus, string erasureOrDestructionCertificateSasKey)
         {
-            return DeviceErasureDetails(deviceErasureStatus, erasureOrDestructionCertificateSasKey, secureErasureCertificateSasKey: default);
+            return DeviceErasureDetails(deviceErasureStatus: deviceErasureStatus, erasureOrDestructionCertificateSasKey: erasureOrDestructionCertificateSasKey, secureErasureCertificateSasKey: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxJobStage"/>. </summary>
@@ -1519,7 +1519,7 @@ namespace Azure.ResourceManager.DataBox.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataBoxJobStage DataBoxJobStage(DataBoxStageName? stageName, string displayName, DataBoxStageStatus? stageStatus, DateTimeOffset? stageTime, BinaryData jobStageDetails)
         {
-            return DataBoxJobStage(stageName, displayName, stageStatus, stageTime, jobStageDetails, delayInformation: default);
+            return DataBoxJobStage(stageName: stageName, displayName: displayName, stageStatus: stageStatus, stageTime: stageTime, jobStageDetails: jobStageDetails, delayInformation: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxSkuCapacity"/>. </summary>
@@ -1529,7 +1529,7 @@ namespace Azure.ResourceManager.DataBox.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataBoxSkuCapacity DataBoxSkuCapacity(string usable, string maximum)
         {
-            return DataBoxSkuCapacity(usable, maximum, individualSkuUsable: default);
+            return DataBoxSkuCapacity(usable: usable, maximum: maximum, individualSkuUsable: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RegionConfigurationResult"/>. </summary>
@@ -1544,7 +1544,7 @@ namespace Azure.ResourceManager.DataBox.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RegionConfigurationResult RegionConfigurationResult(IEnumerable<DateTimeOffset> scheduleAvailabilityResponseAvailableDates, IEnumerable<TransportAvailabilityDetails> transportAvailabilityDetails, DataCenterAddressResult dataCenterAddressResponse)
         {
-            return RegionConfigurationResult(scheduleAvailabilityResponseAvailableDates, transportAvailabilityDetails, dataCenterAddressResponse, deviceCapabilityDetails: default);
+            return RegionConfigurationResult(scheduleAvailabilityResponseAvailableDates: scheduleAvailabilityResponseAvailableDates, transportAvailabilityDetails: transportAvailabilityDetails, dataCenterAddressResponse: dataCenterAddressResponse, deviceCapabilityDetails: default);
         }
     }
 }
