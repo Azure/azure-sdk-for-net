@@ -60,7 +60,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
             string snapshot,
             Dictionary<string, BlobPropertyChange> updatedBlobProperties,
             BlobOperationResult asyncOperationInfo,
-            BlobTagsChange updatedBlobTags)
+            BlobTagsChange updatedBlobTags,
+            string restoredContainerVersion = default)
             => new BlobChangeFeedEventData
             {
                 BlobOperationName = blobOperationName,
@@ -83,7 +84,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 Snapshot = snapshot,
                 UpdatedBlobProperties = updatedBlobProperties,
                 LongRunningOperationInfo = asyncOperationInfo,
-                UpdatedBlobTags = updatedBlobTags
+                UpdatedBlobTags = updatedBlobTags,
+                RestoredContainerVersion = restoredContainerVersion
             };
 
         /// <summary>

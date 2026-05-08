@@ -90,6 +90,26 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public static BlobOperationName CreateRestorePointMarker { get; } = new BlobOperationName("CreateRestorePointMarker");
 
         /// <summary>
+        /// Create Container.
+        /// </summary>
+        public static BlobOperationName CreateContainer { get; } = new BlobOperationName("ContainerCreated");
+
+        /// <summary>
+        /// Delete Container.
+        /// </summary>
+        public static BlobOperationName DeleteContainer { get; } = new BlobOperationName("ContainerDeleted");
+
+        /// <summary>
+        /// Restore Container.
+        /// </summary>
+        public static BlobOperationName RestoreContainer { get; } = new BlobOperationName("RestoreContainer");
+
+        /// <summary>
+        /// Set Container Metadata.
+        /// </summary>
+        public static BlobOperationName SetContainerMetadata { get; } = new BlobOperationName("ContainerPropertiesUpdated");
+
+        /// <summary>
         /// Compares equality of two <see cref="BlobOperationName"/> instances.
         /// </summary>
         /// <param name="left">The <see cref="BlobOperationName"/> to compare.</param>
