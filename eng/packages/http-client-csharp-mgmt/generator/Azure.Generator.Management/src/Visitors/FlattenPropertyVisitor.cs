@@ -108,6 +108,7 @@ namespace Azure.Generator.Management.Visitors
             // via InvokeMethodExpression. The primary methods' parameter order may have changed
             // after flattening, so positional arguments in overloads can be wrong.
             FixBackwardCompatOverloads(modelFactory.Methods);
+            FixBackwardCompatNewInstanceDefaults(modelFactory.Methods);
         }
 
         /// <summary>
@@ -220,6 +221,166 @@ namespace Azure.Generator.Management.Visitors
         {
             return method.Signature.Attributes.Any(a =>
                 a.Type is { IsFrameworkType: true } && a.Type.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
+        }
+
+        private static void FixBackwardCompatNewInstanceDefaults(IReadOnlyList<MethodProvider> methods)
+        {
+            foreach (var method in methods)
+            {
+                if (!IsBackwardCompatMethod(method) || method.BodyStatements is null)
+                {
+                    continue;
+                }
+
+                var updatedBodyStatements = new List<MethodBodyStatement>();
+                var bodyUpdated = false;
+                foreach (var statement in method.BodyStatements)
+                {
+                    if (statement is ExpressionStatement expressionStatement
+                        && (expressionStatement.Expression as KeywordExpression)?.Expression is NewInstanceExpression newInstanceExpression
+                        && TryUpdateNewInstanceArguments(method, newInstanceExpression, out var updatedArguments))
+                    {
+                        updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, updatedArguments)));
+                        bodyUpdated = true;
+                    }
+                    else
+                    {
+                        updatedBodyStatements.Add(statement);
+                    }
+                }
+
+                if (bodyUpdated)
+                {
+                    method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
+                }
+            }
+        }
+
+        private static bool TryUpdateNewInstanceArguments(MethodProvider method, NewInstanceExpression newInstanceExpression, [NotNullWhen(true)] out IReadOnlyList<ValueExpression>? updatedArguments)
+        {
+            updatedArguments = null;
+            if (newInstanceExpression.Type is null || !TryGetModelProvider(newInstanceExpression.Type, out var modelProvider))
+            {
+                return false;
+            }
+
+            var constructorParameters = modelProvider.FullConstructor.Signature.Parameters;
+            if (constructorParameters.Count != newInstanceExpression.Parameters.Count)
+            {
+                return false;
+            }
+
+            List<ValueExpression>? arguments = null;
+            for (int i = 0; i < newInstanceExpression.Parameters.Count; i++)
+            {
+                var currentArgument = newInstanceExpression.Parameters[i];
+                if (!IsDefaultExpression(currentArgument))
+                {
+                    continue;
+                }
+
+                if (TryBuildCompatibilityArgument(method, constructorParameters[i], out var replacement))
+                {
+                    arguments ??= [.. newInstanceExpression.Parameters];
+                    arguments[i] = replacement;
+                }
+            }
+
+            updatedArguments = arguments;
+            return arguments is not null;
+        }
+
+        private static bool TryBuildCompatibilityArgument(MethodProvider method, ParameterProvider constructorParameter, [NotNullWhen(true)] out ValueExpression? argument)
+        {
+            if (TryGetMethodParameter(method, constructorParameter.Name, out var directParameter))
+            {
+                argument = directParameter;
+                return true;
+            }
+
+            if (!TryGetModelProvider(constructorParameter.Type, out var nestedModel))
+            {
+                argument = null;
+                return false;
+            }
+
+            var nestedConstructorParameters = nestedModel.FullConstructor.Signature.Parameters;
+            var nestedArguments = new List<ValueExpression>(nestedConstructorParameters.Count);
+            var matchedParameters = new List<ParameterProvider>();
+            foreach (var nestedParameter in nestedConstructorParameters)
+            {
+                if (TryGetNestedCompatibilityParameter(method, constructorParameter.Property, nestedParameter, out var methodParameter))
+                {
+                    nestedArguments.Add(methodParameter);
+                    matchedParameters.Add(methodParameter);
+                }
+                else
+                {
+                    nestedArguments.Add(nestedParameter.DefaultValue ?? Default);
+                }
+            }
+
+            if (matchedParameters.Count == 0)
+            {
+                argument = null;
+                return false;
+            }
+
+            var newInstance = New.Instance(constructorParameter.Type, nestedArguments);
+            var condition = BuildAllNullCondition(matchedParameters);
+            argument = condition is null
+                ? newInstance
+                : new TernaryConditionalExpression(condition, Default, newInstance);
+            return true;
+        }
+
+        private static bool TryGetNestedCompatibilityParameter(MethodProvider method, PropertyProvider? parentProperty, ParameterProvider nestedParameter, [NotNullWhen(true)] out ParameterProvider? methodParameter)
+        {
+            if (TryGetMethodParameter(method, nestedParameter.Name, out methodParameter))
+            {
+                return true;
+            }
+
+            if (parentProperty is not null && nestedParameter.Property is not null)
+            {
+                var combinedName = PropertyHelpers.GetCombinedPropertyName(nestedParameter.Property, parentProperty).ToVariableName();
+                if (TryGetMethodParameter(method, combinedName, out methodParameter))
+                {
+                    return true;
+                }
+            }
+
+            methodParameter = null;
+            return false;
+        }
+
+        private static bool TryGetMethodParameter(MethodProvider method, string name, [NotNullWhen(true)] out ParameterProvider? parameter)
+        {
+            parameter = method.Signature.Parameters.FirstOrDefault(p => string.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase));
+            return parameter is not null;
+        }
+
+        private static ScopedApi<bool>? BuildAllNullCondition(IEnumerable<ParameterProvider> parameters)
+        {
+            ScopedApi<bool>? result = null;
+            foreach (var parameter in parameters)
+            {
+                if (!parameter.Type.IsNullable)
+                {
+                    continue;
+                }
+
+                result = result is null
+                    ? parameter.Is(Null)
+                    : result.And(parameter.Is(Null));
+            }
+            return result;
+        }
+
+        private static bool IsDefaultExpression(ValueExpression expression)
+        {
+            var displayString = expression.ToDisplayString();
+            return displayString == "default" || displayString.StartsWith("default(", StringComparison.Ordinal);
         }
 
         /// <summary>
