@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="budgetCategory">
+        /// <param name="category">
         /// The category of the budget.
         /// <list type="bullet"><item><description>'Cost' defines a Budget.</description></item><item><description>'ReservationUtilization' defines a Reservation Utilization Alert Rule.</description></item></list>
         /// </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// Supported for CategoryType(s): Cost.
         /// Required for CategoryType(s): Cost.
         /// </param>
-        /// <param name="budgetTimeGrain">
+        /// <param name="timeGrain">
         /// The time covered by a budget. Tracking of the amount will be reset based on the time grain.
         /// Supported for CategoryType(s): Cost, ReservationUtilization.
         /// Supported timeGrainTypes for <b>CategoryType: Cost</b>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="CostManagement.BudgetData"/> instance for mocking. </returns>
-        public static BudgetData BudgetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CategoryType? budgetCategory = default, float? amount = default, TimeGrainType? budgetTimeGrain = default, BudgetTimePeriod timePeriod = default, BudgetFilter filter = default, CurrentSpend currentSpend = default, IDictionary<string, BudgetNotification> notifications = default, ForecastSpend forecastSpend = default, ETag? etag = default)
+        public static BudgetData BudgetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CategoryType? category = default, float? amount = default, TimeGrainType? timeGrain = default, BudgetTimePeriod timePeriod = default, BudgetFilter filter = default, CurrentSpend currentSpend = default, IDictionary<string, BudgetNotification> notifications = default, ForecastSpend forecastSpend = default, ETag? etag = default)
         {
             return new BudgetData(
                 id,
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                budgetCategory is null && amount is null && budgetTimeGrain is null && timePeriod is null && filter is null && currentSpend is null && notifications is null && forecastSpend is null ? default : new BudgetProperties(
-                    budgetCategory.GetValueOrDefault(),
+                category is null && amount is null && timeGrain is null && timePeriod is null && filter is null && currentSpend is null && notifications is null && forecastSpend is null ? default : new BudgetProperties(
+                    category.GetValueOrDefault(),
                     amount,
-                    budgetTimeGrain.GetValueOrDefault(),
+                    timeGrain.GetValueOrDefault(),
                     timePeriod,
                     filter,
                     currentSpend,
@@ -894,6 +894,16 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new TargetCostAllocationEntity(resourceType, name, additionalBinaryDataProperties: null, values.ToList(), policyType);
         }
 
+        /// <summary> The cost allocation rule check name availability response. </summary>
+        /// <param name="nameAvailable"> Whether this rule name is available. </param>
+        /// <param name="reason"> The reason this name is not available. </param>
+        /// <param name="message"> Error message if the name is not available. </param>
+        /// <returns> A new <see cref="Models.CostAllocationRuleCheckNameAvailabilityResponse"/> instance for mocking. </returns>
+        public static CostAllocationRuleCheckNameAvailabilityResponse CostAllocationRuleCheckNameAvailabilityResponse(bool? nameAvailable = default, CostAllocationRuleCheckNameAvailabilityReason? reason = default, string message = default)
+        {
+            return new CostAllocationRuleCheckNameAvailabilityResponse(nameAvailable, reason, message, additionalBinaryDataProperties: null);
+        }
+
         /// <summary>
         /// The properties of the benefit recommendations.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SingleScopeBenefitRecommendationProperties"/> and <see cref="Models.SharedScopeBenefitRecommendationProperties"/>.
@@ -1620,7 +1630,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CommonExportProperties CommonExportProperties(ExportFormatType? format, ExportDeliveryDestination deliveryInfoDestination, ExportDefinition definition, IEnumerable<ExportRun> runHistoryValue, bool? partitionData, DateTimeOffset? nextRunTimeEstimate)
         {
-            return CommonExportProperties(format, deliveryInfoDestination, definition, runHistoryValue, partitionData, dataOverwriteBehavior: default, compressionMode: default, exportDescription: default, nextRunTimeEstimate, systemSuspensionContext: default);
+            return CommonExportProperties(format: format, deliveryInfoDestination: deliveryInfoDestination, definition: definition, runHistoryValue: runHistoryValue, partitionData: partitionData, dataOverwriteBehavior: default, compressionMode: default, exportDescription: default, nextRunTimeEstimate: nextRunTimeEstimate, systemSuspensionContext: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExportRun"/>. </summary>

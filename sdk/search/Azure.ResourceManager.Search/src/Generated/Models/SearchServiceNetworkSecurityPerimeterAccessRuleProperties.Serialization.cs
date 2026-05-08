@@ -101,6 +101,11 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WriteStartArray();
                 foreach (WritableSubResource item in Subscriptions)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
