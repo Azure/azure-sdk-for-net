@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly Guid _subscriptionId;
         private readonly AzureLocation _location;
         private readonly Guid _instanceId;
-        private readonly string _restorableMongodbDatabaseRid;
+        private readonly string _restorableMongoDBDatabaseRid;
         private readonly string _startTime;
         private readonly string _endTime;
         private readonly RequestContext _context;
@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
-        /// <param name="restorableMongodbDatabaseRid"> The resource ID of the MongoDB database. </param>
+        /// <param name="restorableMongoDBDatabaseRid"> The resource ID of the MongoDB database. </param>
         /// <param name="startTime"> Restorable MongoDB collections event feed start time. </param>
         /// <param name="endTime"> Restorable MongoDB collections event feed end time. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RestorableMongodbCollectionsGetRestorableMongoDBCollectionsCollectionResultOfT(RestorableMongodbCollections client, Guid subscriptionId, AzureLocation location, Guid instanceId, string restorableMongodbDatabaseRid, string startTime, string endTime, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RestorableMongodbCollectionsGetRestorableMongoDBCollectionsCollectionResultOfT(RestorableMongodbCollections client, Guid subscriptionId, AzureLocation location, Guid instanceId, string restorableMongoDBDatabaseRid, string startTime, string endTime, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
             _instanceId = instanceId;
-            _restorableMongodbDatabaseRid = restorableMongodbDatabaseRid;
+            _restorableMongoDBDatabaseRid = restorableMongoDBDatabaseRid;
             _startTime = startTime;
             _endTime = endTime;
             _context = context;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetRestorableMongoDBCollectionsRequest(nextLink, _subscriptionId, _location, _instanceId, _restorableMongodbDatabaseRid, _startTime, _endTime, _context) : _client.CreateGetRestorableMongoDBCollectionsRequest(_subscriptionId, _location, _instanceId, _restorableMongodbDatabaseRid, _startTime, _endTime, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetRestorableMongoDBCollectionsRequest(nextLink, _subscriptionId, _location, _instanceId, _restorableMongoDBDatabaseRid, _startTime, _endTime, _context) : _client.CreateGetRestorableMongoDBCollectionsRequest(_subscriptionId, _location, _instanceId, _restorableMongoDBDatabaseRid, _startTime, _endTime, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -1,5 +1,5 @@
 directory: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/DocumentDB
-commit: 55a28dbe1be8f6f1deb17fa50f0c88b338298f2c
+commit: b33a8985c5f2d394a426dae6168c4a78811a6b6b
 repo: Azure/azure-rest-api-specs
 cleanup: true
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

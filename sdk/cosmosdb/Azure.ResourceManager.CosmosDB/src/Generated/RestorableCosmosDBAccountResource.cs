@@ -576,12 +576,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="restorableMongodbDatabaseRid"> The resource ID of the MongoDB database. </param>
+        /// <param name="restorableMongoDBDatabaseRid"> The resource ID of the MongoDB database. </param>
         /// <param name="startTime"> Restorable MongoDB collections event feed start time. </param>
         /// <param name="endTime"> Restorable MongoDB collections event feed end time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableMongoDBCollection"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableMongoDBCollection> GetRestorableMongoDBCollectionsAsync(string restorableMongodbDatabaseRid = default, string startTime = default, string endTime = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RestorableMongoDBCollection> GetRestorableMongoDBCollectionsAsync(string restorableMongoDBDatabaseRid = default, string startTime = default, string endTime = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.CosmosDB
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Guid.Parse(Id.Name),
-                restorableMongodbDatabaseRid,
+                restorableMongoDBDatabaseRid,
                 startTime,
                 endTime,
                 context,
@@ -620,12 +620,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="restorableMongodbDatabaseRid"> The resource ID of the MongoDB database. </param>
+        /// <param name="restorableMongoDBDatabaseRid"> The resource ID of the MongoDB database. </param>
         /// <param name="startTime"> Restorable MongoDB collections event feed start time. </param>
         /// <param name="endTime"> Restorable MongoDB collections event feed end time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableMongoDBCollection"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableMongoDBCollection> GetRestorableMongoDBCollections(string restorableMongodbDatabaseRid = default, string startTime = default, string endTime = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<RestorableMongoDBCollection> GetRestorableMongoDBCollections(string restorableMongoDBDatabaseRid = default, string startTime = default, string endTime = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.CosmosDB
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Guid.Parse(Id.Name),
-                restorableMongodbDatabaseRid,
+                restorableMongoDBDatabaseRid,
                 startTime,
                 endTime,
                 context,
