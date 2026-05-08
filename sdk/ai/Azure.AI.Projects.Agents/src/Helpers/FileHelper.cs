@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -26,14 +27,18 @@ internal class FileHelper
 
     private static void DirWalk(ZipArchive archive, string directoryPath, string prefix)
     {
+        if (!prefix.EndsWith("\\") && !prefix.EndsWith("/"))
+        {
+            prefix += Path.DirectorySeparatorChar;
+        }
         foreach (string file in Directory.GetFiles(directoryPath))
         {
             archive.CreateEntryFromFile(file, file.Substring(prefix.Length));
         }
         foreach (string dir in Directory.GetDirectories(directoryPath))
         {
-            archive.CreateEntry(dir);
-            DirWalk(archive, dir, directoryPath);
+            archive.CreateEntry(dir.Substring(prefix.Length) + Path.DirectorySeparatorChar);
+            DirWalk(archive, dir, prefix);
         }
     }
 
@@ -42,12 +47,10 @@ internal class FileHelper
         BinaryData zipContents;
         using (MemoryStream stream = new())
         {
-            stream.Position = 0;
             using (ZipArchive archive = new(stream, ZipArchiveMode.Create))
             {
                 DirWalk(archive, directoryPath, directoryPath);
             }
-            stream.Position = 0;
             zipContents = new(stream.ToArray());
         }
         return zipContents;
@@ -62,7 +65,6 @@ internal class FileHelper
             {
                 tempZip.CreateEntryFromFile(fileName, Path.GetFileName(fileName));
             }
-            stream.Position = 0;
             zipContents = new(stream.ToArray());
         }
         string strHash = default;

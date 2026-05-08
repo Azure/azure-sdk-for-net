@@ -7,8 +7,11 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
+using Castle.Core.Resource;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
+using NUnit.Framework.Legacy;
 using OpenAI.Responses;
 
 #pragma warning disable AAIP001
@@ -231,20 +234,19 @@ public class AgentsTests : AgentsTestBase
     public async Task TestArchiveFile()
     {
         string path = GetTestFile(GetTestFile("test.txt"));
-        (BinaryData data, string sha256sum)  =  FileHelper.CreateAndReadZipFile(path);
-        Assert.That(sha256sum, Is.Not.Null);
+        (BinaryData data, string sha256sum) = FileHelper.CreateAndReadZipFile(path);
+        Assert.That(sha256sum, Is.Not.Null.And.Not.Empty);
         string tempDir = Path.GetTempPath();
-        string tempFile = Path.Combine(tempDir, "unzipped.txt");
-        FileHelper.SaveAndUnzipData(tempFile, data);
-        Assert.That(Path.Exists(tempFile));
+        string tempFile = Path.Combine(tempDir, "test.txt");
+        FileHelper.SaveAndUnzipData(tempDir, data);
+        FileAssert.Exists(tempFile);
         try
         {
-            
-            
+            FileAssert.AreEqual(path, tempFile);
         }
         finally
         {
-            File.Delete(tempFile)
+            File.Delete(tempFile);
         }
     }
 
@@ -253,7 +255,31 @@ public class AgentsTests : AgentsTestBase
     public async Task TestArchiveDirectory()
     {
         string path = GetTestFile(GetTestFile("roll-dice"));
-        FileHelper.SaveAndUnzipData();
+        BinaryData data = FileHelper.CreateAndReadZipFileFromDirectory(path);
+        string tempDir = Path.GetTempPath();
+        string expectedPath = Path.Combine(tempDir, "sample-skill");
+        try
+        {
+            Directory.Delete(expectedPath, true);
+        }
+        catch { }
+        FileHelper.SaveAndUnzipData(expectedPath, data);
+        Assert.That(expectedPath, Does.Exist);
+        Assert.That(File.GetAttributes(expectedPath) & FileAttributes.Directory, Is.EqualTo(FileAttributes.Directory));
+        try
+        {
+            string skill = Path.Combine(expectedPath, "SKILL.md");
+            Assert.That(skill, Does.Exist);
+            FileAssert.AreEqual(Path.Combine(path, "SKILL.md"), skill);
+            Assert.That(Path.Combine(expectedPath, "references"), Does.Exist);
+            string sampleReference = Path.Combine(expectedPath, "references", "sample.md");
+            Assert.That(sampleReference, Does.Exist);
+            FileAssert.AreEqual(Path.Combine(path, "references", "sample.md"), sampleReference);
+        }
+        finally
+        {
+            Directory.Delete(expectedPath, true);
+        }
     }
 
     [RecordedTest]

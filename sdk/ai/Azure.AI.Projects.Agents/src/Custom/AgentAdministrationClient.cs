@@ -12,6 +12,7 @@ using System.IO.Compression;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
+using Microsoft.Extensions.Options;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents;
@@ -43,6 +44,14 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetSessionsAsync", typeof(string), typeof(AgentDefinitionOptInKeys), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetSessions", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetSessionsAsync", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("CreateSession", typeof(string), typeof(VersionIndicator), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
+[CodeGenSuppress("CreateSessionAsync", typeof(string), typeof(VersionIndicator), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
+[CodeGenSuppress("GetSession", typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
+[CodeGenSuppress("GetSessionAsync", typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
+[CodeGenSuppress("DeleteSession", typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
+[CodeGenSuppress("DeleteSessionAsync", typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
+[CodeGenSuppress("GetSessionLogStream", typeof(string), typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
+[CodeGenSuppress("GetSessionLogStreamAsync", typeof(string), typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
 public partial class AgentAdministrationClient
 {
     private AgentToolboxes _cachedAgentsToolboxes;
@@ -420,12 +429,11 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<ProjectAgentSession> CreateSession(string agentName, VersionIndicator versionIndicator, string agentSessionId = default, CancellationToken cancellationToken = default)
     {
-        return CreateSession(
-            agentName: agentName,
-            versionIndicator:versionIndicator,
-            agentSessionId: agentSessionId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken);
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+        CreateSessionRequest spreadModel = new CreateSessionRequest(agentSessionId, versionIndicator, default);
+        ClientResult result = CreateSession(agentName, spreadModel, default, cancellationToken.ToRequestOptions());
+        return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
     }
 
     /// <summary>
@@ -442,12 +450,11 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<ProjectAgentSession>> CreateSessionAsync(string agentName, VersionIndicator versionIndicator, string agentSessionId = default, CancellationToken cancellationToken = default)
     {
-        return await CreateSessionAsync(
-            agentName: agentName,
-            versionIndicator: versionIndicator,
-            agentSessionId: agentSessionId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken).ConfigureAwait(false);
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+        CreateSessionRequest spreadModel = new CreateSessionRequest(agentSessionId, versionIndicator, default);
+        ClientResult result = await CreateSessionAsync(agentName, spreadModel, default, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
     }
 
     /// <summary> Returns a list of sessions for the specified agent. </summary>
@@ -546,11 +553,12 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult DeleteSession(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
-        return DeleteSession(
-            agentName: agentName,
-            sessionId: sessionId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken);
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
+
+        RequestOptions options = cancellationToken.ToRequestOptions();
+        using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, default, options);
+        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
     }
 
     /// <summary>
@@ -565,11 +573,12 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
-        return await DeleteSessionAsync(
-            agentName: agentName,
-            sessionId: sessionId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken).ConfigureAwait(false);
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
+
+        RequestOptions options = cancellationToken.ToRequestOptions();
+        using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, default, options);
+        return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
     }
 
     /// <summary> Retrieves a session by ID. </summary>
@@ -581,12 +590,11 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<ProjectAgentSession> GetSession(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
-        return GetSession(
-            agentName: agentName,
-            sessionId: sessionId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        );
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
+
+        ClientResult result = GetSession(agentName, sessionId, default, cancellationToken.ToRequestOptions());
+        return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
     }
 
     /// <summary>
@@ -654,12 +662,11 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<ProjectAgentSession>> GetSessionAsync(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
-        return await GetSessionAsync(
-            agentName: agentName,
-            sessionId: sessionId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
+
+        ClientResult result = await GetSessionAsync(agentName, sessionId, default, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
     }
 
     /// <summary>
@@ -696,12 +703,8 @@ public partial class AgentAdministrationClient
         Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
         Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
 
-        return GetSessionLogStream(
-            agentName: agentName,
-            agentVersion: agentVersion,
-            sessionId: sessionId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken);
+        ClientResult result = GetSessionLogStream(agentName, agentVersion, sessionId, default, cancellationToken.ToRequestOptions());
+        return ClientResult.FromValue((SessionLogEvent)result, result.GetRawResponse());
     }
 
     /// <summary>
@@ -738,13 +741,8 @@ public partial class AgentAdministrationClient
         Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
         Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
 
-        return await GetSessionLogStreamAsync(
-            agentName: agentName,
-            agentVersion: agentVersion,
-            sessionId: sessionId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
+        ClientResult result = await GetSessionLogStreamAsync(agentName, agentVersion, sessionId, default, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ClientResult.FromValue((SessionLogEvent)result, result.GetRawResponse());
     }
 
     /// <summary>
