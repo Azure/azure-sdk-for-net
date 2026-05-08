@@ -770,6 +770,110 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_12_06)]
+        public async Task GetFilesAndDirectoriesAsync_NFS_AllItemTypes_Mocked()
+        {
+            // Arrange — replay a canned XML response that contains every NFS item type.
+            string xml = File.ReadAllText(
+                Path.Combine(
+                    TestContext.CurrentContext.TestDirectory,
+                    "Resources",
+                    "ListFilesAndDirectoriesResponse.xml"));
+
+            MockResponse mockResponse = new MockResponse(200);
+            mockResponse.SetContent(xml);
+
+            ShareClientOptions options = new ShareClientOptions
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+            // The transport is mocked, so the URI is never actually contacted; use a fixed
+            // value rather than TestConfigDefault to avoid requiring a recording session.
+            ShareDirectoryClient directory = InstrumentClient(
+                new ShareDirectoryClient(
+                    new Uri("https://account.file.core.windows.net/myshare/mydir"),
+                    options));
+
+            // Act — pull a single page so the mocked transport is hit exactly once.
+            List<ShareFileItem> items = new List<ShareFileItem>();
+            await foreach (Page<ShareFileItem> page in directory.GetFilesAndDirectoriesAsync().AsPages())
+            {
+                items.AddRange(page.Values);
+                break;
+            }
+
+            // Assert — 1 Directory + 2 Files + 1 SymLink + 1 BlockDevice + 1 CharDevice + 1 Fifo + 1 Socket = 8.
+            Assert.AreEqual(8, items.Count);
+
+            // Directory
+            ShareFileItem dir = items.Single(i => i.FileType == NfsFileType.Directory);
+            Assert.IsTrue(dir.IsDirectory);
+            Assert.AreEqual("Directoryb1eab17c31824548b7f246f9e8600999", dir.Name);
+            Assert.AreEqual("12682206919419625485", dir.Id);
+            Assert.AreEqual(2, dir.LinkCount);
+            Assert.IsNull(dir.FileSize);
+            Assert.AreEqual("0", dir.Properties.Owner);
+            Assert.AreEqual("0", dir.Properties.Group);
+            Assert.AreEqual("0755", dir.Properties.FileMode.ToOctalFileMode());
+            Assert.AreEqual(new ETag("\"0x8DE115C0FF22C86\""), dir.Properties.ETag);
+
+            // Files (two entries — same Id/Mode/Owner/Group, different Names)
+            List<ShareFileItem> files = items
+                .Where(i => i.FileType == NfsFileType.Regular)
+                .OrderBy(i => i.Name)
+                .ToList();
+            Assert.AreEqual(2, files.Count);
+            foreach (ShareFileItem file in files)
+            {
+                Assert.IsFalse(file.IsDirectory);
+                Assert.AreEqual(128, file.FileSize);
+                Assert.AreEqual(2, file.LinkCount);
+                Assert.AreEqual("555", file.Properties.Owner);
+                Assert.AreEqual("666", file.Properties.Group);
+                Assert.AreEqual("0420", file.Properties.FileMode.ToOctalFileMode());
+            }
+            Assert.AreEqual("File1788c17d9ce143369a341d5ce93db99a", files[0].Name);
+            Assert.AreEqual("Filee15274d5820f4bcf8978a9edf497ebf7", files[1].Name);
+
+            // SymLink
+            ShareFileItem symlink = items.Single(i => i.FileType == NfsFileType.SymLink);
+            Assert.IsFalse(symlink.IsDirectory);
+            Assert.AreEqual("Filee3467eb54e4444679d1af59a849f8e49_symlink", symlink.Name);
+            Assert.AreEqual("16140971433240166407", symlink.Id);
+            Assert.AreEqual(1, symlink.LinkCount);
+            Assert.AreEqual(
+                "/accounts8de115c011836f2/share41a04289fb194908849dd37660cc2f38/File1788c17d9ce143369a341d5ce93db99a",
+                symlink.LinkText);
+            Assert.AreEqual("0777", symlink.Properties.FileMode.ToOctalFileMode());
+
+            // BlockDevice
+            ShareFileItem block = items.Single(i => i.FileType == NfsFileType.BlockDevice);
+            Assert.AreEqual("File5924b48ddbbb496daca7733a187ca235_blockdev", block.Name);
+            Assert.AreEqual(8, block.DeviceMajor);
+            Assert.AreEqual(0, block.DeviceMinor);
+            Assert.AreEqual("0666", block.Properties.FileMode.ToOctalFileMode());
+
+            // CharDevice
+            ShareFileItem charDev = items.Single(i => i.FileType == NfsFileType.CharacterDevice);
+            Assert.AreEqual("Filed66b188ea28c4d87b5271e3f54ad4395_chardev", charDev.Name);
+            Assert.AreEqual(5, charDev.DeviceMajor);
+            Assert.AreEqual(0, charDev.DeviceMinor);
+
+            // Fifo
+            ShareFileItem fifo = items.Single(i => i.FileType == NfsFileType.Fifo);
+            Assert.AreEqual("File445fca4d216e4c9b90e6fca074f8d90e_fifo", fifo.Name);
+            Assert.IsNull(fifo.DeviceMajor);
+            Assert.IsNull(fifo.DeviceMinor);
+            Assert.IsNull(fifo.LinkText);
+
+            // Socket
+            ShareFileItem socket = items.Single(i => i.FileType == NfsFileType.Socket);
+            Assert.AreEqual("File026b2738ce0f42bdbb678b1fec09f5d6_socket", socket.Name);
+            Assert.IsNull(socket.DeviceMajor);
+            Assert.IsNull(socket.LinkText);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_12_06)]
         public async Task GetFilesAndDirectoriesAsync_AllTraits_SMB()
         {
             // Arrange — regular SMB share + parent directory
