@@ -95,7 +95,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <param name="sourceContainer">The source container client.</param>
         /// <param name="destinationContainer">The destination container client.</param>
         /// <param name="provider">The SAS storage resource provider.</param>
-        /// <returns>Source and destination storage resources with copy-source auth.</returns>
+        /// <returns>Source and destination storage resources for a copy transfer; by default, these resources do not include special copy-source authentication.</returns>
         protected virtual async Task<(StorageResource Source, StorageResource Destination)> CreateCopyStorageResourcesWithAuthAsync(
             long size,
             TContainerClient sourceContainer,
