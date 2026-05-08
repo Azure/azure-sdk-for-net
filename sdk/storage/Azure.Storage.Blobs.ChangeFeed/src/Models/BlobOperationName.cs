@@ -100,6 +100,26 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public static BlobOperationName UpdateLastAccessTime { get; } = new BlobOperationName("UpdateLastAccessTime");
 
         /// <summary>
+        /// Create Container.
+        /// </summary>
+        public static BlobOperationName CreateContainer { get; } = new BlobOperationName("CreateContainer");
+
+        /// <summary>
+        /// Delete Container.
+        /// </summary>
+        public static BlobOperationName DeleteContainer { get; } = new BlobOperationName("DeleteContainer");
+
+        /// <summary>
+        /// Restore Container.
+        /// </summary>
+        public static BlobOperationName RestoreContainer { get; } = new BlobOperationName("RestoreContainer");
+
+        /// <summary>
+        /// Set Container Metadata.
+        /// </summary>
+        public static BlobOperationName SetContainerMetadata { get; } = new BlobOperationName("SetContainerMetadata");
+
+        /// <summary>
         /// Compares equality of two <see cref="BlobOperationName"/> instances.
         /// </summary>
         /// <param name="left">The <see cref="BlobOperationName"/> to compare.</param>

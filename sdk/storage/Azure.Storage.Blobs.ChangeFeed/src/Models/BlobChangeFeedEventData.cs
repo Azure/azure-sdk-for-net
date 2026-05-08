@@ -41,6 +41,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
             BlobVersion = (string)blobVersionObject;
             record.TryGetValue(Constants.ChangeFeed.EventData.ContainerVersion, out object containerVersionObject);
             ContainerVersion = (string)containerVersionObject;
+            record.TryGetValue(Constants.ChangeFeed.EventData.RestoredContainerVersion, out object restoredContainerVersionObject);
+            RestoredContainerVersion = (string)restoredContainerVersionObject;
             record.TryGetValue(Constants.ChangeFeed.EventData.BlobTier, out object blobTierObject);
             if (blobTierObject != null)
             {
@@ -122,6 +124,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// Version of the container the blob is in.
         /// </summary>
         public string ContainerVersion { get; internal set; }
+
+        /// <summary>
+        /// Version of the container that was restored.
+        /// </summary>
+        public string RestoredContainerVersion { get; internal set; }
 
         /// <summary>
         /// Access Tier of the blob.
