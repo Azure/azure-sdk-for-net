@@ -24,7 +24,7 @@ export async function $onEmit(
   // locate the .NET generator's `dist/generator` payload.
   context.options["emitter-extension-path"] ??= import.meta.url;
   // The server-side generator currently emits scaffolding types that are
-  // not yet wired into the input model graph. Disable the upstream Roslyn
+  // not yet wired into the input model graph. Disable the downstream Roslyn
   // post-processor's unreferenced-type pruning so those types survive.
   context.options["unreferenced-types-handling"] ??= "keepAll";
 
