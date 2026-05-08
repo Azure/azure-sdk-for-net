@@ -40,7 +40,7 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
                 }
                 providers.Add(new ControllerProvider(client));
             }
-            return providers.ToArray();
+            return [.. providers];
         }
     }
 }

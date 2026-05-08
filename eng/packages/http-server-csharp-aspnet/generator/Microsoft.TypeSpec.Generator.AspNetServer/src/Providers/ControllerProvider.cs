@@ -62,7 +62,7 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.Providers
             {
                 methods.Add(BuildOperationMethod(method));
             }
-            return methods.ToArray();
+            return [.. methods];
         }
 
         private MethodProvider BuildOperationMethod(InputServiceMethod method)

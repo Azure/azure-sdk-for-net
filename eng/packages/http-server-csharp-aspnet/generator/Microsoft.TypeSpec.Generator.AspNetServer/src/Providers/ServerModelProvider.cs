@@ -105,7 +105,7 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.Providers
                 props.Add(providerProp);
             }
 
-            return props.ToArray();
+            return [.. props];
         }
 
         protected override ConstructorProvider[] BuildConstructors() => [];
