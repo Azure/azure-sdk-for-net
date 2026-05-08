@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 networkAdapters is null ? default : new NetworkSettingsProperties((networkAdapters ?? new ChangeTrackingList<DataBoxEdgeNetworkAdapter>()).ToList(), null));
         }
 
-        /// <summary> Represents the networkAdapter on a device. </summary>
         /// <param name="adapterId"> Instance ID of network adapter. </param>
         /// <param name="adapterPosition"> Hardware position of network adapter. </param>
         /// <param name="index"> Logical index of the adapter. </param>
@@ -49,9 +48,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="status"> Value indicating whether this adapter is valid. </param>
         /// <param name="rdmaStatus"> Value indicating whether this adapter is RDMA capable. </param>
         /// <param name="dhcpStatus"> Value indicating whether this adapter has DHCP enabled. </param>
-        /// <param name="iPv4Configuration"> The IPv4 configuration of the network adapter. </param>
-        /// <param name="iPv6Configuration"> The IPv6 configuration of the network adapter. </param>
-        /// <param name="iPv6LinkLocalAddress"> The IPv6 local address. </param>
+        /// <param name="ipv4Configuration"> The IPv4 configuration of the network adapter. </param>
+        /// <param name="ipv6Configuration"> The IPv6 configuration of the network adapter. </param>
+        /// <param name="ipv6LinkLocalAddress"> The IPv6 local address. </param>
         /// <param name="dnsServers"> The list of DNS Servers of the device. </param>
         /// <returns> A new <see cref="Models.DataBoxEdgeNetworkAdapter"/> instance for mocking. </returns>
         public static DataBoxEdgeNetworkAdapter DataBoxEdgeNetworkAdapter(string adapterId = default, DataBoxEdgeNetworkAdapterPosition adapterPosition = default, int? index = default, Guid? nodeId = default, string networkAdapterName = default, string label = default, string macAddress = default, long? linkSpeed = default, DataBoxEdgeNetworkAdapterStatus? status = default, DataBoxEdgeNetworkAdapterRdmaStatus? rdmaStatus = default, DataBoxEdgeNetworkAdapterDhcpStatus? dhcpStatus = default, DataBoxEdgeIPv4Config ipv4Configuration = default, DataBoxEdgeIPv6Config ipv6Configuration = default, string ipv6LinkLocalAddress = default, IEnumerable<string> dnsServers = default)
@@ -132,11 +131,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="edgeSubscription"> Edge Profile Subscription. </param>
         /// <param name="residencyType"> DataResidencyType enum. </param>
         /// <param name="sku"> The SKU type. </param>
-        /// <param name="etag"> The etag for the devices. </param>
+        /// <param name="eTag"> The etag for the devices. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
         /// <param name="kind"> The kind of the device. </param>
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeDeviceData"/> instance for mocking. </returns>
-        public static DataBoxEdgeDeviceData DataBoxEdgeDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SystemData dataBoxEdgeSystemData = default, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus = default, string serialNumber = default, string description = default, string modelDescription = default, DataBoxEdgeDeviceType? deviceType = default, string friendlyName = default, string culture = default, string deviceModel = default, string deviceSoftwareVersion = default, long? deviceLocalCapacity = default, string timeZone = default, string deviceHcsVersion = default, IEnumerable<DataBoxEdgeRoleType> configuredRoleTypes = default, int? nodeCount = default, DataBoxEdgeResourceMoveDetails resourceMoveDetails = default, string kubernetesWorkloadProfile = default, EdgeProfileSubscription edgeSubscription = default, DataBoxEdgeDataResidencyType? residencyType = default, DataBoxEdgeSku sku = default, ETag? etag = default, ManagedServiceIdentity identity = default, DataBoxEdgeDeviceKind? kind = default)
+        public static DataBoxEdgeDeviceData DataBoxEdgeDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SystemData dataBoxEdgeSystemData = default, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus = default, string serialNumber = default, string description = default, string modelDescription = default, DataBoxEdgeDeviceType? deviceType = default, string friendlyName = default, string culture = default, string deviceModel = default, string deviceSoftwareVersion = default, long? deviceLocalCapacity = default, string timeZone = default, string deviceHcsVersion = default, IEnumerable<DataBoxEdgeRoleType> configuredRoleTypes = default, int? nodeCount = default, DataBoxEdgeResourceMoveDetails resourceMoveDetails = default, string kubernetesWorkloadProfile = default, EdgeProfileSubscription edgeSubscription = default, DataBoxEdgeDataResidencyType? residencyType = default, DataBoxEdgeSku sku = default, ETag? eTag = default, ManagedServiceIdentity identity = default, DataBoxEdgeDeviceKind? kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     kubernetesWorkloadProfile,
                     null),
                 sku,
-                etag,
+                eTag,
                 identity,
                 kind);
         }
@@ -1177,7 +1176,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataBoxEdgeDeviceData DataBoxEdgeDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxEdgeSku sku, ETag? etag, ManagedServiceIdentity identity, DataBoxEdgeDeviceKind? kind, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus, string serialNumber, string description, string modelDescription, DataBoxEdgeDeviceType? deviceType, string friendlyName, string culture, string deviceModel, string deviceSoftwareVersion, long? deviceLocalCapacity, string timeZone, string deviceHcsVersion, IEnumerable<DataBoxEdgeRoleType> configuredRoleTypes, int? nodeCount, DataBoxEdgeResourceMoveDetails resourceMoveDetails, EdgeProfileSubscription edgeSubscription, DataBoxEdgeDataResidencyType? residencyType)
         {
-            return DataBoxEdgeDeviceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, dataBoxEdgeSystemData: default, dataBoxEdgeDeviceStatus: dataBoxEdgeDeviceStatus, serialNumber: serialNumber, description: description, modelDescription: modelDescription, deviceType: deviceType, friendlyName: friendlyName, culture: culture, deviceModel: deviceModel, deviceSoftwareVersion: deviceSoftwareVersion, deviceLocalCapacity: deviceLocalCapacity, timeZone: timeZone, deviceHcsVersion: deviceHcsVersion, configuredRoleTypes: configuredRoleTypes, nodeCount: nodeCount, resourceMoveDetails: resourceMoveDetails, kubernetesWorkloadProfile: default, edgeSubscription: edgeSubscription, residencyType: residencyType, sku: sku, etag: etag, identity: identity, kind: kind);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            configuredRoleTypes ??= new ChangeTrackingList<DataBoxEdgeRoleType>();
+
+            return new DataBoxEdgeDeviceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default,
+                sku,
+                default,
+                identity,
+                kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxEdgeDeviceExtendedInfo"/>. </summary>

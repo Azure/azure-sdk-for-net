@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="budgetCategory">
+        /// <param name="category">
         /// The category of the budget.
         /// <list type="bullet"><item><description>'Cost' defines a Budget.</description></item><item><description>'ReservationUtilization' defines a Reservation Utilization Alert Rule.</description></item></list>
         /// </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// Supported for CategoryType(s): Cost.
         /// Required for CategoryType(s): Cost.
         /// </param>
-        /// <param name="budgetTimeGrain">
+        /// <param name="timeGrain">
         /// The time covered by a budget. Tracking of the amount will be reset based on the time grain.
         /// Supported for CategoryType(s): Cost, ReservationUtilization.
         /// Supported timeGrainTypes for <b>CategoryType: Cost</b>
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="reason"> The reason this name is not available. </param>
         /// <param name="message"> Error message if the name is not available. </param>
         /// <returns> A new <see cref="Models.CostAllocationRuleCheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CostAllocationRuleCheckNameAvailabilityResponse CostAllocationRuleCheckNameAvailabilityResponse(bool? nameAvailable = default, Reason? reason = default, string message = default)
+        public static CostAllocationRuleCheckNameAvailabilityResponse CostAllocationRuleCheckNameAvailabilityResponse(bool? nameAvailable = default, CostAllocationRuleCheckNameAvailabilityReason? reason = default, string message = default)
         {
             return new CostAllocationRuleCheckNameAvailabilityResponse(nameAvailable, reason, message, additionalBinaryDataProperties: null);
         }
