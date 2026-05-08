@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            SubscriptionAliasCreateOrUpdateProperties properties = default;
+            PutAliasRequestProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     {
                         continue;
                     }
-                    properties = SubscriptionAliasCreateOrUpdateProperties.DeserializeSubscriptionAliasCreateOrUpdateProperties(prop.Value, options);
+                    properties = PutAliasRequestProperties.DeserializePutAliasRequestProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

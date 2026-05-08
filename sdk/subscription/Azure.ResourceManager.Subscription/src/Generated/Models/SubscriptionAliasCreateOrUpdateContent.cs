@@ -24,13 +24,120 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <summary> Initializes a new instance of <see cref="SubscriptionAliasCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Put alias request properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionAliasCreateOrUpdateContent(SubscriptionAliasCreateOrUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubscriptionAliasCreateOrUpdateContent(PutAliasRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Put alias request properties. </summary>
-        public SubscriptionAliasCreateOrUpdateProperties Properties { get; set; }
+        internal PutAliasRequestProperties Properties { get; set; }
+
+        /// <summary> The friendly name of the subscription. </summary>
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PutAliasRequestProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> The workload type of the subscription. It can be either Production or DevTest. </summary>
+        public SubscriptionWorkload? Workload
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Workload;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PutAliasRequestProperties();
+                }
+                Properties.Workload = value;
+            }
+        }
+
+        /// <summary>
+        /// Billing scope of the subscription.
+        /// For CustomerLed and FieldLed - /billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}
+        /// For PartnerLed - /billingAccounts/{billingAccountName}/customers/{customerName}
+        /// For Legacy EA - /billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}
+        /// </summary>
+        public string BillingScope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingScope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PutAliasRequestProperties();
+                }
+                Properties.BillingScope = value;
+            }
+        }
+
+        /// <summary> This parameter can be used to create alias for existing subscription Id. </summary>
+        public string SubscriptionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubscriptionId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PutAliasRequestProperties();
+                }
+                Properties.SubscriptionId = value;
+            }
+        }
+
+        /// <summary> Reseller Id. </summary>
+        public string ResellerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResellerId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PutAliasRequestProperties();
+                }
+                Properties.ResellerId = value;
+            }
+        }
+
+        /// <summary> Put alias request additional properties. </summary>
+        public SubscriptionAliasAdditionalProperties AdditionalProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdditionalProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PutAliasRequestProperties();
+                }
+                Properties.AdditionalProperties = value;
+            }
+        }
     }
 }

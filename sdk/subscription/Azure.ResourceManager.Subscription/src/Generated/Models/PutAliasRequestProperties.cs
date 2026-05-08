@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Subscription.Models
 {
     /// <summary> Put subscription properties. </summary>
-    public partial class SubscriptionAliasCreateOrUpdateProperties
+    internal partial class PutAliasRequestProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasCreateOrUpdateProperties"/>. </summary>
-        public SubscriptionAliasCreateOrUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="PutAliasRequestProperties"/>. </summary>
+        public PutAliasRequestProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasCreateOrUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PutAliasRequestProperties"/>. </summary>
         /// <param name="displayName"> The friendly name of the subscription. </param>
         /// <param name="workload"> The workload type of the subscription. It can be either Production or DevTest. </param>
         /// <param name="billingScope">
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="resellerId"> Reseller Id. </param>
         /// <param name="additionalProperties"> Put alias request additional properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionAliasCreateOrUpdateProperties(string displayName, SubscriptionWorkload? workload, string billingScope, string subscriptionId, string resellerId, SubscriptionAliasAdditionalProperties additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PutAliasRequestProperties(string displayName, SubscriptionWorkload? workload, string billingScope, string subscriptionId, string resellerId, SubscriptionAliasAdditionalProperties additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Workload = workload;
