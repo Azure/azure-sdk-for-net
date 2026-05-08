@@ -82,6 +82,7 @@ namespace Azure.Generator.Management.Visitors
             }
 
             var updated = false;
+            var currentParameterNames = currentParameters.Select(parameter => parameter.Name).ToHashSet(StringComparer.Ordinal);
             for (int i = 0; i < currentParameters.Count; i++)
             {
                 var previousName = previousParameters[i].Name;
@@ -91,12 +92,14 @@ namespace Azure.Generator.Management.Visitors
                     continue;
                 }
 
-                if (currentParameters.Where((parameter, index) => index != i).Any(parameter => string.Equals(parameter.Name, previousName, StringComparison.Ordinal)))
+                if (currentParameterNames.Contains(previousName))
                 {
                     continue;
                 }
 
+                currentParameterNames.Remove(currentParameter.Name);
                 currentParameter.Update(name: previousName);
+                currentParameterNames.Add(previousName);
                 updated = true;
             }
 
