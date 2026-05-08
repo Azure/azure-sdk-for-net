@@ -515,6 +515,7 @@ if [ "$USE_LOCAL_SRC" = true ]; then
     </Reference>
     <PackageReference Include="Azure.Core" Version="1.*" />
     <PackageReference Include="Azure.Identity" Version="1.*" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.*" />
     <PackageReference Include="System.Text.Json" Version="*" />
     <PackageReference Include="System.Memory.Data" Version="*" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.*" />
@@ -536,6 +537,7 @@ else
   <ItemGroup>
     <PackageReference Include="Azure.AI.ContentUnderstanding" Version="1.0.0-*" />
     <PackageReference Include="Azure.Identity" Version="1.*" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.*" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.*" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.*" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.*" />
@@ -552,6 +554,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -559,6 +562,9 @@ using System.ClientModel.Primitives;
 using System.Drawing;
 using Azure.AI.ContentUnderstanding;
 using Azure.Identity;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Sas;
 using Microsoft.Extensions.Configuration;
 
 // Load configuration
@@ -726,6 +732,21 @@ fi
 if [ -f "$APPSETTINGS" ]; then
     cp "$APPSETTINGS" "$RUNNER_DIR/appsettings.json"
     print_info "Copied appsettings.json to sample project folder"
+fi
+
+# Sample16: copy bundled receipt training files alongside the runner so
+# AppContext.BaseDirectory/receipt_labels resolves at runtime (Option B path).
+if [ "$SAMPLE_NAME" = "Sample16_CreateAnalyzerWithLabels" ]; then
+    BUNDLED_RECEIPT_DIR="$PACKAGE_ROOT/tests/samples/SampleFiles/receipt_labels"
+    if [ -d "$BUNDLED_RECEIPT_DIR" ]; then
+        mkdir -p "$RUNNER_DIR/receipt_labels"
+        cp -f "$BUNDLED_RECEIPT_DIR"/* "$RUNNER_DIR/receipt_labels/" 2>/dev/null || true
+        # Add a csproj item to copy the folder to the build output directory.
+        # We append before the final </Project> closing tag.
+        if grep -q "</Project>" "$RUNNER_DIR/${SAMPLE_NAME}.csproj"; then
+            sed_inplace 's|</Project>|  <ItemGroup>\n    <None Update="receipt_labels/**/*">\n      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>\n    </None>\n  </ItemGroup>\n</Project>|' "$RUNNER_DIR/${SAMPLE_NAME}.csproj"
+        fi
+    fi
 fi
 
 # ─── Build the project ────────────────────────────────────────────────────────

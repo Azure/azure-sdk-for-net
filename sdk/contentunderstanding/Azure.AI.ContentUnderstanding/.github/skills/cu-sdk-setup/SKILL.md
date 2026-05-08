@@ -233,6 +233,35 @@ Create or edit `appsettings.json` in the package root directory (`sdk/contentund
 }
 ```
 
+> **Sample-specific add-ons (only if you plan to run those samples):**
+>
+> Sample15 (cross-resource copy) needs:
+> ```json
+> {
+>   "CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID": "",
+>   "CONTENTUNDERSTANDING_SOURCE_REGION": "",
+>   "CONTENTUNDERSTANDING_TARGET_ENDPOINT": "",
+>   "CONTENTUNDERSTANDING_TARGET_RESOURCE_ID": "",
+>   "CONTENTUNDERSTANDING_TARGET_REGION": ""
+> }
+> ```
+>
+> Sample16 (analyzer with labeled training data) needs **either** Option A:
+> ```json
+> {
+>   "CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL": "https://<account>.blob.core.windows.net/<container>?<sas-token>",
+>   "CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX": "receipt_labels"
+> }
+> ```
+> **or** Option B (auto-upload via `DefaultAzureCredential`, requires **Storage Blob Data Contributor** on the account):
+> ```json
+> {
+>   "CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT": "mystorageacct",
+>   "CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER": "cu-training-data"
+> }
+> ```
+> If neither is set, Sample16 still runs and creates an analyzer **without** labeled training data.
+
 | Variable | Description |
 |----------|-------------|
 | `CONTENTUNDERSTANDING_ENDPOINT` | Your Microsoft Foundry endpoint URL |

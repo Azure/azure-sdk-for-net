@@ -75,7 +75,12 @@ Create an `appsettings.json` file in the package directory (`sdk/contentundersta
   "CONTENTUNDERSTANDING_SOURCE_REGION": "",
   "CONTENTUNDERSTANDING_TARGET_ENDPOINT": "",
   "CONTENTUNDERSTANDING_TARGET_RESOURCE_ID": "",
-  "CONTENTUNDERSTANDING_TARGET_REGION": ""
+  "CONTENTUNDERSTANDING_TARGET_REGION": "",
+
+  "CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL": "",
+  "CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX": "",
+  "CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT": "",
+  "CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER": ""
 }
 ```
 
@@ -96,6 +101,10 @@ Create an `appsettings.json` file in the package directory (`sdk/contentundersta
 | `CONTENTUNDERSTANDING_TARGET_ENDPOINT` | Sample15 | Target Foundry resource endpoint for cross-resource copy |
 | `CONTENTUNDERSTANDING_TARGET_RESOURCE_ID` | Sample15 | Target ARM resource ID for cross-resource copy |
 | `CONTENTUNDERSTANDING_TARGET_REGION` | Sample15 | Target region (e.g., `westus`) for cross-resource copy |
+| `CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL` | Sample16 (Option A) | Pre-generated **container-level** SAS URL pointing at your labeled training data folder. If set, the sample uses it directly and skips Option B. |
+| `CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX` | Sample16 (optional) | Optional prefix (e.g., `receipt_labels` or `receipt_labels/`) within the SAS container that scopes the labeled data. Both forms work. |
+| `CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT` | Sample16 (Option B) | Storage account name (e.g., `mystorageacct`). Used by Option B (auto-upload) to upload the local `samples/SampleFiles/receipt_labels/` files and mint a User Delegation SAS via `DefaultAzureCredential`. |
+| `CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER` | Sample16 (Option B) | Container name (e.g., `cu-training-data`). Created/used by Option B. |
 
 ### Samples that need a local file
 
@@ -122,6 +131,7 @@ You can also set these as environment variables instead of using `appsettings.js
 > - `Sample02_AnalyzeUrl` — Analyze content from URLs (documents, images, audio, video)
 > - `Sample03_AnalyzeInvoice` — Extract structured invoice fields
 > - `Sample04_CreateAnalyzer` — Create a custom analyzer
+> - `Sample16_CreateAnalyzerWithLabels` — Create a custom analyzer trained from labeled data (.NET-only Option B auto-upload)
 > - Other — Let me see the full list
 >
 > If the user picks "Other", show the full Available Samples list below or run:
@@ -186,6 +196,14 @@ Cross-resource copying between different Azure resources/regions.
 - Requires additional settings: `CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID`, `CONTENTUNDERSTANDING_SOURCE_REGION`, `CONTENTUNDERSTANDING_TARGET_ENDPOINT`, `CONTENTUNDERSTANDING_TARGET_RESOURCE_ID`, `CONTENTUNDERSTANDING_TARGET_REGION`
 - The primary `CONTENTUNDERSTANDING_ENDPOINT` is used as the source endpoint
 
+#### `Sample16_CreateAnalyzerWithLabels`
+Creates a custom analyzer trained from **labeled documents** stored in Azure Blob Storage.
+- Key concepts: `LabeledDataKnowledgeSource`, knowledge sources on `ContentAnalyzerConfig`, container SAS URLs, optional path prefix; falls back to creating an analyzer **without** training data if no SAS URL is configured (so the sample is always runnable)
+- Two ways to provide training data — see **"Setting up Sample16 training data"** below:
+  - **Option A — Manual upload**: you upload labeled triplets (image + `.labels.json` + `.result.json`) yourself and provide a container SAS URL via `CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL`
+  - **Option B — Auto-upload (.NET only)**: the sample uses `DefaultAzureCredential` to upload the receipt files from `tests/samples/SampleFiles/receipt_labels/` into your storage account and mint a short-lived User Delegation SAS — set `CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT` and `CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER`
+- **Java parity**: Java only supports Option A. Option B (auto-upload) is a .NET-only convenience.
+
 ### Setting up Sample15 cross-resource environment
 
 Sample15 requires **two separate Microsoft Foundry resources** (source and target).
@@ -237,6 +255,59 @@ Retrieves keyframe images from video analysis.
 #### `Sample13_DeleteResult`
 Deletes analysis results for data cleanup.
 - Key concepts: Result retention (24-hour auto-deletion), compliance
+
+### Advanced Samples
+
+#### `Sample_Advanced_RehydrateOperation`
+Resume polling a long-running analyze operation from its operation ID (rehydrate after process restart).
+- Key concepts: `Operation<T>` rehydration, decoupling operation start from polling
+
+#### `Sample_Advanced_ToLlmInput`
+Converts a Content Understanding analyzer result into an LLM-friendly input (e.g., for grounded chat).
+- Key concepts: Result post-processing, downstream LLM integration
+
+### Setting up Sample16 training data
+
+Sample16 trains a custom analyzer from **labeled documents** in Azure Blob Storage. Each labeled document is a triplet:
+
+- the source file (e.g., `<id>.jpg`)
+- a `<id>.labels.json` describing field labels
+- a `<id>.result.json` containing the layout/OCR result
+
+The SDK ships sample receipt training data under `tests/samples/SampleFiles/receipt_labels/` (two labeled receipts).
+
+> **[ASK USER] Sample16 training data (Sample16 only):**
+> If the user chose Sample16, ask:
+> 1. "Do you want to **provide your own labeled data** (Option A) or let the sample **auto-upload the bundled receipt files** (Option B)?"
+> 2. **If Option A**: "Please provide a **container-level SAS URL** for the container/folder that holds your labeled triplets. If your data is under a sub-folder, also tell me the prefix (e.g., `receipt_labels`). Both `receipt_labels` and `receipt_labels/` work."
+>    - **Folder layout**: upload all 6 files from `tests/samples/SampleFiles/receipt_labels/` (the 2 receipts × 3 files each: `<id>.jpg`, `<id>.jpg.labels.json`, `<id>.jpg.result.json`) **either** at the **container root** (leave `..._PREFIX` empty) **or** under a sub-folder named `receipt_labels/` (then set `CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX=receipt_labels`). Both layouts work identically.
+>    - In Azure Portal: open your storage container → **Shared access tokens** (use the Portal search bar to find it) → grant Read + List → Generate → copy the **Blob SAS URL**.
+> 3. **If Option B**: "Please provide a **storage account name** and a **container name**. The sample uses `DefaultAzureCredential` (run `az login` first) plus the **Storage Blob Data Contributor** role on the account; it uploads the 6 files from `tests/samples/SampleFiles/receipt_labels/` (located relative to the package directory) and mints a short-lived User Delegation SAS automatically."
+> 4. **If neither option is set**: confirm with the user that the sample will **fall back** to creating an analyzer without training data — it still completes end-to-end so the create/delete flow works, but the analyzer is not trained on labeled data.
+
+For **Option A**, add to `appsettings.json`:
+
+```json
+{
+  "CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL": "https://<account>.blob.core.windows.net/<container>?<sas-token>",
+  "CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX": "receipt_labels"
+}
+```
+
+For **Option B**, add to `appsettings.json`:
+
+```json
+{
+  "CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT": "mystorageacct",
+  "CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER": "cu-training-data"
+}
+```
+
+**Prerequisites for Option B (auto-upload):**
+
+- Run `az login` (Option B uses `DefaultAzureCredential` — API keys are not enough)
+- Assign the **Storage Blob Data Contributor** role on the storage account to your credential (user, service principal, or managed identity)
+- The container does not need to exist beforehand — the sample creates it if missing
 
 ## Workflow
 
@@ -444,6 +515,11 @@ Extracts C# code snippets from a sample markdown file, scaffolds a standalone co
 | `Access denied` or authorization errors | Ensure **Cognitive Services User** role is assigned; check API key or run `az login` |
 | `Model deployment not found` | Run `Sample00_UpdateDefaults` first to configure model mappings |
 | `File not found` for binary samples | Some samples need a local file path; the script provides a default test file URL |
+| Sample16 — `403` / `AuthorizationFailure` from Storage | Container SAS doesn't include Read+List, or User Delegation SAS expired. Regenerate the SAS or re-run `az login` for Option B. |
+| Sample16 — `BlobNotFound` / no labeled data found | Prefix mismatch. Verify the prefix matches your folder layout (`receipt_labels` and `receipt_labels/` are equivalent). |
+| Sample16 — analyzer was created without training data | No SAS URL configured. Set `CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL` (Option A) or `CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT` + `..._CONTAINER` (Option B). |
+| Sample16 — `Forbidden` from `GetUserDelegationKey` (Option B) | Your credential lacks **Storage Blob Data Contributor** on the account. Assign the role and wait ~1–2 min for propagation. |
+| Sample16 — analyzer created but extracts no fields | Files uploaded but the prefix or layout doesn't match. Verify `CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX` matches your folder layout (root → empty prefix; `receipt_labels/` sub-folder → prefix `receipt_labels`) and that each `.labels.json` is valid JSON. |
 | NuGet package not found | The script falls back to building from local source automatically. Check `dotnet --list-sdks` for installed versions |
 | NuGet restore errors | The `.sample_runner/` isolation files should prevent repo NuGet feed issues. Delete `.sample_runner/` and re-run |
 | `.sample_runner/` issues | Delete the entire `.sample_runner/` directory — it will be recreated from scratch on next run |

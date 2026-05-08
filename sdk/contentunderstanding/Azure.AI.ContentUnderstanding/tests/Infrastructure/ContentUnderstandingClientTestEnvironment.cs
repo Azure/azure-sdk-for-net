@@ -87,6 +87,34 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public string? TargetKey => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TARGET_KEY", options => options.IsSecret());
 
         /// <summary>
+        /// Gets the SAS URL for the Azure Blob container with labeled training data
+        /// used by <c>Sample16_CreateAnalyzerWithLabels</c> (optional).
+        /// </summary>
+        /// <remarks>
+        /// If unset, the sample creates an analyzer without labeled training data.
+        /// The SAS URL is sanitized in recordings to prevent exposing secrets.
+        /// </remarks>
+        public string? TrainingDataSasUrl => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL", options => options.IsSecret());
+
+        /// <summary>
+        /// Gets the optional path prefix within the training-data container
+        /// (e.g., <c>"receipt_labels/"</c>) used by <c>Sample16_CreateAnalyzerWithLabels</c>.
+        /// </summary>
+        public string? TrainingDataPrefix => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX");
+
+        /// <summary>
+        /// Gets the storage account name for auto-uploading labeled training data
+        /// (Option B in <c>Sample16_CreateAnalyzerWithLabels</c>). Optional.
+        /// </summary>
+        public string? TrainingDataStorageAccountName => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT");
+
+        /// <summary>
+        /// Gets the blob container name for auto-uploading labeled training data
+        /// (Option B in <c>Sample16_CreateAnalyzerWithLabels</c>). Optional.
+        /// </summary>
+        public string? TrainingDataContainerName => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER");
+
+        /// <summary>
         /// Creates a file path for a test asset file.
         /// </summary>
         /// <param name="filename">The name of the test asset file.</param>
