@@ -12,21 +12,21 @@ using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary> Defines the request body for updating SAP Application Instance. </summary>
-    public partial class SapApplicationServerInstancePatch
+    public partial class UpdateSapApplicationInstanceRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SapApplicationServerInstancePatch"/>. </summary>
-        public SapApplicationServerInstancePatch()
+        /// <summary> Initializes a new instance of <see cref="UpdateSapApplicationInstanceRequest"/>. </summary>
+        public UpdateSapApplicationInstanceRequest()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SapApplicationServerInstancePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateSapApplicationInstanceRequest"/>. </summary>
         /// <param name="tags"> Gets or sets the Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SapApplicationServerInstancePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateSapApplicationInstanceRequest(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

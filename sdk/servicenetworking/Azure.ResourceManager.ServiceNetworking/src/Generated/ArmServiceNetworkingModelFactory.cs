@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="associationType"> Association Type. </param>
         /// <param name="subnetId"> Association ID. </param>
-        /// <returns> A new <see cref="Models.TrafficControllerAssociationPatch"/> instance for mocking. </returns>
-        public static TrafficControllerAssociationPatch TrafficControllerAssociationPatch(IDictionary<string, string> tags = default, TrafficControllerAssociationType? associationType = default, ResourceIdentifier subnetId = default)
+        /// <returns> A new <see cref="Models.TrafficControllerAssociationUpdate"/> instance for mocking. </returns>
+        public static TrafficControllerAssociationUpdate TrafficControllerAssociationUpdate(IDictionary<string, string> tags = default, TrafficControllerAssociationType? associationType = default, ResourceIdentifier subnetId = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TrafficControllerAssociationPatch(tags, associationType is null && subnetId is null ? default : new AssociationUpdateProperties(associationType, new AssociationSubnetUpdate(subnetId, null), null), additionalBinaryDataProperties: null);
+            return new TrafficControllerAssociationUpdate(tags, associationType is null && subnetId is null ? default : new AssociationUpdateProperties(associationType, new AssociationSubnetUpdate(subnetId, null), null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

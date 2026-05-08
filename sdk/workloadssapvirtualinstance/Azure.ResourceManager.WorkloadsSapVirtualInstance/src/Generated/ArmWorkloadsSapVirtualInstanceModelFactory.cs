@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="tags"> Gets or sets the Resource tags. </param>
         /// <param name="identity"> Managed service identity (user assigned identities). </param>
         /// <param name="updateSapVirtualInstanceManagedResourcesNetworkAccessType"> Specifies the network access configuration for the resources that will be deployed in the Managed Resource Group. The options to choose from are Public and Private. If 'Private' is chosen, the Storage Account service tag should be enabled on the subnets in which the SAP VMs exist. This is required for establishing connectivity between VM extensions and the managed resource group storage account. This setting is currently applicable only to Storage Account. Learn more here https://go.microsoft.com/fwlink/?linkid=2247228. </param>
-        /// <returns> A new <see cref="Models.SapVirtualInstancePatch"/> instance for mocking. </returns>
-        public static SapVirtualInstancePatch SapVirtualInstancePatch(IDictionary<string, string> tags = default, SapVirtualInstanceIdentity identity = default, ManagedResourcesNetworkAccessType? updateSapVirtualInstanceManagedResourcesNetworkAccessType = default)
+        /// <returns> A new <see cref="Models.UpdateSapVirtualInstanceRequest"/> instance for mocking. </returns>
+        public static UpdateSapVirtualInstanceRequest UpdateSapVirtualInstanceRequest(IDictionary<string, string> tags = default, SapVirtualInstanceIdentity identity = default, ManagedResourcesNetworkAccessType? updateSapVirtualInstanceManagedResourcesNetworkAccessType = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SapVirtualInstancePatch(tags, identity, updateSapVirtualInstanceManagedResourcesNetworkAccessType is null ? default : new UpdateSapVirtualInstanceProperties(updateSapVirtualInstanceManagedResourcesNetworkAccessType, null), additionalBinaryDataProperties: null);
+            return new UpdateSapVirtualInstanceRequest(tags, identity, updateSapVirtualInstanceManagedResourcesNetworkAccessType is null ? default : new UpdateSapVirtualInstanceProperties(updateSapVirtualInstanceManagedResourcesNetworkAccessType, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The SAP Sizing Recommendation request. </summary>
@@ -496,12 +496,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Defines the request body for updating SAP Central Instance. </summary>
         /// <param name="tags"> Gets or sets the Resource tags. </param>
-        /// <returns> A new <see cref="Models.SapCentralServerInstancePatch"/> instance for mocking. </returns>
-        public static SapCentralServerInstancePatch SapCentralServerInstancePatch(IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.UpdateSapCentralInstanceRequest"/> instance for mocking. </returns>
+        public static UpdateSapCentralInstanceRequest UpdateSapCentralInstanceRequest(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SapCentralServerInstancePatch(tags, additionalBinaryDataProperties: null);
+            return new UpdateSapCentralInstanceRequest(tags, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -559,12 +559,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Defines the request body for updating SAP Database Instance. </summary>
         /// <param name="tags"> Gets or sets the Resource tags. </param>
-        /// <returns> A new <see cref="Models.SapDatabaseInstancePatch"/> instance for mocking. </returns>
-        public static SapDatabaseInstancePatch SapDatabaseInstancePatch(IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.UpdateSapDatabaseInstanceRequest"/> instance for mocking. </returns>
+        public static UpdateSapDatabaseInstanceRequest UpdateSapDatabaseInstanceRequest(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SapDatabaseInstancePatch(tags, additionalBinaryDataProperties: null);
+            return new UpdateSapDatabaseInstanceRequest(tags, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -636,12 +636,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary> Defines the request body for updating SAP Application Instance. </summary>
         /// <param name="tags"> Gets or sets the Resource tags. </param>
-        /// <returns> A new <see cref="Models.SapApplicationServerInstancePatch"/> instance for mocking. </returns>
-        public static SapApplicationServerInstancePatch SapApplicationServerInstancePatch(IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.UpdateSapApplicationInstanceRequest"/> instance for mocking. </returns>
+        public static UpdateSapApplicationInstanceRequest UpdateSapApplicationInstanceRequest(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SapApplicationServerInstancePatch(tags, additionalBinaryDataProperties: null);
+            return new UpdateSapApplicationInstanceRequest(tags, additionalBinaryDataProperties: null);
         }
     }
 }

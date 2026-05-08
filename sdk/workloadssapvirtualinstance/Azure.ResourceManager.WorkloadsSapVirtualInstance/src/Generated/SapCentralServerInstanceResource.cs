@@ -212,12 +212,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The SAP Central Services Instance resource request body. </param>
+        /// <param name="content"> The SAP Central Services Instance resource request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<SapCentralServerInstanceResource>> UpdateAsync(SapCentralServerInstancePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<SapCentralServerInstanceResource>> UpdateAsync(UpdateSapCentralInstanceRequest content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sapCentralServerInstancesClientDiagnostics.CreateScope("SapCentralServerInstanceResource.Update");
             scope.Start();
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapCentralServerInstancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SapCentralServerInstancePatch.ToRequestContent(patch), context);
+                HttpMessage message = _sapCentralServerInstancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateSapCentralInstanceRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SapCentralServerInstanceData> response = Response.FromValue(SapCentralServerInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The SAP Central Services Instance resource request body. </param>
+        /// <param name="content"> The SAP Central Services Instance resource request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<SapCentralServerInstanceResource> Update(SapCentralServerInstancePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<SapCentralServerInstanceResource> Update(UpdateSapCentralInstanceRequest content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sapCentralServerInstancesClientDiagnostics.CreateScope("SapCentralServerInstanceResource.Update");
             scope.Start();
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapCentralServerInstancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SapCentralServerInstancePatch.ToRequestContent(patch), context);
+                HttpMessage message = _sapCentralServerInstancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateSapCentralInstanceRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SapCentralServerInstanceData> response = Response.FromValue(SapCentralServerInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 else
                 {
                     SapCentralServerInstanceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SapCentralServerInstancePatch patch = new SapCentralServerInstancePatch();
+                    UpdateSapCentralInstanceRequest patch = new UpdateSapCentralInstanceRequest();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 else
                 {
                     SapCentralServerInstanceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SapCentralServerInstancePatch patch = new SapCentralServerInstancePatch();
+                    UpdateSapCentralInstanceRequest patch = new UpdateSapCentralInstanceRequest();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 else
                 {
                     SapCentralServerInstanceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SapCentralServerInstancePatch patch = new SapCentralServerInstancePatch();
+                    UpdateSapCentralInstanceRequest patch = new UpdateSapCentralInstanceRequest();
                     patch.Tags.ReplaceWith(tags);
                     Response<SapCentralServerInstanceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 else
                 {
                     SapCentralServerInstanceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SapCentralServerInstancePatch patch = new SapCentralServerInstancePatch();
+                    UpdateSapCentralInstanceRequest patch = new UpdateSapCentralInstanceRequest();
                     patch.Tags.ReplaceWith(tags);
                     Response<SapCentralServerInstanceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 else
                 {
                     SapCentralServerInstanceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SapCentralServerInstancePatch patch = new SapCentralServerInstancePatch();
+                    UpdateSapCentralInstanceRequest patch = new UpdateSapCentralInstanceRequest();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 else
                 {
                     SapCentralServerInstanceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SapCentralServerInstancePatch patch = new SapCentralServerInstancePatch();
+                    UpdateSapCentralInstanceRequest patch = new UpdateSapCentralInstanceRequest();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

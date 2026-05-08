@@ -212,12 +212,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Database resource update request body. </param>
+        /// <param name="content"> Database resource update request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<SapDatabaseInstanceResource>> UpdateAsync(SapDatabaseInstancePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<SapDatabaseInstanceResource>> UpdateAsync(UpdateSapDatabaseInstanceRequest content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceResource.Update");
             scope.Start();
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapDatabaseInstancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SapDatabaseInstancePatch.ToRequestContent(patch), context);
+                HttpMessage message = _sapDatabaseInstancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateSapDatabaseInstanceRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SapDatabaseInstanceData> response = Response.FromValue(SapDatabaseInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Database resource update request body. </param>
+        /// <param name="content"> Database resource update request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<SapDatabaseInstanceResource> Update(SapDatabaseInstancePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<SapDatabaseInstanceResource> Update(UpdateSapDatabaseInstanceRequest content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceResource.Update");
             scope.Start();
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapDatabaseInstancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SapDatabaseInstancePatch.ToRequestContent(patch), context);
+                HttpMessage message = _sapDatabaseInstancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateSapDatabaseInstanceRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SapDatabaseInstanceData> response = Response.FromValue(SapDatabaseInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 else
                 {
                     SapDatabaseInstanceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SapDatabaseInstancePatch patch = new SapDatabaseInstancePatch();
+                    UpdateSapDatabaseInstanceRequest patch = new UpdateSapDatabaseInstanceRequest();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 else
                 {
                     SapDatabaseInstanceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SapDatabaseInstancePatch patch = new SapDatabaseInstancePatch();
+                    UpdateSapDatabaseInstanceRequest patch = new UpdateSapDatabaseInstanceRequest();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 else
                 {
                     SapDatabaseInstanceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SapDatabaseInstancePatch patch = new SapDatabaseInstancePatch();
+                    UpdateSapDatabaseInstanceRequest patch = new UpdateSapDatabaseInstanceRequest();
                     patch.Tags.ReplaceWith(tags);
                     Response<SapDatabaseInstanceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 else
                 {
                     SapDatabaseInstanceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SapDatabaseInstancePatch patch = new SapDatabaseInstancePatch();
+                    UpdateSapDatabaseInstanceRequest patch = new UpdateSapDatabaseInstanceRequest();
                     patch.Tags.ReplaceWith(tags);
                     Response<SapDatabaseInstanceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 else
                 {
                     SapDatabaseInstanceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SapDatabaseInstancePatch patch = new SapDatabaseInstancePatch();
+                    UpdateSapDatabaseInstanceRequest patch = new UpdateSapDatabaseInstanceRequest();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 else
                 {
                     SapDatabaseInstanceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SapDatabaseInstancePatch patch = new SapDatabaseInstancePatch();
+                    UpdateSapDatabaseInstanceRequest patch = new UpdateSapDatabaseInstanceRequest();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
