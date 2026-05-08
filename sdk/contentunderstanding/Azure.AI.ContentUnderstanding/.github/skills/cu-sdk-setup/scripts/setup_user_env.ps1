@@ -80,16 +80,36 @@ function Test-DotNet {
 }
 
 function Install-DotNet {
-    if (Get-Command winget -ErrorAction SilentlyContinue) {
+    # Resolve the user's home directory portably across Windows/macOS/Linux.
+    # $env:USERPROFILE is Windows-only.
+    $userProfile = [Environment]::GetFolderPath('UserProfile')
+    if ([string]::IsNullOrWhiteSpace($userProfile)) { $userProfile = $HOME }
+    if ([string]::IsNullOrWhiteSpace($userProfile)) {
+        Write-FailMsg "Unable to determine the user profile directory for .NET installation."
+        return $false
+    }
+    $installDir = Join-Path $userProfile ".dotnet"
+    $pathSep = [System.IO.Path]::PathSeparator
+
+    # winget is Windows-only; only attempt it on Windows.
+    if ($IsWindows -and (Get-Command winget -ErrorAction SilentlyContinue)) {
         Write-Host "    Running: winget install Microsoft.DotNet.SDK.10"
         $proc = Start-Process -FilePath winget -ArgumentList @("install","--exact","--id","Microsoft.DotNet.SDK.10","--accept-source-agreements","--accept-package-agreements") -NoNewWindow -PassThru -Wait
         if ($proc.ExitCode -ne 0) { return $false }
-    } else {
-        Write-Host "    winget not available; using the official install script."
+    } elseif ($IsWindows) {
+        Write-Host "    winget not available; using the official install script (PowerShell)."
         $tmp = Join-Path ([System.IO.Path]::GetTempPath()) "dotnet-install.ps1"
         Invoke-WebRequest -Uri https://dot.net/v1/dotnet-install.ps1 -OutFile $tmp -UseBasicParsing
-        & $tmp -Channel 10.0 -InstallDir "$env:USERPROFILE\.dotnet"
-        $env:PATH = "$env:USERPROFILE\.dotnet;$env:PATH"
+        & $tmp -Channel 10.0 -InstallDir $installDir
+        $env:PATH = "$installDir$pathSep$env:PATH"
+    } else {
+        # macOS / Linux: use the bash installer.
+        Write-Host "    Using the official install script (bash)."
+        $tmp = Join-Path ([System.IO.Path]::GetTempPath()) "dotnet-install.sh"
+        Invoke-WebRequest -Uri https://dot.net/v1/dotnet-install.sh -OutFile $tmp -UseBasicParsing
+        & chmod +x $tmp
+        & bash $tmp --channel 10.0 --install-dir $installDir
+        $env:PATH = "$installDir$pathSep$env:PATH"
     }
     return $true
 }
@@ -461,10 +481,11 @@ if ($script:Fail -eq 0) {
             Write-Host "  2. (Skipped) Sample00_UpdateDefaults — defaults already configured."
         } else {
             Write-Host "  2. Configure model defaults (one-time per Foundry resource):"
-            Write-Host "       .github\skills\cu-sdk-sample-run\scripts\run_sample.ps1 Sample00_UpdateDefaults -Run"
+            Write-Host "       .github/skills/cu-sdk-sample-run/scripts/run_sample.sh Sample00_UpdateDefaults --run"
+            Write-Host "       (Run from a Bash shell: WSL, Git Bash, or VS Code's bash terminal.)"
         }
         Write-Host "  3. Run a sample:"
-        Write-Host "       .github\skills\cu-sdk-sample-run\scripts\run_sample.ps1 Sample02_AnalyzeUrl -Run"
+        Write-Host "       .github/skills/cu-sdk-sample-run/scripts/run_sample.sh Sample02_AnalyzeUrl --run"
     }
 } else {
     Write-Host "Result: $($script:Fail) failed, $($script:Pass) passed (out of $total checks)" -ForegroundColor Red

@@ -31,6 +31,28 @@ print_warning() { echo -e "${YELLOW}$1${NC}"; }
 print_error()   { echo -e "${RED}$1${NC}"; }
 print_cyan()    { echo -e "${CYAN}$1${NC}"; }
 
+# ─── Portable in-place sed (GNU vs BSD/macOS) ─────────────────────────────────
+# GNU sed accepts `-i` with no arg; BSD/macOS sed requires `-i ''`.
+if sed --version >/dev/null 2>&1; then
+    SED_INPLACE=(sed -i)
+else
+    SED_INPLACE=(sed -i '')
+fi
+sed_inplace() { "${SED_INPLACE[@]}" "$@"; }
+
+# ─── Prerequisite: python3 ────────────────────────────────────────────────────
+require_python3() {
+    if ! command -v python3 &>/dev/null; then
+        print_error "ERROR: python3 is required by this script (used to parse sample markdown and global.json)."
+        echo ""
+        echo "Install python3 and re-run:"
+        echo "  - macOS:    brew install python"
+        echo "  - Linux:    sudo apt-get install -y python3   # or your distro's equivalent"
+        echo "  - Windows:  https://www.python.org/downloads/  (or 'winget install Python.Python.3')"
+        exit 1
+    fi
+}
+
 # ─── Ensure .NET SDK is available ─────────────────────────────────────────────
 ensure_dotnet_sdk() {
     # Determine required .NET channels
@@ -268,6 +290,7 @@ else
 fi
 
 # ─── Extract code snippets from markdown ──────────────────────────────────────
+require_python3
 print_info "=== Extracting code from: $SAMPLE_NAME ==="
 
 # Extract C# code blocks from the markdown.
@@ -629,7 +652,7 @@ inject_fallback_var() {
     if grep -q "\b${var_name}\b" "$RUNNER_DIR/Program.cs" && \
        ! grep -qE "(string|var)\s+${var_name}\s*=" "$RUNNER_DIR/Program.cs"; then
         # Prepend after the PROGRAM_HEADER (after the auth block)
-        sed -i "/^Console\.WriteLine();$/a\\${var_decl}" "$RUNNER_DIR/Program.cs"
+        sed_inplace "/^Console\.WriteLine();$/a\\${var_decl}" "$RUNNER_DIR/Program.cs"
     fi
 }
 
@@ -640,49 +663,49 @@ inject_fallback_var "targetAnalyzerId" 'string targetAnalyzerId = $"copy_target_
 # Post-process Program.cs to replace placeholders
 if [ -n "$LOCAL_FILE" ]; then
     ESCAPED_FILE=$(echo "$LOCAL_FILE" | sed 's/\\/\\\\/g')
-    sed -i "s|<localDocumentFilePath>|$ESCAPED_FILE|g" "$RUNNER_DIR/Program.cs"
-    sed -i "s|<filePath>|$ESCAPED_FILE|g" "$RUNNER_DIR/Program.cs"
-    sed -i "s|<file_path>|$ESCAPED_FILE|g" "$RUNNER_DIR/Program.cs"
+    sed_inplace "s|<localDocumentFilePath>|$ESCAPED_FILE|g" "$RUNNER_DIR/Program.cs"
+    sed_inplace "s|<filePath>|$ESCAPED_FILE|g" "$RUNNER_DIR/Program.cs"
+    sed_inplace "s|<file_path>|$ESCAPED_FILE|g" "$RUNNER_DIR/Program.cs"
 fi
 
 # Replace any remaining <endpoint>, <apiKey> references that might be in the snippets
 # These are already handled by the config loading, but some snippets have them inline
-sed -i 's|"<endpoint>"|_endpoint|g' "$RUNNER_DIR/Program.cs"
-sed -i 's|"<apiKey>"|_apiKey|g' "$RUNNER_DIR/Program.cs"
-sed -i 's|"<document_url>"|"https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/mixed_financial_invoices.pdf"|g' "$RUNNER_DIR/Program.cs"
+sed_inplace 's|"<endpoint>"|_endpoint|g' "$RUNNER_DIR/Program.cs"
+sed_inplace 's|"<apiKey>"|_apiKey|g' "$RUNNER_DIR/Program.cs"
+sed_inplace 's|"<document_url>"|"https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/mixed_financial_invoices.pdf"|g' "$RUNNER_DIR/Program.cs"
 
 # Sample00: Replace model deployment name placeholders
-sed -i "s|<your-gpt-4.1-deployment-name>|$GPT41_DEPLOYMENT|g" "$RUNNER_DIR/Program.cs"
-sed -i "s|<your-gpt-4.1-mini-deployment-name>|$GPT41_MINI_DEPLOYMENT|g" "$RUNNER_DIR/Program.cs"
-sed -i "s|<your-text-embedding-3-large-deployment-name>|$EMBEDDING_DEPLOYMENT|g" "$RUNNER_DIR/Program.cs"
+sed_inplace "s|<your-gpt-4.1-deployment-name>|$GPT41_DEPLOYMENT|g" "$RUNNER_DIR/Program.cs"
+sed_inplace "s|<your-gpt-4.1-mini-deployment-name>|$GPT41_MINI_DEPLOYMENT|g" "$RUNNER_DIR/Program.cs"
+sed_inplace "s|<your-text-embedding-3-large-deployment-name>|$EMBEDDING_DEPLOYMENT|g" "$RUNNER_DIR/Program.cs"
 
 # Sample05: Replace <file_path> placeholder (also handled above for LOCAL_FILE)
 if [ -n "$LOCAL_FILE" ]; then
     ESCAPED_FILE=$(echo "$LOCAL_FILE" | sed 's/\\/\\\\/g')
-    sed -i "s|<file_path>|$ESCAPED_FILE|g" "$RUNNER_DIR/Program.cs"
+    sed_inplace "s|<file_path>|$ESCAPED_FILE|g" "$RUNNER_DIR/Program.cs"
 fi
 
 # Sample15: Replace cross-resource placeholders with config values
 # Source endpoint is the primary endpoint (matches Python SDK convention)
 if [ -n "$ENDPOINT" ]; then
-    sed -i "s|https://source-resource.services.ai.azure.com/|$ENDPOINT|g" "$RUNNER_DIR/Program.cs"
+    sed_inplace "s|https://source-resource.services.ai.azure.com/|$ENDPOINT|g" "$RUNNER_DIR/Program.cs"
 fi
 if [ -n "$TARGET_ENDPOINT" ]; then
-    sed -i "s|https://target-resource.services.ai.azure.com/|$TARGET_ENDPOINT|g" "$RUNNER_DIR/Program.cs"
+    sed_inplace "s|https://target-resource.services.ai.azure.com/|$TARGET_ENDPOINT|g" "$RUNNER_DIR/Program.cs"
 fi
 if [ -n "$SOURCE_RESOURCE_ID" ]; then
     # Replace only the sourceResourceId line (not targetResourceId which uses the same placeholder)
-    sed -i "/string sourceResourceId/s|/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{name}|$SOURCE_RESOURCE_ID|g" "$RUNNER_DIR/Program.cs"
+    sed_inplace "/string sourceResourceId/s|/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{name}|$SOURCE_RESOURCE_ID|g" "$RUNNER_DIR/Program.cs"
 fi
 if [ -n "$TARGET_RESOURCE_ID" ]; then
-    sed -i "/string targetResourceId/s|/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{name}|$TARGET_RESOURCE_ID|g" "$RUNNER_DIR/Program.cs"
+    sed_inplace "/string targetResourceId/s|/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{name}|$TARGET_RESOURCE_ID|g" "$RUNNER_DIR/Program.cs"
 fi
 if [ -n "$SOURCE_REGION" ]; then
     # Only replace the source region assignment line, not all occurrences of region strings
-    sed -i "s|string sourceRegion = \"eastus\";|string sourceRegion = \"$SOURCE_REGION\";|g" "$RUNNER_DIR/Program.cs"
+    sed_inplace "s|string sourceRegion = \"eastus\";|string sourceRegion = \"$SOURCE_REGION\";|g" "$RUNNER_DIR/Program.cs"
 fi
 if [ -n "$TARGET_REGION" ]; then
-    sed -i "s|string targetRegion = \"westus\";|string targetRegion = \"$TARGET_REGION\";|g" "$RUNNER_DIR/Program.cs"
+    sed_inplace "s|string targetRegion = \"westus\";|string targetRegion = \"$TARGET_REGION\";|g" "$RUNNER_DIR/Program.cs"
 fi
 
 # For samples that need a local file but none provided, download a test file
@@ -693,9 +716,9 @@ if grep -q '<localDocumentFilePath>\|<filePath>\|<file_path>' "$RUNNER_DIR/Progr
         TEST_FILE="$RUNNER_DIR/test_document.pdf"
         curl -sL "https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/mixed_financial_invoices.pdf" -o "$TEST_FILE"
         ESCAPED_TEST=$(echo "$TEST_FILE" | sed 's/\\/\\\\/g')
-        sed -i "s|<localDocumentFilePath>|$ESCAPED_TEST|g" "$RUNNER_DIR/Program.cs"
-        sed -i "s|<filePath>|$ESCAPED_TEST|g" "$RUNNER_DIR/Program.cs"
-        sed -i "s|<file_path>|$ESCAPED_TEST|g" "$RUNNER_DIR/Program.cs"
+        sed_inplace "s|<localDocumentFilePath>|$ESCAPED_TEST|g" "$RUNNER_DIR/Program.cs"
+        sed_inplace "s|<filePath>|$ESCAPED_TEST|g" "$RUNNER_DIR/Program.cs"
+        sed_inplace "s|<file_path>|$ESCAPED_TEST|g" "$RUNNER_DIR/Program.cs"
     fi
 fi
 

@@ -325,14 +325,10 @@ This role is required even if you own the resource:
 Delegate to the `cu-sdk-sample-run` skill to execute the sample:
 
 ```bash
-# Bash
 .github/skills/cu-sdk-sample-run/scripts/run_sample.sh Sample00_UpdateDefaults
 ```
 
-```powershell
-# PowerShell
-.github\skills\cu-sdk-sample-run\scripts\run_sample.ps1 Sample00_UpdateDefaults
-```
+> **Note:** On Windows, run the script from a Bash shell (WSL, Git Bash, or VS Code's bash terminal).
 
 This is a **one-time setup per Microsoft Foundry resource**.
 

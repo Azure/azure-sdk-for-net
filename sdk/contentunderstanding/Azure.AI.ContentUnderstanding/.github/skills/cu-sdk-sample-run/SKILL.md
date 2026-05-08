@@ -273,31 +273,16 @@ export CONTENTUNDERSTANDING_ENDPOINT="https://your-foundry.services.ai.azure.com
 # Optional: export CONTENTUNDERSTANDING_KEY="your-key"
 ```
 
-### Step 3: Determine Platform
-
-> **[ASK USER] Platform:**
-> Ask the user: "Which **platform** are you on?" with options:
-> - Linux/macOS (use bash commands)
-> - Windows PowerShell
->
-> Use their answer to show the correct script command below.
-
-### Step 4: Build the Sample Project
+### Step 3: Build the Sample Project
 
 > **[ASK USER] Ready to build:**
 > Ask the user: "Ready to build the sample project? This will create a runnable .NET project from the sample code. (Yes / Not yet)"
 > If "Not yet", ask what they still need to configure and help them resolve it.
 
-**Bash (Linux/macOS):**
+> **Note:** On Windows, run the script from a Bash shell (WSL, Git Bash, or VS Code's bash terminal).
 
 ```bash
 .github/skills/cu-sdk-sample-run/scripts/run_sample.sh <SampleName>
-```
-
-**PowerShell (Windows):**
-
-```powershell
-.github\skills\cu-sdk-sample-run\scripts\run_sample.ps1 -SampleName <SampleName>
 ```
 
 **Examples:**
@@ -316,7 +301,7 @@ export CONTENTUNDERSTANDING_ENDPOINT="https://your-foundry.services.ai.azure.com
 .github/skills/cu-sdk-sample-run/scripts/run_sample.sh --list
 ```
 
-### Step 5: Run the Sample
+### Step 4: Run the Sample
 
 After the script builds successfully, it prints the project location and the command to run. Execute the sample using `dotnet run`:
 
@@ -334,17 +319,11 @@ dotnet run --project Sample01_AnalyzeBinary.csproj
 
 Alternatively, you can use the `--run` flag to build and run in one step:
 
-**Bash:**
 ```bash
 .github/skills/cu-sdk-sample-run/scripts/run_sample.sh Sample01_AnalyzeBinary --run
 ```
 
-**PowerShell:**
-```powershell
-.github\skills\cu-sdk-sample-run\scripts\run_sample.ps1 -SampleName Sample01_AnalyzeBinary -Run
-```
-
-### Step 6: Review Results and Explain the Sample
+### Step 5: Review Results and Explain the Sample
 
 After the sample completes, the skill **must** do the following for the user (do not skip):
 
@@ -438,7 +417,7 @@ Helper scripts are provided in `scripts/` as a convenience. They are **not requi
 
 > **Note:** For first-time environment setup (configuring `appsettings.json`, installing .NET SDK), use the `cu-sdk-setup` skill.
 
-### `run_sample.sh` / `run_sample.ps1` — Run a sample from markdown
+### `run_sample.sh` — Run a sample from markdown
 
 Extracts C# code snippets from a sample markdown file, scaffolds a standalone console project, builds it, and optionally runs it.
 

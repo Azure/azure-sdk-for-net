@@ -78,6 +78,24 @@ warn()    { echo -e "  ${YELLOW}⚠${NC} $1"; }
 fix()     { echo -e "    ${YELLOW}Fix:${NC} $1"; }
 prompt()  { local p="$1" var=$2 def="${3:-}"; local r=""; if [ -n "$def" ]; then read -r -p "  $p [$def]: " r || r=""; r="${r:-$def}"; else read -r -p "  $p: " r || r=""; fi; printf -v "$var" '%s' "$r"; }
 
+# Portable millisecond timestamp. GNU `date +%s%N` is unavailable on macOS/BSD;
+# prefer python3, fall back to perl, then fall back to seconds×1000.
+now_ms() {
+    if command -v python3 >/dev/null 2>&1; then
+        python3 -c 'import time; print(int(time.time()*1000))'
+    elif command -v perl >/dev/null 2>&1; then
+        perl -MTime::HiRes=time -e 'printf("%d", time()*1000)'
+    else
+        local n
+        n=$(date +%N 2>/dev/null)
+        if [ "$n" = "N" ] || [ -z "$n" ]; then
+            echo $(( $(date +%s) * 1000 ))
+        else
+            echo $(( $(date +%s%N) / 1000000 ))
+        fi
+    fi
+}
+
 # ─── Phase 1: Probe + install .NET SDK ────────────────────────────────────────
 install_dotnet() {
     local os; os="$(uname -s)"
@@ -436,12 +454,12 @@ http_get() {
     elif [ -n "$ACCESS_TOKEN" ]; then
         hdr="Authorization: Bearer $ACCESS_TOKEN"
     fi
-    local start_ms; start_ms=$(($(date +%s%N) / 1000000))
+    local start_ms; start_ms=$(now_ms)
     RESP_CODE=$(curl -sS -o "$tmpfile" -w "%{http_code}" -m 30 \
         -H "Content-Type: application/json" \
         ${hdr:+-H "$hdr"} \
         "$url" 2>/dev/null) || RESP_CODE="000"
-    local end_ms; end_ms=$(($(date +%s%N) / 1000000))
+    local end_ms; end_ms=$(now_ms)
     RESP_TIME=$((end_ms - start_ms))
     RESP_BODY="$(cat "$tmpfile" 2>/dev/null || true)"
     rm -f "$tmpfile"
