@@ -30,7 +30,7 @@ resource modelDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-
   parent: aiServices
   name: 'gpt-realtime'
   sku: {
-    name: 'GlobalStandard'
+    name: 'Standard'
     capacity: 1
   }
   properties: {
