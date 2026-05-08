@@ -87,8 +87,9 @@ namespace Azure.Storage.DataMovement.Tests
 
         /// <summary>
         /// Creates source and destination storage resources for Copy transfers that carry
-        /// proper copy-source authentication (e.g. SAS credentials). Override this method
-        /// to provide resources where the source URI is authenticated for service-to-service copy.
+        /// a SAS credential.
+        /// Override this method to provide resources where the source URI is authenticated
+        /// for service-to-service copy.
         /// </summary>
         /// <param name="size">Size of the source file to create and upload.</param>
         /// <param name="sourceContainer">The source container client.</param>
@@ -112,9 +113,10 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         /// <summary>
-        /// Creates source and destination container storage resources for Copy transfers that carry
-        /// proper copy-source authentication (e.g. SAS credentials). Override this method
-        /// to provide resources where the source URI is authenticated for service-to-service copy.
+        /// Creates source and destination storage resources for Copy transfers that carry
+        /// a SAS credential.
+        /// Override this method to provide resources where the source URI is authenticated
+        /// for service-to-service copy.
         /// </summary>
         protected virtual async Task<(StorageResource Source, StorageResource Destination)> CreateCopyStorageResourceContainersWithAuthAsync(
             long size,
