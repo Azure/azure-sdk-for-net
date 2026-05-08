@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HorizonDbReplicaResource"/> and their operations.
-    /// Each <see cref="HorizonDbReplicaResource"/> in the collection will belong to the same instance of <see cref="HorizonDbPoolResource"/>.
-    /// To get a <see cref="HorizonDbReplicaCollection"/> instance call the GetHorizonDbReplicas method from an instance of <see cref="HorizonDbPoolResource"/>.
+    /// A class representing a collection of <see cref="HorizonDBReplicaResource"/> and their operations.
+    /// Each <see cref="HorizonDBReplicaResource"/> in the collection will belong to the same instance of <see cref="HorizonDBPoolResource"/>.
+    /// To get a <see cref="HorizonDBReplicaCollection"/> instance call the GetHorizonDBReplicas method from an instance of <see cref="HorizonDBPoolResource"/>.
     /// </summary>
-    public partial class HorizonDbReplicaCollection : ArmCollection, IEnumerable<HorizonDbReplicaResource>, IAsyncEnumerable<HorizonDbReplicaResource>
+    public partial class HorizonDBReplicaCollection : ArmCollection, IEnumerable<HorizonDBReplicaResource>, IAsyncEnumerable<HorizonDBReplicaResource>
     {
-        private readonly ClientDiagnostics _horizonDbReplicasClientDiagnostics;
-        private readonly HorizonDbReplicas _horizonDbReplicasRestClient;
+        private readonly ClientDiagnostics _horizonDBReplicasClientDiagnostics;
+        private readonly HorizonDBReplicas _horizonDBReplicasRestClient;
 
-        /// <summary> Initializes a new instance of HorizonDbReplicaCollection for mocking. </summary>
-        protected HorizonDbReplicaCollection()
+        /// <summary> Initializes a new instance of HorizonDBReplicaCollection for mocking. </summary>
+        protected HorizonDBReplicaCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbReplicaCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBReplicaCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HorizonDbReplicaCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HorizonDBReplicaCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HorizonDbReplicaResource.ResourceType, out string horizonDbReplicaApiVersion);
-            _horizonDbReplicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDbReplicaResource.ResourceType.Namespace, Diagnostics);
-            _horizonDbReplicasRestClient = new HorizonDbReplicas(_horizonDbReplicasClientDiagnostics, Pipeline, Endpoint, horizonDbReplicaApiVersion ?? "2026-01-20-preview");
+            TryGetApiVersion(HorizonDBReplicaResource.ResourceType, out string horizonDBReplicaApiVersion);
+            _horizonDBReplicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDBReplicaResource.ResourceType.Namespace, Diagnostics);
+            _horizonDBReplicasRestClient = new HorizonDBReplicas(_horizonDBReplicasClientDiagnostics, Pipeline, Endpoint, horizonDBReplicaApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.HorizonDB
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != HorizonDbPoolResource.ResourceType)
+            if (id.ResourceType != HorizonDBPoolResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HorizonDbPoolResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HorizonDBPoolResource.ResourceType), id);
             }
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<HorizonDbReplicaResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string replicaName, HorizonDbReplicaData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HorizonDBReplicaResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string replicaName, HorizonDBReplicaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _horizonDbReplicasClientDiagnostics.CreateScope("HorizonDbReplicaCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _horizonDBReplicasClientDiagnostics.CreateScope("HorizonDBReplicaCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbReplicasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, HorizonDbReplicaData.ToRequestContent(data), context);
+                HttpMessage message = _horizonDBReplicasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, HorizonDBReplicaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HorizonDBArmOperation<HorizonDbReplicaResource> operation = new HorizonDBArmOperation<HorizonDbReplicaResource>(
-                    new HorizonDbReplicaOperationSource(Client),
-                    _horizonDbReplicasClientDiagnostics,
+                HorizonDBArmOperation<HorizonDBReplicaResource> operation = new HorizonDBArmOperation<HorizonDBReplicaResource>(
+                    new HorizonDBReplicaOperationSource(Client),
+                    _horizonDBReplicasClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<HorizonDbReplicaResource> CreateOrUpdate(WaitUntil waitUntil, string replicaName, HorizonDbReplicaData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HorizonDBReplicaResource> CreateOrUpdate(WaitUntil waitUntil, string replicaName, HorizonDBReplicaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _horizonDbReplicasClientDiagnostics.CreateScope("HorizonDbReplicaCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _horizonDBReplicasClientDiagnostics.CreateScope("HorizonDBReplicaCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbReplicasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, HorizonDbReplicaData.ToRequestContent(data), context);
+                HttpMessage message = _horizonDBReplicasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, HorizonDBReplicaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                HorizonDBArmOperation<HorizonDbReplicaResource> operation = new HorizonDBArmOperation<HorizonDbReplicaResource>(
-                    new HorizonDbReplicaOperationSource(Client),
-                    _horizonDbReplicasClientDiagnostics,
+                HorizonDBArmOperation<HorizonDBReplicaResource> operation = new HorizonDBArmOperation<HorizonDBReplicaResource>(
+                    new HorizonDBReplicaOperationSource(Client),
+                    _horizonDBReplicasClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<HorizonDbReplicaResource>> GetAsync(string replicaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBReplicaResource>> GetAsync(string replicaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using DiagnosticScope scope = _horizonDbReplicasClientDiagnostics.CreateScope("HorizonDbReplicaCollection.Get");
+            using DiagnosticScope scope = _horizonDBReplicasClientDiagnostics.CreateScope("HorizonDBReplicaCollection.Get");
             scope.Start();
             try
             {
@@ -203,14 +203,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
+                HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HorizonDbReplicaData> response = Response.FromValue(HorizonDbReplicaData.FromResponse(result), result);
+                Response<HorizonDBReplicaData> response = Response.FromValue(HorizonDBReplicaData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbReplicaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBReplicaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<HorizonDbReplicaResource> Get(string replicaName, CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBReplicaResource> Get(string replicaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using DiagnosticScope scope = _horizonDbReplicasClientDiagnostics.CreateScope("HorizonDbReplicaCollection.Get");
+            using DiagnosticScope scope = _horizonDBReplicasClientDiagnostics.CreateScope("HorizonDBReplicaCollection.Get");
             scope.Start();
             try
             {
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
+                HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<HorizonDbReplicaData> response = Response.FromValue(HorizonDbReplicaData.FromResponse(result), result);
+                Response<HorizonDBReplicaData> response = Response.FromValue(HorizonDBReplicaData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbReplicaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBReplicaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -286,20 +286,20 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDbReplicaResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HorizonDbReplicaResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBReplicaResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HorizonDBReplicaResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDbReplicaData, HorizonDbReplicaResource>(new HorizonDbReplicasGetAllAsyncCollectionResultOfT(
-                _horizonDbReplicasRestClient,
+            return new AsyncPageableWrapper<HorizonDBReplicaData, HorizonDBReplicaResource>(new HorizonDBReplicasGetAllAsyncCollectionResultOfT(
+                _horizonDBReplicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new HorizonDbReplicaResource(Client, data));
+                context), data => new HorizonDBReplicaResource(Client, data));
         }
 
         /// <summary>
@@ -320,20 +320,20 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDbReplicaResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HorizonDbReplicaResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBReplicaResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HorizonDBReplicaResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDbReplicaData, HorizonDbReplicaResource>(new HorizonDbReplicasGetAllCollectionResultOfT(
-                _horizonDbReplicasRestClient,
+            return new PageableWrapper<HorizonDBReplicaData, HorizonDBReplicaResource>(new HorizonDBReplicasGetAllCollectionResultOfT(
+                _horizonDBReplicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new HorizonDbReplicaResource(Client, data));
+                context), data => new HorizonDBReplicaResource(Client, data));
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using DiagnosticScope scope = _horizonDbReplicasClientDiagnostics.CreateScope("HorizonDbReplicaCollection.Exists");
+            using DiagnosticScope scope = _horizonDBReplicasClientDiagnostics.CreateScope("HorizonDBReplicaCollection.Exists");
             scope.Start();
             try
             {
@@ -369,17 +369,17 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
+                HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<HorizonDbReplicaData> response = default;
+                Response<HorizonDBReplicaData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbReplicaData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBReplicaData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbReplicaData)null, result);
+                        response = Response.FromValue((HorizonDBReplicaData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using DiagnosticScope scope = _horizonDbReplicasClientDiagnostics.CreateScope("HorizonDbReplicaCollection.Exists");
+            using DiagnosticScope scope = _horizonDBReplicasClientDiagnostics.CreateScope("HorizonDBReplicaCollection.Exists");
             scope.Start();
             try
             {
@@ -426,17 +426,17 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
+                HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<HorizonDbReplicaData> response = default;
+                Response<HorizonDBReplicaData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbReplicaData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBReplicaData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbReplicaData)null, result);
+                        response = Response.FromValue((HorizonDBReplicaData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -471,11 +471,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<HorizonDbReplicaResource>> GetIfExistsAsync(string replicaName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<HorizonDBReplicaResource>> GetIfExistsAsync(string replicaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using DiagnosticScope scope = _horizonDbReplicasClientDiagnostics.CreateScope("HorizonDbReplicaCollection.GetIfExists");
+            using DiagnosticScope scope = _horizonDBReplicasClientDiagnostics.CreateScope("HorizonDBReplicaCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -483,26 +483,26 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
+                HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<HorizonDbReplicaData> response = default;
+                Response<HorizonDBReplicaData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbReplicaData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBReplicaData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbReplicaData)null, result);
+                        response = Response.FromValue((HorizonDBReplicaData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<HorizonDbReplicaResource>(response.GetRawResponse());
+                    return new NoValueResponse<HorizonDBReplicaResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbReplicaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBReplicaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -532,11 +532,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<HorizonDbReplicaResource> GetIfExists(string replicaName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<HorizonDBReplicaResource> GetIfExists(string replicaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using DiagnosticScope scope = _horizonDbReplicasClientDiagnostics.CreateScope("HorizonDbReplicaCollection.GetIfExists");
+            using DiagnosticScope scope = _horizonDBReplicasClientDiagnostics.CreateScope("HorizonDBReplicaCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -544,26 +544,26 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
+                HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<HorizonDbReplicaData> response = default;
+                Response<HorizonDBReplicaData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbReplicaData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBReplicaData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbReplicaData)null, result);
+                        response = Response.FromValue((HorizonDBReplicaData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<HorizonDbReplicaResource>(response.GetRawResponse());
+                    return new NoValueResponse<HorizonDBReplicaResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbReplicaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBReplicaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.HorizonDB
             }
         }
 
-        IEnumerator<HorizonDbReplicaResource> IEnumerable<HorizonDbReplicaResource>.GetEnumerator()
+        IEnumerator<HorizonDBReplicaResource> IEnumerable<HorizonDBReplicaResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<HorizonDbReplicaResource> IAsyncEnumerable<HorizonDbReplicaResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<HorizonDBReplicaResource> IAsyncEnumerable<HorizonDBReplicaResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

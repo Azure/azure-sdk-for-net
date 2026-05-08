@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HorizonDbClusterResource"/> and their operations.
-    /// Each <see cref="HorizonDbClusterResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="HorizonDbClusterCollection"/> instance call the GetHorizonDbClusters method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="HorizonDBClusterResource"/> and their operations.
+    /// Each <see cref="HorizonDBClusterResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="HorizonDBClusterCollection"/> instance call the GetHorizonDBClusters method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class HorizonDbClusterCollection : ArmCollection, IEnumerable<HorizonDbClusterResource>, IAsyncEnumerable<HorizonDbClusterResource>
+    public partial class HorizonDBClusterCollection : ArmCollection, IEnumerable<HorizonDBClusterResource>, IAsyncEnumerable<HorizonDBClusterResource>
     {
-        private readonly ClientDiagnostics _horizonDbClustersClientDiagnostics;
-        private readonly HorizonDbClusters _horizonDbClustersRestClient;
+        private readonly ClientDiagnostics _horizonDBClustersClientDiagnostics;
+        private readonly HorizonDBClusters _horizonDBClustersRestClient;
 
-        /// <summary> Initializes a new instance of HorizonDbClusterCollection for mocking. </summary>
-        protected HorizonDbClusterCollection()
+        /// <summary> Initializes a new instance of HorizonDBClusterCollection for mocking. </summary>
+        protected HorizonDBClusterCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbClusterCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HorizonDbClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HorizonDBClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HorizonDbClusterResource.ResourceType, out string horizonDbClusterApiVersion);
-            _horizonDbClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDbClusterResource.ResourceType.Namespace, Diagnostics);
-            _horizonDbClustersRestClient = new HorizonDbClusters(_horizonDbClustersClientDiagnostics, Pipeline, Endpoint, horizonDbClusterApiVersion ?? "2026-01-20-preview");
+            TryGetApiVersion(HorizonDBClusterResource.ResourceType, out string horizonDBClusterApiVersion);
+            _horizonDBClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDBClusterResource.ResourceType.Namespace, Diagnostics);
+            _horizonDBClustersRestClient = new HorizonDBClusters(_horizonDBClustersClientDiagnostics, Pipeline, Endpoint, horizonDBClusterApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<HorizonDbClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, HorizonDbClusterData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HorizonDBClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, HorizonDBClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _horizonDbClustersClientDiagnostics.CreateScope("HorizonDbClusterCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, HorizonDbClusterData.ToRequestContent(data), context);
+                HttpMessage message = _horizonDBClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, HorizonDBClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HorizonDBArmOperation<HorizonDbClusterResource> operation = new HorizonDBArmOperation<HorizonDbClusterResource>(
-                    new HorizonDbClusterOperationSource(Client),
-                    _horizonDbClustersClientDiagnostics,
+                HorizonDBArmOperation<HorizonDBClusterResource> operation = new HorizonDBArmOperation<HorizonDBClusterResource>(
+                    new HorizonDBClusterOperationSource(Client),
+                    _horizonDBClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<HorizonDbClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, HorizonDbClusterData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HorizonDBClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, HorizonDBClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _horizonDbClustersClientDiagnostics.CreateScope("HorizonDbClusterCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, HorizonDbClusterData.ToRequestContent(data), context);
+                HttpMessage message = _horizonDBClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, HorizonDBClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                HorizonDBArmOperation<HorizonDbClusterResource> operation = new HorizonDBArmOperation<HorizonDbClusterResource>(
-                    new HorizonDbClusterOperationSource(Client),
-                    _horizonDbClustersClientDiagnostics,
+                HorizonDBArmOperation<HorizonDBClusterResource> operation = new HorizonDBArmOperation<HorizonDBClusterResource>(
+                    new HorizonDBClusterOperationSource(Client),
+                    _horizonDBClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -192,11 +192,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<HorizonDbClusterResource>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBClusterResource>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using DiagnosticScope scope = _horizonDbClustersClientDiagnostics.CreateScope("HorizonDbClusterCollection.Get");
+            using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterCollection.Get");
             scope.Start();
             try
             {
@@ -204,14 +204,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
+                HttpMessage message = _horizonDBClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HorizonDbClusterData> response = Response.FromValue(HorizonDbClusterData.FromResponse(result), result);
+                Response<HorizonDBClusterData> response = Response.FromValue(HorizonDBClusterData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<HorizonDbClusterResource> Get(string clusterName, CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBClusterResource> Get(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using DiagnosticScope scope = _horizonDbClustersClientDiagnostics.CreateScope("HorizonDbClusterCollection.Get");
+            using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterCollection.Get");
             scope.Start();
             try
             {
@@ -253,14 +253,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
+                HttpMessage message = _horizonDBClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<HorizonDbClusterData> response = Response.FromValue(HorizonDbClusterData.FromResponse(result), result);
+                Response<HorizonDBClusterData> response = Response.FromValue(HorizonDBClusterData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -287,14 +287,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDbClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HorizonDbClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HorizonDBClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDbClusterData, HorizonDbClusterResource>(new HorizonDbClustersGetByResourceGroupAsyncCollectionResultOfT(_horizonDbClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HorizonDbClusterResource(Client, data));
+            return new AsyncPageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClustersGetByResourceGroupAsyncCollectionResultOfT(_horizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HorizonDBClusterResource(Client, data));
         }
 
         /// <summary>
@@ -315,14 +315,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDbClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HorizonDbClusterResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HorizonDBClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDbClusterData, HorizonDbClusterResource>(new HorizonDbClustersGetByResourceGroupCollectionResultOfT(_horizonDbClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HorizonDbClusterResource(Client, data));
+            return new PageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClustersGetByResourceGroupCollectionResultOfT(_horizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HorizonDBClusterResource(Client, data));
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using DiagnosticScope scope = _horizonDbClustersClientDiagnostics.CreateScope("HorizonDbClusterCollection.Exists");
+            using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterCollection.Exists");
             scope.Start();
             try
             {
@@ -358,17 +358,17 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
+                HttpMessage message = _horizonDBClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<HorizonDbClusterData> response = default;
+                Response<HorizonDBClusterData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbClusterData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBClusterData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbClusterData)null, result);
+                        response = Response.FromValue((HorizonDBClusterData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using DiagnosticScope scope = _horizonDbClustersClientDiagnostics.CreateScope("HorizonDbClusterCollection.Exists");
+            using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterCollection.Exists");
             scope.Start();
             try
             {
@@ -415,17 +415,17 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
+                HttpMessage message = _horizonDBClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<HorizonDbClusterData> response = default;
+                Response<HorizonDBClusterData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbClusterData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBClusterData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbClusterData)null, result);
+                        response = Response.FromValue((HorizonDBClusterData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -460,11 +460,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<HorizonDbClusterResource>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<HorizonDBClusterResource>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using DiagnosticScope scope = _horizonDbClustersClientDiagnostics.CreateScope("HorizonDbClusterCollection.GetIfExists");
+            using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -472,26 +472,26 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
+                HttpMessage message = _horizonDBClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<HorizonDbClusterData> response = default;
+                Response<HorizonDBClusterData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbClusterData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBClusterData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbClusterData)null, result);
+                        response = Response.FromValue((HorizonDBClusterData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<HorizonDbClusterResource>(response.GetRawResponse());
+                    return new NoValueResponse<HorizonDBClusterResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -521,11 +521,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<HorizonDbClusterResource> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<HorizonDBClusterResource> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using DiagnosticScope scope = _horizonDbClustersClientDiagnostics.CreateScope("HorizonDbClusterCollection.GetIfExists");
+            using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -533,26 +533,26 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
+                HttpMessage message = _horizonDBClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<HorizonDbClusterData> response = default;
+                Response<HorizonDBClusterData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbClusterData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBClusterData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbClusterData)null, result);
+                        response = Response.FromValue((HorizonDBClusterData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<HorizonDbClusterResource>(response.GetRawResponse());
+                    return new NoValueResponse<HorizonDBClusterResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.HorizonDB
             }
         }
 
-        IEnumerator<HorizonDbClusterResource> IEnumerable<HorizonDbClusterResource>.GetEnumerator()
+        IEnumerator<HorizonDBClusterResource> IEnumerable<HorizonDBClusterResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<HorizonDbClusterResource> IAsyncEnumerable<HorizonDbClusterResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<HorizonDBClusterResource> IAsyncEnumerable<HorizonDBClusterResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

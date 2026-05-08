@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary></summary>
-    public partial class HorizonDbClusterResource : IJsonModel<HorizonDbClusterData>
+    public partial class HorizonDBClusterResource : IJsonModel<HorizonDBClusterData>
     {
-        private static IJsonModel<HorizonDbClusterData> s_dataDeserializationInstance;
+        private static IJsonModel<HorizonDBClusterData> s_dataDeserializationInstance;
 
-        private static IJsonModel<HorizonDbClusterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HorizonDbClusterData();
+        private static IJsonModel<HorizonDBClusterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HorizonDBClusterData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDbClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HorizonDbClusterData>)Data).Write(writer, options);
+        void IJsonModel<HorizonDBClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HorizonDBClusterData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbClusterData IJsonModel<HorizonDbClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        HorizonDBClusterData IJsonModel<HorizonDBClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDbClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HorizonDbClusterData>(Data, options, AzureResourceManagerHorizonDBContext.Default);
+        BinaryData IPersistableModel<HorizonDBClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HorizonDBClusterData>(Data, options, AzureResourceManagerHorizonDBContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbClusterData IPersistableModel<HorizonDbClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HorizonDbClusterData>(data, options, AzureResourceManagerHorizonDBContext.Default);
+        HorizonDBClusterData IPersistableModel<HorizonDBClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HorizonDBClusterData>(data, options, AzureResourceManagerHorizonDBContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDbClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<HorizonDBClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

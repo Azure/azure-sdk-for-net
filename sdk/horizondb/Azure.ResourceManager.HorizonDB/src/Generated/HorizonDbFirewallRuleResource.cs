@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary>
-    /// A class representing a HorizonDbFirewallRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HorizonDbFirewallRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HorizonDbPoolResource"/> using the GetHorizonDbFirewallRules method.
+    /// A class representing a HorizonDBFirewallRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HorizonDBFirewallRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HorizonDBPoolResource"/> using the GetHorizonDBFirewallRules method.
     /// </summary>
-    public partial class HorizonDbFirewallRuleResource : ArmResource
+    public partial class HorizonDBFirewallRuleResource : ArmResource
     {
-        private readonly ClientDiagnostics _horizonDbFirewallRulesClientDiagnostics;
-        private readonly HorizonDbFirewallRules _horizonDbFirewallRulesRestClient;
-        private readonly HorizonDbFirewallRuleData _data;
+        private readonly ClientDiagnostics _horizonDBFirewallRulesClientDiagnostics;
+        private readonly HorizonDBFirewallRules _horizonDBFirewallRulesRestClient;
+        private readonly HorizonDBFirewallRuleData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HorizonDb/clusters/pools/firewallRules";
 
-        /// <summary> Initializes a new instance of HorizonDbFirewallRuleResource for mocking. </summary>
-        protected HorizonDbFirewallRuleResource()
+        /// <summary> Initializes a new instance of HorizonDBFirewallRuleResource for mocking. </summary>
+        protected HorizonDBFirewallRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbFirewallRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBFirewallRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HorizonDbFirewallRuleResource(ArmClient client, HorizonDbFirewallRuleData data) : this(client, data.Id)
+        internal HorizonDBFirewallRuleResource(ArmClient client, HorizonDBFirewallRuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbFirewallRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBFirewallRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HorizonDbFirewallRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HorizonDBFirewallRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string horizonDbFirewallRuleApiVersion);
-            _horizonDbFirewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
-            _horizonDbFirewallRulesRestClient = new HorizonDbFirewallRules(_horizonDbFirewallRulesClientDiagnostics, Pipeline, Endpoint, horizonDbFirewallRuleApiVersion ?? "2026-01-20-preview");
+            TryGetApiVersion(ResourceType, out string horizonDBFirewallRuleApiVersion);
+            _horizonDBFirewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
+            _horizonDBFirewallRulesRestClient = new HorizonDBFirewallRules(_horizonDBFirewallRulesClientDiagnostics, Pipeline, Endpoint, horizonDBFirewallRuleApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HorizonDB
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual HorizonDbFirewallRuleData Data
+        public virtual HorizonDBFirewallRuleData Data
         {
             get
             {
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbFirewallRuleResource"/>. </description>
+        /// <description> <see cref="HorizonDBFirewallRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HorizonDbFirewallRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBFirewallRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDbFirewallRulesClientDiagnostics.CreateScope("HorizonDbFirewallRuleResource.Get");
+            using DiagnosticScope scope = _horizonDBFirewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleResource.Get");
             scope.Start();
             try
             {
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _horizonDBFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HorizonDbFirewallRuleData> response = Response.FromValue(HorizonDbFirewallRuleData.FromResponse(result), result);
+                Response<HorizonDBFirewallRuleData> response = Response.FromValue(HorizonDBFirewallRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbFirewallRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBFirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbFirewallRuleResource"/>. </description>
+        /// <description> <see cref="HorizonDBFirewallRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HorizonDbFirewallRuleResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBFirewallRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDbFirewallRulesClientDiagnostics.CreateScope("HorizonDbFirewallRuleResource.Get");
+            using DiagnosticScope scope = _horizonDBFirewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleResource.Get");
             scope.Start();
             try
             {
@@ -172,14 +172,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _horizonDBFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<HorizonDbFirewallRuleData> response = Response.FromValue(HorizonDbFirewallRuleData.FromResponse(result), result);
+                Response<HorizonDBFirewallRuleData> response = Response.FromValue(HorizonDBFirewallRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbFirewallRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBFirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbFirewallRuleResource"/>. </description>
+        /// <description> <see cref="HorizonDBFirewallRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDbFirewallRulesClientDiagnostics.CreateScope("HorizonDbFirewallRuleResource.Delete");
+            using DiagnosticScope scope = _horizonDBFirewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleResource.Delete");
             scope.Start();
             try
             {
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbFirewallRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _horizonDBFirewallRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDbFirewallRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDBFirewallRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbFirewallRuleResource"/>. </description>
+        /// <description> <see cref="HorizonDBFirewallRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDbFirewallRulesClientDiagnostics.CreateScope("HorizonDbFirewallRuleResource.Delete");
+            using DiagnosticScope scope = _horizonDBFirewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleResource.Delete");
             scope.Start();
             try
             {
@@ -270,9 +270,9 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbFirewallRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _horizonDBFirewallRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDbFirewallRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDBFirewallRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Update a HorizonDbFirewallRule.
+        /// Update a HorizonDBFirewallRule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbFirewallRuleResource"/>. </description>
+        /// <description> <see cref="HorizonDBFirewallRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,11 +311,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<HorizonDbFirewallRuleResource>> UpdateAsync(WaitUntil waitUntil, HorizonDbFirewallRuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HorizonDBFirewallRuleResource>> UpdateAsync(WaitUntil waitUntil, HorizonDBFirewallRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _horizonDbFirewallRulesClientDiagnostics.CreateScope("HorizonDbFirewallRuleResource.Update");
+            using DiagnosticScope scope = _horizonDBFirewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleResource.Update");
             scope.Start();
             try
             {
@@ -323,11 +323,11 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbFirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HorizonDbFirewallRuleData.ToRequestContent(data), context);
+                HttpMessage message = _horizonDBFirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HorizonDBFirewallRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HorizonDBArmOperation<HorizonDbFirewallRuleResource> operation = new HorizonDBArmOperation<HorizonDbFirewallRuleResource>(
-                    new HorizonDbFirewallRuleOperationSource(Client),
-                    _horizonDbFirewallRulesClientDiagnostics,
+                HorizonDBArmOperation<HorizonDBFirewallRuleResource> operation = new HorizonDBArmOperation<HorizonDBFirewallRuleResource>(
+                    new HorizonDBFirewallRuleOperationSource(Client),
+                    _horizonDBFirewallRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Update a HorizonDbFirewallRule.
+        /// Update a HorizonDBFirewallRule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbFirewallRuleResource"/>. </description>
+        /// <description> <see cref="HorizonDBFirewallRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,11 +370,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<HorizonDbFirewallRuleResource> Update(WaitUntil waitUntil, HorizonDbFirewallRuleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HorizonDBFirewallRuleResource> Update(WaitUntil waitUntil, HorizonDBFirewallRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _horizonDbFirewallRulesClientDiagnostics.CreateScope("HorizonDbFirewallRuleResource.Update");
+            using DiagnosticScope scope = _horizonDBFirewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleResource.Update");
             scope.Start();
             try
             {
@@ -382,11 +382,11 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbFirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HorizonDbFirewallRuleData.ToRequestContent(data), context);
+                HttpMessage message = _horizonDBFirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HorizonDBFirewallRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                HorizonDBArmOperation<HorizonDbFirewallRuleResource> operation = new HorizonDBArmOperation<HorizonDbFirewallRuleResource>(
-                    new HorizonDbFirewallRuleOperationSource(Client),
-                    _horizonDbFirewallRulesClientDiagnostics,
+                HorizonDBArmOperation<HorizonDBFirewallRuleResource> operation = new HorizonDBArmOperation<HorizonDBFirewallRuleResource>(
+                    new HorizonDBFirewallRuleOperationSource(Client),
+                    _horizonDBFirewallRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,

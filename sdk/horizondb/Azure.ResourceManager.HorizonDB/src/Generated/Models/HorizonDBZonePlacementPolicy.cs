@@ -12,7 +12,7 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> The zone redundancy option for the cluster. </summary>
-    public readonly partial struct ZonePlacementPolicy : IEquatable<ZonePlacementPolicy>
+    public readonly partial struct HorizonDBZonePlacementPolicy : IEquatable<HorizonDBZonePlacementPolicy>
     {
         private readonly string _value;
         /// <summary> Enforce zonal redundancy. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Best-effort placement (default). </summary>
         private const string BestEffortValue = "BestEffort";
 
-        /// <summary> Initializes a new instance of <see cref="ZonePlacementPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBZonePlacementPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ZonePlacementPolicy(string value)
+        public HorizonDBZonePlacementPolicy(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Enforce zonal redundancy. </summary>
-        public static ZonePlacementPolicy Strict { get; } = new ZonePlacementPolicy(StrictValue);
+        public static HorizonDBZonePlacementPolicy Strict { get; } = new HorizonDBZonePlacementPolicy(StrictValue);
 
         /// <summary> Best-effort placement (default). </summary>
-        public static ZonePlacementPolicy BestEffort { get; } = new ZonePlacementPolicy(BestEffortValue);
+        public static HorizonDBZonePlacementPolicy BestEffort { get; } = new HorizonDBZonePlacementPolicy(BestEffortValue);
 
-        /// <summary> Determines if two <see cref="ZonePlacementPolicy"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="HorizonDBZonePlacementPolicy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ZonePlacementPolicy left, ZonePlacementPolicy right) => left.Equals(right);
+        public static bool operator ==(HorizonDBZonePlacementPolicy left, HorizonDBZonePlacementPolicy right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ZonePlacementPolicy"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="HorizonDBZonePlacementPolicy"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ZonePlacementPolicy left, ZonePlacementPolicy right) => !left.Equals(right);
+        public static bool operator !=(HorizonDBZonePlacementPolicy left, HorizonDBZonePlacementPolicy right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ZonePlacementPolicy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HorizonDBZonePlacementPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ZonePlacementPolicy(string value) => new ZonePlacementPolicy(value);
+        public static implicit operator HorizonDBZonePlacementPolicy(string value) => new HorizonDBZonePlacementPolicy(value);
 
-        /// <summary> Converts a string to a <see cref="ZonePlacementPolicy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HorizonDBZonePlacementPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ZonePlacementPolicy?(string value) => value == null ? null : new ZonePlacementPolicy(value);
+        public static implicit operator HorizonDBZonePlacementPolicy?(string value) => value == null ? null : new HorizonDBZonePlacementPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ZonePlacementPolicy other && Equals(other);
+        public override bool Equals(object obj) => obj is HorizonDBZonePlacementPolicy other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ZonePlacementPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HorizonDBZonePlacementPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

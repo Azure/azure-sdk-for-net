@@ -13,22 +13,22 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> Properties of a HorizonDb cluster. </summary>
-    public partial class HorizonDbClusterProperties
+    public partial class HorizonDBClusterProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbClusterProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterProperties"/>. </summary>
         /// <param name="administratorLogin"> The administrator login name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="administratorLogin"/> is null. </exception>
-        public HorizonDbClusterProperties(string administratorLogin)
+        public HorizonDBClusterProperties(string administratorLogin)
         {
             Argument.AssertNotNull(administratorLogin, nameof(administratorLogin));
 
             AdministratorLogin = administratorLogin;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbClusterProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterProperties"/>. </summary>
         /// <param name="administratorLogin"> The administrator login name. </param>
         /// <param name="administratorLoginPassword"> The administrator login password. </param>
         /// <param name="version"> The version of the HorizonDb cluster. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="zonePlacementPolicy"> Defines how replicas are placed across availability zones. </param>
         /// <param name="parameterGroup"> Defines connection to a parameter group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbClusterProperties(string administratorLogin, string administratorLoginPassword, string version, CreateModeCluster? createMode, DateTimeOffset? pointInTimeUTC, ResourceIdentifier sourceClusterResourceId, string poolName, int? replicaCount, int? vCores, string processorType, Network network, State? state, string fullyQualifiedDomainName, string readonlyEndpoint, ProvisioningState? provisioningState, ZonePlacementPolicy? zonePlacementPolicy, HorizonDbClusterParameterGroupConnectionProperties parameterGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBClusterProperties(string administratorLogin, string administratorLoginPassword, string version, HorizonDBCreateModeCluster? createMode, DateTimeOffset? pointInTimeUTC, ResourceIdentifier sourceClusterResourceId, string poolName, int? replicaCount, int? vCores, string processorType, Network network, HorizonDBClusterState? state, string fullyQualifiedDomainName, string readonlyEndpoint, HorizonDBProvisioningState? provisioningState, HorizonDBZonePlacementPolicy? zonePlacementPolicy, HorizonDBClusterParameterGroupConnectionProperties parameterGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public string Version { get; set; }
 
         /// <summary> The mode to create a new HorizonDb cluster. </summary>
-        public CreateModeCluster? CreateMode { get; set; }
+        public HorizonDBCreateModeCluster? CreateMode { get; set; }
 
         /// <summary> Restore point creation time specifying the time to restore from. </summary>
         public DateTimeOffset? PointInTimeUTC { get; set; }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         internal Network Network { get; set; }
 
         /// <summary> Current state of the cluster. </summary>
-        public State? State { get; }
+        public HorizonDBClusterState? State { get; }
 
         /// <summary> The fully qualified domain name of the cluster. </summary>
         public string FullyQualifiedDomainName { get; }
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public string ReadonlyEndpoint { get; }
 
         /// <summary> The provisioning state of the cluster. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public HorizonDBProvisioningState? ProvisioningState { get; }
 
         /// <summary> Defines how replicas are placed across availability zones. </summary>
-        public ZonePlacementPolicy? ZonePlacementPolicy { get; set; }
+        public HorizonDBZonePlacementPolicy? ZonePlacementPolicy { get; set; }
 
         /// <summary> Defines connection to a parameter group. </summary>
-        public HorizonDbClusterParameterGroupConnectionProperties ParameterGroup { get; set; }
+        public HorizonDBClusterParameterGroupConnectionProperties ParameterGroup { get; set; }
 
         /// <summary> The flag indicating whether public ip is requested. </summary>
-        public PublicNetworkAccessState? PublicNetworkAccess
+        public HorizonDBPublicNetworkAccessState? PublicNetworkAccess
         {
             get
             {

@@ -12,23 +12,23 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> Properties of a HorizonDb parameter group for update operations. </summary>
-    public partial class HorizonDbParameterGroupPropertiesForPatchUpdate
+    public partial class HorizonDBParameterGroupPropertiesForPatchUpdate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbParameterGroupPropertiesForPatchUpdate"/>. </summary>
-        public HorizonDbParameterGroupPropertiesForPatchUpdate()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupPropertiesForPatchUpdate"/>. </summary>
+        public HorizonDBParameterGroupPropertiesForPatchUpdate()
         {
-            Parameters = new ChangeTrackingList<ParameterProperties>();
+            Parameters = new ChangeTrackingList<HorizonDBParameterProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbParameterGroupPropertiesForPatchUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupPropertiesForPatchUpdate"/>. </summary>
         /// <param name="parameters"> Parameters in the parameter group. </param>
         /// <param name="description"> Description of the parameter group. </param>
         /// <param name="applyImmediately"> Indicates whether the parameters should be applied immediately. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbParameterGroupPropertiesForPatchUpdate(IList<ParameterProperties> parameters, string description, bool? applyImmediately, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBParameterGroupPropertiesForPatchUpdate(IList<HorizonDBParameterProperties> parameters, string description, bool? applyImmediately, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Parameters = parameters;
             Description = description;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Parameters in the parameter group. </summary>
-        public IList<ParameterProperties> Parameters { get; }
+        public IList<HorizonDBParameterProperties> Parameters { get; }
 
         /// <summary> Description of the parameter group. </summary>
         public string Description { get; set; }

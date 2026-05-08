@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    internal partial class HorizonDbFirewallRules
+    internal partial class HorizonDBFirewallRules
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of HorizonDbFirewallRules for mocking. </summary>
-        protected HorizonDbFirewallRules()
+        /// <summary> Initializes a new instance of HorizonDBFirewallRules for mocking. </summary>
+        protected HorizonDBFirewallRules()
         {
         }
 
-        /// <summary> Initializes a new instance of HorizonDbFirewallRules. </summary>
+        /// <summary> Initializes a new instance of HorizonDBFirewallRules. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal HorizonDbFirewallRules(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal HorizonDBFirewallRules(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

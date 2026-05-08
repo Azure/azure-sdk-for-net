@@ -15,56 +15,56 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> Properties of a HorizonDb cluster. </summary>
-    public partial class HorizonDbClusterProperties : IJsonModel<HorizonDbClusterProperties>
+    public partial class HorizonDBClusterProperties : IJsonModel<HorizonDBClusterProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="HorizonDbClusterProperties"/> for deserialization. </summary>
-        internal HorizonDbClusterProperties()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterProperties"/> for deserialization. </summary>
+        internal HorizonDBClusterProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDbClusterProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HorizonDBClusterProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHorizonDbClusterProperties(document.RootElement, options);
+                        return DeserializeHorizonDBClusterProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDbClusterProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBClusterProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHorizonDBContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDbClusterProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBClusterProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDbClusterProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HorizonDBClusterProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbClusterProperties IPersistableModel<HorizonDbClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HorizonDBClusterProperties IPersistableModel<HorizonDBClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDbClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HorizonDBClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDbClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HorizonDBClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDbClusterProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBClusterProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("administratorLogin"u8);
             writer.WriteStringValue(AdministratorLogin);
@@ -181,24 +181,24 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbClusterProperties IJsonModel<HorizonDbClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HorizonDBClusterProperties IJsonModel<HorizonDBClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDbClusterProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HorizonDBClusterProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDbClusterProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBClusterProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHorizonDbClusterProperties(document.RootElement, options);
+            return DeserializeHorizonDBClusterProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HorizonDbClusterProperties DeserializeHorizonDbClusterProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static HorizonDBClusterProperties DeserializeHorizonDBClusterProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             string administratorLogin = default;
             string administratorLoginPassword = default;
             string version = default;
-            CreateModeCluster? createMode = default;
+            HorizonDBCreateModeCluster? createMode = default;
             DateTimeOffset? pointInTimeUTC = default;
             ResourceIdentifier sourceClusterResourceId = default;
             string poolName = default;
@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
             int? vCores = default;
             string processorType = default;
             Network network = default;
-            State? state = default;
+            HorizonDBClusterState? state = default;
             string fullyQualifiedDomainName = default;
             string readonlyEndpoint = default;
-            ProvisioningState? provisioningState = default;
-            ZonePlacementPolicy? zonePlacementPolicy = default;
-            HorizonDbClusterParameterGroupConnectionProperties parameterGroup = default;
+            HorizonDBProvisioningState? provisioningState = default;
+            HorizonDBZonePlacementPolicy? zonePlacementPolicy = default;
+            HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    createMode = new CreateModeCluster(prop.Value.GetString());
+                    createMode = new HorizonDBCreateModeCluster(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("pointInTimeUTC"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    state = new State(prop.Value.GetString());
+                    state = new HorizonDBClusterState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("fullyQualifiedDomainName"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new HorizonDBProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("zonePlacementPolicy"u8))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    zonePlacementPolicy = new ZonePlacementPolicy(prop.Value.GetString());
+                    zonePlacementPolicy = new HorizonDBZonePlacementPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("parameterGroup"u8))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    parameterGroup = HorizonDbClusterParameterGroupConnectionProperties.DeserializeHorizonDbClusterParameterGroupConnectionProperties(prop.Value, options);
+                    parameterGroup = HorizonDBClusterParameterGroupConnectionProperties.DeserializeHorizonDBClusterParameterGroupConnectionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDbClusterProperties(
+            return new HorizonDBClusterProperties(
                 administratorLogin,
                 administratorLoginPassword,
                 version,

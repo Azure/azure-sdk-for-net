@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (HorizonDbParameterGroupData item in Value)
+            foreach (HorizonDBParameterGroupData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            IList<HorizonDbParameterGroupData> value = default;
+            IList<HorizonDBParameterGroupData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<HorizonDbParameterGroupData> array = new List<HorizonDbParameterGroupData>();
+                    List<HorizonDBParameterGroupData> array = new List<HorizonDBParameterGroupData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HorizonDbParameterGroupData.DeserializeHorizonDbParameterGroupData(item, options));
+                        array.Add(HorizonDBParameterGroupData.DeserializeHorizonDBParameterGroupData(item, options));
                     }
                     value = array;
                     continue;

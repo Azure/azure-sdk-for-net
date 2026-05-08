@@ -12,16 +12,16 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> Properties of a HorizonDb firewall rule. </summary>
-    public partial class HorizonDbFirewallRuleProperties
+    public partial class HorizonDBFirewallRuleProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbFirewallRuleProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBFirewallRuleProperties"/>. </summary>
         /// <param name="startIpAddress"> The start IP address of the firewall rule (IPv4). </param>
         /// <param name="endIpAddress"> The end IP address of the firewall rule (IPv4). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startIpAddress"/> or <paramref name="endIpAddress"/> is null. </exception>
-        public HorizonDbFirewallRuleProperties(string startIpAddress, string endIpAddress)
+        public HorizonDBFirewallRuleProperties(string startIpAddress, string endIpAddress)
         {
             Argument.AssertNotNull(startIpAddress, nameof(startIpAddress));
             Argument.AssertNotNull(endIpAddress, nameof(endIpAddress));
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.HorizonDB.Models
             EndIpAddress = endIpAddress;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbFirewallRuleProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBFirewallRuleProperties"/>. </summary>
         /// <param name="startIpAddress"> The start IP address of the firewall rule (IPv4). </param>
         /// <param name="endIpAddress"> The end IP address of the firewall rule (IPv4). </param>
         /// <param name="description"> The description of the HorizonDb firewall rule. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbFirewallRuleProperties(string startIpAddress, string endIpAddress, string description, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBFirewallRuleProperties(string startIpAddress, string endIpAddress, string description, HorizonDBProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartIpAddress = startIpAddress;
             EndIpAddress = endIpAddress;
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public string Description { get; set; }
 
         /// <summary> The provisioning state of the firewall rule. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public HorizonDBProvisioningState? ProvisioningState { get; }
     }
 }

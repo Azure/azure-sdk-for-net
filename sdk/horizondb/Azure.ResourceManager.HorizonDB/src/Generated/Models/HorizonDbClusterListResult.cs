@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Initializes a new instance of <see cref="HorizonDbClusterListResult"/>. </summary>
         /// <param name="value"> The HorizonDbCluster items on this page. </param>
-        internal HorizonDbClusterListResult(IEnumerable<HorizonDbClusterData> value)
+        internal HorizonDbClusterListResult(IEnumerable<HorizonDBClusterData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="value"> The HorizonDbCluster items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbClusterListResult(IList<HorizonDbClusterData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDbClusterListResult(IList<HorizonDBClusterData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> The HorizonDbCluster items on this page. </summary>
-        public IList<HorizonDbClusterData> Value { get; }
+        public IList<HorizonDBClusterData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

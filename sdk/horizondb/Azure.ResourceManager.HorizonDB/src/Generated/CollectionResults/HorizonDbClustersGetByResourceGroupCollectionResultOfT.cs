@@ -14,19 +14,19 @@ using Azure.ResourceManager.HorizonDB.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    internal partial class HorizonDbClustersGetByResourceGroupCollectionResultOfT : Pageable<HorizonDbClusterData>
+    internal partial class HorizonDBClustersGetByResourceGroupCollectionResultOfT : Pageable<HorizonDBClusterData>
     {
-        private readonly HorizonDbClusters _client;
+        private readonly HorizonDBClusters _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of HorizonDbClustersGetByResourceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The HorizonDbClusters client used to send requests. </param>
+        /// <summary> Initializes a new instance of HorizonDBClustersGetByResourceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The HorizonDBClusters client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public HorizonDbClustersGetByResourceGroupCollectionResultOfT(HorizonDbClusters client, Guid subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public HorizonDBClustersGetByResourceGroupCollectionResultOfT(HorizonDBClusters client, Guid subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.HorizonDB
             _context = context;
         }
 
-        /// <summary> Gets the pages of HorizonDbClustersGetByResourceGroupCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of HorizonDBClustersGetByResourceGroupCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of HorizonDbClustersGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<HorizonDbClusterData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of HorizonDBClustersGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<HorizonDBClusterData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HorizonDB
                     yield break;
                 }
                 HorizonDbClusterListResult result = HorizonDbClusterListResult.FromResponse(response);
-                yield return Page<HorizonDbClusterData>.FromValues((IReadOnlyList<HorizonDbClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<HorizonDBClusterData>.FromValues((IReadOnlyList<HorizonDBClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HorizonDB
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HorizonDbClusterCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HorizonDBClusterCollection.GetAll");
             scope.Start();
             try
             {

@@ -12,22 +12,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> Connection information for HorizonDb parameter group. </summary>
-    public partial class HorizonDbParameterGroupConnectionProperties
+    public partial class HorizonDBParameterGroupConnectionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbParameterGroupConnectionProperties"/>. </summary>
-        internal HorizonDbParameterGroupConnectionProperties()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupConnectionProperties"/>. </summary>
+        internal HorizonDBParameterGroupConnectionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbParameterGroupConnectionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupConnectionProperties"/>. </summary>
         /// <param name="name"> The name of the connected resource. </param>
         /// <param name="id"> The resource ID of the connected resource. </param>
         /// <param name="type"> The type of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbParameterGroupConnectionProperties(string name, ResourceIdentifier id, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBParameterGroupConnectionProperties(string name, ResourceIdentifier id, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;

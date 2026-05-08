@@ -14,30 +14,30 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary> Represents the HorizonDb firewall rule. </summary>
-    public partial class HorizonDbFirewallRuleData : ResourceData
+    public partial class HorizonDBFirewallRuleData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbFirewallRuleData"/>. </summary>
-        public HorizonDbFirewallRuleData()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBFirewallRuleData"/>. </summary>
+        public HorizonDBFirewallRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbFirewallRuleData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBFirewallRuleData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal HorizonDbFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, HorizonDbFirewallRuleProperties properties) : base(id, name, resourceType, systemData)
+        internal HorizonDBFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, HorizonDBFirewallRuleProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public HorizonDbFirewallRuleProperties Properties { get; set; }
+        public HorizonDBFirewallRuleProperties Properties { get; set; }
     }
 }

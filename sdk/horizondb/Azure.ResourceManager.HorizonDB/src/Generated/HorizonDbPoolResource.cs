@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary>
-    /// A class representing a HorizonDbPool along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HorizonDbPoolResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HorizonDbClusterResource"/> using the GetHorizonDbPools method.
+    /// A class representing a HorizonDBPool along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HorizonDBPoolResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HorizonDBClusterResource"/> using the GetHorizonDBPools method.
     /// </summary>
-    public partial class HorizonDbPoolResource : ArmResource
+    public partial class HorizonDBPoolResource : ArmResource
     {
-        private readonly ClientDiagnostics _horizonDbPoolsClientDiagnostics;
-        private readonly HorizonDbPools _horizonDbPoolsRestClient;
-        private readonly HorizonDbPoolData _data;
+        private readonly ClientDiagnostics _horizonDBPoolsClientDiagnostics;
+        private readonly HorizonDBPools _horizonDBPoolsRestClient;
+        private readonly HorizonDBPoolData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HorizonDb/clusters/pools";
 
-        /// <summary> Initializes a new instance of HorizonDbPoolResource for mocking. </summary>
-        protected HorizonDbPoolResource()
+        /// <summary> Initializes a new instance of HorizonDBPoolResource for mocking. </summary>
+        protected HorizonDBPoolResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HorizonDbPoolResource(ArmClient client, HorizonDbPoolData data) : this(client, data.Id)
+        internal HorizonDBPoolResource(ArmClient client, HorizonDBPoolData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HorizonDbPoolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HorizonDBPoolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string horizonDbPoolApiVersion);
-            _horizonDbPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
-            _horizonDbPoolsRestClient = new HorizonDbPools(_horizonDbPoolsClientDiagnostics, Pipeline, Endpoint, horizonDbPoolApiVersion ?? "2026-01-20-preview");
+            TryGetApiVersion(ResourceType, out string horizonDBPoolApiVersion);
+            _horizonDBPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
+            _horizonDBPoolsRestClient = new HorizonDBPools(_horizonDBPoolsClientDiagnostics, Pipeline, Endpoint, horizonDBPoolApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HorizonDB
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual HorizonDbPoolData Data
+        public virtual HorizonDBPoolData Data
         {
             get
             {
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbPoolResource"/>. </description>
+        /// <description> <see cref="HorizonDBPoolResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HorizonDbPoolResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBPoolResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDbPoolsClientDiagnostics.CreateScope("HorizonDbPoolResource.Get");
+            using DiagnosticScope scope = _horizonDBPoolsClientDiagnostics.CreateScope("HorizonDBPoolResource.Get");
             scope.Start();
             try
             {
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _horizonDBPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HorizonDbPoolData> response = Response.FromValue(HorizonDbPoolData.FromResponse(result), result);
+                Response<HorizonDBPoolData> response = Response.FromValue(HorizonDBPoolData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbPoolResource"/>. </description>
+        /// <description> <see cref="HorizonDBPoolResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HorizonDbPoolResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBPoolResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDbPoolsClientDiagnostics.CreateScope("HorizonDbPoolResource.Get");
+            using DiagnosticScope scope = _horizonDBPoolsClientDiagnostics.CreateScope("HorizonDBPoolResource.Get");
             scope.Start();
             try
             {
@@ -171,14 +171,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _horizonDBPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<HorizonDbPoolData> response = Response.FromValue(HorizonDbPoolData.FromResponse(result), result);
+                Response<HorizonDBPoolData> response = Response.FromValue(HorizonDBPoolData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,11 +187,11 @@ namespace Azure.ResourceManager.HorizonDB
             }
         }
 
-        /// <summary> Gets a collection of HorizonDbReplicas in the <see cref="HorizonDbPoolResource"/>. </summary>
-        /// <returns> An object representing collection of HorizonDbReplicas and their operations over a HorizonDbReplicaResource. </returns>
-        public virtual HorizonDbReplicaCollection GetHorizonDbReplicas()
+        /// <summary> Gets a collection of HorizonDBReplicas in the <see cref="HorizonDBPoolResource"/>. </summary>
+        /// <returns> An object representing collection of HorizonDBReplicas and their operations over a HorizonDBReplicaResource. </returns>
+        public virtual HorizonDBReplicaCollection GetHorizonDBReplicas()
         {
-            return GetCachedClient(client => new HorizonDbReplicaCollection(client, Id));
+            return GetCachedClient(client => new HorizonDBReplicaCollection(client, Id));
         }
 
         /// <summary> Gets information about a HorizonDb replica. </summary>
@@ -200,11 +200,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HorizonDbReplicaResource>> GetHorizonDbReplicaAsync(string replicaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBReplicaResource>> GetHorizonDBReplicaAsync(string replicaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            return await GetHorizonDbReplicas().GetAsync(replicaName, cancellationToken).ConfigureAwait(false);
+            return await GetHorizonDBReplicas().GetAsync(replicaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets information about a HorizonDb replica. </summary>
@@ -213,31 +213,18 @@ namespace Azure.ResourceManager.HorizonDB
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HorizonDbReplicaResource> GetHorizonDbReplica(string replicaName, CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBReplicaResource> GetHorizonDBReplica(string replicaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            return GetHorizonDbReplicas().Get(replicaName, cancellationToken);
+            return GetHorizonDBReplicas().Get(replicaName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HorizonDbFirewallRules in the <see cref="HorizonDbPoolResource"/>. </summary>
-        /// <returns> An object representing collection of HorizonDbFirewallRules and their operations over a HorizonDbFirewallRuleResource. </returns>
-        public virtual HorizonDbFirewallRuleCollection GetHorizonDbFirewallRules()
+        /// <summary> Gets a collection of HorizonDBFirewallRules in the <see cref="HorizonDBPoolResource"/>. </summary>
+        /// <returns> An object representing collection of HorizonDBFirewallRules and their operations over a HorizonDBFirewallRuleResource. </returns>
+        public virtual HorizonDBFirewallRuleCollection GetHorizonDBFirewallRules()
         {
-            return GetCachedClient(client => new HorizonDbFirewallRuleCollection(client, Id));
-        }
-
-        /// <summary> Gets information about a HorizonDb firewall rule. </summary>
-        /// <param name="firewallRuleName"> The name of the HorizonDb firewall rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<HorizonDbFirewallRuleResource>> GetHorizonDbFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
-
-            return await GetHorizonDbFirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new HorizonDBFirewallRuleCollection(client, Id));
         }
 
         /// <summary> Gets information about a HorizonDb firewall rule. </summary>
@@ -246,11 +233,24 @@ namespace Azure.ResourceManager.HorizonDB
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HorizonDbFirewallRuleResource> GetHorizonDbFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBFirewallRuleResource>> GetHorizonDBFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            return GetHorizonDbFirewallRules().Get(firewallRuleName, cancellationToken);
+            return await GetHorizonDBFirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets information about a HorizonDb firewall rule. </summary>
+        /// <param name="firewallRuleName"> The name of the HorizonDb firewall rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HorizonDBFirewallRuleResource> GetHorizonDBFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+
+            return GetHorizonDBFirewallRules().Get(firewallRuleName, cancellationToken);
         }
     }
 }

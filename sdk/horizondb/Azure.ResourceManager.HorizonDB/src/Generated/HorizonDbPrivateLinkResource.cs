@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary>
-    /// A class representing a HorizonDbPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HorizonDbPrivateLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HorizonDbClusterResource"/> using the GetHorizonDbPrivateLinkResources method.
+    /// A class representing a HorizonDBPrivateLinkResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HorizonDBPrivateLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HorizonDBClusterResource"/> using the GetHorizonDBPrivateLinkResources method.
     /// </summary>
-    public partial class HorizonDbPrivateLinkResource : ArmResource
+    public partial class HorizonDBPrivateLinkResource : ArmResource
     {
-        private readonly ClientDiagnostics _horizonDbPrivateLinkResourcesClientDiagnostics;
-        private readonly HorizonDbPrivateLinkResources _horizonDbPrivateLinkResourcesRestClient;
-        private readonly HorizonDbPrivateLinkResourceData _data;
+        private readonly ClientDiagnostics _horizonDBPrivateLinkResourcesClientDiagnostics;
+        private readonly HorizonDBPrivateLinkResources _horizonDBPrivateLinkResourcesRestClient;
+        private readonly HorizonDBPrivateLinkResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HorizonDb/clusters/privateLinkResources";
 
-        /// <summary> Initializes a new instance of HorizonDbPrivateLinkResource for mocking. </summary>
-        protected HorizonDbPrivateLinkResource()
+        /// <summary> Initializes a new instance of HorizonDBPrivateLinkResource for mocking. </summary>
+        protected HorizonDBPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HorizonDbPrivateLinkResource(ArmClient client, HorizonDbPrivateLinkResourceData data) : this(client, data.Id)
+        internal HorizonDBPrivateLinkResource(ArmClient client, HorizonDBPrivateLinkResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HorizonDbPrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HorizonDBPrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string horizonDbPrivateLinkResourceApiVersion);
-            _horizonDbPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
-            _horizonDbPrivateLinkResourcesRestClient = new HorizonDbPrivateLinkResources(_horizonDbPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, horizonDbPrivateLinkResourceApiVersion ?? "2026-01-20-preview");
+            TryGetApiVersion(ResourceType, out string horizonDBPrivateLinkResourceApiVersion);
+            _horizonDBPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
+            _horizonDBPrivateLinkResourcesRestClient = new HorizonDBPrivateLinkResources(_horizonDBPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, horizonDBPrivateLinkResourceApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HorizonDB
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual HorizonDbPrivateLinkResourceData Data
+        public virtual HorizonDBPrivateLinkResourceData Data
         {
             get
             {
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbPrivateLinkResource"/>. </description>
+        /// <description> <see cref="HorizonDBPrivateLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HorizonDbPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDbPrivateLinkResourcesClientDiagnostics.CreateScope("HorizonDbPrivateLinkResource.Get");
+            using DiagnosticScope scope = _horizonDBPrivateLinkResourcesClientDiagnostics.CreateScope("HorizonDBPrivateLinkResource.Get");
             scope.Start();
             try
             {
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _horizonDBPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HorizonDbPrivateLinkResourceData> response = Response.FromValue(HorizonDbPrivateLinkResourceData.FromResponse(result), result);
+                Response<HorizonDBPrivateLinkResourceData> response = Response.FromValue(HorizonDBPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbPrivateLinkResource"/>. </description>
+        /// <description> <see cref="HorizonDBPrivateLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HorizonDbPrivateLinkResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBPrivateLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDbPrivateLinkResourcesClientDiagnostics.CreateScope("HorizonDbPrivateLinkResource.Get");
+            using DiagnosticScope scope = _horizonDBPrivateLinkResourcesClientDiagnostics.CreateScope("HorizonDBPrivateLinkResource.Get");
             scope.Start();
             try
             {
@@ -171,14 +171,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _horizonDBPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<HorizonDbPrivateLinkResourceData> response = Response.FromValue(HorizonDbPrivateLinkResourceData.FromResponse(result), result);
+                Response<HorizonDBPrivateLinkResourceData> response = Response.FromValue(HorizonDBPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

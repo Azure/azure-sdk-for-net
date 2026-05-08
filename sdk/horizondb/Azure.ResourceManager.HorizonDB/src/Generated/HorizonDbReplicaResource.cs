@@ -18,40 +18,40 @@ using Azure.ResourceManager.HorizonDB.Models;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary>
-    /// A class representing a HorizonDbReplica along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HorizonDbReplicaResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HorizonDbPoolResource"/> using the GetHorizonDbReplicas method.
+    /// A class representing a HorizonDBReplica along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HorizonDBReplicaResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HorizonDBPoolResource"/> using the GetHorizonDBReplicas method.
     /// </summary>
-    public partial class HorizonDbReplicaResource : ArmResource
+    public partial class HorizonDBReplicaResource : ArmResource
     {
-        private readonly ClientDiagnostics _horizonDbReplicasClientDiagnostics;
-        private readonly HorizonDbReplicas _horizonDbReplicasRestClient;
-        private readonly HorizonDbReplicaData _data;
+        private readonly ClientDiagnostics _horizonDBReplicasClientDiagnostics;
+        private readonly HorizonDBReplicas _horizonDBReplicasRestClient;
+        private readonly HorizonDBReplicaData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HorizonDb/clusters/pools/replicas";
 
-        /// <summary> Initializes a new instance of HorizonDbReplicaResource for mocking. </summary>
-        protected HorizonDbReplicaResource()
+        /// <summary> Initializes a new instance of HorizonDBReplicaResource for mocking. </summary>
+        protected HorizonDBReplicaResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbReplicaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBReplicaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HorizonDbReplicaResource(ArmClient client, HorizonDbReplicaData data) : this(client, data.Id)
+        internal HorizonDBReplicaResource(ArmClient client, HorizonDBReplicaData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbReplicaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBReplicaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HorizonDbReplicaResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HorizonDBReplicaResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string horizonDbReplicaApiVersion);
-            _horizonDbReplicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
-            _horizonDbReplicasRestClient = new HorizonDbReplicas(_horizonDbReplicasClientDiagnostics, Pipeline, Endpoint, horizonDbReplicaApiVersion ?? "2026-01-20-preview");
+            TryGetApiVersion(ResourceType, out string horizonDBReplicaApiVersion);
+            _horizonDBReplicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
+            _horizonDBReplicasRestClient = new HorizonDBReplicas(_horizonDBReplicasClientDiagnostics, Pipeline, Endpoint, horizonDBReplicaApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HorizonDB
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual HorizonDbReplicaData Data
+        public virtual HorizonDBReplicaData Data
         {
             get
             {
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbReplicaResource"/>. </description>
+        /// <description> <see cref="HorizonDBReplicaResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HorizonDbReplicaResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBReplicaResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDbReplicasClientDiagnostics.CreateScope("HorizonDbReplicaResource.Get");
+            using DiagnosticScope scope = _horizonDBReplicasClientDiagnostics.CreateScope("HorizonDBReplicaResource.Get");
             scope.Start();
             try
             {
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HorizonDbReplicaData> response = Response.FromValue(HorizonDbReplicaData.FromResponse(result), result);
+                Response<HorizonDBReplicaData> response = Response.FromValue(HorizonDBReplicaData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbReplicaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBReplicaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbReplicaResource"/>. </description>
+        /// <description> <see cref="HorizonDBReplicaResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HorizonDbReplicaResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBReplicaResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDbReplicasClientDiagnostics.CreateScope("HorizonDbReplicaResource.Get");
+            using DiagnosticScope scope = _horizonDBReplicasClientDiagnostics.CreateScope("HorizonDBReplicaResource.Get");
             scope.Start();
             try
             {
@@ -173,14 +173,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<HorizonDbReplicaData> response = Response.FromValue(HorizonDbReplicaData.FromResponse(result), result);
+                Response<HorizonDBReplicaData> response = Response.FromValue(HorizonDBReplicaData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbReplicaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBReplicaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbReplicaResource"/>. </description>
+        /// <description> <see cref="HorizonDBReplicaResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<HorizonDbReplicaResource>> UpdateAsync(WaitUntil waitUntil, HorizonDbReplicaPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HorizonDBReplicaResource>> UpdateAsync(WaitUntil waitUntil, HorizonDBReplicaPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _horizonDbReplicasClientDiagnostics.CreateScope("HorizonDbReplicaResource.Update");
+            using DiagnosticScope scope = _horizonDBReplicasClientDiagnostics.CreateScope("HorizonDBReplicaResource.Update");
             scope.Start();
             try
             {
@@ -226,11 +226,11 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbReplicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HorizonDbReplicaPatch.ToRequestContent(patch), context);
+                HttpMessage message = _horizonDBReplicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HorizonDBReplicaPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HorizonDBArmOperation<HorizonDbReplicaResource> operation = new HorizonDBArmOperation<HorizonDbReplicaResource>(
-                    new HorizonDbReplicaOperationSource(Client),
-                    _horizonDbReplicasClientDiagnostics,
+                HorizonDBArmOperation<HorizonDBReplicaResource> operation = new HorizonDBArmOperation<HorizonDBReplicaResource>(
+                    new HorizonDBReplicaOperationSource(Client),
+                    _horizonDBReplicasClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbReplicaResource"/>. </description>
+        /// <description> <see cref="HorizonDBReplicaResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<HorizonDbReplicaResource> Update(WaitUntil waitUntil, HorizonDbReplicaPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HorizonDBReplicaResource> Update(WaitUntil waitUntil, HorizonDBReplicaPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _horizonDbReplicasClientDiagnostics.CreateScope("HorizonDbReplicaResource.Update");
+            using DiagnosticScope scope = _horizonDBReplicasClientDiagnostics.CreateScope("HorizonDBReplicaResource.Update");
             scope.Start();
             try
             {
@@ -285,11 +285,11 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbReplicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HorizonDbReplicaPatch.ToRequestContent(patch), context);
+                HttpMessage message = _horizonDBReplicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HorizonDBReplicaPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                HorizonDBArmOperation<HorizonDbReplicaResource> operation = new HorizonDBArmOperation<HorizonDbReplicaResource>(
-                    new HorizonDbReplicaOperationSource(Client),
-                    _horizonDbReplicasClientDiagnostics,
+                HorizonDBArmOperation<HorizonDBReplicaResource> operation = new HorizonDBArmOperation<HorizonDBReplicaResource>(
+                    new HorizonDBReplicaOperationSource(Client),
+                    _horizonDBReplicasClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbReplicaResource"/>. </description>
+        /// <description> <see cref="HorizonDBReplicaResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDbReplicasClientDiagnostics.CreateScope("HorizonDbReplicaResource.Delete");
+            using DiagnosticScope scope = _horizonDBReplicasClientDiagnostics.CreateScope("HorizonDBReplicaResource.Delete");
             scope.Start();
             try
             {
@@ -340,9 +340,9 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbReplicasRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _horizonDBReplicasRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDbReplicasClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDBReplicasClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbReplicaResource"/>. </description>
+        /// <description> <see cref="HorizonDBReplicaResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDbReplicasClientDiagnostics.CreateScope("HorizonDbReplicaResource.Delete");
+            using DiagnosticScope scope = _horizonDBReplicasClientDiagnostics.CreateScope("HorizonDBReplicaResource.Delete");
             scope.Start();
             try
             {
@@ -389,9 +389,9 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbReplicasRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _horizonDBReplicasRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDbReplicasClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDBReplicasClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

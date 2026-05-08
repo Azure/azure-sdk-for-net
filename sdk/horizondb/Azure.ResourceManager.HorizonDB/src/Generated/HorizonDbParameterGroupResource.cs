@@ -20,40 +20,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary>
-    /// A class representing a HorizonDbParameterGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HorizonDbParameterGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHorizonDbParameterGroups method.
+    /// A class representing a HorizonDBParameterGroup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HorizonDBParameterGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHorizonDBParameterGroups method.
     /// </summary>
-    public partial class HorizonDbParameterGroupResource : ArmResource
+    public partial class HorizonDBParameterGroupResource : ArmResource
     {
-        private readonly ClientDiagnostics _horizonDbParameterGroupsClientDiagnostics;
-        private readonly HorizonDbParameterGroups _horizonDbParameterGroupsRestClient;
-        private readonly HorizonDbParameterGroupData _data;
+        private readonly ClientDiagnostics _horizonDBParameterGroupsClientDiagnostics;
+        private readonly HorizonDBParameterGroups _horizonDBParameterGroupsRestClient;
+        private readonly HorizonDBParameterGroupData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HorizonDb/parameterGroups";
 
-        /// <summary> Initializes a new instance of HorizonDbParameterGroupResource for mocking. </summary>
-        protected HorizonDbParameterGroupResource()
+        /// <summary> Initializes a new instance of HorizonDBParameterGroupResource for mocking. </summary>
+        protected HorizonDBParameterGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbParameterGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HorizonDbParameterGroupResource(ArmClient client, HorizonDbParameterGroupData data) : this(client, data.Id)
+        internal HorizonDBParameterGroupResource(ArmClient client, HorizonDBParameterGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbParameterGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HorizonDbParameterGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HorizonDBParameterGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string horizonDbParameterGroupApiVersion);
-            _horizonDbParameterGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
-            _horizonDbParameterGroupsRestClient = new HorizonDbParameterGroups(_horizonDbParameterGroupsClientDiagnostics, Pipeline, Endpoint, horizonDbParameterGroupApiVersion ?? "2026-01-20-preview");
+            TryGetApiVersion(ResourceType, out string horizonDBParameterGroupApiVersion);
+            _horizonDBParameterGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
+            _horizonDBParameterGroupsRestClient = new HorizonDBParameterGroups(_horizonDBParameterGroupsClientDiagnostics, Pipeline, Endpoint, horizonDBParameterGroupApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HorizonDB
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual HorizonDbParameterGroupData Data
+        public virtual HorizonDBParameterGroupData Data
         {
             get
             {
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbParameterGroupResource"/>. </description>
+        /// <description> <see cref="HorizonDBParameterGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HorizonDbParameterGroupResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBParameterGroupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupResource.Get");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupResource.Get");
             scope.Start();
             try
             {
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HorizonDbParameterGroupData> response = Response.FromValue(HorizonDbParameterGroupData.FromResponse(result), result);
+                Response<HorizonDBParameterGroupData> response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbParameterGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBParameterGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbParameterGroupResource"/>. </description>
+        /// <description> <see cref="HorizonDBParameterGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HorizonDbParameterGroupResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBParameterGroupResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupResource.Get");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupResource.Get");
             scope.Start();
             try
             {
@@ -173,14 +173,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<HorizonDbParameterGroupData> response = Response.FromValue(HorizonDbParameterGroupData.FromResponse(result), result);
+                Response<HorizonDBParameterGroupData> response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbParameterGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBParameterGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbParameterGroupResource"/>. </description>
+        /// <description> <see cref="HorizonDBParameterGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<HorizonDbParameterGroupResource>> UpdateAsync(WaitUntil waitUntil, HorizonDbParameterGroupPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HorizonDBParameterGroupResource>> UpdateAsync(WaitUntil waitUntil, HorizonDBParameterGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupResource.Update");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupResource.Update");
             scope.Start();
             try
             {
@@ -226,11 +226,11 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbParameterGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HorizonDbParameterGroupPatch.ToRequestContent(patch), context);
+                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HorizonDBParameterGroupPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HorizonDBArmOperation<HorizonDbParameterGroupResource> operation = new HorizonDBArmOperation<HorizonDbParameterGroupResource>(
-                    new HorizonDbParameterGroupOperationSource(Client),
-                    _horizonDbParameterGroupsClientDiagnostics,
+                HorizonDBArmOperation<HorizonDBParameterGroupResource> operation = new HorizonDBArmOperation<HorizonDBParameterGroupResource>(
+                    new HorizonDBParameterGroupOperationSource(Client),
+                    _horizonDBParameterGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbParameterGroupResource"/>. </description>
+        /// <description> <see cref="HorizonDBParameterGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<HorizonDbParameterGroupResource> Update(WaitUntil waitUntil, HorizonDbParameterGroupPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HorizonDBParameterGroupResource> Update(WaitUntil waitUntil, HorizonDBParameterGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupResource.Update");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupResource.Update");
             scope.Start();
             try
             {
@@ -285,11 +285,11 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbParameterGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HorizonDbParameterGroupPatch.ToRequestContent(patch), context);
+                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HorizonDBParameterGroupPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                HorizonDBArmOperation<HorizonDbParameterGroupResource> operation = new HorizonDBArmOperation<HorizonDbParameterGroupResource>(
-                    new HorizonDbParameterGroupOperationSource(Client),
-                    _horizonDbParameterGroupsClientDiagnostics,
+                HorizonDBArmOperation<HorizonDBParameterGroupResource> operation = new HorizonDBArmOperation<HorizonDBParameterGroupResource>(
+                    new HorizonDBParameterGroupOperationSource(Client),
+                    _horizonDBParameterGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbParameterGroupResource"/>. </description>
+        /// <description> <see cref="HorizonDBParameterGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupResource.Delete");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupResource.Delete");
             scope.Start();
             try
             {
@@ -340,9 +340,9 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbParameterGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDbParameterGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDBParameterGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbParameterGroupResource"/>. </description>
+        /// <description> <see cref="HorizonDBParameterGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupResource.Delete");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupResource.Delete");
             scope.Start();
             try
             {
@@ -389,9 +389,9 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbParameterGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDbParameterGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDBParameterGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -422,26 +422,26 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbParameterGroupResource"/>. </description>
+        /// <description> <see cref="HorizonDBParameterGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> The version number to filter by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDbParameterGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HorizonDbParameterGroupResource> GetVersionsAsync(int? version = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBParameterGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HorizonDBParameterGroupResource> GetVersionsAsync(int? version = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDbParameterGroupData, HorizonDbParameterGroupResource>(new HorizonDbParameterGroupsGetVersionsAsyncCollectionResultOfT(
-                _horizonDbParameterGroupsRestClient,
+            return new AsyncPageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupsGetVersionsAsyncCollectionResultOfT(
+                _horizonDBParameterGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 version,
-                context), data => new HorizonDbParameterGroupResource(Client, data));
+                context), data => new HorizonDBParameterGroupResource(Client, data));
         }
 
         /// <summary>
@@ -461,26 +461,26 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbParameterGroupResource"/>. </description>
+        /// <description> <see cref="HorizonDBParameterGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> The version number to filter by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDbParameterGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HorizonDbParameterGroupResource> GetVersions(int? version = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBParameterGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HorizonDBParameterGroupResource> GetVersions(int? version = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDbParameterGroupData, HorizonDbParameterGroupResource>(new HorizonDbParameterGroupsGetVersionsCollectionResultOfT(
-                _horizonDbParameterGroupsRestClient,
+            return new PageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupsGetVersionsCollectionResultOfT(
+                _horizonDBParameterGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 version,
-                context), data => new HorizonDbParameterGroupResource(Client, data));
+                context), data => new HorizonDBParameterGroupResource(Client, data));
         }
 
         /// <summary>
@@ -500,19 +500,19 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbParameterGroupResource"/>. </description>
+        /// <description> <see cref="HorizonDBParameterGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDbParameterGroupConnectionProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HorizonDbParameterGroupConnectionProperties> GetConnectionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBParameterGroupConnectionProperties"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HorizonDBParameterGroupConnectionProperties> GetConnectionsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new HorizonDbParameterGroupsGetConnectionsAsyncCollectionResultOfT(_horizonDbParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new HorizonDBParameterGroupsGetConnectionsAsyncCollectionResultOfT(_horizonDBParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -532,19 +532,19 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDbParameterGroupResource"/>. </description>
+        /// <description> <see cref="HorizonDBParameterGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDbParameterGroupConnectionProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HorizonDbParameterGroupConnectionProperties> GetConnections(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBParameterGroupConnectionProperties"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HorizonDBParameterGroupConnectionProperties> GetConnections(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new HorizonDbParameterGroupsGetConnectionsCollectionResultOfT(_horizonDbParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new HorizonDBParameterGroupsGetConnectionsCollectionResultOfT(_horizonDBParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary> Add a tag to the current resource. </summary>
@@ -552,12 +552,12 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<HorizonDbParameterGroupResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBParameterGroupResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupResource.AddTag");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupResource.AddTag");
             scope.Start();
             try
             {
@@ -570,21 +570,21 @@ namespace Azure.ResourceManager.HorizonDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _horizonDbParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<HorizonDbParameterGroupData> response = Response.FromValue(HorizonDbParameterGroupData.FromResponse(result), result);
-                    return Response.FromValue(new HorizonDbParameterGroupResource(Client, response.Value), response.GetRawResponse());
+                    Response<HorizonDBParameterGroupData> response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
+                    return Response.FromValue(new HorizonDBParameterGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    HorizonDbParameterGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    HorizonDbParameterGroupPatch patch = new HorizonDbParameterGroupPatch();
+                    HorizonDBParameterGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    HorizonDBParameterGroupPatch patch = new HorizonDBParameterGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<HorizonDbParameterGroupResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<HorizonDBParameterGroupResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -600,12 +600,12 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<HorizonDbParameterGroupResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBParameterGroupResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupResource.AddTag");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupResource.AddTag");
             scope.Start();
             try
             {
@@ -618,21 +618,21 @@ namespace Azure.ResourceManager.HorizonDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _horizonDbParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<HorizonDbParameterGroupData> response = Response.FromValue(HorizonDbParameterGroupData.FromResponse(result), result);
-                    return Response.FromValue(new HorizonDbParameterGroupResource(Client, response.Value), response.GetRawResponse());
+                    Response<HorizonDBParameterGroupData> response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
+                    return Response.FromValue(new HorizonDBParameterGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    HorizonDbParameterGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    HorizonDbParameterGroupPatch patch = new HorizonDbParameterGroupPatch();
+                    HorizonDBParameterGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    HorizonDBParameterGroupPatch patch = new HorizonDBParameterGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<HorizonDbParameterGroupResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<HorizonDBParameterGroupResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -647,11 +647,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<HorizonDbParameterGroupResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBParameterGroupResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupResource.SetTags");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupResource.SetTags");
             scope.Start();
             try
             {
@@ -665,17 +665,17 @@ namespace Azure.ResourceManager.HorizonDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _horizonDbParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<HorizonDbParameterGroupData> response = Response.FromValue(HorizonDbParameterGroupData.FromResponse(result), result);
-                    return Response.FromValue(new HorizonDbParameterGroupResource(Client, response.Value), response.GetRawResponse());
+                    Response<HorizonDBParameterGroupData> response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
+                    return Response.FromValue(new HorizonDBParameterGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    HorizonDbParameterGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    HorizonDbParameterGroupPatch patch = new HorizonDbParameterGroupPatch();
+                    HorizonDBParameterGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    HorizonDBParameterGroupPatch patch = new HorizonDBParameterGroupPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<HorizonDbParameterGroupResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<HorizonDBParameterGroupResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -690,11 +690,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<HorizonDbParameterGroupResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBParameterGroupResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupResource.SetTags");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupResource.SetTags");
             scope.Start();
             try
             {
@@ -708,17 +708,17 @@ namespace Azure.ResourceManager.HorizonDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _horizonDbParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<HorizonDbParameterGroupData> response = Response.FromValue(HorizonDbParameterGroupData.FromResponse(result), result);
-                    return Response.FromValue(new HorizonDbParameterGroupResource(Client, response.Value), response.GetRawResponse());
+                    Response<HorizonDBParameterGroupData> response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
+                    return Response.FromValue(new HorizonDBParameterGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    HorizonDbParameterGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    HorizonDbParameterGroupPatch patch = new HorizonDbParameterGroupPatch();
+                    HorizonDBParameterGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    HorizonDBParameterGroupPatch patch = new HorizonDBParameterGroupPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<HorizonDbParameterGroupResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<HorizonDBParameterGroupResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -733,11 +733,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<HorizonDbParameterGroupResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBParameterGroupResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupResource.RemoveTag");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupResource.RemoveTag");
             scope.Start();
             try
             {
@@ -750,21 +750,21 @@ namespace Azure.ResourceManager.HorizonDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _horizonDbParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<HorizonDbParameterGroupData> response = Response.FromValue(HorizonDbParameterGroupData.FromResponse(result), result);
-                    return Response.FromValue(new HorizonDbParameterGroupResource(Client, response.Value), response.GetRawResponse());
+                    Response<HorizonDBParameterGroupData> response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
+                    return Response.FromValue(new HorizonDBParameterGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    HorizonDbParameterGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    HorizonDbParameterGroupPatch patch = new HorizonDbParameterGroupPatch();
+                    HorizonDBParameterGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    HorizonDBParameterGroupPatch patch = new HorizonDBParameterGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<HorizonDbParameterGroupResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<HorizonDBParameterGroupResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -779,11 +779,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<HorizonDbParameterGroupResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBParameterGroupResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupResource.RemoveTag");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupResource.RemoveTag");
             scope.Start();
             try
             {
@@ -796,21 +796,21 @@ namespace Azure.ResourceManager.HorizonDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _horizonDbParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<HorizonDbParameterGroupData> response = Response.FromValue(HorizonDbParameterGroupData.FromResponse(result), result);
-                    return Response.FromValue(new HorizonDbParameterGroupResource(Client, response.Value), response.GetRawResponse());
+                    Response<HorizonDBParameterGroupData> response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
+                    return Response.FromValue(new HorizonDBParameterGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    HorizonDbParameterGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    HorizonDbParameterGroupPatch patch = new HorizonDbParameterGroupPatch();
+                    HorizonDBParameterGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    HorizonDBParameterGroupPatch patch = new HorizonDBParameterGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<HorizonDbParameterGroupResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<HorizonDBParameterGroupResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

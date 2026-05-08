@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary></summary>
-    public partial class HorizonDbParameterGroupResource : IJsonModel<HorizonDbParameterGroupData>
+    public partial class HorizonDBParameterGroupResource : IJsonModel<HorizonDBParameterGroupData>
     {
-        private static IJsonModel<HorizonDbParameterGroupData> s_dataDeserializationInstance;
+        private static IJsonModel<HorizonDBParameterGroupData> s_dataDeserializationInstance;
 
-        private static IJsonModel<HorizonDbParameterGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HorizonDbParameterGroupData();
+        private static IJsonModel<HorizonDBParameterGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HorizonDBParameterGroupData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDbParameterGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HorizonDbParameterGroupData>)Data).Write(writer, options);
+        void IJsonModel<HorizonDBParameterGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HorizonDBParameterGroupData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbParameterGroupData IJsonModel<HorizonDbParameterGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        HorizonDBParameterGroupData IJsonModel<HorizonDBParameterGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDbParameterGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HorizonDbParameterGroupData>(Data, options, AzureResourceManagerHorizonDBContext.Default);
+        BinaryData IPersistableModel<HorizonDBParameterGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HorizonDBParameterGroupData>(Data, options, AzureResourceManagerHorizonDBContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbParameterGroupData IPersistableModel<HorizonDbParameterGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HorizonDbParameterGroupData>(data, options, AzureResourceManagerHorizonDBContext.Default);
+        HorizonDBParameterGroupData IPersistableModel<HorizonDBParameterGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HorizonDBParameterGroupData>(data, options, AzureResourceManagerHorizonDBContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDbParameterGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<HorizonDBParameterGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

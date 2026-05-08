@@ -12,7 +12,7 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> The mode to create a new HorizonDb cluster. </summary>
-    public readonly partial struct CreateModePool : IEquatable<CreateModePool>
+    public readonly partial struct HorizonDBCreateModePool : IEquatable<HorizonDBCreateModePool>
     {
         private readonly string _value;
         /// <summary> Create a new pool. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Update an existing pool. </summary>
         private const string UpdateValue = "Update";
 
-        /// <summary> Initializes a new instance of <see cref="CreateModePool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBCreateModePool"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CreateModePool(string value)
+        public HorizonDBCreateModePool(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Create a new pool. </summary>
-        public static CreateModePool Create { get; } = new CreateModePool(CreateValue);
+        public static HorizonDBCreateModePool Create { get; } = new HorizonDBCreateModePool(CreateValue);
 
         /// <summary> Update an existing pool. </summary>
-        public static CreateModePool Update { get; } = new CreateModePool(UpdateValue);
+        public static HorizonDBCreateModePool Update { get; } = new HorizonDBCreateModePool(UpdateValue);
 
-        /// <summary> Determines if two <see cref="CreateModePool"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="HorizonDBCreateModePool"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(CreateModePool left, CreateModePool right) => left.Equals(right);
+        public static bool operator ==(HorizonDBCreateModePool left, HorizonDBCreateModePool right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="CreateModePool"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="HorizonDBCreateModePool"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(CreateModePool left, CreateModePool right) => !left.Equals(right);
+        public static bool operator !=(HorizonDBCreateModePool left, HorizonDBCreateModePool right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="CreateModePool"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HorizonDBCreateModePool"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CreateModePool(string value) => new CreateModePool(value);
+        public static implicit operator HorizonDBCreateModePool(string value) => new HorizonDBCreateModePool(value);
 
-        /// <summary> Converts a string to a <see cref="CreateModePool"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HorizonDBCreateModePool"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CreateModePool?(string value) => value == null ? null : new CreateModePool(value);
+        public static implicit operator HorizonDBCreateModePool?(string value) => value == null ? null : new HorizonDBCreateModePool(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CreateModePool other && Equals(other);
+        public override bool Equals(object obj) => obj is HorizonDBCreateModePool other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(CreateModePool other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HorizonDBCreateModePool other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

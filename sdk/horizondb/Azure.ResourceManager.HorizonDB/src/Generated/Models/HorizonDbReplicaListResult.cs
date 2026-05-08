@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Initializes a new instance of <see cref="HorizonDbReplicaListResult"/>. </summary>
         /// <param name="value"> The HorizonDbReplica items on this page. </param>
-        internal HorizonDbReplicaListResult(IEnumerable<HorizonDbReplicaData> value)
+        internal HorizonDbReplicaListResult(IEnumerable<HorizonDBReplicaData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="value"> The HorizonDbReplica items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbReplicaListResult(IList<HorizonDbReplicaData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDbReplicaListResult(IList<HorizonDBReplicaData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> The HorizonDbReplica items on this page. </summary>
-        public IList<HorizonDbReplicaData> Value { get; }
+        public IList<HorizonDBReplicaData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

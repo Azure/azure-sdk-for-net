@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HorizonDbPrivateLinkResource"/> and their operations.
-    /// Each <see cref="HorizonDbPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="HorizonDbClusterResource"/>.
-    /// To get a <see cref="HorizonDbPrivateLinkResourceCollection"/> instance call the GetHorizonDbPrivateLinkResources method from an instance of <see cref="HorizonDbClusterResource"/>.
+    /// A class representing a collection of <see cref="HorizonDBPrivateLinkResource"/> and their operations.
+    /// Each <see cref="HorizonDBPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="HorizonDBClusterResource"/>.
+    /// To get a <see cref="HorizonDBPrivateLinkResourceCollection"/> instance call the GetHorizonDBPrivateLinkResources method from an instance of <see cref="HorizonDBClusterResource"/>.
     /// </summary>
-    public partial class HorizonDbPrivateLinkResourceCollection : ArmCollection, IEnumerable<HorizonDbPrivateLinkResource>, IAsyncEnumerable<HorizonDbPrivateLinkResource>
+    public partial class HorizonDBPrivateLinkResourceCollection : ArmCollection, IEnumerable<HorizonDBPrivateLinkResource>, IAsyncEnumerable<HorizonDBPrivateLinkResource>
     {
-        private readonly ClientDiagnostics _horizonDbPrivateLinkResourcesClientDiagnostics;
-        private readonly HorizonDbPrivateLinkResources _horizonDbPrivateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _horizonDBPrivateLinkResourcesClientDiagnostics;
+        private readonly HorizonDBPrivateLinkResources _horizonDBPrivateLinkResourcesRestClient;
 
-        /// <summary> Initializes a new instance of HorizonDbPrivateLinkResourceCollection for mocking. </summary>
-        protected HorizonDbPrivateLinkResourceCollection()
+        /// <summary> Initializes a new instance of HorizonDBPrivateLinkResourceCollection for mocking. </summary>
+        protected HorizonDBPrivateLinkResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbPrivateLinkResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateLinkResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HorizonDbPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HorizonDBPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HorizonDbPrivateLinkResource.ResourceType, out string horizonDbPrivateLinkResourceApiVersion);
-            _horizonDbPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDbPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _horizonDbPrivateLinkResourcesRestClient = new HorizonDbPrivateLinkResources(_horizonDbPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, horizonDbPrivateLinkResourceApiVersion ?? "2026-01-20-preview");
+            TryGetApiVersion(HorizonDBPrivateLinkResource.ResourceType, out string horizonDBPrivateLinkResourceApiVersion);
+            _horizonDBPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDBPrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            _horizonDBPrivateLinkResourcesRestClient = new HorizonDBPrivateLinkResources(_horizonDBPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, horizonDBPrivateLinkResourceApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.HorizonDB
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != HorizonDbClusterResource.ResourceType)
+            if (id.ResourceType != HorizonDBClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HorizonDbClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HorizonDBClusterResource.ResourceType), id);
             }
         }
 
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<HorizonDbPrivateLinkResource>> GetAsync(string groupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBPrivateLinkResource>> GetAsync(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using DiagnosticScope scope = _horizonDbPrivateLinkResourcesClientDiagnostics.CreateScope("HorizonDbPrivateLinkResourceCollection.Get");
+            using DiagnosticScope scope = _horizonDBPrivateLinkResourcesClientDiagnostics.CreateScope("HorizonDBPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
@@ -87,14 +87,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupName, context);
+                HttpMessage message = _horizonDBPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HorizonDbPrivateLinkResourceData> response = Response.FromValue(HorizonDbPrivateLinkResourceData.FromResponse(result), result);
+                Response<HorizonDBPrivateLinkResourceData> response = Response.FromValue(HorizonDBPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<HorizonDbPrivateLinkResource> Get(string groupName, CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBPrivateLinkResource> Get(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using DiagnosticScope scope = _horizonDbPrivateLinkResourcesClientDiagnostics.CreateScope("HorizonDbPrivateLinkResourceCollection.Get");
+            using DiagnosticScope scope = _horizonDBPrivateLinkResourcesClientDiagnostics.CreateScope("HorizonDBPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupName, context);
+                HttpMessage message = _horizonDBPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<HorizonDbPrivateLinkResourceData> response = Response.FromValue(HorizonDbPrivateLinkResourceData.FromResponse(result), result);
+                Response<HorizonDBPrivateLinkResourceData> response = Response.FromValue(HorizonDBPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,14 +170,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDbPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HorizonDbPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HorizonDBPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDbPrivateLinkResourceData, HorizonDbPrivateLinkResource>(new HorizonDbPrivateLinkResourcesGetAllAsyncCollectionResultOfT(_horizonDbPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HorizonDbPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<HorizonDBPrivateLinkResourceData, HorizonDBPrivateLinkResource>(new HorizonDBPrivateLinkResourcesGetAllAsyncCollectionResultOfT(_horizonDBPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HorizonDBPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -198,14 +198,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDbPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HorizonDbPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HorizonDBPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDbPrivateLinkResourceData, HorizonDbPrivateLinkResource>(new HorizonDbPrivateLinkResourcesGetAllCollectionResultOfT(_horizonDbPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HorizonDbPrivateLinkResource(Client, data));
+            return new PageableWrapper<HorizonDBPrivateLinkResourceData, HorizonDBPrivateLinkResource>(new HorizonDBPrivateLinkResourcesGetAllCollectionResultOfT(_horizonDBPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HorizonDBPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using DiagnosticScope scope = _horizonDbPrivateLinkResourcesClientDiagnostics.CreateScope("HorizonDbPrivateLinkResourceCollection.Exists");
+            using DiagnosticScope scope = _horizonDBPrivateLinkResourcesClientDiagnostics.CreateScope("HorizonDBPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -241,17 +241,17 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupName, context);
+                HttpMessage message = _horizonDBPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<HorizonDbPrivateLinkResourceData> response = default;
+                Response<HorizonDBPrivateLinkResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbPrivateLinkResourceData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBPrivateLinkResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbPrivateLinkResourceData)null, result);
+                        response = Response.FromValue((HorizonDBPrivateLinkResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using DiagnosticScope scope = _horizonDbPrivateLinkResourcesClientDiagnostics.CreateScope("HorizonDbPrivateLinkResourceCollection.Exists");
+            using DiagnosticScope scope = _horizonDBPrivateLinkResourcesClientDiagnostics.CreateScope("HorizonDBPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -298,17 +298,17 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupName, context);
+                HttpMessage message = _horizonDBPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<HorizonDbPrivateLinkResourceData> response = default;
+                Response<HorizonDBPrivateLinkResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbPrivateLinkResourceData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBPrivateLinkResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbPrivateLinkResourceData)null, result);
+                        response = Response.FromValue((HorizonDBPrivateLinkResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -343,11 +343,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<HorizonDbPrivateLinkResource>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<HorizonDBPrivateLinkResource>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using DiagnosticScope scope = _horizonDbPrivateLinkResourcesClientDiagnostics.CreateScope("HorizonDbPrivateLinkResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _horizonDBPrivateLinkResourcesClientDiagnostics.CreateScope("HorizonDBPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -355,26 +355,26 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupName, context);
+                HttpMessage message = _horizonDBPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<HorizonDbPrivateLinkResourceData> response = default;
+                Response<HorizonDBPrivateLinkResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbPrivateLinkResourceData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBPrivateLinkResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbPrivateLinkResourceData)null, result);
+                        response = Response.FromValue((HorizonDBPrivateLinkResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<HorizonDbPrivateLinkResource>(response.GetRawResponse());
+                    return new NoValueResponse<HorizonDBPrivateLinkResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -404,11 +404,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<HorizonDbPrivateLinkResource> GetIfExists(string groupName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<HorizonDBPrivateLinkResource> GetIfExists(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using DiagnosticScope scope = _horizonDbPrivateLinkResourcesClientDiagnostics.CreateScope("HorizonDbPrivateLinkResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _horizonDBPrivateLinkResourcesClientDiagnostics.CreateScope("HorizonDBPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -416,26 +416,26 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupName, context);
+                HttpMessage message = _horizonDBPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<HorizonDbPrivateLinkResourceData> response = default;
+                Response<HorizonDBPrivateLinkResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbPrivateLinkResourceData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBPrivateLinkResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbPrivateLinkResourceData)null, result);
+                        response = Response.FromValue((HorizonDBPrivateLinkResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<HorizonDbPrivateLinkResource>(response.GetRawResponse());
+                    return new NoValueResponse<HorizonDBPrivateLinkResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.HorizonDB
             }
         }
 
-        IEnumerator<HorizonDbPrivateLinkResource> IEnumerable<HorizonDbPrivateLinkResource>.GetEnumerator()
+        IEnumerator<HorizonDBPrivateLinkResource> IEnumerable<HorizonDBPrivateLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<HorizonDbPrivateLinkResource> IAsyncEnumerable<HorizonDbPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<HorizonDBPrivateLinkResource> IAsyncEnumerable<HorizonDBPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

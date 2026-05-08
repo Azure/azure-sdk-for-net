@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableHorizonDBSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _horizonDbClustersClientDiagnostics;
-        private HorizonDbClusters _horizonDbClustersRestClient;
-        private ClientDiagnostics _horizonDbParameterGroupsClientDiagnostics;
-        private HorizonDbParameterGroups _horizonDbParameterGroupsRestClient;
+        private ClientDiagnostics _horizonDBClustersClientDiagnostics;
+        private HorizonDBClusters _horizonDBClustersRestClient;
+        private ClientDiagnostics _horizonDBParameterGroupsClientDiagnostics;
+        private HorizonDBParameterGroups _horizonDBParameterGroupsRestClient;
 
         /// <summary> Initializes a new instance of MockableHorizonDBSubscriptionResource for mocking. </summary>
         protected MockableHorizonDBSubscriptionResource()
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         {
         }
 
-        private ClientDiagnostics HorizonDbClustersClientDiagnostics => _horizonDbClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HorizonDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics HorizonDBClustersClientDiagnostics => _horizonDBClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HorizonDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HorizonDbClusters HorizonDbClustersRestClient => _horizonDbClustersRestClient ??= new HorizonDbClusters(HorizonDbClustersClientDiagnostics, Pipeline, Endpoint, "2026-01-20-preview");
+        private HorizonDBClusters HorizonDBClustersRestClient => _horizonDBClustersRestClient ??= new HorizonDBClusters(HorizonDBClustersClientDiagnostics, Pipeline, Endpoint, "2026-01-20-preview");
 
-        private ClientDiagnostics HorizonDbParameterGroupsClientDiagnostics => _horizonDbParameterGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HorizonDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics HorizonDBParameterGroupsClientDiagnostics => _horizonDBParameterGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HorizonDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HorizonDbParameterGroups HorizonDbParameterGroupsRestClient => _horizonDbParameterGroupsRestClient ??= new HorizonDbParameterGroups(HorizonDbParameterGroupsClientDiagnostics, Pipeline, Endpoint, "2026-01-20-preview");
+        private HorizonDBParameterGroups HorizonDBParameterGroupsRestClient => _horizonDBParameterGroupsRestClient ??= new HorizonDBParameterGroups(HorizonDBParameterGroupsClientDiagnostics, Pipeline, Endpoint, "2026-01-20-preview");
 
         /// <summary>
         /// Lists all HorizonDb clusters in a subscription.
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDbClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HorizonDbClusterResource> GetHorizonDbClustersAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HorizonDBClusterResource> GetHorizonDBClustersAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDbClusterData, HorizonDbClusterResource>(new HorizonDbClustersGetBySubscriptionAsyncCollectionResultOfT(HorizonDbClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HorizonDbClusterResource(Client, data));
+            return new AsyncPageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClustersGetBySubscriptionAsyncCollectionResultOfT(HorizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HorizonDBClusterResource(Client, data));
         }
 
         /// <summary>
@@ -90,14 +90,14 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDbClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HorizonDbClusterResource> GetHorizonDbClusters(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HorizonDBClusterResource> GetHorizonDBClusters(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDbClusterData, HorizonDbClusterResource>(new HorizonDbClustersGetBySubscriptionCollectionResultOfT(HorizonDbClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HorizonDbClusterResource(Client, data));
+            return new PageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClustersGetBySubscriptionCollectionResultOfT(HorizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HorizonDBClusterResource(Client, data));
         }
 
         /// <summary>
@@ -118,14 +118,14 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDbParameterGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HorizonDbParameterGroupResource> GetHorizonDbParameterGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBParameterGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HorizonDBParameterGroupResource> GetHorizonDBParameterGroupsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDbParameterGroupData, HorizonDbParameterGroupResource>(new HorizonDbParameterGroupsGetBySubscriptionAsyncCollectionResultOfT(HorizonDbParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HorizonDbParameterGroupResource(Client, data));
+            return new AsyncPageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupsGetBySubscriptionAsyncCollectionResultOfT(HorizonDBParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HorizonDBParameterGroupResource(Client, data));
         }
 
         /// <summary>
@@ -146,14 +146,14 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDbParameterGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HorizonDbParameterGroupResource> GetHorizonDbParameterGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBParameterGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HorizonDBParameterGroupResource> GetHorizonDBParameterGroups(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDbParameterGroupData, HorizonDbParameterGroupResource>(new HorizonDbParameterGroupsGetBySubscriptionCollectionResultOfT(HorizonDbParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HorizonDbParameterGroupResource(Client, data));
+            return new PageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupsGetBySubscriptionCollectionResultOfT(HorizonDBParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HorizonDBParameterGroupResource(Client, data));
         }
     }
 }

@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HorizonDbParameterGroupResource"/> and their operations.
-    /// Each <see cref="HorizonDbParameterGroupResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="HorizonDbParameterGroupCollection"/> instance call the GetHorizonDbParameterGroups method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="HorizonDBParameterGroupResource"/> and their operations.
+    /// Each <see cref="HorizonDBParameterGroupResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="HorizonDBParameterGroupCollection"/> instance call the GetHorizonDBParameterGroups method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class HorizonDbParameterGroupCollection : ArmCollection, IEnumerable<HorizonDbParameterGroupResource>, IAsyncEnumerable<HorizonDbParameterGroupResource>
+    public partial class HorizonDBParameterGroupCollection : ArmCollection, IEnumerable<HorizonDBParameterGroupResource>, IAsyncEnumerable<HorizonDBParameterGroupResource>
     {
-        private readonly ClientDiagnostics _horizonDbParameterGroupsClientDiagnostics;
-        private readonly HorizonDbParameterGroups _horizonDbParameterGroupsRestClient;
+        private readonly ClientDiagnostics _horizonDBParameterGroupsClientDiagnostics;
+        private readonly HorizonDBParameterGroups _horizonDBParameterGroupsRestClient;
 
-        /// <summary> Initializes a new instance of HorizonDbParameterGroupCollection for mocking. </summary>
-        protected HorizonDbParameterGroupCollection()
+        /// <summary> Initializes a new instance of HorizonDBParameterGroupCollection for mocking. </summary>
+        protected HorizonDBParameterGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbParameterGroupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HorizonDbParameterGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HorizonDBParameterGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HorizonDbParameterGroupResource.ResourceType, out string horizonDbParameterGroupApiVersion);
-            _horizonDbParameterGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDbParameterGroupResource.ResourceType.Namespace, Diagnostics);
-            _horizonDbParameterGroupsRestClient = new HorizonDbParameterGroups(_horizonDbParameterGroupsClientDiagnostics, Pipeline, Endpoint, horizonDbParameterGroupApiVersion ?? "2026-01-20-preview");
+            TryGetApiVersion(HorizonDBParameterGroupResource.ResourceType, out string horizonDBParameterGroupApiVersion);
+            _horizonDBParameterGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDBParameterGroupResource.ResourceType.Namespace, Diagnostics);
+            _horizonDBParameterGroupsRestClient = new HorizonDBParameterGroups(_horizonDBParameterGroupsClientDiagnostics, Pipeline, Endpoint, horizonDBParameterGroupApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="parameterGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<HorizonDbParameterGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string parameterGroupName, HorizonDbParameterGroupData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HorizonDBParameterGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string parameterGroupName, HorizonDBParameterGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(parameterGroupName, nameof(parameterGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbParameterGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, HorizonDbParameterGroupData.ToRequestContent(data), context);
+                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, HorizonDBParameterGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HorizonDBArmOperation<HorizonDbParameterGroupResource> operation = new HorizonDBArmOperation<HorizonDbParameterGroupResource>(
-                    new HorizonDbParameterGroupOperationSource(Client),
-                    _horizonDbParameterGroupsClientDiagnostics,
+                HorizonDBArmOperation<HorizonDBParameterGroupResource> operation = new HorizonDBArmOperation<HorizonDBParameterGroupResource>(
+                    new HorizonDBParameterGroupOperationSource(Client),
+                    _horizonDBParameterGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="parameterGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<HorizonDbParameterGroupResource> CreateOrUpdate(WaitUntil waitUntil, string parameterGroupName, HorizonDbParameterGroupData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HorizonDBParameterGroupResource> CreateOrUpdate(WaitUntil waitUntil, string parameterGroupName, HorizonDBParameterGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(parameterGroupName, nameof(parameterGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbParameterGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, HorizonDbParameterGroupData.ToRequestContent(data), context);
+                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, HorizonDBParameterGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                HorizonDBArmOperation<HorizonDbParameterGroupResource> operation = new HorizonDBArmOperation<HorizonDbParameterGroupResource>(
-                    new HorizonDbParameterGroupOperationSource(Client),
-                    _horizonDbParameterGroupsClientDiagnostics,
+                HorizonDBArmOperation<HorizonDBParameterGroupResource> operation = new HorizonDBArmOperation<HorizonDBParameterGroupResource>(
+                    new HorizonDBParameterGroupOperationSource(Client),
+                    _horizonDBParameterGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -192,11 +192,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="parameterGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<HorizonDbParameterGroupResource>> GetAsync(string parameterGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBParameterGroupResource>> GetAsync(string parameterGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(parameterGroupName, nameof(parameterGroupName));
 
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupCollection.Get");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupCollection.Get");
             scope.Start();
             try
             {
@@ -204,14 +204,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, context);
+                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HorizonDbParameterGroupData> response = Response.FromValue(HorizonDbParameterGroupData.FromResponse(result), result);
+                Response<HorizonDBParameterGroupData> response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbParameterGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBParameterGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="parameterGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<HorizonDbParameterGroupResource> Get(string parameterGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBParameterGroupResource> Get(string parameterGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(parameterGroupName, nameof(parameterGroupName));
 
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupCollection.Get");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupCollection.Get");
             scope.Start();
             try
             {
@@ -253,14 +253,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, context);
+                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<HorizonDbParameterGroupData> response = Response.FromValue(HorizonDbParameterGroupData.FromResponse(result), result);
+                Response<HorizonDBParameterGroupData> response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbParameterGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBParameterGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -287,14 +287,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDbParameterGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HorizonDbParameterGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBParameterGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HorizonDBParameterGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDbParameterGroupData, HorizonDbParameterGroupResource>(new HorizonDbParameterGroupsGetByResourceGroupAsyncCollectionResultOfT(_horizonDbParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HorizonDbParameterGroupResource(Client, data));
+            return new AsyncPageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupsGetByResourceGroupAsyncCollectionResultOfT(_horizonDBParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HorizonDBParameterGroupResource(Client, data));
         }
 
         /// <summary>
@@ -315,14 +315,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDbParameterGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HorizonDbParameterGroupResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBParameterGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HorizonDBParameterGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDbParameterGroupData, HorizonDbParameterGroupResource>(new HorizonDbParameterGroupsGetByResourceGroupCollectionResultOfT(_horizonDbParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HorizonDbParameterGroupResource(Client, data));
+            return new PageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupsGetByResourceGroupCollectionResultOfT(_horizonDBParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HorizonDBParameterGroupResource(Client, data));
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             Argument.AssertNotNullOrEmpty(parameterGroupName, nameof(parameterGroupName));
 
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupCollection.Exists");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -358,17 +358,17 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, context);
+                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<HorizonDbParameterGroupData> response = default;
+                Response<HorizonDBParameterGroupData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbParameterGroupData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbParameterGroupData)null, result);
+                        response = Response.FromValue((HorizonDBParameterGroupData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             Argument.AssertNotNullOrEmpty(parameterGroupName, nameof(parameterGroupName));
 
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupCollection.Exists");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -415,17 +415,17 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, context);
+                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<HorizonDbParameterGroupData> response = default;
+                Response<HorizonDBParameterGroupData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbParameterGroupData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbParameterGroupData)null, result);
+                        response = Response.FromValue((HorizonDBParameterGroupData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -460,11 +460,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="parameterGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<HorizonDbParameterGroupResource>> GetIfExistsAsync(string parameterGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<HorizonDBParameterGroupResource>> GetIfExistsAsync(string parameterGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(parameterGroupName, nameof(parameterGroupName));
 
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -472,26 +472,26 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, context);
+                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<HorizonDbParameterGroupData> response = default;
+                Response<HorizonDBParameterGroupData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbParameterGroupData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbParameterGroupData)null, result);
+                        response = Response.FromValue((HorizonDBParameterGroupData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<HorizonDbParameterGroupResource>(response.GetRawResponse());
+                    return new NoValueResponse<HorizonDBParameterGroupResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbParameterGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBParameterGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -521,11 +521,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="parameterGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<HorizonDbParameterGroupResource> GetIfExists(string parameterGroupName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<HorizonDBParameterGroupResource> GetIfExists(string parameterGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(parameterGroupName, nameof(parameterGroupName));
 
-            using DiagnosticScope scope = _horizonDbParameterGroupsClientDiagnostics.CreateScope("HorizonDbParameterGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _horizonDBParameterGroupsClientDiagnostics.CreateScope("HorizonDBParameterGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -533,26 +533,26 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, context);
+                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<HorizonDbParameterGroupData> response = default;
+                Response<HorizonDBParameterGroupData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbParameterGroupData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbParameterGroupData)null, result);
+                        response = Response.FromValue((HorizonDBParameterGroupData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<HorizonDbParameterGroupResource>(response.GetRawResponse());
+                    return new NoValueResponse<HorizonDBParameterGroupResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbParameterGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBParameterGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.HorizonDB
             }
         }
 
-        IEnumerator<HorizonDbParameterGroupResource> IEnumerable<HorizonDbParameterGroupResource>.GetEnumerator()
+        IEnumerator<HorizonDBParameterGroupResource> IEnumerable<HorizonDBParameterGroupResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<HorizonDbParameterGroupResource> IAsyncEnumerable<HorizonDbParameterGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<HorizonDBParameterGroupResource> IAsyncEnumerable<HorizonDBParameterGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
