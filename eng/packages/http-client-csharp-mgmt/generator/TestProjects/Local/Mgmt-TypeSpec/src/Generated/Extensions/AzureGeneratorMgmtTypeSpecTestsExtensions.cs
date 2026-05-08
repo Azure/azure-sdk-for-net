@@ -3000,36 +3000,36 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// List Zoo resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetZoosAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetZoosCustomAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ZooResource> GetZoosAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ZooResource> GetZoosCustomAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetZoosAsync(cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetZoosCustomAsync(cancellationToken);
         }
 
         /// <summary>
         /// List Zoo resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetZoos(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetZoosCustom(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ZooResource> GetZoos(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<ZooResource> GetZoosCustom(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetZoos(cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetZoosCustom(cancellationToken);
         }
 
         /// <summary>
