@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.TrafficManager
             return message;
         }
 
-        internal HttpMessage CreateUpdateV2Request(Guid subscriptionId, string resourceGroupName, string profileName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

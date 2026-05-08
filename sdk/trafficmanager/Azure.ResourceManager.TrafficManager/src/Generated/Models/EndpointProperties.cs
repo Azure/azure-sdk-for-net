@@ -13,7 +13,7 @@ using Azure.ResourceManager.TrafficManager;
 namespace Azure.ResourceManager.TrafficManager.Models
 {
     /// <summary> Class representing a Traffic Manager endpoint properties. </summary>
-    public partial class EndpointProperties
+    internal partial class EndpointProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

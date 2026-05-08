@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Profiles_UpdateV2. </description>
+        /// <description> Profiles_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The Traffic Manager profile parameters supplied to the Update operation. </param>
+        /// <param name="data"> The Traffic Manager profile parameters supplied to the Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<TrafficManagerProfileResource>> UpdateAsync(TrafficManagerProfilePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<TrafficManagerProfileResource>> UpdateAsync(TrafficManagerProfileData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _profilesClientDiagnostics.CreateScope("TrafficManagerProfileResource.Update");
             scope.Start();
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateUpdateV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TrafficManagerProfilePatch.ToRequestContent(patch), context);
+                HttpMessage message = _profilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TrafficManagerProfileData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Profiles_UpdateV2. </description>
+        /// <description> Profiles_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -262,12 +262,12 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The Traffic Manager profile parameters supplied to the Update operation. </param>
+        /// <param name="data"> The Traffic Manager profile parameters supplied to the Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<TrafficManagerProfileResource> Update(TrafficManagerProfilePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<TrafficManagerProfileResource> Update(TrafficManagerProfileData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _profilesClientDiagnostics.CreateScope("TrafficManagerProfileResource.Update");
             scope.Start();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateUpdateV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TrafficManagerProfilePatch.ToRequestContent(patch), context);
+                HttpMessage message = _profilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TrafficManagerProfileData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.TrafficManager
                 else
                 {
                     TrafficManagerProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    TrafficManagerProfilePatch patch = new TrafficManagerProfilePatch();
+                    TrafficManagerProfileData patch = new TrafficManagerProfileData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.TrafficManager
                 else
                 {
                     TrafficManagerProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    TrafficManagerProfilePatch patch = new TrafficManagerProfilePatch();
+                    TrafficManagerProfileData patch = new TrafficManagerProfileData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.TrafficManager
                 else
                 {
                     TrafficManagerProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    TrafficManagerProfilePatch patch = new TrafficManagerProfilePatch();
+                    TrafficManagerProfileData patch = new TrafficManagerProfileData();
                     patch.Tags.ReplaceWith(tags);
                     Response<TrafficManagerProfileResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.TrafficManager
                 else
                 {
                     TrafficManagerProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    TrafficManagerProfilePatch patch = new TrafficManagerProfilePatch();
+                    TrafficManagerProfileData patch = new TrafficManagerProfileData();
                     patch.Tags.ReplaceWith(tags);
                     Response<TrafficManagerProfileResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.TrafficManager
                 else
                 {
                     TrafficManagerProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    TrafficManagerProfilePatch patch = new TrafficManagerProfilePatch();
+                    TrafficManagerProfileData patch = new TrafficManagerProfileData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.TrafficManager
                 else
                 {
                     TrafficManagerProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    TrafficManagerProfilePatch patch = new TrafficManagerProfilePatch();
+                    TrafficManagerProfileData patch = new TrafficManagerProfileData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

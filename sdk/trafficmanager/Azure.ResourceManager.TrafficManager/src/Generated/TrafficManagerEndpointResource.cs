@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Endpoints_UpdateV2. </description>
+        /// <description> Endpoints_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The Traffic Manager endpoint parameters supplied to the Update operation. </param>
+        /// <param name="data"> The Traffic Manager endpoint parameters supplied to the Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<TrafficManagerEndpointResource>> UpdateAsync(TrafficManagerEndpointPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<TrafficManagerEndpointResource>> UpdateAsync(TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("TrafficManagerEndpointResource.Update");
             scope.Start();
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateUpdateV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.ResourceType.Type, Id.Name, TrafficManagerEndpointPatch.ToRequestContent(patch), context);
+                HttpMessage message = _endpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.ResourceType.Type, Id.Name, TrafficManagerEndpointData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerEndpointData> response = Response.FromValue(TrafficManagerEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Endpoints_UpdateV2. </description>
+        /// <description> Endpoints_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -262,12 +262,12 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The Traffic Manager endpoint parameters supplied to the Update operation. </param>
+        /// <param name="data"> The Traffic Manager endpoint parameters supplied to the Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<TrafficManagerEndpointResource> Update(TrafficManagerEndpointPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<TrafficManagerEndpointResource> Update(TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("TrafficManagerEndpointResource.Update");
             scope.Start();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateUpdateV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.ResourceType.Type, Id.Name, TrafficManagerEndpointPatch.ToRequestContent(patch), context);
+                HttpMessage message = _endpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.ResourceType.Type, Id.Name, TrafficManagerEndpointData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerEndpointData> response = Response.FromValue(TrafficManagerEndpointData.FromResponse(result), result);
                 if (response.Value == null)
