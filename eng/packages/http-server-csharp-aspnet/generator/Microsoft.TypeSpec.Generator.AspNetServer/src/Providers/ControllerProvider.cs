@@ -167,7 +167,7 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.Providers
                     type = type.WithNullable(true);
                 }
 
-                var name = SafeIdentifier(p.Name);
+                var name = p.Name.ToVariableName();
                 if (!seen.Add(name))
                 {
                     continue;
@@ -222,26 +222,6 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.Providers
             return string.Equals(name, "accept", StringComparison.OrdinalIgnoreCase)
                 || string.Equals(name, "content-type", StringComparison.OrdinalIgnoreCase)
                 || string.Equals(name, "contenttype", StringComparison.OrdinalIgnoreCase);
-        }
-
-        private static readonly HashSet<string> CSharpKeywords = new()
-        {
-            "abstract","as","base","bool","break","byte","case","catch","char","checked","class","const",
-            "continue","decimal","default","delegate","do","double","else","enum","event","explicit",
-            "extern","false","finally","fixed","float","for","foreach","goto","if","implicit","in","int",
-            "interface","internal","is","lock","long","namespace","new","null","object","operator","out",
-            "override","params","private","protected","public","readonly","ref","return","sbyte","sealed",
-            "short","sizeof","stackalloc","static","string","struct","switch","this","throw","true","try",
-            "typeof","uint","ulong","unchecked","unsafe","ushort","using","virtual","void","volatile","while",
-        };
-
-        private static string SafeIdentifier(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                return "_arg";
-            }
-            return CSharpKeywords.Contains(name) ? "@" + name : name;
         }
     }
 }
