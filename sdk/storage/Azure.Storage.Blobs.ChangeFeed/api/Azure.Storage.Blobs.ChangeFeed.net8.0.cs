@@ -52,6 +52,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public System.DateTimeOffset? CreationTime { get { throw null; } }
         public System.Uri DestinationUri { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset? LastAccessTime { get { throw null; } }
         public Azure.Storage.Blobs.ChangeFeed.BlobOperationResult LongRunningOperationInfo { get { throw null; } }
         public Azure.Storage.Blobs.ChangeFeed.ChangeFeedEventPreviousInfo PreviousInfo { get { throw null; } }
         public bool? Recursive { get { throw null; } }
@@ -73,6 +74,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType BlobAsyncOperationInitiated { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType BlobCreated { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType BlobDeleted { get { throw null; } }
+        public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType BlobLastAccessTimeUpdated { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType BlobPropertiesUpdated { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType BlobSnapshotCreated { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType BlobTierChanged { get { throw null; } }
@@ -95,7 +97,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
     {
         public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEvent BlobChangeFeedEvent(string topic, string subject, Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType eventType, System.DateTimeOffset eventTime, System.Guid id, Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventData eventData, long dataVersion, string metadataVersion) { throw null; }
         public static Azure.Storage.Blobs.ChangeFeed.BlobOperationResult BlobChangeFeedEventAsyncOperationInfo(Azure.Storage.Blobs.Models.AccessTier? destinationAccessTier, bool wasAsyncOperation, string copyId) { throw null; }
-        public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventData BlobChangeFeedEventData(string blobOperationName, string clientRequestId, System.Guid requestId, Azure.ETag eTag, string contentType, long contentLength, Azure.Storage.Blobs.Models.BlobType blobType, string blobVersion, string containerVersion, Azure.Storage.Blobs.Models.AccessTier? blobAccessTier, long contentOffset, System.Uri destinationUri, System.Uri sourceUri, System.Uri uri, bool recursive, string sequencer, Azure.Storage.Blobs.ChangeFeed.ChangeFeedEventPreviousInfo previousInfo, string snapshot, System.Collections.Generic.Dictionary<string, Azure.Storage.Blobs.ChangeFeed.BlobPropertyChange> updatedBlobProperties, Azure.Storage.Blobs.ChangeFeed.BlobOperationResult asyncOperationInfo, Azure.Storage.Blobs.ChangeFeed.BlobTagsChange updatedBlobTags, System.DateTimeOffset? creationTime) { throw null; }
+        public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventData BlobChangeFeedEventData(string blobOperationName, string clientRequestId, System.Guid requestId, Azure.ETag eTag, string contentType, long contentLength, Azure.Storage.Blobs.Models.BlobType blobType, string blobVersion, string containerVersion, Azure.Storage.Blobs.Models.AccessTier? blobAccessTier, long contentOffset, System.Uri destinationUri, System.Uri sourceUri, System.Uri uri, bool recursive, string sequencer, Azure.Storage.Blobs.ChangeFeed.ChangeFeedEventPreviousInfo previousInfo, string snapshot, System.Collections.Generic.Dictionary<string, Azure.Storage.Blobs.ChangeFeed.BlobPropertyChange> updatedBlobProperties, Azure.Storage.Blobs.ChangeFeed.BlobOperationResult asyncOperationInfo, Azure.Storage.Blobs.ChangeFeed.BlobTagsChange updatedBlobTags, System.DateTimeOffset? creationTime, System.DateTimeOffset? lastAccessTime) { throw null; }
         public static Azure.Storage.Blobs.ChangeFeed.BlobPropertyChange BlobChangeFeedEventUpdatedBlobProperty(string propertyName, string previousValue, string newValue) { throw null; }
         public static Azure.Storage.Blobs.ChangeFeed.BlobTagsChange BlobChangeFeedEventUpdatedBlobTags(System.Collections.Generic.Dictionary<string, string> previousTags, System.Collections.Generic.Dictionary<string, string> newTags) { throw null; }
         public static Azure.Storage.Blobs.ChangeFeed.ChangeFeedEventPreviousInfo ChangeFeedEventPreviousInfo(string softDeleteSnapshot, bool wasBlobSoftDeleted, string blobVersion, string lastVersion, Azure.Storage.Blobs.Models.AccessTier? previousTier) { throw null; }
@@ -121,6 +123,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public static Azure.Storage.Blobs.ChangeFeed.BlobOperationName SnapshotBlob { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.BlobOperationName UndeleteBlob { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.BlobOperationName UnspecifiedApi { get { throw null; } }
+        public static Azure.Storage.Blobs.ChangeFeed.BlobOperationName UpdateLastAccessTime { get { throw null; } }
         public bool Equals(Azure.Storage.Blobs.ChangeFeed.BlobOperationName other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }

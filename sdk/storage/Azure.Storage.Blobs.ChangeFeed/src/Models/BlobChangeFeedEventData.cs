@@ -52,6 +52,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
             CreationTime = creationTime != null
                 ? DateTimeOffset.Parse((string)creationTime, CultureInfo.InvariantCulture)
                 : (DateTimeOffset?)null;
+            record.TryGetValue(Constants.ChangeFeed.EventData.LastAccessTime, out object lastAccessTime);
+            LastAccessTime = lastAccessTime != null
+                ? DateTimeOffset.Parse((string)lastAccessTime, CultureInfo.InvariantCulture)
+                : (DateTimeOffset?)null;
             record.TryGetValue(Constants.ChangeFeed.EventData.DestinationUrl, out object destinationUrl);
             DestinationUri = !string.IsNullOrEmpty((string)destinationUrl) ? new Uri((string)destinationUrl) : null;
             record.TryGetValue(Constants.ChangeFeed.EventData.SourceUrl, out object sourceUrl);
@@ -135,6 +139,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// The time the blob was created.
         /// </summary>
         public DateTimeOffset? CreationTime { get; internal set; }
+
+        /// <summary>
+        /// The time the blob was last accessed.
+        /// </summary>
+        public DateTimeOffset? LastAccessTime { get; internal set; }
 
         /// <summary>
         /// The url of the file that will exist after the operation completes. For example, if a file is renamed,

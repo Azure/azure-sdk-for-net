@@ -502,6 +502,7 @@ namespace Azure.Storage
                 public const string AppendBlob = "AppendBlob";
                 public const string ContentOffset = "contentOffset";
                 public const string CreationTime = "createTime";
+                public const string LastAccessTime = "lastAccessTime";
                 public const string DestinationUrl = "destinationUrl";
                 public const string SourceUrl = "sourceUrl";
                 public const string Url = "url";
