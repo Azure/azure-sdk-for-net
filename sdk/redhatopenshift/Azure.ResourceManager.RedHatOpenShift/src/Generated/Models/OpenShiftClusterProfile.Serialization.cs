@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RedHatOpenShift;
 
 namespace Azure.ResourceManager.RedHatOpenShift.Models
 {
-    public partial class OpenShiftClusterProfile : IUtf8JsonSerializable, IJsonModel<OpenShiftClusterProfile>
+    /// <summary> ClusterProfile represents a cluster profile. </summary>
+    public partial class OpenShiftClusterProfile : IJsonModel<OpenShiftClusterProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OpenShiftClusterProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OpenShiftClusterProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OpenShiftClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOpenShiftClusterProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OpenShiftClusterProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OpenShiftClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedHatOpenShiftContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(OpenShiftClusterProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OpenShiftClusterProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OpenShiftClusterProfile IPersistableModel<OpenShiftClusterProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OpenShiftClusterProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OpenShiftClusterProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +70,11 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenShiftClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenShiftClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OpenShiftClusterProfile)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(PullSecret))
             {
                 writer.WritePropertyName("pullSecret"u8);
@@ -64,15 +105,15 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 writer.WritePropertyName("oidcIssuer"u8);
                 writer.WriteStringValue(OidcIssuer);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,22 +122,27 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             }
         }
 
-        OpenShiftClusterProfile IJsonModel<OpenShiftClusterProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OpenShiftClusterProfile IJsonModel<OpenShiftClusterProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OpenShiftClusterProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenShiftClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenShiftClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OpenShiftClusterProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeOpenShiftClusterProfile(document.RootElement, options);
         }
 
-        internal static OpenShiftClusterProfile DeserializeOpenShiftClusterProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static OpenShiftClusterProfile DeserializeOpenShiftClusterProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -107,54 +153,52 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             ResourceIdentifier resourceGroupId = default;
             OpenShiftFipsValidatedModule? fipsValidatedModules = default;
             string oidcIssuer = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("pullSecret"u8))
+                if (prop.NameEquals("pullSecret"u8))
                 {
-                    pullSecret = property.Value.GetString();
+                    pullSecret = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("domain"u8))
+                if (prop.NameEquals("domain"u8))
                 {
-                    domain = property.Value.GetString();
+                    domain = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    version = property.Value.GetString();
+                    version = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGroupId"u8))
+                if (prop.NameEquals("resourceGroupId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceGroupId = new ResourceIdentifier(property.Value.GetString());
+                    resourceGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("fipsValidatedModules"u8))
+                if (prop.NameEquals("fipsValidatedModules"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fipsValidatedModules = new OpenShiftFipsValidatedModule(property.Value.GetString());
+                    fipsValidatedModules = new OpenShiftFipsValidatedModule(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("oidcIssuer"u8))
+                if (prop.NameEquals("oidcIssuer"u8))
                 {
-                    oidcIssuer = property.Value.GetString();
+                    oidcIssuer = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new OpenShiftClusterProfile(
                 pullSecret,
                 domain,
@@ -162,38 +206,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 resourceGroupId,
                 fipsValidatedModules,
                 oidcIssuer,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<OpenShiftClusterProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenShiftClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedHatOpenShiftContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(OpenShiftClusterProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        OpenShiftClusterProfile IPersistableModel<OpenShiftClusterProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenShiftClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOpenShiftClusterProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OpenShiftClusterProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<OpenShiftClusterProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

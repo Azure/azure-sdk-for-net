@@ -1110,7 +1110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="extendedInfo"> Additional information for this backup item. </param>
         /// <param name="kpisHealths"> Health details of different KPIs. </param>
         /// <param name="nodesList"> List of the nodes in case of distributed container. </param>
-        /// <param name="parentProtectedItem"> Parent Protected item in case protected as part of a parent. </param>
+        /// <param name="parentProtectedItem"> Name of the parent protected item (e.g., SQL Instance name) when this database is protected as part of a parent. </param>
         /// <param name="protectionLevel"> Protection type in case protected as part of a parent. </param>
         /// <returns> A new <see cref="Models.VmWorkloadSqlDatabaseProtectedItem"/> instance for mocking. </returns>
         public static VmWorkloadSqlDatabaseProtectedItem VmWorkloadSqlDatabaseProtectedItem(BackupManagementType? backupManagementType = default, BackupDataSourceType? workloadType = default, string containerName = default, ResourceIdentifier sourceResourceId = default, ResourceIdentifier policyId = default, DateTimeOffset? lastRecoverOn = default, string backupSetName = default, BackupCreateMode? createMode = default, DateTimeOffset? deferredDeletedOn = default, bool? isScheduledForDeferredDelete = default, string deferredDeleteTimeRemaining = default, bool? isDeferredDeleteScheduleUpcoming = default, bool? isRehydrate = default, IEnumerable<string> resourceGuardOperationRequests = default, bool? isArchiveEnabled = default, string policyName = default, int? softDeleteRetentionPeriodInDays = default, string vaultId = default, BackupSourceSideScanInfo sourceSideScanInfo = default, string friendlyName = default, string serverName = default, string parentName = default, string parentType = default, string protectionStatus = default, BackupProtectionState? protectionState = default, LastBackupStatus? lastBackupStatus = default, DateTimeOffset? lastBackupOn = default, BackupErrorDetail lastBackupErrorDetail = default, string protectedItemDataSourceId = default, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus = default, VmWorkloadProtectedItemExtendedInfo extendedInfo = default, IDictionary<string, KpiResourceHealthDetails> kpisHealths = default, IEnumerable<DistributedNodesInfo> nodesList = default, string parentProtectedItem = default, BackupProtectionLevel? protectionLevel = default)
@@ -1532,9 +1532,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="threatStatus"> Threat status of the recovery point. </param>
         /// <param name="threatInfo"> Recovery point threat information. </param>
         /// <returns> A new <see cref="Models.BackupGenericRecoveryPoint"/> instance for mocking. </returns>
-        public static BackupGenericRecoveryPoint BackupGenericRecoveryPoint(string objectType = default, RecoveryPointThreatStatus? threatStatus = default, IEnumerable<RecoveryPointThreatInformation> threatInfo = default)
+        public static BackupGenericRecoveryPoint BackupGenericRecoveryPoint(string objectType = default, BackupThreatStatus? threatStatus = default, IEnumerable<BackupThreatInfo> threatInfo = default)
         {
-            threatInfo ??= new ChangeTrackingList<RecoveryPointThreatInformation>();
+            threatInfo ??= new ChangeTrackingList<BackupThreatInfo>();
 
             return new UnknownRecoveryPoint(objectType, threatStatus, threatInfo.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1546,19 +1546,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="threatState"> Threat Status Types. </param>
         /// <param name="threatStartOn"> Start timestamp of the threat. </param>
         /// <param name="threatEndOn"> End timestamp of the threat. </param>
-        /// <param name="threatURI"> threat details link. </param>
+        /// <param name="threatUri"> threat details link. </param>
         /// <param name="threatSeverity"> Threat Severity Types. </param>
-        /// <returns> A new <see cref="Models.RecoveryPointThreatInformation"/> instance for mocking. </returns>
-        public static RecoveryPointThreatInformation RecoveryPointThreatInformation(string threatTitle = default, string threatDescription = default, DateTimeOffset? lastUpdatedOn = default, RecoveryPointThreatState? threatState = default, DateTimeOffset? threatStartOn = default, DateTimeOffset? threatEndOn = default, Uri threatURI = default, RecoveryPointThreatSeverity? threatSeverity = default)
+        /// <returns> A new <see cref="Models.BackupThreatInfo"/> instance for mocking. </returns>
+        public static BackupThreatInfo BackupThreatInfo(string threatTitle = default, string threatDescription = default, DateTimeOffset? lastUpdatedOn = default, BackupThreatState? threatState = default, DateTimeOffset? threatStartOn = default, DateTimeOffset? threatEndOn = default, Uri threatUri = default, BackupThreatSeverity? threatSeverity = default)
         {
-            return new RecoveryPointThreatInformation(
+            return new BackupThreatInfo(
                 threatTitle,
                 threatDescription,
                 lastUpdatedOn,
                 threatState,
                 threatStartOn,
                 threatEndOn,
-                threatURI,
+                threatUri,
                 threatSeverity,
                 additionalBinaryDataProperties: null);
         }
@@ -1573,9 +1573,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
         /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
         /// <returns> A new <see cref="Models.FileShareRecoveryPoint"/> instance for mocking. </returns>
-        public static FileShareRecoveryPoint FileShareRecoveryPoint(RecoveryPointThreatStatus? threatStatus = default, IEnumerable<RecoveryPointThreatInformation> threatInfo = default, string recoveryPointType = default, DateTimeOffset? recoveryPointOn = default, Uri fileShareSnapshotUri = default, int? recoveryPointSizeInGB = default, RecoveryPointProperties recoveryPointProperties = default, IEnumerable<RecoveryPointTierInformation> recoveryPointTierDetails = default)
+        public static FileShareRecoveryPoint FileShareRecoveryPoint(BackupThreatStatus? threatStatus = default, IEnumerable<BackupThreatInfo> threatInfo = default, string recoveryPointType = default, DateTimeOffset? recoveryPointOn = default, Uri fileShareSnapshotUri = default, int? recoveryPointSizeInGB = default, RecoveryPointProperties recoveryPointProperties = default, IEnumerable<RecoveryPointTierInformation> recoveryPointTierDetails = default)
         {
-            threatInfo ??= new ChangeTrackingList<RecoveryPointThreatInformation>();
+            threatInfo ??= new ChangeTrackingList<BackupThreatInfo>();
             recoveryPointTierDetails ??= new ChangeTrackingList<RecoveryPointTierInformation>();
 
             return new FileShareRecoveryPoint(
@@ -1613,9 +1613,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
         /// <param name="timeRanges"> List of log ranges. </param>
         /// <returns> A new <see cref="Models.WorkloadPointInTimeRecoveryPoint"/> instance for mocking. </returns>
-        public static WorkloadPointInTimeRecoveryPoint WorkloadPointInTimeRecoveryPoint(RecoveryPointThreatStatus? threatStatus = default, IEnumerable<RecoveryPointThreatInformation> threatInfo = default, DateTimeOffset? recoveryPointCreatedOn = default, RestorePointType? restorePointType = default, IEnumerable<RecoveryPointTierInformationV2> recoveryPointTierDetails = default, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default, RecoveryPointProperties recoveryPointProperties = default, IEnumerable<PointInTimeRange> timeRanges = default)
+        public static WorkloadPointInTimeRecoveryPoint WorkloadPointInTimeRecoveryPoint(BackupThreatStatus? threatStatus = default, IEnumerable<BackupThreatInfo> threatInfo = default, DateTimeOffset? recoveryPointCreatedOn = default, RestorePointType? restorePointType = default, IEnumerable<RecoveryPointTierInformationV2> recoveryPointTierDetails = default, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default, RecoveryPointProperties recoveryPointProperties = default, IEnumerable<PointInTimeRange> timeRanges = default)
         {
-            threatInfo ??= new ChangeTrackingList<RecoveryPointThreatInformation>();
+            threatInfo ??= new ChangeTrackingList<BackupThreatInfo>();
             recoveryPointTierDetails ??= new ChangeTrackingList<RecoveryPointTierInformationV2>();
             recoveryPointMoveReadinessInfo ??= new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>();
             timeRanges ??= new ChangeTrackingList<PointInTimeRange>();
@@ -1642,9 +1642,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointMoveReadinessInfo"> Eligibility of RP to be moved to another tier. </param>
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
         /// <returns> A new <see cref="Models.WorkloadRecoveryPoint"/> instance for mocking. </returns>
-        public static WorkloadRecoveryPoint WorkloadRecoveryPoint(RecoveryPointThreatStatus? threatStatus = default, IEnumerable<RecoveryPointThreatInformation> threatInfo = default, DateTimeOffset? recoveryPointCreatedOn = default, RestorePointType? restorePointType = default, IEnumerable<RecoveryPointTierInformationV2> recoveryPointTierDetails = default, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default, RecoveryPointProperties recoveryPointProperties = default)
+        public static WorkloadRecoveryPoint WorkloadRecoveryPoint(BackupThreatStatus? threatStatus = default, IEnumerable<BackupThreatInfo> threatInfo = default, DateTimeOffset? recoveryPointCreatedOn = default, RestorePointType? restorePointType = default, IEnumerable<RecoveryPointTierInformationV2> recoveryPointTierDetails = default, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default, RecoveryPointProperties recoveryPointProperties = default)
         {
-            threatInfo ??= new ChangeTrackingList<RecoveryPointThreatInformation>();
+            threatInfo ??= new ChangeTrackingList<BackupThreatInfo>();
             recoveryPointTierDetails ??= new ChangeTrackingList<RecoveryPointTierInformationV2>();
             recoveryPointMoveReadinessInfo ??= new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>();
 
@@ -1683,9 +1683,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
         /// <param name="timeRanges"> List of log ranges. </param>
         /// <returns> A new <see cref="Models.WorkloadSapHanaPointInTimeRecoveryPoint"/> instance for mocking. </returns>
-        public static WorkloadSapHanaPointInTimeRecoveryPoint WorkloadSapHanaPointInTimeRecoveryPoint(RecoveryPointThreatStatus? threatStatus = default, IEnumerable<RecoveryPointThreatInformation> threatInfo = default, DateTimeOffset? recoveryPointCreatedOn = default, RestorePointType? restorePointType = default, IEnumerable<RecoveryPointTierInformationV2> recoveryPointTierDetails = default, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default, RecoveryPointProperties recoveryPointProperties = default, IEnumerable<PointInTimeRange> timeRanges = default)
+        public static WorkloadSapHanaPointInTimeRecoveryPoint WorkloadSapHanaPointInTimeRecoveryPoint(BackupThreatStatus? threatStatus = default, IEnumerable<BackupThreatInfo> threatInfo = default, DateTimeOffset? recoveryPointCreatedOn = default, RestorePointType? restorePointType = default, IEnumerable<RecoveryPointTierInformationV2> recoveryPointTierDetails = default, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default, RecoveryPointProperties recoveryPointProperties = default, IEnumerable<PointInTimeRange> timeRanges = default)
         {
-            threatInfo ??= new ChangeTrackingList<RecoveryPointThreatInformation>();
+            threatInfo ??= new ChangeTrackingList<BackupThreatInfo>();
             recoveryPointTierDetails ??= new ChangeTrackingList<RecoveryPointTierInformationV2>();
             recoveryPointMoveReadinessInfo ??= new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>();
             timeRanges ??= new ChangeTrackingList<PointInTimeRange>();
@@ -1712,9 +1712,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointMoveReadinessInfo"> Eligibility of RP to be moved to another tier. </param>
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
         /// <returns> A new <see cref="Models.WorkloadSapHanaRecoveryPoint"/> instance for mocking. </returns>
-        public static WorkloadSapHanaRecoveryPoint WorkloadSapHanaRecoveryPoint(RecoveryPointThreatStatus? threatStatus = default, IEnumerable<RecoveryPointThreatInformation> threatInfo = default, DateTimeOffset? recoveryPointCreatedOn = default, RestorePointType? restorePointType = default, IEnumerable<RecoveryPointTierInformationV2> recoveryPointTierDetails = default, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default, RecoveryPointProperties recoveryPointProperties = default)
+        public static WorkloadSapHanaRecoveryPoint WorkloadSapHanaRecoveryPoint(BackupThreatStatus? threatStatus = default, IEnumerable<BackupThreatInfo> threatInfo = default, DateTimeOffset? recoveryPointCreatedOn = default, RestorePointType? restorePointType = default, IEnumerable<RecoveryPointTierInformationV2> recoveryPointTierDetails = default, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default, RecoveryPointProperties recoveryPointProperties = default)
         {
-            threatInfo ??= new ChangeTrackingList<RecoveryPointThreatInformation>();
+            threatInfo ??= new ChangeTrackingList<BackupThreatInfo>();
             recoveryPointTierDetails ??= new ChangeTrackingList<RecoveryPointTierInformationV2>();
             recoveryPointMoveReadinessInfo ??= new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>();
 
@@ -1740,9 +1740,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
         /// <param name="timeRanges"> List of log ranges. </param>
         /// <returns> A new <see cref="Models.WorkloadSapAsePointInTimeRecoveryPoint"/> instance for mocking. </returns>
-        public static WorkloadSapAsePointInTimeRecoveryPoint WorkloadSapAsePointInTimeRecoveryPoint(RecoveryPointThreatStatus? threatStatus = default, IEnumerable<RecoveryPointThreatInformation> threatInfo = default, DateTimeOffset? recoveryPointCreatedOn = default, RestorePointType? restorePointType = default, IEnumerable<RecoveryPointTierInformationV2> recoveryPointTierDetails = default, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default, RecoveryPointProperties recoveryPointProperties = default, IEnumerable<PointInTimeRange> timeRanges = default)
+        public static WorkloadSapAsePointInTimeRecoveryPoint WorkloadSapAsePointInTimeRecoveryPoint(BackupThreatStatus? threatStatus = default, IEnumerable<BackupThreatInfo> threatInfo = default, DateTimeOffset? recoveryPointCreatedOn = default, RestorePointType? restorePointType = default, IEnumerable<RecoveryPointTierInformationV2> recoveryPointTierDetails = default, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default, RecoveryPointProperties recoveryPointProperties = default, IEnumerable<PointInTimeRange> timeRanges = default)
         {
-            threatInfo ??= new ChangeTrackingList<RecoveryPointThreatInformation>();
+            threatInfo ??= new ChangeTrackingList<BackupThreatInfo>();
             recoveryPointTierDetails ??= new ChangeTrackingList<RecoveryPointTierInformationV2>();
             recoveryPointMoveReadinessInfo ??= new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>();
             timeRanges ??= new ChangeTrackingList<PointInTimeRange>();
@@ -1769,9 +1769,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointMoveReadinessInfo"> Eligibility of RP to be moved to another tier. </param>
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
         /// <returns> A new <see cref="Models.WorkloadSapAseRecoveryPoint"/> instance for mocking. </returns>
-        public static WorkloadSapAseRecoveryPoint WorkloadSapAseRecoveryPoint(RecoveryPointThreatStatus? threatStatus = default, IEnumerable<RecoveryPointThreatInformation> threatInfo = default, DateTimeOffset? recoveryPointCreatedOn = default, RestorePointType? restorePointType = default, IEnumerable<RecoveryPointTierInformationV2> recoveryPointTierDetails = default, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default, RecoveryPointProperties recoveryPointProperties = default)
+        public static WorkloadSapAseRecoveryPoint WorkloadSapAseRecoveryPoint(BackupThreatStatus? threatStatus = default, IEnumerable<BackupThreatInfo> threatInfo = default, DateTimeOffset? recoveryPointCreatedOn = default, RestorePointType? restorePointType = default, IEnumerable<RecoveryPointTierInformationV2> recoveryPointTierDetails = default, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default, RecoveryPointProperties recoveryPointProperties = default)
         {
-            threatInfo ??= new ChangeTrackingList<RecoveryPointThreatInformation>();
+            threatInfo ??= new ChangeTrackingList<BackupThreatInfo>();
             recoveryPointTierDetails ??= new ChangeTrackingList<RecoveryPointTierInformationV2>();
             recoveryPointMoveReadinessInfo ??= new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>();
 
@@ -1802,9 +1802,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="timeRanges"> List of log ranges. </param>
         /// <returns> A new <see cref="Models.WorkloadSqlPointInTimeRecoveryPoint"/> instance for mocking. </returns>
-        public static WorkloadSqlPointInTimeRecoveryPoint WorkloadSqlPointInTimeRecoveryPoint(RecoveryPointThreatStatus? threatStatus = default, IEnumerable<RecoveryPointThreatInformation> threatInfo = default, DateTimeOffset? recoveryPointCreatedOn = default, RestorePointType? restorePointType = default, IEnumerable<RecoveryPointTierInformationV2> recoveryPointTierDetails = default, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default, RecoveryPointProperties recoveryPointProperties = default, WorkloadSqlRecoveryPointExtendedInfo extendedInfo = default, IEnumerable<PointInTimeRange> timeRanges = default)
+        public static WorkloadSqlPointInTimeRecoveryPoint WorkloadSqlPointInTimeRecoveryPoint(BackupThreatStatus? threatStatus = default, IEnumerable<BackupThreatInfo> threatInfo = default, DateTimeOffset? recoveryPointCreatedOn = default, RestorePointType? restorePointType = default, IEnumerable<RecoveryPointTierInformationV2> recoveryPointTierDetails = default, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default, RecoveryPointProperties recoveryPointProperties = default, WorkloadSqlRecoveryPointExtendedInfo extendedInfo = default, IEnumerable<PointInTimeRange> timeRanges = default)
         {
-            threatInfo ??= new ChangeTrackingList<RecoveryPointThreatInformation>();
+            threatInfo ??= new ChangeTrackingList<BackupThreatInfo>();
             recoveryPointTierDetails ??= new ChangeTrackingList<RecoveryPointTierInformationV2>();
             recoveryPointMoveReadinessInfo ??= new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>();
             timeRanges ??= new ChangeTrackingList<PointInTimeRange>();
@@ -1837,9 +1837,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Or when ListRecoveryPoints is called for Log RP only with ExtendedInfo query filter
         /// </param>
         /// <returns> A new <see cref="Models.WorkloadSqlRecoveryPoint"/> instance for mocking. </returns>
-        public static WorkloadSqlRecoveryPoint WorkloadSqlRecoveryPoint(RecoveryPointThreatStatus? threatStatus = default, IEnumerable<RecoveryPointThreatInformation> threatInfo = default, DateTimeOffset? recoveryPointCreatedOn = default, RestorePointType? restorePointType = default, IEnumerable<RecoveryPointTierInformationV2> recoveryPointTierDetails = default, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default, RecoveryPointProperties recoveryPointProperties = default, WorkloadSqlRecoveryPointExtendedInfo extendedInfo = default)
+        public static WorkloadSqlRecoveryPoint WorkloadSqlRecoveryPoint(BackupThreatStatus? threatStatus = default, IEnumerable<BackupThreatInfo> threatInfo = default, DateTimeOffset? recoveryPointCreatedOn = default, RestorePointType? restorePointType = default, IEnumerable<RecoveryPointTierInformationV2> recoveryPointTierDetails = default, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default, RecoveryPointProperties recoveryPointProperties = default, WorkloadSqlRecoveryPointExtendedInfo extendedInfo = default)
         {
-            threatInfo ??= new ChangeTrackingList<RecoveryPointThreatInformation>();
+            threatInfo ??= new ChangeTrackingList<BackupThreatInfo>();
             recoveryPointTierDetails ??= new ChangeTrackingList<RecoveryPointTierInformationV2>();
             recoveryPointMoveReadinessInfo ??= new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>();
 
@@ -1861,10 +1861,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="dataDirectoryPaths"> List of data directory paths during restore operation. </param>
         /// <param name="includedDatabases"> List of databases included in recovery point. </param>
         /// <returns> A new <see cref="Models.WorkloadSqlRecoveryPointExtendedInfo"/> instance for mocking. </returns>
-        public static WorkloadSqlRecoveryPointExtendedInfo WorkloadSqlRecoveryPointExtendedInfo(DateTimeOffset? dataDirectoryInfoCapturedOn = default, IEnumerable<SqlDataDirectory> dataDirectoryPaths = default, IEnumerable<BackupRecoveryPointDatabase> includedDatabases = default)
+        public static WorkloadSqlRecoveryPointExtendedInfo WorkloadSqlRecoveryPointExtendedInfo(DateTimeOffset? dataDirectoryInfoCapturedOn = default, IEnumerable<SqlDataDirectory> dataDirectoryPaths = default, IEnumerable<BackupDatabaseInRecoveryPoint> includedDatabases = default)
         {
             dataDirectoryPaths ??= new ChangeTrackingList<SqlDataDirectory>();
-            includedDatabases ??= new ChangeTrackingList<BackupRecoveryPointDatabase>();
+            includedDatabases ??= new ChangeTrackingList<BackupDatabaseInRecoveryPoint>();
 
             return new WorkloadSqlRecoveryPointExtendedInfo(dataDirectoryInfoCapturedOn, dataDirectoryPaths.ToList(), includedDatabases.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1878,9 +1878,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointAdditionalInfo"> Additional information associated with this backup copy. </param>
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
         /// <returns> A new <see cref="Models.GenericRecoveryPoint"/> instance for mocking. </returns>
-        public static GenericRecoveryPoint GenericRecoveryPoint(RecoveryPointThreatStatus? threatStatus = default, IEnumerable<RecoveryPointThreatInformation> threatInfo = default, string friendlyName = default, string recoveryPointType = default, DateTimeOffset? recoveryPointOn = default, string recoveryPointAdditionalInfo = default, RecoveryPointProperties recoveryPointProperties = default)
+        public static GenericRecoveryPoint GenericRecoveryPoint(BackupThreatStatus? threatStatus = default, IEnumerable<BackupThreatInfo> threatInfo = default, string friendlyName = default, string recoveryPointType = default, DateTimeOffset? recoveryPointOn = default, string recoveryPointAdditionalInfo = default, RecoveryPointProperties recoveryPointProperties = default)
         {
-            threatInfo ??= new ChangeTrackingList<RecoveryPointThreatInformation>();
+            threatInfo ??= new ChangeTrackingList<BackupThreatInfo>();
 
             return new GenericRecoveryPoint(
                 "GenericRecoveryPoint",
@@ -1920,9 +1920,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// should be null if VM is in public cloud
         /// </param>
         /// <returns> A new <see cref="Models.IaasVmRecoveryPoint"/> instance for mocking. </returns>
-        public static IaasVmRecoveryPoint IaasVmRecoveryPoint(RecoveryPointThreatStatus? threatStatus = default, IEnumerable<RecoveryPointThreatInformation> threatInfo = default, string recoveryPointType = default, DateTimeOffset? recoveryPointOn = default, string recoveryPointAdditionalInfo = default, string sourceVmStorageType = default, bool? isSourceVmEncrypted = default, KeyAndSecretDetails keyAndSecret = default, bool? isInstantIlrSessionActive = default, IEnumerable<RecoveryPointTierInformationV2> recoveryPointTierDetails = default, bool? isManagedVirtualMachine = default, string virtualMachineSize = default, bool? originalStorageAccountOption = default, string osType = default, RecoveryPointDiskConfiguration recoveryPointDiskConfiguration = default, IEnumerable<string> zones = default, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default, string securityType = default, RecoveryPointProperties recoveryPointProperties = default, bool? isPrivateAccessEnabledOnAnyDisk = default, ExtendedLocation extendedLocation = default)
+        public static IaasVmRecoveryPoint IaasVmRecoveryPoint(BackupThreatStatus? threatStatus = default, IEnumerable<BackupThreatInfo> threatInfo = default, string recoveryPointType = default, DateTimeOffset? recoveryPointOn = default, string recoveryPointAdditionalInfo = default, string sourceVmStorageType = default, bool? isSourceVmEncrypted = default, KeyAndSecretDetails keyAndSecret = default, bool? isInstantIlrSessionActive = default, IEnumerable<RecoveryPointTierInformationV2> recoveryPointTierDetails = default, bool? isManagedVirtualMachine = default, string virtualMachineSize = default, bool? originalStorageAccountOption = default, string osType = default, RecoveryPointDiskConfiguration recoveryPointDiskConfiguration = default, IEnumerable<string> zones = default, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default, string securityType = default, RecoveryPointProperties recoveryPointProperties = default, bool? isPrivateAccessEnabledOnAnyDisk = default, ExtendedLocation extendedLocation = default)
         {
-            threatInfo ??= new ChangeTrackingList<RecoveryPointThreatInformation>();
+            threatInfo ??= new ChangeTrackingList<BackupThreatInfo>();
             recoveryPointTierDetails ??= new ChangeTrackingList<RecoveryPointTierInformationV2>();
             zones ??= new ChangeTrackingList<string>();
             recoveryPointMoveReadinessInfo ??= new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>();

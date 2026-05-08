@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RedHatOpenShift
@@ -21,55 +22,53 @@ namespace Azure.ResourceManager.RedHatOpenShift
     /// <summary>
     /// A class representing a collection of <see cref="OpenShiftClusterResource"/> and their operations.
     /// Each <see cref="OpenShiftClusterResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="OpenShiftClusterCollection"/> instance call the GetOpenShiftClusters method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="OpenShiftClusterCollection"/> instance call the GetOpenShiftClusters method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class OpenShiftClusterCollection : ArmCollection, IEnumerable<OpenShiftClusterResource>, IAsyncEnumerable<OpenShiftClusterResource>
     {
-        private readonly ClientDiagnostics _openShiftClusterClientDiagnostics;
-        private readonly OpenShiftClustersRestOperations _openShiftClusterRestClient;
+        private readonly ClientDiagnostics _openShiftClustersClientDiagnostics;
+        private readonly OpenShiftClusters _openShiftClustersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="OpenShiftClusterCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of OpenShiftClusterCollection for mocking. </summary>
         protected OpenShiftClusterCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OpenShiftClusterCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenShiftClusterCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OpenShiftClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _openShiftClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", OpenShiftClusterResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(OpenShiftClusterResource.ResourceType, out string openShiftClusterApiVersion);
-            _openShiftClusterRestClient = new OpenShiftClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, openShiftClusterApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _openShiftClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", OpenShiftClusterResource.ResourceType.Namespace, Diagnostics);
+            _openShiftClustersRestClient = new OpenShiftClusters(_openShiftClustersClientDiagnostics, Pipeline, Endpoint, openShiftClusterApiVersion ?? "2025-07-25");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// The operation returns properties of a OpenShift cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftClusters_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftClusters_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="resourceName"> The name of the OpenShift cluster resource. </param>
         /// <param name="data"> The OpenShift cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<OpenShiftClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, OpenShiftClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _openShiftClusterClientDiagnostics.CreateScope("OpenShiftClusterCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _openShiftClustersClientDiagnostics.CreateScope("OpenShiftClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _openShiftClusterRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RedHatOpenShiftArmOperation<OpenShiftClusterResource>(new OpenShiftClusterOperationSource(Client), _openShiftClusterClientDiagnostics, Pipeline, _openShiftClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _openShiftClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, OpenShiftClusterData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RedHatOpenShiftArmOperation<OpenShiftClusterResource> operation = new RedHatOpenShiftArmOperation<OpenShiftClusterResource>(
+                    new OpenShiftClusterOperationSource(Client),
+                    _openShiftClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// The operation returns properties of a OpenShift cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftClusters_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftClusters_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="resourceName"> The name of the OpenShift cluster resource. </param>
         /// <param name="data"> The OpenShift cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<OpenShiftClusterResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, OpenShiftClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _openShiftClusterClientDiagnostics.CreateScope("OpenShiftClusterCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _openShiftClustersClientDiagnostics.CreateScope("OpenShiftClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _openShiftClusterRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
-                var operation = new RedHatOpenShiftArmOperation<OpenShiftClusterResource>(new OpenShiftClusterOperationSource(Client), _openShiftClusterClientDiagnostics, Pipeline, _openShiftClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _openShiftClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, OpenShiftClusterData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RedHatOpenShiftArmOperation<OpenShiftClusterResource> operation = new RedHatOpenShiftArmOperation<OpenShiftClusterResource>(
+                    new OpenShiftClusterOperationSource(Client),
+                    _openShiftClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// The operation returns properties of a OpenShift cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftClusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the OpenShift cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<OpenShiftClusterResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _openShiftClusterClientDiagnostics.CreateScope("OpenShiftClusterCollection.Get");
+            using DiagnosticScope scope = _openShiftClustersClientDiagnostics.CreateScope("OpenShiftClusterCollection.Get");
             scope.Start();
             try
             {
-                var response = await _openShiftClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _openShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OpenShiftClusterData> response = Response.FromValue(OpenShiftClusterData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OpenShiftClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// The operation returns properties of a OpenShift cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftClusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the OpenShift cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<OpenShiftClusterResource> Get(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _openShiftClusterClientDiagnostics.CreateScope("OpenShiftClusterCollection.Get");
+            using DiagnosticScope scope = _openShiftClustersClientDiagnostics.CreateScope("OpenShiftClusterCollection.Get");
             scope.Start();
             try
             {
-                var response = _openShiftClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _openShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OpenShiftClusterData> response = Response.FromValue(OpenShiftClusterData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OpenShiftClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// The operation returns properties of each OpenShift cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftClusters_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftClusters_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OpenShiftClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OpenShiftClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OpenShiftClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _openShiftClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _openShiftClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OpenShiftClusterResource(Client, OpenShiftClusterData.DeserializeOpenShiftClusterData(e)), _openShiftClusterClientDiagnostics, Pipeline, "OpenShiftClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OpenShiftClusterData, OpenShiftClusterResource>(new OpenShiftClustersGetByResourceGroupAsyncCollectionResultOfT(_openShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OpenShiftClusterCollection.GetAll"), data => new OpenShiftClusterResource(Client, data));
         }
 
         /// <summary>
         /// The operation returns properties of each OpenShift cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftClusters_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftClusters_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <returns> A collection of <see cref="OpenShiftClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OpenShiftClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _openShiftClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _openShiftClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OpenShiftClusterResource(Client, OpenShiftClusterData.DeserializeOpenShiftClusterData(e)), _openShiftClusterClientDiagnostics, Pipeline, "OpenShiftClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OpenShiftClusterData, OpenShiftClusterResource>(new OpenShiftClustersGetByResourceGroupCollectionResultOfT(_openShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OpenShiftClusterCollection.GetAll"), data => new OpenShiftClusterResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftClusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the OpenShift cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _openShiftClusterClientDiagnostics.CreateScope("OpenShiftClusterCollection.Exists");
+            using DiagnosticScope scope = _openShiftClustersClientDiagnostics.CreateScope("OpenShiftClusterCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _openShiftClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _openShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<OpenShiftClusterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OpenShiftClusterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OpenShiftClusterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftClusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the OpenShift cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _openShiftClusterClientDiagnostics.CreateScope("OpenShiftClusterCollection.Exists");
+            using DiagnosticScope scope = _openShiftClustersClientDiagnostics.CreateScope("OpenShiftClusterCollection.Exists");
             scope.Start();
             try
             {
-                var response = _openShiftClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _openShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<OpenShiftClusterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OpenShiftClusterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OpenShiftClusterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftClusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the OpenShift cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<OpenShiftClusterResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _openShiftClusterClientDiagnostics.CreateScope("OpenShiftClusterCollection.GetIfExists");
+            using DiagnosticScope scope = _openShiftClustersClientDiagnostics.CreateScope("OpenShiftClusterCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _openShiftClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _openShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<OpenShiftClusterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OpenShiftClusterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OpenShiftClusterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OpenShiftClusterResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OpenShiftClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftClusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the OpenShift cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<OpenShiftClusterResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _openShiftClusterClientDiagnostics.CreateScope("OpenShiftClusterCollection.GetIfExists");
+            using DiagnosticScope scope = _openShiftClustersClientDiagnostics.CreateScope("OpenShiftClusterCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _openShiftClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _openShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<OpenShiftClusterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OpenShiftClusterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OpenShiftClusterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OpenShiftClusterResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OpenShiftClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<OpenShiftClusterResource> IAsyncEnumerable<OpenShiftClusterResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
