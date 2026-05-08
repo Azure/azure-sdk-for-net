@@ -496,6 +496,7 @@ namespace Azure.Storage
                 public const string BlobType = "blobType";
                 public const string BlobVersionLower = "blobVersion";
                 public const string ContainerVersion = "containerVersion";
+                public const string RestoredContainerVersion = "restoredContainerVersion";
                 public const string BlobTier = "blobTier";
                 public const string BlockBlob = "BlockBlob";
                 public const string PageBlob = "PageBlob";

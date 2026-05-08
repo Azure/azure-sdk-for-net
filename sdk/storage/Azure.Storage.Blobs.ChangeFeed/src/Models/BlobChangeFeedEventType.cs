@@ -74,6 +74,21 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public static BlobChangeFeedEventType BlobLastAccessTimeUpdated { get; } = new BlobChangeFeedEventType("BlobLastAccessTimeUpdated");
 
         /// <summary>
+        /// Container Created.
+        /// </summary>
+        public static BlobChangeFeedEventType ContainerCreated { get; } = new BlobChangeFeedEventType("ContainerCreated");
+
+        /// <summary>
+        /// Container Deleted.
+        /// </summary>
+        public static BlobChangeFeedEventType ContainerDeleted { get; } = new BlobChangeFeedEventType("ContainerDeleted");
+
+        /// <summary>
+        /// Container Properties Updated.
+        /// </summary>
+        public static BlobChangeFeedEventType ContainerPropertiesUpdated { get; } = new BlobChangeFeedEventType("ContainerPropertiesUpdated");
+
+        /// <summary>
         /// Compares equality of two <see cref="BlobChangeFeedEventType"/> instances.
         /// </summary>
         /// <param name="left">The <see cref="BlobChangeFeedEventType"/> to compare.</param>
