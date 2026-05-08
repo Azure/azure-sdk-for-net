@@ -7,14 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> Custom Authentication properties. </summary>
-    public partial class BrokerAuthenticatorCustomAuth
+    internal partial class BrokerAuthenticatorCustomAuth
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorCustomAuth"/>. </summary>
+        /// <param name="x509SecretRef"> Kubernetes secret containing an X.509 client certificate. This is a reference to the secret through an identifying name, not the secret itself. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="x509SecretRef"/> is null. </exception>
+        public BrokerAuthenticatorCustomAuth(string x509SecretRef)
+        {
+            Argument.AssertNotNull(x509SecretRef, nameof(x509SecretRef));
+
+            X509 = new BrokerX509ManualCertificate(x509SecretRef);
+        }
 
         /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorCustomAuth"/>. </summary>
         /// <param name="x509"> X509 Custom Auth type details. </param>

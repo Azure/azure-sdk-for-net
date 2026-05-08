@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     Properties = new EventhubProperties();
                 }
-                Properties.PartitionCount = value.Value;
+                Properties.PartitionCount = value;
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     Properties = new EventhubProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     Properties = new EventhubProperties();
                 }
-                Properties.MessageTimestampType = value.Value;
+                Properties.MessageTimestampType = value;
             }
         }
     }

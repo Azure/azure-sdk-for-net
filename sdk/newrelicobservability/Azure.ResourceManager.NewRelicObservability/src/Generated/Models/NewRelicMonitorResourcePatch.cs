@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 {
                     Properties = new NewRelicMonitorResourceUpdateProperties();
                 }
-                Properties.OrgCreationSource = value.Value;
+                Properties.OrgCreationSource = value;
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 {
                     Properties = new NewRelicMonitorResourceUpdateProperties();
                 }
-                Properties.AccountCreationSource = value.Value;
+                Properties.AccountCreationSource = value;
             }
         }
 

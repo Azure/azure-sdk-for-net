@@ -1,14 +1,21 @@
 # Release History
 
-## 2.1.0-beta.1 (Unreleased)
+## 2.1.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added `ResponsesToolboxSearchPreviewTool` for discovering deferred tools via `search_tools` queries at runtime.
+- Added `Name` and `Description` properties to Responses tool classes.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.1.0-beta.1 (2026-04-21)
+
+### Features Added
+- The sample for Hosted agent was updated.
 
 ## 2.0.0 (2026-03-31)
 

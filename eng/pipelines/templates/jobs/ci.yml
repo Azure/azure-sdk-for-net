@@ -112,12 +112,6 @@ jobs:
     - job: "Analyze"
       timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
       condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
-      templateContext:
-        outputs:
-          - output: pipelineArtifact
-            targetPath: '$(Build.ArtifactStagingDirectory)'
-            artifactName: 'verify'
-
       pool:
         name: $(LINUXPOOL)
         image: $(LINUXVMIMAGE)

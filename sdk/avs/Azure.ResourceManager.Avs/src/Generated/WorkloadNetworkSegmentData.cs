@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     Properties = new WorkloadNetworkSegmentProperties();
                 }
-                Properties.Revision = value.Value;
+                Properties.Revision = value;
             }
         }
     }

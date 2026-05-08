@@ -11,19 +11,35 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     internal static partial class HealthProbeProtocolExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this HealthProbeProtocol value) => value switch
         {
             HealthProbeProtocol.NotSet => "NotSet",
             HealthProbeProtocol.Http => "Http",
             HealthProbeProtocol.Https => "Https",
+            HealthProbeProtocol.Grpc => "Grpc",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthProbeProtocol value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static HealthProbeProtocol ToHealthProbeProtocol(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSet")) return HealthProbeProtocol.NotSet;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Http")) return HealthProbeProtocol.Http;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Https")) return HealthProbeProtocol.Https;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSet"))
+            {
+                return HealthProbeProtocol.NotSet;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Http"))
+            {
+                return HealthProbeProtocol.Http;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Https"))
+            {
+                return HealthProbeProtocol.Https;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Grpc"))
+            {
+                return HealthProbeProtocol.Grpc;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthProbeProtocol value.");
         }
     }

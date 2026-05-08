@@ -10,16 +10,75 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class CdnOriginData : IUtf8JsonSerializable, IJsonModel<CdnOriginData>
+    /// <summary> CDN origin is the source of the content being delivered via CDN. When the edge nodes represented by an endpoint do not have the requested content cached, they attempt to fetch it from one or more of the configured origins. </summary>
+    public partial class CdnOriginData : ResourceData, IJsonModel<CdnOriginData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnOriginData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CdnOriginData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCdnOriginData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CdnOriginData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CdnOriginData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CdnOriginData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CdnOriginData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CdnOriginData IPersistableModel<CdnOriginData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CdnOriginData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CdnOriginData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="cdnOriginData"> The <see cref="CdnOriginData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CdnOriginData cdnOriginData)
+        {
+            if (cdnOriginData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(cdnOriginData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CdnOriginData"/> from. </param>
+        internal static CdnOriginData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCdnOriginData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CdnOriginData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,701 +90,105 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CdnOriginData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnOriginData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CdnOriginData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(HostName))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("hostName"u8);
-                writer.WriteStringValue(HostName);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(HttpPort))
-            {
-                if (HttpPort != null)
-                {
-                    writer.WritePropertyName("httpPort"u8);
-                    writer.WriteNumberValue(HttpPort.Value);
-                }
-                else
-                {
-                    writer.WriteNull("httpPort");
-                }
-            }
-            if (Optional.IsDefined(HttpsPort))
-            {
-                if (HttpsPort != null)
-                {
-                    writer.WritePropertyName("httpsPort"u8);
-                    writer.WriteNumberValue(HttpsPort.Value);
-                }
-                else
-                {
-                    writer.WriteNull("httpsPort");
-                }
-            }
-            if (Optional.IsDefined(OriginHostHeader))
-            {
-                writer.WritePropertyName("originHostHeader"u8);
-                writer.WriteStringValue(OriginHostHeader);
-            }
-            if (Optional.IsDefined(Priority))
-            {
-                if (Priority != null)
-                {
-                    writer.WritePropertyName("priority"u8);
-                    writer.WriteNumberValue(Priority.Value);
-                }
-                else
-                {
-                    writer.WriteNull("priority");
-                }
-            }
-            if (Optional.IsDefined(Weight))
-            {
-                if (Weight != null)
-                {
-                    writer.WritePropertyName("weight"u8);
-                    writer.WriteNumberValue(Weight.Value);
-                }
-                else
-                {
-                    writer.WriteNull("weight");
-                }
-            }
-            if (Optional.IsDefined(Enabled))
-            {
-                writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
-            }
-            if (Optional.IsDefined(PrivateLinkAlias))
-            {
-                writer.WritePropertyName("privateLinkAlias"u8);
-                writer.WriteStringValue(PrivateLinkAlias);
-            }
-            if (Optional.IsDefined(PrivateLinkResourceId))
-            {
-                if (PrivateLinkResourceId != null)
-                {
-                    writer.WritePropertyName("privateLinkResourceId"u8);
-                    writer.WriteStringValue(PrivateLinkResourceId);
-                }
-                else
-                {
-                    writer.WriteNull("privateLinkResourceId");
-                }
-            }
-            if (Optional.IsDefined(PrivateLinkLocation))
-            {
-                writer.WritePropertyName("privateLinkLocation"u8);
-                writer.WriteStringValue(PrivateLinkLocation);
-            }
-            if (Optional.IsDefined(PrivateLinkApprovalMessage))
-            {
-                writer.WritePropertyName("privateLinkApprovalMessage"u8);
-                writer.WriteStringValue(PrivateLinkApprovalMessage);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
-            {
-                writer.WritePropertyName("resourceState"u8);
-                writer.WriteStringValue(ResourceState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointStatus))
-            {
-                if (PrivateEndpointStatus != null)
-                {
-                    writer.WritePropertyName("privateEndpointStatus"u8);
-                    writer.WriteStringValue(PrivateEndpointStatus.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("privateEndpointStatus");
-                }
-            }
-            writer.WriteEndObject();
         }
 
-        CdnOriginData IJsonModel<CdnOriginData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CdnOriginData IJsonModel<CdnOriginData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CdnOriginData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CdnOriginData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnOriginData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CdnOriginData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCdnOriginData(document.RootElement, options);
         }
 
-        internal static CdnOriginData DeserializeCdnOriginData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CdnOriginData DeserializeCdnOriginData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string hostName = default;
-            int? httpPort = default;
-            int? httpsPort = default;
-            string originHostHeader = default;
-            int? priority = default;
-            int? weight = default;
-            bool? enabled = default;
-            string privateLinkAlias = default;
-            ResourceIdentifier privateLinkResourceId = default;
-            string privateLinkLocation = default;
-            string privateLinkApprovalMessage = default;
-            OriginResourceState? resourceState = default;
-            OriginProvisioningState? provisioningState = default;
-            PrivateEndpointStatus? privateEndpointStatus = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            OriginProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("hostName"u8))
-                        {
-                            hostName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("httpPort"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                httpPort = null;
-                                continue;
-                            }
-                            httpPort = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("httpsPort"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                httpsPort = null;
-                                continue;
-                            }
-                            httpsPort = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("originHostHeader"u8))
-                        {
-                            originHostHeader = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("priority"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                priority = null;
-                                continue;
-                            }
-                            priority = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("weight"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                weight = null;
-                                continue;
-                            }
-                            weight = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("enabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("privateLinkAlias"u8))
-                        {
-                            privateLinkAlias = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("privateLinkResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                privateLinkResourceId = null;
-                                continue;
-                            }
-                            privateLinkResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("privateLinkLocation"u8))
-                        {
-                            privateLinkLocation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("privateLinkApprovalMessage"u8))
-                        {
-                            privateLinkApprovalMessage = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceState = new OriginResourceState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new OriginProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("privateEndpointStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                privateEndpointStatus = null;
-                                continue;
-                            }
-                            privateEndpointStatus = new PrivateEndpointStatus(property0.Value.GetString());
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = OriginProperties.DeserializeOriginProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CdnOriginData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                hostName,
-                httpPort,
-                httpsPort,
-                originHostHeader,
-                priority,
-                weight,
-                enabled,
-                privateLinkAlias,
-                privateLinkResourceId,
-                privateLinkLocation,
-                privateLinkApprovalMessage,
-                resourceState,
-                provisioningState,
-                privateEndpointStatus,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    hostName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HostName))
-                {
-                    builder.Append("    hostName: ");
-                    if (HostName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{HostName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{HostName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpPort), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    httpPort: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HttpPort))
-                {
-                    builder.Append("    httpPort: ");
-                    builder.AppendLine($"{HttpPort.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpsPort), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    httpsPort: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HttpsPort))
-                {
-                    builder.Append("    httpsPort: ");
-                    builder.AppendLine($"{HttpsPort.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OriginHostHeader), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    originHostHeader: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OriginHostHeader))
-                {
-                    builder.Append("    originHostHeader: ");
-                    if (OriginHostHeader.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{OriginHostHeader}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{OriginHostHeader}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Priority), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    priority: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Priority))
-                {
-                    builder.Append("    priority: ");
-                    builder.AppendLine($"{Priority.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Weight), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    weight: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Weight))
-                {
-                    builder.Append("    weight: ");
-                    builder.AppendLine($"{Weight.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Enabled))
-                {
-                    builder.Append("    enabled: ");
-                    var boolValue = Enabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkAlias), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    privateLinkAlias: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrivateLinkAlias))
-                {
-                    builder.Append("    privateLinkAlias: ");
-                    if (PrivateLinkAlias.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrivateLinkAlias}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrivateLinkAlias}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    privateLinkResourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrivateLinkResourceId))
-                {
-                    builder.Append("    privateLinkResourceId: ");
-                    builder.AppendLine($"'{PrivateLinkResourceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkLocation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    privateLinkLocation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrivateLinkLocation))
-                {
-                    builder.Append("    privateLinkLocation: ");
-                    if (PrivateLinkLocation.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrivateLinkLocation}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrivateLinkLocation}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkApprovalMessage), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    privateLinkApprovalMessage: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrivateLinkApprovalMessage))
-                {
-                    builder.Append("    privateLinkApprovalMessage: ");
-                    if (PrivateLinkApprovalMessage.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrivateLinkApprovalMessage}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrivateLinkApprovalMessage}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    resourceState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceState))
-                {
-                    builder.Append("    resourceState: ");
-                    builder.AppendLine($"'{ResourceState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    privateEndpointStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrivateEndpointStatus))
-                {
-                    builder.Append("    privateEndpointStatus: ");
-                    builder.AppendLine($"'{PrivateEndpointStatus.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CdnOriginData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CdnOriginData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CdnOriginData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CdnOriginData IPersistableModel<CdnOriginData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CdnOriginData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCdnOriginData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CdnOriginData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CdnOriginData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

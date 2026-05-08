@@ -677,6 +677,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 identifier,
                 deploymentName,
                 href,
@@ -713,7 +714,6 @@ namespace Azure.ResourceManager.AppService
                 isScmSite,
                 isWebjob,
                 description,
-                kind,
                 serializedAdditionalRawData);
         }
 

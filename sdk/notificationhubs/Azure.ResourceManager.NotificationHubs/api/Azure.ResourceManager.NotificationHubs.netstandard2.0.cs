@@ -994,7 +994,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     }
     public partial class NotificationHubPubRegistrationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubPubRegistrationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubPubRegistrationResult>
     {
-        public NotificationHubPubRegistrationResult() { }
+        internal NotificationHubPubRegistrationResult() { }
         public string ApplicationPlatform { get { throw null; } }
         public string Outcome { get { throw null; } }
         public string PnsHandle { get { throw null; } }

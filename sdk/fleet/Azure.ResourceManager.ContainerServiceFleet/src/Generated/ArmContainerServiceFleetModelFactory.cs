@@ -176,8 +176,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 provisioningState is null && managedNamespaceProperties is null && adoptionPolicy is null && deletePolicy is null && propagationPolicy is null && status is null && portalFqdn is null ? default : new FleetManagedNamespaceProperties(
                     provisioningState,
                     managedNamespaceProperties,
-                    adoptionPolicy.Value,
-                    deletePolicy.Value,
+                    adoptionPolicy.GetValueOrDefault(),
+                    deletePolicy.GetValueOrDefault(),
                     propagationPolicy,
                     status,
                     portalFqdn,
@@ -289,9 +289,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 provisioningState is null && displayName is null && gateType is null && target is null && state is null ? default : new GateProperties(
                     provisioningState,
                     displayName,
-                    gateType.Value,
+                    gateType.GetValueOrDefault(),
                     target,
-                    state.Value,
+                    state.GetValueOrDefault(),
                     null),
                 etag);
         }
@@ -309,9 +309,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <param name="gatePatchState"> The state of the Gate. </param>
         /// <returns> A new <see cref="Models.ContainerServiceFleetGatePatch"/> instance for mocking. </returns>
-        public static ContainerServiceFleetGatePatch ContainerServiceFleetGatePatch(ContainerServiceFleetGateState? gatePatchState = default)
+        public static ContainerServiceFleetGatePatch ContainerServiceFleetGatePatch(ContainerServiceFleetGateState gatePatchState = default)
         {
-            return new ContainerServiceFleetGatePatch(gatePatchState is null ? default : new GatePatchProperties(gatePatchState.Value, null), additionalBinaryDataProperties: null);
+            return new ContainerServiceFleetGatePatch(new GatePatchProperties(gatePatchState, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

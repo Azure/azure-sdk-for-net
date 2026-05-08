@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     Properties = new BatchAccountProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 

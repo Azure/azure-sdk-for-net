@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
 
             // availability zones requires custom vnet
             var vnetInfo = await CreateDefaultNetwork(_resourceGroup, _vnetName);
-            foreach (var role in properties.ComputeProfile.Roles)
+            foreach (var role in properties.ComputeRoles)
             {
                 role.VirtualNetworkProfile = new HDInsightVirtualNetworkProfile()
                 {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             string clusterName = "hdi-encryptionathost";
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
             properties.ClusterDefinition.Kind = "Spark";
-            properties.ComputeProfile.Roles.ToList().ForEach(role => role.HardwareProfile.VmSize = "Standard_DS12_v2");
+            properties.ComputeRoles.ToList().ForEach(role => role.HardwareVmSize = "Standard_DS12_v2");
             properties.DiskEncryptionProperties = new HDInsightDiskEncryptionProperties()
             {
                 IsEncryptionAtHostEnabled = true
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 PublicIPTag = new HDInsightClusterIPTag("FirstPartyUsage", "HDInsight")
             };
 
-            foreach (var role in properties.ComputeProfile.Roles)
+            foreach (var role in properties.ComputeRoles)
             {
                 role.VirtualNetworkProfile = new HDInsightVirtualNetworkProfile()
                 {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             properties.StorageAccounts.FirstOrDefault().ResourceId = StorageAccountResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, _storageAccountName);
 
             var vnetInfo = await CreateDefaultNetwork(_resourceGroup, _vnetName);
-            foreach (var role in properties.ComputeProfile.Roles)
+            foreach (var role in properties.ComputeRoles)
             {
                 role.VirtualNetworkProfile = new HDInsightVirtualNetworkProfile()
                 {
@@ -347,8 +347,8 @@ namespace Azure.ResourceManager.HDInsight.Tests
 
             var headNode = properties.ComputeRoles.First(role => role.Name == "headnode");
             var zookeeperNode = properties.ComputeRoles.First(role => role.Name == "zookeepernode");
-            headNode.HardwareProfile.VmSize = "ExtraLarge";
-            zookeeperNode.HardwareProfile.VmSize = "Medium";
+            headNode.HardwareVmSize = "ExtraLarge";
+            zookeeperNode.HardwareVmSize = "Medium";
 
             var data = new HDInsightClusterCreateOrUpdateContent()
             {
@@ -359,8 +359,8 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
             Assert.AreEqual("Hadoop", cluster.Value.Data.Properties.ClusterDefinition.Kind);
-            Assert.AreEqual("standard_a8_v2", cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("headnode")).HardwareProfile.VmSize);
-            Assert.AreEqual("standard_a2_v2", cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("zookeepernode")).HardwareProfile.VmSize);
+            Assert.AreEqual("standard_a8_v2", cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("headnode")).HardwareVmSize);
+            Assert.AreEqual("standard_a2_v2", cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("zookeepernode")).HardwareVmSize);
         }
 
         [RecordedTest]
@@ -411,21 +411,15 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
             properties.ClusterDefinition.Kind = "MLServices";
             properties.ClusterVersion = "4.0";
-            properties.ComputeProfile.Roles.Add(new HDInsightClusterRole()
+            properties.ComputeRoles.Add(new HDInsightClusterRole()
             {
                 Name = "edgenode",
                 TargetInstanceCount = 1,
-                HardwareProfile = new HardwareProfile
+                HardwareVmSize = "Standard_D4_v2",
+                OSLinuxProfile = new HDInsightLinuxOSProfile()
                 {
-                    VmSize = "Standard_D4_v2"
-                },
-                OSProfile = new OSProfile()
-                {
-                    LinuxProfile = new HDInsightLinuxOSProfile()
-                    {
-                        Username = Common_User,
-                        Password = Common_Password
-                    }
+                    Username = Common_User,
+                    Password = Common_Password
                 }
             });
 
@@ -447,21 +441,15 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
             properties.ClusterDefinition.Kind = "RServer";
             properties.ClusterDefinition.ComponentVersion.Add(new KeyValuePair<string, string>("RServer", "9.3"));
-            properties.ComputeProfile.Roles.Add(new HDInsightClusterRole()
+            properties.ComputeRoles.Add(new HDInsightClusterRole()
             {
                 Name = "edgenode",
                 TargetInstanceCount = 1,
-                HardwareProfile = new HardwareProfile
+                HardwareVmSize = "Standard_D4_v2",
+                OSLinuxProfile = new HDInsightLinuxOSProfile()
                 {
-                    VmSize = "Standard_D4_v2"
-                },
-                OSProfile = new OSProfile()
-                {
-                    LinuxProfile = new HDInsightLinuxOSProfile()
-                    {
-                        Username = Common_User,
-                        Password = Common_Password
-                    }
+                    Username = Common_User,
+                    Password = Common_Password
                 }
             });
 
@@ -611,7 +599,6 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
             properties.ClusterVersion = "5.1";
             properties.StorageAccounts.Clear();
-            var msiId = new ResourceIdentifier(msi);
             var hdis = new HDInsightStorageAccountInfo()
             {
                 Name = $"{_storageAccountName}.blob.core.windows.net",
@@ -620,11 +607,11 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 Container = _containerName,
                 Key = null,
                 EnableSecureChannel = true,
-                MsiResourceId = new ResourceIdentifier(msiId.ToString())
+                MsiResourceId = new ResourceIdentifier(msi)
             };
             properties.StorageAccounts.Add(hdis);
             var clusterIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
-            clusterIdentity.UserAssignedIdentities.Add(msiId, new UserAssignedIdentity());
+            clusterIdentity.UserAssignedIdentities.Add(new ResourceIdentifier(msi), new Azure.ResourceManager.Models.UserAssignedIdentity());
             var content = new HDInsightClusterCreateOrUpdateContent()
             {
                 Properties = properties,
@@ -647,7 +634,6 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
             properties.ClusterVersion = "5.1";
             properties.StorageAccounts.Clear();
-            var msiId = new ResourceIdentifier(msi);
             var hdis = new HDInsightStorageAccountInfo()
             {
                 Name = $"{_storageAccountName}.dfs.core.windows.net",
@@ -655,20 +641,20 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 IsDefault = true,
                 FileSystem = _fileSystem,
                 EnableSecureChannel = true,
-                MsiResourceId = new ResourceIdentifier(msiId.ToString())
+                MsiResourceId = new ResourceIdentifier(msi)
             };
             properties.StorageAccounts.Add(hdis);
             var clusterIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
-            clusterIdentity.UserAssignedIdentities.Add(msiId, new UserAssignedIdentity());
-            var content = new HDInsightClusterCreateOrUpdateContent()
+            clusterIdentity.UserAssignedIdentities.Add(new ResourceIdentifier(msi), new Azure.ResourceManager.Models.UserAssignedIdentity());
+            var content2 = new HDInsightClusterCreateOrUpdateContent()
             {
                 Properties = properties,
                 Location = DefaultLocation,
                 Identity = clusterIdentity
             };
-            var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, content);
-            Assert.IsNotNull(cluster);
-            Assert.AreEqual($"{_storageAccountName}.dfs.core.windows.net", cluster.Value.Data.Properties.StorageAccounts.First(item => item.IsDefault == true).Name);
+            var cluster2 = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, content2);
+            Assert.IsNotNull(cluster2);
+            Assert.AreEqual($"{_storageAccountName}.dfs.core.windows.net", cluster2.Value.Data.Properties.StorageAccounts.First(item => item.IsDefault == true).Name);
         }
 
         [RecordedTest]
@@ -682,7 +668,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 Kind = "Hadoop",
                 Configurations = new BinaryData(@"{
                 ""gateway"": {
-                        ""restAuthCredential.isEnabled"": ""false"",
+                        ""restAuthCredential.isEnabled"": false,
                         ""restAuthEntraUsers"": ""[{\""objectId\"":\""00000000-0000-0000-0000-000000000000\"",\""displayName\"":\""DisplayName\"",\""upn\"":\""user@microsoft.com\""}]""
                     }
                     }")

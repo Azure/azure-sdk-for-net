@@ -918,7 +918,7 @@ namespace Azure.ResourceManager.Search.Models
     }
     public partial class SearchServiceNetworkSecurityPerimeterProvisioningIssue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue>
     {
-        public SearchServiceNetworkSecurityPerimeterProvisioningIssue() { }
+        internal SearchServiceNetworkSecurityPerimeterProvisioningIssue() { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties Properties { get { throw null; } }
         protected virtual Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -933,7 +933,7 @@ namespace Azure.ResourceManager.Search.Models
     }
     public partial class SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties>
     {
-        public SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties() { }
+        internal SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties() { }
         public string Description { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueType? IssueType { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity? Severity { get { throw null; } }

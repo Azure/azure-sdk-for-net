@@ -986,6 +986,8 @@ This complements the context-level helpers (`GetInputItemsAsync`, `GetInputTextA
 The `CancellationToken` is triggered when:
 - A client calls `POST /responses/{id}/cancel` (background mode only)
 - A client disconnects the HTTP connection (non-background mode)
+- The server is shutting down (graceful shutdown)
+- Phase 1 persistence fails in background mode (storage unavailable before `response.created`)
 
 ### TextResponse Handlers
 
@@ -1059,6 +1061,8 @@ Let `OperationCanceledException` propagate — the server handles the winddown a
 3. Once the handler finishes (within or beyond the grace period), the response transitions to `cancelled` status and a `response.failed` terminal event is emitted and persisted.
 
 You don't need to emit any terminal event on cancellation — just let `OperationCanceledException` propagate and the library handles the rest. Handlers should cooperate with `CancellationToken` and wind down promptly to ensure the cancel endpoint returns a fully resolved `cancelled` snapshot.
+
+> **Note on persistence-triggered cancellation**: When Phase 1 persistence fails in background mode, the `CancellationToken` fires identically to an explicit cancel. Your handler cannot distinguish this from a normal cancellation — and doesn't need to. The library handles error reporting to the client. Simply let `OperationCanceledException` propagate as you would for any other cancellation.
 
 ### Graceful Shutdown
 
@@ -1174,6 +1178,37 @@ Bad client input returns HTTP 400 before your handler runs. Bad handler output r
 
 **Debugging**: If you see unexpected 500 errors during development, check your application logs for validation errors. The logged details include the JSON path and expected type, pointing you to the builder call that produced invalid output.
 
+### Persistence Failures
+
+When `store=true` (the default), the library persists the response to durable storage. If persistence fails (e.g., the storage service is unavailable), the library handles it transparently — **your handler does not need to handle persistence errors**.
+
+**What happens when persistence fails:**
+
+| Mode | When persistence fails | What the handler sees | What the client sees |
+|------|----------------------|----------------------|---------------------|
+| Non-streaming, non-background | After handler completes (in `FinalizeExecutionAsync`) | Nothing — handler already finished | Response with `status: "failed"`, `error.code: "server_error"` |
+| Streaming, non-background | Before yielding the terminal event | Nothing — handler already emitted terminal | Terminal event replaced with `response.failed` |
+| Background, non-streaming | Phase 1 (CreateResponse): before response returned to client | `CancellationToken` fires (`OperationCanceledException`) | HTTP 500 error (pre-creation failure) |
+| Background, non-streaming | Phase 2 (UpdateResponse): after handler completes | Nothing — handler already finished | `GET` returns `status: "failed"` |
+| Background, streaming | Phase 1 (CreateResponse): before `response.created` sent | `CancellationToken` fires (`OperationCanceledException`) | Standalone `error` SSE event |
+| Background, streaming | Phase 2 (UpdateResponse): after terminal event streamed | Nothing — handler already finished | `response.failed` SSE event replaces original terminal |
+
+**Key points for handler authors:**
+
+1. **You don't need to catch or handle persistence errors.** The library handles the storage lifecycle and error reporting automatically.
+
+2. **Your handler may be cancelled if Phase 1 persistence fails.** In background mode, the library persists the response *before* signalling `response.created` to the client. If this initial persist fails, the handler's `CancellationToken` fires. Your handler sees this as a normal cancellation — the same `OperationCanceledException` that fires on client disconnect or explicit cancel. No special handling is required; let the exception propagate.
+
+3. **Phase 2 failures don't affect your handler.** Phase 2 persistence (updating the final state) happens *after* your handler finishes. If it fails, the response is marked as `failed` but your handler has already completed normally.
+
+4. **Failed responses remain accessible via `GET`.** When persistence fails, the response stays in memory for the lifetime of the sandbox. Clients can retrieve the failed response with its error details via `GET /responses/{id}`.
+
+5. **The storage provider's transport layer retries automatically.** The library does not add application-level retries. By the time a persistence error surfaces, the underlying HTTP pipeline has already exhausted its retry budget (typically 3 retries with exponential backoff).
+
+**When does persistence failure affect running handlers?**
+
+Only in background Phase 1 — when the library tries to create the initial response record *before* the client knows about it. This is the only scenario where a persistence failure cancels an actively running handler. In all other cases, the handler has already completed its work by the time persistence occurs.
+
 
 
 ---
@@ -1246,12 +1281,14 @@ yield return stream.EmitFailed(ResponseErrorCode.ServerError, "Error message", u
 yield return stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens, usage);
 ```
 
-Create `ResponseUsage` using the model factory:
+Create `ResponseUsage` directly:
 
 ```csharp
-var usage = AzureAIAgentServerResponsesModelFactory.ResponseUsage(
+var usage = new ResponseUsage(
     inputTokens: 150,
+    inputTokensDetails: new ResponseUsageInputTokensDetails(cachedTokens: 0),
     outputTokens: 42,
+    outputTokensDetails: new ResponseUsageOutputTokensDetails(reasoningTokens: 0),
     totalTokens: 192);
 yield return stream.EmitCompleted(usage);
 ```

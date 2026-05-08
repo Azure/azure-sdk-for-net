@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Property to select Azure Storage type. Available options: blobContainer. </summary>
+    /// <summary>
+    /// Property to select Azure Storage type. Available options: blobContainer.
+    /// Serialized Name: FunctionsDeploymentStorageType
+    /// </summary>
     public readonly partial struct FunctionAppStorageType : IEquatable<FunctionAppStorageType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         private const string BlobContainerValue = "blobContainer";
 
-        /// <summary> blobContainer. </summary>
+        /// <summary>
+        /// blobContainer
+        /// Serialized Name: FunctionsDeploymentStorageType.blobContainer
+        /// </summary>
         public static FunctionAppStorageType BlobContainer { get; } = new FunctionAppStorageType(BlobContainerValue);
         /// <summary> Determines if two <see cref="FunctionAppStorageType"/> values are the same. </summary>
         public static bool operator ==(FunctionAppStorageType left, FunctionAppStorageType right) => left.Equals(right);

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new Ruleproperties();
                 }
-                Properties.FilterType = value.Value;
+                Properties.FilterType = value;
             }
         }
 

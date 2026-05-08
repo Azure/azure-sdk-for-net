@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     Properties = new ProjectProperties();
                 }
-                Properties.MaxDevBoxesPerUser = value.Value;
+                Properties.MaxDevBoxesPerUser = value;
             }
         }
 
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     Properties = new ProjectProperties();
                 }
-                Properties.AzureAiServicesMode = value.Value;
+                Properties.AzureAiServicesMode = value;
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     Properties = new ProjectProperties();
                 }
-                Properties.WorkspaceStorageMode = value.Value;
+                Properties.WorkspaceStorageMode = value;
             }
         }
 

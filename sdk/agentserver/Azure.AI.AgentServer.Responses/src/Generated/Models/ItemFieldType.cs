@@ -16,6 +16,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         private readonly string _value;
         private const string MessageValue = "message";
         private const string FunctionCallValue = "function_call";
+        private const string ToolSearchCallValue = "tool_search_call";
+        private const string ToolSearchOutputValue = "tool_search_output";
         private const string FunctionCallOutputValue = "function_call_output";
         private const string FileSearchCallValue = "file_search_call";
         private const string WebSearchCallValue = "web_search_call";
@@ -53,6 +55,12 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Gets the FunctionCall. </summary>
         public static ItemFieldType FunctionCall { get; } = new ItemFieldType(FunctionCallValue);
+
+        /// <summary> Gets the ToolSearchCall. </summary>
+        public static ItemFieldType ToolSearchCall { get; } = new ItemFieldType(ToolSearchCallValue);
+
+        /// <summary> Gets the ToolSearchOutput. </summary>
+        public static ItemFieldType ToolSearchOutput { get; } = new ItemFieldType(ToolSearchOutputValue);
 
         /// <summary> Gets the FunctionCallOutput. </summary>
         public static ItemFieldType FunctionCallOutput { get; } = new ItemFieldType(FunctionCallOutputValue);

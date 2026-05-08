@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new CreditProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new CreditProperties();
                 }
-                Properties.StartOn = value.Value;
+                Properties.StartOn = value;
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new CreditProperties();
                 }
-                Properties.EndOn = value.Value;
+                Properties.EndOn = value;
             }
         }
 

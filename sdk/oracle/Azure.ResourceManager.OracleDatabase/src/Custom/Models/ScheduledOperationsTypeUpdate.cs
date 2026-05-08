@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -22,10 +23,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             Argument.AssertNotNull(dayOfWeek, nameof(dayOfWeek));
 
-            DayOfWeek = dayOfWeek;
+            ScheduledDay = dayOfWeek;
         }
 
         /// <summary> Day of week. </summary>
-        public OracleDatabaseDayOfWeekUpdate DayOfWeek { get; set; }
+        [Obsolete("This property is obsolete and will be removed in a future release. Please use 'ScheduledDay' instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public OracleDatabaseDayOfWeekUpdate DayOfWeek
+        {
+            get => ScheduledDay;
+            set => ScheduledDay = value;
+        }
+
+        /// <summary> Day of week name. </summary>
+        [Obsolete("This property is obsolete and will be removed in a future release. Please use 'ScheduledDayName' instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public OracleDatabaseDayOfWeekName? DayOfWeekName
+        {
+            get => ScheduledDayName;
+            set => ScheduledDayName = value;
+        }
     }
 }

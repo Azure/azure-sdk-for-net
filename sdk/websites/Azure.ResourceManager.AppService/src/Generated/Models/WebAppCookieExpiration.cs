@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the session cookie's expiration. </summary>
+    /// <summary>
+    /// The configuration settings of the session cookie's expiration.
+    /// Serialized Name: CookieExpiration
+    /// </summary>
     public partial class WebAppCookieExpiration
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppCookieExpiration"/>. </summary>
-        /// <param name="convention"> The convention used when determining the session cookie's expiration. </param>
-        /// <param name="timeToExpiration"> The time after the request is made when the session cookie should expire. </param>
+        /// <param name="convention">
+        /// The convention used when determining the session cookie's expiration.
+        /// Serialized Name: CookieExpiration.convention
+        /// </param>
+        /// <param name="timeToExpiration">
+        /// The time after the request is made when the session cookie should expire.
+        /// Serialized Name: CookieExpiration.timeToExpiration
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppCookieExpiration(CookieExpirationConvention? convention, string timeToExpiration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The convention used when determining the session cookie's expiration. </summary>
+        /// <summary>
+        /// The convention used when determining the session cookie's expiration.
+        /// Serialized Name: CookieExpiration.convention
+        /// </summary>
         [WirePath("convention")]
         public CookieExpirationConvention? Convention { get; set; }
-        /// <summary> The time after the request is made when the session cookie should expire. </summary>
+        /// <summary>
+        /// The time after the request is made when the session cookie should expire.
+        /// Serialized Name: CookieExpiration.timeToExpiration
+        /// </summary>
         [WirePath("timeToExpiration")]
         public string TimeToExpiration { get; set; }
     }

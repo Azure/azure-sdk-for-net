@@ -19,7 +19,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="code"></param>
         /// <param name="outputs"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="containerId"/> is null. </exception>
-        public InputItemCodeInterpreterToolCall(string id, OutputItemCodeInterpreterToolCallStatus status, string containerId, string code, IEnumerable<BinaryData> outputs) : base(InputItemType.CodeInterpreterCall)
+        public InputItemCodeInterpreterToolCall(string id, InputItemCodeInterpreterToolCallStatus status, string containerId, string code, IEnumerable<BinaryData> outputs) : base(InputItemType.CodeInterpreterCall)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(containerId, nameof(containerId));
@@ -39,7 +39,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="containerId"> The ID of the container used to run the code. </param>
         /// <param name="code"></param>
         /// <param name="outputs"></param>
-        internal InputItemCodeInterpreterToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, OutputItemCodeInterpreterToolCallStatus status, string containerId, string code, IList<BinaryData> outputs) : base(@type, additionalBinaryDataProperties)
+        internal InputItemCodeInterpreterToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, InputItemCodeInterpreterToolCallStatus status, string containerId, string code, IList<BinaryData> outputs) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
@@ -52,7 +52,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string Id { get; }
 
         /// <summary> The status of the code interpreter tool call. Valid values are `in_progress`, `completed`, `incomplete`, `interpreting`, and `failed`. </summary>
-        public OutputItemCodeInterpreterToolCallStatus Status { get; }
+        public InputItemCodeInterpreterToolCallStatus Status { get; }
 
         /// <summary> The ID of the container used to run the code. </summary>
         public string ContainerId { get; }

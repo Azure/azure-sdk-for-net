@@ -5,39 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Maintenance;
+using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableMaintenanceArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableMaintenanceArmClient"/> class for mocking. </summary>
+        private ClientDiagnostics _scheduledEventClientDiagnostics;
+        private ScheduledEvent _scheduledEventRestClient;
+        private ClientDiagnostics _updatesClientDiagnostics;
+        private Updates _updatesRestClient;
+
+        /// <summary> Initializes a new instance of MockableMaintenanceArmClient for mocking. </summary>
         protected MockableMaintenanceArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMaintenanceArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMaintenanceArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMaintenanceArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableMaintenanceArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
+        private ClientDiagnostics ScheduledEventClientDiagnostics => _scheduledEventClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ScheduledEvent ScheduledEventRestClient => _scheduledEventRestClient ??= new ScheduledEvent(ScheduledEventClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
 
-        /// <summary>
-        /// Gets an object representing a <see cref="MaintenancePublicConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MaintenancePublicConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MaintenancePublicConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        private ClientDiagnostics UpdatesClientDiagnostics => _updatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Updates UpdatesRestClient => _updatesRestClient ??= new Updates(UpdatesClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
+
+        /// <summary> Gets an object representing a <see cref="MaintenancePublicConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MaintenancePublicConfigurationResource"/> object. </returns>
         public virtual MaintenancePublicConfigurationResource GetMaintenancePublicConfigurationResource(ResourceIdentifier id)
@@ -46,10 +54,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             return new MaintenancePublicConfigurationResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="MaintenanceConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MaintenanceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="MaintenanceConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MaintenanceConfigurationResource"/> object. </returns>
         public virtual MaintenanceConfigurationResource GetMaintenanceConfigurationResource(ResourceIdentifier id)
@@ -58,16 +63,468 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             return new MaintenanceConfigurationResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="MaintenanceApplyUpdateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MaintenanceApplyUpdateResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceApplyUpdateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="MaintenanceSubscriptionConfigurationAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MaintenanceSubscriptionConfigurationAssignmentResource"/> object. </returns>
+        public virtual MaintenanceSubscriptionConfigurationAssignmentResource GetMaintenanceSubscriptionConfigurationAssignmentResource(ResourceIdentifier id)
+        {
+            MaintenanceSubscriptionConfigurationAssignmentResource.ValidateResourceId(id);
+            return new MaintenanceSubscriptionConfigurationAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MaintenanceResourceGroupConfigurationAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MaintenanceResourceGroupConfigurationAssignmentResource"/> object. </returns>
+        public virtual MaintenanceResourceGroupConfigurationAssignmentResource GetMaintenanceResourceGroupConfigurationAssignmentResource(ResourceIdentifier id)
+        {
+            MaintenanceResourceGroupConfigurationAssignmentResource.ValidateResourceId(id);
+            return new MaintenanceResourceGroupConfigurationAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MaintenanceGroupConfigurationAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MaintenanceGroupConfigurationAssignmentResource"/> object. </returns>
+        public virtual MaintenanceGroupConfigurationAssignmentResource GetMaintenanceGroupConfigurationAssignmentResource(ResourceIdentifier id)
+        {
+            MaintenanceGroupConfigurationAssignmentResource.ValidateResourceId(id);
+            return new MaintenanceGroupConfigurationAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="MaintenanceGroupConfigurationAssignmentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="MaintenanceGroupConfigurationAssignmentResource"/> objects. </returns>
+        public virtual MaintenanceGroupConfigurationAssignmentCollection GetMaintenanceGroupConfigurationAssignments(ResourceIdentifier scope)
+        {
+            return new MaintenanceGroupConfigurationAssignmentCollection(Client, scope);
+        }
+
+        /// <summary> Get configuration assignment for resource.. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="configurationAssignmentName"> The name of the ConfigurationAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MaintenanceGroupConfigurationAssignmentResource> GetMaintenanceGroupConfigurationAssignment(ResourceIdentifier scope, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+
+            return GetMaintenanceGroupConfigurationAssignments(scope).Get(configurationAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Get configuration assignment for resource.. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="configurationAssignmentName"> The name of the ConfigurationAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MaintenanceGroupConfigurationAssignmentResource>> GetMaintenanceGroupConfigurationAssignmentAsync(ResourceIdentifier scope, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+
+            return await GetMaintenanceGroupConfigurationAssignments(scope).GetAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MaintenanceConfigurationAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MaintenanceConfigurationAssignmentResource"/> object. </returns>
+        public virtual MaintenanceConfigurationAssignmentResource GetMaintenanceConfigurationAssignmentResource(ResourceIdentifier id)
+        {
+            MaintenanceConfigurationAssignmentResource.ValidateResourceId(id);
+            return new MaintenanceConfigurationAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="MaintenanceConfigurationAssignmentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="MaintenanceConfigurationAssignmentResource"/> objects. </returns>
+        public virtual MaintenanceConfigurationAssignmentCollection GetMaintenanceConfigurationAssignments(ResourceIdentifier scope)
+        {
+            return new MaintenanceConfigurationAssignmentCollection(Client, scope);
+        }
+
+        /// <summary> Get configuration assignment for resource.. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="configurationAssignmentName"> The name of the ConfigurationAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MaintenanceConfigurationAssignmentResource> GetMaintenanceConfigurationAssignment(ResourceIdentifier scope, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+
+            return GetMaintenanceConfigurationAssignments(scope).Get(configurationAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Get configuration assignment for resource.. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="configurationAssignmentName"> The name of the ConfigurationAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MaintenanceConfigurationAssignmentResource>> GetMaintenanceConfigurationAssignmentAsync(ResourceIdentifier scope, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+
+            return await GetMaintenanceConfigurationAssignments(scope).GetAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MaintenanceGroupApplyUpdateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MaintenanceGroupApplyUpdateResource"/> object. </returns>
+        public virtual MaintenanceGroupApplyUpdateResource GetMaintenanceGroupApplyUpdateResource(ResourceIdentifier id)
+        {
+            MaintenanceGroupApplyUpdateResource.ValidateResourceId(id);
+            return new MaintenanceGroupApplyUpdateResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="MaintenanceGroupApplyUpdateCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="MaintenanceGroupApplyUpdateResource"/> objects. </returns>
+        public virtual MaintenanceGroupApplyUpdateCollection GetMaintenanceGroupApplyUpdates(ResourceIdentifier scope)
+        {
+            return new MaintenanceGroupApplyUpdateCollection(Client, scope);
+        }
+
+        /// <summary> Track maintenance updates to resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MaintenanceGroupApplyUpdateResource> GetMaintenanceGroupApplyUpdate(ResourceIdentifier scope, string applyUpdateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
+
+            return GetMaintenanceGroupApplyUpdates(scope).Get(applyUpdateName, cancellationToken);
+        }
+
+        /// <summary> Track maintenance updates to resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MaintenanceGroupApplyUpdateResource>> GetMaintenanceGroupApplyUpdateAsync(ResourceIdentifier scope, string applyUpdateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
+
+            return await GetMaintenanceGroupApplyUpdates(scope).GetAsync(applyUpdateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MaintenanceApplyUpdateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MaintenanceApplyUpdateResource"/> object. </returns>
         public virtual MaintenanceApplyUpdateResource GetMaintenanceApplyUpdateResource(ResourceIdentifier id)
         {
             MaintenanceApplyUpdateResource.ValidateResourceId(id);
             return new MaintenanceApplyUpdateResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="MaintenanceApplyUpdateCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="MaintenanceApplyUpdateResource"/> objects. </returns>
+        public virtual MaintenanceApplyUpdateCollection GetMaintenanceApplyUpdates(ResourceIdentifier scope)
+        {
+            return new MaintenanceApplyUpdateCollection(Client, scope);
+        }
+
+        /// <summary> Track maintenance updates to resource with parent. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdate(ResourceIdentifier scope, string applyUpdateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
+
+            return GetMaintenanceApplyUpdates(scope).Get(applyUpdateName, cancellationToken);
+        }
+
+        /// <summary> Track maintenance updates to resource with parent. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MaintenanceApplyUpdateResource>> GetMaintenanceApplyUpdateAsync(ResourceIdentifier scope, string applyUpdateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
+
+            return await GetMaintenanceApplyUpdates(scope).GetAsync(applyUpdateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Post Scheduled Event Acknowledgement
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/scheduledevents/{scheduledEventId}/acknowledge. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledEventOperationGroup_Acknowledge. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scheduledEventId"> Scheduled Event Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="scheduledEventId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<MaintenanceScheduledEventApproveResult>> AcknowledgeAsync(ResourceIdentifier scope, string scheduledEventId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(scheduledEventId, nameof(scheduledEventId));
+
+            using DiagnosticScope scope0 = ScheduledEventClientDiagnostics.CreateScope("MockableMaintenanceArmClient.Acknowledge");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledEventRestClient.CreateAcknowledgeRequest(Guid.Parse(scope.SubscriptionId), scope.Parent.Name, scope.ResourceType.Type, scope.Name, scheduledEventId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MaintenanceScheduledEventApproveResult> response = Response.FromValue(MaintenanceScheduledEventApproveResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Post Scheduled Event Acknowledgement
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/scheduledevents/{scheduledEventId}/acknowledge. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledEventOperationGroup_Acknowledge. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scheduledEventId"> Scheduled Event Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="scheduledEventId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<MaintenanceScheduledEventApproveResult> Acknowledge(ResourceIdentifier scope, string scheduledEventId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(scheduledEventId, nameof(scheduledEventId));
+
+            using DiagnosticScope scope0 = ScheduledEventClientDiagnostics.CreateScope("MockableMaintenanceArmClient.Acknowledge");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledEventRestClient.CreateAcknowledgeRequest(Guid.Parse(scope.SubscriptionId), scope.Parent.Name, scope.ResourceType.Type, scope.Name, scheduledEventId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MaintenanceScheduledEventApproveResult> response = Response.FromValue(MaintenanceScheduledEventApproveResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get updates to resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/updates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UpdatesOperationGroup_ListParent. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="MaintenanceUpdate"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MaintenanceUpdate> GetUpdatesByParentAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UpdatesGetUpdatesByParentAsyncCollectionResultOfT(
+                UpdatesRestClient,
+                Guid.Parse(scope.SubscriptionId),
+                scope.Parent.Parent.Name,
+                scope.Parent.ResourceType.Namespace,
+                scope.Parent.ResourceType.Type,
+                scope.Parent.Name,
+                scope.ResourceType.Type,
+                scope.Name,
+                context,
+                "MockableMaintenanceArmClient.GetUpdatesByParent");
+        }
+
+        /// <summary>
+        /// Get updates to resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/updates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UpdatesOperationGroup_ListParent. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="MaintenanceUpdate"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MaintenanceUpdate> GetUpdatesByParent(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UpdatesGetUpdatesByParentCollectionResultOfT(
+                UpdatesRestClient,
+                Guid.Parse(scope.SubscriptionId),
+                scope.Parent.Parent.Name,
+                scope.Parent.ResourceType.Namespace,
+                scope.Parent.ResourceType.Type,
+                scope.Parent.Name,
+                scope.ResourceType.Type,
+                scope.Name,
+                context,
+                "MockableMaintenanceArmClient.GetUpdatesByParent");
+        }
+
+        /// <summary>
+        /// Get updates to resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/updates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UpdatesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="MaintenanceUpdate"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MaintenanceUpdate> GetAllAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UpdatesGetAllAsyncCollectionResultOfT(
+                UpdatesRestClient,
+                Guid.Parse(scope.SubscriptionId),
+                scope.Parent.Name,
+                scope.ResourceType.Namespace,
+                scope.ResourceType.Type,
+                scope.Name,
+                context,
+                "MockableMaintenanceArmClient.GetAll");
+        }
+
+        /// <summary>
+        /// Get updates to resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/updates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UpdatesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="MaintenanceUpdate"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MaintenanceUpdate> GetAll(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UpdatesGetAllCollectionResultOfT(
+                UpdatesRestClient,
+                Guid.Parse(scope.SubscriptionId),
+                scope.Parent.Name,
+                scope.ResourceType.Namespace,
+                scope.ResourceType.Type,
+                scope.Name,
+                context,
+                "MockableMaintenanceArmClient.GetAll");
         }
     }
 }

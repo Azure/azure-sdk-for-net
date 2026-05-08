@@ -54,7 +54,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
             toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         ));
         ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
-            toolboxName: toolboxName,
+            name: toolboxName,
             tools: [tool],
             description: "Example toolbox created by the azure-ai-projects sample.",
             metadata: new Dictionary<string, string> {
@@ -62,7 +62,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
             }
         );
         ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
-            toolboxName: toolboxName,
+            name: toolboxName,
             tools: [tool],
             description: "Another toolbox created by the azure-ai-projects sample.",
             metadata: new Dictionary<string, string> {
@@ -75,7 +75,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         #endregion
 
         #region Snippet:Sample_GetToolbox_ToolboxesAgentsCRUD_Async
-        ToolboxRecord record = await toolboxClient.GetToolboxAsync(toolboxName: toolBox1.Name);
+        ToolboxRecord record = await toolboxClient.GetToolboxAsync(name: toolBox1.Name);
         Console.WriteLine($"The default version for a toolbox {record.Name} is {record.DefaultVersion}");
         #endregion
 
@@ -140,7 +140,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
             toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         ));
         ToolboxVersion toolBox1 = toolboxClient.CreateToolboxVersion(
-            toolboxName: toolboxName,
+            name: toolboxName,
             tools: [tool],
             description: "Example toolbox created by the azure-ai-projects sample.",
             metadata: new Dictionary<string, string> {
@@ -148,7 +148,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
             }
         );
         ToolboxVersion toolBox2 = toolboxClient.CreateToolboxVersion(
-            toolboxName: toolboxName,
+            name: toolboxName,
             tools: [tool],
             description: "Another toolbox created by the azure-ai-projects sample.",
             metadata: new Dictionary<string, string> {
@@ -161,7 +161,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         #endregion
 
         #region Snippet:Sample_GetToolbox_ToolboxesAgentsCRUD_Sync
-        ToolboxRecord record = toolboxClient.GetToolbox(toolboxName: toolBox1.Name);
+        ToolboxRecord record = toolboxClient.GetToolbox(name: toolBox1.Name);
         Console.WriteLine($"The default version for a toolbox {record.Name} is {record.DefaultVersion}");
         #endregion
 

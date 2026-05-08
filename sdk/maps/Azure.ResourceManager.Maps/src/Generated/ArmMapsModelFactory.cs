@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Maps.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new MapsCreatorPatch(tags, provisioningState is null && storageUnits is null && totalStorageUnitSizeInBytes is null && consumedStorageUnitSizeInBytes is null ? default : new MapsCreatorProperties(provisioningState, storageUnits.Value, totalStorageUnitSizeInBytes, consumedStorageUnitSizeInBytes, null), additionalBinaryDataProperties: null);
+            return new MapsCreatorPatch(tags, provisioningState is null && storageUnits is null && totalStorageUnitSizeInBytes is null && consumedStorageUnitSizeInBytes is null ? default : new MapsCreatorProperties(provisioningState, storageUnits.GetValueOrDefault(), totalStorageUnitSizeInBytes, consumedStorageUnitSizeInBytes, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

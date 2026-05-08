@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                addressClassification is null && shippingAddress is null && contactDetails is null && addressValidationStatus is null && provisioningState is null ? default : new EdgeOrderItemAddressProperties(
+                new EdgeOrderItemAddressProperties(
                     addressClassification,
                     shippingAddress,
                     contactDetails,
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                orderItemDetails is null && addressDetails is null && startOn is null && orderId is null && provisioningState is null ? default : new OrderItemProperties(
+                new OrderItemProperties(
                     orderItemDetails,
                     addressDetails,
                     startOn,
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 productDetails,
                 orderItemType,
                 orderItemMode,
-                siteId is null ? default : new SiteDetails(siteId.Value, null),
+                siteId is null ? default : new SiteDetails(siteId.GetValueOrDefault(), null),
                 currentStage,
                 orderItemStageHistory.ToList(),
                 preferences,
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
             return new OrderItemPreferences(
                 notificationPreferences.ToList(),
-                transportPreferencesPreferredShipmentType is null ? default : new TransportPreferences(transportPreferencesPreferredShipmentType.Value, null),
+                transportPreferencesPreferredShipmentType is null ? default : new TransportPreferences(transportPreferencesPreferredShipmentType.GetValueOrDefault(), null),
                 doubleEncryptionStatus is null ? default : new EncryptionPreferences(doubleEncryptionStatus, null),
                 preferredManagementResourceId is null ? default : new ManagementResourcePreferences(preferredManagementResourceId, null),
                 termCommitmentPreferences,
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                orderItemIds is null && currentStage is null && orderStageHistory is null && orderMode is null ? default : new OrderProperties((orderItemIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), currentStage, (orderStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>()).ToList(), orderMode, null));
+                new OrderProperties((orderItemIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), currentStage, (orderStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>()).ToList(), orderMode, null));
         }
 
         /// <summary> Configuration filters. </summary>
@@ -996,8 +996,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="name"> Represents Billing type name. </param>
         /// <param name="meterDetails">
         /// Represents MeterDetails
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include  and .
         /// </param>
         /// <param name="meteringType"> Represents Metering type (eg one-time or recurrent). </param>
         /// <param name="frequency"> Frequency of recurrence. </param>

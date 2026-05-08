@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.23 (Unreleased)
+## 1.0.0-beta.24 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,32 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Replaced `Azure.Monitor.OpenTelemetry.AspNetCore` with the unified `Microsoft.OpenTelemetry` distro for telemetry. The new distro auto-detects Azure Monitor and OTLP exporters from environment variables and eliminates the need for duplicate-instrumentation guards.
+
+## 1.0.0-beta.23 (2026-04-22)
+
+### Features Added
+
+- Added `PlatformHeaders` static class centralizing all platform HTTP header name constants
+  (`x-request-id`, `x-platform-server`, `x-agent-session-id`, isolation keys, `traceparent`,
+  `x-ms-client-request-id`). All AgentServer packages now reference these shared constants
+  instead of declaring private duplicates.
+- Added `RequestIdMiddleware` that sets the `x-request-id` response header on every HTTP response.
+  Value is resolved in priority order: OTEL trace ID → incoming `x-request-id` header → new GUID.
+  Registered automatically by `AgentHostBuilder` and by `AddAgentServerCore()` for
+  standalone (Tier 3) setups.
+- Added `RequestIdBaggagePropagator` middleware that propagates incoming `x-request-id` header
+  values into `Activity.Baggage` for end-to-end distributed tracing correlation.
+
+### Breaking Changes
+
+- Removed `IsolationContext.UserIsolationKeyHeaderName` and `IsolationContext.ChatIsolationKeyHeaderName`
+  — use `PlatformHeaders.UserIsolationKey` and `PlatformHeaders.ChatIsolationKey` instead.
+- Replaced `AddAgentServerRequestId()`, `AddAgentServerVersion()`, `AddAgentServerLogging()`,
+  `UseAgentServerRequestId()`, `UseAgentServerVersion()`, and `UseAgentServerLogging()` with a
+  single `AddAgentServerCore()` / `UseAgentServerCore()` pair. Tier 3 standalone setups now use
+  two calls instead of six.
 
 ## 1.0.0-beta.22 (2026-04-17)
 
