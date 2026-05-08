@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RedHatOpenShift
@@ -21,76 +22,83 @@ namespace Azure.ResourceManager.RedHatOpenShift
     /// <summary>
     /// A class representing a collection of <see cref="OpenShiftVersionResource"/> and their operations.
     /// Each <see cref="OpenShiftVersionResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get an <see cref="OpenShiftVersionCollection"/> instance call the GetOpenShiftVersions method from an instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="OpenShiftVersionCollection"/> instance call the GetOpenShiftVersions method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class OpenShiftVersionCollection : ArmCollection, IEnumerable<OpenShiftVersionResource>, IAsyncEnumerable<OpenShiftVersionResource>
     {
-        private readonly ClientDiagnostics _openShiftVersionClientDiagnostics;
-        private readonly OpenShiftVersionsRestOperations _openShiftVersionRestClient;
+        private readonly ClientDiagnostics _openShiftVersionsClientDiagnostics;
+        private readonly OpenShiftVersions _openShiftVersionsRestClient;
+        /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of the <see cref="OpenShiftVersionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of OpenShiftVersionCollection for mocking. </summary>
         protected OpenShiftVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OpenShiftVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenShiftVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="location"> The location for the resource. </param>
         internal OpenShiftVersionCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
-            _location = location;
-            _openShiftVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", OpenShiftVersionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(OpenShiftVersionResource.ResourceType, out string openShiftVersionApiVersion);
-            _openShiftVersionRestClient = new OpenShiftVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, openShiftVersionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _location = location;
+            _openShiftVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", OpenShiftVersionResource.ResourceType.Namespace, Diagnostics);
+            _openShiftVersionsRestClient = new OpenShiftVersions(_openShiftVersionsClientDiagnostics, Pipeline, Endpoint, openShiftVersionApiVersion ?? "2025-07-25");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// This operation returns installable OpenShift version as a string.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions/{openShiftVersion}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions/{openShiftVersion}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="openShiftVersion"> The desired version value of the OpenShiftVersion resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="openShiftVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="openShiftVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="openShiftVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<OpenShiftVersionResource>> GetAsync(string openShiftVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openShiftVersion, nameof(openShiftVersion));
 
-            using var scope = _openShiftVersionClientDiagnostics.CreateScope("OpenShiftVersionCollection.Get");
+            using DiagnosticScope scope = _openShiftVersionsClientDiagnostics.CreateScope("OpenShiftVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _openShiftVersionRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), openShiftVersion, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _openShiftVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftVersion, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OpenShiftVersionData> response = Response.FromValue(OpenShiftVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OpenShiftVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -104,38 +112,42 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// This operation returns installable OpenShift version as a string.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions/{openShiftVersion}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions/{openShiftVersion}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="openShiftVersion"> The desired version value of the OpenShiftVersion resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="openShiftVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="openShiftVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="openShiftVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<OpenShiftVersionResource> Get(string openShiftVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openShiftVersion, nameof(openShiftVersion));
 
-            using var scope = _openShiftVersionClientDiagnostics.CreateScope("OpenShiftVersionCollection.Get");
+            using DiagnosticScope scope = _openShiftVersionsClientDiagnostics.CreateScope("OpenShiftVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _openShiftVersionRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), openShiftVersion, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _openShiftVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftVersion, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OpenShiftVersionData> response = Response.FromValue(OpenShiftVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OpenShiftVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -149,50 +161,44 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// The operation returns the installable OpenShift versions as a string.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftVersions_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftVersions_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OpenShiftVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OpenShiftVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OpenShiftVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _openShiftVersionRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _openShiftVersionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OpenShiftVersionResource(Client, OpenShiftVersionData.DeserializeOpenShiftVersionData(e)), _openShiftVersionClientDiagnostics, Pipeline, "OpenShiftVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OpenShiftVersionData, OpenShiftVersionResource>(new OpenShiftVersionsGetAllAsyncCollectionResultOfT(_openShiftVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OpenShiftVersionCollection.GetAll"), data => new OpenShiftVersionResource(Client, data));
         }
 
         /// <summary>
         /// The operation returns the installable OpenShift versions as a string.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftVersions_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftVersions_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,45 +206,61 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <returns> A collection of <see cref="OpenShiftVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OpenShiftVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _openShiftVersionRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _openShiftVersionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OpenShiftVersionResource(Client, OpenShiftVersionData.DeserializeOpenShiftVersionData(e)), _openShiftVersionClientDiagnostics, Pipeline, "OpenShiftVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OpenShiftVersionData, OpenShiftVersionResource>(new OpenShiftVersionsGetAllCollectionResultOfT(_openShiftVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OpenShiftVersionCollection.GetAll"), data => new OpenShiftVersionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions/{openShiftVersion}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions/{openShiftVersion}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="openShiftVersion"> The desired version value of the OpenShiftVersion resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="openShiftVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="openShiftVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="openShiftVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string openShiftVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openShiftVersion, nameof(openShiftVersion));
 
-            using var scope = _openShiftVersionClientDiagnostics.CreateScope("OpenShiftVersionCollection.Exists");
+            using DiagnosticScope scope = _openShiftVersionsClientDiagnostics.CreateScope("OpenShiftVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _openShiftVersionRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), openShiftVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _openShiftVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftVersion, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<OpenShiftVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OpenShiftVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OpenShiftVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -252,36 +274,50 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions/{openShiftVersion}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions/{openShiftVersion}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="openShiftVersion"> The desired version value of the OpenShiftVersion resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="openShiftVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="openShiftVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="openShiftVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string openShiftVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openShiftVersion, nameof(openShiftVersion));
 
-            using var scope = _openShiftVersionClientDiagnostics.CreateScope("OpenShiftVersionCollection.Exists");
+            using DiagnosticScope scope = _openShiftVersionsClientDiagnostics.CreateScope("OpenShiftVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _openShiftVersionRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), openShiftVersion, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _openShiftVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftVersion, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<OpenShiftVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OpenShiftVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OpenShiftVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -295,38 +331,54 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions/{openShiftVersion}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions/{openShiftVersion}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="openShiftVersion"> The desired version value of the OpenShiftVersion resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="openShiftVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="openShiftVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="openShiftVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<OpenShiftVersionResource>> GetIfExistsAsync(string openShiftVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openShiftVersion, nameof(openShiftVersion));
 
-            using var scope = _openShiftVersionClientDiagnostics.CreateScope("OpenShiftVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _openShiftVersionsClientDiagnostics.CreateScope("OpenShiftVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _openShiftVersionRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), openShiftVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _openShiftVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftVersion, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<OpenShiftVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OpenShiftVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OpenShiftVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OpenShiftVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OpenShiftVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -340,38 +392,54 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions/{openShiftVersion}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions/{openShiftVersion}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="openShiftVersion"> The desired version value of the OpenShiftVersion resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="openShiftVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="openShiftVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="openShiftVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<OpenShiftVersionResource> GetIfExists(string openShiftVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openShiftVersion, nameof(openShiftVersion));
 
-            using var scope = _openShiftVersionClientDiagnostics.CreateScope("OpenShiftVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _openShiftVersionsClientDiagnostics.CreateScope("OpenShiftVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _openShiftVersionRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), openShiftVersion, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _openShiftVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftVersion, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<OpenShiftVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OpenShiftVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OpenShiftVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OpenShiftVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OpenShiftVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,6 +459,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<OpenShiftVersionResource> IAsyncEnumerable<OpenShiftVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

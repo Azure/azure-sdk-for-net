@@ -21,6 +21,20 @@ namespace Azure.ResourceManager.Storage.Models
     public static partial class ArmStorageModelFactory
     {
 
+        /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
+        /// <param name="state"> The ImmutabilityPolicy state of a blob container, possible values include: Locked and Unlocked. </param>
+        /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
+        /// <param name="allowProtectedAppendWritesAll"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The 'allowProtectedAppendWrites' and 'allowProtectedAppendWritesAll' properties are mutually exclusive. </param>
+        /// <param name="eTag"> ImmutabilityPolicy Etag. </param>
+        /// <param name="updateHistory"> The ImmutabilityPolicy update history of the blob container. </param>
+        /// <returns> A new <see cref="Models.BlobContainerImmutabilityPolicy"/> instance for mocking. </returns>
+        public static BlobContainerImmutabilityPolicy BlobContainerImmutabilityPolicy(int? immutabilityPeriodSinceCreationInDays = default, ImmutabilityPolicyState? state = default, bool? allowProtectedAppendWrites = default, bool? allowProtectedAppendWritesAll = default, ETag? eTag = default, IEnumerable<UpdateHistoryEntry> updateHistory = default)
+        {
+            updateHistory ??= new ChangeTrackingList<UpdateHistoryEntry>();
+
+            return new BlobContainerImmutabilityPolicy(immutabilityPeriodSinceCreationInDays is null && state is null && allowProtectedAppendWrites is null && allowProtectedAppendWritesAll is null ? default : new ImmutabilityPolicyProperty(immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites, allowProtectedAppendWritesAll, null), eTag, updateHistory.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The LegalHold property of a blob container. </summary>
         /// <param name="hasLegalHold"> The hasLegalHold public property is set to true by SRP if there are at least one existing tag. The hasLegalHold public property is set to false by SRP if all existing legal hold tags are cleared out. There can be a maximum of 1000 blob containers with hasLegalHold=true for a given account. </param>
         /// <param name="tags"> The list of LegalHold tags of a blob container. </param>
@@ -1405,7 +1419,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
         /// <param name="allowProtectedAppendWritesAll"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The 'allowProtectedAppendWrites' and 'allowProtectedAppendWritesAll' properties are mutually exclusive. </param>
         /// <returns> A new <see cref="Models.BlobContainerImmutabilityPolicy"/> instance for mocking. </returns>
-        public static BlobContainerImmutabilityPolicy BlobContainerImmutabilityPolicy(ETag? etag = default, IEnumerable<UpdateHistoryEntry> updateHistory = default, int? immutabilityPeriodSinceCreationInDays = default, ImmutabilityPolicyState? state = default, bool? allowProtectedAppendWrites = default, bool? allowProtectedAppendWritesAll = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobContainerImmutabilityPolicy BlobContainerImmutabilityPolicy(ETag? etag, IEnumerable<UpdateHistoryEntry> updateHistory, int? immutabilityPeriodSinceCreationInDays, ImmutabilityPolicyState? state, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll)
         {
             updateHistory ??= new ChangeTrackingList<UpdateHistoryEntry>();
 

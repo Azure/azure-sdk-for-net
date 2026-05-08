@@ -1311,9 +1311,8 @@ namespace Azure.ResourceManager.Hci.Models
             return new HciEdgeDeviceStorageNetworks(name, networkAdapterName, storageVlanId, storageAdapterIPInfo.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The StorageAdapter physical nodes of a cluster. </summary>
         /// <param name="physicalNode"> storage adapter physical node name. </param>
-        /// <param name="iPv4Address"> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
+        /// <param name="ipv4Address"> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
         /// <param name="subnetMask"> The SubnetMask address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
         /// <returns> A new <see cref="Models.HciEdgeDeviceStorageAdapterIPInfo"/> instance for mocking. </returns>
         public static HciEdgeDeviceStorageAdapterIPInfo HciEdgeDeviceStorageAdapterIPInfo(string physicalNode = default, string ipv4Address = default, string subnetMask = default)

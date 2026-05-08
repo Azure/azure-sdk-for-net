@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
     /// <summary> NetworkProfile represents a network profile. </summary>
     public partial class OpenShiftNetworkProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftNetworkProfile"/>. </summary>
         public OpenShiftNetworkProfile()
@@ -56,25 +27,29 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="outboundType"> The OutboundType used for egress traffic. </param>
         /// <param name="loadBalancerProfile"> The cluster load balancer profile. </param>
         /// <param name="preconfiguredNsg"> Specifies whether subnets are pre-attached with an NSG. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenShiftNetworkProfile(string podCidr, string serviceCidr, OpenShiftOutboundType? outboundType, OpenShiftLoadBalancerProfile loadBalancerProfile, OpenShiftPreconfiguredNsg? preconfiguredNsg, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OpenShiftNetworkProfile(string podCidr, string serviceCidr, OpenShiftOutboundType? outboundType, OpenShiftLoadBalancerProfile loadBalancerProfile, OpenShiftPreconfiguredNsg? preconfiguredNsg, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PodCidr = podCidr;
             ServiceCidr = serviceCidr;
             OutboundType = outboundType;
             LoadBalancerProfile = loadBalancerProfile;
             PreconfiguredNsg = preconfiguredNsg;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The CIDR used for OpenShift/Kubernetes Pods. </summary>
         public string PodCidr { get; set; }
+
         /// <summary> The CIDR used for OpenShift/Kubernetes Services. </summary>
         public string ServiceCidr { get; set; }
+
         /// <summary> The OutboundType used for egress traffic. </summary>
         public OpenShiftOutboundType? OutboundType { get; set; }
+
         /// <summary> The cluster load balancer profile. </summary>
         public OpenShiftLoadBalancerProfile LoadBalancerProfile { get; set; }
+
         /// <summary> Specifies whether subnets are pre-attached with an NSG. </summary>
         public OpenShiftPreconfiguredNsg? PreconfiguredNsg { get; set; }
     }

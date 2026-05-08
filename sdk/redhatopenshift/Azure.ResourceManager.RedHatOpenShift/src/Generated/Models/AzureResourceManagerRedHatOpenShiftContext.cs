@@ -6,16 +6,17 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RedHatOpenShift.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RedHatOpenShift
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(EffectiveOutboundIP))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(OpenShiftApiServerProfile))]
     [ModelReaderWriterBuildable(typeof(OpenShiftClusterAdminKubeconfig))]
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
     [ModelReaderWriterBuildable(typeof(OpenShiftClusterList))]
     [ModelReaderWriterBuildable(typeof(OpenShiftClusterPatch))]
     [ModelReaderWriterBuildable(typeof(OpenShiftClusterProfile))]
+    [ModelReaderWriterBuildable(typeof(OpenShiftClusterProperties))]
     [ModelReaderWriterBuildable(typeof(OpenShiftClusterResource))]
     [ModelReaderWriterBuildable(typeof(OpenShiftConsoleProfile))]
     [ModelReaderWriterBuildable(typeof(OpenShiftIngressProfile))]
@@ -34,16 +36,17 @@ namespace Azure.ResourceManager.RedHatOpenShift
     [ModelReaderWriterBuildable(typeof(OpenShiftPlatformWorkloadIdentity))]
     [ModelReaderWriterBuildable(typeof(OpenShiftPlatformWorkloadIdentityProfile))]
     [ModelReaderWriterBuildable(typeof(OpenShiftPlatformWorkloadIdentityRole))]
-    [ModelReaderWriterBuildable(typeof(OpenShiftPlatformWorkloadIdentityRoleSetList))]
+    [ModelReaderWriterBuildable(typeof(OpenShiftPlatformWorkloadIdentityRoleSetData))]
     [ModelReaderWriterBuildable(typeof(OpenShiftPlatformWorkloadIdentityRoleSetResource))]
     [ModelReaderWriterBuildable(typeof(OpenShiftServicePrincipalProfile))]
     [ModelReaderWriterBuildable(typeof(OpenShiftVersionData))]
     [ModelReaderWriterBuildable(typeof(OpenShiftVersionList))]
+    [ModelReaderWriterBuildable(typeof(OpenShiftVersionProperties))]
     [ModelReaderWriterBuildable(typeof(OpenShiftVersionResource))]
     [ModelReaderWriterBuildable(typeof(OpenShiftWorkerProfile))]
-    [ModelReaderWriterBuildable(typeof(PlatformWorkloadIdentityRoleSetData))]
+    [ModelReaderWriterBuildable(typeof(PlatformWorkloadIdentityRoleSetList))]
+    [ModelReaderWriterBuildable(typeof(PlatformWorkloadIdentityRoleSetProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerRedHatOpenShiftContext : ModelReaderWriterContext

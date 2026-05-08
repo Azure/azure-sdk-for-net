@@ -8,117 +8,209 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.RedHatOpenShift;
 
 namespace Azure.ResourceManager.RedHatOpenShift.Models
 {
     /// <summary> OpenShiftCluster represents an Azure Red Hat OpenShift cluster. </summary>
     public partial class OpenShiftClusterPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftClusterPatch"/>. </summary>
         public OpenShiftClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            WorkerProfiles = new ChangeTrackingList<OpenShiftWorkerProfile>();
-            WorkerProfilesStatus = new ChangeTrackingList<OpenShiftWorkerProfile>();
-            IngressProfiles = new ChangeTrackingList<OpenShiftIngressProfile>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftClusterPatch"/>. </summary>
         /// <param name="tags"> The resource tags. </param>
+        /// <param name="properties"> The cluster properties. </param>
         /// <param name="identity"> Identity stores information about the cluster MSI(s) in a workload identity cluster. </param>
-        /// <param name="provisioningState"> The cluster provisioning state. </param>
-        /// <param name="clusterProfile"> The cluster profile. </param>
-        /// <param name="consoleProfile"> The console profile. </param>
-        /// <param name="servicePrincipalProfile"> The cluster service principal profile. </param>
-        /// <param name="platformWorkloadIdentityProfile"> The workload identity profile. </param>
-        /// <param name="networkProfile"> The cluster network profile. </param>
-        /// <param name="masterProfile"> The cluster master profile. </param>
-        /// <param name="workerProfiles"> The cluster worker profiles. </param>
-        /// <param name="workerProfilesStatus"> The cluster worker profiles status. </param>
-        /// <param name="apiServerProfile"> The cluster API server profile. </param>
-        /// <param name="ingressProfiles"> The cluster ingress profiles. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenShiftClusterPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, OpenShiftClusterProvisioningState? provisioningState, OpenShiftClusterProfile clusterProfile, OpenShiftConsoleProfile consoleProfile, OpenShiftServicePrincipalProfile servicePrincipalProfile, OpenShiftPlatformWorkloadIdentityProfile platformWorkloadIdentityProfile, OpenShiftNetworkProfile networkProfile, OpenShiftMasterProfile masterProfile, IList<OpenShiftWorkerProfile> workerProfiles, IReadOnlyList<OpenShiftWorkerProfile> workerProfilesStatus, OpenShiftApiServerProfile apiServerProfile, IList<OpenShiftIngressProfile> ingressProfiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OpenShiftClusterPatch(IDictionary<string, string> tags, OpenShiftClusterProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
+            Properties = properties;
             Identity = identity;
-            ProvisioningState = provisioningState;
-            ClusterProfile = clusterProfile;
-            ConsoleProfile = consoleProfile;
-            ServicePrincipalProfile = servicePrincipalProfile;
-            PlatformWorkloadIdentityProfile = platformWorkloadIdentityProfile;
-            NetworkProfile = networkProfile;
-            MasterProfile = masterProfile;
-            WorkerProfiles = workerProfiles;
-            WorkerProfilesStatus = workerProfilesStatus;
-            ApiServerProfile = apiServerProfile;
-            IngressProfiles = ingressProfiles;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The cluster properties. </summary>
+        internal OpenShiftClusterProperties Properties { get; set; }
+
         /// <summary> Identity stores information about the cluster MSI(s) in a workload identity cluster. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> The cluster provisioning state. </summary>
-        public OpenShiftClusterProvisioningState? ProvisioningState { get; set; }
-        /// <summary> The cluster profile. </summary>
-        public OpenShiftClusterProfile ClusterProfile { get; set; }
-        /// <summary> The console profile. </summary>
-        internal OpenShiftConsoleProfile ConsoleProfile { get; set; }
-        /// <summary> The URL to access the cluster console. </summary>
-        public string ConsoleUrl
+        public OpenShiftClusterProvisioningState? ProvisioningState
         {
-            get => ConsoleProfile is null ? default : ConsoleProfile.Url;
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OpenShiftClusterProperties();
+                }
+                Properties.ProvisioningState = value;
+            }
+        }
+
+        /// <summary> The cluster profile. </summary>
+        public OpenShiftClusterProfile ClusterProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OpenShiftClusterProperties();
+                }
+                Properties.ClusterProfile = value;
+            }
         }
 
         /// <summary> The cluster service principal profile. </summary>
-        public OpenShiftServicePrincipalProfile ServicePrincipalProfile { get; set; }
+        public OpenShiftServicePrincipalProfile ServicePrincipalProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServicePrincipalProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OpenShiftClusterProperties();
+                }
+                Properties.ServicePrincipalProfile = value;
+            }
+        }
+
         /// <summary> The workload identity profile. </summary>
-        public OpenShiftPlatformWorkloadIdentityProfile PlatformWorkloadIdentityProfile { get; set; }
+        public OpenShiftPlatformWorkloadIdentityProfile PlatformWorkloadIdentityProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlatformWorkloadIdentityProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OpenShiftClusterProperties();
+                }
+                Properties.PlatformWorkloadIdentityProfile = value;
+            }
+        }
+
         /// <summary> The cluster network profile. </summary>
-        public OpenShiftNetworkProfile NetworkProfile { get; set; }
+        public OpenShiftNetworkProfile NetworkProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OpenShiftClusterProperties();
+                }
+                Properties.NetworkProfile = value;
+            }
+        }
+
         /// <summary> The cluster master profile. </summary>
-        public OpenShiftMasterProfile MasterProfile { get; set; }
+        public OpenShiftMasterProfile MasterProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MasterProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OpenShiftClusterProperties();
+                }
+                Properties.MasterProfile = value;
+            }
+        }
+
         /// <summary> The cluster worker profiles. </summary>
-        public IList<OpenShiftWorkerProfile> WorkerProfiles { get; }
+        public IList<OpenShiftWorkerProfile> WorkerProfiles
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OpenShiftClusterProperties();
+                }
+                return Properties.WorkerProfiles;
+            }
+        }
+
         /// <summary> The cluster worker profiles status. </summary>
-        public IReadOnlyList<OpenShiftWorkerProfile> WorkerProfilesStatus { get; }
+        public IReadOnlyList<OpenShiftWorkerProfile> WorkerProfilesStatus
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OpenShiftClusterProperties();
+                }
+                return Properties.WorkerProfilesStatus;
+            }
+        }
+
         /// <summary> The cluster API server profile. </summary>
-        public OpenShiftApiServerProfile ApiServerProfile { get; set; }
+        public OpenShiftApiServerProfile ApiServerProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApiServerProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OpenShiftClusterProperties();
+                }
+                Properties.ApiServerProfile = value;
+            }
+        }
+
         /// <summary> The cluster ingress profiles. </summary>
-        public IList<OpenShiftIngressProfile> IngressProfiles { get; }
+        public IList<OpenShiftIngressProfile> IngressProfiles
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OpenShiftClusterProperties();
+                }
+                return Properties.IngressProfiles;
+            }
+        }
+
+        /// <summary> The URL to access the cluster console. </summary>
+        public Uri ConsoleUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConsoleUri;
+            }
+        }
     }
 }

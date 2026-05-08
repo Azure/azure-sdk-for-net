@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="updatedAtUtc"> Exact time the Schema Group was updated. </param>
         /// <param name="createdAtUtc"> Exact time the Schema Group was created. </param>
-        /// <param name="etag"> The ETag value. </param>
+        /// <param name="eTag"> The ETag value. </param>
         /// <param name="groupProperties"> dictionary object for SchemaGroup group properties. </param>
         /// <param name="schemaCompatibility"> Gets or sets the SchemaCompatibility. </param>
         /// <param name="schemaType"> Gets or sets the SchemaType. </param>

@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// The content type of the key-value's value.
         /// Providing a proper content-type can enable transformations of values when they are retrieved by applications.
         /// </param>
-        /// <param name="etag"> An ETag indicating the state of a key-value within a configuration store. </param>
+        /// <param name="eTag"> An ETag indicating the state of a key-value within a configuration store. </param>
         /// <param name="lastModifiedOn"> The last time a modifying operation was performed on the given key-value. </param>
         /// <param name="isLocked">
         /// A value indicating whether the key-value is locked.
@@ -249,9 +249,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="size"> The size in bytes of the snapshot. </param>
         /// <param name="itemsCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. NOTE: These are data plane tags, not ARM tags. </param>
-        /// <param name="etag"> A value representing the current state of the snapshot. </param>
+        /// <param name="eTag"> A value representing the current state of the snapshot. </param>
         /// <returns> A new <see cref="AppConfiguration.AppConfigurationSnapshotData"/> instance for mocking. </returns>
-        public static AppConfigurationSnapshotData AppConfigurationSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppConfigurationProvisioningState? provisioningState = default, AppConfigurationSnapshotStatus? status = default, IEnumerable<SnapshotKeyValueFilter> filters = default, SnapshotCompositionType? compositionType = default, DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, long? retentionPeriod = default, long? size = default, long? itemsCount = default, IDictionary<string, string> tags = default, ETag? etag = default)
+        public static AppConfigurationSnapshotData AppConfigurationSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppConfigurationProvisioningState? provisioningState = default, AppConfigurationSnapshotStatus? status = default, IEnumerable<SnapshotKeyValueFilter> filters = default, SnapshotCompositionType? compositionType = default, DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, long? retentionPeriod = default, long? size = default, long? itemsCount = default, IDictionary<string, string> tags = default, ETag? eTag = default)
         {
             return new AppConfigurationSnapshotData(
                 id,
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && status is null && filters is null && compositionType is null && createdOn is null && expireOn is null && retentionPeriod is null && size is null && itemsCount is null && tags is null && etag is null ? default : new SnapshotProperties(
+                provisioningState is null && status is null && filters is null && compositionType is null && createdOn is null && expireOn is null && retentionPeriod is null && size is null && itemsCount is null && tags is null && eTag is null ? default : new SnapshotProperties(
                     provisioningState,
                     status,
                     (filters ?? new ChangeTrackingList<SnapshotKeyValueFilter>()).ToList(),
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     size,
                     itemsCount,
                     tags,
-                    etag,
+                    eTag,
                     null));
         }
 
