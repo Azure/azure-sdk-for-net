@@ -152,7 +152,12 @@ describe("Resolve Resource API Versions", () => {
     ["delete-method-id", { apiVersions: ["2024-05-01"] }],
     ["list-method-id", { apiVersions: ["2024-04-01", "2024-05-01"] }],
     ["action-method-id", { apiVersions: ["2024-05-01"] }]
-  ]) as unknown as Map<string, import("@azure-tools/typespec-client-generator-core").SdkMethod<import("@azure-tools/typespec-client-generator-core").SdkHttpOperation>>;
+  ]) as unknown as Map<
+    string,
+    import("@azure-tools/typespec-client-generator-core").SdkMethod<
+      import("@azure-tools/typespec-client-generator-core").SdkHttpOperation
+    >
+  >;
 
   function makeMethod(methodId: string, kind: ResourceOperationKind) {
     return {
