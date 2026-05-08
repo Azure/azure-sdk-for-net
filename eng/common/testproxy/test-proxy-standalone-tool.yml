@@ -5,6 +5,7 @@ parameters:
   targetVersion: ''
   templateRoot: '$(Build.SourcesDirectory)'
   condition: true
+  proxyUrl: 'http://localhost:5000'
 
 steps:
   - pwsh: |
@@ -56,14 +57,14 @@ steps:
     - pwsh: |
         $invocation = @"
         Start-Process $(PROXY_EXE)
-          -ArgumentList `"start -u --storage-location ${{ parameters.rootFolder }}`"
+          -ArgumentList `"start -u --storage-location ${{ parameters.rootFolder }} -- --urls ${{ parameters.proxyUrl }}`"
           -NoNewWindow -PassThru -RedirectStandardOutput ${{ parameters.rootFolder }}/test-proxy.log
           -RedirectStandardError ${{ parameters.rootFolder }}/test-proxy-error.log
         "@
         Write-Host $invocation
 
         $Process = Start-Process $(PROXY_EXE) `
-          -ArgumentList "start -u --storage-location ${{ parameters.rootFolder }}" `
+          -ArgumentList "start -u --storage-location ${{ parameters.rootFolder }} -- --urls ${{ parameters.proxyUrl }}" `
           -NoNewWindow -PassThru -RedirectStandardOutput ${{ parameters.rootFolder }}/test-proxy.log `
           -RedirectStandardError ${{ parameters.rootFolder }}/test-proxy-error.log
 
@@ -77,8 +78,8 @@ steps:
         if [[ "$(uname)" == "Darwin" ]]; then
           export DOTNET_ROOT="$HOME/.dotnet"
         fi
-        echo "nohup $(PROXY_EXE) 1>${{ parameters.rootFolder }}/test-proxy.log 2>${{ parameters.rootFolder }}/test-proxy-error.log &"
-        nohup $(PROXY_EXE) 1>${{ parameters.rootFolder }}/test-proxy.log 2>${{ parameters.rootFolder }}/test-proxy-error.log &
+        echo "nohup $(PROXY_EXE) start -u --storage-location ${{ parameters.rootFolder }} -- --urls \"${{ parameters.proxyUrl }}\" 1>${{ parameters.rootFolder }}/test-proxy.log 2>${{ parameters.rootFolder }}/test-proxy-error.log &"
+        nohup $(PROXY_EXE) start -u --storage-location ${{ parameters.rootFolder }} -- --urls "${{ parameters.proxyUrl }}" 1>${{ parameters.rootFolder }}/test-proxy.log 2>${{ parameters.rootFolder }}/test-proxy-error.log &
 
         echo $! > $(Build.SourcesDirectory)/test-proxy.pid
 
@@ -93,8 +94,8 @@ steps:
     - pwsh: |
         for ($i = 0; $i -lt 10; $i++) {
             try {
-                Write-Host "Invoke-WebRequest -Uri `"http://localhost:5000/Admin/IsAlive`" | Out-Null"
-                Invoke-WebRequest -Uri "http://localhost:5000/Admin/IsAlive" | Out-Null
+                Write-Host "Invoke-WebRequest -Uri `"${{ parameters.proxyUrl }}/Admin/IsAlive`" | Out-Null"
+                Invoke-WebRequest -Uri "${{ parameters.proxyUrl }}/Admin/IsAlive" | Out-Null
                 Write-Host "Successfully connected to the test proxy on port 5000."
                 exit 0
             } catch {

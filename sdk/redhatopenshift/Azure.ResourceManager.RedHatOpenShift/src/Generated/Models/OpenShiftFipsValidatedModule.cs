@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedHatOpenShift;
 
 namespace Azure.ResourceManager.RedHatOpenShift.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
     public readonly partial struct OpenShiftFipsValidatedModule : IEquatable<OpenShiftFipsValidatedModule>
     {
         private readonly string _value;
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftFipsValidatedModule"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OpenShiftFipsValidatedModule(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
+            _value = value;
+        }
 
         /// <summary> Disabled. </summary>
         public static OpenShiftFipsValidatedModule Disabled { get; } = new OpenShiftFipsValidatedModule(DisabledValue);
+
         /// <summary> Enabled. </summary>
         public static OpenShiftFipsValidatedModule Enabled { get; } = new OpenShiftFipsValidatedModule(EnabledValue);
+
         /// <summary> Determines if two <see cref="OpenShiftFipsValidatedModule"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OpenShiftFipsValidatedModule left, OpenShiftFipsValidatedModule right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OpenShiftFipsValidatedModule"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OpenShiftFipsValidatedModule left, OpenShiftFipsValidatedModule right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OpenShiftFipsValidatedModule"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OpenShiftFipsValidatedModule"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OpenShiftFipsValidatedModule(string value) => new OpenShiftFipsValidatedModule(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OpenShiftFipsValidatedModule"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OpenShiftFipsValidatedModule?(string value) => value == null ? null : new OpenShiftFipsValidatedModule(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OpenShiftFipsValidatedModule other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OpenShiftFipsValidatedModule other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
