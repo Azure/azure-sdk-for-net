@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Datadog.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DatadogMonitorProperties DatadogMonitorProperties(DatadogProvisioningState? provisioningState, DatadogMonitoringStatus? monitoringStatus, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, DatadogOrganizationProperties datadogOrganizationProperties, DatadogUserInfo userInfo, DatadogLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference)
         {
-            return DatadogMonitorProperties(provisioningState, monitoringStatus, marketplaceSubscriptionStatus, datadogOrganizationProperties, userInfo, liftrResourceCategory, liftrResourcePreference, saaSResourceId: default, sreAgentConfiguration: default, marketplaceOfferDetails: default);
+            return DatadogMonitorProperties(provisioningState: provisioningState, monitoringStatus: monitoringStatus, marketplaceSubscriptionStatus: marketplaceSubscriptionStatus, datadogOrganizationProperties: datadogOrganizationProperties, userInfo: userInfo, liftrResourceCategory: liftrResourceCategory, liftrResourcePreference: liftrResourcePreference, saaSResourceId: default, sreAgentConfiguration: default, marketplaceOfferDetails: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSaaSInfo"/>. </summary>
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Datadog.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MarketplaceSaaSInfo MarketplaceSaaSInfo(string marketplaceSubscriptionId, string marketplaceName, string marketplaceStatus, string billedAzureSubscriptionId, bool? isSubscribed)
         {
-            return MarketplaceSaaSInfo(marketplaceSubscriptionId, marketplaceName, marketplaceStatus, billedAzureSubscriptionId, offerId: default, isSubscribed);
+            return MarketplaceSaaSInfo(marketplaceSubscriptionId: marketplaceSubscriptionId, marketplaceName: marketplaceName, marketplaceStatus: marketplaceStatus, billedAzureSubscriptionId: billedAzureSubscriptionId, offerId: default, isSubscribed: isSubscribed);
         }
     }
 }

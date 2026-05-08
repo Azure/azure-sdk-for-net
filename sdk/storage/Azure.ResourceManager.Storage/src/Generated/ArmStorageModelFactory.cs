@@ -21,6 +21,20 @@ namespace Azure.ResourceManager.Storage.Models
     public static partial class ArmStorageModelFactory
     {
 
+        /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
+        /// <param name="state"> The ImmutabilityPolicy state of a blob container, possible values include: Locked and Unlocked. </param>
+        /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
+        /// <param name="allowProtectedAppendWritesAll"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The 'allowProtectedAppendWrites' and 'allowProtectedAppendWritesAll' properties are mutually exclusive. </param>
+        /// <param name="eTag"> ImmutabilityPolicy Etag. </param>
+        /// <param name="updateHistory"> The ImmutabilityPolicy update history of the blob container. </param>
+        /// <returns> A new <see cref="Models.BlobContainerImmutabilityPolicy"/> instance for mocking. </returns>
+        public static BlobContainerImmutabilityPolicy BlobContainerImmutabilityPolicy(int? immutabilityPeriodSinceCreationInDays = default, ImmutabilityPolicyState? state = default, bool? allowProtectedAppendWrites = default, bool? allowProtectedAppendWritesAll = default, ETag? eTag = default, IEnumerable<UpdateHistoryEntry> updateHistory = default)
+        {
+            updateHistory ??= new ChangeTrackingList<UpdateHistoryEntry>();
+
+            return new BlobContainerImmutabilityPolicy(immutabilityPeriodSinceCreationInDays is null && state is null && allowProtectedAppendWrites is null && allowProtectedAppendWritesAll is null ? default : new ImmutabilityPolicyProperty(immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites, allowProtectedAppendWritesAll, null), eTag, updateHistory.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The LegalHold property of a blob container. </summary>
         /// <param name="hasLegalHold"> The hasLegalHold public property is set to true by SRP if there are at least one existing tag. The hasLegalHold public property is set to false by SRP if all existing legal hold tags are cleared out. There can be a maximum of 1000 blob containers with hasLegalHold=true for a given account. </param>
         /// <param name="tags"> The list of LegalHold tags of a blob container. </param>
@@ -1405,7 +1419,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
         /// <param name="allowProtectedAppendWritesAll"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The 'allowProtectedAppendWrites' and 'allowProtectedAppendWritesAll' properties are mutually exclusive. </param>
         /// <returns> A new <see cref="Models.BlobContainerImmutabilityPolicy"/> instance for mocking. </returns>
-        public static BlobContainerImmutabilityPolicy BlobContainerImmutabilityPolicy(ETag? etag = default, IEnumerable<UpdateHistoryEntry> updateHistory = default, int? immutabilityPeriodSinceCreationInDays = default, ImmutabilityPolicyState? state = default, bool? allowProtectedAppendWrites = default, bool? allowProtectedAppendWritesAll = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobContainerImmutabilityPolicy BlobContainerImmutabilityPolicy(ETag? etag, IEnumerable<UpdateHistoryEntry> updateHistory, int? immutabilityPeriodSinceCreationInDays, ImmutabilityPolicyState? state, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll)
         {
             updateHistory ??= new ChangeTrackingList<UpdateHistoryEntry>();
 
@@ -1837,7 +1852,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IEnumerable<ObjectReplicationPolicyRule> rules, bool? isMetricsEnabled)
         {
-            return ObjectReplicationPolicyData(id, name, resourceType, systemData, policyId, enabledOn, sourceAccount, destinationAccount, rules, isMetricsEnabled, isPriorityReplicationEnabled: default);
+            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: isMetricsEnabled, isPriorityReplicationEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageSkuInformation"/>. </summary>
@@ -1852,7 +1867,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageSkuInformation StorageSkuInformation(StorageSkuName name, StorageSkuTier? tier, string resourceType, StorageKind? kind, IEnumerable<string> locations, IEnumerable<StorageSkuCapability> capabilities, IEnumerable<StorageSkuRestriction> restrictions)
         {
-            return StorageSkuInformation(name, tier, resourceType, kind, locations, locationInfo: default, capabilities, restrictions);
+            return StorageSkuInformation(name: name, tier: tier, resourceType: resourceType, kind: kind, locations: locations, locationInfo: default, capabilities: capabilities, restrictions: restrictions);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.StorageAccountData"/>. </summary>
@@ -1944,7 +1959,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountEndpoints StorageAccountEndpoints(Uri blobUri, Uri queueUri, Uri tableUri, Uri fileUri, Uri webUri, Uri dfsUri, StorageAccountMicrosoftEndpoints microsoftEndpoints, StorageAccountInternetEndpoints internetEndpoints)
         {
-            return StorageAccountEndpoints(blobUri, queueUri, tableUri, fileUri, webUri, dfsUri, microsoftEndpoints, internetEndpoints, iPv6Endpoints: default);
+            return StorageAccountEndpoints(blobUri: blobUri, queueUri: queueUri, tableUri: tableUri, fileUri: fileUri, webUri: webUri, dfsUri: dfsUri, microsoftEndpoints: microsoftEndpoints, internetEndpoints: internetEndpoints, iPv6Endpoints: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.FileShareData"/>. </summary>
@@ -2002,7 +2017,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IEnumerable<ObjectReplicationPolicyRule> rules)
         {
-            return ObjectReplicationPolicyData(id, name, resourceType, systemData, policyId, enabledOn, sourceAccount, destinationAccount, rules, isMetricsEnabled: default, isPriorityReplicationEnabled: default);
+            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: default, isPriorityReplicationEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoReplicationStatistics"/>. </summary>
@@ -2013,7 +2028,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GeoReplicationStatistics GeoReplicationStatistics(GeoReplicationStatus? status, DateTimeOffset? lastSyncOn, bool? canFailover)
         {
-            return GeoReplicationStatistics(status, lastSyncOn, canFailover, canPlannedFailover: default, postFailoverRedundancy: default, postPlannedFailoverRedundancy: default);
+            return GeoReplicationStatistics(status: status, lastSyncOn: lastSyncOn, canFailover: canFailover, canPlannedFailover: default, postFailoverRedundancy: default, postPlannedFailoverRedundancy: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.StorageAccountLocalUserData"/>. </summary>
@@ -2032,7 +2047,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountLocalUserData StorageAccountLocalUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<StoragePermissionScope> permissionScopes, string homeDirectory, IEnumerable<StorageSshPublicKey> sshAuthorizedKeys, string sid, bool? hasSharedKey, bool? hasSshKey, bool? hasSshPassword)
         {
-            return StorageAccountLocalUserData(id, name, resourceType, systemData, permissionScopes, homeDirectory, sshAuthorizedKeys, sid, hasSharedKey, hasSshKey, hasSshPassword, userId: default, groupId: default, isAclAuthorizationAllowed: default, extendedGroups: default, isNfsV3Enabled: default);
+            return StorageAccountLocalUserData(id: id, name: name, resourceType: resourceType, systemData: systemData, permissionScopes: permissionScopes, homeDirectory: homeDirectory, sshAuthorizedKeys: sshAuthorizedKeys, sid: sid, hasSharedKey: hasSharedKey, hasSshKey: hasSshKey, hasSshPassword: hasSshPassword, userId: default, groupId: default, isAclAuthorizationAllowed: default, extendedGroups: default, isNfsV3Enabled: default);
         }
     }
 }

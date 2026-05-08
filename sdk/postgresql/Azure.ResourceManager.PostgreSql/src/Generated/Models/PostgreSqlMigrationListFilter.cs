@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The PostgreSqlMigrationListFilter. </summary>
+    /// <summary> Indicates the filter to apply when listing migrations. </summary>
     public readonly partial struct PostgreSqlMigrationListFilter : IEquatable<PostgreSqlMigrationListFilter>
     {
         private readonly string _value;
+        /// <summary> Only active (in-progress) migrations. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> All migrations. </summary>
+        private const string AllValue = "All";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationListFilter"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlMigrationListFilter(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ActiveValue = "Active";
-        private const string AllValue = "All";
-
-        /// <summary> Active. </summary>
+        /// <summary> Only active (in-progress) migrations. </summary>
         public static PostgreSqlMigrationListFilter Active { get; } = new PostgreSqlMigrationListFilter(ActiveValue);
-        /// <summary> All. </summary>
+
+        /// <summary> All migrations. </summary>
         public static PostgreSqlMigrationListFilter All { get; } = new PostgreSqlMigrationListFilter(AllValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlMigrationListFilter"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlMigrationListFilter left, PostgreSqlMigrationListFilter right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlMigrationListFilter"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlMigrationListFilter left, PostgreSqlMigrationListFilter right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlMigrationListFilter"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlMigrationListFilter"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlMigrationListFilter(string value) => new PostgreSqlMigrationListFilter(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlMigrationListFilter"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlMigrationListFilter?(string value) => value == null ? null : new PostgreSqlMigrationListFilter(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlMigrationListFilter other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlMigrationListFilter other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

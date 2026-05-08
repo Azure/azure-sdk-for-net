@@ -581,6 +581,47 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             Console.WriteLine("[TestConsole] Validation complete - destination matches source exactly");
         }
+        protected override async Task<(StorageResource Source, StorageResource Destination)> CreateCopyStorageResourcesWithAuthAsync(
+            long size,
+            ShareClient sourceContainer,
+            ShareClient destinationContainer,
+            StorageResourceProvider provider)
+        {
+            string itemName = GetNewItemName();
+
+            // Upload data using SharedKey client
+            ShareFileClient fileClient = sourceContainer.GetRootDirectoryClient().GetFileClient(itemName);
+            await fileClient.CreateAsync(size);
+            using (Stream originalStream = await CreateLimitedMemoryStream(size))
+            {
+                originalStream.Position = 0;
+                await fileClient.UploadAsync(originalStream);
+            }
+
+            // Create resources through the SAS provider so copy-source URL is authenticated
+            ShareFilesStorageResourceProvider sasProvider = (ShareFilesStorageResourceProvider)provider;
+            StorageResource source = await sasProvider.FromFileAsync(fileClient.Uri);
+            ShareFileClient destClient = destinationContainer.GetRootDirectoryClient().GetFileClient(itemName);
+            StorageResource destination = await sasProvider.FromFileAsync(destClient.Uri);
+            return (source, destination);
+        }
+
+        protected override async Task<(StorageResource Source, StorageResource Destination)> CreateCopyStorageResourceContainersWithAuthAsync(
+            long size,
+            int transferCount,
+            ShareClient sourceContainer,
+            ShareClient destinationContainer,
+            StorageResourceProvider provider)
+        {
+            // Upload data using SharedKey client (discard the FromClient-based resource)
+            await CreateSourceStorageResourceContainerAsync(size, transferCount, GetNewContainerName(), sourceContainer);
+
+            // Create container resources through the SAS provider so copy-source URL is authenticated
+            ShareFilesStorageResourceProvider sasProvider = (ShareFilesStorageResourceProvider)provider;
+            StorageResource source = await sasProvider.FromDirectoryAsync(sourceContainer.GetRootDirectoryClient().Uri);
+            StorageResource destination = await sasProvider.FromDirectoryAsync(destinationContainer.GetRootDirectoryClient().Uri);
+            return (source, destination);
+        }
 
         #region Snapshot Tests
         [Test]
