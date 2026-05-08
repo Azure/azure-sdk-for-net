@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Subscription
             return message;
         }
 
-        internal HttpMessage CreateAcceptOwnershipRequest(string subscriptionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateAcceptSubscriptionOwnershipRequest(string subscriptionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Subscription
             return message;
         }
 
-        internal HttpMessage CreateAcceptOwnershipStatusRequest(string subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetAcceptOwnershipStatusRequest(string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

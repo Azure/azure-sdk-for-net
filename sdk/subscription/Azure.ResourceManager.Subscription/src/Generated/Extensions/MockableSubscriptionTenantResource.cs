@@ -161,12 +161,12 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> AcceptOwnershipAsync(WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> AcceptSubscriptionOwnershipAsync(WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = SubscriptionOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptOwnership");
+            using DiagnosticScope scope = SubscriptionOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptSubscriptionOwnership");
             scope.Start();
             try
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionOperationGroupRestClient.CreateAcceptOwnershipRequest(subscriptionId, AcceptOwnershipContent.ToRequestContent(content), context);
+                HttpMessage message = SubscriptionOperationGroupRestClient.CreateAcceptSubscriptionOwnershipRequest(subscriptionId, AcceptOwnershipContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SubscriptionArmOperation operation = new SubscriptionArmOperation(SubscriptionOperationGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -213,12 +213,12 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation AcceptOwnership(WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation AcceptSubscriptionOwnership(WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = SubscriptionOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptOwnership");
+            using DiagnosticScope scope = SubscriptionOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptSubscriptionOwnership");
             scope.Start();
             try
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionOperationGroupRestClient.CreateAcceptOwnershipRequest(subscriptionId, AcceptOwnershipContent.ToRequestContent(content), context);
+                HttpMessage message = SubscriptionOperationGroupRestClient.CreateAcceptSubscriptionOwnershipRequest(subscriptionId, AcceptOwnershipContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SubscriptionArmOperation operation = new SubscriptionArmOperation(SubscriptionOperationGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -263,11 +263,11 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AcceptOwnershipStatus>> AcceptOwnershipStatusAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AcceptOwnershipStatus>> GetAcceptOwnershipStatusAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using DiagnosticScope scope = SubscriptionOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptOwnershipStatus");
+            using DiagnosticScope scope = SubscriptionOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.GetAcceptOwnershipStatus");
             scope.Start();
             try
             {
@@ -275,9 +275,9 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionOperationGroupRestClient.CreateAcceptOwnershipStatusRequest(subscriptionId, context);
+                HttpMessage message = SubscriptionOperationGroupRestClient.CreateGetAcceptOwnershipStatusRequest(subscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AcceptOwnershipStatus> response = Response.FromValue(Models.AcceptOwnershipStatus.FromResponse(result), result);
+                Response<AcceptOwnershipStatus> response = Response.FromValue(AcceptOwnershipStatus.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -312,11 +312,11 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AcceptOwnershipStatus> AcceptOwnershipStatus(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual Response<AcceptOwnershipStatus> GetAcceptOwnershipStatus(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using DiagnosticScope scope = SubscriptionOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptOwnershipStatus");
+            using DiagnosticScope scope = SubscriptionOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.GetAcceptOwnershipStatus");
             scope.Start();
             try
             {
@@ -324,9 +324,9 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionOperationGroupRestClient.CreateAcceptOwnershipStatusRequest(subscriptionId, context);
+                HttpMessage message = SubscriptionOperationGroupRestClient.CreateGetAcceptOwnershipStatusRequest(subscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AcceptOwnershipStatus> response = Response.FromValue(Models.AcceptOwnershipStatus.FromResponse(result), result);
+                Response<AcceptOwnershipStatus> response = Response.FromValue(AcceptOwnershipStatus.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

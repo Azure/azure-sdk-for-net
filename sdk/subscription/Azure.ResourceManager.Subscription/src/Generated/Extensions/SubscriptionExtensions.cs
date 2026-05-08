@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Subscription
         /// Accept subscription ownership.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSubscriptionTenantResource.AcceptOwnershipAsync(WaitUntil, string, AcceptOwnershipContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSubscriptionTenantResource.AcceptSubscriptionOwnershipAsync(WaitUntil, string, AcceptOwnershipContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -334,18 +334,18 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<ArmOperation> AcceptOwnershipAsync(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation> AcceptSubscriptionOwnershipAsync(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableSubscriptionTenantResource(tenantResource).AcceptOwnershipAsync(waitUntil, subscriptionId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSubscriptionTenantResource(tenantResource).AcceptSubscriptionOwnershipAsync(waitUntil, subscriptionId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Accept subscription ownership.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSubscriptionTenantResource.AcceptOwnership(WaitUntil, string, AcceptOwnershipContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSubscriptionTenantResource.AcceptSubscriptionOwnership(WaitUntil, string, AcceptOwnershipContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -354,47 +354,47 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static ArmOperation AcceptOwnership(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
+        public static ArmOperation AcceptSubscriptionOwnership(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableSubscriptionTenantResource(tenantResource).AcceptOwnership(waitUntil, subscriptionId, content, cancellationToken);
+            return GetMockableSubscriptionTenantResource(tenantResource).AcceptSubscriptionOwnership(waitUntil, subscriptionId, content, cancellationToken);
         }
 
         /// <summary>
         /// Accept subscription ownership status.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSubscriptionTenantResource.AcceptOwnershipStatusAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSubscriptionTenantResource.GetAcceptOwnershipStatusAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<AcceptOwnershipStatus>> AcceptOwnershipStatusAsync(this TenantResource tenantResource, string subscriptionId, CancellationToken cancellationToken = default)
+        public static async Task<Response<AcceptOwnershipStatus>> GetAcceptOwnershipStatusAsync(this TenantResource tenantResource, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableSubscriptionTenantResource(tenantResource).AcceptOwnershipStatusAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSubscriptionTenantResource(tenantResource).GetAcceptOwnershipStatusAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Accept subscription ownership status.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSubscriptionTenantResource.AcceptOwnershipStatus(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSubscriptionTenantResource.GetAcceptOwnershipStatus(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<AcceptOwnershipStatus> AcceptOwnershipStatus(this TenantResource tenantResource, string subscriptionId, CancellationToken cancellationToken = default)
+        public static Response<AcceptOwnershipStatus> GetAcceptOwnershipStatus(this TenantResource tenantResource, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableSubscriptionTenantResource(tenantResource).AcceptOwnershipStatus(subscriptionId, cancellationToken);
+            return GetMockableSubscriptionTenantResource(tenantResource).GetAcceptOwnershipStatus(subscriptionId, cancellationToken);
         }
 
         /// <summary>
