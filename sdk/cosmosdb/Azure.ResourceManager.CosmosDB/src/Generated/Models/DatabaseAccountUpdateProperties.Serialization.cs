@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
-                foreach (AzureLocation item in Locations)
+                foreach (CosmosDBAccountLocation item in Locations)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             ConsistencyPolicy consistencyPolicy = default;
-            IList<AzureLocation> locations = default;
+            IList<CosmosDBAccountLocation> locations = default;
             IList<CosmosDBIPAddressOrRange> ipRules = default;
             bool? isVirtualNetworkFilterEnabled = default;
             bool? enableAutomaticFailover = default;
@@ -386,10 +386,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<AzureLocation> array = new List<AzureLocation>();
+                    List<CosmosDBAccountLocation> array = new List<CosmosDBAccountLocation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new AzureLocation(item.GetString()));
+                        array.Add(CosmosDBAccountLocation.DeserializeCosmosDBAccountLocation(item, options));
                     }
                     locations = array;
                     continue;
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             return new DatabaseAccountUpdateProperties(
                 consistencyPolicy,
-                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locations ?? new ChangeTrackingList<CosmosDBAccountLocation>(),
                 ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>(),
                 isVirtualNetworkFilterEnabled,
                 enableAutomaticFailover,

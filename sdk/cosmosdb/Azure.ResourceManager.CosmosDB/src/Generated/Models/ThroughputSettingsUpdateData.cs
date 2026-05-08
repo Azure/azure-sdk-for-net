@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The ThroughputSettingsUpdateData. </summary>
+    /// <summary> Parameters to update Cosmos DB resource throughput. </summary>
     public partial class ThroughputSettingsUpdateData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

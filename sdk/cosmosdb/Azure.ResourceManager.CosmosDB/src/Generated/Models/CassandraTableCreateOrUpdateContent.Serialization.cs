@@ -16,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The CassandraTableCreateOrUpdateContent. </summary>
+    /// <summary> Parameters to create and update Cosmos DB Cassandra table. </summary>
     public partial class CassandraTableCreateOrUpdateContent : TrackedResourceData, IJsonModel<CassandraTableCreateOrUpdateContent>
     {
         /// <summary> Initializes a new instance of <see cref="CassandraTableCreateOrUpdateContent"/> for deserialization. </summary>

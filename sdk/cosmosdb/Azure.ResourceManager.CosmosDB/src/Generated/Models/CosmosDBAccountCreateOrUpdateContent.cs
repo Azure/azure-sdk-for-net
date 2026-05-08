@@ -13,11 +13,23 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The CosmosDBAccountCreateOrUpdateContent. </summary>
+    /// <summary> Parameters to create and update Cosmos DB database accounts. </summary>
     public partial class CosmosDBAccountCreateOrUpdateContent : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountCreateOrUpdateContent"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
+        /// <param name="databaseAccountOfferType"> The offer type for the Cosmos DB database account. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locations"/> is null. </exception>
+        public CosmosDBAccountCreateOrUpdateContent(AzureLocation location, IEnumerable<CosmosDBAccountLocation> locations, CosmosDBAccountOfferType databaseAccountOfferType) : base(location)
+        {
+            Argument.AssertNotNull(locations, nameof(locations));
+
+            Properties = new DatabaseAccountCreateUpdateProperties(locations, databaseAccountOfferType);
+        }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -39,5 +51,399 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Indicates the type of database account. This can only be set at database account creation. </summary>
         [WirePath("kind")]
         public CosmosDBAccountKind? Kind { get; set; }
+
+        /// <summary> Properties to create and update Azure Cosmos DB database accounts. </summary>
+        [WirePath("properties")]
+        internal DatabaseAccountCreateUpdateProperties Properties { get; }
+
+        /// <summary> The consistency policy for the Cosmos DB account. </summary>
+        [WirePath("properties.consistencyPolicy")]
+        public ConsistencyPolicy ConsistencyPolicy
+        {
+            get
+            {
+                return Properties.ConsistencyPolicy;
+            }
+        }
+
+        /// <summary> An array that contains the georeplication locations enabled for the Cosmos DB account. </summary>
+        [WirePath("properties.locations")]
+        public IList<CosmosDBAccountLocation> Locations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Locations;
+            }
+        }
+
+        /// <summary> List of IpRules. </summary>
+        [WirePath("properties.ipRules")]
+        public IList<CosmosDBIPAddressOrRange> IpRules
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IpRules;
+            }
+        }
+
+        /// <summary> Flag to indicate whether to enable/disable Virtual Network ACL rules. </summary>
+        [WirePath("properties.isVirtualNetworkFilterEnabled")]
+        public bool? IsVirtualNetworkFilterEnabled
+        {
+            get
+            {
+                return Properties.IsVirtualNetworkFilterEnabled;
+            }
+        }
+
+        /// <summary> Enables automatic failover of the write region in the rare event that the region is unavailable due to an outage. Automatic failover will result in a new write region for the account and is chosen based on the failover priorities configured for the account. </summary>
+        [WirePath("properties.enableAutomaticFailover")]
+        public bool? EnableAutomaticFailover
+        {
+            get
+            {
+                return Properties.EnableAutomaticFailover;
+            }
+        }
+
+        /// <summary> List of Cosmos DB capabilities for the account. </summary>
+        [WirePath("properties.capabilities")]
+        public IList<CosmosDBAccountCapability> Capabilities
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Capabilities;
+            }
+        }
+
+        /// <summary> List of Virtual Network ACL rules configured for the Cosmos DB account. </summary>
+        [WirePath("properties.virtualNetworkRules")]
+        public IList<CosmosDBVirtualNetworkRule> VirtualNetworkRules
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetworkRules;
+            }
+        }
+
+        /// <summary> Enables the account to write in multiple locations. </summary>
+        [WirePath("properties.enableMultipleWriteLocations")]
+        public bool? EnableMultipleWriteLocations
+        {
+            get
+            {
+                return Properties.EnableMultipleWriteLocations;
+            }
+        }
+
+        /// <summary> Enables the cassandra connector on the Cosmos DB C* account. </summary>
+        [WirePath("properties.enableCassandraConnector")]
+        public bool? EnableCassandraConnector
+        {
+            get
+            {
+                return Properties.EnableCassandraConnector;
+            }
+        }
+
+        /// <summary> The cassandra connector offer type for the Cosmos DB database C* account. </summary>
+        [WirePath("properties.connectorOffer")]
+        public ConnectorOffer? ConnectorOffer
+        {
+            get
+            {
+                return Properties.ConnectorOffer;
+            }
+        }
+
+        /// <summary> Disable write operations on metadata resources (databases, containers, throughput) via account keys. </summary>
+        [WirePath("properties.disableKeyBasedMetadataWriteAccess")]
+        public bool? DisableKeyBasedMetadataWriteAccess
+        {
+            get
+            {
+                return Properties.DisableKeyBasedMetadataWriteAccess;
+            }
+        }
+
+        /// <summary> The URI of the key vault. </summary>
+        [WirePath("properties.keyVaultKeyUri")]
+        public string KeyVaultKeyUri
+        {
+            get
+            {
+                return Properties.KeyVaultKeyUri;
+            }
+        }
+
+        /// <summary> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be "FirstPartyIdentity", "SystemAssignedIdentity" and more. </summary>
+        [WirePath("properties.defaultIdentity")]
+        public string DefaultIdentity
+        {
+            get
+            {
+                return Properties.DefaultIdentity;
+            }
+        }
+
+        /// <summary> Whether requests from Public Network are allowed. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public CosmosDBPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties.PublicNetworkAccess;
+            }
+        }
+
+        /// <summary> Flag to indicate whether Free Tier is enabled. </summary>
+        [WirePath("properties.enableFreeTier")]
+        public bool? IsFreeTierEnabled
+        {
+            get
+            {
+                return Properties.IsFreeTierEnabled;
+            }
+        }
+
+        /// <summary> Flag to indicate whether to enable storage analytics. </summary>
+        [WirePath("properties.enableAnalyticalStorage")]
+        public bool? IsAnalyticalStorageEnabled
+        {
+            get
+            {
+                return Properties.IsAnalyticalStorageEnabled;
+            }
+        }
+
+        /// <summary> Enum to indicate the mode of account creation. </summary>
+        [WirePath("properties.createMode")]
+        public CosmosDBAccountCreateMode? CreateMode
+        {
+            get
+            {
+                return Properties.CreateMode;
+            }
+        }
+
+        /// <summary> The object representing the policy for taking backups on an account. </summary>
+        [WirePath("properties.backupPolicy")]
+        public CosmosDBAccountBackupPolicy BackupPolicy
+        {
+            get
+            {
+                return Properties.BackupPolicy;
+            }
+        }
+
+        /// <summary> The CORS policy for the Cosmos DB database account. </summary>
+        [WirePath("properties.cors")]
+        public IList<CosmosDBAccountCorsPolicy> Cors
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Cors;
+            }
+        }
+
+        /// <summary> Indicates what services are allowed to bypass firewall checks. </summary>
+        [WirePath("properties.networkAclBypass")]
+        public NetworkAclBypass? NetworkAclBypass
+        {
+            get
+            {
+                return Properties.NetworkAclBypass;
+            }
+        }
+
+        /// <summary> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </summary>
+        [WirePath("properties.networkAclBypassResourceIds")]
+        public IList<string> NetworkAclBypassResourceIds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkAclBypassResourceIds;
+            }
+        }
+
+        /// <summary> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </summary>
+        [WirePath("properties.disableLocalAuth")]
+        public bool? DisableLocalAuth
+        {
+            get
+            {
+                return Properties.DisableLocalAuth;
+            }
+        }
+
+        /// <summary> Parameters to indicate the information about the restore. </summary>
+        [WirePath("properties.restoreParameters")]
+        public CosmosDBAccountRestoreParameters RestoreParameters
+        {
+            get
+            {
+                return Properties.RestoreParameters;
+            }
+        }
+
+        /// <summary> Indicates the capacityMode of the Cosmos DB account. </summary>
+        [WirePath("properties.capacityMode")]
+        public CapacityMode? CapacityMode
+        {
+            get
+            {
+                return Properties.CapacityMode;
+            }
+        }
+
+        /// <summary> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </summary>
+        [WirePath("properties.enableMaterializedViews")]
+        public bool? EnableMaterializedViews
+        {
+            get
+            {
+                return Properties.EnableMaterializedViews;
+            }
+        }
+
+        /// <summary> This property is ignored during the update/create operation, as the metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB account. </summary>
+        [WirePath("properties.keysMetadata")]
+        public DatabaseAccountKeysMetadata KeysMetadata
+        {
+            get
+            {
+                return Properties.KeysMetadata;
+            }
+        }
+
+        /// <summary> Flag to indicate enabling/disabling of Partition Merge feature on the account. </summary>
+        [WirePath("properties.enablePartitionMerge")]
+        public bool? EnablePartitionMerge
+        {
+            get
+            {
+                return Properties.EnablePartitionMerge;
+            }
+        }
+
+        /// <summary> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </summary>
+        [WirePath("properties.enableBurstCapacity")]
+        public bool? EnableBurstCapacity
+        {
+            get
+            {
+                return Properties.EnableBurstCapacity;
+            }
+        }
+
+        /// <summary> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </summary>
+        [WirePath("properties.minimalTlsVersion")]
+        public CosmosDBMinimalTlsVersion? MinimalTlsVersion
+        {
+            get
+            {
+                return Properties.MinimalTlsVersion;
+            }
+        }
+
+        /// <summary> Indicates the status of the Customer Managed Key feature on the account. In case there are errors, the property provides troubleshooting guidance. </summary>
+        [WirePath("properties.customerManagedKeyStatus")]
+        public string CustomerManagedKeyStatus
+        {
+            get
+            {
+                return Properties.CustomerManagedKeyStatus;
+            }
+        }
+
+        /// <summary> Flag to indicate enabling/disabling of Priority Based Execution Preview feature on the account. </summary>
+        [WirePath("properties.enablePriorityBasedExecution")]
+        public bool? EnablePriorityBasedExecution
+        {
+            get
+            {
+                return Properties.EnablePriorityBasedExecution;
+            }
+        }
+
+        /// <summary> Enum to indicate default Priority Level of request for Priority Based Execution. </summary>
+        [WirePath("properties.defaultPriorityLevel")]
+        public DefaultPriorityLevel? DefaultPriorityLevel
+        {
+            get
+            {
+                return Properties.DefaultPriorityLevel;
+            }
+        }
+
+        /// <summary> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </summary>
+        [WirePath("properties.enablePerRegionPerPartitionAutoscale")]
+        public bool? EnablePerRegionPerPartitionAutoscale
+        {
+            get
+            {
+                return Properties.EnablePerRegionPerPartitionAutoscale;
+            }
+        }
+
+        /// <summary> Flag to indicate if All Versions and Deletes Change feed feature is enabled on the account. </summary>
+        [WirePath("properties.enableAllVersionsAndDeletesChangeFeed")]
+        public bool? EnableAllVersionsAndDeletesChangeFeed
+        {
+            get
+            {
+                return Properties.EnableAllVersionsAndDeletesChangeFeed;
+            }
+        }
+
+        /// <summary> Describes the version of the MongoDB account. </summary>
+        [WirePath("properties.apiProperties.serverVersion")]
+        public CosmosDBServerVersion? ApiServerVersion
+        {
+            get
+            {
+                return Properties.ApiServerVersion;
+            }
+        }
+
+        /// <summary> Describes the types of schema for analytical storage. </summary>
+        [WirePath("properties.analyticalStorageConfiguration.schemaType")]
+        public AnalyticalStorageSchemaType? AnalyticalStorageSchemaType
+        {
+            get
+            {
+                return Properties.AnalyticalStorageSchemaType;
+            }
+        }
+
+        /// <summary> Describe the level of detail with which queries are to be logged. </summary>
+        [WirePath("properties.diagnosticLogSettings.enableFullTextQuery")]
+        public EnableFullTextQuery? DiagnosticLogEnableFullTextQuery
+        {
+            get
+            {
+                return Properties.DiagnosticLogEnableFullTextQuery;
+            }
+        }
+
+        /// <summary> The total throughput limit imposed on the account. A totalThroughputLimit of 2000 imposes a strict limit of max throughput that can be provisioned on that account to be 2000. A totalThroughputLimit of -1 indicates no limits on provisioning of throughput. </summary>
+        [WirePath("properties.capacity.totalThroughputLimit")]
+        public int? CapacityTotalThroughputLimit
+        {
+            get
+            {
+                return Properties.CapacityTotalThroughputLimit;
+            }
+        }
+
+        /// <summary> The offer type for the Cosmos DB database account. </summary>
+        [WirePath("properties.databaseAccountOfferType")]
+        public CosmosDBAccountOfferType DatabaseAccountOfferType
+        {
+            get
+            {
+                return Properties.DatabaseAccountOfferType;
+            }
+        }
     }
 }

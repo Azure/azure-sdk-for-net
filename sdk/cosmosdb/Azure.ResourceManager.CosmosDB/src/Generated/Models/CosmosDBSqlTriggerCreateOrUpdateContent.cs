@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The CosmosDBSqlTriggerCreateOrUpdateContent. </summary>
+    /// <summary> Parameters to create and update Cosmos DB trigger. </summary>
     public partial class CosmosDBSqlTriggerCreateOrUpdateContent : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

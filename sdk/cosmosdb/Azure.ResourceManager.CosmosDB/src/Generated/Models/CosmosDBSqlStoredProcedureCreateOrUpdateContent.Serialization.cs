@@ -16,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The CosmosDBSqlStoredProcedureCreateOrUpdateContent. </summary>
+    /// <summary> Parameters to create and update Cosmos DB storedProcedure. </summary>
     public partial class CosmosDBSqlStoredProcedureCreateOrUpdateContent : TrackedResourceData, IJsonModel<CosmosDBSqlStoredProcedureCreateOrUpdateContent>
     {
         /// <summary> Initializes a new instance of <see cref="CosmosDBSqlStoredProcedureCreateOrUpdateContent"/> for deserialization. </summary>

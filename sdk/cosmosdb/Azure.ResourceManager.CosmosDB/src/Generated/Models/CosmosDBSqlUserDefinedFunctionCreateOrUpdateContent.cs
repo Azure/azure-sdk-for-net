@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent. </summary>
+    /// <summary> Parameters to create and update Cosmos DB userDefinedFunction. </summary>
     public partial class CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

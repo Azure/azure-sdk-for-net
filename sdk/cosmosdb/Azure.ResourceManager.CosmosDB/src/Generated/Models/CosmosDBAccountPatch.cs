@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> An array that contains the georeplication locations enabled for the Cosmos DB account. </summary>
         [WirePath("properties.locations")]
-        public IList<AzureLocation> Locations
+        public IList<CosmosDBAccountLocation> Locations
         {
             get
             {

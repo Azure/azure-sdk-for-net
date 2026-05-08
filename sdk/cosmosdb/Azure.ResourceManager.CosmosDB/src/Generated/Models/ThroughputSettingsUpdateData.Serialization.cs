@@ -16,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The ThroughputSettingsUpdateData. </summary>
+    /// <summary> Parameters to update Cosmos DB resource throughput. </summary>
     public partial class ThroughputSettingsUpdateData : TrackedResourceData, IJsonModel<ThroughputSettingsUpdateData>
     {
         /// <summary> Initializes a new instance of <see cref="ThroughputSettingsUpdateData"/> for deserialization. </summary>

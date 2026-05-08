@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The CosmosDBTableCreateOrUpdateContent. </summary>
+    /// <summary> Parameters to create and update Cosmos DB Table. </summary>
     public partial class CosmosDBTableCreateOrUpdateContent : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

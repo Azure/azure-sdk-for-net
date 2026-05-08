@@ -16,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The MongoDBDatabaseCreateOrUpdateContent. </summary>
+    /// <summary> Parameters to create and update Cosmos DB MongoDB database. </summary>
     public partial class MongoDBDatabaseCreateOrUpdateContent : TrackedResourceData, IJsonModel<MongoDBDatabaseCreateOrUpdateContent>
     {
         /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseCreateOrUpdateContent"/> for deserialization. </summary>

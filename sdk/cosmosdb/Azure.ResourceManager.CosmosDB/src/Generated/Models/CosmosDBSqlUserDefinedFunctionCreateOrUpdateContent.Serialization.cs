@@ -16,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent. </summary>
+    /// <summary> Parameters to create and update Cosmos DB userDefinedFunction. </summary>
     public partial class CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent : TrackedResourceData, IJsonModel<CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>
     {
         /// <summary> Initializes a new instance of <see cref="CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent"/> for deserialization. </summary>

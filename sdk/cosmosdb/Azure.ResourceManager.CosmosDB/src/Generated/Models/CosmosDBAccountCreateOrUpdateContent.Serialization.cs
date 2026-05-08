@@ -16,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The CosmosDBAccountCreateOrUpdateContent. </summary>
+    /// <summary> Parameters to create and update Cosmos DB database accounts. </summary>
     public partial class CosmosDBAccountCreateOrUpdateContent : TrackedResourceData, IJsonModel<CosmosDBAccountCreateOrUpdateContent>
     {
         /// <summary> Initializes a new instance of <see cref="CosmosDBAccountCreateOrUpdateContent"/> for deserialization. </summary>

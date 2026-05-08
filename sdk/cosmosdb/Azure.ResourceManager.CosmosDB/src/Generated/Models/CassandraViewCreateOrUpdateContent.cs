@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The CassandraViewCreateOrUpdateContent. </summary>
+    /// <summary> Parameters to create and update Cosmos DB Cassandra view. </summary>
     public partial class CassandraViewCreateOrUpdateContent : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

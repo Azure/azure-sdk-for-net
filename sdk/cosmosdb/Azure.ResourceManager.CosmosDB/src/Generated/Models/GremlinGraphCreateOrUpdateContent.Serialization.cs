@@ -16,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The GremlinGraphCreateOrUpdateContent. </summary>
+    /// <summary> Parameters to create and update Cosmos DB Gremlin graph. </summary>
     public partial class GremlinGraphCreateOrUpdateContent : TrackedResourceData, IJsonModel<GremlinGraphCreateOrUpdateContent>
     {
         /// <summary> Initializes a new instance of <see cref="GremlinGraphCreateOrUpdateContent"/> for deserialization. </summary>

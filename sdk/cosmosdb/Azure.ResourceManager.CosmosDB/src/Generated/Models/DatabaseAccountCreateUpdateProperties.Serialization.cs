@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -85,7 +84,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteObjectValue(ConsistencyPolicy, options);
             }
             writer.WritePropertyName("locations"u8);
-            writer.WriteStringValue(Locations);
+            writer.WriteStartArray();
+            foreach (CosmosDBAccountLocation item in Locations)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
             writer.WritePropertyName("databaseAccountOfferType"u8);
             writer.WriteStringValue(DatabaseAccountOfferType.ToString());
             if (Optional.IsCollectionDefined(IpRules))
@@ -341,7 +345,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             ConsistencyPolicy consistencyPolicy = default;
-            AzureLocation locations = default;
+            IList<CosmosDBAccountLocation> locations = default;
             CosmosDBAccountOfferType databaseAccountOfferType = default;
             IList<CosmosDBIPAddressOrRange> ipRules = default;
             bool? isVirtualNetworkFilterEnabled = default;
@@ -393,7 +397,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("locations"u8))
                 {
-                    locations = new AzureLocation(prop.Value.GetString());
+                    List<CosmosDBAccountLocation> array = new List<CosmosDBAccountLocation>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(CosmosDBAccountLocation.DeserializeCosmosDBAccountLocation(item, options));
+                    }
+                    locations = array;
                     continue;
                 }
                 if (prop.NameEquals("databaseAccountOfferType"u8))
