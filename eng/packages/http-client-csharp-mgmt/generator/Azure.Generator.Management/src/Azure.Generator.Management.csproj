@@ -13,6 +13,10 @@
 		<PackageReference Include="Humanizer.Core" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<EmbeddedResource Include="Assets\README.md.template" />
+	</ItemGroup>
+
 	<Target Name="CheckEmitterBuild" BeforeTargets="Build">
 		<!-- Check if the folder does not exist -->
 		<Error Condition="!Exists('..\..\..\node_modules\@typespec\http-client-csharp')" Text="Emitter has not been built please run `npm ci` followed by `npm run build` from ./eng/packages/http-client-csharp folder." />

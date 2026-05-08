@@ -27,6 +27,7 @@
 import {
   Program,
   Operation,
+  NoTarget,
   getPattern,
   getMinLength,
   getMaxLength
@@ -43,22 +44,26 @@ import {
   ArmResourceSchema,
   NameConstraints,
   NonResourceMethod,
+  ParentResourceLookupContext,
   ResourceMetadata,
   ResourceMethod,
   ResourceOperationKind,
   ResourceScopeKind,
+  expandArmResources,
   postProcessArmResources,
-  ParentResourceLookupContext,
   assignNonResourceMethodsToResources,
   resolveResourceApiVersions,
   extractRbacRoles,
-  extractNameConstraintOverrides
+  extractNameConstraintOverrides,
+  isResourceIdPatternPrefixMatch
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import {
   getCrossLanguageDefinitionId,
   getClientType,
-  SdkModelType
+  SdkModelType,
+  SdkHttpOperation,
+  SdkMethod
 } from "@azure-tools/typespec-client-generator-core";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
@@ -97,41 +102,24 @@ export function resolveArmResources(
     ResolvedResource
   >();
 
-  // Build a lookup map from methodId (crossLanguageDefinitionId) to apiVersions
-  // so that we can efficiently resolve per-resource API versions
-  const methodApiVersionsMap = new Map<string, string[]>();
-  // Build a lookup map from methodId to SdkMethod kind (basic, paging, lro, lropaging)
-  // so that we can detect pageable actions that should be classified as List
-  const methodKindMap = new Map<string, string>();
-  // Build a lookup map from methodId to the response item type's crossLanguageDefinitionId
-  // so that we can verify pageable actions return actual resource models
-  const methodResponseModelIdMap = new Map<string, string>();
+  // Build a single lookup map from methodId (crossLanguageDefinitionId) to
+  // SdkMethod. All per-method information needed below (apiVersions, kind,
+  // response item type) is derived from this map. Duplicate ids are reported
+  // as diagnostics rather than silently ignored.
+  const methodMap = new Map<string, SdkMethod<SdkHttpOperation>>();
   for (const client of getAllSdkClients(sdkContext)) {
     for (const method of client.methods) {
-      if (!methodApiVersionsMap.has(method.crossLanguageDefinitionId)) {
-        methodApiVersionsMap.set(
-          method.crossLanguageDefinitionId,
-          method.apiVersions
-        );
+      const id = method.crossLanguageDefinitionId;
+      if (methodMap.has(id)) {
+        sdkContext.program.reportDiagnostic({
+          code: "general-warning",
+          severity: "warning",
+          message: `Duplicate method id encountered while building method map: ${id}`,
+          target: NoTarget
+        });
+        continue;
       }
-      if (!methodKindMap.has(method.crossLanguageDefinitionId)) {
-        methodKindMap.set(method.crossLanguageDefinitionId, method.kind);
-      }
-      if (
-        (method.kind === "paging" || method.kind === "lropaging") &&
-        !methodResponseModelIdMap.has(method.crossLanguageDefinitionId)
-      ) {
-        const responseType = method.response?.type;
-        if (
-          responseType?.kind === "array" &&
-          responseType.valueType.kind === "model"
-        ) {
-          methodResponseModelIdMap.set(
-            method.crossLanguageDefinitionId,
-            (responseType.valueType as SdkModelType).crossLanguageDefinitionId
-          );
-        }
-      }
+      methodMap.set(id, method as SdkMethod<SdkHttpOperation>);
     }
   }
 
@@ -172,8 +160,7 @@ export function resolveArmResources(
         program,
         sdkContext,
         resolvedResource,
-        methodKindMap,
-        methodResponseModelIdMap,
+        methodMap,
         resourceModelIds
       );
 
@@ -200,47 +187,40 @@ export function resolveArmResources(
   // Convert non-resource methods
   const nonResourceMethods: NonResourceMethod[] = [];
 
-  // Create parent lookup context for resolveArmResources
-  // In this case, parent information comes from ResolvedResource objects
-  // Build validResourceMap once for efficient lookup
-  const validResourceMap = new Map<string, ArmResourceSchema>();
-  for (const r of resources.filter(
-    (r) => r.metadata.resourceIdPattern !== undefined
-  )) {
-    const resolvedR = schemaToResolvedResource.get(r);
-    if (resolvedR) {
-      validResourceMap.set(resolvedR.resourceInstancePath, r);
-    }
-  }
+  const reportWarning = (message: string) =>
+    sdkContext.program.reportDiagnostic({
+      code: "general-warning",
+      severity: "warning",
+      message,
+      target: NoTarget
+    });
 
-  const parentLookup: ParentResourceLookupContext = {
-    getParentResource: (
-      resource: ArmResourceSchema
-    ): ArmResourceSchema | undefined => {
-      const resolved = schemaToResolvedResource.get(resource);
-      if (!resolved) return undefined;
+  // Step 1: expand resources with dynamic parent type segments (e.g.
+  // `{parentType}/{parentName}` where `{parentType}` is an enum) into one
+  // concrete resource per enum value.
+  const { expandedResources, expandedToOriginal } = expandArmResources(resources, {
+    serviceMethods: methodMap,
+    diagnosticReporter: reportWarning
+  });
 
-      // Walk up the parent chain to find a valid parent
-      let parent = resolved.parent;
-      while (parent) {
-        const parentResource = validResourceMap.get(
-          parent.resourceInstancePath
-        );
-        if (parentResource) {
-          return parentResource;
-        }
-        parent = parent.parent;
-      }
-      return undefined;
-    }
-  };
+  // Step 2: build the parent-lookup context. This path computes parents from
+  // the ResolvedResource.parent chain returned by the ARM library and also
+  // mirrors schema-to-resolved-resource entries for the freshly expanded
+  // schemas so the lookup can resolve them.
+  const parentLookup = buildResolveArmResourcesParentLookup(
+    expandedResources,
+    expandedToOriginal,
+    schemaToResolvedResource
+  );
 
-  // Use the shared post-processing function
+  // Step 3: shared post-processing.
   const filteredResources = postProcessArmResources(
-    resources,
+    expandedResources,
     nonResourceMethods,
     parentLookup,
-    methodResponseModelIdMap
+    {
+      methodResponseModelIdMap: deriveMethodResponseModelIdMap(methodMap)
+    }
   );
 
   // Add provider operations as non-resource methods
@@ -315,7 +295,7 @@ export function resolveArmResources(
   for (const resource of filteredResources) {
     resource.metadata.apiVersions = resolveResourceApiVersions(
       resource.metadata.methods,
-      methodApiVersionsMap
+      methodMap
     );
   }
 
@@ -332,8 +312,7 @@ function convertResolvedResourceToMetadata(
   program: Program,
   sdkContext: CSharpEmitterContext,
   resolvedResource: ResolvedResource,
-  methodKindMap?: Map<string, string>,
-  methodResponseModelIdMap?: Map<string, string>,
+  methodMap: Map<string, SdkMethod<SdkHttpOperation>>,
   resourceModelIds?: Set<string>
 ): ResourceMetadata {
   const methods: ResourceMethod[] = [];
@@ -425,12 +404,13 @@ function convertResolvedResourceToMetadata(
         // Classify as List only if the action is pageable AND its response item type
         // is a known resource model. This prevents metadata-returning pageable actions
         // from being misclassified as List operations.
-        const sdkMethodKind = methodKindMap?.get(methodId);
-        const responseModelId = methodResponseModelIdMap?.get(methodId);
+        const sdkMethod = methodMap.get(methodId);
+        const responseModelId = pagingResponseItemModelId(sdkMethod);
         const isResourceList =
-          sdkMethodKind === "paging" &&
+          sdkMethod?.kind === "paging" &&
+          responseModelId !== undefined &&
           resourceModelIds !== undefined &&
-          resourceModelIds.has(responseModelId!);
+          resourceModelIds.has(responseModelId);
         const opPath = new RequestPath(actionOp.path);
         methods.push({
           methodId,
@@ -714,4 +694,118 @@ function assignListOperationsToResources(
       });
     }
   }
+}
+
+/**
+ * Returns the crossLanguageDefinitionId of the response item model for a paging
+ * (or lropaging) method whose response is `T[]` over a model. Returns undefined
+ * for non-paging methods or non-array/non-model responses.
+ */
+function pagingResponseItemModelId(
+  method: SdkMethod<SdkHttpOperation> | undefined
+): string | undefined {
+  if (!method) return undefined;
+  if (method.kind !== "paging" && method.kind !== "lropaging") return undefined;
+  const responseType = method.response?.type;
+  if (responseType?.kind !== "array") return undefined;
+  if (responseType.valueType.kind !== "model") return undefined;
+  return (responseType.valueType as SdkModelType).crossLanguageDefinitionId;
+}
+
+/**
+ * Derives a methodId -> response item model id map from the unified method map.
+ * Only paging/lropaging methods with array-of-model responses contribute; others
+ * are intentionally omitted to preserve the prior semantics.
+ */
+function deriveMethodResponseModelIdMap(
+  methodMap: ReadonlyMap<string, SdkMethod<SdkHttpOperation>>
+): Map<string, string> {
+  const result = new Map<string, string>();
+  for (const [id, method] of methodMap) {
+    const responseModelId = pagingResponseItemModelId(method);
+    if (responseModelId !== undefined) {
+      result.set(id, responseModelId);
+    }
+  }
+  return result;
+}
+
+/**
+ * Builds the parent-lookup context for the resolveArmResources detection path.
+ *
+ * Note: this lookup is intentionally specific to this detection path. The legacy
+ * detection path in {@link buildArmProviderSchema} computes parents from path-prefix
+ * matching plus the `parentResourceModelId` decorator, while this path uses the
+ * {@link ResolvedResource}.parent chain. The two mechanisms are not unifiable
+ * without losing information, hence the per-path lookup.
+ *
+ * Side effect: mirrors entries in `schemaToResolvedResource` so that newly
+ * expanded child schemas resolve to the same {@link ResolvedResource} as their
+ * pre-expansion source.
+ */
+function buildResolveArmResourcesParentLookup(
+  expanded: ArmResourceSchema[],
+  expandedToOriginal: ReadonlyMap<ArmResourceSchema, ArmResourceSchema>,
+  schemaToResolvedResource: Map<ArmResourceSchema, ResolvedResource>
+): ParentResourceLookupContext {
+  for (const [expandedSchema, originalSchema] of expandedToOriginal) {
+    const resolved = schemaToResolvedResource.get(originalSchema);
+    if (resolved) {
+      schemaToResolvedResource.set(expandedSchema, resolved);
+    }
+  }
+
+  // When the parent itself was expanded (rare nested case), multiple
+  // ArmResourceSchemas may share the same resourceInstancePath, so candidates
+  // are grouped and disambiguated by checking which candidate's substituted
+  // resourceIdPattern is a prefix of the resource's resourceIdPattern.
+  const validResourceMap = new Map<string, ArmResourceSchema[]>();
+  for (const r of expanded.filter(
+    (resource) => resource.metadata.resourceIdPattern !== undefined
+  )) {
+    const resolvedR = schemaToResolvedResource.get(r);
+    if (resolvedR) {
+      const candidates = validResourceMap.get(resolvedR.resourceInstancePath);
+      if (candidates) {
+        candidates.push(r);
+      } else {
+        validResourceMap.set(resolvedR.resourceInstancePath, [r]);
+      }
+    }
+  }
+
+  return {
+    getParentResource: (resource: ArmResourceSchema) =>
+      findParentResource(resource, schemaToResolvedResource, validResourceMap)
+  };
+}
+
+/**
+ * Walks the {@link ResolvedResource} parent chain from `resource` upward and
+ * returns the first ArmResourceSchema candidate that matches a parent in the
+ * lookup map. When multiple candidates share the same resourceInstancePath
+ * (nested dynamic-parent expansion), the candidate whose substituted
+ * resourceIdPattern is a prefix of the resource's resourceIdPattern is chosen.
+ */
+function findParentResource(
+  resource: ArmResourceSchema,
+  schemaToResolvedResource: ReadonlyMap<ArmResourceSchema, ResolvedResource>,
+  validResourceMap: ReadonlyMap<string, ArmResourceSchema[]>
+): ArmResourceSchema | undefined {
+  const resolved = schemaToResolvedResource.get(resource);
+  if (!resolved) return undefined;
+
+  let parent = resolved.parent;
+  while (parent) {
+    const parentResources = validResourceMap.get(parent.resourceInstancePath);
+    if (parentResources && parentResources.length > 0) {
+      return (
+        parentResources.find((candidate) =>
+          isResourceIdPatternPrefixMatch(resource, candidate)
+        ) ?? parentResources[0]
+      );
+    }
+    parent = parent.parent;
+  }
+  return undefined;
 }

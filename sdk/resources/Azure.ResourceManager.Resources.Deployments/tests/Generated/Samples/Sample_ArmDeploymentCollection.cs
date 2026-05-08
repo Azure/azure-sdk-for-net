@@ -32,10 +32,9 @@ namespace Azure.ResourceManager.Resources.Samples
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
             string scope = "providers/Microsoft.Management/managementGroups/my-management-group-id";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(scope);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this ArmDeploymentResource
-            ArmDeploymentCollection collection = subscriptionResource.GetArmDeployments();
+            ArmDeploymentCollection collection = client.GetArmDeployments(subscriptionResourceId);
 
             // invoke the operation
             string deploymentName = "my-deployment";

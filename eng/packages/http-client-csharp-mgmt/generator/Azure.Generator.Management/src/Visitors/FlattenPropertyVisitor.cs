@@ -638,7 +638,7 @@ namespace Azure.Generator.Management.Visitors
             // Ensure base model types are flattened first so that inherited properties
             // are in their final state (e.g., safe-flattened single-property models become internal)
             // before this model processes them via GetAllProperties.
-            if (model.BaseModelProvider is ModelProvider baseModel && !_flattenedModelTypes.ContainsKey(baseModel.Type))
+            if (TryGetBaseModelProvider(model, out var baseModel) && !_flattenedModelTypes.ContainsKey(baseModel.Type))
             {
                 FlattenModel(baseModel);
             }
@@ -696,6 +696,13 @@ namespace Azure.Generator.Management.Visitors
                         continue;
                     }
 
+                    // skip if the inner model opts out of safe-flatten via
+                    // @@clientOption(InnerModel, "disable-safe-flatten", true, "csharp")
+                    if (ManagementClientGenerator.Instance.OutputLibrary.SafeFlattenDisabledModels.Contains(modelProvider))
+                    {
+                        continue;
+                    }
+
                     isSafeFlatten = SafeFlatten(model, innerProperties, propertyMap, internalProperty, modelProvider);
                 }
             }
@@ -709,7 +716,7 @@ namespace Azure.Generator.Management.Visitors
                 _flattenedModelTypes.Add(model.Type, propertyNameMap);
                 UpdatePublicConstructor(model, propertyNameMap);
             }
-            else if (model.BaseModelProvider is ModelProvider flattenedBase && _flattenedModelTypes.TryGetValue(flattenedBase.Type, out var basePropertyNameMap))
+            else if (TryGetBaseModelProvider(model, out var flattenedBase) && _flattenedModelTypes.TryGetValue(flattenedBase.Type, out var basePropertyNameMap))
             {
                 // This model has no flattenable properties of its own, but its base model was
                 // safe-flattened. The base's public constructor signature changed (e.g. an
@@ -1120,6 +1127,25 @@ namespace Azure.Generator.Management.Visitors
             return false;
         }
 
+        /// <summary>
+        /// Resolves the base <see cref="ModelProvider"/> of a model by looking up its <see cref="TypeProvider.BaseType"/>
+        /// in the type factory. This is preferred over <see cref="ModelProvider.BaseModelProvider"/> because
+        /// <see cref="TypeProvider.BaseType"/> reflects the actual base type that will be emitted, including any
+        /// overrides applied by visitors. <see cref="ModelProvider.BaseModelProvider"/> is computed independently
+        /// and may be stale relative to <see cref="TypeProvider.BaseType"/>, which can cause this visitor to
+        /// flatten inherited properties twice (once via the stale base, once via the actual base).
+        /// </summary>
+        private static bool TryGetBaseModelProvider(ModelProvider model, [NotNullWhen(true)] out ModelProvider? baseModel)
+        {
+            var baseType = model.BaseType;
+            if (baseType is not null && TryGetModelProvider(baseType, out baseModel))
+            {
+                return true;
+            }
+            baseModel = null;
+            return false;
+        }
+
         private class CSharpTypeNameComparer : IEqualityComparer<CSharpType>
         {
             public bool Equals(CSharpType? x, CSharpType? y)
@@ -1174,14 +1200,14 @@ namespace Azure.Generator.Management.Visitors
             // Check base types for inherited flattened properties
             if (TryGetModelProvider(type, out var model))
             {
-                var baseModel = model.BaseModelProvider;
-                while (baseModel is not null)
+                var current = model;
+                while (TryGetBaseModelProvider(current, out var baseModel))
                 {
                     if (_flattenedModelTypes.TryGetValue(baseModel.Type, out propertyNameMap))
                     {
                         return true;
                     }
-                    baseModel = baseModel.BaseModelProvider;
+                    current = baseModel;
                 }
             }
             return false;

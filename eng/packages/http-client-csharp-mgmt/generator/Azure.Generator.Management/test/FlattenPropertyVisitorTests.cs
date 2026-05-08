@@ -826,6 +826,249 @@ namespace Azure.Generator.Mgmt.Tests
                 "Chained safe-flatten setter should delegate assignment through the inner flattened property");
         }
 
+        /// <summary>
+        /// Baseline for the disable-safe-flatten opt-out tests: when a wrapper inner model has
+        /// exactly one public property, the parent's wrapper property is normally safe-flattened
+        /// (the wrapper property becomes internal and a new public property mirroring the inner
+        /// one is added to the parent). This test pins that baseline behavior so the opt-out
+        /// tests below can clearly demonstrate the difference.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenAppliedByDefaultForSinglePropertyWrapper()
+        {
+            var (parentModelProvider, _) = SetupSafeFlattenScenario(
+                wrapperDecorators: null,
+                runVisitors: true);
+
+            AssertSafeFlattenApplied(parentModelProvider, "baseline (no decorator)");
+        }
+
+        /// <summary>
+        /// Verifies the new opt-out: when the wrapper inner model carries
+        /// <c>@@clientOption(WrapperModel, "disable-safe-flatten", true, "csharp")</c>,
+        /// safe-flatten is skipped for that wrapper. The parent's wrapper property remains
+        /// public and no flattened mirror property is promoted onto the parent.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenSkippedWhenDisableSafeFlattenDecoratorIsTrue()
+        {
+            var (parentModelProvider, _) = SetupSafeFlattenScenario(
+                wrapperDecorators: [BuildClientOptionDecorator("disable-safe-flatten", BinaryData.FromObjectAsJson(true))],
+                runVisitors: true);
+
+            AssertSafeFlattenSkipped(parentModelProvider, "disable-safe-flatten=true");
+        }
+
+        /// <summary>
+        /// Only a JSON boolean <c>true</c> is honored. A boolean <c>false</c> must be ignored and
+        /// the wrapper must still be safe-flattened normally.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenStillAppliedWhenDisableSafeFlattenDecoratorIsFalse()
+        {
+            var (parentModelProvider, _) = SetupSafeFlattenScenario(
+                wrapperDecorators: [BuildClientOptionDecorator("disable-safe-flatten", BinaryData.FromObjectAsJson(false))],
+                runVisitors: true);
+
+            AssertSafeFlattenApplied(parentModelProvider, "disable-safe-flatten=false (must be ignored)");
+        }
+
+        /// <summary>
+        /// Only a JSON boolean <c>true</c> is honored. A non-boolean value (e.g. the string
+        /// <c>"true"</c>) must be ignored and safe-flatten must still apply. This pins the
+        /// "strictly boolean true" contract from the PR description.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenStillAppliedWhenDisableSafeFlattenValueIsStringTrue()
+        {
+            var (parentModelProvider, _) = SetupSafeFlattenScenario(
+                wrapperDecorators: [BuildClientOptionDecorator("disable-safe-flatten", BinaryData.FromObjectAsJson("true"))],
+                runVisitors: true);
+
+            AssertSafeFlattenApplied(parentModelProvider, "disable-safe-flatten=\"true\" (string, must be ignored)");
+        }
+
+        /// <summary>
+        /// A different clientOption key (e.g. <c>resource-rbac-roles</c>) must not be misinterpreted
+        /// as the disable-safe-flatten opt-out. Safe-flatten should still apply when only an
+        /// unrelated clientOption decorator is present on the wrapper model.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenStillAppliedForUnrelatedClientOptionDecorator()
+        {
+            var (parentModelProvider, _) = SetupSafeFlattenScenario(
+                wrapperDecorators: [BuildClientOptionDecorator("some-other-option", BinaryData.FromObjectAsJson(true))],
+                runVisitors: true);
+
+            AssertSafeFlattenApplied(parentModelProvider, "unrelated clientOption key");
+        }
+
+        /// <summary>
+        /// Verifies that <see cref="ManagementInputLibrary.SafeFlattenDisabledModels"/> exposes
+        /// the wrapper input model when the decorator is present with a JSON boolean true.
+        /// </summary>
+        [Test]
+        public void TestInputLibraryExposesSafeFlattenDisabledModels()
+        {
+            var (_, wrapperInputModel) = SetupSafeFlattenScenario(
+                wrapperDecorators: [BuildClientOptionDecorator("disable-safe-flatten", BinaryData.FromObjectAsJson(true))],
+                runVisitors: false);
+
+            Assert.That(
+                ManagementClientGenerator.Instance.InputLibrary.SafeFlattenDisabledModels,
+                Has.Member(wrapperInputModel),
+                "InputLibrary.SafeFlattenDisabledModels should contain the wrapper model when the decorator opts it out");
+
+            var wrapperOutput = ManagementClientGenerator.Instance.TypeFactory.CreateModel(wrapperInputModel);
+            Assert.That(wrapperOutput, Is.Not.Null);
+            Assert.That(
+                ManagementClientGenerator.Instance.OutputLibrary.SafeFlattenDisabledModels,
+                Has.Member(wrapperOutput!),
+                "OutputLibrary.SafeFlattenDisabledModels should mirror the input library's set");
+        }
+
+        // After safe-flatten on a wrapper-shape parent (`Wrapper -> WrapperModel { value }`):
+        //  - The original "Wrapper" property is internalized.
+        //  - A new public flattened property is promoted onto the parent.
+        // The exact promoted name is computed by PropertyHelpers.GetCombinedPropertyName and is
+        // not part of the disable-safe-flatten contract, so we assert structural signals (the
+        // wrapper's modifier change + the gain of an extra public property) rather than a
+        // hard-coded name.
+        private static void AssertSafeFlattenApplied(ModelProvider parent, string scenario)
+        {
+            var wrapperProp = parent.Properties.SingleOrDefault(p => p.Name == "Wrapper");
+            Assert.That(wrapperProp, Is.Not.Null, $"[{scenario}] Wrapper property should still exist on the parent");
+            Assert.That(
+                wrapperProp!.Modifiers.HasFlag(MethodSignatureModifiers.Internal),
+                Is.True,
+                $"[{scenario}] Wrapper property should be internalized when safe-flatten is applied");
+            Assert.That(
+                wrapperProp.Modifiers.HasFlag(MethodSignatureModifiers.Public),
+                Is.False,
+                $"[{scenario}] Wrapper property should not be public after safe-flatten");
+
+            var promotedPublic = parent.Properties
+                .Where(p => p.Name != "Wrapper" && p.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                .ToList();
+            Assert.That(
+                promotedPublic,
+                Has.Count.EqualTo(1),
+                $"[{scenario}] Exactly one new public property should be promoted onto the parent by safe-flatten");
+        }
+
+        private static void AssertSafeFlattenSkipped(ModelProvider parent, string scenario)
+        {
+            var wrapperProp = parent.Properties.SingleOrDefault(p => p.Name == "Wrapper");
+            Assert.That(wrapperProp, Is.Not.Null, $"[{scenario}] Wrapper property must still exist on the parent");
+            Assert.That(
+                wrapperProp!.Modifiers.HasFlag(MethodSignatureModifiers.Public),
+                Is.True,
+                $"[{scenario}] Wrapper property should remain public when safe-flatten is disabled");
+            Assert.That(
+                wrapperProp.Modifiers.HasFlag(MethodSignatureModifiers.Internal),
+                Is.False,
+                $"[{scenario}] Wrapper property should not be internalized when safe-flatten is disabled");
+
+            var promotedPublic = parent.Properties
+                .Where(p => p.Name != "Wrapper" && p.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                .ToList();
+            Assert.That(
+                promotedPublic,
+                Is.Empty,
+                $"[{scenario}] No flattened mirror property should be promoted when safe-flatten is disabled");
+        }
+
+        /// <summary>
+        /// A decorator scoped to a different language (e.g. <c>"java"</c>) must be ignored
+        /// by the C# generator, even when the key and value match.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenStillAppliedWhenDisableSafeFlattenScopeIsNotCSharp()
+        {
+            var (parentModelProvider, _) = SetupSafeFlattenScenario(
+                wrapperDecorators: [BuildClientOptionDecorator("disable-safe-flatten", BinaryData.FromObjectAsJson(true), scope: "java")],
+                runVisitors: true);
+
+            AssertSafeFlattenApplied(parentModelProvider, "disable-safe-flatten=true scoped to \"java\"");
+        }
+
+        /// <summary>
+        /// A decorator with no scope argument is treated by TCGC as "all languages" and must
+        /// be honored by the C# generator.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenSkippedWhenDisableSafeFlattenHasNoScope()
+        {
+            var (parentModelProvider, _) = SetupSafeFlattenScenario(
+                wrapperDecorators: [BuildClientOptionDecorator("disable-safe-flatten", BinaryData.FromObjectAsJson(true), scope: null)],
+                runVisitors: true);
+
+            AssertSafeFlattenSkipped(parentModelProvider, "disable-safe-flatten=true with no scope (all languages)");
+        }
+
+        private static InputDecoratorInfo BuildClientOptionDecorator(string optionName, BinaryData value, string? scope = "csharp")
+        {
+            // Mirrors the shape that TCGC propagates for @@clientOption: positional-named
+            // parameters surface as a Dictionary<string, BinaryData>. The second positional
+            // parameter is named "name" in TCGC's decorator definition (even though our docs
+            // refer to it as a "key").
+            var arguments = new Dictionary<string, BinaryData>
+            {
+                ["name"] = BinaryData.FromObjectAsJson(optionName),
+                ["value"] = value,
+            };
+            if (scope is not null)
+            {
+                arguments["scope"] = BinaryData.FromObjectAsJson(scope);
+            }
+            return new InputDecoratorInfo("Azure.ClientGenerator.Core.@clientOption", arguments);
+        }
+
+        /// <summary>
+        /// Builds a wrapper-style scenario: a parent model with a single property whose type is
+        /// a wrapper model that itself has a single public property — the canonical safe-flatten
+        /// trigger. Optionally attaches decorators to the wrapper model and runs all visitors so
+        /// callers can inspect the post-visit state of the parent.
+        /// </summary>
+        private static (ModelProvider Parent, InputModelType WrapperInput) SetupSafeFlattenScenario(
+            IReadOnlyList<InputDecoratorInfo>? wrapperDecorators,
+            bool runVisitors)
+        {
+            var valueProp = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
+            var wrapperModel = InputFactory.Model(
+                "WrapperModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [valueProp],
+                decorators: wrapperDecorators);
+
+            var wrapperProperty = InputFactory.Property("wrapper", wrapperModel, isRequired: true, serializedName: "wrapper");
+            var parentInputModel = InputFactory.Model(
+                "ParentModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [wrapperProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentInputModel, wrapperModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentInputModel)!;
+            Assert.That(parentProvider, Is.Not.Null);
+
+            if (runVisitors)
+            {
+                var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                    "VisitTypeCore",
+                    BindingFlags.NonPublic | BindingFlags.Instance);
+                Assert.That(visitTypeCore, Is.Not.Null);
+
+                foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+                {
+                    visitTypeCore!.Invoke(visitor, [parentProvider]);
+                }
+            }
+
+            return (parentProvider, wrapperModel);
+        }
+
         private class ObsoletePropertyCustomCodeView : TypeProvider
         {
             private readonly TypeProvider _enclosingType;
@@ -899,6 +1142,96 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(flattened, Is.Not.Null, "Expected flattened 'Count' property on parent model");
             Assert.That(flattened!.Type.IsNullable, Is.True,
                 "Required value-type property flattened from an optional parent should be exposed as Nullable<T>");
+        }
+
+        /// <summary>
+        /// Regression test for https://github.com/microsoft/typespec/issues/10485.
+        ///
+        /// <see cref="ModelProvider.BaseModelProvider"/> is computed independently from
+        /// <see cref="TypeProvider.BaseType"/>: the former reads <see cref="InputModelType.BaseModel"/>
+        /// directly while <see cref="TypeProvider.BuildBaseType"/> is virtual and may be overridden by
+        /// downstream emitters (or by the management generator itself when it replaces the spec
+        /// inheritance with a hand-picked base). When the two disagree, walking
+        /// <see cref="ModelProvider.BaseModelProvider"/> can pull in inherited properties from a parent
+        /// that is NOT in the actual C# inheritance chain, which causes the flatten visitor to flatten
+        /// the same properties twice (once via the spec base, once via the overridden base).
+        ///
+        /// This test constructs a child model whose spec base ("SpecBaseModel") differs from the base
+        /// returned by an overridden <see cref="ModelProvider.BuildBaseType"/> ("OverrideBaseModel"),
+        /// and asserts that <see cref="FlattenPropertyVisitor"/>'s internal base-resolution helper
+        /// (<c>TryGetBaseModelProvider</c>) returns the OverrideBaseModel's provider — i.e. the model
+        /// matching <see cref="TypeProvider.BaseType"/>, not <see cref="ModelProvider.BaseModelProvider"/>.
+        /// </summary>
+        [Test]
+        public void TestTryGetBaseModelProviderHonorsOverriddenBaseType()
+        {
+            // SpecBaseModel: the base recorded in the input spec. Has its own property to make it
+            // distinguishable from OverrideBaseModel.
+            var specBaseProp = InputFactory.Property("specBaseProp", InputPrimitiveType.String, isRequired: true, serializedName: "specBaseProp");
+            var specBaseInput = InputFactory.Model(
+                "SpecBaseModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [specBaseProp]);
+
+            // OverrideBaseModel: an unrelated model that the subclass will redirect BaseType to.
+            var overrideBaseProp = InputFactory.Property("overrideBaseProp", InputPrimitiveType.String, isRequired: true, serializedName: "overrideBaseProp");
+            var overrideBaseInput = InputFactory.Model(
+                "OverrideBaseModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [overrideBaseProp]);
+
+            // ChildModel: spec base = SpecBaseModel.
+            var childProp = InputFactory.Property("childProp", InputPrimitiveType.String, isRequired: true, serializedName: "childProp");
+            var childInput = InputFactory.Model(
+                "ChildModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                baseModel: specBaseInput,
+                properties: [childProp]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [specBaseInput, overrideBaseInput, childInput]);
+
+            var specBaseProvider = plugin.Object.TypeFactory.CreateModel(specBaseInput)!;
+            var overrideBaseProvider = plugin.Object.TypeFactory.CreateModel(overrideBaseInput)!;
+            Assert.That(specBaseProvider, Is.Not.Null);
+            Assert.That(overrideBaseProvider, Is.Not.Null);
+
+            var childWithOverride = new ChildModelProviderWithOverriddenBase(childInput, overrideBaseProvider.Type);
+
+            // Sanity check: BaseType is the override, but BaseModelProvider still points at the spec
+            // base (this is exactly the inconsistency we want the visitor to be resilient to).
+            Assert.That(childWithOverride.BaseType, Is.EqualTo(overrideBaseProvider.Type),
+                "Subclass override should make BaseType point at OverrideBaseModel");
+            Assert.That(childWithOverride.BaseModelProvider, Is.SameAs(specBaseProvider),
+                "Precondition: with the upstream typespec dependency unchanged, BaseModelProvider " +
+                "still resolves via InputModelType.BaseModel — the inconsistency this test guards against");
+
+            // Invoke the private static helper via reflection.
+            var helper = typeof(FlattenPropertyVisitor).GetMethod(
+                "TryGetBaseModelProvider",
+                BindingFlags.NonPublic | BindingFlags.Static);
+            Assert.That(helper, Is.Not.Null, "Could not find FlattenPropertyVisitor.TryGetBaseModelProvider");
+
+            var args = new object?[] { childWithOverride, null };
+            var resolved = (bool)helper!.Invoke(null, args)!;
+            var resolvedProvider = (ModelProvider?)args[1];
+
+            Assert.That(resolved, Is.True, "Helper should resolve a base provider when BaseType is in the type cache");
+            Assert.That(resolvedProvider, Is.SameAs(overrideBaseProvider),
+                "Helper must return the provider matching BaseType (OverrideBaseModel), not BaseModelProvider (SpecBaseModel)");
+        }
+
+        private class ChildModelProviderWithOverriddenBase : ModelProvider
+        {
+            private readonly CSharpType _overriddenBase;
+
+            public ChildModelProviderWithOverriddenBase(InputModelType inputModel, CSharpType overriddenBase)
+                : base(inputModel)
+            {
+                _overriddenBase = overriddenBase;
+            }
+
+            protected override CSharpType? BuildBaseType() => _overriddenBase;
         }
     }
 }

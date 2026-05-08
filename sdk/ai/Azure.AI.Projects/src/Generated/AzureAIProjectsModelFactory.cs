@@ -1304,6 +1304,224 @@ namespace Azure.AI.Projects
             return new MemoryStoreDeleteScopeResponse("memory_store.scope.deleted", name, scope, isDeleted, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Caller-supplied inputs for a data generation job. </summary>
+        /// <param name="name"> The display name of the data generation job. </param>
+        /// <param name="sources"> The sources used for the data generation job. </param>
+        /// <param name="options"> The options for the data generation job. </param>
+        /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
+        /// <returns> A new <see cref="Projects.DataGenerationJobInputs"/> instance for mocking. </returns>
+        public static DataGenerationJobInputs DataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobOptions options = default, DataGenerationJobScenario scenario = default)
+        {
+            sources ??= new ChangeTrackingList<DataGenerationJobSource>();
+
+            return new DataGenerationJobInputs(name, sources.ToList(), options, scenario, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The base source model for data generation jobs.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.PromptDataGenerationJobSource"/>, <see cref="Projects.AgentDataGenerationJobSource"/>, <see cref="Projects.TracesDataGenerationJobSource"/>, <see cref="Projects.DatasetDataGenerationJobSource"/>, and <see cref="Projects.FileDataGenerationJobSource"/>.
+        /// </summary>
+        /// <param name="type"> The type of source. </param>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <returns> A new <see cref="Projects.DataGenerationJobSource"/> instance for mocking. </returns>
+        public static DataGenerationJobSource DataGenerationJobSource(string @type = default, string description = default)
+        {
+            return new UnknownDataGenerationJobSource(new DataGenerationJobSourceType(@type), description, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Prompt source for data generation jobs — inline text provided by the user. </summary>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="prompt"> Inline prompt text (e.g., agent description, policy text, supplementary context). </param>
+        /// <returns> A new <see cref="Projects.PromptDataGenerationJobSource"/> instance for mocking. </returns>
+        public static PromptDataGenerationJobSource PromptDataGenerationJobSource(string description = default, string prompt = default)
+        {
+            return new PromptDataGenerationJobSource(DataGenerationJobSourceType.Prompt, additionalBinaryDataProperties: null, description, prompt);
+        }
+
+        /// <summary> Agent source for data generation jobs — references an agent to fetch instructions and metadata from. </summary>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="agentName"> The agent name to fetch instructions from. </param>
+        /// <param name="agentVersion"> The agent version. If not specified, the latest version is used. </param>
+        /// <returns> A new <see cref="Projects.AgentDataGenerationJobSource"/> instance for mocking. </returns>
+        public static AgentDataGenerationJobSource AgentDataGenerationJobSource(string description = default, string agentName = default, string agentVersion = default)
+        {
+            return new AgentDataGenerationJobSource(DataGenerationJobSourceType.Agent, additionalBinaryDataProperties: null, description, agentName, agentVersion);
+        }
+
+        /// <summary> Traces source for data generation jobs — conversation traces from Application Insights. </summary>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="agentName"> The agent name to fetch traces for. </param>
+        /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
+        /// <param name="startTime"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        /// <param name="endTime"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <param name="maxTraces"> Maximum number of traces to retrieve. </param>
+        /// <returns> A new <see cref="Projects.TracesDataGenerationJobSource"/> instance for mocking. </returns>
+        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentName = default, string agentVersion = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, int? maxTraces = default)
+        {
+            return new TracesDataGenerationJobSource(
+                DataGenerationJobSourceType.Traces,
+                additionalBinaryDataProperties: null,
+                description,
+                agentName,
+                agentVersion,
+                startTime,
+                endTime,
+                maxTraces);
+        }
+
+        /// <summary> Dataset source for data generation jobs — reference to a dataset. </summary>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="name"> The name of the dataset. </param>
+        /// <param name="version"> The version of the dataset. If not specified, the latest version is used. </param>
+        /// <returns> A new <see cref="Projects.DatasetDataGenerationJobSource"/> instance for mocking. </returns>
+        public static DatasetDataGenerationJobSource DatasetDataGenerationJobSource(string description = default, string name = default, string version = default)
+        {
+            return new DatasetDataGenerationJobSource(DataGenerationJobSourceType.Dataset, additionalBinaryDataProperties: null, description, name, version);
+        }
+
+        /// <summary> File source for data generation jobs — Azure OpenAI file input. </summary>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="id"> Input Azure Open AI file id used for data generation. </param>
+        /// <returns> A new <see cref="Projects.FileDataGenerationJobSource"/> instance for mocking. </returns>
+        public static FileDataGenerationJobSource FileDataGenerationJobSource(string description = default, string id = default)
+        {
+            return new FileDataGenerationJobSource(DataGenerationJobSourceType.File, description, additionalBinaryDataProperties: null, id);
+        }
+
+        /// <summary>
+        /// Options for managing data generation jobs.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.SimpleQnADataGenerationJobOptions"/>, <see cref="Projects.TracesDataGenerationJobOptions"/>, <see cref="Projects.ToolUseFineTuningDataGenerationJobOptions"/>, and <see cref="Projects.TaskDataGenerationJobOptions"/>.
+        /// </summary>
+        /// <param name="type"> The data generation job type. </param>
+        /// <param name="maxSamples"> Maximum number of samples to generate. </param>
+        /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
+        /// <param name="modelOptions"> The LLM model options. </param>
+        /// <returns> A new <see cref="Projects.DataGenerationJobOptions"/> instance for mocking. </returns>
+        public static DataGenerationJobOptions DataGenerationJobOptions(string @type = default, int maxSamples = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
+        {
+            return new UnknownDataGenerationJobOptions(new DataGenerationJobType(@type), maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> LLM model options for data generation jobs. </summary>
+        /// <param name="model"> Base model name used to generate data. </param>
+        /// <returns> A new <see cref="Projects.DataGenerationModelOptions"/> instance for mocking. </returns>
+        public static DataGenerationModelOptions DataGenerationModelOptions(string model = default)
+        {
+            return new DataGenerationModelOptions(model, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The options for a data generation job with SimpleQnA type. </summary>
+        /// <param name="maxSamples"> Maximum number of samples to generate. </param>
+        /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
+        /// <param name="modelOptions"> The LLM model options. </param>
+        /// <param name="questionTypes"> The question types to generate. Used only for fine-tuning scenarios. </param>
+        /// <returns> A new <see cref="Projects.SimpleQnADataGenerationJobOptions"/> instance for mocking. </returns>
+        public static SimpleQnADataGenerationJobOptions SimpleQnADataGenerationJobOptions(int maxSamples = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default, IEnumerable<SimpleQnAFineTuningQuestionType> questionTypes = default)
+        {
+            questionTypes ??= new ChangeTrackingList<SimpleQnAFineTuningQuestionType>();
+
+            return new SimpleQnADataGenerationJobOptions(
+                DataGenerationJobType.SimpleQna,
+                maxSamples,
+                trainSplit,
+                modelOptions,
+                additionalBinaryDataProperties: null,
+                questionTypes.ToList());
+        }
+
+        /// <summary> The options for a data generation job with Traces type. </summary>
+        /// <param name="maxSamples"> Maximum number of samples to generate. </param>
+        /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
+        /// <param name="modelOptions"> The LLM model options. </param>
+        /// <returns> A new <see cref="Projects.TracesDataGenerationJobOptions"/> instance for mocking. </returns>
+        public static TracesDataGenerationJobOptions TracesDataGenerationJobOptions(int maxSamples = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
+        {
+            return new TracesDataGenerationJobOptions(DataGenerationJobType.Traces, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The options for a data generation job with ToolUse type. Used only for fine-tuning scenarios. </summary>
+        /// <param name="maxSamples"> Maximum number of samples to generate. </param>
+        /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
+        /// <param name="modelOptions"> The LLM model options. </param>
+        /// <returns> A new <see cref="Projects.ToolUseFineTuningDataGenerationJobOptions"/> instance for mocking. </returns>
+        public static ToolUseFineTuningDataGenerationJobOptions ToolUseFineTuningDataGenerationJobOptions(int maxSamples = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
+        {
+            return new ToolUseFineTuningDataGenerationJobOptions(DataGenerationJobType.ToolUse, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The options for a data generation job with Task type. </summary>
+        /// <param name="maxSamples"> Maximum number of samples to generate. </param>
+        /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
+        /// <param name="modelOptions"> The LLM model options. </param>
+        /// <returns> A new <see cref="Projects.TaskDataGenerationJobOptions"/> instance for mocking. </returns>
+        public static TaskDataGenerationJobOptions TaskDataGenerationJobOptions(int maxSamples = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
+        {
+            return new TaskDataGenerationJobOptions(DataGenerationJobType.Task, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Result produced by a successful data generation job. </summary>
+        /// <param name="outputs"> The final job outputs: Azure OpenAI files for fine-tuning, or datasets for evaluation. </param>
+        /// <param name="generatedSamples"> The number of samples actually generated. </param>
+        /// <param name="tokenUsage"> The token usage information for the data generation job. </param>
+        /// <returns> A new <see cref="Projects.DataGenerationJobResult"/> instance for mocking. </returns>
+        public static DataGenerationJobResult DataGenerationJobResult(IEnumerable<DataGenerationJobOutput> outputs = default, int generatedSamples = default, DataGenerationTokenUsage tokenUsage = default)
+        {
+            outputs ??= new ChangeTrackingList<DataGenerationJobOutput>();
+
+            return new DataGenerationJobResult(outputs.ToList(), generatedSamples, tokenUsage, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Output information for a data generation job.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.FileDataGenerationJobOutput"/> and <see cref="Projects.DatasetDataGenerationJobOutput"/>.
+        /// </summary>
+        /// <param name="type"> The type of the output. </param>
+        /// <returns> A new <see cref="Projects.DataGenerationJobOutput"/> instance for mocking. </returns>
+        public static DataGenerationJobOutput DataGenerationJobOutput(string @type = default)
+        {
+            return new UnknownDataGenerationJobOutput(new DataGenerationJobOutputType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Azure OpenAI file output for a data generation job. </summary>
+        /// <param name="id"> The id of the output Azure OpenAI file. </param>
+        /// <param name="filename"> The filename of the output Azure OpenAI file. </param>
+        /// <returns> A new <see cref="Projects.FileDataGenerationJobOutput"/> instance for mocking. </returns>
+        public static FileDataGenerationJobOutput FileDataGenerationJobOutput(string id = default, string filename = default)
+        {
+            return new FileDataGenerationJobOutput(DataGenerationJobOutputType.File, additionalBinaryDataProperties: null, id, filename);
+        }
+
+        /// <summary> Dataset output for a data generation job. </summary>
+        /// <param name="id"> The id of the output dataset created. </param>
+        /// <param name="name"> The name of the output dataset and can be optionally set during job creation time. </param>
+        /// <param name="version"> The version of the output dataset. </param>
+        /// <param name="description"> Description of the output dataset and can be optionally set during job creation time. </param>
+        /// <param name="tags"> Tag dictionary of the output dataset and can be optionally set during job creation time. </param>
+        /// <returns> A new <see cref="Projects.DatasetDataGenerationJobOutput"/> instance for mocking. </returns>
+        public static DatasetDataGenerationJobOutput DatasetDataGenerationJobOutput(string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DatasetDataGenerationJobOutput(
+                DataGenerationJobOutputType.Dataset,
+                additionalBinaryDataProperties: null,
+                id,
+                name,
+                version,
+                description,
+                tags);
+        }
+
+        /// <summary> Token usage information for a data generation job. </summary>
+        /// <param name="promptTokens"> The number of prompt tokens used. </param>
+        /// <param name="completionTokens"> The number of completion tokens generated. </param>
+        /// <param name="totalTokens"> Total number of tokens used. </param>
+        /// <returns> A new <see cref="Projects.DataGenerationTokenUsage"/> instance for mocking. </returns>
+        public static DataGenerationTokenUsage DataGenerationTokenUsage(long? promptTokens = default, long? completionTokens = default, long? totalTokens = default)
+        {
+            return new DataGenerationTokenUsage(promptTokens, completionTokens, totalTokens, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Evaluator Metric. </summary>
         /// <param name="type"> Type of the metric. </param>
         /// <param name="desirableDirection"> It indicates whether a higher value is better or a lower value is better for this metric. </param>

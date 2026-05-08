@@ -62,6 +62,14 @@ namespace Azure.AI.AnomalyDetector
         public virtual Azure.AI.AnomalyDetector.Multivariate GetMultivariateClient() { throw null; }
         public virtual Azure.AI.AnomalyDetector.Univariate GetUnivariateClient() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class AnomalyDetectorClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddAnomalyDetectorClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddAnomalyDetectorClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.AnomalyDetector.AnomalyDetectorClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedAnomalyDetectorClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedAnomalyDetectorClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.AnomalyDetector.AnomalyDetectorClientSettings> configureSettings) { throw null; }
+    }
     public partial class AnomalyDetectorClientOptions : Azure.Core.ClientOptions
     {
         public AnomalyDetectorClientOptions(Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions.ServiceVersion version = Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions.ServiceVersion.V1_1) { }

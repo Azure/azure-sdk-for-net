@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient from a <see cref="KnowledgeBaseRetrievalClientSettings"/>. </summary>
         /// <param name="settings"> The settings for KnowledgeBaseRetrievalClient. </param>
         [Experimental("SCME0002")]
-        public KnowledgeBaseRetrievalClient(KnowledgeBaseRetrievalClientSettings settings) : this(settings?.Endpoint, settings?.KnowledgeBaseName, settings?.CredentialProvider as TokenCredential,  settings?.Options)
+        public KnowledgeBaseRetrievalClient(KnowledgeBaseRetrievalClientSettings settings) : this(settings?.Endpoint, settings?.KnowledgeBaseName, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
 
