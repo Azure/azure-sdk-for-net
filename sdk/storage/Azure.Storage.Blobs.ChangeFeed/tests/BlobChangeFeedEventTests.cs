@@ -421,11 +421,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// Tests deserialization of a V7 schema change feed event that includes restoredContainerVersion.
         /// </summary>
         [Test]
-        public void SchemaV7Test()
+        public void SchemaV8Test()
         {
             // Arrange
             string rawText = File.ReadAllText(
-                $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"EventSchemaV7.json"}");
+                $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"EventSchemaV8.json"}");
 
             Dictionary<string, object> rawDictionary = DeserializeEvent(rawText);
 
@@ -434,7 +434,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             // Assert
             Assert.AreEqual(
-                7,
+                8,
                 changeFeedEvent.SchemaVersion);
             Assert.AreEqual(
                 "/subscriptions/dd40261b-437d-43d0-86cf-ef222b78fd15/resourceGroups/haambaga/providers/Microsoft.Storage/storageAccounts/HAAMBAGA-DEV",
