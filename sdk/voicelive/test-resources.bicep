@@ -10,19 +10,48 @@ param baseName string = resourceGroup().name
 @description('The location of the resource. By default, this is the same as the resource group.')
 param location string = resourceGroup().location
 
-@description('The name of the existing AI Services resource.')
-param aiServicesResourceName string = 'changfu-azure-ai-service'
+var aiServicesName = '${baseName}-ai'
+var cognitiveServicesUserRoleId = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'a97b65f3-24c7-4388-baec-2e87135dc908')
 
-@description('The resource group containing the existing AI Services resource.')
-param aiServicesResourceGroupName string = 'changfu-carbon-rg'
+resource aiServices 'Microsoft.CognitiveServices/accounts@2025-04-01-preview' = {
+  name: aiServicesName
+  location: location
+  kind: 'AIServices'
+  sku: {
+    name: 'S0'
+  }
+  properties: {
+    customSubDomainName: toLower(aiServicesName)
+    publicNetworkAccess: 'Enabled'
+  }
+}
 
-// Reference existing AI Services resource
-resource aiServices 'Microsoft.CognitiveServices/accounts@2025-04-01-preview' existing = {
-  name: aiServicesResourceName
-  scope: resourceGroup(aiServicesResourceGroupName)
+resource modelDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-10-01' = {
+  parent: aiServices
+  name: 'gpt-4o-realtime-preview'
+  sku: {
+    name: 'Standard'
+    capacity: 1
+  }
+  properties: {
+    model: {
+      name: 'gpt-4o-realtime-preview'
+      format: 'OpenAI'
+      version: '2025-06-03'
+    }
+  }
+}
+
+resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(resourceGroup().id, aiServices.id, cognitiveServicesUserRoleId)
+  scope: aiServices
+  properties: {
+    roleDefinitionId: cognitiveServicesUserRoleId
+    principalId: testApplicationOid
+  }
 }
 
 // Outputs become environment variables injected into the test run
 output AI_SERVICES_ENDPOINT string = aiServices.properties.endpoints['AI Foundry API']
 output AI_SERVICES_KEY string = aiServices.listKeys().key1
-output MODEL_DEPLOYMENT_NAME string = 'gpt-realtime'
+output MODEL_DEPLOYMENT_NAME string = modelDeployment.name
