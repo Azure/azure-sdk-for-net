@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Subscription.Models
         public static Azure.ResourceManager.Subscription.SubscriptionAliasData SubscriptionAliasData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Subscription.Models.SubscriptionAliasProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Subscription.Models.SubscriptionAliasProperties SubscriptionAliasProperties(string subscriptionId = null, string displayName = null, Azure.ResourceManager.Subscription.Models.SubscriptionProvisioningState? provisioningState = default(Azure.ResourceManager.Subscription.Models.SubscriptionProvisioningState?), System.Uri acceptOwnershipUri = null, Azure.ResourceManager.Subscription.Models.AcceptOwnershipState? acceptOwnershipState = default(Azure.ResourceManager.Subscription.Models.AcceptOwnershipState?), string billingScope = null, Azure.ResourceManager.Subscription.Models.SubscriptionWorkload? workload = default(Azure.ResourceManager.Subscription.Models.SubscriptionWorkload?), string resellerId = null, string subscriptionOwnerId = null, string managementGroupId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Subscription.TargetDirectoryResultData TargetDirectoryResultData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Subscription.Models.TargetDirectoryResultProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Subscription.Models.TargetDirectoryResultProperties TargetDirectoryResultProperties(string destinationTenantId = null, string destinationOwnerId = null, string subscriptionId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? acceptedOn = default(System.DateTimeOffset?), string sourceOwnerEmail = null, string sourceOwnerId = null, string sourceTenantId = null, Azure.ResourceManager.Subscription.Models.ChangeDirectoryOperationStatus? status = default(Azure.ResourceManager.Subscription.Models.ChangeDirectoryOperationStatus?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Subscription.Models.TargetDirectoryResultProperties TargetDirectoryResultProperties(System.Guid? destinationTenantId = default(System.Guid?), System.Guid? destinationOwnerId = default(System.Guid?), string subscriptionId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? acceptedOn = default(System.DateTimeOffset?), string sourceOwnerEmail = null, System.Guid? sourceOwnerId = default(System.Guid?), System.Guid? sourceTenantId = default(System.Guid?), Azure.ResourceManager.Subscription.Models.ChangeDirectoryOperationStatus? status = default(Azure.ResourceManager.Subscription.Models.ChangeDirectoryOperationStatus?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Subscription.Models.TenantPolicyCreateOrUpdateContent TenantPolicyCreateOrUpdateContent(bool? blockSubscriptionsLeavingTenant = default(bool?), bool? blockSubscriptionsIntoTenant = default(bool?), System.Collections.Generic.IEnumerable<System.Guid> exemptedPrincipals = null) { throw null; }
         public static Azure.ResourceManager.Subscription.TenantPolicyData TenantPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Subscription.Models.TenantPolicyProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Subscription.Models.TenantPolicyProperties TenantPolicyProperties(string policyId = null, bool? blockSubscriptionsLeavingTenant = default(bool?), bool? blockSubscriptionsIntoTenant = default(bool?), System.Collections.Generic.IEnumerable<System.Guid> exemptedPrincipals = null) { throw null; }
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Subscription.Models
     public partial class SubscriptionName : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Subscription.Models.SubscriptionName>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.Models.SubscriptionName>
     {
         public SubscriptionName() { }
-        public string SubscriptionNameProperty { get { throw null; } set { } }
+        public string SubscriptionNameValue { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Subscription.Models.SubscriptionName JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Subscription.Models.SubscriptionName PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -556,8 +556,8 @@ namespace Azure.ResourceManager.Subscription.Models
     public partial class TargetDirectoryProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Subscription.Models.TargetDirectoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.Models.TargetDirectoryProperties>
     {
         public TargetDirectoryProperties() { }
-        public string DestinationOwnerId { get { throw null; } set { } }
-        public string DestinationTenantId { get { throw null; } set { } }
+        public System.Guid? DestinationOwnerId { get { throw null; } set { } }
+        public System.Guid? DestinationTenantId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Subscription.Models.TargetDirectoryProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Subscription.Models.TargetDirectoryProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -573,12 +573,12 @@ namespace Azure.ResourceManager.Subscription.Models
         internal TargetDirectoryResultProperties() { }
         public System.DateTimeOffset? AcceptedOn { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public string DestinationOwnerId { get { throw null; } }
-        public string DestinationTenantId { get { throw null; } }
+        public System.Guid? DestinationOwnerId { get { throw null; } }
+        public System.Guid? DestinationTenantId { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string SourceOwnerEmail { get { throw null; } }
-        public string SourceOwnerId { get { throw null; } }
-        public string SourceTenantId { get { throw null; } }
+        public System.Guid? SourceOwnerId { get { throw null; } }
+        public System.Guid? SourceTenantId { get { throw null; } }
         public Azure.ResourceManager.Subscription.Models.ChangeDirectoryOperationStatus? Status { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
         protected virtual Azure.ResourceManager.Subscription.Models.TargetDirectoryResultProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

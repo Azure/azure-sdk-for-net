@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 throw new FormatException($"The model {nameof(SubscriptionName)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SubscriptionNameProperty))
+            if (Optional.IsDefined(SubscriptionNameValue))
             {
                 writer.WritePropertyName("subscriptionName"u8);
-                writer.WriteStringValue(SubscriptionNameProperty);
+                writer.WriteStringValue(SubscriptionNameValue);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,13 +132,13 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            string subscriptionNameProperty = default;
+            string subscriptionNameValue = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("subscriptionName"u8))
                 {
-                    subscriptionNameProperty = prop.Value.GetString();
+                    subscriptionNameValue = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SubscriptionName(subscriptionNameProperty, additionalBinaryDataProperties);
+            return new SubscriptionName(subscriptionNameValue, additionalBinaryDataProperties);
         }
     }
 }

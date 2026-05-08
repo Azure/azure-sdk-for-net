@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Subscription.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionName"/>. </summary>
-        /// <param name="subscriptionNameProperty"> New subscription name. </param>
+        /// <param name="subscriptionNameValue"> New subscription name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionName(string subscriptionNameProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubscriptionName(string subscriptionNameValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SubscriptionNameProperty = subscriptionNameProperty;
+            SubscriptionNameValue = subscriptionNameValue;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> New subscription name. </summary>
-        public string SubscriptionNameProperty { get; set; }
+        public string SubscriptionNameValue { get; set; }
     }
 }

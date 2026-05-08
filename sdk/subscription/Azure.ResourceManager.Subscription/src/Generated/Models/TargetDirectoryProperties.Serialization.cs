@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Subscription.Models
             if (Optional.IsDefined(DestinationOwnerId))
             {
                 writer.WritePropertyName("destinationOwnerId"u8);
-                writer.WriteStringValue(DestinationOwnerId);
+                writer.WriteStringValue(DestinationOwnerId.Value);
             }
             if (Optional.IsDefined(DestinationTenantId))
             {
                 writer.WritePropertyName("destinationTenantId"u8);
-                writer.WriteStringValue(DestinationTenantId);
+                writer.WriteStringValue(DestinationTenantId.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,19 +126,27 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            string destinationOwnerId = default;
-            string destinationTenantId = default;
+            Guid? destinationOwnerId = default;
+            Guid? destinationTenantId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("destinationOwnerId"u8))
                 {
-                    destinationOwnerId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    destinationOwnerId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("destinationTenantId"u8))
                 {
-                    destinationTenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    destinationTenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

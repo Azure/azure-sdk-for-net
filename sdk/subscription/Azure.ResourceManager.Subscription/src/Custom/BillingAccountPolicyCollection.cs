@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Subscription
         {
             _billingAccountPoliciesResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", BillingAccountPolicyResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(BillingAccountPolicyResource.ResourceType, out string billingAccountPolicyBillingAccountApiVersion);
-            _billingAccountPoliciesResponsesRestClient = new BillingAccountPoliciesResponses(_billingAccountPoliciesResponsesClientDiagnostics, Pipeline, Endpoint, billingAccountPolicyBillingAccountApiVersion);
+            _billingAccountPoliciesResponsesRestClient = new BillingAccountPoliciesResponses(_billingAccountPoliciesResponsesClientDiagnostics, Pipeline, Endpoint, billingAccountPolicyBillingAccountApiVersion ?? "2025-11-01-preview");
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
-            using DiagnosticScope scope = _billingAccountPoliciesResponsesClientDiagnostics.CreateScope("BillingAccountPolicyResource.Get");
+            using DiagnosticScope scope = _billingAccountPoliciesResponsesClientDiagnostics.CreateScope("BillingAccountPolicyCollection.Get");
             scope.Start();
             try
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(Id.Parent.Name, context);
+                HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(billingAccountId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingAccountPolicyData> response = Response.FromValue(BillingAccountPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
-            using DiagnosticScope scope = _billingAccountPoliciesResponsesClientDiagnostics.CreateScope("BillingAccountPolicyResource.Get");
+            using DiagnosticScope scope = _billingAccountPoliciesResponsesClientDiagnostics.CreateScope("BillingAccountPolicyCollection.Get");
             scope.Start();
             try
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(Id.Parent.Name, context);
+                HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(billingAccountId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingAccountPolicyData> response = Response.FromValue(BillingAccountPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
-            using DiagnosticScope scope = _billingAccountPoliciesResponsesClientDiagnostics.CreateScope("BillingAccountPolicyResource.Get");
+            using DiagnosticScope scope = _billingAccountPoliciesResponsesClientDiagnostics.CreateScope("BillingAccountPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(Id.Parent.Name, context);
+                HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(billingAccountId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingAccountPolicyData> response = Response.FromValue(BillingAccountPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
-            using DiagnosticScope scope = _billingAccountPoliciesResponsesClientDiagnostics.CreateScope("BillingAccountPolicyResource.Get");
+            using DiagnosticScope scope = _billingAccountPoliciesResponsesClientDiagnostics.CreateScope("BillingAccountPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(Id.Parent.Name, context);
+                HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(billingAccountId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingAccountPolicyData> response = Response.FromValue(BillingAccountPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
-            using DiagnosticScope scope = _billingAccountPoliciesResponsesClientDiagnostics.CreateScope("BillingAccountPolicyResource.Get");
+            using DiagnosticScope scope = _billingAccountPoliciesResponsesClientDiagnostics.CreateScope("BillingAccountPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(Id.Parent.Name, context);
+                HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(billingAccountId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingAccountPolicyData> response = Response.FromValue(BillingAccountPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
-            using DiagnosticScope scope = _billingAccountPoliciesResponsesClientDiagnostics.CreateScope("BillingAccountPolicyResource.Get");
+            using DiagnosticScope scope = _billingAccountPoliciesResponsesClientDiagnostics.CreateScope("BillingAccountPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(Id.Parent.Name, context);
+                HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(billingAccountId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingAccountPolicyData> response = Response.FromValue(BillingAccountPolicyData.FromResponse(result), result);
                 if (response.Value == null)

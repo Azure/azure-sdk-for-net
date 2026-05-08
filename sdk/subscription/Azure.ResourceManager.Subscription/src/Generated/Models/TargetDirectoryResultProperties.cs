@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="status"> Status of the subscription transfer operation. </param>
         /// <param name="expiresOn"> Subscription Initiate Request Expiry time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TargetDirectoryResultProperties(string destinationTenantId, string destinationOwnerId, string subscriptionId, DateTimeOffset? createdOn, DateTimeOffset? acceptedOn, string sourceOwnerEmail, string sourceOwnerId, string sourceTenantId, ChangeDirectoryOperationStatus? status, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TargetDirectoryResultProperties(Guid? destinationTenantId, Guid? destinationOwnerId, string subscriptionId, DateTimeOffset? createdOn, DateTimeOffset? acceptedOn, string sourceOwnerEmail, Guid? sourceOwnerId, Guid? sourceTenantId, ChangeDirectoryOperationStatus? status, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DestinationTenantId = destinationTenantId;
             DestinationOwnerId = destinationOwnerId;
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Subscription.Models
         }
 
         /// <summary> Destination Tenant Id where Subscription will be accepted. </summary>
-        public string DestinationTenantId { get; }
+        public Guid? DestinationTenantId { get; }
 
         /// <summary> Destination Owner Id where Subscription will be accepted. </summary>
-        public string DestinationOwnerId { get; }
+        public Guid? DestinationOwnerId { get; }
 
         /// <summary> The id of the subscription being transferred. </summary>
         public string SubscriptionId { get; }
@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.Subscription.Models
         public string SourceOwnerEmail { get; }
 
         /// <summary> The object id of the user who initiated the transfer request. </summary>
-        public string SourceOwnerId { get; }
+        public Guid? SourceOwnerId { get; }
 
         /// <summary> The id of the tenant where the subscription originally resided. </summary>
-        public string SourceTenantId { get; }
+        public Guid? SourceTenantId { get; }
 
         /// <summary> Status of the subscription transfer operation. </summary>
         public ChangeDirectoryOperationStatus? Status { get; }

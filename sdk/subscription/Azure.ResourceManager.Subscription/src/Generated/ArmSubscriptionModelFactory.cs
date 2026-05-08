@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="status"> Status of the subscription transfer operation. </param>
         /// <param name="expiresOn"> Subscription Initiate Request Expiry time. </param>
         /// <returns> A new <see cref="Models.TargetDirectoryResultProperties"/> instance for mocking. </returns>
-        public static TargetDirectoryResultProperties TargetDirectoryResultProperties(string destinationTenantId = default, string destinationOwnerId = default, string subscriptionId = default, DateTimeOffset? createdOn = default, DateTimeOffset? acceptedOn = default, string sourceOwnerEmail = default, string sourceOwnerId = default, string sourceTenantId = default, ChangeDirectoryOperationStatus? status = default, DateTimeOffset? expiresOn = default)
+        public static TargetDirectoryResultProperties TargetDirectoryResultProperties(Guid? destinationTenantId = default, Guid? destinationOwnerId = default, string subscriptionId = default, DateTimeOffset? createdOn = default, DateTimeOffset? acceptedOn = default, string sourceOwnerEmail = default, Guid? sourceOwnerId = default, Guid? sourceTenantId = default, ChangeDirectoryOperationStatus? status = default, DateTimeOffset? expiresOn = default)
         {
             return new TargetDirectoryResultProperties(
                 destinationTenantId,

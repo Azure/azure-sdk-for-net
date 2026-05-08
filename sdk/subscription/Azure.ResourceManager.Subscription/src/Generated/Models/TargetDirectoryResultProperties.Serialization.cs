@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.Subscription.Models
             if (options.Format != "W" && Optional.IsDefined(DestinationTenantId))
             {
                 writer.WritePropertyName("destinationTenantId"u8);
-                writer.WriteStringValue(DestinationTenantId);
+                writer.WriteStringValue(DestinationTenantId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(DestinationOwnerId))
             {
                 writer.WritePropertyName("destinationOwnerId"u8);
-                writer.WriteStringValue(DestinationOwnerId);
+                writer.WriteStringValue(DestinationOwnerId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
@@ -115,12 +115,12 @@ namespace Azure.ResourceManager.Subscription.Models
             if (options.Format != "W" && Optional.IsDefined(SourceOwnerId))
             {
                 writer.WritePropertyName("sourceOwnerId"u8);
-                writer.WriteStringValue(SourceOwnerId);
+                writer.WriteStringValue(SourceOwnerId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(SourceTenantId))
             {
                 writer.WritePropertyName("sourceTenantId"u8);
-                writer.WriteStringValue(SourceTenantId);
+                writer.WriteStringValue(SourceTenantId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            string destinationTenantId = default;
-            string destinationOwnerId = default;
+            Guid? destinationTenantId = default;
+            Guid? destinationOwnerId = default;
             string subscriptionId = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? acceptedOn = default;
             string sourceOwnerEmail = default;
-            string sourceOwnerId = default;
-            string sourceTenantId = default;
+            Guid? sourceOwnerId = default;
+            Guid? sourceTenantId = default;
             ChangeDirectoryOperationStatus? status = default;
             DateTimeOffset? expiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -189,12 +189,20 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 if (prop.NameEquals("destinationTenantId"u8))
                 {
-                    destinationTenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    destinationTenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("destinationOwnerId"u8))
                 {
-                    destinationOwnerId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    destinationOwnerId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subscriptionId"u8))
@@ -228,12 +236,20 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
                 if (prop.NameEquals("sourceOwnerId"u8))
                 {
-                    sourceOwnerId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceOwnerId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceTenantId"u8))
                 {
-                    sourceTenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceTenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))

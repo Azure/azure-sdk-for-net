@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="destinationOwnerId"> The destination OwnerId, can be object id or email address. </param>
         /// <param name="destinationTenantId"> The destination Tenant id where subscription needs to be accepted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TargetDirectoryProperties(string destinationOwnerId, string destinationTenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TargetDirectoryProperties(Guid? destinationOwnerId, Guid? destinationTenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DestinationOwnerId = destinationOwnerId;
             DestinationTenantId = destinationTenantId;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Subscription.Models
         }
 
         /// <summary> The destination OwnerId, can be object id or email address. </summary>
-        public string DestinationOwnerId { get; set; }
+        public Guid? DestinationOwnerId { get; set; }
 
         /// <summary> The destination Tenant id where subscription needs to be accepted. </summary>
-        public string DestinationTenantId { get; set; }
+        public Guid? DestinationTenantId { get; set; }
     }
 }
