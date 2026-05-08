@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.Elastic.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticMonitorData ElasticMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string skuName, ElasticMonitorProperties properties, ManagedServiceIdentity identity)
         {
-            return ElasticMonitorData(id, name, resourceType, systemData, tags, location, properties, kind: default, skuName, identity);
+            return ElasticMonitorData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, properties: properties, kind: default, skuName: skuName, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ElasticMonitorProperties"/>. </summary>
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.Elastic.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticMonitorProperties ElasticMonitorProperties(ElasticProvisioningState? provisioningState, ElasticMonitoringStatus? monitoringStatus, ElasticCloudProperties elasticProperties, ElasticUserInfo userInfo, ElasticPlanDetails planDetails, string version, string subscriptionState, string saaSAzureSubscriptionStatus, string sourceCampaignName, string sourceCampaignId, ElasticLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, bool? isApiKeyGenerated)
         {
-            return ElasticMonitorProperties(provisioningState, monitoringStatus, elasticProperties, userInfo, planDetails, version, subscriptionState, saaSAzureSubscriptionStatus, sourceCampaignName, sourceCampaignId, liftrResourceCategory, liftrResourcePreference, isApiKeyGenerated, hostingType: default, projectDetails: default);
+            return ElasticMonitorProperties(provisioningState: provisioningState, monitoringStatus: monitoringStatus, elasticProperties: elasticProperties, userInfo: userInfo, planDetails: planDetails, version: version, subscriptionState: subscriptionState, saaSAzureSubscriptionStatus: saaSAzureSubscriptionStatus, sourceCampaignName: sourceCampaignName, sourceCampaignId: sourceCampaignId, liftrResourceCategory: liftrResourceCategory, liftrResourcePreference: liftrResourcePreference, isApiKeyGenerated: isApiKeyGenerated, hostingType: default, projectDetails: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ElasticDeploymentInfoResult"/>. </summary>
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Elastic.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticDeploymentInfoResult ElasticDeploymentInfoResult(ElasticDeploymentStatus? status, string version, string memoryCapacity, string diskCapacity, string elasticsearchEndPoint, Uri deploymentUri, MarketplaceSaaSInfo marketplaceSaasInfo)
         {
-            return ElasticDeploymentInfoResult(status, version, memoryCapacity, diskCapacity, elasticsearchEndPoint, deploymentUri, marketplaceSaasInfo, projectType: default, configurationType: default);
+            return ElasticDeploymentInfoResult(status: status, version: version, memoryCapacity: memoryCapacity, diskCapacity: diskCapacity, elasticsearchEndPoint: elasticsearchEndPoint, deploymentUri: deploymentUri, marketplaceSaasInfo: marketplaceSaasInfo, projectType: default, configurationType: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectedPartnerResourceProperties"/>. </summary>
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Elastic.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ConnectedPartnerResourceProperties ConnectedPartnerResourceProperties(string partnerDeploymentName, Uri partnerDeploymentUri, ResourceIdentifier azureResourceId, AzureLocation? location)
         {
-            return ConnectedPartnerResourceProperties(partnerDeploymentName, partnerDeploymentUri, azureResourceId, location, connectedPartnerResourcePropertiesType: default);
+            return ConnectedPartnerResourceProperties(partnerDeploymentName: partnerDeploymentName, partnerDeploymentUri: partnerDeploymentUri, azureResourceId: azureResourceId, location: location, connectedPartnerResourcePropertiesType: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ElasticOpenAIIntegrationProperties"/>. </summary>
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.Elastic.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticOpenAIIntegrationProperties ElasticOpenAIIntegrationProperties(ResourceIdentifier openAIResourceId, string openAIResourceEndpoint, string key, DateTimeOffset? lastRefreshOn)
         {
-            return ElasticOpenAIIntegrationProperties(openAIResourceId, openAIResourceEndpoint, openAIConnectorId: default, key, lastRefreshOn);
+            return ElasticOpenAIIntegrationProperties(openAIResourceId: openAIResourceId, openAIResourceEndpoint: openAIResourceEndpoint, openAIConnectorId: default, key: key, lastRefreshOn: lastRefreshOn);
         }
     }
 }
