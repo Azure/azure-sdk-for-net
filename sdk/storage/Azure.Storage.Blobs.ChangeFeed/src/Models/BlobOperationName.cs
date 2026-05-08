@@ -95,6 +95,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public static BlobOperationName AppendBlock { get; } = new BlobOperationName("AppendBlock");
 
         /// <summary>
+        /// Update Last Access Time.
+        /// </summary>
+        public static BlobOperationName UpdateLastAccessTime { get; } = new BlobOperationName("UpdateLastAccessTime");
+
+        /// <summary>
         /// Compares equality of two <see cref="BlobOperationName"/> instances.
         /// </summary>
         /// <param name="left">The <see cref="BlobOperationName"/> to compare.</param>
