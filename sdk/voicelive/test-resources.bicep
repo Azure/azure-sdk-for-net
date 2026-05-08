@@ -10,22 +10,8 @@ param baseName string = resourceGroup().name
 @description('The location of the resource. By default, this is the same as the resource group.')
 param location string = resourceGroup().location
 
-@description('The name of the model to deploy.')
-param modelName string = 'gpt-realtime'
-
-@description('The format of the model to deploy.')
-param modelFormat string = 'OpenAI'
-
-@description('The version of the model to deploy.')
-param modelVersion string = '2025-08-28'
-
-@description('The SKU name for the model deployment.')
-param modelSkuName string = 'GlobalStandard'
-
-@description('The capacity of the model deployment.')
-param modelCapacity int = 1
-
 var aiServicesName = '${baseName}-ai'
+var defaultProjectName = '${toLower(aiServicesName)}-defaultproject'
 var cognitiveServicesUserRoleId = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'a97b65f3-24c7-4388-baec-2e87135dc908')
 
 resource aiServices 'Microsoft.CognitiveServices/accounts@2025-04-01-preview' = {
@@ -35,24 +21,28 @@ resource aiServices 'Microsoft.CognitiveServices/accounts@2025-04-01-preview' = 
   sku: {
     name: 'S0'
   }
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
     customSubDomainName: toLower(aiServicesName)
     publicNetworkAccess: 'Enabled'
+    allowProjectManagement: true
+    defaultProjectName: toLower(aiServicesName)
   }
-}
 
-resource modelDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-10-01' = {
-  parent: aiServices
-  name: modelName
-  sku: {
-    name: modelSkuName
-    capacity: modelCapacity
-  }
-  properties: {
-    model: {
-      name: modelName
-      format: modelFormat
-      version: modelVersion
+  resource defaultProject 'projects' = {
+    name: defaultProjectName
+    location: location
+    identity: {
+      type: 'SystemAssigned'
+    }
+    sku: {
+      name: 'S0'
+    }
+    properties: {
+      displayName: defaultProjectName
+      description: 'Default project created with the resource'
     }
   }
 }
@@ -67,6 +57,8 @@ resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
 }
 
 // Outputs become environment variables injected into the test run
+output AI_SERVICES_NAME string = aiServices.name
 output AI_SERVICES_ENDPOINT string = aiServices.properties.endpoints['AI Foundry API']
 output AI_SERVICES_KEY string = aiServices.listKeys().key1
-output MODEL_DEPLOYMENT_NAME string = modelDeployment.name
+output DEFAULT_PROJECT_NAME string = defaultProjectName
+output AGENT_PROJECT_ENDPOINT string = aiServices::defaultProject.properties.endpoints['AI Foundry API']
