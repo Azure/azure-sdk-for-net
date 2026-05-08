@@ -104,18 +104,16 @@ namespace Azure.Generator.Management.Visitors
                 }
             }
 
-            // Second pass: fix backward-compat overloads whose bodies call primary methods
-            // via InvokeMethodExpression. The primary methods' parameter order may have changed
-            // after flattening, so positional arguments in overloads can be wrong.
+            // Second pass: fix backward-compat overload bodies after primary method parameters
+            // changed during flattening.
             FixBackwardCompatOverloads(modelFactory.Methods);
-            FixBackwardCompatNewInstanceDefaults(modelFactory.Methods);
         }
 
         /// <summary>
-        /// Fixes backward-compat overload methods that call primary model factory methods.
-        /// After flattening reorders the primary method's parameters, the positional arguments
-        /// in these overloads may be in the wrong order. This method rebuilds the argument list
-        /// to match the primary method's current parameter order.
+        /// Fixes backward-compat overload methods after flattening changes primary model factory methods.
+        /// This updates overloads that call primary methods with stale positional arguments and overloads
+        /// that construct model instances directly with defaulted arguments for values still present in the
+        /// old signature.
         /// </summary>
         internal static void FixBackwardCompatOverloads(IReadOnlyList<MethodProvider> methods)
         {
@@ -141,11 +139,11 @@ namespace Azure.Generator.Management.Visitors
                     continue;
                 }
 
-                // Look for backward-compat overloads that call another method via InvokeMethodExpression
                 var updatedBodyStatements = new List<MethodBodyStatement>();
                 var bodyUpdated = false;
                 foreach (var statement in method.BodyStatements)
                 {
+                    // Look for backward-compat overloads that call another method via InvokeMethodExpression.
                     if (statement is ExpressionStatement expressionStatement
                         && (expressionStatement.Expression as KeywordExpression)?.Expression is InvokeMethodExpression invokeExpression
                         && (invokeExpression.MethodName ?? invokeExpression.MethodSignature?.Name) is string calledMethodName
@@ -200,6 +198,12 @@ namespace Azure.Generator.Management.Visitors
                             updatedBodyStatements.Add(statement);
                         }
                     }
+                    else if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } }
+                        && TryUpdateNewInstanceArguments(method, newInstanceExpression, out var updatedArguments))
+                    {
+                        updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, updatedArguments)));
+                        bodyUpdated = true;
+                    }
                     else
                     {
                         updatedBodyStatements.Add(statement);
@@ -221,39 +225,6 @@ namespace Azure.Generator.Management.Visitors
         {
             return method.Signature.Attributes.Any(a =>
                 a.Type is { IsFrameworkType: true } && a.Type.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
-        }
-
-        private static void FixBackwardCompatNewInstanceDefaults(IReadOnlyList<MethodProvider> methods)
-        {
-            foreach (var method in methods)
-            {
-                if (!IsBackwardCompatMethod(method) || method.BodyStatements is null)
-                {
-                    continue;
-                }
-
-                var updatedBodyStatements = new List<MethodBodyStatement>();
-                var bodyUpdated = false;
-                foreach (var statement in method.BodyStatements)
-                {
-                    if (statement is ExpressionStatement expressionStatement
-                        && (expressionStatement.Expression as KeywordExpression)?.Expression is NewInstanceExpression newInstanceExpression
-                        && TryUpdateNewInstanceArguments(method, newInstanceExpression, out var updatedArguments))
-                    {
-                        updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, updatedArguments)));
-                        bodyUpdated = true;
-                    }
-                    else
-                    {
-                        updatedBodyStatements.Add(statement);
-                    }
-                }
-
-                if (bodyUpdated)
-                {
-                    method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
-                }
-            }
         }
 
         private static bool TryUpdateNewInstanceArguments(MethodProvider method, NewInstanceExpression newInstanceExpression, [NotNullWhen(true)] out IReadOnlyList<ValueExpression>? updatedArguments)
