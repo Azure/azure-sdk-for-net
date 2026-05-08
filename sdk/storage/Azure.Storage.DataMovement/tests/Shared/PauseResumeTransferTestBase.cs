@@ -86,15 +86,16 @@ namespace Azure.Storage.DataMovement.Tests
         protected abstract TServiceClient GetAzureSasCredentialServiceClient();
 
         /// <summary>
-        /// Creates source and destination storage resources for Copy transfers that carry
-        /// proper copy-source authentication (e.g. SAS credentials). Override this method
-        /// to provide resources where the source URI is authenticated for service-to-service copy.
+        /// Creates source and destination storage resources for Copy transfers.
+        /// Override this method to provide resources where the source URI includes
+        /// copy-source authentication (for example, SAS credentials) for service-to-service copy.
+        /// The default implementation does not add special copy-source authentication.
         /// </summary>
         /// <param name="size">Size of the source file to create and upload.</param>
         /// <param name="sourceContainer">The source container client.</param>
         /// <param name="destinationContainer">The destination container client.</param>
         /// <param name="provider">The SAS storage resource provider.</param>
-        /// <returns>Source and destination storage resources with copy-source auth.</returns>
+        /// <returns>Source and destination storage resources for a copy transfer; by default, these resources do not include special copy-source authentication.</returns>
         protected virtual async Task<(StorageResource Source, StorageResource Destination)> CreateCopyStorageResourcesWithAuthAsync(
             long size,
             TContainerClient sourceContainer,
