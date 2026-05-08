@@ -8,24 +8,18 @@
     Builds the mgmt generator locally and regenerates SDK folders using TypeSpec.
     Does NOT modify package.json files or create versioned packages.
     By default (when -Services is omitted), regenerates ALL mgmt SDKs.
-    Use -Services to regenerate one or more specific libraries by exact name.
+    Use -Services to regenerate one or more specific libraries by exact
+    library folder name (e.g., "Azure.ResourceManager.Compute").
 
 .PARAMETER Services
-    One or more library names to regenerate, matched against the SDK folder
-    name (case-insensitive). Omit -Services to regenerate ALL mgmt SDKs.
+    One or more library folder names to regenerate (e.g.,
+    "Azure.ResourceManager.Compute"). Each value must match an SDK folder
+    name exactly (case-insensitive). Omit -Services to regenerate ALL
+    mgmt SDKs.
 
-    Each value is normalized before matching: if it does not already start
-    with "Azure.ResourceManager." (case-insensitive), the prefix is added
-    automatically. So "Compute" is treated as "Azure.ResourceManager.Compute".
-
-    Wildcards ('*' and '?') are supported and matched verbatim with -like
-    against the library name. Patterns without wildcards must match exactly.
-
-    This avoids the common pitfall where a substring like "Compute" also
-    picks up ComputeFleet, ComputeLimit, ComputeSchedule, etc.: bare
-    "Compute" now means exactly Azure.ResourceManager.Compute, while users
-    who explicitly want the family can pass "Compute*" (or
-    "Azure.ResourceManager.Compute*").
+    Exact matching avoids the common pitfall where a substring like
+    "Compute" also picks up ComputeFleet, ComputeLimit, ComputeSchedule,
+    etc.
 
 .PARAMETER Parallel
     Number of parallel jobs (default: 4, min: 1). Set to 1 for sequential execution.
@@ -50,16 +44,11 @@
     # Regenerates ALL mgmt SDKs.
 
 .EXAMPLE
-    .\RegenSdkLocal.ps1 -Services "KeyVault"
-    # Treated as "Azure.ResourceManager.KeyVault" (exact match).
+    .\RegenSdkLocal.ps1 -Services "Azure.ResourceManager.KeyVault"
+    # Exact match against the SDK folder name.
 
 .EXAMPLE
-    .\RegenSdkLocal.ps1 -Services "KeyVault","Compute"
-
-.EXAMPLE
-    .\RegenSdkLocal.ps1 -Services "Compute*"
-    # Wildcard: matches Azure.ResourceManager.Compute and all sibling
-    # libraries (ComputeFleet, ComputeSchedule, etc.).
+    .\RegenSdkLocal.ps1 -Services "Azure.ResourceManager.KeyVault","Azure.ResourceManager.Compute"
 
 .EXAMPLE
     .\RegenSdkLocal.ps1 -Services "Azure.ResourceManager.KeyVault" -LocalSpecRepoPath "C:\src\azure-rest-api-specs"
@@ -161,45 +150,21 @@ foreach ($tspFile in $tspFiles) {
 
 Write-Host "Found $($mgmtSdkFolders.Count) mgmt SDK folders"
 
-# Apply services filter
-#   * Each pattern is normalized: if it doesn't already start with
-#     "Azure.ResourceManager." (case-insensitive), the prefix is added.
-#   * Wildcards ('*' / '?') are matched verbatim with -like.
-#   * Patterns without wildcards must match the library name exactly.
+# Apply services filter: each value must match an SDK folder name exactly
+# (case-insensitive). Throws if any value matches no folder.
 if ($Services -and $Services.Count -gt 0) {
-    $normalizedPatterns = @($Services | ForEach-Object {
-        $p = $_
-        if ($p -like 'Azure.ResourceManager.*') { $p } else { "Azure.ResourceManager.$p" }
+    $unmatched = @($Services | Where-Object {
+        $name = $_
+        -not ($mgmtSdkFolders | Where-Object { $_.Library -ieq $name })
     })
-
-    $unmatched = @()
+    if ($unmatched.Count -gt 0) {
+        throw "No mgmt SDK folder matched: $($unmatched -join ', '). Pass the exact library folder name, e.g., 'Azure.ResourceManager.Compute'."
+    }
     $mgmtSdkFolders = @($mgmtSdkFolders | Where-Object {
         $folder = $_
-        foreach ($pattern in $normalizedPatterns) {
-            if ($pattern -match '[\*\?]') {
-                if ($folder.Library -like $pattern) { return $true }
-            }
-            elseif ($folder.Library -ieq $pattern) {
-                return $true
-            }
-        }
-        return $false
+        $null -ne ($Services | Where-Object { $folder.Library -ieq $_ })
     })
-
-    foreach ($pattern in $normalizedPatterns) {
-        $hit = $false
-        foreach ($folder in $mgmtSdkFolders) {
-            if ($pattern -match '[\*\?]') {
-                if ($folder.Library -like $pattern) { $hit = $true; break }
-            }
-            elseif ($folder.Library -ieq $pattern) { $hit = $true; break }
-        }
-        if (-not $hit) { $unmatched += $pattern }
-    }
-    if ($unmatched.Count -gt 0) {
-        throw "No mgmt SDK folder matched: $($unmatched -join ', '). Pass an exact library name (with or without the 'Azure.ResourceManager.' prefix) or a wildcard such as 'Compute*'."
-    }
-    Write-Host "Filtered to $($mgmtSdkFolders.Count) matching: $($normalizedPatterns -join ', ')"
+    Write-Host "Filtered to $($mgmtSdkFolders.Count) matching: $($Services -join ', ')"
 }
 
 if ($mgmtSdkFolders.Count -eq 0) {
