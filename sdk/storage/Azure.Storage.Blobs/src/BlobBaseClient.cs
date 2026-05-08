@@ -1631,17 +1631,17 @@ namespace Azure.Storage.Blobs.Specialized
                             .GetAsync(async, cancellationToken)
                             .ConfigureAwait(false);
                         idealEndpoint = GetIdealEndpoint(range, cachedValue.Segments);
-                    }
 
-                    // Add the ideal endpoint to the Http message properties so DataLocalityPolicy can route the request
-                    if (idealEndpoint != null)
-                    {
-                        disposableBucket.Add(
-                            HttpPipeline.CreateHttpMessagePropertiesScope(
-                                new Dictionary<string, object>
-                                {
-                                    { DataLocalityPolicy.IdealEndpointKey, idealEndpoint }
-                                }));
+                        // Add the ideal endpoint to the Http message properties so DataLocalityPolicy can route the request
+                        if (idealEndpoint != null)
+                        {
+                            disposableBucket.Add(
+                                HttpPipeline.CreateHttpMessagePropertiesScope(
+                                    new Dictionary<string, object>
+                                    {
+                                        { DataLocalityPolicy.IdealEndpointKey, idealEndpoint }
+                                    }));
+                        }
                     }
 
                     // Start downloading the blob
