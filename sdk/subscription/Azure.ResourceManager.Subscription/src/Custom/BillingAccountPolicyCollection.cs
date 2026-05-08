@@ -12,7 +12,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
 
-// TODO: BillingAccountPolicy is a singleton resource defined in TypeSpec but not in the swagger. So add this collection class back to ensure the SDK backwards compatibility.
+// BillingAccountPolicy is a singleton resource defined in TypeSpec but not in the swagger. So add this collection class back to ensure the SDK backwards compatibility.
 namespace Azure.ResourceManager.Subscription
 {
     /// <summary>
