@@ -276,14 +276,27 @@ Sample16 trains a custom analyzer from **labeled documents** in Azure Blob Stora
 
 The SDK ships sample receipt training data under `tests/samples/SampleFiles/receipt_labels/` (two labeled receipts).
 
-> **[ASK USER] Sample16 training data (Sample16 only):**
-> If the user chose Sample16, ask:
-> 1. "Do you want to **provide your own labeled data** (Option A) or let the sample **auto-upload the bundled receipt files** (Option B)?"
+> **[ASK USER] — REQUIRED GATE for Sample16 (do NOT run the script before this is resolved):**
+> Sample16 silently falls back to "create analyzer without labeled data" when no training-data
+> source is configured. That fall-back path completes end-to-end and prints `✓ Sample completed`
+> even though the labeled-data API surface is **not** actually exercised. Before invoking
+> `run_sample.sh Sample16_CreateAnalyzerWithLabels --run`, the agent **must** ask the user one
+> of the questions below and act on the answer:
+>
+> 1. "Sample16 trains an analyzer from labeled documents in Azure Blob Storage. Do you want to
+>    **provide your own labeled data** (Option A), let the sample **auto-upload the bundled
+>    receipt files** (Option B), or **run a demo-mode smoke test** (no training data — fastest,
+>    but not a full validation)?"
 > 2. **If Option A**: "Please provide a **container-level SAS URL** for the container/folder that holds your labeled triplets. If your data is under a sub-folder, also tell me the prefix (e.g., `receipt_labels`). Both `receipt_labels` and `receipt_labels/` work."
 >    - **Folder layout**: upload all 6 files from `tests/samples/SampleFiles/receipt_labels/` (the 2 receipts × 3 files each: `<id>.jpg`, `<id>.jpg.labels.json`, `<id>.jpg.result.json`) **either** at the **container root** (leave `..._PREFIX` empty) **or** under a sub-folder named `receipt_labels/` (then set `CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX=receipt_labels`). Both layouts work identically.
 >    - In Azure Portal: open your storage container → **Shared access tokens** (use the Portal search bar to find it) → grant Read + List → Generate → copy the **Blob SAS URL**.
 > 3. **If Option B**: "Please provide a **storage account name** and a **container name**. The sample uses `DefaultAzureCredential` (run `az login` first) plus the **Storage Blob Data Contributor** role on the account; it uploads the 6 files from `tests/samples/SampleFiles/receipt_labels/` (located relative to the package directory) and mints a short-lived User Delegation SAS automatically."
-> 4. **If neither option is set**: confirm with the user that the sample will **fall back** to creating an analyzer without training data — it still completes end-to-end so the create/delete flow works, but the analyzer is not trained on labeled data.
+> 4. **If demo-mode smoke test**: confirm explicitly with the user — "I will run Sample16 *without* training data. The output will say `Knowledge srcs: 0` and you will see a `DEMO MODE` warning. The labeled-data API path will **not** be exercised. OK to proceed?" Only run the script after the user says yes.
+>
+> **Belt-and-suspenders**: `run_sample.sh` itself emits a loud `DEMO MODE` banner before the
+> `dotnet run` step when none of the four training-data env vars / appsettings keys are set, so
+> the fall-back is unmissable in the captured run output. Treat that banner as a signal that
+> validation is **incomplete** unless the user explicitly opted into demo mode in step 4.
 
 For **Option A**, add to `appsettings.json`:
 

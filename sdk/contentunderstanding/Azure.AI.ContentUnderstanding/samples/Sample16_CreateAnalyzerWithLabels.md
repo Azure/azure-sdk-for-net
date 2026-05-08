@@ -77,7 +77,7 @@ CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX=receipt_labels/
 
 The credential running the sample needs **Storage Blob Data Contributor** (or higher) **on the storage account** so it can upload blobs and call `GetUserDelegationKeyAsync` (an account-scoped operation).
 
-> **Note:** If neither `CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL` nor the storage-account variables are set, the sample creates an analyzer **without** training data and prints a "demonstration only" message. This is the default behavior and requires no extra setup.
+> **Note:** If neither `CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL` nor the storage-account variables are set, the sample creates an analyzer **without** training data and prints a `DEMO MODE` warning to the console. This is the default behavior and requires no extra setup, but it does **not** exercise the labeled-data API path end-to-end.
 
 ## Build the receipt field schema
 
@@ -194,6 +194,13 @@ string analyzerId = $"receipt_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds(
             labeledSource.Prefix = trainingDataPrefix;
         }
         knowledgeSources.Add(labeledSource);
+    }
+    else
+    {
+        Console.WriteLine("DEMO MODE: no training data configured. The analyzer will be created without labeled data.");
+        Console.WriteLine("  Set CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL (Option A), or both");
+        Console.WriteLine("  CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT and CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER (Option B),");
+        Console.WriteLine("  to fully exercise the labeled-data API path.");
     }
 
     // Step 4: Create the analyzer
@@ -314,7 +321,7 @@ Console.WriteLine($"Analyzer '{analyzerId}' deleted.");
 | --- | --- | --- |
 | `403` / `AuthenticationFailed` when reading the SAS URL | SAS expired or missing **List**/**Read** permission. | Regenerate the SAS with both permissions and an unexpired expiry. |
 | `BlobNotFound` during analyzer creation | Wrong prefix, files at the wrong layout, or files not uploaded. | Verify the container layout matches the `.labels.json` filenames; adjust `CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX` accordingly. |
-| `Sample completed without training data` | Neither `CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL` nor the storage-account variables were set. | Configure Option A or Option B above to exercise the labeled-data path. |
+| `DEMO MODE: no training data configured` printed at run time | Neither `CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL` nor the storage-account variables were set. | Configure Option A or Option B above to exercise the labeled-data path. |
 | `Forbidden` when calling `GetUserDelegationKeyAsync` | Identity lacks **Storage Blob Data Contributor** on the storage account. | Grant the role and retry, or switch to Option A. |
 
 ## Next steps

@@ -57,12 +57,17 @@ namespace Azure.AI.ContentUnderstanding.Samples
             string defaultId = $"test_receipt_analyzer_{Recording.Random.NewGuid().ToString("N")}";
             string analyzerId = Recording.GetVariable("analyzerWithLabelsId", defaultId) ?? defaultId;
 
+            // Prefix is read via the framework helper, which automatically records it on Record
+            // and replays the recorded value on Playback (no manual SetVariable needed).
+            string? trainingDataPrefix = TestEnvironment.TrainingDataPrefix;
+
+            // SAS URL must be a parseable Uri at construction time below. Because TrainingDataSasUrl
+            // is marked IsSecret(), the framework returns the literal string "Sanitized" on Playback,
+            // which is not a valid Uri. Fall back to a syntactically valid placeholder in that case;
+            // the recorded HTTP traffic carries the sanitized value already.
             string? trainingDataSasUrl = Mode == RecordedTestMode.Playback
                 ? "https://placeholder.blob.core.windows.net/container?sv=placeholder"
                 : TestEnvironment.TrainingDataSasUrl;
-            string? trainingDataPrefix = Mode == RecordedTestMode.Playback
-                ? Recording.GetVariable("trainingDataPrefix", null)
-                : TestEnvironment.TrainingDataPrefix;
 
             // Option B fallback: upload local label files → generate SAS URL
             if (string.IsNullOrEmpty(trainingDataSasUrl) && Mode != RecordedTestMode.Playback)
@@ -80,11 +85,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 }
             }
 
-            // Save variable values for playback mode
-            if (Mode == RecordedTestMode.Record)
-            {
-                Recording.SetVariable("trainingDataPrefix", trainingDataPrefix ?? string.Empty);
-            }
 #endif
             // ─────────────────────────────────────────────────────────────────
 
@@ -140,6 +140,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         labeledSource.Prefix = trainingDataPrefix;
                     }
                     knowledgeSources.Add(labeledSource);
+                }
+                else
+                {
+                    Console.WriteLine("DEMO MODE: no training data configured. The analyzer will be created without labeled data.");
+                    Console.WriteLine("  Set CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL (Option A), or both");
+                    Console.WriteLine("  CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT and CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER (Option B),");
+                    Console.WriteLine("  to fully exercise the labeled-data API path.");
                 }
 
                 // Step 4: Create the analyzer

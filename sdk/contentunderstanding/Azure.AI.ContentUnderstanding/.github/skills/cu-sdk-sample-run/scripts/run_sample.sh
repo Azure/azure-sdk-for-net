@@ -289,6 +289,28 @@ else
     print_info "Auth: DefaultAzureCredential"
 fi
 
+# ─── Bridge optional sample-specific keys from appsettings.json to OS env ─────
+# Snippets read these via Environment.GetEnvironmentVariable (the canonical
+# Azure SDK pattern shown in the public docs). Microsoft.Extensions.Configuration
+# does NOT push JSON values into the OS env, so values that live only in
+# appsettings.json would be invisible to a snippet body unless we export them
+# here. Pre-existing OS env vars win over appsettings.json (--unset semantics).
+if [ -f "$APPSETTINGS" ] && command -v python3 &>/dev/null; then
+    for _key in CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL \
+                CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX \
+                CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT \
+                CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER \
+                CONTENTUNDERSTANDING_TRAINING_DATA_LOCAL_DIR; do
+        if [ -z "${!_key:-}" ]; then
+            _value=$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('$_key',''))" 2>/dev/null)
+            if [ -n "$_value" ]; then
+                export "$_key=$_value"
+            fi
+        fi
+    done
+    unset _key _value
+fi
+
 # ─── Extract code snippets from markdown ──────────────────────────────────────
 require_python3
 print_info "=== Extracting code from: $SAMPLE_NAME ==="
@@ -771,6 +793,36 @@ if [ $BUILD_EXIT_CODE -ne 0 ]; then
 fi
 
 print_success "✓ Build succeeded: $SAMPLE_NAME"
+
+# ─── Sample16-specific gate: warn loudly when no training data is configured ─
+# Sample16 silently falls back to "create analyzer without labeled data" when
+# none of the training-data env vars / appsettings keys are set. That path
+# completes end-to-end and prints "✓ Sample completed", which is misleading
+# because the labeled-data API surface is NOT actually exercised. This banner
+# makes the demo-mode fall-back unmissable so the agent (and the user) cannot
+# accidentally accept it as a full validation run.
+if [[ "$SAMPLE_NAME" == Sample16* ]] && [ "$RUN_AFTER_BUILD" = true ]; then
+    if [ -z "${CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL:-}" ] \
+       && { [ -z "${CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT:-}" ] \
+            || [ -z "${CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER:-}" ]; }; then
+        echo ""
+        print_warning "════════════════════════════════════════════════════════════════════════════════"
+        print_warning "  ⚠️  Sample16 will run in DEMO MODE — NO training data is configured."
+        print_warning ""
+        print_warning "    The analyzer will be created WITHOUT labeled data. Expected output:"
+        print_warning "        Knowledge srcs: 0     (full-validation target is 1)"
+        print_warning ""
+        print_warning "    To fully validate Sample16, set ONE of the following before re-running:"
+        print_warning ""
+        print_warning "      Option A:  CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL=<container SAS URL>"
+        print_warning "      Option B:  CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT=<account>"
+        print_warning "                 CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER=<container>"
+        print_warning ""
+        print_warning "    See samples/Sample16_CreateAnalyzerWithLabels.md for full setup."
+        print_warning "════════════════════════════════════════════════════════════════════════════════"
+        echo ""
+    fi
+fi
 
 # ─── Run (if --run flag) or print instructions ───────────────────────────────
 if [ "$RUN_AFTER_BUILD" = true ]; then
