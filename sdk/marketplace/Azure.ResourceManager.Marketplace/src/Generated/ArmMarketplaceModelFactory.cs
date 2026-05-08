@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PrivateStorePlan PrivateStorePlan(string skuId, string planId, string planDisplayName, PrivateStorePlanAccessibility? accessibility, string altStackReference, string stackType)
         {
-            return PrivateStorePlan(skuId, planId, planDisplayName, accessibility, altStackReference, stackType, isStopSell: default);
+            return PrivateStorePlan(skuId: skuId, planId: planId, planDisplayName: planDisplayName, accessibility: accessibility, altStackReference: altStackReference, stackType: stackType, isStopSell: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Marketplace.PrivateStoreOfferData"/>. </summary>
