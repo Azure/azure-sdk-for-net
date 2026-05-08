@@ -79,10 +79,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType BlobPropertiesUpdated { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType BlobSnapshotCreated { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType BlobTierChanged { get { throw null; } }
-        public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType ContainerCreated { get { throw null; } }
-        public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType ContainerDeleted { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType ContainerPropertiesUpdated { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType Control { get { throw null; } }
+        public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType CreateContainer { get { throw null; } }
+        public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType DeleteContainer { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType RestorePointMarkerCreated { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType UnspecifiedEventType { get { throw null; } }
         public bool Equals(Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType other) { throw null; }
