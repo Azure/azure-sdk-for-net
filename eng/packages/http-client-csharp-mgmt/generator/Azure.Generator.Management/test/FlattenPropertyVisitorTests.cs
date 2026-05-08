@@ -403,10 +403,142 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(skuArgument, Does.Not.Contain("new TestSku(name"));
         }
 
+        [Test]
+        public void TestLastContractBackwardCompatNewInstanceConstructsDroppedModelArgument()
+        {
+            var provisioningStateProperty = InputFactory.Property("provisioningState", InputPrimitiveType.String, serializedName: "provisioningState");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [provisioningStateProperty]);
+
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var oldProvisioningStateParam = new ParameterProvider("testProvisioningState", $"", typeof(string));
+            var oldSignature = new MethodSignature(
+                "TestResource",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldProvisioningStateParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+
+            var constructorParameters = parentProvider.FullConstructor.Signature.Parameters;
+            var constructorArguments = constructorParameters
+                .Select(p => p.Name == "properties" ? Default : p.DefaultValue ?? Default)
+                .ToArray();
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            lastContractView.MethodsToBuild = [new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), lastContractView)];
+            SetLastContractView(modelFactory, lastContractView);
+
+            var updateModelFactory = typeof(FlattenPropertyVisitor).GetMethod(
+                "UpdateModelFactory",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(updateModelFactory, Is.Not.Null);
+
+            updateModelFactory!.Invoke(new FlattenPropertyVisitor(), [modelFactory]);
+
+            var updatedMethod = lastContractView.Methods.Single();
+            var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
+            var keywordExpression = statement!.Expression as KeywordExpression;
+            var newInstance = keywordExpression!.Expression as NewInstanceExpression;
+            var propertiesIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "properties").i;
+            var propertiesArgument = newInstance!.Parameters[propertiesIndex].ToDisplayString();
+            Assert.That(propertiesArgument, Does.Contain("TestProperties"));
+            Assert.That(propertiesArgument, Does.Contain("testProvisioningState"));
+        }
+
+        [Test]
+        public void TestWriterFixesSynthesizedLastContractBackwardCompatNewInstance()
+        {
+            var provisioningStateProperty = InputFactory.Property("provisioningState", InputPrimitiveType.String, serializedName: "provisioningState");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [provisioningStateProperty]);
+
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var previousSignature = new MethodSignature(
+                "TestResource",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [new ParameterProvider("testProvisioningState", $"", typeof(string))]);
+
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
+            SetLastContractView(modelFactory, lastContractView);
+
+            ProcessTypeForBackCompatibility(modelFactory);
+
+            var rendered = plugin.Object.GetWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("testProvisioningState is null) ? default : new global::Samples.Models.TestProperties(testProvisioningState"));
+            Assert.That(rendered, Does.Not.Contain("return new global::Samples.Models.TestResource(\r\n                default"));
+        }
+
         private static void AssertArgIsParameter(ValueExpression arg, string expectedName, string context)
         {
             string? actualName = arg is VariableExpression v ? v.Declaration.RequestedName : null;
             Assert.That(actualName, Is.EqualTo(expectedName), $"Expected parameter '{expectedName}' at {context}, but got '{actualName ?? arg.GetType().Name}'");
+        }
+
+        private static void SetLastContractView(TypeProvider typeProvider, TypeProvider lastContractView)
+        {
+            typeof(TypeProvider).GetField(
+                    "_lastContractView",
+                    BindingFlags.NonPublic | BindingFlags.Instance)!
+                .SetValue(typeProvider, new Lazy<TypeProvider?>(() => lastContractView));
+        }
+
+        private static void ProcessTypeForBackCompatibility(TypeProvider typeProvider)
+        {
+            typeof(TypeProvider).GetMethod(
+                    "ProcessTypeForBackCompatibility",
+                    BindingFlags.NonPublic | BindingFlags.Instance)!
+                .Invoke(typeProvider, null);
+        }
+
+        private class TestModelFactoryView : TypeProvider
+        {
+            private readonly string _name;
+
+            public TestModelFactoryView(string name)
+            {
+                _name = name;
+            }
+
+            public MethodProvider[] MethodsToBuild { get; set; } = [];
+
+            protected override string BuildName() => _name;
+
+            protected override string BuildRelativeFilePath() => $"{Name}.cs";
+
+            protected override MethodProvider[] BuildMethods() => MethodsToBuild;
         }
 
         private static void ApplyFlattenDecorator(InputModelProperty property)

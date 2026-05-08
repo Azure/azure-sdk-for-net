@@ -105,8 +105,13 @@ namespace Azure.Generator.Management.Visitors
             }
 
             // Second pass: fix backward-compat overload bodies after primary method parameters
-            // changed during flattening.
+            // changed during flattening. Compatibility overloads can be present on the current
+            // model factory or on the last-contract view that is rendered later by the writer.
             FixBackwardCompatOverloads(modelFactory.Methods);
+            if (modelFactory.LastContractView?.Methods is { Count: > 0 } lastContractMethods)
+            {
+                FixBackwardCompatOverloads(modelFactory.Methods, lastContractMethods);
+            }
         }
 
         /// <summary>
@@ -116,10 +121,13 @@ namespace Azure.Generator.Management.Visitors
         /// old signature.
         /// </summary>
         internal static void FixBackwardCompatOverloads(IReadOnlyList<MethodProvider> methods)
+            => FixBackwardCompatOverloads(methods, methods);
+
+        internal static void FixBackwardCompatOverloads(IReadOnlyList<MethodProvider> primaryMethodSource, IReadOnlyList<MethodProvider> methodsToFix)
         {
             // Build a lookup of primary methods by name
             var primaryMethods = new Dictionary<string, MethodProvider>();
-            foreach (var method in methods)
+            foreach (var method in primaryMethodSource)
             {
                 if (!IsBackwardCompatMethod(method))
                 {
@@ -132,7 +140,7 @@ namespace Azure.Generator.Management.Visitors
                 }
             }
 
-            foreach (var method in methods)
+            foreach (var method in methodsToFix)
             {
                 if (!IsBackwardCompatMethod(method) || method.BodyStatements is null)
                 {
@@ -199,8 +207,9 @@ namespace Azure.Generator.Management.Visitors
                         }
                     }
                     else if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } }
-                        && TryUpdateNewInstanceArguments(method, newInstanceExpression, out var updatedArguments))
+                        && TryUpdateNewInstanceArguments(method, newInstanceExpression, out var updatedArguments, out var matchedParameters))
                     {
+                        updatedBodyStatements.RemoveAll(s => IsNullCoalescingAssignmentToMatchedParameter(s, matchedParameters));
                         updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, updatedArguments)));
                         bodyUpdated = true;
                     }
@@ -227,9 +236,14 @@ namespace Azure.Generator.Management.Visitors
                 a.Type is { IsFrameworkType: true } && a.Type.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
         }
 
-        private static bool TryUpdateNewInstanceArguments(MethodProvider method, NewInstanceExpression newInstanceExpression, [NotNullWhen(true)] out IReadOnlyList<ValueExpression>? updatedArguments)
+        private static bool TryUpdateNewInstanceArguments(
+            MethodProvider method,
+            NewInstanceExpression newInstanceExpression,
+            [NotNullWhen(true)] out IReadOnlyList<ValueExpression>? updatedArguments,
+            [NotNullWhen(true)] out IReadOnlyList<ParameterProvider>? matchedParameters)
         {
             updatedArguments = null;
+            matchedParameters = null;
             if (newInstanceExpression.Type is null || !TryGetModelProvider(newInstanceExpression.Type, out var modelProvider))
             {
                 return false;
@@ -242,6 +256,7 @@ namespace Azure.Generator.Management.Visitors
             }
 
             List<ValueExpression>? arguments = null;
+            List<ParameterProvider>? matched = null;
             for (int i = 0; i < newInstanceExpression.Parameters.Count; i++)
             {
                 var currentArgument = newInstanceExpression.Parameters[i];
@@ -250,18 +265,34 @@ namespace Azure.Generator.Management.Visitors
                     continue;
                 }
 
-                if (TryBuildCompatibilityArgument(method, constructorParameters[i], new HashSet<CSharpType>(new CSharpTypeNameComparer()), out var replacement))
+                if (TryBuildCompatibilityArgument(method, constructorParameters[i], new HashSet<CSharpType>(new CSharpTypeNameComparer()), wrapWithNullCheck: true, out var replacement))
                 {
                     arguments ??= [.. newInstanceExpression.Parameters];
+                    matched ??= [];
                     arguments[i] = replacement.Argument;
+                    matched.AddRange(replacement.MatchedParameters);
                 }
             }
 
             updatedArguments = arguments;
+            matchedParameters = matched;
             return arguments is not null;
         }
 
-        private static bool TryBuildCompatibilityArgument(MethodProvider method, ParameterProvider constructorParameter, HashSet<CSharpType> visitedTypes, [NotNullWhen(true)] out CompatibilityArgument? argument)
+        private static bool IsNullCoalescingAssignmentToMatchedParameter(
+            MethodBodyStatement statement,
+            IReadOnlyList<ParameterProvider> parameters)
+        {
+            var text = statement.ToDisplayString();
+            return parameters.Any(parameter => text.StartsWith($"{parameter.Name} ??=", StringComparison.Ordinal));
+        }
+
+        private static bool TryBuildCompatibilityArgument(
+            MethodProvider method,
+            ParameterProvider constructorParameter,
+            HashSet<CSharpType> visitedTypes,
+            bool wrapWithNullCheck,
+            [NotNullWhen(true)] out CompatibilityArgument? argument)
         {
             if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, out var directParameter))
             {
@@ -306,7 +337,7 @@ namespace Azure.Generator.Management.Visitors
             }
 
             var newInstance = New.Instance(constructorParameter.Type, nestedArguments);
-            var condition = BuildAllNullCondition(matchedParameters);
+            var condition = wrapWithNullCheck ? BuildAllNullCondition(matchedParameters) : null;
             var expression = condition is null
                 ? newInstance
                 : new TernaryConditionalExpression(condition, Default, newInstance);
@@ -333,7 +364,7 @@ namespace Azure.Generator.Management.Visitors
                 return true;
             }
 
-            return TryBuildCompatibilityArgument(method, nestedParameter, visitedTypes, out argument);
+            return TryBuildCompatibilityArgument(method, nestedParameter, visitedTypes, wrapWithNullCheck: false, out argument);
         }
 
         private static bool TryGetMethodParameter(MethodProvider method, string name, CSharpType expectedType, [NotNullWhen(true)] out ParameterProvider? parameter)
@@ -367,7 +398,7 @@ namespace Azure.Generator.Management.Visitors
             ScopedApi<bool>? result = null;
             foreach (var parameter in parameters)
             {
-                if (!parameter.Type.IsNullable)
+                if (parameter.Type.IsValueType && !parameter.Type.IsNullable)
                 {
                     continue;
                 }
