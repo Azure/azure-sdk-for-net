@@ -215,6 +215,9 @@ try {
         }
         $tspOutput = Invoke-Expression "npx tsp compile $mainTsp $tspOptions 2>&1"
         $tspExitCode = $LASTEXITCODE
+        # Always dump full tsp output for debugging (overwrites each run)
+        $tspLogPath = Join-Path $ProjectPath 'tsp-compile.log'
+        $tspOutput | Out-File -FilePath $tspLogPath -Encoding utf8
         Pop-Location
 
         if ($tspExitCode -ne 0) {

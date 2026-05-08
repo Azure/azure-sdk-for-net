@@ -25,6 +25,21 @@
     this local directory instead of fetching from GitHub. Useful for fast iteration
     when making spec changes alongside generator changes.
 
+.PARAMETER UseLocalMgmtGenerator
+    When specified, builds the local mgmt generator (eng/packages/http-client-csharp-mgmt)
+    and overwrites Azure.Generator.Management.{dll,pdb,xml} in the provisioning
+    generator's dist/generator output with the freshly built copies. Use this to
+    test mgmt-generator changes (e.g., FlattenPropertyVisitor fixes) end-to-end
+    without publishing a new Azure.Generator.Management NuGet package.
+
+.PARAMETER UseLocalTypeSpec
+    Path to a local microsoft/typespec repo checkout. When specified, overlays the
+    locally-built Microsoft.TypeSpec.Generator.* dlls from
+    <path>/packages/http-client-csharp/dist/generator into the provisioning generator's
+    dist/generator output. Use this to test typespec-base-generator changes end-to-end.
+    The local typespec repo must already be built (e.g., via `dotnet build` in
+    packages/http-client-csharp/generator).
+
 .PARAMETER SaveInputs
     When specified, passes save-inputs=true to the emitter to preserve tspCodeModel.json for debugging.
 
@@ -53,6 +68,8 @@ param(
     [ValidateRange(1, [int]::MaxValue)]
     [int]$Parallel = 4,
     [string]$LocalSpecRepoPath,
+    [switch]$UseLocalMgmtGenerator,
+    [string]$UseLocalTypeSpec,
     [switch]$SaveInputs,
     [switch]$DebugGenerator
 )
@@ -83,6 +100,7 @@ if ($LocalSpecRepoPath) {
 $provisioningPackageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
 $sdkRepoRoot = Resolve-Path (Join-Path $provisioningPackageRoot '..' '..' '..')
 $sdkRoot = Join-Path $sdkRepoRoot "sdk"
+$mgmtPackageRoot = Resolve-Path (Join-Path $provisioningPackageRoot '..' 'http-client-csharp-mgmt')
 
 # Validate paths
 if (-not (Test-Path $sdkRoot)) {
@@ -92,6 +110,31 @@ if (-not (Test-Path $sdkRoot)) {
 Write-Host "=== Local Provisioning SDK Regeneration ==="
 Write-Host "Provisioning Generator: $provisioningPackageRoot"
 Write-Host "SDK Root: $sdkRepoRoot"
+if ($UseLocalMgmtGenerator) {
+    Write-Host "Mgmt Generator (override): $mgmtPackageRoot"
+}
+
+# Step 0 (optional): Build local mgmt generator
+if ($UseLocalMgmtGenerator) {
+    Write-Host "`n[0/3] Building local Mgmt generator (override)..."
+    if (-not (Test-Path $mgmtPackageRoot)) {
+        throw "Mgmt generator package root not found: $mgmtPackageRoot"
+    }
+    Push-Location $mgmtPackageRoot
+    try {
+        Write-Host "  dotnet build (Azure.Generator.Management)..."
+        $output = dotnet build ./generator/Azure.Generator.Management/src -c Debug --verbosity quiet 2>&1
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "  ERROR: mgmt dotnet build failed:" -ForegroundColor Red
+            $output | ForEach-Object { Write-Host "    $_" }
+            throw "mgmt dotnet build failed with exit code $LASTEXITCODE"
+        }
+        Write-Host "  Mgmt build complete."
+    }
+    finally {
+        Pop-Location
+    }
+}
 
 # Step 1: Build generator
 Write-Host "`n[1/3] Building Provisioning generator..."
@@ -124,6 +167,61 @@ try {
 }
 finally {
     Pop-Location
+}
+
+# Step 1b (optional): overlay locally-built mgmt generator dll into provisioning dist/
+if ($UseLocalMgmtGenerator) {
+    Write-Host "`n  Overlaying local Azure.Generator.Management binaries..."
+    $mgmtDistDir = Join-Path $mgmtPackageRoot 'dist' 'generator'
+    $provDistDir = Join-Path $provisioningPackageRoot 'dist' 'generator'
+    if (-not (Test-Path $mgmtDistDir)) {
+        throw "Mgmt dist/generator not found after build: $mgmtDistDir"
+    }
+    if (-not (Test-Path $provDistDir)) {
+        throw "Provisioning dist/generator not found after build: $provDistDir"
+    }
+    # Overlay all files from mgmt dist EXCEPT provisioning-specific ones, so that
+    # transitive deps (Microsoft.TypeSpec.Generator.*, Microsoft.CodeAnalysis.*, Humanizer, etc.)
+    # match the version Azure.Generator.Management.dll was just built against. Otherwise MEF
+    # DirectoryCatalog scanning fails with ReflectionTypeLoadException due to missing methods.
+    $excludePatterns = @(
+        'Azure.Generator.Provisioning.*',
+        'Azure.Provisioning.dll'
+    )
+    $copied = 0
+    foreach ($file in Get-ChildItem -Path $mgmtDistDir -File) {
+        $skip = $false
+        foreach ($pat in $excludePatterns) { if ($file.Name -like $pat) { $skip = $true; break } }
+        if ($skip) { continue }
+        Copy-Item -Path $file.FullName -Destination $provDistDir -Force
+        $copied++
+    }
+    Write-Host "    Overlaid $copied files from mgmt dist."
+    if ($copied -eq 0) {
+        throw "No files overlaid from $mgmtDistDir"
+    }
+}
+
+# Step 1c (optional): overlay locally-built TypeSpec generator dlls
+if ($UseLocalTypeSpec) {
+    Write-Host "`n  Overlaying local Microsoft.TypeSpec.Generator binaries..."
+    if (-not (Test-Path $UseLocalTypeSpec)) {
+        throw "UseLocalTypeSpec path not found: $UseLocalTypeSpec"
+    }
+    $tspDistDir = Join-Path (Resolve-Path $UseLocalTypeSpec).Path 'packages' 'http-client-csharp' 'dist' 'generator'
+    if (-not (Test-Path $tspDistDir)) {
+        throw "Local typespec dist/generator not found: $tspDistDir. Build typespec first (dotnet build packages/http-client-csharp/generator)."
+    }
+    $provDistDir = Join-Path $provisioningPackageRoot 'dist' 'generator'
+    $tspCopied = 0
+    foreach ($file in Get-ChildItem -Path $tspDistDir -File -Filter 'Microsoft.TypeSpec.Generator*') {
+        Copy-Item -Path $file.FullName -Destination $provDistDir -Force
+        $tspCopied++
+    }
+    Write-Host "    Overlaid $tspCopied Microsoft.TypeSpec.Generator.* files from $tspDistDir."
+    if ($tspCopied -eq 0) {
+        throw "No Microsoft.TypeSpec.Generator.* files overlaid from $tspDistDir"
+    }
 }
 
 # Step 2: Find provisioning SDK folders
