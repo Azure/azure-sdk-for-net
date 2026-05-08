@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Redis
     [ModelReaderWriterBuildable(typeof(ExportRdbContent))]
     [ModelReaderWriterBuildable(typeof(ImportRdbContent))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(RedisAccessKeys))]
