@@ -3587,6 +3587,45 @@ namespace Azure.Search.Documents.Models
                 title);
         }
 
+        /// <summary> Contains debugging information that can be used to further explore your search results. </summary>
+        /// <returns> A new <see cref="Models.DebugInfo"/> instance for mocking. </returns>
+        public static DebugInfo DebugInfo()
+        {
+            return new DebugInfo(additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request body for resync indexer operation. </summary>
+        /// <param name="options"> Re-sync options that have been pre-defined from data source. </param>
+        /// <returns> A new <see cref="Indexes.Models.IndexerResyncBody"/> instance for mocking. </returns>
+        public static IndexerResyncBody IndexerResyncBody(IEnumerable<IndexerResyncOption> options = default)
+        {
+            options ??= new ChangeTrackingList<IndexerResyncOption>();
+
+            return new IndexerResyncBody(options.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type of the keysOrIds. </summary>
+        /// <param name="documentKeys"> document keys to be reset. </param>
+        /// <param name="dataSourceDocumentIds"> datasource document identifiers to be reset. </param>
+        /// <returns> A new <see cref="Indexes.Models.ResetDocumentOptions"/> instance for mocking. </returns>
+        public static ResetDocumentOptions ResetDocumentOptions(IEnumerable<string> documentKeys = default, IEnumerable<string> dataSourceDocumentIds = default)
+        {
+            documentKeys ??= new ChangeTrackingList<string>();
+            dataSourceDocumentIds ??= new ChangeTrackingList<string>();
+
+            return new ResetDocumentOptions(documentKeys.ToList(), dataSourceDocumentIds.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type of the skill names. </summary>
+        /// <param name="skillNameList"> the names of skills to be reset. </param>
+        /// <returns> A new <see cref="Indexes.Models.ResetSkillsOptions"/> instance for mocking. </returns>
+        public static ResetSkillsOptions ResetSkillsOptions(IEnumerable<string> skillNameList = default)
+        {
+            skillNameList ??= new ChangeTrackingList<string>();
+
+            return new ResetSkillsOptions(skillNameList.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="SearchModelFactory.SearchIndexer(string,string,string,string,string,Indexes.Models.IndexingSchedule,Indexes.Models.IndexingParameters,IList{Indexes.Models.FieldMapping},IList{Indexes.Models.FieldMapping},bool?,string,SearchResourceEncryptionKey,IDictionary{string,BinaryData})"/>. </summary>
         /// <param name="name"> The name of the indexer. </param>
         /// <param name="description"> The description of the indexer. </param>
