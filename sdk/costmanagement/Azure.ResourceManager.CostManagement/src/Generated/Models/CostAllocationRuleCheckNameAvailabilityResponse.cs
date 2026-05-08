@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="reason"> The reason this name is not available. </param>
         /// <param name="message"> Error message if the name is not available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CostAllocationRuleCheckNameAvailabilityResponse(bool? nameAvailable, Reason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CostAllocationRuleCheckNameAvailabilityResponse(bool? nameAvailable, CostAllocationRuleCheckNameAvailabilityReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NameAvailable = nameAvailable;
             Reason = reason;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public bool? NameAvailable { get; }
 
         /// <summary> The reason this name is not available. </summary>
-        public Reason? Reason { get; }
+        public CostAllocationRuleCheckNameAvailabilityReason? Reason { get; }
 
         /// <summary> Error message if the name is not available. </summary>
         public string Message { get; }

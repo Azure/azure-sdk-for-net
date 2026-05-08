@@ -1046,7 +1046,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static Azure.ResourceManager.CostManagement.Models.BudgetNotification BudgetNotification(bool enabled = false, Azure.ResourceManager.CostManagement.Models.BudgetNotificationOperatorType @operator = default(Azure.ResourceManager.CostManagement.Models.BudgetNotificationOperatorType), float threshold = 0f, Azure.ResourceManager.CostManagement.Models.Frequency? frequency = default(Azure.ResourceManager.CostManagement.Models.Frequency?), System.Collections.Generic.IEnumerable<string> contactEmails = null, System.Collections.Generic.IEnumerable<string> contactRoles = null, System.Collections.Generic.IEnumerable<string> contactGroups = null, Azure.ResourceManager.CostManagement.Models.ThresholdType? thresholdType = default(Azure.ResourceManager.CostManagement.Models.ThresholdType?), Azure.ResourceManager.CostManagement.Models.CultureCode? locale = default(Azure.ResourceManager.CostManagement.Models.CultureCode?)) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.CommonExportProperties CommonExportProperties(Azure.ResourceManager.CostManagement.Models.ExportFormatType? format = default(Azure.ResourceManager.CostManagement.Models.ExportFormatType?), Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination deliveryInfoDestination = null, Azure.ResourceManager.CostManagement.Models.ExportDefinition definition = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.Models.ExportRun> runHistoryValue = null, bool? partitionData = default(bool?), Azure.ResourceManager.CostManagement.Models.DataOverwriteBehaviorType? dataOverwriteBehavior = default(Azure.ResourceManager.CostManagement.Models.DataOverwriteBehaviorType?), Azure.ResourceManager.CostManagement.Models.CompressionModeType? compressionMode = default(Azure.ResourceManager.CostManagement.Models.CompressionModeType?), string exportDescription = null, System.DateTimeOffset? nextRunTimeEstimate = default(System.DateTimeOffset?), Azure.ResourceManager.CostManagement.Models.ExportSuspensionContext systemSuspensionContext = null) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.CommonExportProperties CommonExportProperties(Azure.ResourceManager.CostManagement.Models.ExportFormatType? format, Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination deliveryInfoDestination, Azure.ResourceManager.CostManagement.Models.ExportDefinition definition, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.Models.ExportRun> runHistoryValue, bool? partitionData, System.DateTimeOffset? nextRunTimeEstimate) { throw null; }
-        public static Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityResponse CostAllocationRuleCheckNameAvailabilityResponse(bool? nameAvailable = default(bool?), Azure.ResourceManager.CostManagement.Models.Reason? reason = default(Azure.ResourceManager.CostManagement.Models.Reason?), string message = null) { throw null; }
+        public static Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityResponse CostAllocationRuleCheckNameAvailabilityResponse(bool? nameAvailable = default(bool?), Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityReason? reason = default(Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityReason?), string message = null) { throw null; }
         public static Azure.ResourceManager.CostManagement.CostAllocationRuleData CostAllocationRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CostManagement.Models.CostAllocationRuleProperties properties = null) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.CostAllocationRuleDetails CostAllocationRuleDetails(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.Models.SourceCostAllocationEntity> sourceResources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.Models.TargetCostAllocationEntity> targetResources = null) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.CostAllocationRuleProperties CostAllocationRuleProperties(string description = null, Azure.ResourceManager.CostManagement.Models.CostAllocationRuleDetails details = null, Azure.ResourceManager.CostManagement.Models.RuleStatus status = default(Azure.ResourceManager.CostManagement.Models.RuleStatus), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?)) { throw null; }
@@ -1562,6 +1562,24 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.CostAllocationResourceType left, Azure.ResourceManager.CostManagement.Models.CostAllocationResourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CostAllocationRuleCheckNameAvailabilityReason : System.IEquatable<Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CostAllocationRuleCheckNameAvailabilityReason(string value) { throw null; }
+        public static Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityReason AlreadyExists { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityReason Invalid { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityReason Valid { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityReason other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityReason left, Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityReason (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityReason? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityReason left, Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityReason right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class CostAllocationRuleCheckNameAvailabilityRequest : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityRequest>
     {
         public CostAllocationRuleCheckNameAvailabilityRequest() { }
@@ -1582,7 +1600,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         internal CostAllocationRuleCheckNameAvailabilityResponse() { }
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
-        public Azure.ResourceManager.CostManagement.Models.Reason? Reason { get { throw null; } }
+        public Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityReason? Reason { get { throw null; } }
         protected virtual Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.CostManagement.Models.CostAllocationRuleCheckNameAvailabilityResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3102,24 +3120,6 @@ namespace Azure.ResourceManager.CostManagement.Models
         Azure.ResourceManager.CostManagement.Models.QueryTimePeriod System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryTimePeriod>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryTimePeriod>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryTimePeriod>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Reason : System.IEquatable<Azure.ResourceManager.CostManagement.Models.Reason>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Reason(string value) { throw null; }
-        public static Azure.ResourceManager.CostManagement.Models.Reason AlreadyExists { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.Reason Invalid { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.Reason Valid { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CostManagement.Models.Reason other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.Reason left, Azure.ResourceManager.CostManagement.Models.Reason right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CostManagement.Models.Reason (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.CostManagement.Models.Reason? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.Reason left, Azure.ResourceManager.CostManagement.Models.Reason right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class RecommendationUsageDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails>
     {

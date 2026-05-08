@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="reason"> The reason this name is not available. </param>
         /// <param name="message"> Error message if the name is not available. </param>
         /// <returns> A new <see cref="Models.CostAllocationRuleCheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CostAllocationRuleCheckNameAvailabilityResponse CostAllocationRuleCheckNameAvailabilityResponse(bool? nameAvailable = default, Reason? reason = default, string message = default)
+        public static CostAllocationRuleCheckNameAvailabilityResponse CostAllocationRuleCheckNameAvailabilityResponse(bool? nameAvailable = default, CostAllocationRuleCheckNameAvailabilityReason? reason = default, string message = default)
         {
             return new CostAllocationRuleCheckNameAvailabilityResponse(nameAvailable, reason, message, additionalBinaryDataProperties: null);
         }

@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 return null;
             }
             bool? nameAvailable = default;
-            Reason? reason = default;
+            CostAllocationRuleCheckNameAvailabilityReason? reason = default;
             string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    reason = new Reason(prop.Value.GetString());
+                    reason = new CostAllocationRuleCheckNameAvailabilityReason(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("message"u8))
