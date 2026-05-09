@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <param name="matchExpressions"> MatchExpressions is a list of resource selector requirements. Valid operators include In, NotIn, Exists, and DoesNotExist. The values set must be non-empty in the case of In and NotIn. The values set must be empty in the case of Exists and DoesNotExist. </param>
         /// <param name="matchLabels"> MatchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is 'key', the operator is 'In', and the values array contains only 'value'. </param>
         /// <returns> A new <see cref="Models.ResourceSyncRulePropertiesSelector"/> instance for mocking. </returns>
-        public static ResourceSyncRulePropertiesSelector ResourceSyncRulePropertiesSelector(IEnumerable<MatchExpressionsProperties> matchExpressions = default, IDictionary<string, string> matchLabels = default)
+        public static ResourceSyncRulePropertiesSelector ResourceSyncRulePropertiesSelector(IEnumerable<ResourceSyncRuleMatchExpression> matchExpressions = default, IDictionary<string, string> matchLabels = default)
         {
-            matchExpressions ??= new ChangeTrackingList<MatchExpressionsProperties>();
+            matchExpressions ??= new ChangeTrackingList<ResourceSyncRuleMatchExpression>();
             matchLabels ??= new ChangeTrackingDictionary<string, string>();
 
             return new ResourceSyncRulePropertiesSelector(matchExpressions.ToList(), matchLabels, additionalBinaryDataProperties: null);
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <param name="key"> Key is the label key that the selector applies to. </param>
         /// <param name="operator"> The Operator field represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist. </param>
         /// <param name="values"> The label value. </param>
-        /// <returns> A new <see cref="Models.MatchExpressionsProperties"/> instance for mocking. </returns>
-        public static MatchExpressionsProperties MatchExpressionsProperties(string key = default, string @operator = default, IEnumerable<string> values = default)
+        /// <returns> A new <see cref="Models.ResourceSyncRuleMatchExpression"/> instance for mocking. </returns>
+        public static ResourceSyncRuleMatchExpression ResourceSyncRuleMatchExpression(string key = default, string @operator = default, IEnumerable<string> values = default)
         {
             values ??= new ChangeTrackingList<string>();
 
-            return new MatchExpressionsProperties(key, @operator, values.ToList(), additionalBinaryDataProperties: null);
+            return new ResourceSyncRuleMatchExpression(key, @operator, values.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="priority"> Priority represents a priority of the Resource Sync Rule. </param>

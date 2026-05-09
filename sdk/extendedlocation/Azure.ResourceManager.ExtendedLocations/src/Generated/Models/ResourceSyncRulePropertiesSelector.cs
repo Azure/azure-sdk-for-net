@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <summary> Initializes a new instance of <see cref="ResourceSyncRulePropertiesSelector"/>. </summary>
         public ResourceSyncRulePropertiesSelector()
         {
-            MatchExpressions = new ChangeTrackingList<MatchExpressionsProperties>();
+            MatchExpressions = new ChangeTrackingList<ResourceSyncRuleMatchExpression>();
             MatchLabels = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <param name="matchExpressions"> MatchExpressions is a list of resource selector requirements. Valid operators include In, NotIn, Exists, and DoesNotExist. The values set must be non-empty in the case of In and NotIn. The values set must be empty in the case of Exists and DoesNotExist. </param>
         /// <param name="matchLabels"> MatchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is 'key', the operator is 'In', and the values array contains only 'value'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSyncRulePropertiesSelector(IList<MatchExpressionsProperties> matchExpressions, IDictionary<string, string> matchLabels, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceSyncRulePropertiesSelector(IList<ResourceSyncRuleMatchExpression> matchExpressions, IDictionary<string, string> matchLabels, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MatchExpressions = matchExpressions;
             MatchLabels = matchLabels;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         }
 
         /// <summary> MatchExpressions is a list of resource selector requirements. Valid operators include In, NotIn, Exists, and DoesNotExist. The values set must be non-empty in the case of In and NotIn. The values set must be empty in the case of Exists and DoesNotExist. </summary>
-        public IList<MatchExpressionsProperties> MatchExpressions { get; }
+        public IList<ResourceSyncRuleMatchExpression> MatchExpressions { get; }
 
         /// <summary> MatchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is 'key', the operator is 'In', and the values array contains only 'value'. </summary>
         public IDictionary<string, string> MatchLabels { get; }

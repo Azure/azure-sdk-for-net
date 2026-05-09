@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             {
                 writer.WritePropertyName("matchExpressions"u8);
                 writer.WriteStartArray();
-                foreach (MatchExpressionsProperties item in MatchExpressions)
+                foreach (ResourceSyncRuleMatchExpression item in MatchExpressions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             {
                 return null;
             }
-            IList<MatchExpressionsProperties> matchExpressions = default;
+            IList<ResourceSyncRuleMatchExpression> matchExpressions = default;
             IDictionary<string, string> matchLabels = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     {
                         continue;
                     }
-                    List<MatchExpressionsProperties> array = new List<MatchExpressionsProperties>();
+                    List<ResourceSyncRuleMatchExpression> array = new List<ResourceSyncRuleMatchExpression>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MatchExpressionsProperties.DeserializeMatchExpressionsProperties(item, options));
+                        array.Add(ResourceSyncRuleMatchExpression.DeserializeResourceSyncRuleMatchExpression(item, options));
                     }
                     matchExpressions = array;
                     continue;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceSyncRulePropertiesSelector(matchExpressions ?? new ChangeTrackingList<MatchExpressionsProperties>(), matchLabels ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new ResourceSyncRulePropertiesSelector(matchExpressions ?? new ChangeTrackingList<ResourceSyncRuleMatchExpression>(), matchLabels ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

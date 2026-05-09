@@ -14,51 +14,51 @@ using Azure.ResourceManager.ExtendedLocations;
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
     /// <summary> Resource Sync Rules matchExpression property definition. </summary>
-    public partial class MatchExpressionsProperties : IJsonModel<MatchExpressionsProperties>
+    public partial class ResourceSyncRuleMatchExpression : IJsonModel<ResourceSyncRuleMatchExpression>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MatchExpressionsProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceSyncRuleMatchExpression PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MatchExpressionsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceSyncRuleMatchExpression>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMatchExpressionsProperties(document.RootElement, options);
+                        return DeserializeResourceSyncRuleMatchExpression(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MatchExpressionsProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceSyncRuleMatchExpression)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MatchExpressionsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceSyncRuleMatchExpression>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerExtendedLocationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MatchExpressionsProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceSyncRuleMatchExpression)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MatchExpressionsProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ResourceSyncRuleMatchExpression>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MatchExpressionsProperties IPersistableModel<MatchExpressionsProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ResourceSyncRuleMatchExpression IPersistableModel<ResourceSyncRuleMatchExpression>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MatchExpressionsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResourceSyncRuleMatchExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MatchExpressionsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ResourceSyncRuleMatchExpression>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MatchExpressionsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceSyncRuleMatchExpression>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MatchExpressionsProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceSyncRuleMatchExpression)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Key))
             {
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MatchExpressionsProperties IJsonModel<MatchExpressionsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ResourceSyncRuleMatchExpression IJsonModel<ResourceSyncRuleMatchExpression>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MatchExpressionsProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceSyncRuleMatchExpression JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MatchExpressionsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceSyncRuleMatchExpression>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MatchExpressionsProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceSyncRuleMatchExpression)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMatchExpressionsProperties(document.RootElement, options);
+            return DeserializeResourceSyncRuleMatchExpression(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MatchExpressionsProperties DeserializeMatchExpressionsProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ResourceSyncRuleMatchExpression DeserializeResourceSyncRuleMatchExpression(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MatchExpressionsProperties(key, @operator, values ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new ResourceSyncRuleMatchExpression(key, @operator, values ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

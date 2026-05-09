@@ -12,23 +12,23 @@ using Azure.ResourceManager.ExtendedLocations;
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
     /// <summary> Resource Sync Rules matchExpression property definition. </summary>
-    public partial class MatchExpressionsProperties
+    public partial class ResourceSyncRuleMatchExpression
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MatchExpressionsProperties"/>. </summary>
-        public MatchExpressionsProperties()
+        /// <summary> Initializes a new instance of <see cref="ResourceSyncRuleMatchExpression"/>. </summary>
+        public ResourceSyncRuleMatchExpression()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MatchExpressionsProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSyncRuleMatchExpression"/>. </summary>
         /// <param name="key"> Key is the label key that the selector applies to. </param>
         /// <param name="operator"> The Operator field represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist. </param>
         /// <param name="values"> The label value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MatchExpressionsProperties(string key, string @operator, IList<string> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceSyncRuleMatchExpression(string key, string @operator, IList<string> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Operator = @operator;
