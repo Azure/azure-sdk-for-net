@@ -538,6 +538,166 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(rendered, Does.Not.Contain("return new global::Samples.Models.TestResource(\r\n                default"));
         }
 
+        [Test]
+        public void TestBackwardCompatDirectListArgumentIsNullCoalesced()
+        {
+            var requiredFeaturesProperty = InputFactory.Property("requiredFeatures", InputFactory.Array(InputPrimitiveType.String), serializedName: "requiredFeatures");
+            var parentModel = InputFactory.Model(
+                "TestResourceWithList",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [requiredFeaturesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var requiredFeaturesConstructorParam = parentProvider.FullConstructor.Signature.Parameters.Single(p => p.Name == "requiredFeatures");
+            var oldRequiredFeaturesParam = new ParameterProvider("requiredFeatures", $"", requiredFeaturesConstructorParam.Type.InputType);
+            var oldSignature = new MethodSignature(
+                "TestResourceWithList",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldRequiredFeaturesParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+
+            var constructorParameters = parentProvider.FullConstructor.Signature.Parameters;
+            var requiredFeaturesIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "requiredFeatures").i;
+            var method = new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorParameters.Select(p => p.DefaultValue ?? Default).ToArray())), modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+
+            var updatedMethod = modelFactory.Methods.Single();
+            var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
+            var keywordExpression = statement!.Expression as KeywordExpression;
+            var newInstance = keywordExpression!.Expression as NewInstanceExpression;
+            var requiredFeaturesArgument = newInstance!.Parameters[requiredFeaturesIndex].ToDisplayString();
+            Assert.That(requiredFeaturesArgument, Does.Contain("requiredFeatures ??"));
+            Assert.That(requiredFeaturesArgument, Does.Contain("ChangeTrackingList<string>"));
+            Assert.That(requiredFeaturesArgument, Does.Contain("ToList()"));
+        }
+
+        [Test]
+        public void TestBackwardCompatNestedArgumentUsesContextualNameBeforeResourceName()
+        {
+            var stepNameProperty = InputFactory.Property("name", InputPrimitiveType.String, serializedName: "name");
+            var stepDescriptionProperty = InputFactory.Property("description", InputPrimitiveType.String, serializedName: "description");
+            var stepModel = InputFactory.Model(
+                "TestStep",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [stepNameProperty, stepDescriptionProperty]);
+            var progressProperty = InputFactory.Property("progress", stepModel, isRequired: false, serializedName: "progress");
+            var propertiesModel = InputFactory.Model(
+                "TestUpdateRunProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [progressProperty]);
+            var resourceNameProperty = InputFactory.Property("name", InputPrimitiveType.String, serializedName: "name");
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            var parentModel = InputFactory.Model(
+                "TestUpdateRunData",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [resourceNameProperty, propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel, stepModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(stepModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var oldResourceNameParam = new ParameterProvider("name", $"", typeof(string));
+            var oldStepNameParam = new ParameterProvider("namePropertiesProgressName", $"", typeof(string));
+            var oldDescriptionParam = new ParameterProvider("description", $"", typeof(string));
+            var oldSignature = new MethodSignature(
+                "TestUpdateRunData",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldResourceNameParam, oldStepNameParam, oldDescriptionParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+
+            var constructorParameters = parentProvider.FullConstructor.Signature.Parameters;
+            var propertiesIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "properties").i;
+            var constructorArguments = constructorParameters
+                .Select(p => p.Name == "properties" ? Default : p.DefaultValue ?? Default)
+                .ToArray();
+            var method = new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+
+            var updatedMethod = modelFactory.Methods.Single();
+            var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
+            var keywordExpression = statement!.Expression as KeywordExpression;
+            var newInstance = keywordExpression!.Expression as NewInstanceExpression;
+            var propertiesArgument = newInstance!.Parameters[propertiesIndex].ToDisplayString();
+            Assert.That(propertiesArgument, Does.Contain("namePropertiesProgressName"));
+            Assert.That(propertiesArgument, Does.Contain("description"));
+            Assert.That(propertiesArgument, Does.Not.Match(@"new\s+[\w\.:]*TestStep\s*\(\s*name\s*,"));
+        }
+
+        [Test]
+        public void TestBackwardCompatNestedArgumentDoesNotUseResourceIdForNestedId()
+        {
+            var profileIdProperty = InputFactory.Property("id", InputPrimitiveType.String, serializedName: "id");
+            var profileModel = InputFactory.Model(
+                "TestProfileReference",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [profileIdProperty]);
+            var provisioningStateProperty = InputFactory.Property("provisioningState", InputPrimitiveType.String, serializedName: "provisioningState");
+            var profileProperty = InputFactory.Property("containerGroupProfile", profileModel, isRequired: false, serializedName: "containerGroupProfile");
+            var propertiesModel = InputFactory.Model(
+                "TestContainerProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [provisioningStateProperty, profileProperty]);
+            var resourceIdProperty = InputFactory.Property("id", InputPrimitiveType.String, serializedName: "id");
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            var parentModel = InputFactory.Model(
+                "TestContainerGroupData",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [resourceIdProperty, propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel, profileModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(profileModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var oldResourceIdParam = new ParameterProvider("id", $"", typeof(string));
+            var oldProvisioningStateParam = new ParameterProvider("provisioningState", $"", typeof(string));
+            var oldSignature = new MethodSignature(
+                "TestContainerGroupData",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldResourceIdParam, oldProvisioningStateParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+
+            var constructorParameters = parentProvider.FullConstructor.Signature.Parameters;
+            var propertiesIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "properties").i;
+            var constructorArguments = constructorParameters
+                .Select(p => p.Name == "properties" ? Default : p.DefaultValue ?? Default)
+                .ToArray();
+            var method = new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+
+            var updatedMethod = modelFactory.Methods.Single();
+            var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
+            var keywordExpression = statement!.Expression as KeywordExpression;
+            var newInstance = keywordExpression!.Expression as NewInstanceExpression;
+            var propertiesArgument = newInstance!.Parameters[propertiesIndex].ToDisplayString();
+            Assert.That(propertiesArgument, Does.Contain("provisioningState"));
+            Assert.That(propertiesArgument, Does.Not.Match(@"new\s+[\w\.:]*TestProfileReference\s*\(\s*id\s*,"));
+        }
+
         private static void AssertArgIsParameter(ValueExpression arg, string expectedName, string context)
         {
             string? actualName = arg is VariableExpression v ? v.Declaration.RequestedName : null;
