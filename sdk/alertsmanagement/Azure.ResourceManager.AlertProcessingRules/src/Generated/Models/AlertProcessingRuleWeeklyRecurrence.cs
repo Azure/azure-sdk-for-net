@@ -13,30 +13,30 @@ using Azure.ResourceManager.AlertProcessingRules;
 namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
     /// <summary> Weekly recurrence object. </summary>
-    public partial class WeeklyRecurrence : Recurrence
+    public partial class AlertProcessingRuleWeeklyRecurrence : AlertProcessingRuleRecurrence
     {
-        /// <summary> Initializes a new instance of <see cref="WeeklyRecurrence"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleWeeklyRecurrence"/>. </summary>
         /// <param name="daysOfWeek"> Specifies the values for weekly recurrence pattern. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="daysOfWeek"/> is null. </exception>
-        public WeeklyRecurrence(IEnumerable<DaysOfWeek> daysOfWeek) : base(RecurrenceType.Weekly)
+        public AlertProcessingRuleWeeklyRecurrence(IEnumerable<AlertsManagementDayOfWeek> daysOfWeek) : base(RecurrenceType.Weekly)
         {
             Argument.AssertNotNull(daysOfWeek, nameof(daysOfWeek));
 
             DaysOfWeek = daysOfWeek.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WeeklyRecurrence"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleWeeklyRecurrence"/>. </summary>
         /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
         /// <param name="startTime"> Start time for recurrence. </param>
         /// <param name="endTime"> End time for recurrence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="daysOfWeek"> Specifies the values for weekly recurrence pattern. </param>
-        internal WeeklyRecurrence(RecurrenceType recurrenceType, string startTime, string endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<DaysOfWeek> daysOfWeek) : base(recurrenceType, startTime, endTime, additionalBinaryDataProperties)
+        internal AlertProcessingRuleWeeklyRecurrence(RecurrenceType recurrenceType, string startTime, string endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<AlertsManagementDayOfWeek> daysOfWeek) : base(recurrenceType, startTime, endTime, additionalBinaryDataProperties)
         {
             DaysOfWeek = daysOfWeek;
         }
 
         /// <summary> Specifies the values for weekly recurrence pattern. </summary>
-        public IList<DaysOfWeek> DaysOfWeek { get; }
+        public IList<AlertsManagementDayOfWeek> DaysOfWeek { get; }
     }
 }

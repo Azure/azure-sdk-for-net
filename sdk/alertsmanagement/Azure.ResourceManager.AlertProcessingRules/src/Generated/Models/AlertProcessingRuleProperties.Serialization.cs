@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
-                foreach (Condition item in Conditions)
+                foreach (AlertProcessingRuleCondition item in Conditions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             }
             writer.WritePropertyName("actions"u8);
             writer.WriteStartArray();
-            foreach (Action item in Actions)
+            foreach (AlertProcessingRuleAction item in Actions)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                 return null;
             }
             IList<string> scopes = default;
-            IList<Condition> conditions = default;
-            Schedule schedule = default;
-            IList<Action> actions = default;
+            IList<AlertProcessingRuleCondition> conditions = default;
+            AlertProcessingRuleSchedule schedule = default;
+            IList<AlertProcessingRuleAction> actions = default;
             string description = default;
             bool? enabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -197,10 +197,10 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                     {
                         continue;
                     }
-                    List<Condition> array = new List<Condition>();
+                    List<AlertProcessingRuleCondition> array = new List<AlertProcessingRuleCondition>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Condition.DeserializeCondition(item, options));
+                        array.Add(AlertProcessingRuleCondition.DeserializeAlertProcessingRuleCondition(item, options));
                     }
                     conditions = array;
                     continue;
@@ -211,15 +211,15 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                     {
                         continue;
                     }
-                    schedule = Schedule.DeserializeSchedule(prop.Value, options);
+                    schedule = AlertProcessingRuleSchedule.DeserializeAlertProcessingRuleSchedule(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("actions"u8))
                 {
-                    List<Action> array = new List<Action>();
+                    List<AlertProcessingRuleAction> array = new List<AlertProcessingRuleAction>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Action.DeserializeAction(item, options));
+                        array.Add(AlertProcessingRuleAction.DeserializeAlertProcessingRuleAction(item, options));
                     }
                     actions = array;
                     continue;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             }
             return new AlertProcessingRuleProperties(
                 scopes,
-                conditions ?? new ChangeTrackingList<Condition>(),
+                conditions ?? new ChangeTrackingList<AlertProcessingRuleCondition>(),
                 schedule,
                 actions,
                 description,

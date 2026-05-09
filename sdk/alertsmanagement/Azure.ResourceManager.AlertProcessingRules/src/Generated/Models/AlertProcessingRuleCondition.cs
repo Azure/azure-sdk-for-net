@@ -12,23 +12,23 @@ using Azure.ResourceManager.AlertProcessingRules;
 namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
     /// <summary> Condition to trigger an alert processing rule. </summary>
-    public partial class Condition
+    public partial class AlertProcessingRuleCondition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Condition"/>. </summary>
-        public Condition()
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleCondition"/>. </summary>
+        public AlertProcessingRuleCondition()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Condition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleCondition"/>. </summary>
         /// <param name="field"> Field for a given condition. </param>
         /// <param name="operator"> Operator for a given condition. </param>
         /// <param name="values"> List of values to match for a given condition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Condition(Field? @field, Operator? @operator, IList<string> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertProcessingRuleCondition(AlertProcessingRuleField? @field, AlertProcessingRuleOperator? @operator, IList<string> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Field = @field;
             Operator = @operator;
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         }
 
         /// <summary> Field for a given condition. </summary>
-        public Field? Field { get; set; }
+        public AlertProcessingRuleField? Field { get; set; }
 
         /// <summary> Operator for a given condition. </summary>
-        public Operator? Operator { get; set; }
+        public AlertProcessingRuleOperator? Operator { get; set; }
 
         /// <summary> List of values to match for a given condition. </summary>
         public IList<string> Values { get; }

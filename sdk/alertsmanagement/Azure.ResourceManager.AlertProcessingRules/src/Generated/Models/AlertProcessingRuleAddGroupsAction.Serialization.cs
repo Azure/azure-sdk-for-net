@@ -14,56 +14,56 @@ using Azure.ResourceManager.AlertProcessingRules;
 namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
     /// <summary> Add action groups to alert processing rule. </summary>
-    public partial class AddActionGroups : Action, IJsonModel<AddActionGroups>
+    public partial class AlertProcessingRuleAddGroupsAction : AlertProcessingRuleAction, IJsonModel<AlertProcessingRuleAddGroupsAction>
     {
-        /// <summary> Initializes a new instance of <see cref="AddActionGroups"/> for deserialization. </summary>
-        internal AddActionGroups()
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleAddGroupsAction"/> for deserialization. </summary>
+        internal AlertProcessingRuleAddGroupsAction()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Action PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AlertProcessingRuleAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AddActionGroups>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleAddGroupsAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAddActionGroups(document.RootElement, options);
+                        return DeserializeAlertProcessingRuleAddGroupsAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AddActionGroups)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleAddGroupsAction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AddActionGroups>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleAddGroupsAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAlertProcessingRulesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AddActionGroups)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleAddGroupsAction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AddActionGroups>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AlertProcessingRuleAddGroupsAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AddActionGroups IPersistableModel<AddActionGroups>.Create(BinaryData data, ModelReaderWriterOptions options) => (AddActionGroups)PersistableModelCreateCore(data, options);
+        AlertProcessingRuleAddGroupsAction IPersistableModel<AlertProcessingRuleAddGroupsAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (AlertProcessingRuleAddGroupsAction)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AddActionGroups>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AlertProcessingRuleAddGroupsAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AddActionGroups>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AlertProcessingRuleAddGroupsAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AddActionGroups>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleAddGroupsAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddActionGroups)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertProcessingRuleAddGroupsAction)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("actionGroupIds"u8);
@@ -96,24 +96,24 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AddActionGroups IJsonModel<AddActionGroups>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AddActionGroups)JsonModelCreateCore(ref reader, options);
+        AlertProcessingRuleAddGroupsAction IJsonModel<AlertProcessingRuleAddGroupsAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AlertProcessingRuleAddGroupsAction)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Action JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AlertProcessingRuleAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AddActionGroups>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleAddGroupsAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddActionGroups)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertProcessingRuleAddGroupsAction)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAddActionGroups(document.RootElement, options);
+            return DeserializeAlertProcessingRuleAddGroupsAction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AddActionGroups DeserializeAddActionGroups(JsonElement element, ModelReaderWriterOptions options)
+        internal static AlertProcessingRuleAddGroupsAction DeserializeAlertProcessingRuleAddGroupsAction(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AddActionGroups(actionType, additionalBinaryDataProperties, actionGroupIds);
+            return new AlertProcessingRuleAddGroupsAction(actionType, additionalBinaryDataProperties, actionGroupIds);
         }
     }
 }

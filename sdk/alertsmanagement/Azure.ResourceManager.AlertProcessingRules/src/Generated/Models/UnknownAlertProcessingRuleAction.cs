@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
-    internal partial class UnknownAction : Action
+    internal partial class UnknownAlertProcessingRuleAction : AlertProcessingRuleAction
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAlertProcessingRuleAction"/>. </summary>
         /// <param name="actionType"> Action that should be applied. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAction(ActionType actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(actionType != default ? actionType : "unknown", additionalBinaryDataProperties)
+        internal UnknownAlertProcessingRuleAction(ActionType actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(actionType != default ? actionType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

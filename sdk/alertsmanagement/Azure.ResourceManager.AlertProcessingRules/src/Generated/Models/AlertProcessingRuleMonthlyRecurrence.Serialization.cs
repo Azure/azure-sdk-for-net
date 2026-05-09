@@ -14,56 +14,56 @@ using Azure.ResourceManager.AlertProcessingRules;
 namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
     /// <summary> Monthly recurrence object. </summary>
-    public partial class MonthlyRecurrence : Recurrence, IJsonModel<MonthlyRecurrence>
+    public partial class AlertProcessingRuleMonthlyRecurrence : AlertProcessingRuleRecurrence, IJsonModel<AlertProcessingRuleMonthlyRecurrence>
     {
-        /// <summary> Initializes a new instance of <see cref="MonthlyRecurrence"/> for deserialization. </summary>
-        internal MonthlyRecurrence()
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleMonthlyRecurrence"/> for deserialization. </summary>
+        internal AlertProcessingRuleMonthlyRecurrence()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Recurrence PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AlertProcessingRuleRecurrence PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonthlyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleMonthlyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMonthlyRecurrence(document.RootElement, options);
+                        return DeserializeAlertProcessingRuleMonthlyRecurrence(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonthlyRecurrence)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleMonthlyRecurrence)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonthlyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleMonthlyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAlertProcessingRulesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MonthlyRecurrence)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleMonthlyRecurrence)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MonthlyRecurrence>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AlertProcessingRuleMonthlyRecurrence>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonthlyRecurrence IPersistableModel<MonthlyRecurrence>.Create(BinaryData data, ModelReaderWriterOptions options) => (MonthlyRecurrence)PersistableModelCreateCore(data, options);
+        AlertProcessingRuleMonthlyRecurrence IPersistableModel<AlertProcessingRuleMonthlyRecurrence>.Create(BinaryData data, ModelReaderWriterOptions options) => (AlertProcessingRuleMonthlyRecurrence)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MonthlyRecurrence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AlertProcessingRuleMonthlyRecurrence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MonthlyRecurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AlertProcessingRuleMonthlyRecurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonthlyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleMonthlyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonthlyRecurrence)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertProcessingRuleMonthlyRecurrence)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("daysOfMonth"u8);
@@ -91,24 +91,24 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonthlyRecurrence IJsonModel<MonthlyRecurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MonthlyRecurrence)JsonModelCreateCore(ref reader, options);
+        AlertProcessingRuleMonthlyRecurrence IJsonModel<AlertProcessingRuleMonthlyRecurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AlertProcessingRuleMonthlyRecurrence)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Recurrence JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AlertProcessingRuleRecurrence JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonthlyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleMonthlyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonthlyRecurrence)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertProcessingRuleMonthlyRecurrence)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMonthlyRecurrence(document.RootElement, options);
+            return DeserializeAlertProcessingRuleMonthlyRecurrence(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MonthlyRecurrence DeserializeMonthlyRecurrence(JsonElement element, ModelReaderWriterOptions options)
+        internal static AlertProcessingRuleMonthlyRecurrence DeserializeAlertProcessingRuleMonthlyRecurrence(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MonthlyRecurrence(recurrenceType, startTime, endTime, additionalBinaryDataProperties, daysOfMonth);
+            return new AlertProcessingRuleMonthlyRecurrence(recurrenceType, startTime, endTime, additionalBinaryDataProperties, daysOfMonth);
         }
     }
 }

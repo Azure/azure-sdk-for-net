@@ -10,14 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
-    internal partial class UnknownRecurrence : Recurrence
+    internal partial class UnknownAlertProcessingRuleRecurrence : AlertProcessingRuleRecurrence
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownRecurrence"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAlertProcessingRuleRecurrence"/>. </summary>
         /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
         /// <param name="startTime"> Start time for recurrence. </param>
         /// <param name="endTime"> End time for recurrence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRecurrence(RecurrenceType recurrenceType, string startTime, string endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(recurrenceType != default ? recurrenceType : "unknown", startTime, endTime, additionalBinaryDataProperties)
+        internal UnknownAlertProcessingRuleRecurrence(RecurrenceType recurrenceType, string startTime, string endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(recurrenceType != default ? recurrenceType : "unknown", startTime, endTime, additionalBinaryDataProperties)
         {
         }
     }

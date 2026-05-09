@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
     /// <summary> Daily recurrence object. </summary>
-    public partial class DailyRecurrence : Recurrence
+    public partial class DailyRecurrence : AlertProcessingRuleRecurrence
     {
         /// <summary> Initializes a new instance of <see cref="DailyRecurrence"/>. </summary>
         public DailyRecurrence() : base(RecurrenceType.Daily)

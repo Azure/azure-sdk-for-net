@@ -13,23 +13,23 @@ using Azure.ResourceManager.AlertProcessingRules;
 namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
     /// <summary> Add action groups to alert processing rule. </summary>
-    public partial class AddActionGroups : Action
+    public partial class AlertProcessingRuleAddGroupsAction : AlertProcessingRuleAction
     {
-        /// <summary> Initializes a new instance of <see cref="AddActionGroups"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleAddGroupsAction"/>. </summary>
         /// <param name="actionGroupIds"> List of action group Ids to add to alert processing rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupIds"/> is null. </exception>
-        public AddActionGroups(IEnumerable<string> actionGroupIds) : base(ActionType.AddActionGroups)
+        public AlertProcessingRuleAddGroupsAction(IEnumerable<string> actionGroupIds) : base(ActionType.AddActionGroups)
         {
             Argument.AssertNotNull(actionGroupIds, nameof(actionGroupIds));
 
             ActionGroupIds = actionGroupIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AddActionGroups"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleAddGroupsAction"/>. </summary>
         /// <param name="actionType"> Action that should be applied. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="actionGroupIds"> List of action group Ids to add to alert processing rule. </param>
-        internal AddActionGroups(ActionType actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> actionGroupIds) : base(actionType, additionalBinaryDataProperties)
+        internal AlertProcessingRuleAddGroupsAction(ActionType actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> actionGroupIds) : base(actionType, additionalBinaryDataProperties)
         {
             ActionGroupIds = actionGroupIds;
         }

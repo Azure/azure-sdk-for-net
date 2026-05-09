@@ -15,24 +15,24 @@ namespace Azure.ResourceManager.AlertProcessingRules
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(Action))]
-    [ModelReaderWriterBuildable(typeof(AddActionGroups))]
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleAction))]
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleAddGroupsAction))]
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleCondition))]
     [ModelReaderWriterBuildable(typeof(AlertProcessingRuleData))]
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleMonthlyRecurrence))]
     [ModelReaderWriterBuildable(typeof(AlertProcessingRulePatch))]
     [ModelReaderWriterBuildable(typeof(AlertProcessingRuleProperties))]
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleRecurrence))]
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleRemoveAllGroupsAction))]
     [ModelReaderWriterBuildable(typeof(AlertProcessingRuleResource))]
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleSchedule))]
     [ModelReaderWriterBuildable(typeof(AlertProcessingRulesList))]
-    [ModelReaderWriterBuildable(typeof(Condition))]
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleWeeklyRecurrence))]
     [ModelReaderWriterBuildable(typeof(DailyRecurrence))]
-    [ModelReaderWriterBuildable(typeof(MonthlyRecurrence))]
     [ModelReaderWriterBuildable(typeof(PatchProperties))]
-    [ModelReaderWriterBuildable(typeof(Recurrence))]
-    [ModelReaderWriterBuildable(typeof(RemoveAllActionGroups))]
-    [ModelReaderWriterBuildable(typeof(Schedule))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UnknownAction))]
-    [ModelReaderWriterBuildable(typeof(UnknownRecurrence))]
-    [ModelReaderWriterBuildable(typeof(WeeklyRecurrence))]
+    [ModelReaderWriterBuildable(typeof(UnknownAlertProcessingRuleAction))]
+    [ModelReaderWriterBuildable(typeof(UnknownAlertProcessingRuleRecurrence))]
     public partial class AzureResourceManagerAlertProcessingRulesContext : ModelReaderWriterContext
     {
     }

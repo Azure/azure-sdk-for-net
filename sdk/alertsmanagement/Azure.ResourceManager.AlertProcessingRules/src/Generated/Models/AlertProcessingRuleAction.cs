@@ -12,24 +12,24 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
     /// <summary>
     /// Action to be applied.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AddActionGroups"/> and <see cref="RemoveAllActionGroups"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AlertProcessingRuleAddGroupsAction"/> and <see cref="AlertProcessingRuleRemoveAllGroupsAction"/>.
     /// </summary>
-    public abstract partial class Action
+    public abstract partial class AlertProcessingRuleAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Action"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleAction"/>. </summary>
         /// <param name="actionType"> Action that should be applied. </param>
-        private protected Action(ActionType actionType)
+        private protected AlertProcessingRuleAction(ActionType actionType)
         {
             ActionType = actionType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Action"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleAction"/>. </summary>
         /// <param name="actionType"> Action that should be applied. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Action(ActionType actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertProcessingRuleAction(ActionType actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionType = actionType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <param name="scopes"> Scopes on which alert processing rule will apply. </param>
         /// <param name="actions"> Actions to be applied. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> or <paramref name="actions"/> is null. </exception>
-        public AlertProcessingRuleProperties(IEnumerable<string> scopes, IEnumerable<Action> actions)
+        public AlertProcessingRuleProperties(IEnumerable<string> scopes, IEnumerable<AlertProcessingRuleAction> actions)
         {
             Argument.AssertNotNull(scopes, nameof(scopes));
             Argument.AssertNotNull(actions, nameof(actions));
 
             Scopes = scopes.ToList();
-            Conditions = new ChangeTrackingList<Condition>();
+            Conditions = new ChangeTrackingList<AlertProcessingRuleCondition>();
             Actions = actions.ToList();
         }
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <param name="description"> Actions to be applied.Description of alert processing rule. </param>
         /// <param name="enabled"> Indicates if the given alert processing rule is enabled or disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertProcessingRuleProperties(IList<string> scopes, IList<Condition> conditions, Schedule schedule, IList<Action> actions, string description, bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertProcessingRuleProperties(IList<string> scopes, IList<AlertProcessingRuleCondition> conditions, AlertProcessingRuleSchedule schedule, IList<AlertProcessingRuleAction> actions, string description, bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scopes = scopes;
             Conditions = conditions;
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         public IList<string> Scopes { get; }
 
         /// <summary> Conditions on which alerts will be filtered. </summary>
-        public IList<Condition> Conditions { get; }
+        public IList<AlertProcessingRuleCondition> Conditions { get; }
 
         /// <summary> Scheduling for alert processing rule. </summary>
-        public Schedule Schedule { get; set; }
+        public AlertProcessingRuleSchedule Schedule { get; set; }
 
         /// <summary> Actions to be applied. </summary>
-        public IList<Action> Actions { get; }
+        public IList<AlertProcessingRuleAction> Actions { get; }
 
         /// <summary> Actions to be applied.Description of alert processing rule. </summary>
         public string Description { get; set; }

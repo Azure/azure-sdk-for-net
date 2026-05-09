@@ -95,32 +95,107 @@ namespace Azure.ResourceManager.AlertProcessingRules.Mocking
 }
 namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
-    public abstract partial class Action : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.Action>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.Action>
+    public abstract partial class AlertProcessingRuleAction : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction>
     {
-        internal Action() { }
-        protected virtual Azure.ResourceManager.AlertProcessingRules.Models.Action JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        internal AlertProcessingRuleAction() { }
+        protected virtual Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.AlertProcessingRules.Models.Action PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.AlertProcessingRules.Models.Action System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.Action>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.Action>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AlertProcessingRules.Models.Action System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.Action>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.Action>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.Action>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AddActionGroups : Azure.ResourceManager.AlertProcessingRules.Models.Action, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AddActionGroups>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AddActionGroups>
+    public partial class AlertProcessingRuleAddGroupsAction : Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAddGroupsAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAddGroupsAction>
     {
-        public AddActionGroups(System.Collections.Generic.IEnumerable<string> actionGroupIds) { }
+        public AlertProcessingRuleAddGroupsAction(System.Collections.Generic.IEnumerable<string> actionGroupIds) { }
         public System.Collections.Generic.IList<string> ActionGroupIds { get { throw null; } }
-        protected override Azure.ResourceManager.AlertProcessingRules.Models.Action JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.AlertProcessingRules.Models.Action PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.AlertProcessingRules.Models.AddActionGroups System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AddActionGroups>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AddActionGroups>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AlertProcessingRules.Models.AddActionGroups System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AddActionGroups>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AddActionGroups>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AddActionGroups>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAddGroupsAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAddGroupsAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAddGroupsAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAddGroupsAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAddGroupsAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAddGroupsAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAddGroupsAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AlertProcessingRuleCondition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition>
+    {
+        public AlertProcessingRuleCondition() { }
+        public Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField? Field { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator? Operator { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        protected virtual Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AlertProcessingRuleField : System.IEquatable<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AlertProcessingRuleField(string value) { throw null; }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField AlertContext { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField AlertRuleId { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField AlertRuleName { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField Description { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField MonitorCondition { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField MonitorService { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField Severity { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField SignalType { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField TargetResource { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField TargetResourceGroup { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField TargetResourceType { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField left, Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField left, Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AlertProcessingRuleMonthlyRecurrence : Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleMonthlyRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleMonthlyRecurrence>
+    {
+        public AlertProcessingRuleMonthlyRecurrence(System.Collections.Generic.IEnumerable<int> daysOfMonth) { }
+        public System.Collections.Generic.IList<int> DaysOfMonth { get { throw null; } }
+        protected override Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleMonthlyRecurrence System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleMonthlyRecurrence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleMonthlyRecurrence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleMonthlyRecurrence System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleMonthlyRecurrence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleMonthlyRecurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleMonthlyRecurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AlertProcessingRuleOperator : System.IEquatable<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AlertProcessingRuleOperator(string value) { throw null; }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator Contains { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator DoesNotContain { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator EqualTo { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator NotEqualTo { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator left, Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator left, Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AlertProcessingRulePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRulePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRulePatch>
     {
@@ -139,12 +214,12 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
     }
     public partial class AlertProcessingRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleProperties>
     {
-        public AlertProcessingRuleProperties(System.Collections.Generic.IEnumerable<string> scopes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.Action> actions) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AlertProcessingRules.Models.Action> Actions { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AlertProcessingRules.Models.Condition> Conditions { get { throw null; } }
+        public AlertProcessingRuleProperties(System.Collections.Generic.IEnumerable<string> scopes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction> actions) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction> Actions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition> Conditions { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public bool? Enabled { get { throw null; } set { } }
-        public Azure.ResourceManager.AlertProcessingRules.Models.Schedule Schedule { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule Schedule { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
         protected virtual Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -156,184 +231,109 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public abstract partial class AlertProcessingRuleRecurrence : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence>
+    {
+        internal AlertProcessingRuleRecurrence() { }
+        public string EndTime { get { throw null; } set { } }
+        public string StartTime { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AlertProcessingRuleRemoveAllGroupsAction : Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRemoveAllGroupsAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRemoveAllGroupsAction>
+    {
+        public AlertProcessingRuleRemoveAllGroupsAction() { }
+        protected override Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRemoveAllGroupsAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRemoveAllGroupsAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRemoveAllGroupsAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRemoveAllGroupsAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRemoveAllGroupsAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRemoveAllGroupsAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRemoveAllGroupsAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AlertProcessingRuleSchedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule>
+    {
+        public AlertProcessingRuleSchedule() { }
+        public string EffectiveFrom { get { throw null; } set { } }
+        public string EffectiveUntil { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence> Recurrences { get { throw null; } }
+        public string TimeZone { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AlertProcessingRuleWeeklyRecurrence : Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleWeeklyRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleWeeklyRecurrence>
+    {
+        public AlertProcessingRuleWeeklyRecurrence(System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek> daysOfWeek) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek> DaysOfWeek { get { throw null; } }
+        protected override Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleWeeklyRecurrence System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleWeeklyRecurrence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleWeeklyRecurrence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleWeeklyRecurrence System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleWeeklyRecurrence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleWeeklyRecurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleWeeklyRecurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AlertsManagementDayOfWeek : System.IEquatable<Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AlertsManagementDayOfWeek(string value) { throw null; }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek Friday { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek Monday { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek Saturday { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek Sunday { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek Thursday { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek Tuesday { get { throw null; } }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek Wednesday { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek left, Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek left, Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public static partial class ArmAlertProcessingRulesModelFactory
     {
-        public static Azure.ResourceManager.AlertProcessingRules.Models.AddActionGroups AddActionGroups(System.Collections.Generic.IEnumerable<string> actionGroupIds = null) { throw null; }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAddGroupsAction AlertProcessingRuleAddGroupsAction(System.Collections.Generic.IEnumerable<string> actionGroupIds = null) { throw null; }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition AlertProcessingRuleCondition(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField? field = default(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField?), Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator? @operator = default(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator?), System.Collections.Generic.IEnumerable<string> values = null) { throw null; }
         public static Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleData AlertProcessingRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleMonthlyRecurrence AlertProcessingRuleMonthlyRecurrence(string startTime = null, string endTime = null, System.Collections.Generic.IEnumerable<int> daysOfMonth = null) { throw null; }
         public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRulePatch AlertProcessingRulePatch(bool? enabled = default(bool?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleProperties AlertProcessingRuleProperties(System.Collections.Generic.IEnumerable<string> scopes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.Condition> conditions = null, Azure.ResourceManager.AlertProcessingRules.Models.Schedule schedule = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.Action> actions = null, string description = null, bool? enabled = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.Condition Condition(Azure.ResourceManager.AlertProcessingRules.Models.Field? field = default(Azure.ResourceManager.AlertProcessingRules.Models.Field?), Azure.ResourceManager.AlertProcessingRules.Models.Operator? @operator = default(Azure.ResourceManager.AlertProcessingRules.Models.Operator?), System.Collections.Generic.IEnumerable<string> values = null) { throw null; }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.MonthlyRecurrence MonthlyRecurrence(string startTime = null, string endTime = null, System.Collections.Generic.IEnumerable<int> daysOfMonth = null) { throw null; }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.Schedule Schedule(string effectiveFrom = null, string effectiveUntil = null, string timeZone = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.Recurrence> recurrences = null) { throw null; }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.WeeklyRecurrence WeeklyRecurrence(string startTime = null, string endTime = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.DaysOfWeek> daysOfWeek = null) { throw null; }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleProperties AlertProcessingRuleProperties(System.Collections.Generic.IEnumerable<string> scopes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition> conditions = null, Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule schedule = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction> actions = null, string description = null, bool? enabled = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule AlertProcessingRuleSchedule(string effectiveFrom = null, string effectiveUntil = null, string timeZone = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence> recurrences = null) { throw null; }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleWeeklyRecurrence AlertProcessingRuleWeeklyRecurrence(string startTime = null, string endTime = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek> daysOfWeek = null) { throw null; }
     }
-    public partial class Condition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.Condition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.Condition>
-    {
-        public Condition() { }
-        public Azure.ResourceManager.AlertProcessingRules.Models.Field? Field { get { throw null; } set { } }
-        public Azure.ResourceManager.AlertProcessingRules.Models.Operator? Operator { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Values { get { throw null; } }
-        protected virtual Azure.ResourceManager.AlertProcessingRules.Models.Condition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.AlertProcessingRules.Models.Condition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.AlertProcessingRules.Models.Condition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.Condition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.Condition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AlertProcessingRules.Models.Condition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.Condition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.Condition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.Condition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DailyRecurrence : Azure.ResourceManager.AlertProcessingRules.Models.Recurrence, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.DailyRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.DailyRecurrence>
+    public partial class DailyRecurrence : Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.DailyRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.DailyRecurrence>
     {
         public DailyRecurrence() { }
-        protected override Azure.ResourceManager.AlertProcessingRules.Models.Recurrence JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.AlertProcessingRules.Models.Recurrence PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AlertProcessingRules.Models.DailyRecurrence System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.DailyRecurrence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.DailyRecurrence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AlertProcessingRules.Models.DailyRecurrence System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.DailyRecurrence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.DailyRecurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.DailyRecurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DaysOfWeek : System.IEquatable<Azure.ResourceManager.AlertProcessingRules.Models.DaysOfWeek>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DaysOfWeek(string value) { throw null; }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.DaysOfWeek Friday { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.DaysOfWeek Monday { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.DaysOfWeek Saturday { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.DaysOfWeek Sunday { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.DaysOfWeek Thursday { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.DaysOfWeek Tuesday { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.DaysOfWeek Wednesday { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AlertProcessingRules.Models.DaysOfWeek other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AlertProcessingRules.Models.DaysOfWeek left, Azure.ResourceManager.AlertProcessingRules.Models.DaysOfWeek right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AlertProcessingRules.Models.DaysOfWeek (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.AlertProcessingRules.Models.DaysOfWeek? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AlertProcessingRules.Models.DaysOfWeek left, Azure.ResourceManager.AlertProcessingRules.Models.DaysOfWeek right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Field : System.IEquatable<Azure.ResourceManager.AlertProcessingRules.Models.Field>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Field(string value) { throw null; }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.Field AlertContext { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.Field AlertRuleId { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.Field AlertRuleName { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.Field Description { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.Field MonitorCondition { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.Field MonitorService { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.Field Severity { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.Field SignalType { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.Field TargetResource { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.Field TargetResourceGroup { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.Field TargetResourceType { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AlertProcessingRules.Models.Field other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AlertProcessingRules.Models.Field left, Azure.ResourceManager.AlertProcessingRules.Models.Field right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AlertProcessingRules.Models.Field (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.AlertProcessingRules.Models.Field? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AlertProcessingRules.Models.Field left, Azure.ResourceManager.AlertProcessingRules.Models.Field right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class MonthlyRecurrence : Azure.ResourceManager.AlertProcessingRules.Models.Recurrence, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.MonthlyRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.MonthlyRecurrence>
-    {
-        public MonthlyRecurrence(System.Collections.Generic.IEnumerable<int> daysOfMonth) { }
-        public System.Collections.Generic.IList<int> DaysOfMonth { get { throw null; } }
-        protected override Azure.ResourceManager.AlertProcessingRules.Models.Recurrence JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.AlertProcessingRules.Models.Recurrence PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.AlertProcessingRules.Models.MonthlyRecurrence System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.MonthlyRecurrence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.MonthlyRecurrence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AlertProcessingRules.Models.MonthlyRecurrence System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.MonthlyRecurrence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.MonthlyRecurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.MonthlyRecurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Operator : System.IEquatable<Azure.ResourceManager.AlertProcessingRules.Models.Operator>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Operator(string value) { throw null; }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.Operator Contains { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.Operator DoesNotContain { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.Operator EqualTo { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.Operator NotEqualTo { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AlertProcessingRules.Models.Operator other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AlertProcessingRules.Models.Operator left, Azure.ResourceManager.AlertProcessingRules.Models.Operator right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AlertProcessingRules.Models.Operator (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.AlertProcessingRules.Models.Operator? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AlertProcessingRules.Models.Operator left, Azure.ResourceManager.AlertProcessingRules.Models.Operator right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public abstract partial class Recurrence : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.Recurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.Recurrence>
-    {
-        internal Recurrence() { }
-        public string EndTime { get { throw null; } set { } }
-        public string StartTime { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.AlertProcessingRules.Models.Recurrence JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.AlertProcessingRules.Models.Recurrence PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.AlertProcessingRules.Models.Recurrence System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.Recurrence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.Recurrence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AlertProcessingRules.Models.Recurrence System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.Recurrence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.Recurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.Recurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RemoveAllActionGroups : Azure.ResourceManager.AlertProcessingRules.Models.Action, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.RemoveAllActionGroups>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.RemoveAllActionGroups>
-    {
-        public RemoveAllActionGroups() { }
-        protected override Azure.ResourceManager.AlertProcessingRules.Models.Action JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.AlertProcessingRules.Models.Action PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.AlertProcessingRules.Models.RemoveAllActionGroups System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.RemoveAllActionGroups>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.RemoveAllActionGroups>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AlertProcessingRules.Models.RemoveAllActionGroups System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.RemoveAllActionGroups>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.RemoveAllActionGroups>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.RemoveAllActionGroups>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class Schedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.Schedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.Schedule>
-    {
-        public Schedule() { }
-        public string EffectiveFrom { get { throw null; } set { } }
-        public string EffectiveUntil { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AlertProcessingRules.Models.Recurrence> Recurrences { get { throw null; } }
-        public string TimeZone { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.AlertProcessingRules.Models.Schedule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.AlertProcessingRules.Models.Schedule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.AlertProcessingRules.Models.Schedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.Schedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.Schedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AlertProcessingRules.Models.Schedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.Schedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.Schedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.Schedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class WeeklyRecurrence : Azure.ResourceManager.AlertProcessingRules.Models.Recurrence, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.WeeklyRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.WeeklyRecurrence>
-    {
-        public WeeklyRecurrence(System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.DaysOfWeek> daysOfWeek) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AlertProcessingRules.Models.DaysOfWeek> DaysOfWeek { get { throw null; } }
-        protected override Azure.ResourceManager.AlertProcessingRules.Models.Recurrence JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.AlertProcessingRules.Models.Recurrence PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.AlertProcessingRules.Models.WeeklyRecurrence System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.WeeklyRecurrence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.WeeklyRecurrence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AlertProcessingRules.Models.WeeklyRecurrence System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.WeeklyRecurrence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.WeeklyRecurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.WeeklyRecurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

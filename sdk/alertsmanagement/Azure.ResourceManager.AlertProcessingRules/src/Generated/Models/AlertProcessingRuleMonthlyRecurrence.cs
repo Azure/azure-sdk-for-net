@@ -13,25 +13,25 @@ using Azure.ResourceManager.AlertProcessingRules;
 namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
     /// <summary> Monthly recurrence object. </summary>
-    public partial class MonthlyRecurrence : Recurrence
+    public partial class AlertProcessingRuleMonthlyRecurrence : AlertProcessingRuleRecurrence
     {
-        /// <summary> Initializes a new instance of <see cref="MonthlyRecurrence"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleMonthlyRecurrence"/>. </summary>
         /// <param name="daysOfMonth"> Specifies the values for monthly recurrence pattern. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="daysOfMonth"/> is null. </exception>
-        public MonthlyRecurrence(IEnumerable<int> daysOfMonth) : base(RecurrenceType.Monthly)
+        public AlertProcessingRuleMonthlyRecurrence(IEnumerable<int> daysOfMonth) : base(RecurrenceType.Monthly)
         {
             Argument.AssertNotNull(daysOfMonth, nameof(daysOfMonth));
 
             DaysOfMonth = daysOfMonth.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonthlyRecurrence"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleMonthlyRecurrence"/>. </summary>
         /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
         /// <param name="startTime"> Start time for recurrence. </param>
         /// <param name="endTime"> End time for recurrence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="daysOfMonth"> Specifies the values for monthly recurrence pattern. </param>
-        internal MonthlyRecurrence(RecurrenceType recurrenceType, string startTime, string endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<int> daysOfMonth) : base(recurrenceType, startTime, endTime, additionalBinaryDataProperties)
+        internal AlertProcessingRuleMonthlyRecurrence(RecurrenceType recurrenceType, string startTime, string endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<int> daysOfMonth) : base(recurrenceType, startTime, endTime, additionalBinaryDataProperties)
         {
             DaysOfMonth = daysOfMonth;
         }

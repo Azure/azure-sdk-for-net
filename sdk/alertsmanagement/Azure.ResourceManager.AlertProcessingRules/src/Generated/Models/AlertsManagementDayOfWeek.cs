@@ -12,7 +12,7 @@ using Azure.ResourceManager.AlertProcessingRules;
 namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
     /// <summary> Days of week. </summary>
-    public readonly partial struct DaysOfWeek : IEquatable<DaysOfWeek>
+    public readonly partial struct AlertsManagementDayOfWeek : IEquatable<AlertsManagementDayOfWeek>
     {
         private readonly string _value;
         /// <summary> Sunday. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <summary> Saturday. </summary>
         private const string SaturdayValue = "Saturday";
 
-        /// <summary> Initializes a new instance of <see cref="DaysOfWeek"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertsManagementDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DaysOfWeek(string value)
+        public AlertsManagementDayOfWeek(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -41,50 +41,50 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         }
 
         /// <summary> Sunday. </summary>
-        public static DaysOfWeek Sunday { get; } = new DaysOfWeek(SundayValue);
+        public static AlertsManagementDayOfWeek Sunday { get; } = new AlertsManagementDayOfWeek(SundayValue);
 
         /// <summary> Monday. </summary>
-        public static DaysOfWeek Monday { get; } = new DaysOfWeek(MondayValue);
+        public static AlertsManagementDayOfWeek Monday { get; } = new AlertsManagementDayOfWeek(MondayValue);
 
         /// <summary> Tuesday. </summary>
-        public static DaysOfWeek Tuesday { get; } = new DaysOfWeek(TuesdayValue);
+        public static AlertsManagementDayOfWeek Tuesday { get; } = new AlertsManagementDayOfWeek(TuesdayValue);
 
         /// <summary> Wednesday. </summary>
-        public static DaysOfWeek Wednesday { get; } = new DaysOfWeek(WednesdayValue);
+        public static AlertsManagementDayOfWeek Wednesday { get; } = new AlertsManagementDayOfWeek(WednesdayValue);
 
         /// <summary> Thursday. </summary>
-        public static DaysOfWeek Thursday { get; } = new DaysOfWeek(ThursdayValue);
+        public static AlertsManagementDayOfWeek Thursday { get; } = new AlertsManagementDayOfWeek(ThursdayValue);
 
         /// <summary> Friday. </summary>
-        public static DaysOfWeek Friday { get; } = new DaysOfWeek(FridayValue);
+        public static AlertsManagementDayOfWeek Friday { get; } = new AlertsManagementDayOfWeek(FridayValue);
 
         /// <summary> Saturday. </summary>
-        public static DaysOfWeek Saturday { get; } = new DaysOfWeek(SaturdayValue);
+        public static AlertsManagementDayOfWeek Saturday { get; } = new AlertsManagementDayOfWeek(SaturdayValue);
 
-        /// <summary> Determines if two <see cref="DaysOfWeek"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AlertsManagementDayOfWeek"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DaysOfWeek left, DaysOfWeek right) => left.Equals(right);
+        public static bool operator ==(AlertsManagementDayOfWeek left, AlertsManagementDayOfWeek right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DaysOfWeek"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AlertsManagementDayOfWeek"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DaysOfWeek left, DaysOfWeek right) => !left.Equals(right);
+        public static bool operator !=(AlertsManagementDayOfWeek left, AlertsManagementDayOfWeek right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DaysOfWeek"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AlertsManagementDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DaysOfWeek(string value) => new DaysOfWeek(value);
+        public static implicit operator AlertsManagementDayOfWeek(string value) => new AlertsManagementDayOfWeek(value);
 
-        /// <summary> Converts a string to a <see cref="DaysOfWeek"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AlertsManagementDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DaysOfWeek?(string value) => value == null ? null : new DaysOfWeek(value);
+        public static implicit operator AlertsManagementDayOfWeek?(string value) => value == null ? null : new AlertsManagementDayOfWeek(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DaysOfWeek other && Equals(other);
+        public override bool Equals(object obj) => obj is AlertsManagementDayOfWeek other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DaysOfWeek other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AlertsManagementDayOfWeek other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

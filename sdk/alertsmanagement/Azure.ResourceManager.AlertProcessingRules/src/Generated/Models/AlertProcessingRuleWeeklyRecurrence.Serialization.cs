@@ -13,56 +13,57 @@ using Azure.ResourceManager.AlertProcessingRules;
 
 namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
-    internal partial class UnknownRecurrence : Recurrence, IJsonModel<Recurrence>
+    /// <summary> Weekly recurrence object. </summary>
+    public partial class AlertProcessingRuleWeeklyRecurrence : AlertProcessingRuleRecurrence, IJsonModel<AlertProcessingRuleWeeklyRecurrence>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownRecurrence"/> for deserialization. </summary>
-        internal UnknownRecurrence()
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleWeeklyRecurrence"/> for deserialization. </summary>
+        internal AlertProcessingRuleWeeklyRecurrence()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Recurrence PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AlertProcessingRuleRecurrence PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Recurrence>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleWeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRecurrence(document.RootElement, options);
+                        return DeserializeAlertProcessingRuleWeeklyRecurrence(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Recurrence)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleWeeklyRecurrence)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Recurrence>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleWeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAlertProcessingRulesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Recurrence)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleWeeklyRecurrence)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Recurrence>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AlertProcessingRuleWeeklyRecurrence>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Recurrence IPersistableModel<Recurrence>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AlertProcessingRuleWeeklyRecurrence IPersistableModel<AlertProcessingRuleWeeklyRecurrence>.Create(BinaryData data, ModelReaderWriterOptions options) => (AlertProcessingRuleWeeklyRecurrence)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Recurrence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AlertProcessingRuleWeeklyRecurrence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Recurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AlertProcessingRuleWeeklyRecurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,34 +74,41 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Recurrence>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleWeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Recurrence)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertProcessingRuleWeeklyRecurrence)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("daysOfWeek"u8);
+            writer.WriteStartArray();
+            foreach (AlertsManagementDayOfWeek item in DaysOfWeek)
+            {
+                writer.WriteStringValue(item.ToString());
+            }
+            writer.WriteEndArray();
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Recurrence IJsonModel<Recurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AlertProcessingRuleWeeklyRecurrence IJsonModel<AlertProcessingRuleWeeklyRecurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AlertProcessingRuleWeeklyRecurrence)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Recurrence JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AlertProcessingRuleRecurrence JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Recurrence>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleWeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Recurrence)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertProcessingRuleWeeklyRecurrence)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRecurrence(document.RootElement, options);
+            return DeserializeAlertProcessingRuleWeeklyRecurrence(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownRecurrence DeserializeUnknownRecurrence(JsonElement element, ModelReaderWriterOptions options)
+        internal static AlertProcessingRuleWeeklyRecurrence DeserializeAlertProcessingRuleWeeklyRecurrence(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -110,6 +118,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             string startTime = default;
             string endTime = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<AlertsManagementDayOfWeek> daysOfWeek = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("recurrenceType"u8))
@@ -127,12 +136,22 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                     endTime = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("daysOfWeek"u8))
+                {
+                    List<AlertsManagementDayOfWeek> array = new List<AlertsManagementDayOfWeek>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new AlertsManagementDayOfWeek(item.GetString()));
+                    }
+                    daysOfWeek = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownRecurrence(recurrenceType, startTime, endTime, additionalBinaryDataProperties);
+            return new AlertProcessingRuleWeeklyRecurrence(recurrenceType, startTime, endTime, additionalBinaryDataProperties, daysOfWeek);
         }
     }
 }

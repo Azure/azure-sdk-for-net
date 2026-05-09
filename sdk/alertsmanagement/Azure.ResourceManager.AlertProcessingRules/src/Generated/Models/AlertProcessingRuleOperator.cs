@@ -12,7 +12,7 @@ using Azure.ResourceManager.AlertProcessingRules;
 namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
     /// <summary> Operator for a given condition. </summary>
-    public readonly partial struct Operator : IEquatable<Operator>
+    public readonly partial struct AlertProcessingRuleOperator : IEquatable<AlertProcessingRuleOperator>
     {
         private readonly string _value;
         /// <summary> Equals. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <summary> DoesNotContain. </summary>
         private const string DoesNotContainValue = "DoesNotContain";
 
-        /// <summary> Initializes a new instance of <see cref="Operator"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleOperator"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Operator(string value)
+        public AlertProcessingRuleOperator(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         }
 
         /// <summary> Equals. </summary>
-        public static Operator EqualTo { get; } = new Operator(EqualToValue);
+        public static AlertProcessingRuleOperator EqualTo { get; } = new AlertProcessingRuleOperator(EqualToValue);
 
         /// <summary> NotEquals. </summary>
-        public static Operator NotEqualTo { get; } = new Operator(NotEqualToValue);
+        public static AlertProcessingRuleOperator NotEqualTo { get; } = new AlertProcessingRuleOperator(NotEqualToValue);
 
         /// <summary> Contains. </summary>
-        public static Operator Contains { get; } = new Operator(ContainsValue);
+        public static AlertProcessingRuleOperator Contains { get; } = new AlertProcessingRuleOperator(ContainsValue);
 
         /// <summary> DoesNotContain. </summary>
-        public static Operator DoesNotContain { get; } = new Operator(DoesNotContainValue);
+        public static AlertProcessingRuleOperator DoesNotContain { get; } = new AlertProcessingRuleOperator(DoesNotContainValue);
 
-        /// <summary> Determines if two <see cref="Operator"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AlertProcessingRuleOperator"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Operator left, Operator right) => left.Equals(right);
+        public static bool operator ==(AlertProcessingRuleOperator left, AlertProcessingRuleOperator right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Operator"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AlertProcessingRuleOperator"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Operator left, Operator right) => !left.Equals(right);
+        public static bool operator !=(AlertProcessingRuleOperator left, AlertProcessingRuleOperator right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Operator"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AlertProcessingRuleOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Operator(string value) => new Operator(value);
+        public static implicit operator AlertProcessingRuleOperator(string value) => new AlertProcessingRuleOperator(value);
 
-        /// <summary> Converts a string to a <see cref="Operator"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AlertProcessingRuleOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Operator?(string value) => value == null ? null : new Operator(value);
+        public static implicit operator AlertProcessingRuleOperator?(string value) => value == null ? null : new AlertProcessingRuleOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Operator other && Equals(other);
+        public override bool Equals(object obj) => obj is AlertProcessingRuleOperator other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Operator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AlertProcessingRuleOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

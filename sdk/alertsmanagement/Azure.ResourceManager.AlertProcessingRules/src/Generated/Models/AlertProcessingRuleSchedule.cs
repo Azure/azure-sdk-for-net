@@ -12,24 +12,24 @@ using Azure.ResourceManager.AlertProcessingRules;
 namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
     /// <summary> Scheduling configuration for a given alert processing rule. </summary>
-    public partial class Schedule
+    public partial class AlertProcessingRuleSchedule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Schedule"/>. </summary>
-        public Schedule()
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleSchedule"/>. </summary>
+        public AlertProcessingRuleSchedule()
         {
-            Recurrences = new ChangeTrackingList<Recurrence>();
+            Recurrences = new ChangeTrackingList<AlertProcessingRuleRecurrence>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Schedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleSchedule"/>. </summary>
         /// <param name="effectiveFrom"> Scheduling effective from time. Date-Time in ISO-8601 format without timezone suffix. </param>
         /// <param name="effectiveUntil"> Scheduling effective until time. Date-Time in ISO-8601 format without timezone suffix. </param>
         /// <param name="timeZone"> Scheduling time zone. </param>
         /// <param name="recurrences"> List of recurrences. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Schedule(string effectiveFrom, string effectiveUntil, string timeZone, IList<Recurrence> recurrences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertProcessingRuleSchedule(string effectiveFrom, string effectiveUntil, string timeZone, IList<AlertProcessingRuleRecurrence> recurrences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EffectiveFrom = effectiveFrom;
             EffectiveUntil = effectiveUntil;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         public string TimeZone { get; set; }
 
         /// <summary> List of recurrences. </summary>
-        public IList<Recurrence> Recurrences { get; }
+        public IList<AlertProcessingRuleRecurrence> Recurrences { get; }
     }
 }

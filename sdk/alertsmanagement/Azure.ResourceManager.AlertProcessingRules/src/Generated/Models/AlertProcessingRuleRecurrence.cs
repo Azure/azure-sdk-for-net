@@ -12,26 +12,26 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
     /// <summary>
     /// Recurrence object.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DailyRecurrence"/>, <see cref="WeeklyRecurrence"/>, and <see cref="MonthlyRecurrence"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DailyRecurrence"/>, <see cref="AlertProcessingRuleWeeklyRecurrence"/>, and <see cref="AlertProcessingRuleMonthlyRecurrence"/>.
     /// </summary>
-    public abstract partial class Recurrence
+    public abstract partial class AlertProcessingRuleRecurrence
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Recurrence"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleRecurrence"/>. </summary>
         /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
-        private protected Recurrence(RecurrenceType recurrenceType)
+        private protected AlertProcessingRuleRecurrence(RecurrenceType recurrenceType)
         {
             RecurrenceType = recurrenceType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Recurrence"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleRecurrence"/>. </summary>
         /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
         /// <param name="startTime"> Start time for recurrence. </param>
         /// <param name="endTime"> End time for recurrence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Recurrence(RecurrenceType recurrenceType, string startTime, string endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertProcessingRuleRecurrence(RecurrenceType recurrenceType, string startTime, string endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecurrenceType = recurrenceType;
             StartTime = startTime;

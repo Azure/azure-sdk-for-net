@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <param name="description"> Actions to be applied.Description of alert processing rule. </param>
         /// <param name="enabled"> Indicates if the given alert processing rule is enabled or disabled. </param>
         /// <returns> A new <see cref="Models.AlertProcessingRuleProperties"/> instance for mocking. </returns>
-        public static AlertProcessingRuleProperties AlertProcessingRuleProperties(IEnumerable<string> scopes = default, IEnumerable<Condition> conditions = default, Schedule schedule = default, IEnumerable<Action> actions = default, string description = default, bool? enabled = default)
+        public static AlertProcessingRuleProperties AlertProcessingRuleProperties(IEnumerable<string> scopes = default, IEnumerable<AlertProcessingRuleCondition> conditions = default, AlertProcessingRuleSchedule schedule = default, IEnumerable<AlertProcessingRuleAction> actions = default, string description = default, bool? enabled = default)
         {
             scopes ??= new ChangeTrackingList<string>();
-            conditions ??= new ChangeTrackingList<Condition>();
-            actions ??= new ChangeTrackingList<Action>();
+            conditions ??= new ChangeTrackingList<AlertProcessingRuleCondition>();
+            actions ??= new ChangeTrackingList<AlertProcessingRuleAction>();
 
             return new AlertProcessingRuleProperties(
                 scopes.ToList(),
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <param name="field"> Field for a given condition. </param>
         /// <param name="operator"> Operator for a given condition. </param>
         /// <param name="values"> List of values to match for a given condition. </param>
-        /// <returns> A new <see cref="Models.Condition"/> instance for mocking. </returns>
-        public static Condition Condition(Field? @field = default, Operator? @operator = default, IEnumerable<string> values = default)
+        /// <returns> A new <see cref="Models.AlertProcessingRuleCondition"/> instance for mocking. </returns>
+        public static AlertProcessingRuleCondition AlertProcessingRuleCondition(AlertProcessingRuleField? @field = default, AlertProcessingRuleOperator? @operator = default, IEnumerable<string> values = default)
         {
             values ??= new ChangeTrackingList<string>();
 
-            return new Condition(@field, @operator, values.ToList(), additionalBinaryDataProperties: null);
+            return new AlertProcessingRuleCondition(@field, @operator, values.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Scheduling configuration for a given alert processing rule. </summary>
@@ -82,46 +82,46 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <param name="effectiveUntil"> Scheduling effective until time. Date-Time in ISO-8601 format without timezone suffix. </param>
         /// <param name="timeZone"> Scheduling time zone. </param>
         /// <param name="recurrences"> List of recurrences. </param>
-        /// <returns> A new <see cref="Models.Schedule"/> instance for mocking. </returns>
-        public static Schedule Schedule(string effectiveFrom = default, string effectiveUntil = default, string timeZone = default, IEnumerable<Recurrence> recurrences = default)
+        /// <returns> A new <see cref="Models.AlertProcessingRuleSchedule"/> instance for mocking. </returns>
+        public static AlertProcessingRuleSchedule AlertProcessingRuleSchedule(string effectiveFrom = default, string effectiveUntil = default, string timeZone = default, IEnumerable<AlertProcessingRuleRecurrence> recurrences = default)
         {
-            recurrences ??= new ChangeTrackingList<Recurrence>();
+            recurrences ??= new ChangeTrackingList<AlertProcessingRuleRecurrence>();
 
-            return new Schedule(effectiveFrom, effectiveUntil, timeZone, recurrences.ToList(), additionalBinaryDataProperties: null);
+            return new AlertProcessingRuleSchedule(effectiveFrom, effectiveUntil, timeZone, recurrences.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Weekly recurrence object. </summary>
         /// <param name="startTime"> Start time for recurrence. </param>
         /// <param name="endTime"> End time for recurrence. </param>
         /// <param name="daysOfWeek"> Specifies the values for weekly recurrence pattern. </param>
-        /// <returns> A new <see cref="Models.WeeklyRecurrence"/> instance for mocking. </returns>
-        public static WeeklyRecurrence WeeklyRecurrence(string startTime = default, string endTime = default, IEnumerable<DaysOfWeek> daysOfWeek = default)
+        /// <returns> A new <see cref="Models.AlertProcessingRuleWeeklyRecurrence"/> instance for mocking. </returns>
+        public static AlertProcessingRuleWeeklyRecurrence AlertProcessingRuleWeeklyRecurrence(string startTime = default, string endTime = default, IEnumerable<AlertsManagementDayOfWeek> daysOfWeek = default)
         {
-            daysOfWeek ??= new ChangeTrackingList<DaysOfWeek>();
+            daysOfWeek ??= new ChangeTrackingList<AlertsManagementDayOfWeek>();
 
-            return new WeeklyRecurrence(RecurrenceType.Weekly, startTime, endTime, additionalBinaryDataProperties: null, daysOfWeek.ToList());
+            return new AlertProcessingRuleWeeklyRecurrence(RecurrenceType.Weekly, startTime, endTime, additionalBinaryDataProperties: null, daysOfWeek.ToList());
         }
 
         /// <summary> Monthly recurrence object. </summary>
         /// <param name="startTime"> Start time for recurrence. </param>
         /// <param name="endTime"> End time for recurrence. </param>
         /// <param name="daysOfMonth"> Specifies the values for monthly recurrence pattern. </param>
-        /// <returns> A new <see cref="Models.MonthlyRecurrence"/> instance for mocking. </returns>
-        public static MonthlyRecurrence MonthlyRecurrence(string startTime = default, string endTime = default, IEnumerable<int> daysOfMonth = default)
+        /// <returns> A new <see cref="Models.AlertProcessingRuleMonthlyRecurrence"/> instance for mocking. </returns>
+        public static AlertProcessingRuleMonthlyRecurrence AlertProcessingRuleMonthlyRecurrence(string startTime = default, string endTime = default, IEnumerable<int> daysOfMonth = default)
         {
             daysOfMonth ??= new ChangeTrackingList<int>();
 
-            return new MonthlyRecurrence(RecurrenceType.Monthly, startTime, endTime, additionalBinaryDataProperties: null, daysOfMonth.ToList());
+            return new AlertProcessingRuleMonthlyRecurrence(RecurrenceType.Monthly, startTime, endTime, additionalBinaryDataProperties: null, daysOfMonth.ToList());
         }
 
         /// <summary> Add action groups to alert processing rule. </summary>
         /// <param name="actionGroupIds"> List of action group Ids to add to alert processing rule. </param>
-        /// <returns> A new <see cref="Models.AddActionGroups"/> instance for mocking. </returns>
-        public static AddActionGroups AddActionGroups(IEnumerable<string> actionGroupIds = default)
+        /// <returns> A new <see cref="Models.AlertProcessingRuleAddGroupsAction"/> instance for mocking. </returns>
+        public static AlertProcessingRuleAddGroupsAction AlertProcessingRuleAddGroupsAction(IEnumerable<string> actionGroupIds = default)
         {
             actionGroupIds ??= new ChangeTrackingList<string>();
 
-            return new AddActionGroups(ActionType.AddActionGroups, additionalBinaryDataProperties: null, actionGroupIds.ToList());
+            return new AlertProcessingRuleAddGroupsAction(ActionType.AddActionGroups, additionalBinaryDataProperties: null, actionGroupIds.ToList());
         }
 
         /// <param name="enabled"> Indicates if the given alert processing rule is enabled or disabled. </param>
