@@ -4386,11 +4386,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBAccountCreateOrUpdateContent CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ManagedServiceIdentity identity, ConsistencyPolicy consistencyPolicy, IEnumerable<CosmosDBAccountLocation> locations, CosmosDBAccountOfferType databaseAccountOfferType, IEnumerable<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IEnumerable<CosmosDBAccountCapability> capabilities, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, CosmosDBServerVersion? apiServerVersion, bool? isAnalyticalStorageEnabled, AnalyticalStorageSchemaType? analyticalStorageSchemaType, CosmosDBAccountCreateMode? createMode, CosmosDBAccountBackupPolicy backupPolicy, IEnumerable<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds, bool? disableLocalAuth, CosmosDBAccountRestoreParameters restoreParameters, int? capacityTotalThroughputLimit, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, CosmosDBMinimalTlsVersion? minimalTlsVersion, bool? enableBurstCapacity, string customerManagedKeyStatus, bool? enablePerRegionPerPartitionAutoscale, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            locations ??= new ChangeTrackingList<CosmosDBAccountLocation>();
-            ipRules ??= new ChangeTrackingList<CosmosDBIPAddressOrRange>();
-            capabilities ??= new ChangeTrackingList<CosmosDBAccountCapability>();
-            virtualNetworkRules ??= new ChangeTrackingList<CosmosDBVirtualNetworkRule>();
-            cors ??= new ChangeTrackingList<CosmosDBAccountCorsPolicy>();
             networkAclBypassResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new CosmosDBAccountCreateOrUpdateContent(
@@ -4402,7 +4397,47 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 tags,
                 location,
                 kind,
-                default);
+                consistencyPolicy is null && locations is null && ipRules is null && isVirtualNetworkFilterEnabled is null && enableAutomaticFailover is null && capabilities is null && virtualNetworkRules is null && enableMultipleWriteLocations is null && enableCassandraConnector is null && connectorOffer is null && disableKeyBasedMetadataWriteAccess is null && defaultIdentity is null && publicNetworkAccess is null && isFreeTierEnabled is null && apiServerVersion is null && isAnalyticalStorageEnabled is null && analyticalStorageSchemaType is null && createMode is null && backupPolicy is null && cors is null && networkAclBypass is null && disableLocalAuth is null && restoreParameters is null && capacityTotalThroughputLimit is null && keysMetadata is null && enablePartitionMerge is null && enableBurstCapacity is null && minimalTlsVersion is null && customerManagedKeyStatus is null && enablePriorityBasedExecution is null && defaultPriorityLevel is null && enablePerRegionPerPartitionAutoscale is null ? default : new DatabaseAccountCreateUpdateProperties(
+                    consistencyPolicy,
+                    (locations ?? new ChangeTrackingList<CosmosDBAccountLocation>()).ToList(),
+                    databaseAccountOfferType,
+                    (ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>()).ToList(),
+                    isVirtualNetworkFilterEnabled,
+                    enableAutomaticFailover,
+                    (capabilities ?? new ChangeTrackingList<CosmosDBAccountCapability>()).ToList(),
+                    (virtualNetworkRules ?? new ChangeTrackingList<CosmosDBVirtualNetworkRule>()).ToList(),
+                    enableMultipleWriteLocations,
+                    enableCassandraConnector,
+                    connectorOffer,
+                    disableKeyBasedMetadataWriteAccess,
+                    default,
+                    defaultIdentity,
+                    publicNetworkAccess,
+                    isFreeTierEnabled,
+                    new ApiProperties(apiServerVersion, default),
+                    isAnalyticalStorageEnabled,
+                    new AnalyticalStorageConfiguration(analyticalStorageSchemaType, default),
+                    createMode,
+                    backupPolicy,
+                    (cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>()).ToList(),
+                    networkAclBypass,
+                    default,
+                    default,
+                    disableLocalAuth,
+                    restoreParameters,
+                    new CosmosDBAccountCapacity(capacityTotalThroughputLimit, default),
+                    default,
+                    default,
+                    keysMetadata,
+                    enablePartitionMerge,
+                    enableBurstCapacity,
+                    minimalTlsVersion,
+                    customerManagedKeyStatus,
+                    enablePriorityBasedExecution,
+                    defaultPriorityLevel,
+                    enablePerRegionPerPartitionAutoscale,
+                    default,
+                    default));
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlDatabaseData"/>. </summary>
@@ -4441,7 +4476,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalBinaryDataProperties: null,
                 rid,
                 timestamp,
-                default,
+                etag,
                 colls,
                 users);
         }
@@ -4486,7 +4521,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalBinaryDataProperties: null,
                 rid,
                 timestamp,
-                default);
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ThroughputSettingsResourceInfo"/>. </summary>
@@ -4540,16 +4575,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ExtendedCosmosDBSqlContainerResourceInfo ExtendedCosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, IEnumerable<CosmosDBUniqueKey> uniqueKeys, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IEnumerable<ComputedProperty> computedProperties, IEnumerable<CosmosDBVectorEmbedding> vectorEmbeddings, FullTextPolicy fullTextPolicy, string rid, float? timestamp, ETag? etag)
         {
-            uniqueKeys ??= new ChangeTrackingList<CosmosDBUniqueKey>();
             computedProperties ??= new ChangeTrackingList<ComputedProperty>();
-            vectorEmbeddings ??= new ChangeTrackingList<CosmosDBVectorEmbedding>();
 
             return new ExtendedCosmosDBSqlContainerResourceInfo(
                 containerName,
                 indexingPolicy,
                 partitionKey,
                 defaultTtl,
-                default,
+                uniqueKeys is null ? default : new CosmosDBUniqueKeyPolicy((uniqueKeys ?? new ChangeTrackingList<CosmosDBUniqueKey>()).ToList(), default),
                 conflictResolutionPolicy,
                 clientEncryptionPolicy,
                 analyticalStorageTtl,
@@ -4559,13 +4592,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 default,
                 default,
                 computedProperties.ToList(),
-                default,
+                vectorEmbeddings is null ? default : new VectorEmbeddingPolicy((vectorEmbeddings ?? new ChangeTrackingList<CosmosDBVectorEmbedding>()).ToList(), default),
                 fullTextPolicy,
                 default,
                 additionalBinaryDataProperties: null,
                 rid,
                 timestamp,
-                default);
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlStoredProcedureData"/>. </summary>
@@ -4852,7 +4885,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalBinaryDataProperties: null,
                 rid,
                 timestamp,
-                default,
+                etag,
                 colls,
                 users,
                 self);
@@ -4880,16 +4913,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RestorableSqlContainerPropertiesResourceContainer RestorableSqlContainerPropertiesResourceContainer(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, IEnumerable<CosmosDBUniqueKey> uniqueKeys, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IEnumerable<ComputedProperty> computedProperties, IEnumerable<CosmosDBVectorEmbedding> vectorEmbeddings, FullTextPolicy fullTextPolicy, string self, string rid, float? timestamp, ETag? etag)
         {
-            uniqueKeys ??= new ChangeTrackingList<CosmosDBUniqueKey>();
             computedProperties ??= new ChangeTrackingList<ComputedProperty>();
-            vectorEmbeddings ??= new ChangeTrackingList<CosmosDBVectorEmbedding>();
 
             return new RestorableSqlContainerPropertiesResourceContainer(
                 containerName,
                 indexingPolicy,
                 partitionKey,
                 defaultTtl,
-                default,
+                uniqueKeys is null ? default : new CosmosDBUniqueKeyPolicy((uniqueKeys ?? new ChangeTrackingList<CosmosDBUniqueKey>()).ToList(), default),
                 conflictResolutionPolicy,
                 clientEncryptionPolicy,
                 analyticalStorageTtl,
@@ -4899,13 +4930,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 default,
                 default,
                 computedProperties.ToList(),
-                default,
+                vectorEmbeddings is null ? default : new VectorEmbeddingPolicy((vectorEmbeddings ?? new ChangeTrackingList<CosmosDBVectorEmbedding>()).ToList(), default),
                 fullTextPolicy,
                 default,
                 additionalBinaryDataProperties: null,
                 rid,
                 timestamp,
-                default,
+                etag,
                 self);
         }
 
