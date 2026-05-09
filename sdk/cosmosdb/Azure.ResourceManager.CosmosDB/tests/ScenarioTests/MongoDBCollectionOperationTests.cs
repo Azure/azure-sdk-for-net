@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
@@ -90,9 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyMongoDBCollections(collection, collection2);
 
-            var updateOptions = new MongoDBCollectionCreateOrUpdateContent(collection.Id, _collectionName, collection.Data.ResourceType, null,
-                new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, collection.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, null);
+            var updateOptions = new MongoDBCollectionCreateOrUpdateContent(AzureLocation.WestUS, collection.Data.Resource) { Options = new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 } };
 
             collection = await (await MongoDBCollectionCollection.CreateOrUpdateAsync(WaitUntil.Started, _collectionName, updateOptions)).WaitForCompletionAsync();
             Assert.AreEqual(_collectionName, collection.Data.Resource.CollectionName);
@@ -139,9 +137,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 CreateMode = CosmosDBAccountCreateMode.Restore
             };
 
-            var updateOptions = new MongoDBCollectionCreateOrUpdateContent(collection.Id, _collectionName, collection.Data.ResourceType, null,
-                new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, null);
+            var updateOptions = new MongoDBCollectionCreateOrUpdateContent(AzureLocation.WestUS, resource) { Options = new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 } };
 
             var collection2 = await (await MongoDBCollectionCollection.CreateOrUpdateAsync(WaitUntil.Started, _collectionName, updateOptions)).WaitForCompletionAsync();
             Assert.AreEqual(_collectionName, collection.Data.Resource.CollectionName);

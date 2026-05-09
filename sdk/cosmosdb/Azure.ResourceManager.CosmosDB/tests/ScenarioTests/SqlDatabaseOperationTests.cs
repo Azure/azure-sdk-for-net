@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
@@ -90,9 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyDatabases(database, database2);
 
-            var updateOptions = new CosmosDBSqlDatabaseCreateOrUpdateContent(database.Id, _databaseName, database.Data.ResourceType, null,
-                new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, database.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, null);
+            var updateOptions = new CosmosDBSqlDatabaseCreateOrUpdateContent(AzureLocation.WestUS, database.Data.Resource) { Options = new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 } };
 
             database = (await SqlDatabaseContainer.CreateOrUpdateAsync(WaitUntil.Completed, _databaseName, updateOptions)).Value;
             Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
@@ -130,9 +128,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             };
             CosmosDBSqlDatabaseResourceInfo resource = new CosmosDBSqlDatabaseResourceInfo(_databaseName, RestoreParameters, CosmosDBAccountCreateMode.Restore, null);
 
-            var updateOptions = new CosmosDBSqlDatabaseCreateOrUpdateContent(database.Id, _databaseName, database.Data.ResourceType, null,
-                new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, resource, null, null);
+            var updateOptions = new CosmosDBSqlDatabaseCreateOrUpdateContent(AzureLocation.WestUS, resource);
 
             var database3 = (await SqlDatabaseContainer.CreateOrUpdateAsync(WaitUntil.Completed, _databaseName, updateOptions)).Value;
             Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);

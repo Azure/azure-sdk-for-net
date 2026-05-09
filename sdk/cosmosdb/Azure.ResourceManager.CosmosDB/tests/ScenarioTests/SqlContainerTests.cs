@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
@@ -170,9 +170,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             long restoreTime = backupInfo.ContinuousBackupInformation.LatestRestorableTimestamp.Value.ToUnixTimeMilliseconds();
             Assert.True(restoreTime > 0);
 
-            var updateOptions = new CosmosDBSqlContainerCreateOrUpdateContent(container.Id, _containerName, container.Data.ResourceType, null,
-                new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, container.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, null);
+            var updateOptions = new CosmosDBSqlContainerCreateOrUpdateContent(AzureLocation.WestUS, container.Data.Resource) { Options = new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 } };
 
             container = (await SqlContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, updateOptions)).Value;
             backupInfo = (await container.RetrieveContinuousBackupInformationAsync(WaitUntil.Completed, new ContinuousBackupRestoreLocation { Location = AzureLocation.WestUS })).Value;
@@ -237,7 +235,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                         },
                         new List<CosmosDBVectorIndex>(),
                         new List<FullTextIndexPath>(),
-                        serializedAdditionalRawData: new Dictionary<string, BinaryData>())
+                        additionalBinaryDataProperties: new Dictionary<string, BinaryData>())
                 })
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

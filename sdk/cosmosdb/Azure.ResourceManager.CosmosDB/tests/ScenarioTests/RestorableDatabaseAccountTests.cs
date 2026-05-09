@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                         },
                         new List<CosmosDBVectorIndex>(),
                         new List<FullTextIndexPath>(),
-                        serializedAdditionalRawData: new Dictionary<string, BinaryData>())
+                        additionalBinaryDataProperties: new Dictionary<string, BinaryData>())
                 })
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

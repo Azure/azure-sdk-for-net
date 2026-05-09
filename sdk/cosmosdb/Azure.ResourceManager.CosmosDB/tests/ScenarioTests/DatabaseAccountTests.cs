@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedData.CustomerManagedKeyStatus, actualData.CustomerManagedKeyStatus);
             Assert.AreEqual(expectedData.PublicNetworkAccess, actualData.PublicNetworkAccess);
             Assert.AreEqual(expectedData.IsFreeTierEnabled, actualData.IsFreeTierEnabled);
-            Assert.AreEqual(expectedData.ApiProperties.ServerVersion.ToString(), actualData.ApiProperties.ServerVersion.ToString());
+            Assert.AreEqual(expectedData.ApiServerVersion.ToString(), actualData.ApiServerVersion.ToString());
             Assert.AreEqual(expectedData.IsAnalyticalStorageEnabled, actualData.IsAnalyticalStorageEnabled);
             Assert.AreEqual(expectedData.Cors.Count, actualData.Cors.Count);
             Assert.AreEqual(expectedData.EnableBurstCapacity, actualData.EnableBurstCapacity);

@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                         },
                         new List<CosmosDBVectorIndex>(),
                         new List<FullTextIndexPath>(),
-                        serializedAdditionalRawData: new Dictionary<string, BinaryData>())
+                        additionalBinaryDataProperties: new Dictionary<string, BinaryData>())
                 })
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
