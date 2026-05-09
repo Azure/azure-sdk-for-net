@@ -69,7 +69,7 @@ extends:
           ShouldPublish: ${{ parameters.ShouldPublish }}
           ShouldRegenerate: ${{ parameters.ShouldRegenerate }}
           HasNugetPackages: ${{ parameters.PublishNugetPackages }}
-          ${{ if startswith(variables['Build.SourceBranch'], 'refs/pull/') }}:  # PR ref's can't be published to public, even in a manual run
+          ${{ if startswith(variables['Build.SourceBranch'], 'refs/pull/') }}:  # PR refs can't be published to public, even in a manual run
             PublishPublic: false
             PublishDependsOnTest: false
           ${{ else }}: # Any other manual run can go to public
