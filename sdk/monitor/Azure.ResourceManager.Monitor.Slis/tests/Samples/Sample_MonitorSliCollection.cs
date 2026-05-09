@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Monitor.Slis.Samples
 {
-    public partial class Sample_SliCollection
+    public partial class Sample_MonitorSliCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -27,17 +27,16 @@ namespace Azure.ResourceManager.Monitor.Slis.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this SliResource
+            // get the collection of this MonitorSliResource
             string serviceGroupName = "testSG";
-            SliCollection collection = tenantResource.GetSlis(serviceGroupName);
+            ResourceIdentifier rg = new ResourceIdentifier($"/providers/Microsoft.Management/serviceGroups/{serviceGroupName}");
+            MonitorSliCollection collection = client.GetMonitorSlis(rg);
 
             // invoke the operation
             string sliName = "testSli";
-            SliData data = new SliData
+            MonitorSliData data = new MonitorSliData
             {
-                Properties = new SliResourceProperties(
+                Properties = new MonitorSliProperties(
                 "Measures the performance characteristics of the GetContosoUsers() API. ",
                 SliCategory.Latency,
                 SliEvaluationType.WindowBased,
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Samples
             {
 new SliAmwAccount(new ResourceIdentifier("/subscriptions/<subId>/resourcegroups/<rgId>/providers/microsoft.monitor/accounts/<dest>"), new ResourceIdentifier("/subscriptions/<subId>/resourcegroups/<rgId>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<idName>"))
             },
-                new SliBaselineProperties(new SliBaseline(99F, 30, SliEvaluationCalculationType.CalendarDays)),
+                new SliBaseline(99F, 30, SliEvaluationCalculationType.CalendarDays),
                 true,
                 new SliProperties
                 {
@@ -91,12 +90,12 @@ WindowSizeMinutes = 5,
                     WindowUptimeCriteria = new WindowUptimeCriteria(95F, WindowUptimeCriteriaComparator.GreaterThanOrEqual),
                 }),
             };
-            ArmOperation<SliResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sliName, data);
-            SliResource result = lro.Value;
+            ArmOperation<MonitorSliResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sliName, data);
+            MonitorSliResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SliData resourceData = result.Data;
+            MonitorSliData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -113,19 +112,18 @@ WindowSizeMinutes = 5,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this SliResource
+            // get the collection of this MonitorSliResource
             string serviceGroupName = "testSG";
-            SliCollection collection = tenantResource.GetSlis(serviceGroupName);
+            ResourceIdentifier rg = new ResourceIdentifier($"/providers/Microsoft.Management/serviceGroups/{serviceGroupName}");
+            MonitorSliCollection collection = client.GetMonitorSlis(rg);
 
             // invoke the operation
             string sliName = "testSli";
-            SliResource result = await collection.GetAsync(sliName);
+            MonitorSliResource result = await collection.GetAsync(sliName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SliData resourceData = result.Data;
+            MonitorSliData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -142,18 +140,17 @@ WindowSizeMinutes = 5,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this SliResource
+            // get the collection of this MonitorSliResource
             string serviceGroupName = "testSG";
-            SliCollection collection = tenantResource.GetSlis(serviceGroupName);
+            ResourceIdentifier rg = new ResourceIdentifier($"/providers/Microsoft.Management/serviceGroups/{serviceGroupName}");
+            MonitorSliCollection collection = client.GetMonitorSlis(rg);
 
             // invoke the operation and iterate over the result
-            await foreach (SliResource item in collection.GetAllAsync())
+            await foreach (MonitorSliResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SliData resourceData = item.Data;
+                MonitorSliData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -173,11 +170,10 @@ WindowSizeMinutes = 5,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this SliResource
+            // get the collection of this MonitorSliResource
             string serviceGroupName = "testSG";
-            SliCollection collection = tenantResource.GetSlis(serviceGroupName);
+            ResourceIdentifier rg = new ResourceIdentifier($"/providers/Microsoft.Management/serviceGroups/{serviceGroupName}");
+            MonitorSliCollection collection = client.GetMonitorSlis(rg);
 
             // invoke the operation
             string sliName = "testSli";
@@ -198,16 +194,15 @@ WindowSizeMinutes = 5,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this SliResource
+            // get the collection of this MonitorSliResource
             string serviceGroupName = "testSG";
-            SliCollection collection = tenantResource.GetSlis(serviceGroupName);
+            ResourceIdentifier rg = new ResourceIdentifier($"/providers/Microsoft.Management/serviceGroups/{serviceGroupName}");
+            MonitorSliCollection collection = client.GetMonitorSlis(rg);
 
             // invoke the operation
             string sliName = "testSli";
-            NullableResponse<SliResource> response = await collection.GetIfExistsAsync(sliName);
-            SliResource result = response.HasValue ? response.Value : null;
+            NullableResponse<MonitorSliResource> response = await collection.GetIfExistsAsync(sliName);
+            MonitorSliResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -217,7 +212,7 @@ WindowSizeMinutes = 5,
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SliData resourceData = result.Data;
+                MonitorSliData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

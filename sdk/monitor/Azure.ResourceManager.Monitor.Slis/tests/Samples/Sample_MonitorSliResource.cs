@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Monitor.Slis.Samples
 {
-    public partial class Sample_SliResource
+    public partial class Sample_MonitorSliResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.Monitor.Slis.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SliResource created on azure
-            // for more information of creating SliResource, please refer to the document of SliResource
+            // this example assumes you already have this MonitorSliResource created on azure
+            // for more information of creating MonitorSliResource, please refer to the document of MonitorSliResource
             string serviceGroupName = "testSG";
             string sliName = "testSli";
-            ResourceIdentifier sliResourceId = SliResource.CreateResourceIdentifier(serviceGroupName, sliName);
-            SliResource sli = client.GetSliResource(sliResourceId);
+            ResourceIdentifier sliResourceId = MonitorSliResource.CreateResourceIdentifier(serviceGroupName, sliName);
+            MonitorSliResource sli = client.GetMonitorSliResource(sliResourceId);
 
             // invoke the operation
-            SliResource result = await sli.GetAsync();
+            MonitorSliResource result = await sli.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SliData resourceData = result.Data;
+            MonitorSliData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.Monitor.Slis.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SliResource created on azure
-            // for more information of creating SliResource, please refer to the document of SliResource
+            // this example assumes you already have this MonitorSliResource created on azure
+            // for more information of creating MonitorSliResource, please refer to the document of MonitorSliResource
             string serviceGroupName = "testSG";
             string sliName = "testSli";
-            ResourceIdentifier sliResourceId = SliResource.CreateResourceIdentifier(serviceGroupName, sliName);
-            SliResource sli = client.GetSliResource(sliResourceId);
+            ResourceIdentifier sliResourceId = MonitorSliResource.CreateResourceIdentifier(serviceGroupName, sliName);
+            MonitorSliResource sli = client.GetMonitorSliResource(sliResourceId);
 
             // invoke the operation
             await sli.DeleteAsync(WaitUntil.Completed);
@@ -80,17 +80,17 @@ namespace Azure.ResourceManager.Monitor.Slis.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SliResource created on azure
-            // for more information of creating SliResource, please refer to the document of SliResource
+            // this example assumes you already have this MonitorSliResource created on azure
+            // for more information of creating MonitorSliResource, please refer to the document of MonitorSliResource
             string serviceGroupName = "testSG";
             string sliName = "testSli";
-            ResourceIdentifier sliResourceId = SliResource.CreateResourceIdentifier(serviceGroupName, sliName);
-            SliResource sli = client.GetSliResource(sliResourceId);
+            ResourceIdentifier sliResourceId = MonitorSliResource.CreateResourceIdentifier(serviceGroupName, sliName);
+            MonitorSliResource sli = client.GetMonitorSliResource(sliResourceId);
 
             // invoke the operation
-            SliData data = new SliData
+            MonitorSliData data = new MonitorSliData
             {
-                Properties = new SliResourceProperties(
+                Properties = new MonitorSliProperties(
                 "Measures the performance characteristics of the GetContosoUsers() API. ",
                 SliCategory.Latency,
                 SliEvaluationType.WindowBased,
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Samples
             {
 new SliAmwAccount(new ResourceIdentifier("/subscriptions/<subId>/resourcegroups/<rgId>/providers/microsoft.monitor/accounts/<dest>"), new ResourceIdentifier("/subscriptions/<subId>/resourcegroups/<rgId>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<idName>"))
             },
-                new SliBaselineProperties(new SliBaseline(99F, 30, SliEvaluationCalculationType.CalendarDays)),
+                new SliBaseline(99F, 30, SliEvaluationCalculationType.CalendarDays),
                 true,
                 new SliProperties
                 {
@@ -144,12 +144,12 @@ WindowSizeMinutes = 5,
                     WindowUptimeCriteria = new WindowUptimeCriteria(95F, WindowUptimeCriteriaComparator.GreaterThanOrEqual),
                 }),
             };
-            ArmOperation<SliResource> lro = await sli.UpdateAsync(WaitUntil.Completed, data);
-            SliResource result = lro.Value;
+            ArmOperation<MonitorSliResource> lro = await sli.UpdateAsync(WaitUntil.Completed, data);
+            MonitorSliResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SliData resourceData = result.Data;
+            MonitorSliData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
