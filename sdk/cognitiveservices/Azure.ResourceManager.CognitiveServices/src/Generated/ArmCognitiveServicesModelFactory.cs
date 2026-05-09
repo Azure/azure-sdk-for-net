@@ -2575,7 +2575,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 location,
                 properties,
                 tags,
-                default,
+                etag,
                 kind,
                 sku,
                 identity);
@@ -2637,7 +2637,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesPrivateEndpointConnectionData CognitiveServicesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier privateEndpointId, CognitiveServicesPrivateLinkServiceConnectionState connectionState, CognitiveServicesPrivateEndpointConnectionProvisioningState? provisioningState, IEnumerable<string> groupIds, ETag? etag)
         {
-            groupIds ??= new ChangeTrackingList<string>();
 
             return new CognitiveServicesPrivateEndpointConnectionData(
                 id,
@@ -2645,8 +2644,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
-                default,
+                privateEndpointId is null && connectionState is null && provisioningState is null && groupIds is null ? default : new CognitiveServicesPrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default),
+                etag,
                 location);
         }
 
@@ -2722,7 +2721,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 additionalBinaryDataProperties: null,
                 properties,
                 sku,
-                default,
+                etag,
                 tags);
         }
 
@@ -2773,7 +2772,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 properties,
                 tags,
                 location,
-                default,
+                etag,
                 kind,
                 sku);
         }
@@ -2799,7 +2798,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 properties,
-                default,
+                etag,
                 tags);
         }
 
@@ -2824,7 +2823,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 properties,
-                default,
+                etag,
                 tags);
         }
 
@@ -2861,8 +2860,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
-                default,
+                raiBlocklistDescription is null ? default : new RaiBlocklistProperties(raiBlocklistDescription, default),
+                etag,
                 tags);
         }
 
@@ -2887,7 +2886,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 properties,
-                default,
+                etag,
                 tags);
         }
 
@@ -2911,8 +2910,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
-                default,
+                accountId is null ? default : new CommitmentPlanAccountAssociationProperties(accountId, default),
+                etag,
                 tags);
         }
 
@@ -2936,8 +2935,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
-                default,
+                state is null ? default : new DefenderForAISettingProperties(state, default),
+                etag,
                 tags);
         }
 
@@ -2966,7 +2965,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 location,
                 properties,
                 tags,
-                default,
+                etag,
                 identity);
         }
 
