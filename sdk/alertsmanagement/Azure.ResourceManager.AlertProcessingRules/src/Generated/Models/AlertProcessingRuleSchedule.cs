@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <param name="timeZone"> Scheduling time zone. </param>
         /// <param name="recurrences"> List of recurrences. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertProcessingRuleSchedule(string effectiveFrom, string effectiveUntil, string timeZone, IList<AlertProcessingRuleRecurrence> recurrences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertProcessingRuleSchedule(DateTimeOffset? effectiveFrom, DateTimeOffset? effectiveUntil, string timeZone, IList<AlertProcessingRuleRecurrence> recurrences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EffectiveFrom = effectiveFrom;
             EffectiveUntil = effectiveUntil;
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         }
 
         /// <summary> Scheduling effective from time. Date-Time in ISO-8601 format without timezone suffix. </summary>
-        public string EffectiveFrom { get; set; }
+        public DateTimeOffset? EffectiveFrom { get; set; }
 
         /// <summary> Scheduling effective until time. Date-Time in ISO-8601 format without timezone suffix. </summary>
-        public string EffectiveUntil { get; set; }
+        public DateTimeOffset? EffectiveUntil { get; set; }
 
         /// <summary> Scheduling time zone. </summary>
         public string TimeZone { get; set; }

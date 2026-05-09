@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
 
         /// <summary> Initializes a new instance of <see cref="DailyRecurrence"/>. </summary>
         /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
-        /// <param name="startTime"> Start time for recurrence. </param>
-        /// <param name="endTime"> End time for recurrence. </param>
+        /// <param name="startOn"> Start time for recurrence. </param>
+        /// <param name="endOn"> End time for recurrence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DailyRecurrence(RecurrenceType recurrenceType, string startTime, string endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(recurrenceType, startTime, endTime, additionalBinaryDataProperties)
+        internal DailyRecurrence(RecurrenceType recurrenceType, TimeSpan? startOn, TimeSpan? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(recurrenceType, startOn, endOn, additionalBinaryDataProperties)
         {
         }
     }

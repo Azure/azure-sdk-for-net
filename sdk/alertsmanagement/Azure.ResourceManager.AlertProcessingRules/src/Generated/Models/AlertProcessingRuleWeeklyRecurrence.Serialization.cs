@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                 return null;
             }
             RecurrenceType recurrenceType = default;
-            string startTime = default;
-            string endTime = default;
+            TimeSpan? startOn = default;
+            TimeSpan? endOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<AlertsManagementDayOfWeek> daysOfWeek = default;
             foreach (var prop in element.EnumerateObject())
@@ -128,12 +128,20 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startOn = prop.Value.GetTimeSpan("T");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
-                    endTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endOn = prop.Value.GetTimeSpan("T");
                     continue;
                 }
                 if (prop.NameEquals("daysOfWeek"u8))
@@ -151,7 +159,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AlertProcessingRuleWeeklyRecurrence(recurrenceType, startTime, endTime, additionalBinaryDataProperties, daysOfWeek);
+            return new AlertProcessingRuleWeeklyRecurrence(recurrenceType, startOn, endOn, additionalBinaryDataProperties, daysOfWeek);
         }
     }
 }

@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Indicates if the given alert processing rule is enabled or disabled. </summary>
-        public bool? Enabled
+        public bool? IsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.Enabled;
+                return Properties is null ? default : Properties.IsEnabled;
             }
             set
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                 {
                     Properties = new PatchProperties();
                 }
-                Properties.Enabled = value;
+                Properties.IsEnabled = value;
             }
         }
     }

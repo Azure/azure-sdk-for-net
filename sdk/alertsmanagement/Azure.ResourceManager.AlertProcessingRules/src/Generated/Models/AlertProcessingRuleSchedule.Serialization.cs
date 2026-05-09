@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             if (Optional.IsDefined(EffectiveFrom))
             {
                 writer.WritePropertyName("effectiveFrom"u8);
-                writer.WriteStringValue(EffectiveFrom);
+                writer.WriteStringValue(EffectiveFrom.Value, "O");
             }
             if (Optional.IsDefined(EffectiveUntil))
             {
                 writer.WritePropertyName("effectiveUntil"u8);
-                writer.WriteStringValue(EffectiveUntil);
+                writer.WriteStringValue(EffectiveUntil.Value, "O");
             }
             if (Optional.IsDefined(TimeZone))
             {
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             {
                 return null;
             }
-            string effectiveFrom = default;
-            string effectiveUntil = default;
+            DateTimeOffset? effectiveFrom = default;
+            DateTimeOffset? effectiveUntil = default;
             string timeZone = default;
             IList<AlertProcessingRuleRecurrence> recurrences = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,12 +150,20 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             {
                 if (prop.NameEquals("effectiveFrom"u8))
                 {
-                    effectiveFrom = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    effectiveFrom = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("effectiveUntil"u8))
                 {
-                    effectiveUntil = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    effectiveUntil = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("timeZone"u8))

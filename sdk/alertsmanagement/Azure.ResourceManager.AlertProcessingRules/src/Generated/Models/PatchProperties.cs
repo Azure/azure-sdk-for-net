@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PatchProperties"/>. </summary>
-        /// <param name="enabled"> Indicates if the given alert processing rule is enabled or disabled. </param>
+        /// <param name="isEnabled"> Indicates if the given alert processing rule is enabled or disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PatchProperties(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PatchProperties(bool? isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates if the given alert processing rule is enabled or disabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
 }

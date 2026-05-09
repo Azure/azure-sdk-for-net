@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             AlertProcessingRuleSchedule schedule = default;
             IList<AlertProcessingRuleAction> actions = default;
             string description = default;
-            bool? enabled = default;
+            bool? isEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                 schedule,
                 actions,
                 description,
-                enabled,
+                isEnabled,
                 additionalBinaryDataProperties);
         }
     }

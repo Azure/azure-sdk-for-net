@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
 
         /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleMonthlyRecurrence"/>. </summary>
         /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
-        /// <param name="startTime"> Start time for recurrence. </param>
-        /// <param name="endTime"> End time for recurrence. </param>
+        /// <param name="startOn"> Start time for recurrence. </param>
+        /// <param name="endOn"> End time for recurrence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="daysOfMonth"> Specifies the values for monthly recurrence pattern. </param>
-        internal AlertProcessingRuleMonthlyRecurrence(RecurrenceType recurrenceType, string startTime, string endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<int> daysOfMonth) : base(recurrenceType, startTime, endTime, additionalBinaryDataProperties)
+        internal AlertProcessingRuleMonthlyRecurrence(RecurrenceType recurrenceType, TimeSpan? startOn, TimeSpan? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<int> daysOfMonth) : base(recurrenceType, startOn, endOn, additionalBinaryDataProperties)
         {
             DaysOfMonth = daysOfMonth;
         }

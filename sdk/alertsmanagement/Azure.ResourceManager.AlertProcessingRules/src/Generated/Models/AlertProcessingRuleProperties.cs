@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <param name="schedule"> Scheduling for alert processing rule. </param>
         /// <param name="actions"> Actions to be applied. </param>
         /// <param name="description"> Actions to be applied.Description of alert processing rule. </param>
-        /// <param name="enabled"> Indicates if the given alert processing rule is enabled or disabled. </param>
+        /// <param name="isEnabled"> Indicates if the given alert processing rule is enabled or disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertProcessingRuleProperties(IList<string> scopes, IList<AlertProcessingRuleCondition> conditions, AlertProcessingRuleSchedule schedule, IList<AlertProcessingRuleAction> actions, string description, bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertProcessingRuleProperties(IList<string> scopes, IList<AlertProcessingRuleCondition> conditions, AlertProcessingRuleSchedule schedule, IList<AlertProcessingRuleAction> actions, string description, bool? isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scopes = scopes;
             Conditions = conditions;
             Schedule = schedule;
             Actions = actions;
             Description = description;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -67,6 +67,6 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         public string Description { get; set; }
 
         /// <summary> Indicates if the given alert processing rule is enabled or disabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
 }

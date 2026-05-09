@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                 return null;
             }
             RecurrenceType recurrenceType = default;
-            string startTime = default;
-            string endTime = default;
+            TimeSpan? startOn = default;
+            TimeSpan? endOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -115,12 +115,20 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startOn = prop.Value.GetTimeSpan("T");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
-                    endTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endOn = prop.Value.GetTimeSpan("T");
                     continue;
                 }
                 if (options.Format != "W")
@@ -128,7 +136,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DailyRecurrence(recurrenceType, startTime, endTime, additionalBinaryDataProperties);
+            return new DailyRecurrence(recurrenceType, startOn, endOn, additionalBinaryDataProperties);
         }
     }
 }

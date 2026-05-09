@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
     public partial class AlertProcessingRulePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRulePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRulePatch>
     {
         public AlertProcessingRulePatch() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRulePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction> Actions { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition> Conditions { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule Schedule { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
         protected virtual Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -234,8 +234,8 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
     public abstract partial class AlertProcessingRuleRecurrence : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence>
     {
         internal AlertProcessingRuleRecurrence() { }
-        public string EndTime { get { throw null; } set { } }
-        public string StartTime { get { throw null; } set { } }
+        public System.TimeSpan? EndOn { get { throw null; } set { } }
+        public System.TimeSpan? StartOn { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -262,8 +262,8 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
     public partial class AlertProcessingRuleSchedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule>
     {
         public AlertProcessingRuleSchedule() { }
-        public string EffectiveFrom { get { throw null; } set { } }
-        public string EffectiveUntil { get { throw null; } set { } }
+        public System.DateTimeOffset? EffectiveFrom { get { throw null; } set { } }
+        public System.DateTimeOffset? EffectiveUntil { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence> Recurrences { get { throw null; } }
         public string TimeZone { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -317,11 +317,11 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAddGroupsAction AlertProcessingRuleAddGroupsAction(System.Collections.Generic.IEnumerable<string> actionGroupIds = null) { throw null; }
         public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition AlertProcessingRuleCondition(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField? field = default(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleField?), Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator? @operator = default(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator?), System.Collections.Generic.IEnumerable<string> values = null) { throw null; }
         public static Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleData AlertProcessingRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleMonthlyRecurrence AlertProcessingRuleMonthlyRecurrence(string startTime = null, string endTime = null, System.Collections.Generic.IEnumerable<int> daysOfMonth = null) { throw null; }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRulePatch AlertProcessingRulePatch(bool? enabled = default(bool?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleProperties AlertProcessingRuleProperties(System.Collections.Generic.IEnumerable<string> scopes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition> conditions = null, Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule schedule = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction> actions = null, string description = null, bool? enabled = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule AlertProcessingRuleSchedule(string effectiveFrom = null, string effectiveUntil = null, string timeZone = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence> recurrences = null) { throw null; }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleWeeklyRecurrence AlertProcessingRuleWeeklyRecurrence(string startTime = null, string endTime = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek> daysOfWeek = null) { throw null; }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleMonthlyRecurrence AlertProcessingRuleMonthlyRecurrence(System.TimeSpan? startOn = default(System.TimeSpan?), System.TimeSpan? endOn = default(System.TimeSpan?), System.Collections.Generic.IEnumerable<int> daysOfMonth = null) { throw null; }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRulePatch AlertProcessingRulePatch(bool? isEnabled = default(bool?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleProperties AlertProcessingRuleProperties(System.Collections.Generic.IEnumerable<string> scopes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition> conditions = null, Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule schedule = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction> actions = null, string description = null, bool? isEnabled = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule AlertProcessingRuleSchedule(System.DateTimeOffset? effectiveFrom = default(System.DateTimeOffset?), System.DateTimeOffset? effectiveUntil = default(System.DateTimeOffset?), string timeZone = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence> recurrences = null) { throw null; }
+        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleWeeklyRecurrence AlertProcessingRuleWeeklyRecurrence(System.TimeSpan? startOn = default(System.TimeSpan?), System.TimeSpan? endOn = default(System.TimeSpan?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertProcessingRules.Models.AlertsManagementDayOfWeek> daysOfWeek = null) { throw null; }
     }
     public partial class DailyRecurrence : Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.DailyRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.DailyRecurrence>
     {

@@ -5,6 +5,5 @@
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.AlertsManagement Alert Processing Rules.</Description>
     <PackageTags>azure;management;arm;resource manager;alertsmanagement;alertprocessingrules</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>
