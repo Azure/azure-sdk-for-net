@@ -54,12 +54,10 @@ Synchronous sample:
 ProjectsAgentVersion agentVersion = agentsClient.GetAgentVersion(
     agentName: hostedAgentName,
     agentVersion: hostedAgentVersion);
-string sessionKey = Guid.NewGuid().ToString();
 string sessionId = Guid.NewGuid().ToString();
 ProjectAgentSession session = agentsClient.CreateSession(
     agentName: agentVersion.Name,
     agentSessionId: sessionId,
-    isolationKey: sessionKey,
     versionIndicator: new VersionRefIndicator(agentVersion.Version)
 );
 while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
@@ -74,12 +72,10 @@ Asynchronous sample:
 ProjectsAgentVersion agentVersion = await agentsClient.GetAgentVersionAsync(
     agentName: hostedAgentName,
     agentVersion: hostedAgentVersion);
-string sessionKey = Guid.NewGuid().ToString("N");
 string sessionId = Guid.NewGuid().ToString("N");
 ProjectAgentSession session = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
     agentSessionId: sessionId,
-    isolationKey: sessionKey,
     versionIndicator: new VersionRefIndicator(agentVersion.Version)
 );
 while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
@@ -204,12 +200,12 @@ Synchronous sample:
 ```C# Snippet:Sample_DeleteFiles_SessionFiles_Sync
 sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
 sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload2.txt");
-agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
+agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_DeleteFiles_SessionFiles_Async
 await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
 await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload2.txt");
-await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
+await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
 ```

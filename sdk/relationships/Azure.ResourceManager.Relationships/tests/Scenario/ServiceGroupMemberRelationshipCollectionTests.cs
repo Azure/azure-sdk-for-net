@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
     /// a member of a Service Group. The relationship is created ON the member resource,
     /// with targetId pointing to the Service Group.
     /// </summary>
-    [Ignore("Recordings broken by ServiceGroups TypeSpec migration (#58689). Tracking: https://github.com/Azure/azure-sdk-for-net/issues/58724")]
     public class ServiceGroupMemberRelationshipCollectionTests : RelationshipsManagementTestBase
     {
         private ServiceGroupMemberRelationshipResource _relationship;

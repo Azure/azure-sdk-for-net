@@ -38,7 +38,7 @@ public partial class AgentToolboxes
     /// <exception cref="ArgumentNullException"> <paramref name="toolboxName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="toolboxName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<ToolboxVersion> GetToolboxes(string toolboxName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<ToolboxVersion> GetToolboxVersions(string toolboxName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(toolboxName, nameof(toolboxName));
         return new InternalOpenAICollectionResultOfT<ToolboxVersion>(

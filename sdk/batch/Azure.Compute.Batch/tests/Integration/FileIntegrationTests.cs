@@ -65,7 +65,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                     BatchFileProperties batchFilePropertiesesponse = await client.GetTaskFilePropertiesAsync(jobId, t.Id, outputFileName);
                     Assert.IsNotNull(batchFilePropertiesesponse);
-                    Assert.IsNotEmpty(batchFilePropertiesesponse.FileUrl);
+                    Assert.IsNotNull(batchFilePropertiesesponse.FileUri);
 
                     BinaryData fileContents = await client.GetTaskFileAsync(jobId, t.Id, outputFileName);
                     using (var reader = new StreamReader(fileContents.ToStream()))
@@ -159,7 +159,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     BatchFileProperties batchFileProperties = await client.GetNodeFilePropertiesAsync(poolId, item.Id, file);
                     Assert.IsNotNull(batchFileProperties);
-                    Assert.IsNotEmpty(batchFileProperties.FileUrl);
+                    Assert.IsNotNull(batchFileProperties.FileUri);
 
                     BinaryData fileContents = await client.GetNodeFileAsync(poolId, item.Id, file);
                     using (var reader = new StreamReader(fileContents.ToStream()))

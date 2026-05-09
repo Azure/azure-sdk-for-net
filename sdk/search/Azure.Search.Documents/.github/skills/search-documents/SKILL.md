@@ -1,464 +1,163 @@
 ---
 name: search-documents
-description: '**UTILITY SKILL** — Domain knowledge for the Azure.Search.Documents SDK package. Covers all supported developer tools, how to use each one for Search, architecture, customization patterns, and common scenarios (e.g. new API version release). WHEN: regenerate search package; modify search client; fix search build error; add search feature; customize types; export API surface; run tests; release new version.'
+description: 'E2E workflow skill for Azure.Search.Documents SDK (TypeSpec + heavy customization). Handles full release cycles and partial updates: SHA update; code generation; build; customization fixes; ServiceVersion sync; testing; API export; changelog; version; samples; formatting; release metadata. WHEN: create new package version for Azure.Search.Documents; regenerate Azure.Search.Documents; fix Azure.Search.Documents bug; release Azure.Search.Documents; update Azure.Search.Documents spec. Do not use for Azure.ResourceManager.Search or Azure.Provisioning.Search.'
 ---
 
 # Azure.Search.Documents — Package Skill
 
-This skill is organized around **tools and capabilities** — what you can do and exactly how to do it for this package. Common scenarios (like releasing a new API version) are covered at the end as tool-composition workflows.
-
-For deep reference, see:
-- [references/architecture.md](./references/architecture.md) — full source layout, clients, service version rules, buffererd indexing
-- [references/customization.md](./references/customization.md) — `CodeGenType`/`CodeGenMember`/`CodeGenSuppress` patterns
-
----
-
-## Package Identity
-
 | Property | Value |
 |---|---|
-| Package name | `Azure.Search.Documents` |
-| Root path | `sdk/search/Azure.Search.Documents/` |
+| Package | `Azure.Search.Documents` |
+| Root | `sdk/search/Azure.Search.Documents/` |
+| Plane | data-plane (TypeSpec → `azure-typespec-http-client-csharp-emitter`) |
+| Service directory | `search` |
 | TypeSpec pin | `tsp-location.yaml` |
-| Solution | `Azure.Search.Documents.sln` |
-| Service directory key | `search` (used by eng scripts) |
 
----
+References (load on demand):
+- [references/architecture.md](./references/architecture.md) — source layout, generated-vs-custom map, service version management, SearchOptions three-layer architecture, backward compat rules
+- [references/customization.md](./references/customization.md) — CodeGen attributes, TypeSpec-vs-C# decision table, per-type map, SearchOptions redirector patterns, post-regen update guide
+- [references/testing.md](./references/testing.md) — coverage tiers, version matrix, preview isolation, post-regen test workflow
 
-## Architecture at a Glance
-
-`src/Generated/` — **never hand-edit**. All other `src/` files are custom code extending the generated `partial` classes.
-
-**Public clients:**
-
-| Client | Namespace | Purpose |
-|---|---|---|
-| `SearchClient` | `Azure.Search.Documents` | Document query (search, suggest, autocomplete) and document index/delete |
-| `SearchIndexClient` | `Azure.Search.Documents.Indexes` | Indexes, synonym maps, aliases, knowledge bases, knowledge sources |
-| `SearchIndexerClient` | `Azure.Search.Documents.Indexes` | Indexers, data sources, skillsets |
-| `KnowledgeBaseRetrievalClient` | `Azure.Search.Documents.KnowledgeBases` | RAG-style retrieval from a knowledge base |
-| `SearchIndexingBufferedSender<T>` | `Azure.Search.Documents` | Batched, retry-aware document upload |
-
----
-
-## Tool Reference
-
-### 1. `azsdk_package_generate_code` — Regenerate SDK from TypeSpec
-
-**What it does:** Pulls the TypeSpec spec at the commit pinned in `tsp-location.yaml` and regenerates all files under `src/Generated/`.
-
-**When to use:**
-- Updating to a new spec commit / API version
-- Picking up spec bug fixes without a version bump
-
-**How to invoke:**
-```
-azsdk_package_generate_code
-  packagePath: sdk/search/Azure.Search.Documents
-```
-
-**Inputs that may need to change first:**
-
-| File | Field | When to change |
-|---|---|---|
-| `tsp-location.yaml` | `commit` | New API version or spec update |
-| `tsp-location.yaml` | `directory` | Spec path changed (rare) |
-
-Current `tsp-location.yaml`:
-```yaml
-repo: Azure/azure-rest-api-specs
-commit: <SHA>
-directory: specification/search/data-plane/Search
-emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
-```
-
-**Post-generation checklist** (always verify after running):
-- [ ] `src/Generated/` has changed files — normal
-- [ ] New model files appear in `src/Generated/Models/` — normal, may need `@@access`/`@@usage` in TypeSpec `client.tsp`
-- [ ] Deleted model files — check if backward-compat retention is required (see [Backward Compat](#backward-compat-for-deleted-types))
-- [ ] `SearchClientOptions.cs` updated if the generated `ServiceVersion` mapping changed
-- [ ] Build passes — run `azsdk_package_build_code` immediately after
-
-> **Rule:** Never manually edit any file inside `src/Generated/`. Fix the TypeSpec spec or add a C# customization.
-
----
-
-### 2. `azsdk_package_build_code` — Build / Compile
-
-**What it does:** Runs `dotnet build` on the package and returns compilation errors.
-
-**When to use:** After any change to `src/` or `src/Generated/`. Always run after generation.
-
-**How to invoke:**
-```
-azsdk_package_build_code
-  packagePath: sdk/search/Azure.Search.Documents
-```
-
-**Common build errors and fixes:**
-
-| Error pattern | Cause | Fix |
-|---|---|---|
-| `'Foo' does not contain a definition for 'Bar'` | Generated property renamed or removed | Update custom partial to use new name, or add `[CodeGenMember]` alias |
-| `The type or namespace 'Foo' does not exist` | Generated type deleted | Restore file (backward compat) or update reference |
-| `Ambiguous reference` | Custom and generated both declare same member | Use `[CodeGenSuppress]` to remove generated one |
-| `CS0115` override/implement mismatch | Method signature changed in generated layer | Align custom override signature |
-| Switch expression not exhaustive | New `ServiceVersion` enum member added | Update all three switch arms in `SearchClientOptions.cs` |
-
-When generated code introduces a type not previously public, you may need to add `@@access` or `@@usage` decorators in the TypeSpec `client.tsp` rather than duplicating visibility control in C#. Prefer TypeSpec for cross-language concerns.
-
----
-
-### 3. `Export-API.ps1` — Export Public API Surface
-
-**What it does:** Generates `api/Azure.Search.Documents.*.cs` snapshots of the public API surface. Required after any public API change so CI ApiCompat works correctly.
-
-**When to use:**
-- After any public member is added, removed, or renamed
-- After regeneration (if public types changed)
-- Before any release
-
-**How to invoke:**
-```powershell
-eng\scripts\Export-API.ps1 search
-```
-
-**Output files** (committed to the repo):
-```
-api/Azure.Search.Documents.net10.0.cs
-api/Azure.Search.Documents.net8.0.cs
-api/Azure.Search.Documents.netstandard2.0.cs
-```
-
-**Gate for GA releases:** Also run `dotnet pack` which triggers ApiCompat automatically and verifies no breaking changes from `ApiCompatVersion`. 
-
-> **Rule:** Never update `ApiCompatBaseline.txt` or `ApiCompatVersion` without explicit directive. Prefer fixing code to match existing API shape. Breaking changes require a major version bump.
-
----
-
-### 4. `dotnet format` / `azsdk_package_run_check` — Code Quality Checks
-
-**`dotnet format` — code style:**
-```powershell
-dotnet format sdk/search/Azure.Search.Documents/src/Azure.Search.Documents.csproj
-dotnet format sdk/search/Azure.Search.Documents/tests/Azure.Search.Documents.Tests.csproj
-```
-Run on any `*.cs` file you modify. Required before committing.
-
-**`azsdk_package_run_check` — repo-level lint (spelling, README links, metadata):**
-```
-azsdk_package_run_check
-  packagePath: sdk/search/Azure.Search.Documents
-```
-Catches: cspell violations in new identifiers/comments, broken README links, malformed `metadata.json`, missing `CHANGELOG.md` entry.
-
----
-
-### 5. `Update-Snippets.ps1` — Sync Samples and Snippets
-
-**What it does:** Scans `samples/` and `README.md` for code snippet markers and regenerates the inline code blocks from the actual compilable sample files.
-
-**When to use:**
-- After adding or changing a public API that has a sample
-- After renaming a type that appears in samples
-- Before any release
-
-**How to invoke:**
-```powershell
-eng\scripts\Update-Snippets.ps1 search
-```
-
-If samples reference a new type added in this release, ensure the type is compilable first (i.e., build passes) before running snippets.
-
----
-
-### 6. `dotnet test` — Run Tests
-
-**Unit/recorded tests (always run):**
-```powershell
-dotnet test sdk/search/Azure.Search.Documents/tests/ --filter "TestCategory!=Live"
-```
-
-**Live tests (requires provisioned service):**
-```powershell
-dotnet test sdk/search/Azure.Search.Documents/tests/ --filter "TestCategory=Live"
-```
-
-**Test layout:**
-```
-tests/
-├── Batching/               # SearchIndexingBufferedSender tests
-├── DocumentOperations/     # Search, get, suggest, autocomplete
-├── Models/                 # Model serialization, factory
-├── Samples/                # Runnable doc examples
-├── Serialization/          # SearchDocument converter
-└── SearchClientTests.cs / SearchIndexClientTests.cs / ...
-```
-
-**Recording playback:** Test recordings are stored in a separate repo, pointed to by `assets.json`. Recorded tests run in CI without a live service.
-
----
-
-### 7. `azsdk_package_update_changelog_content` — Draft Changelog
-
-**What it does:** Drafts changelog entries in `CHANGELOG.md` based on API diffs and commits.
-
-**When to use:** After completing a release cycle, before cutting the release.
-
-**How to invoke:**
-```
-azsdk_package_update_changelog_content
-  packagePath: sdk/search/Azure.Search.Documents
-```
-
-**Sections to fill:**
-- `## Features Added` — new public types, operations, overloads
-- `## Breaking Changes` — removed/renamed public members (GA only)
-- `## Bugs Fixed` — behavior corrections
-- `## Other Changes` — dependency bumps, perf, internal refactors
-
-> **Rule:** Verify every entry against `api/*.cs`. Do not list types that do not exist in the codebase. Compare against the previous GA version's API surface.
-
----
-
-### 8. `Prepare-Release.ps1` / `azsdk_package_update_metadata` — Version and Metadata
-
-**Bump version and changelog header:**
-```powershell
-eng\common\scripts\Prepare-Release.ps1 Azure.Search.Documents search <ReleaseDate>
-# GA:      X.Y.Z           e.g. 12.0.0
-# Preview: X.Y.Z-beta.N    e.g. 12.0.0-beta.1
-```
-
-**Update metadata.json:**
-```
-azsdk_package_update_metadata
-  packagePath: sdk/search/Azure.Search.Documents
-```
-
----
-
-## Key Hand-Authored Files
-
-These files are **never overwritten by regeneration**. They must be manually kept in sync.
-
-### `src/SearchClientOptions.cs` — Service Version Registry
-
-The single source of truth for all API versions the SDK supports. Five locations must always be in sync:
-
-```csharp
-// 1. Enum member
-public enum ServiceVersion
-{
-    V2020_06_30 = 1,
-    V2023_11_01 = 2,
-    V2024_07_01 = 3,
-    V2025_09_01 = 4,
-    V2026_04_01 = 5,  // ← add new member here
-}
-
-// 2. LatestVersion constant
-internal const ServiceVersion LatestVersion = ServiceVersion.V2026_04_01;
-
-// 3. Validate() — add case for the new member (throws on invalid)
-// 4. ToVersionString() — map enum → "2026-04-01"
-// 5. ToServiceVersion() — map "2026-04-01" → enum  (used by test recordings)
-```
-
-> **Rule:** All five must be in sync. Missing a `ToVersionString` case causes a runtime `ArgumentOutOfRangeException`.  
-> For preview releases: only the latest preview version is allowed. For GA: no preview versions allowed.
-
-### `src/Indexes/FieldBuilder.cs`
-Reflects `.NET` model types to produce `SearchField` definitions. Self-contained; rarely needs changes.
-
-### `src/SearchFilter.cs`
-Safe OData filter string builder. Add new overloads here for new filter capabilities.
-
-### `Models/SearchModelFactory.cs`
-Custom partial of the generated factory for backward-compat overloads. Update when generated factory method signatures change.
-
----
-
-## Customization Patterns
-
-> Full reference: [references/customization.md](./references/customization.md)
-
-### When to customize in TypeSpec vs. C#
-
-| Change | Where |
-|---|---|
-| Rename type/property for all languages | TypeSpec `client.tsp` → `@@clientName` |
-| Change access (public→internal) for all languages | TypeSpec `client.tsp` → `@@access` |
-| Language-specific convenience constructor | C# customization |
-| Wrap `string` as `Uri`, `ETag`, `IList<string>` | C# customization |
-| Suppress a generated constructor to replace it | C# `[CodeGenSuppress]` |
-| Add semantic helpers (`FieldBuilder`, `SearchFilter`) | C# only |
-| Multi-version backward compat for removed type | C# (restore deleted file) |
-
-### Quick attribute reference
-
-```csharp
-[CodeGenType("OriginalGeneratedName")]    // renames a class/enum in the custom partial
-[CodeGenMember("OriginalPropertyName")]  // renames a property/field in the custom partial
-[CodeGenSuppress("MethodName", typeof(Arg1))]  // removes a generated constructor/method
-```
-
-### Backward Compat for Deleted Types
-
-When regeneration deletes a model that existed in a prior GA version:
-1. `git status` / `git diff --name-only` — identify deleted `src/Generated/Models/Foo.cs`
-2. `git checkout HEAD -- src/Generated/Models/Foo.cs` — restore
-3. The file stays in `Generated/` but is no longer overwritten by future regen
-4. Add to the known retained types list in this skill under [Known Retained Types](#known-retained-types)
-
-**Known retained types** (restored after deletion due to API version changes):
-- `HybridSearch.cs`, `HybridCountAndFacetMode.cs`
-- `IndexerRuntime.cs`
-- `QueryLanguage.cs`, `QuerySpellerType.cs`, `QueryRewritesType.cs`
-- `SemanticQueryRewritesResultType.cs`, `KnowledgeRetrievalOutputMode.cs`
-- `QueryRewritesDebugInfo.cs`, `QueryRewritesValuesDebugInfo.cs`
-
----
-
-## Common Scenarios
-
-### Scenario A: Release a New GA API Version
-
-This is the full workflow composing all tools above.
-
-> **Prerequisite:** Have the new spec **commit SHA** and **API version string** (e.g., `2026-04-01`) before starting. Do not guess or use HEAD.
-
-**Step 1 — Update `tsp-location.yaml`** 
-Set `commit` to the new SHA. Leave all other fields unchanged.
-
-**Step 2 — Regenerate**
-```
-azsdk_package_generate_code  packagePath: sdk/search/Azure.Search.Documents
-```
-
-**Step 3 — Update `SearchClientOptions.cs`**  
-Add the new `ServiceVersion` enum member and update all five locations (see [Key Hand-Authored Files](#key-hand-authored-files)). No preview versions in a GA release.
-
-**Step 4 — Fix build errors**
-```
-azsdk_package_build_code  packagePath: sdk/search/Azure.Search.Documents
-```
-Resolve any errors using the patterns in [Tool 2](#2-azsdk_package_build_code----build--compile).
-
-**Step 5 — Update test version references**  
-Search tests for stale version strings (`"2025-09-01"`, `ServiceVersion.V2025_09_01`, etc.) and update to the new version.
-
-**Step 6 — Export public API**
-```powershell
-eng\scripts\Export-API.ps1 search
-dotnet pack sdk/search/Azure.Search.Documents/src  # triggers ApiCompat
-```
-Zero ApiCompat errors required. Never update baseline without explicit approval.
-
-**Step 7 — Format**
-```powershell
-dotnet format sdk/search/Azure.Search.Documents/src/Azure.Search.Documents.csproj
-dotnet format sdk/search/Azure.Search.Documents/tests/Azure.Search.Documents.Tests.csproj
-```
-
-**Step 8 — Snippets**
-```powershell
-eng\scripts\Update-Snippets.ps1 search
-```
-
-**Step 9 — Tests**
-```powershell
-dotnet test sdk/search/Azure.Search.Documents/tests/ --filter "TestCategory!=Live"
-azsdk_package_run_check  packagePath: sdk/search/Azure.Search.Documents
-```
-
-**Step 10 — Changelog**
-```
-azsdk_package_update_changelog_content  packagePath: sdk/search/Azure.Search.Documents
-```
-Verify every entry against `api/*.cs`.
-
-**Step 11 — Version and metadata**
-```powershell
-eng\common\scripts\Prepare-Release.ps1 Azure.Search.Documents search <ReleaseDate>
-```
-```
-azsdk_package_update_metadata  packagePath: sdk/search/Azure.Search.Documents
-```
-
-**Step 12 — Final gate**
-Re-run any step whose outputs changed since it last ran:
-- [ ] `src/` changed after Step 6 → re-run Export-API
-- [ ] `src/` or `*.md` changed after Step 8 → re-run snippets
-- [ ] `dotnet build` → `dotnet test` (non-live) → `dotnet pack` (ApiCompat)
-- [ ] `git status` clean (no unintentionally modified files)
-
----
-
-### Scenario B: Regenerate Without Changing API Version
-
-Use this when picking up a spec bug fix on the same API version.
-
-1. Update `commit` in `tsp-location.yaml` to the new SHA
-2. Run `azsdk_package_generate_code`
-3. Run `azsdk_package_build_code` and fix any errors
-4. Run `Export-API.ps1 search` and check for unintended API surface changes
-5. Run `dotnet test --filter "TestCategory!=Live"`
-
----
-
-### Scenario C: Add a C# Customization to a Generated Type
-
-1. Identify the generated type in `src/Generated/` (do not edit it)
-2. Create or update the corresponding custom partial file in `src/` (see [architecture.md](./references/architecture.md) for the file mapping)
-3. Apply the appropriate attribute (`[CodeGenType]`, `[CodeGenMember]`, `[CodeGenSuppress]`)
-4. Run `azsdk_package_build_code` to verify
-5. If a public API changed: run `Export-API.ps1 search`
-
-**Prefer TypeSpec first:** If the rename or visibility change should apply to all language SDKs, update `client.tsp` in `azure-rest-api-specs` and regenerate instead of adding a C# customization.
-
----
-
-### Scenario D: Fix a Build Error After Regeneration
-
-1. Read the error message carefully — identify the file, type, and member
-2. Check if the generated type/member was renamed: look in `src/Generated/` for the new name
-3. Choose the fix:
-   - Rename in custom partial → use `[CodeGenMember("OldName")]`
-   - Type no longer exists → restore deleted file (see [Backward Compat](#backward-compat-for-deleted-types)) or remove reference
-   - Ambiguous declaration → add `[CodeGenSuppress]` on the generated version
-   - Switch exhaustiveness → add the new `ServiceVersion` case to all three switches
-4. Run `azsdk_package_build_code` again to confirm clean build
-
----
-
-## Keeping Reference Docs in Sync
-
-The reference files in `.github/skills/search-documents/references/` are the long-term memory for this package. They must stay accurate or future agents will make decisions based on stale information.
-
-**After completing any task, check whether the following changed and update the relevant reference file if so:**
-
-| If you changed… | Update in `references/` |
-|---|---|
-| Added/removed/renamed a client type or namespace | `architecture.md` → Public Client Types table, Namespaces table |
-| Added/removed a `src/` directory or significant file | `architecture.md` → Source Layout section |
-| Added/removed a custom partial class or key hand-authored file | `architecture.md` → Generated vs. Custom table, Key Supporting Files table |
-| Changed `ServiceVersion` enum (new version, removed version) | `architecture.md` → Service Version Management section |
-| Added/modified a `[CodeGenType]`, `[CodeGenMember]`, or `[CodeGenSuppress]` usage | `customization.md` → relevant pattern section and usage table |
-| Restored a deleted generated type for backward compat | `architecture.md` → Backwards Compatibility section; this skill → Known Retained Types list |
-| Added a new test directory or changed test framework conventions | `architecture.md` → Tests section |
-| Changed how the `SearchModelFactory` custom partial works | `customization.md` → SearchModelFactory Customizations section |
-
-**Rule:** If you're unsure whether a change is significant enough to document, document it. Stale reference docs are harder to fix than over-documented ones.
 
 ---
 
 ## Common Pitfalls
 
-- **Editing `src/Generated/`** — changes are wiped on next regeneration. Use custom partial classes.
-- **Missing a `ToVersionString` / `ToServiceVersion` case** — causes silent `ArgumentOutOfRangeException` at runtime, not a compile error.
-- **Forgetting to re-export API after public changes** — CI ApiCompat fails on the PR.
-- **Writing changelog entries for types that don't exist** — always cross-check against `api/*.cs`.
-- **Not running `dotnet format`** — CI style check fails.
-- **Adding a preview `ServiceVersion` to a GA release** — remove all preview-only version arms before tagging GA.
-- **Restoring a deleted type to the wrong directory** — restored types go back to `src/Generated/Models/`, not `src/Models/`.
+1. **Never hand-edit `src/Generated/`** — files with `// <auto-generated/>` header are overwritten on regeneration. All modifications go through custom partial classes, `[CodeGenSuppress]`/`[CodeGenType]`/`[CodeGenMember]` attributes, or TypeSpec `client.tsp` decorators.
+2. **Check custom partials FIRST on build errors after regen** — this package has 60+ `[CodeGenMember]`, 12 `[CodeGenType]`, and 11 `[CodeGenSuppress]` usages. The files in `src/Options/`, `src/Models/`, `src/Indexes/Models/` are the most likely breakage points.
+3. **`[CodeGenSuppress]` fails silently** — if the generator renames/removes a member, a stale `[CodeGenSuppress]` does nothing (no compile error, but the generated member reappears in the public API).
+4. **ServiceVersion has 5 sync locations** — enum member, `LatestVersion`, `Validate()`, `ToVersionString()`, `ToServiceVersion()` in `SearchClientOptions.cs`. Missing a switch case causes a **runtime** `ArgumentOutOfRangeException`, not a compile error.
+5. **Forgetting `Export-API.ps1 search`** — CI ApiCompat will fail on any public API change.
+6. **Restoring a preview-only deleted type** — only restore types that existed in a previous GA release. Check via git tags.
+7. **Changelog: "Breaking Change" for unreleased type** — types introduced in the current unreleased version are not breaking changes; use "Features Added" instead.
+8. **Never make changes to ApiCompatBaseline.txt unless approved by the user** — this file is used to track API compatibility and should only be modified with proper authorization.
+9. **SearchModelFactory** — the hand-written `SearchModelFactory` only needs to be modified when the build fails due to a missing factory method.
+10. **Custom deserializers silently drop new fields** — Some classes, such as `FacetResult.cs` and `SearchResults.cs`, have hand-written deserialization that constructs model types directly. When the generated constructor gains new parameters, do NOT just pass `null`/`default` — you must add JSON parsing logic for the new properties. See [architecture.md](./references/architecture.md#custom-deserialization-sites).
+11. **`SearchTestBase.LatestVersion` must match `SearchClientOptions.LatestVersion`** — this constant in `tests/Utilities/SearchTestBase.cs` controls which API version all tests run against. Forgetting to update it means tests still target the old version. See [testing.md](./references/testing.md#version-matrix-rules).
+12. **SearchOptions new properties must go to the correct layer** — `SearchOptions` has a three-layer architecture: public sub-objects (`SemanticSearchOptions`, `VectorSearchOptions`), private `[CodeGenMember]` redirectors, and the flat generated model. A new generated property must be routed to the correct sub-object (or left as a direct property) and the internal constructor must be updated. Leaving a new property on the generated auto-property creates a discrepancy between the public API and the wire format. See [architecture.md](./references/architecture.md#searchoptions-architecture) for the decision tree and checklists.
+---
+
+## Tools
+
+ALWAYS use MCP tools when available. Fall back to manual scripts only when a tool is unavailable or fails.
+
+| Step | MCP Tool / Command | Notes |
+|---|---|---|
+| Generate | `azsdk_package_generate_code` with `packagePath: sdk/search/Azure.Search.Documents` | Takes 2+ min. Update `tsp-location.yaml` `commit` first if SHA changed. |
+| Build | `azsdk_package_build_code` with `packagePath: sdk/search/Azure.Search.Documents` | Run after any `src/` change. |
+| Export API | `eng/scripts/Export-API.ps1 search` | Produces `api/Azure.Search.Documents.{net10.0,net8.0,netstandard2.0}.cs`. |
+| Format | `dotnet format src/Azure.Search.Documents.csproj` + `dotnet format tests/Azure.Search.Documents.Tests.csproj` | |
+| Snippets | `eng/scripts/Update-Snippets.ps1 search` | Run after adding/renaming public types in samples. |
+| Tests | `dotnet test tests/ --filter "TestCategory!=Live"` | Recordings via `assets.json` + Test Proxy. |
+| Check | `azsdk_package_run_check` with `packagePath: sdk/search/Azure.Search.Documents` | |
+| Changelog | `azsdk_package_update_changelog_content` with `packagePath: sdk/search/Azure.Search.Documents` | May return noop — draft manually comparing to previous release tag. |
+| Version | `azsdk_package_update_version` with `packagePath: sdk/search/Azure.Search.Documents` | |
+| Metadata | `azsdk_package_update_metadata` with `packagePath: sdk/search/Azure.Search.Documents` | |
+
+### Build Error Triage
+
+| Error pattern | Where to fix |
+|---|---|
+| `does not contain a definition for 'X'` | Custom partial in `src/` — update `[CodeGenMember]` or property reference. See [customization.md](./references/customization.md). |
+| `type or namespace 'X' does not exist` | Restore deleted type (if GA backward compat) or remove reference. See [architecture.md](./references/architecture.md#backwards-compatibility-for-removed-api-version-types). |
+| `Ambiguous reference` | Add `[CodeGenSuppress]` on the generated member. |
+| Switch expression not exhaustive | Update all 5 switch arms in `SearchClientOptions.cs`. See [architecture.md](./references/architecture.md#service-version-management). |
+| Error in `src/Generated/*.cs` | Fix via TypeSpec `client.tsp` or `[CodeGenSuppress]` — **never** edit the generated file. |
+| Constructor arg count mismatch in custom deserializer | **Do NOT just add `null`/`default`**. Read the generated model to identify new properties, then add JSON parsing logic in the custom deserializer. See [architecture.md](./references/architecture.md#custom-deserialization-sites). |
+| New property appears on generated `SearchOptions` that belongs on a sub-object | Add property to `SemanticSearchOptions` or `VectorSearchOptions`, add private `[CodeGenMember]` redirector in `Options/SearchOptions.cs`, update internal ctor, regenerate. See [architecture.md](./references/architecture.md#adding-a-new-property--decision-tree). |
+
+---
+
+## Workflows
+
+### Detect Scope Automatically
+
+When the user's request doesn't specify a scenario, classify it:
+
+| User intent | Workflow |
+|---|---|
+| "Create a new package with commit SHA X for version Y" / "release new version" / "new API version" | → **Full Release** |
+| "Update spec SHA" / "spec patch" | → **Spec Update** |
+| "Fix this bug" / "add this feature" / code change in `src/` | → **Code Change** |
+| "Add customization" / "rename type" / "suppress member" | → **Customization** |
+
+All workflows converge on the same **finalization steps**. Skip steps that don't apply (e.g., no ServiceVersion update for a bug fix that doesn't change the API version).
+
+---
+
+### Full Release (new API version or new package version)
+
+> Input: spec commit SHA, target version string, GA or preview
+
+1. **SHA** — Update `tsp-location.yaml` `commit` to the new SHA.
+2. **Generate** — Run `azsdk_package_generate_code`.
+3. **Deleted types** — `git diff --diff-filter=D --name-only HEAD -- src/Generated/`. Restore only types from a previous GA release (see [architecture.md](./references/architecture.md#backwards-compatibility-for-removed-api-version-types)).
+4. **ServiceVersion** — In `SearchClientOptions.cs`, add new enum member and update all 5 locations. For GA: remove preview versions. For preview: keep only latest preview. See [architecture.md](./references/architecture.md#service-version-management).
+5. **Build & fix** — Run `azsdk_package_build_code`. Fix errors using the [build error triage table](#build-error-triage) and [customization.md](./references/customization.md#identifying-what-needs-updating-after-regeneration). **CRITICAL:** When fixing constructor arg mismatches in custom deserializers (`FacetResult.cs`, `SearchResults.cs`), do NOT pass `null`/`default` — add actual deserialization logic for the new fields. See [architecture.md](./references/architecture.md#custom-deserialization-sites). After the build passes, check for new properties on the generated `SearchOptions` that should be routed to sub-objects — see [architecture.md](./references/architecture.md#adding-a-new-property--decision-tree).
+6. **Customization audit** — Verify `[CodeGenSuppress]` targets still exist. Verify `[CodeGenType]` mappings still match generated names. `Select-String -Path src/**/*.cs -Pattern "CodeGen(Suppress|Type)" -Recurse`.
+7. **Export API** — `eng/scripts/Export-API.ps1 search`. Review `git diff api/` for expected changes.
+8. **ApiCompat** — `dotnet pack src/` to verify no unintended binary-breaking changes.
+9. **Test version** — Update `LatestVersion` in `tests/Utilities/SearchTestBase.cs` to match the new `ServiceVersion` enum member. This is the single source of truth for which API version all tests target.
+10. **Tests** — Add tests for new types/properties per [testing.md](./references/testing.md):
+   - TypeCompleteness tests auto-discover new `IJsonModel<T>` types (Tiers 1+2).
+   - New `SearchOptions` property → add 1 line to `SearchOptionsMockTests.SearchOptionProperties()`.
+   - New client operation → write recorded test + mock test.
+   - New preview feature → add to `*.Preview.cs` with `#if AZURE_SEARCH_PREVIEW`.
+   - New polymorphic base type → add to `SearchTestHelpers.PolymorphicBaseTypes`.
+11. **Format** — `dotnet format` on both src and tests `.csproj` files.
+12. **Snippets** — `eng/scripts/Update-Snippets.ps1 search`.
+13. **Run tests** — `dotnet test tests/ --filter "TestCategory!=Live"`.
+14. **Run checks** — `azsdk_package_run_check`.
+15. **Changelog** — Update `CHANGELOG.md`:
+    - If topmost version is unreleased, patch in-place. Only create a new section when topmost has shipped.
+    - Breaking changes = only removals/renames from a **previously released** version. Cross-check against `api/*.cs` and git tags.
+16. **Version & metadata** — `azsdk_package_update_version`, `azsdk_package_update_metadata`.
+17. **Prepare release** — `./eng/common/scripts/Prepare-Release.ps1 Azure.Search.Documents`.
+18. **Final gate** — Re-run Export-API if `src/` changed since step 7. Re-run snippets if `*.md` changed since step 12. Confirm `git status` shows only expected changes.
+
+---
+
+### Spec Update (same API version, unreleased)
+
+1. Update `tsp-location.yaml` `commit`.
+2. Run `azsdk_package_generate_code`.
+3. Run `azsdk_package_build_code` and fix errors.
+4. Check deleted types (restore only GA types).
+5. Update handwritten code as needed.
+6. → Continue from [Finalize](#finalize) step 7.
+
+---
+
+### Code Change (bug fix, feature addition)
+
+1. Make the code change in custom files under `src/` (never `src/Generated/`).
+2. Regenerate the code in case there are generation changes.
+3. Run `azsdk_package_build_code`.
+4. Add/update tests for the change.
+5. → Continue from [Finalize](#finalize) step 7.
+
+---
+
+### Customization (add/update CodeGen attributes)
+
+1. Identify the generated type in `src/Generated/` (do not edit it).
+2. Create or update the custom partial in `src/`. See [customization.md](./references/customization.md) for attribute patterns.
+3. Prefer TypeSpec `client.tsp` for cross-language concerns (`@@clientName`, `@@access`). Use C# customization only for language-specific behavior.
+4. Regenerate the code to verify the change is applied correctly.
+5. Run `azsdk_package_build_code` and fix any errors.
+6. → Continue from [Finalize](#finalize) step 7.
+
+---
+
+### Finalize
+
+All workflows converge here. Skip steps that don't apply.
+
+7. **Export API** — `eng/scripts/Export-API.ps1 search` (if public API changed).
+8. **Format** — `dotnet format` on src and tests.
+9. **Snippets** — `eng/scripts/Update-Snippets.ps1 search` (if public types changed in samples).
+10. **Tests** — `dotnet test tests/ --filter "TestCategory!=Live"`.
+11. **Checks** — `azsdk_package_run_check`.
+12. **Changelog** — Update `CHANGELOG.md` (patch in-place if unreleased; cross-check against `api/*.cs`).
+13. **Version & metadata** — Update if this is a versioned release.
+14. **Final gate** — `git diff` to review all changes. Ensure no untracked generated files.
