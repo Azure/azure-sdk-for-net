@@ -97,6 +97,17 @@ ensure_dotnet_sdk() {
     fi
 
     # Install missing SDKs
+    if ! command -v curl >/dev/null 2>&1; then
+        print_error "ERROR: 'curl' is required to download the .NET install script."
+        echo ""
+        echo "Install curl and re-run:"
+        echo "  - macOS:    brew install curl"
+        echo "  - Ubuntu:   sudo apt-get update && sudo apt-get install -y curl"
+        echo "  - Fedora:   sudo dnf install -y curl"
+        echo "  - Alpine:   apk add --no-cache curl"
+        exit 1
+    fi
+
     local install_script="/tmp/dotnet-install.sh"
     if [ ! -f "$install_script" ]; then
         print_info "Downloading .NET install script..."
@@ -766,8 +777,20 @@ if [ "$SAMPLE_NAME" = "Sample16_CreateAnalyzerWithLabels" ]; then
         cp -f "$BUNDLED_RECEIPT_DIR"/* "$RUNNER_DIR/receipt_labels/" 2>/dev/null || true
         # Add a csproj item to copy the folder to the build output directory.
         # We append before the final </Project> closing tag.
-        if grep -q "</Project>" "$RUNNER_DIR/${SAMPLE_NAME}.csproj"; then
-            sed_in_place 's|</Project>|  <ItemGroup>\n    <None Update="receipt_labels/**/*">\n      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>\n    </None>\n  </ItemGroup>\n</Project>|' "$RUNNER_DIR/${SAMPLE_NAME}.csproj"
+        # Note: we avoid `sed` with `\n` escapes here because BSD/macOS `sed`
+        # writes them as literal characters instead of newlines, producing
+        # malformed XML. Strip the closing tag and re-append with a here-doc.
+        local csproj_file="$RUNNER_DIR/${SAMPLE_NAME}.csproj"
+        if grep -q "</Project>" "$csproj_file"; then
+            sed_in_place '/<\/Project>[[:space:]]*$/d' "$csproj_file"
+            cat >>"$csproj_file" <<'EOF'
+  <ItemGroup>
+    <None Update="receipt_labels/**/*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
+EOF
         fi
     fi
 fi

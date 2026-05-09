@@ -400,8 +400,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 new Uri($"https://{storageAccountName}.blob.core.windows.net"),
                 credential);
 
+            // Start the key 5 minutes in the past to tolerate clock skew between
+            // the local machine and the storage service. Without this buffer, SAS
+            // generation can intermittently fail with AuthenticationFailed.
             var userDelegationKey = (await blobServiceClient.GetUserDelegationKeyAsync(
-                DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(1),
+                DateTimeOffset.UtcNow.AddMinutes(-5), DateTimeOffset.UtcNow.AddHours(1),
                 CancellationToken.None)).Value;
 
             var sasBuilder = new BlobSasBuilder
