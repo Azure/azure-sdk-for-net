@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
     /// <summary> Defines the properties of an SLI. </summary>
     public partial class SliProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SliProperties"/>. </summary>
         public SliProperties()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="totalSignals"> Represents total signals used in request-based SLI calculations. </param>
         /// <param name="signals"> Signals used for window-based SLI calculations. </param>
         /// <param name="windowUptimeCriteria"> Defines the uptime criteria for window-based SLIs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SliProperties(SliSignal goodSignals, SliSignal totalSignals, SliSignal signals, WindowUptimeCriteria windowUptimeCriteria, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SliProperties(SliSignal goodSignals, SliSignal totalSignals, SliSignal signals, WindowUptimeCriteria windowUptimeCriteria, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GoodSignals = goodSignals;
             TotalSignals = totalSignals;
             Signals = signals;
             WindowUptimeCriteria = windowUptimeCriteria;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents good signals used in request-based SLI calculations. </summary>
         public SliSignal GoodSignals { get; set; }
+
         /// <summary> Represents total signals used in request-based SLI calculations. </summary>
         public SliSignal TotalSignals { get; set; }
+
         /// <summary> Signals used for window-based SLI calculations. </summary>
         public SliSignal Signals { get; set; }
+
         /// <summary> Defines the uptime criteria for window-based SLIs. </summary>
         public WindowUptimeCriteria WindowUptimeCriteria { get; set; }
     }

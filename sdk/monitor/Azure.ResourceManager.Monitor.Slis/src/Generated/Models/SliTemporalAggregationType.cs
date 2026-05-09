@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor.Slis;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
     public readonly partial struct SliTemporalAggregationType : IEquatable<SliTemporalAggregationType>
     {
         private readonly string _value;
+        /// <summary> Average value. </summary>
+        private const string AverageValue = "Average";
+        /// <summary> Minimum value. </summary>
+        private const string MinValue = "Min";
+        /// <summary> Maximum value. </summary>
+        private const string MaxValue = "Max";
+        /// <summary> Summation. </summary>
+        private const string SumValue = "Sum";
+        /// <summary> Rate over time. </summary>
+        private const string RateValue = "Rate";
+        /// <summary> Instance rate. </summary>
+        private const string IRateValue = "IRate";
+        /// <summary> Delta over time. </summary>
+        private const string DeltaValue = "Delta";
+        /// <summary> Instance delta. </summary>
+        private const string IDeltaValue = "IDelta";
+        /// <summary> Increase over time. </summary>
+        private const string IncreaseValue = "Increase";
 
         /// <summary> Initializes a new instance of <see cref="SliTemporalAggregationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SliTemporalAggregationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AverageValue = "Average";
-        private const string MinValue = "Min";
-        private const string MaxValue = "Max";
-        private const string SumValue = "Sum";
-        private const string RateValue = "Rate";
-        private const string IRateValue = "IRate";
-        private const string DeltaValue = "Delta";
-        private const string IDeltaValue = "IDelta";
-        private const string IncreaseValue = "Increase";
+            _value = value;
+        }
 
         /// <summary> Average value. </summary>
         public static SliTemporalAggregationType Average { get; } = new SliTemporalAggregationType(AverageValue);
+
         /// <summary> Minimum value. </summary>
         public static SliTemporalAggregationType Min { get; } = new SliTemporalAggregationType(MinValue);
+
         /// <summary> Maximum value. </summary>
         public static SliTemporalAggregationType Max { get; } = new SliTemporalAggregationType(MaxValue);
+
         /// <summary> Summation. </summary>
         public static SliTemporalAggregationType Sum { get; } = new SliTemporalAggregationType(SumValue);
+
         /// <summary> Rate over time. </summary>
         public static SliTemporalAggregationType Rate { get; } = new SliTemporalAggregationType(RateValue);
+
         /// <summary> Instance rate. </summary>
         public static SliTemporalAggregationType IRate { get; } = new SliTemporalAggregationType(IRateValue);
+
         /// <summary> Delta over time. </summary>
         public static SliTemporalAggregationType Delta { get; } = new SliTemporalAggregationType(DeltaValue);
+
         /// <summary> Instance delta. </summary>
         public static SliTemporalAggregationType IDelta { get; } = new SliTemporalAggregationType(IDeltaValue);
+
         /// <summary> Increase over time. </summary>
         public static SliTemporalAggregationType Increase { get; } = new SliTemporalAggregationType(IncreaseValue);
+
         /// <summary> Determines if two <see cref="SliTemporalAggregationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SliTemporalAggregationType left, SliTemporalAggregationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SliTemporalAggregationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SliTemporalAggregationType left, SliTemporalAggregationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SliTemporalAggregationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SliTemporalAggregationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SliTemporalAggregationType(string value) => new SliTemporalAggregationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SliTemporalAggregationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SliTemporalAggregationType?(string value) => value == null ? null : new SliTemporalAggregationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SliTemporalAggregationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SliTemporalAggregationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

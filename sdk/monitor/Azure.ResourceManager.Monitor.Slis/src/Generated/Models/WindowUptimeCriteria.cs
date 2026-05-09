@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
     /// <summary> Represents criteria for determining uptime in window-based SLIs. </summary>
     public partial class WindowUptimeCriteria
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WindowUptimeCriteria"/>. </summary>
         /// <param name="target"> Threshold value used to determine uptime. </param>
@@ -57,21 +28,17 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <summary> Initializes a new instance of <see cref="WindowUptimeCriteria"/>. </summary>
         /// <param name="target"> Threshold value used to determine uptime. </param>
         /// <param name="comparator"> Comparison operator used for uptime evaluation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WindowUptimeCriteria(float target, WindowUptimeCriteriaComparator comparator, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WindowUptimeCriteria(float target, WindowUptimeCriteriaComparator comparator, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Target = target;
             Comparator = comparator;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WindowUptimeCriteria"/> for deserialization. </summary>
-        internal WindowUptimeCriteria()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Threshold value used to determine uptime. </summary>
         public float Target { get; set; }
+
         /// <summary> Comparison operator used for uptime evaluation. </summary>
         public WindowUptimeCriteriaComparator Comparator { get; set; }
     }

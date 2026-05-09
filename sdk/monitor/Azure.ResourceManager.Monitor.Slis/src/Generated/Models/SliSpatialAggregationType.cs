@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor.Slis;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
     public readonly partial struct SliSpatialAggregationType : IEquatable<SliSpatialAggregationType>
     {
         private readonly string _value;
+        /// <summary> Average value. </summary>
+        private const string AverageValue = "Average";
+        /// <summary> Minimum value. </summary>
+        private const string MinValue = "Min";
+        /// <summary> Maximum value. </summary>
+        private const string MaxValue = "Max";
+        /// <summary> Summation. </summary>
+        private const string SumValue = "Sum";
+        /// <summary> Count of occurrences. </summary>
+        private const string CountValue = "Count";
 
         /// <summary> Initializes a new instance of <see cref="SliSpatialAggregationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SliSpatialAggregationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AverageValue = "Average";
-        private const string MinValue = "Min";
-        private const string MaxValue = "Max";
-        private const string SumValue = "Sum";
-        private const string CountValue = "Count";
+            _value = value;
+        }
 
         /// <summary> Average value. </summary>
         public static SliSpatialAggregationType Average { get; } = new SliSpatialAggregationType(AverageValue);
+
         /// <summary> Minimum value. </summary>
         public static SliSpatialAggregationType Min { get; } = new SliSpatialAggregationType(MinValue);
+
         /// <summary> Maximum value. </summary>
         public static SliSpatialAggregationType Max { get; } = new SliSpatialAggregationType(MaxValue);
+
         /// <summary> Summation. </summary>
         public static SliSpatialAggregationType Sum { get; } = new SliSpatialAggregationType(SumValue);
+
         /// <summary> Count of occurrences. </summary>
         public static SliSpatialAggregationType Count { get; } = new SliSpatialAggregationType(CountValue);
+
         /// <summary> Determines if two <see cref="SliSpatialAggregationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SliSpatialAggregationType left, SliSpatialAggregationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SliSpatialAggregationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SliSpatialAggregationType left, SliSpatialAggregationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SliSpatialAggregationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SliSpatialAggregationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SliSpatialAggregationType(string value) => new SliSpatialAggregationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SliSpatialAggregationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SliSpatialAggregationType?(string value) => value == null ? null : new SliSpatialAggregationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SliSpatialAggregationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SliSpatialAggregationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

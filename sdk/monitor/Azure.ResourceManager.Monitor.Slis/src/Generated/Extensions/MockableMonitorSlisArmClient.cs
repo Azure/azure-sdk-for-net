@@ -5,45 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Monitor.Slis;
 
 namespace Azure.ResourceManager.Monitor.Slis.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableMonitorSlisArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableMonitorSlisArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableMonitorSlisArmClient for mocking. </summary>
         protected MockableMonitorSlisArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMonitorSlisArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMonitorSlisArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMonitorSlisArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableMonitorSlisArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SliResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SliResource.CreateResourceIdentifier" /> to create a <see cref="SliResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="MonitorSliResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SliResource"/> object. </returns>
-        public virtual SliResource GetSliResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MonitorSliResource"/> object. </returns>
+        public virtual MonitorSliResource GetMonitorSliResource(ResourceIdentifier id)
         {
-            SliResource.ValidateResourceId(id);
-            return new SliResource(Client, id);
+            MonitorSliResource.ValidateResourceId(id);
+            return new MonitorSliResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="MonitorSliCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="MonitorSliResource"/> objects. </returns>
+        public virtual MonitorSliCollection GetMonitorSlis(ResourceIdentifier scope)
+        {
+            return new MonitorSliCollection(Client, scope);
+        }
+
+        /// <summary> Gets an SLI resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="sliName"> Name of the SLI that is given by the user. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sliName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sliName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MonitorSliResource> GetMonitorSli(ResourceIdentifier scope, string sliName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sliName, nameof(sliName));
+
+            return GetMonitorSlis(scope).Get(sliName, cancellationToken);
+        }
+
+        /// <summary> Gets an SLI resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="sliName"> Name of the SLI that is given by the user. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sliName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sliName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MonitorSliResource>> GetMonitorSliAsync(ResourceIdentifier scope, string sliName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sliName, nameof(sliName));
+
+            return await GetMonitorSlis(scope).GetAsync(sliName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

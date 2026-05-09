@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor.Slis;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
     public readonly partial struct SliEvaluationCalculationType : IEquatable<SliEvaluationCalculationType>
     {
         private readonly string _value;
+        /// <summary> Calculates evaluation based on a fixed calendar period. </summary>
+        private const string CalendarDaysValue = "CalendarDays";
+        /// <summary> Calculates evaluation using a rolling time window. </summary>
+        private const string RollingDaysValue = "RollingDays";
 
         /// <summary> Initializes a new instance of <see cref="SliEvaluationCalculationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SliEvaluationCalculationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CalendarDaysValue = "CalendarDays";
-        private const string RollingDaysValue = "RollingDays";
+            _value = value;
+        }
 
         /// <summary> Calculates evaluation based on a fixed calendar period. </summary>
         public static SliEvaluationCalculationType CalendarDays { get; } = new SliEvaluationCalculationType(CalendarDaysValue);
+
         /// <summary> Calculates evaluation using a rolling time window. </summary>
         public static SliEvaluationCalculationType RollingDays { get; } = new SliEvaluationCalculationType(RollingDaysValue);
+
         /// <summary> Determines if two <see cref="SliEvaluationCalculationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SliEvaluationCalculationType left, SliEvaluationCalculationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SliEvaluationCalculationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SliEvaluationCalculationType left, SliEvaluationCalculationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SliEvaluationCalculationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SliEvaluationCalculationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SliEvaluationCalculationType(string value) => new SliEvaluationCalculationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SliEvaluationCalculationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SliEvaluationCalculationType?(string value) => value == null ? null : new SliEvaluationCalculationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SliEvaluationCalculationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SliEvaluationCalculationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

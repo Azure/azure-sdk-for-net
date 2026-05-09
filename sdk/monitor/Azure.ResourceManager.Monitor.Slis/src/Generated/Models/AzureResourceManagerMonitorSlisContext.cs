@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Slis.Models;
 
@@ -13,21 +14,21 @@ namespace Azure.ResourceManager.Monitor.Slis
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(MonitorSliData))]
+    [ModelReaderWriterBuildable(typeof(MonitorSliProperties))]
+    [ModelReaderWriterBuildable(typeof(MonitorSliResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SliAmwAccount))]
     [ModelReaderWriterBuildable(typeof(SliBaseline))]
     [ModelReaderWriterBuildable(typeof(SliBaselineProperties))]
     [ModelReaderWriterBuildable(typeof(SliCondition))]
-    [ModelReaderWriterBuildable(typeof(SliData))]
     [ModelReaderWriterBuildable(typeof(SliExecutionState))]
     [ModelReaderWriterBuildable(typeof(SliListResult))]
     [ModelReaderWriterBuildable(typeof(SliMetric))]
     [ModelReaderWriterBuildable(typeof(SliProperties))]
-    [ModelReaderWriterBuildable(typeof(SliResource))]
-    [ModelReaderWriterBuildable(typeof(SliResourceProperties))]
     [ModelReaderWriterBuildable(typeof(SliSignal))]
     [ModelReaderWriterBuildable(typeof(SliSignalSource))]
     [ModelReaderWriterBuildable(typeof(SliSpatialAggregation))]

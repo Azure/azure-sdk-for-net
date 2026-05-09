@@ -8,35 +8,36 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Monitor.Slis;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmMonitorSlisModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Slis.SliData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Represents an SLI resource within the ProviderHub. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Slis.SliData"/> instance for mocking. </returns>
-        public static SliData SliData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SliResourceProperties properties = null, ManagedServiceIdentity identity = null)
+        /// <returns> A new <see cref="Slis.MonitorSliData"/> instance for mocking. </returns>
+        public static MonitorSliData MonitorSliData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorSliProperties properties = default, ManagedServiceIdentity identity = default)
         {
-            return new SliData(
+            return new MonitorSliData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 properties,
-                identity,
-                serializedAdditionalRawData: null);
+                identity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SliResourceProperties"/>. </summary>
         /// <param name="provisioningState"> Indicates the provisioning status of the last operation. </param>
         /// <param name="description"> A user-provided description of the SLI, with a maximum length of 1000 characters. </param>
         /// <param name="category"> Specifies the category of the SLI, used to classify signals such as Availability and Latency. </param>
@@ -44,49 +45,97 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="executionState"> Indicates the current execution status of the SLI resource in ARM responses. </param>
         /// <param name="destinationAmwAccounts"> Destination AMW accounts. </param>
         /// <param name="destinationMetrics"> The destination Azure Monitor Workspace (AMW) accounts where the SLI emits metrics. </param>
-        /// <param name="baseline"> Defines the SLO baseline associated with the SLI. </param>
+        /// <param name="baseline"> Defines the baseline target, which is compared against the SLI value to determine compliance. </param>
         /// <param name="streamingRuleId"> The streaming rule Id associated with the Sli resource. </param>
         /// <param name="streamingRuleLastUpdatedOn"> The streaming rule last updated timestamp associated with the Sli resource. </param>
-        /// <param name="enableAlert"> A flag to determine whether alert is enabled. </param>
+        /// <param name="isAlertEnabled"> A flag to determine whether alert is enabled. </param>
         /// <param name="sliProperties"> Defines the SLI properties associated with the SLI. </param>
-        /// <returns> A new <see cref="Models.SliResourceProperties"/> instance for mocking. </returns>
-        public static SliResourceProperties SliResourceProperties(SliProvisioningState? provisioningState = null, string description = null, SliCategory category = default, SliEvaluationType evaluationType = default, SliExecutionState executionState = null, IEnumerable<SliAmwAccount> destinationAmwAccounts = null, IEnumerable<SliMetric> destinationMetrics = null, SliBaseline baseline = null, string streamingRuleId = null, DateTimeOffset? streamingRuleLastUpdatedOn = null, bool enableAlert = default, SliProperties sliProperties = null)
+        /// <returns> A new <see cref="Models.MonitorSliProperties"/> instance for mocking. </returns>
+        public static MonitorSliProperties MonitorSliProperties(SliProvisioningState? provisioningState = default, string description = default, SliCategory category = default, SliEvaluationType evaluationType = default, SliExecutionState executionState = default, IEnumerable<SliAmwAccount> destinationAmwAccounts = default, IEnumerable<SliMetric> destinationMetrics = default, SliBaseline baseline = default, string streamingRuleId = default, DateTimeOffset? streamingRuleLastUpdatedOn = default, bool isAlertEnabled = default, SliProperties sliProperties = default)
         {
-            destinationAmwAccounts ??= new List<SliAmwAccount>();
-            destinationMetrics ??= new List<SliMetric>();
+            destinationAmwAccounts ??= new ChangeTrackingList<SliAmwAccount>();
+            destinationMetrics ??= new ChangeTrackingList<SliMetric>();
 
-            return new SliResourceProperties(
+            return new MonitorSliProperties(
                 provisioningState,
                 description,
                 category,
                 evaluationType,
                 executionState,
-                destinationAmwAccounts?.ToList(),
-                destinationMetrics?.ToList(),
-                baseline != null ? new SliBaselineProperties(baseline, serializedAdditionalRawData: null) : null,
+                destinationAmwAccounts.ToList(),
+                destinationMetrics.ToList(),
+                new SliBaselineProperties(baseline, null),
                 streamingRuleId,
                 streamingRuleLastUpdatedOn,
-                enableAlert,
+                isAlertEnabled,
                 sliProperties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SliExecutionState"/>. </summary>
+        /// <summary> Represents the current execution state of an SLI. </summary>
         /// <param name="state"> The execution state value. </param>
         /// <param name="message"> A descriptive message related to the execution state. </param>
         /// <returns> A new <see cref="Models.SliExecutionState"/> instance for mocking. </returns>
-        public static SliExecutionState SliExecutionState(string state = null, string message = null)
+        public static SliExecutionState SliExecutionState(string state = default, string message = default)
         {
-            return new SliExecutionState(state, message, serializedAdditionalRawData: null);
+            return new SliExecutionState(state, message, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SliMetric"/>. </summary>
+        /// <summary> Defines a metric in the destination AMW account. </summary>
         /// <param name="metricNamespace"> The namespace of the metric. </param>
         /// <param name="metricName"> The name of the metric. </param>
         /// <returns> A new <see cref="Models.SliMetric"/> instance for mocking. </returns>
-        public static SliMetric SliMetric(string metricNamespace = null, string metricName = null)
+        public static SliMetric SliMetric(string metricNamespace = default, string metricName = default)
         {
-            return new SliMetric(metricNamespace, metricName, serializedAdditionalRawData: null);
+            return new SliMetric(metricNamespace, metricName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a signal model used in SLI calculations. </summary>
+        /// <param name="signalSources"> Sources of metrics used for SLIs. </param>
+        /// <param name="signalFormula"> Mathematical formula used to combine multiple metrics. </param>
+        /// <returns> A new <see cref="Models.SliSignal"/> instance for mocking. </returns>
+        public static SliSignal SliSignal(IEnumerable<SliSignalSource> signalSources = default, string signalFormula = default)
+        {
+            signalSources ??= new ChangeTrackingList<SliSignalSource>();
+
+            return new SliSignal(signalSources.ToList(), signalFormula, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a signal source used in SLIs. </summary>
+        /// <param name="signalSourceId"> Unique identifier for the signal source. </param>
+        /// <param name="sourceAmwAccountManagedIdentity"> Managed identity for authenticating the signal source. </param>
+        /// <param name="sourceAmwAccountResourceId"> Resource ID of the source AMW account. </param>
+        /// <param name="metricNamespace"> Namespace of the metric. </param>
+        /// <param name="metricName"> Name of the metric. </param>
+        /// <param name="filters"> Filters applied to modify signal values. </param>
+        /// <param name="spatialAggregation"> Defines how measurements are aggregated across multiple time series. </param>
+        /// <param name="temporalAggregation"> Defines how measurements are aggregated over a specific time window within the same time series. </param>
+        /// <returns> A new <see cref="Models.SliSignalSource"/> instance for mocking. </returns>
+        public static SliSignalSource SliSignalSource(string signalSourceId = default, ResourceIdentifier sourceAmwAccountManagedIdentity = default, ResourceIdentifier sourceAmwAccountResourceId = default, string metricNamespace = default, string metricName = default, IEnumerable<SliCondition> filters = default, SliSpatialAggregation spatialAggregation = default, SliTemporalAggregation temporalAggregation = default)
+        {
+            filters ??= new ChangeTrackingList<SliCondition>();
+
+            return new SliSignalSource(
+                signalSourceId,
+                sourceAmwAccountManagedIdentity,
+                sourceAmwAccountResourceId,
+                metricNamespace,
+                metricName,
+                filters.ToList(),
+                spatialAggregation,
+                temporalAggregation,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the spatial aggregation model. </summary>
+        /// <param name="type"> Type of spatial aggregation. </param>
+        /// <param name="dimensions"> Dimensions considered for spatial aggregation. </param>
+        /// <returns> A new <see cref="Models.SliSpatialAggregation"/> instance for mocking. </returns>
+        public static SliSpatialAggregation SliSpatialAggregation(SliSpatialAggregationType @type = default, IEnumerable<string> dimensions = default)
+        {
+            dimensions ??= new ChangeTrackingList<string>();
+
+            return new SliSpatialAggregation(@type, dimensions.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }

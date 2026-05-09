@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor.Slis;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
     public readonly partial struct SliSamplingType : IEquatable<SliSamplingType>
     {
         private readonly string _value;
+        /// <summary> Maximum value. </summary>
+        private const string MaxValue = "max";
+        /// <summary> Minimum value. </summary>
+        private const string MinValue = "min";
+        /// <summary> Average value. </summary>
+        private const string AvgValue = "avg";
+        /// <summary> Summation. </summary>
+        private const string SumValue = "sum";
 
         /// <summary> Initializes a new instance of <see cref="SliSamplingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SliSamplingType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MaxValue = "max";
-        private const string MinValue = "min";
-        private const string AvgValue = "avg";
-        private const string SumValue = "sum";
+            _value = value;
+        }
 
         /// <summary> Maximum value. </summary>
         public static SliSamplingType Max { get; } = new SliSamplingType(MaxValue);
+
         /// <summary> Minimum value. </summary>
         public static SliSamplingType Min { get; } = new SliSamplingType(MinValue);
+
         /// <summary> Average value. </summary>
         public static SliSamplingType Avg { get; } = new SliSamplingType(AvgValue);
+
         /// <summary> Summation. </summary>
         public static SliSamplingType Sum { get; } = new SliSamplingType(SumValue);
+
         /// <summary> Determines if two <see cref="SliSamplingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SliSamplingType left, SliSamplingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SliSamplingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SliSamplingType left, SliSamplingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SliSamplingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SliSamplingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SliSamplingType(string value) => new SliSamplingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SliSamplingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SliSamplingType?(string value) => value == null ? null : new SliSamplingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SliSamplingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SliSamplingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

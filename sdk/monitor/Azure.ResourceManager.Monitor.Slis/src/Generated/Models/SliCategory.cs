@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor.Slis;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
     public readonly partial struct SliCategory : IEquatable<SliCategory>
     {
         private readonly string _value;
+        /// <summary> Indicates availability-related metrics. </summary>
+        private const string AvailabilityValue = "Availability";
+        /// <summary> Indicates latency-related metrics. </summary>
+        private const string LatencyValue = "Latency";
 
         /// <summary> Initializes a new instance of <see cref="SliCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SliCategory(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AvailabilityValue = "Availability";
-        private const string LatencyValue = "Latency";
+            _value = value;
+        }
 
         /// <summary> Indicates availability-related metrics. </summary>
         public static SliCategory Availability { get; } = new SliCategory(AvailabilityValue);
+
         /// <summary> Indicates latency-related metrics. </summary>
         public static SliCategory Latency { get; } = new SliCategory(LatencyValue);
+
         /// <summary> Determines if two <see cref="SliCategory"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SliCategory left, SliCategory right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SliCategory"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SliCategory left, SliCategory right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SliCategory"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SliCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SliCategory(string value) => new SliCategory(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SliCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SliCategory?(string value) => value == null ? null : new SliCategory(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SliCategory other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SliCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

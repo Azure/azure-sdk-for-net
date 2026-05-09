@@ -9,43 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.Monitor.Slis;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
     /// <summary> Represents a signal source used in SLIs. </summary>
     public partial class SliSignalSource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SliSignalSource"/>. </summary>
         /// <param name="signalSourceId"> Unique identifier for the signal source. </param>
@@ -87,8 +59,8 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="filters"> Filters applied to modify signal values. </param>
         /// <param name="spatialAggregation"> Defines how measurements are aggregated across multiple time series. </param>
         /// <param name="temporalAggregation"> Defines how measurements are aggregated over a specific time window within the same time series. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SliSignalSource(string signalSourceId, ResourceIdentifier sourceAmwAccountManagedIdentity, ResourceIdentifier sourceAmwAccountResourceId, string metricNamespace, string metricName, IList<SliCondition> filters, SliSpatialAggregation spatialAggregation, SliTemporalAggregation temporalAggregation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SliSignalSource(string signalSourceId, ResourceIdentifier sourceAmwAccountManagedIdentity, ResourceIdentifier sourceAmwAccountResourceId, string metricNamespace, string metricName, IList<SliCondition> filters, SliSpatialAggregation spatialAggregation, SliTemporalAggregation temporalAggregation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SignalSourceId = signalSourceId;
             SourceAmwAccountManagedIdentity = sourceAmwAccountManagedIdentity;
@@ -98,28 +70,30 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             Filters = filters;
             SpatialAggregation = spatialAggregation;
             TemporalAggregation = temporalAggregation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SliSignalSource"/> for deserialization. </summary>
-        internal SliSignalSource()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique identifier for the signal source. </summary>
         public string SignalSourceId { get; set; }
+
         /// <summary> Managed identity for authenticating the signal source. </summary>
         public ResourceIdentifier SourceAmwAccountManagedIdentity { get; set; }
+
         /// <summary> Resource ID of the source AMW account. </summary>
         public ResourceIdentifier SourceAmwAccountResourceId { get; set; }
+
         /// <summary> Namespace of the metric. </summary>
         public string MetricNamespace { get; set; }
+
         /// <summary> Name of the metric. </summary>
         public string MetricName { get; set; }
+
         /// <summary> Filters applied to modify signal values. </summary>
         public IList<SliCondition> Filters { get; }
+
         /// <summary> Defines how measurements are aggregated across multiple time series. </summary>
         public SliSpatialAggregation SpatialAggregation { get; set; }
+
         /// <summary> Defines how measurements are aggregated over a specific time window within the same time series. </summary>
         public SliTemporalAggregation TemporalAggregation { get; set; }
     }

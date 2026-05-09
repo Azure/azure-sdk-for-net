@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Monitor.Slis;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
     /// <summary> Represents a filtering condition. </summary>
     public partial class SliCondition
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SliCondition"/>. </summary>
         /// <param name="operator"> Operator used in the filtering condition. </param>
@@ -63,30 +35,29 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="samplingType"> Defines the sampling type. </param>
         /// <param name="operator"> Operator used in the filtering condition. </param>
         /// <param name="value"> Value used in filtering. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SliCondition(string dimensionName, SliScalarFunction? scalarFunction, SliSamplingType? samplingType, SliConditionOperator @operator, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SliCondition(string dimensionName, SliScalarFunction? scalarFunction, SliSamplingType? samplingType, SliConditionOperator @operator, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DimensionName = dimensionName;
             ScalarFunction = scalarFunction;
             SamplingType = samplingType;
             Operator = @operator;
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SliCondition"/> for deserialization. </summary>
-        internal SliCondition()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Dimension name used in filtering. </summary>
         public string DimensionName { get; set; }
+
         /// <summary> Scalar function applied for filtering. </summary>
         public SliScalarFunction? ScalarFunction { get; set; }
+
         /// <summary> Defines the sampling type. </summary>
         public SliSamplingType? SamplingType { get; set; }
+
         /// <summary> Operator used in the filtering condition. </summary>
         public SliConditionOperator Operator { get; set; }
+
         /// <summary> Value used in filtering. </summary>
         public string Value { get; set; }
     }

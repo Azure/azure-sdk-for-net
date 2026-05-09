@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor.Slis;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
     public readonly partial struct WindowUptimeCriteriaComparator : IEquatable<WindowUptimeCriteriaComparator>
     {
         private readonly string _value;
+        /// <summary> Less than the target value. </summary>
+        private const string LessThanValue = "<";
+        /// <summary> Greater than the target value. </summary>
+        private const string GreaterThanValue = ">";
+        /// <summary> Less than or equal to the target value. </summary>
+        private const string LessThanOrEqualValue = "<=";
+        /// <summary> Greater than or equal to the target value. </summary>
+        private const string GreaterThanOrEqualValue = ">=";
 
         /// <summary> Initializes a new instance of <see cref="WindowUptimeCriteriaComparator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WindowUptimeCriteriaComparator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LessThanValue = "<";
-        private const string GreaterThanValue = ">";
-        private const string LessThanOrEqualValue = "<=";
-        private const string GreaterThanOrEqualValue = ">=";
+            _value = value;
+        }
 
         /// <summary> Less than the target value. </summary>
         public static WindowUptimeCriteriaComparator LessThan { get; } = new WindowUptimeCriteriaComparator(LessThanValue);
+
         /// <summary> Greater than the target value. </summary>
         public static WindowUptimeCriteriaComparator GreaterThan { get; } = new WindowUptimeCriteriaComparator(GreaterThanValue);
+
         /// <summary> Less than or equal to the target value. </summary>
         public static WindowUptimeCriteriaComparator LessThanOrEqual { get; } = new WindowUptimeCriteriaComparator(LessThanOrEqualValue);
+
         /// <summary> Greater than or equal to the target value. </summary>
         public static WindowUptimeCriteriaComparator GreaterThanOrEqual { get; } = new WindowUptimeCriteriaComparator(GreaterThanOrEqualValue);
+
         /// <summary> Determines if two <see cref="WindowUptimeCriteriaComparator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WindowUptimeCriteriaComparator left, WindowUptimeCriteriaComparator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WindowUptimeCriteriaComparator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WindowUptimeCriteriaComparator left, WindowUptimeCriteriaComparator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WindowUptimeCriteriaComparator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WindowUptimeCriteriaComparator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WindowUptimeCriteriaComparator(string value) => new WindowUptimeCriteriaComparator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WindowUptimeCriteriaComparator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WindowUptimeCriteriaComparator?(string value) => value == null ? null : new WindowUptimeCriteriaComparator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WindowUptimeCriteriaComparator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WindowUptimeCriteriaComparator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
