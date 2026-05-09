@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AlertProcessingRules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateGetByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AlertProcessingRuleData> response = Response.FromValue(AlertProcessingRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AlertProcessingRules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateGetByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AlertProcessingRuleData> response = Response.FromValue(AlertProcessingRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AlertProcessingRules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AlertProcessingRulePatch.ToRequestContent(patch), context);
+                HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AlertProcessingRulePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AlertProcessingRuleData> response = Response.FromValue(AlertProcessingRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AlertProcessingRules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AlertProcessingRulePatch.ToRequestContent(patch), context);
+                HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AlertProcessingRulePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AlertProcessingRuleData> response = Response.FromValue(AlertProcessingRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.AlertProcessingRules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.AlertProcessingRules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.AlertProcessingRules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateGetByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AlertProcessingRuleData> response = Response.FromValue(AlertProcessingRuleData.FromResponse(result), result);
                     return Response.FromValue(new AlertProcessingRuleResource(Client, response.Value), response.GetRawResponse());
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.AlertProcessingRules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateGetByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AlertProcessingRuleData> response = Response.FromValue(AlertProcessingRuleData.FromResponse(result), result);
                     return Response.FromValue(new AlertProcessingRuleResource(Client, response.Value), response.GetRawResponse());
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.AlertProcessingRules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateGetByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AlertProcessingRuleData> response = Response.FromValue(AlertProcessingRuleData.FromResponse(result), result);
                     return Response.FromValue(new AlertProcessingRuleResource(Client, response.Value), response.GetRawResponse());
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.AlertProcessingRules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateGetByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AlertProcessingRuleData> response = Response.FromValue(AlertProcessingRuleData.FromResponse(result), result);
                     return Response.FromValue(new AlertProcessingRuleResource(Client, response.Value), response.GetRawResponse());
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.AlertProcessingRules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateGetByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AlertProcessingRuleData> response = Response.FromValue(AlertProcessingRuleData.FromResponse(result), result);
                     return Response.FromValue(new AlertProcessingRuleResource(Client, response.Value), response.GetRawResponse());
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.AlertProcessingRules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _alertProcessingRulesOperationGroupRestClient.CreateGetByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AlertProcessingRuleData> response = Response.FromValue(AlertProcessingRuleData.FromResponse(result), result);
                     return Response.FromValue(new AlertProcessingRuleResource(Client, response.Value), response.GetRawResponse());

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using Azure;
 using Azure.Core;
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AlertProcessingRuleData, AlertProcessingRuleResource>(new AlertProcessingRulesOperationGroupGetBySubscriptionAsyncCollectionResultOfT(AlertProcessingRulesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAlertProcessingRulesSubscriptionResource.GetAlertProcessingRules"), data => new AlertProcessingRuleResource(Client, data));
+            return new AsyncPageableWrapper<AlertProcessingRuleData, AlertProcessingRuleResource>(new AlertProcessingRulesOperationGroupGetBySubscriptionAsyncCollectionResultOfT(AlertProcessingRulesOperationGroupRestClient, Id.SubscriptionId, context, "MockableAlertProcessingRulesSubscriptionResource.GetAlertProcessingRules"), data => new AlertProcessingRuleResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AlertProcessingRuleData, AlertProcessingRuleResource>(new AlertProcessingRulesOperationGroupGetBySubscriptionCollectionResultOfT(AlertProcessingRulesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAlertProcessingRulesSubscriptionResource.GetAlertProcessingRules"), data => new AlertProcessingRuleResource(Client, data));
+            return new PageableWrapper<AlertProcessingRuleData, AlertProcessingRuleResource>(new AlertProcessingRulesOperationGroupGetBySubscriptionCollectionResultOfT(AlertProcessingRulesOperationGroupRestClient, Id.SubscriptionId, context, "MockableAlertProcessingRulesSubscriptionResource.GetAlertProcessingRules"), data => new AlertProcessingRuleResource(Client, data));
         }
     }
 }
