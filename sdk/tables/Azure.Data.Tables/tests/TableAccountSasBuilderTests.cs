@@ -35,15 +35,15 @@ namespace Azure.Data.Tables.Tests
             var TableAccountSasBuilder = new TableAccountSasBuilder(uri);
 
             // Assert
-            Assert.AreEqual(TableSasProtocol.Https, TableAccountSasBuilder.Protocol);
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), TableAccountSasBuilder.ExpiresOn);
-            Assert.AreEqual("", TableAccountSasBuilder.Identifier);
-            Assert.AreEqual(TableSasIPRange.Parse("168.1.5.60-168.1.5.70"), TableAccountSasBuilder.IPRange);
-            Assert.AreEqual("rw", TableAccountSasBuilder.Permissions);
-            Assert.AreEqual(TableAccountSasResourceTypes.Service, TableAccountSasBuilder.ResourceTypes);
-            Assert.AreEqual(TableSasProtocol.Https, TableAccountSasBuilder.Protocol);
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), TableAccountSasBuilder.StartsOn);
-            Assert.AreEqual("2015-04-05", TableAccountSasBuilder.Version);
+            Assert.That(TableAccountSasBuilder.Protocol, Is.EqualTo(TableSasProtocol.Https));
+            Assert.That(TableAccountSasBuilder.ExpiresOn, Is.EqualTo(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero)));
+            Assert.That(TableAccountSasBuilder.Identifier, Is.Empty);
+            Assert.That(TableAccountSasBuilder.IPRange, Is.EqualTo(TableSasIPRange.Parse("168.1.5.60-168.1.5.70")));
+            Assert.That(TableAccountSasBuilder.Permissions, Is.EqualTo("rw"));
+            Assert.That(TableAccountSasBuilder.ResourceTypes, Is.EqualTo(TableAccountSasResourceTypes.Service));
+            Assert.That(TableAccountSasBuilder.Protocol, Is.EqualTo(TableSasProtocol.Https));
+            Assert.That(TableAccountSasBuilder.StartsOn, Is.EqualTo(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero)));
+            Assert.That(TableAccountSasBuilder.Version, Is.EqualTo("2015-04-05"));
         }
         [Test]
         [TestCase(new object[] { "r", TableAccountSasPermissions.Read, TableAccountSasResourceTypes.Container })]

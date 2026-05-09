@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.CostManagement.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 category is null && amount is null && timeGrain is null && timePeriod is null && filter is null && currentSpend is null && notifications is null && forecastSpend is null ? default : new BudgetProperties(
-                    category.Value,
+                    category.GetValueOrDefault(),
                     amount,
-                    timeGrain.Value,
+                    timeGrain.GetValueOrDefault(),
                     timePeriod,
                     filter,
                     currentSpend,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             return new ExportProperties(
                 format,
-                deliveryInfoDestination is null ? default : new ExportDeliveryInfo(deliveryInfoDestination, null),
+                new ExportDeliveryInfo(deliveryInfoDestination, null),
                 definition,
                 runHistoryValue is null ? default : new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), null),
                 partitionData,
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             return new CommonExportProperties(
                 format,
-                deliveryInfoDestination is null ? default : new ExportDeliveryInfo(deliveryInfoDestination, null),
+                new ExportDeliveryInfo(deliveryInfoDestination, null),
                 definition,
                 runHistoryValue is null ? default : new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), null),
                 partitionData,
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 SettingsKind.Taginheritance,
-                preferContainerTags is null ? default : new TagInheritanceProperties(preferContainerTags.Value, null));
+                preferContainerTags is null ? default : new TagInheritanceProperties(preferContainerTags.GetValueOrDefault(), null));
         }
 
         /// <param name="id"> The id of the long running operation. </param>
@@ -892,6 +892,16 @@ namespace Azure.ResourceManager.CostManagement.Models
             values ??= new ChangeTrackingList<CostAllocationProportion>();
 
             return new TargetCostAllocationEntity(resourceType, name, additionalBinaryDataProperties: null, values.ToList(), policyType);
+        }
+
+        /// <summary> The cost allocation rule check name availability response. </summary>
+        /// <param name="nameAvailable"> Whether this rule name is available. </param>
+        /// <param name="reason"> The reason this name is not available. </param>
+        /// <param name="message"> Error message if the name is not available. </param>
+        /// <returns> A new <see cref="Models.CostAllocationRuleCheckNameAvailabilityResponse"/> instance for mocking. </returns>
+        public static CostAllocationRuleCheckNameAvailabilityResponse CostAllocationRuleCheckNameAvailabilityResponse(bool? nameAvailable = default, CostAllocationRuleCheckNameAvailabilityReason? reason = default, string message = default)
+        {
+            return new CostAllocationRuleCheckNameAvailabilityResponse(nameAvailable, reason, message, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1620,7 +1630,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CommonExportProperties CommonExportProperties(ExportFormatType? format, ExportDeliveryDestination deliveryInfoDestination, ExportDefinition definition, IEnumerable<ExportRun> runHistoryValue, bool? partitionData, DateTimeOffset? nextRunTimeEstimate)
         {
-            return CommonExportProperties(format, deliveryInfoDestination, definition, runHistoryValue, partitionData, dataOverwriteBehavior: default, compressionMode: default, exportDescription: default, nextRunTimeEstimate, systemSuspensionContext: default);
+            return CommonExportProperties(format: format, deliveryInfoDestination: deliveryInfoDestination, definition: definition, runHistoryValue: runHistoryValue, partitionData: partitionData, dataOverwriteBehavior: default, compressionMode: default, exportDescription: default, nextRunTimeEstimate: nextRunTimeEstimate, systemSuspensionContext: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExportRun"/>. </summary>

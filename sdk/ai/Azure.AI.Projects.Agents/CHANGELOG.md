@@ -3,8 +3,16 @@
 ## 2.1.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added `FabricIQPreviewTool`.
+- Added `ToolboxSearchPreviewTool` for discovering deferred tools via `search_tools` queries at runtime.
+- Added `Name` and `Description` properties to tool classes (`A2APreviewTool`, `AzureAISearchTool`, `BingCustomSearchPreviewTool`, `BingGroundingTool`, `BrowserAutomationPreviewTool`, `MemorySearchPreviewTool`, `MicrosoftFabricPreviewTool`, `SharepointPreviewTool`).
 
 ### Breaking Changes
+- `AgentEndpoint` was renamed to `AgentEndpointConfiguration`.
+- `TelemetryEndpointAuth` was renamed to `TelemetryEndpointAuthentication`.
+- `TelemetryEndpoint` property `Auth` was renamed to `Authentication`.
+- `TelemetryEndpoint` property `Data` was renamed to `ExportedDataTypes`.
+- `isolationKey` was removed from `CreateSession` and `DeleteSession` operations.
 
 ### Bugs Fixed
 

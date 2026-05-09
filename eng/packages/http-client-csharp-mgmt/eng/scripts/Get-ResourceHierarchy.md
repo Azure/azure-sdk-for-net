@@ -32,15 +32,29 @@ the script records:
 The JSON array is written to **stdout**. Short diagnostic messages (assembly
 version, type counts) go to **stderr**.
 
+## Architecture
+
+`Get-ResourceHierarchy.ps1` is a thin PowerShell shim around the .NET 10
+console tool under `ResourceHierarchyTool/`. The shim builds the tool on
+demand (only when sources are newer than the existing build output) and
+forwards the request to a child `dotnet` process.
+
+The reflection runs on .NET 10 specifically so that the latest
+`Azure.ResourceManager` (and its `System.Text.Json` v10 transitive dep) can
+be loaded; the PowerShell host's own .NET 9 runtime cannot satisfy those
+references.
+
 ## Usage
 
 ```
-pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/Get-ResourceHierarchy.ps1 <path-to-dll> > hierarchy.json
+pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/Get-ResourceHierarchy.ps1 <path-to-dll> [-ProbeDir <dir>...] [-ProbeFile <file>...] > hierarchy.json
 ```
 
-The script accepts any `Azure.ResourceManager.<RP>.dll` as input. The only
-requirement is that the DLL's directory must also contain its runtime
-dependencies — most importantly `Azure.ResourceManager.dll`.
+The DLL's directory is automatically added as a probe directory. If
+sibling dependencies (`Azure.ResourceManager.dll`, etc.) are not colocated,
+pass extra `-ProbeDir`/`-ProbeFile` arguments listing where to find them —
+or use `Get-PreviousGaResourceHierarchy.ps1` which builds a probe-dir list
+from the SDK project's NuGet restore for you.
 
 ### Obtaining a DLL with dependencies
 
@@ -73,22 +87,30 @@ On a recent run this reports **49 resource types / 45 collection types /
 
 ## How it works (short version)
 
-- Loads the target assembly with `Assembly.LoadFrom`; sibling dependencies are
-  resolved from the same directory via an `AssemblyResolve` handler.
-- Discovers types by walking the `BaseType` chain (avoids cross-ALC identity
-  pitfalls that `IsAssignableFrom` would hit).
-- Reads `[Obsolete]` and `[EditorBrowsable]` via `GetCustomAttributesData()`
-  (no attribute instantiation required).
+The work happens inside `ResourceHierarchyTool` (a small `net10.0` console
+app). It:
+
+- Loads the target assembly with `Assembly.LoadFrom`; sibling dependencies
+  are resolved from the DLL's own directory plus any caller-supplied probe
+  directories via an `AssemblyResolve` handler.
+- Discovers types by walking the `BaseType` chain (avoids cross-ALC
+  identity pitfalls that `IsAssignableFrom` would hit).
+- Reads `[Obsolete]` and `[EditorBrowsable]` via
+  `GetCustomAttributesData()` (no attribute instantiation required).
 - Infers parents and scopes by inspecting `Get*` methods on other resources
   and on the RP's `Mockable*` extension types:
   - for collection-backed resources: methods returning `<Name>Collection`
-  - for singletons: parameter-less methods returning the resource type directly
+  - for singletons: parameter-less methods returning the resource type
+    directly
+- Propagates extension scopes from each top-level resource down through its
+  parent → child chain (so deeply nested children correctly inherit
+  `ResourceGroup` / `Subscription` / `Tenant` / `ManagementGroup`).
 
 ## Caveats
 
-- Input DLLs must target a framework compatible with the host pwsh runtime
-  (`net10.0` works with pwsh on .NET 10). Netstandard2.0-only outputs will not
-  load.
-- Assemblies load into the default `AssemblyLoadContext`, so the pwsh process
-  cannot analyze two DLLs with conflicting dependency versions in a single
-  session — run the script once per target DLL.
+- Running the reflection requires the .NET 10 SDK to be installed (the tool
+  targets `net10.0`). The shim builds on first use; subsequent runs reuse
+  the build output.
+- Assemblies load into the default `AssemblyLoadContext`, so a single tool
+  invocation cannot analyze two DLLs with conflicting dependency versions
+  — run the shim once per target DLL.

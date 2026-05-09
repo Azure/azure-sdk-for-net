@@ -79,6 +79,17 @@ namespace Azure.Generator.Management
             [];
 
         /// <inheritdoc/>
+        protected override Type? CreateFrameworkType(string fullyQualifiedTypeName)
+        {
+            if (KnownManagementTypes.TryGetFrameworkType(fullyQualifiedTypeName, out var frameworkType))
+            {
+                return frameworkType;
+            }
+
+            return base.CreateFrameworkType(fullyQualifiedTypeName);
+        }
+
+        /// <inheritdoc/>
         protected override ClientProvider? CreateClientCore(InputClient inputClient)
         {
             return base.CreateClientCore(inputClient);

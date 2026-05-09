@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 {
                     Properties = new ForwardingRulePatchProperties();
                 }
-                Properties.DnsForwardingRuleState = value.Value;
+                Properties.DnsForwardingRuleState = value;
             }
         }
     }

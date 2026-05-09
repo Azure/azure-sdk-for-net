@@ -236,7 +236,6 @@ namespace Azure.Storage.DataMovement
 
                 await ReportBytesWrittenAsync(completeLength).ConfigureAwait(false);
                 await CompleteTransferAsync(sourceProperties).ConfigureAwait(false);
-                await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
             }
             catch (RequestFailedException exception)
                 when (_createMode == StorageResourceCreationMode.SkipIfExists

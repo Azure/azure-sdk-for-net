@@ -189,6 +189,57 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             return ClientBuilder.GetServiceClientFromAzureSasCredentialConfig(Tenants.TestConfigDefault, default);
         }
 
+        protected override async Task<(StorageResource Source, StorageResource Destination)> CreateCopyStorageResourcesWithAuthAsync(
+            long size,
+            BlobContainerClient sourceContainer,
+            BlobContainerClient destinationContainer,
+            StorageResourceProvider provider)
+        {
+            string itemName = GetNewItemName();
+
+            // Upload data using SharedKey client
+            BlockBlobClient blobClient = sourceContainer.GetBlockBlobClient(itemName);
+            using (Stream originalStream = await CreateLimitedMemoryStream(size))
+            {
+                originalStream.Position = 0;
+                await blobClient.UploadAsync(originalStream);
+            }
+
+            // Create resources through the SAS provider so copy-source URL is authenticated
+            BlobsStorageResourceProvider sasProvider = (BlobsStorageResourceProvider)provider;
+            StorageResource source = await sasProvider.FromBlobAsync(
+                blobClient.Uri,
+                new BlockBlobStorageResourceOptions());
+            BlockBlobClient destClient = destinationContainer.GetBlockBlobClient(itemName);
+            StorageResource destination = await sasProvider.FromBlobAsync(
+                destClient.Uri,
+                new BlockBlobStorageResourceOptions());
+            return (source, destination);
+        }
+
+        protected override async Task<(StorageResource Source, StorageResource Destination)> CreateCopyStorageResourceContainersWithAuthAsync(
+            long size,
+            int transferCount,
+            BlobContainerClient sourceContainer,
+            BlobContainerClient destinationContainer,
+            StorageResourceProvider provider)
+        {
+            string directoryPath = GetNewContainerName();
+
+            // Upload data using SharedKey client (discard the FromClient-based resource)
+            await CreateSourceStorageResourceContainerAsync(size, transferCount, directoryPath, sourceContainer);
+
+            // Create container resources through the SAS provider so copy-source URL is authenticated
+            BlobsStorageResourceProvider sasProvider = (BlobsStorageResourceProvider)provider;
+            BlobStorageResourceContainerOptions sourceOptions = new() { BlobPrefix = directoryPath };
+            StorageResource source = await sasProvider.FromContainerAsync(
+                sourceContainer.Uri,
+                sourceOptions);
+            StorageResource destination = await sasProvider.FromContainerAsync(
+                destinationContainer.Uri);
+            return (source, destination);
+        }
+
         #region Snapshot Tests
         [Test]
         [Ignore("Live tests only")]

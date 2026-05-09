@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                createdOn is null && provisioningState is null && organizationId is null && ssoUri is null && offerDetail is null && userDetail is null && linkOrganizationToken is null ? default : new OrganizationResourceProperties(
+                new OrganizationResourceProperties(
                     createdOn,
                     provisioningState,
                     organizationId,
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                connectorBasicInfo is null && connectorServiceTypeInfo is null && partnerConnectorInfo is null ? default : new ConnectorResourceProperties(connectorBasicInfo, connectorServiceTypeInfo, partnerConnectorInfo, null));
+                new ConnectorResourceProperties(connectorBasicInfo, connectorServiceTypeInfo, partnerConnectorInfo, null));
         }
 
         /// <summary> The partner connector type is KafkaAzureBlobStorageSink. </summary>
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.Confluent.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ConfluentOrganizationData ConfluentOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, ConfluentProvisionState? provisioningState, Guid? organizationId, Uri ssoUri, ConfluentOfferDetail offerDetail, ConfluentUserDetail userDetail)
         {
-            return ConfluentOrganizationData(id, name, resourceType, systemData, tags, location, createdOn, provisioningState, organizationId, ssoUri, offerDetail, userDetail, linkOrganizationToken: default);
+            return ConfluentOrganizationData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, createdOn: createdOn, provisioningState: provisioningState, organizationId: organizationId, ssoUri: ssoUri, offerDetail: offerDetail, userDetail: userDetail, linkOrganizationToken: default);
         }
     }
 }

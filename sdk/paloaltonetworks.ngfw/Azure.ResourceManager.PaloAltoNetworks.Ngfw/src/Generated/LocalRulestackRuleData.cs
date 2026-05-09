@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new RuleEntry();
                 }
-                Properties.ETag = value.Value;
+                Properties.ETag = value;
             }
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new RuleEntry();
                 }
-                Properties.RuleState = value.Value;
+                Properties.RuleState = value;
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new RuleEntry();
                 }
-                Properties.NegateSource = value.Value;
+                Properties.NegateSource = value;
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new RuleEntry();
                 }
-                Properties.NegateDestination = value.Value;
+                Properties.NegateDestination = value;
             }
         }
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new RuleEntry();
                 }
-                Properties.ActionType = value.Value;
+                Properties.ActionType = value;
             }
         }
 
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new RuleEntry();
                 }
-                Properties.EnableLogging = value.Value;
+                Properties.EnableLogging = value;
             }
         }
 
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new RuleEntry();
                 }
-                Properties.DecryptionRuleType = value.Value;
+                Properties.DecryptionRuleType = value;
             }
         }
 

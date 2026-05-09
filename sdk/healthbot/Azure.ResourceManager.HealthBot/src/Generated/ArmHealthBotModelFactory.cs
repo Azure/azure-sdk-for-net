@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             return new HealthBotPatch(
                 properties,
                 tags,
-                skuName is null ? default : new HealthBotSku(skuName.Value, null),
+                skuName is null ? default : new HealthBotSku(skuName.GetValueOrDefault(), null),
                 identity,
                 location,
                 additionalBinaryDataProperties: null);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HealthBot.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HealthBotProperties HealthBotProperties(string provisioningState, Uri botManagementPortalLink, HealthBotKeyVaultProperties keyVaultProperties)
         {
-            return HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties, accessControlMethod: default);
+            return HealthBotProperties(provisioningState: provisioningState, botManagementPortalLink: botManagementPortalLink, keyVaultProperties: keyVaultProperties, accessControlMethod: default);
         }
     }
 }

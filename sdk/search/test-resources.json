@@ -71,7 +71,7 @@
     },
     "variables": {
         "searchServiceName": "[concat('azs-net-', parameters('baseName'))]",
-        "searchApiVersion": "2021-04-01-preview",
+        "searchApiVersion": "2026-03-01-preview",
         "searchEncryptionLocations": [
             "westus2",
             "eastus2",
@@ -104,7 +104,8 @@
                 "publicNetworkAccess": "Enabled",
                 "networkRuleSet": {
                     "ipRules": []
-                }
+                },
+                "semanticSearch": "free"
             }
         },
         {
@@ -120,7 +121,7 @@
             "sku": {
                 "name": "Standard_LRS"
             },
-            "kind": "BlobStorage"
+            "kind": "StorageV2"
         },
         {
             "name": "[variables('cognitiveServicesAccountName')]",
@@ -189,14 +190,14 @@
             }
         },
         {
-            "name": "[concat(variables('openAiAccountName'), '/gpt-4.1')]",
+            "name": "[concat(variables('openAiAccountName'), '/gpt-5-mini')]",
             "type": "Microsoft.CognitiveServices/accounts/deployments",
             "apiVersion": "[variables('openAiApiVersion')]",
             "properties": {
                 "model": {
-                    "name": "gpt-4.1",
+                    "name": "gpt-5-mini",
                     "format": "OpenAI",
-                    "version": "2025-04-14"
+                    "version": "2025-08-07"
                 }
             },
             "sku": {
@@ -223,7 +224,7 @@
                 "capacity": 30
             },
             "dependsOn": [
-                "[resourceId('Microsoft.CognitiveServices/accounts/deployments', variables('openAiAccountName'), 'gpt-4.1')]"
+                "[resourceId('Microsoft.CognitiveServices/accounts/deployments', variables('openAiAccountName'), 'gpt-5-mini')]"
             ]
         },
         {

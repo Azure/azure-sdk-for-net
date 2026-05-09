@@ -28,14 +28,14 @@ namespace Azure.Data.AppConfiguration.Tests
 
             Response response = await SendGetRequest(transport, policy);
 
-            Assert.False(transport.Requests[0].Headers.TryGetValue(headerName, out _));
-            Assert.True(response.Headers.TryGetValue(headerName, out string responseValue));
-            Assert.AreEqual(headerValue, responseValue);
+            Assert.That(transport.Requests[0].Headers.TryGetValue(headerName, out _), Is.False);
+            Assert.That(response.Headers.TryGetValue(headerName, out string responseValue), Is.True);
+            Assert.That(responseValue, Is.EqualTo(headerValue));
 
             await SendGetRequest(transport, policy);
 
-            Assert.True(transport.Requests[1].Headers.TryGetValue(headerName, out string requestValue));
-            Assert.AreEqual(idTokenValue, requestValue);
+            Assert.That(transport.Requests[1].Headers.TryGetValue(headerName, out string requestValue), Is.True);
+            Assert.That(requestValue, Is.EqualTo(idTokenValue));
         }
 
         [Test]
@@ -55,10 +55,10 @@ namespace Azure.Data.AppConfiguration.Tests
             await SendGetRequest(transport, policy);
             await SendGetRequest(transport, policy);
 
-            Assert.True(transport.Requests[1].Headers.TryGetValue(headerName, out string reqValue));
+            Assert.That(transport.Requests[1].Headers.TryGetValue(headerName, out string reqValue), Is.True);
 
-            Assert.True($"{header1Value},{header2Value}".Equals(reqValue) ||
-                        $"{header2Value},{header1Value}".Equals(reqValue));
+            Assert.That($"{header1Value},{header2Value}".Equals(reqValue) ||
+                        $"{header2Value},{header1Value}".Equals(reqValue), Is.True);
         }
 
         [Test]
@@ -77,10 +77,10 @@ namespace Azure.Data.AppConfiguration.Tests
             await SendGetRequest(transport, policy);
             await SendGetRequest(transport, policy);
 
-            Assert.True(transport.Requests[1].Headers.TryGetValue(headerName, out string reqValue));
+            Assert.That(transport.Requests[1].Headers.TryGetValue(headerName, out string reqValue), Is.True);
 
-            Assert.True($"{header1Value},{header2Value}".Equals(reqValue) ||
-                        $"{header2Value},{header1Value}".Equals(reqValue));
+            Assert.That($"{header1Value},{header2Value}".Equals(reqValue) ||
+                        $"{header2Value},{header1Value}".Equals(reqValue), Is.True);
         }
 
         [Test]
@@ -103,11 +103,11 @@ namespace Azure.Data.AppConfiguration.Tests
             await SendGetRequest(transport, policy);
             await SendGetRequest(transport, policy);
 
-            Assert.True(transport.Requests[1].Headers.TryGetValue(headerName, out string req1Value));
-            Assert.True(transport.Requests[2].Headers.TryGetValue(headerName, out string req2Value));
+            Assert.That(transport.Requests[1].Headers.TryGetValue(headerName, out string req1Value), Is.True);
+            Assert.That(transport.Requests[2].Headers.TryGetValue(headerName, out string req2Value), Is.True);
 
-            Assert.AreEqual(header1Value, req1Value);
-            Assert.AreEqual(header2Value, req2Value);
+            Assert.That(req1Value, Is.EqualTo(header1Value));
+            Assert.That(req2Value, Is.EqualTo(header2Value));
         }
 
         [Test]
@@ -130,11 +130,11 @@ namespace Azure.Data.AppConfiguration.Tests
             await SendGetRequest(transport, policy);
             await SendGetRequest(transport, policy);
 
-            Assert.True(transport.Requests[1].Headers.TryGetValue(headerName, out string req1Value));
-            Assert.True(transport.Requests[2].Headers.TryGetValue(headerName, out string req2Value));
+            Assert.That(transport.Requests[1].Headers.TryGetValue(headerName, out string req1Value), Is.True);
+            Assert.That(transport.Requests[2].Headers.TryGetValue(headerName, out string req2Value), Is.True);
 
-            Assert.AreEqual(header1Value, req1Value);
-            Assert.AreEqual(header1Value, req2Value);
+            Assert.That(req1Value, Is.EqualTo(header1Value));
+            Assert.That(req2Value, Is.EqualTo(header1Value));
         }
 
         [Test]
@@ -145,10 +145,10 @@ namespace Azure.Data.AppConfiguration.Tests
             long seqNo = 28;
             string headerValue = $"{id}={value};sn={seqNo}";
 
-            Assert.IsTrue(SyncTokenUtils.TryParse(headerValue, out SyncToken syncToken));
-            Assert.AreEqual(id, syncToken.Id);
-            Assert.AreEqual(value, syncToken.Value);
-            Assert.AreEqual(seqNo, syncToken.SequenceNumber);
+            Assert.That(SyncTokenUtils.TryParse(headerValue, out SyncToken syncToken), Is.True);
+            Assert.That(syncToken.Id, Is.EqualTo(id));
+            Assert.That(syncToken.Value, Is.EqualTo(value));
+            Assert.That(syncToken.SequenceNumber, Is.EqualTo(seqNo));
         }
     }
 }

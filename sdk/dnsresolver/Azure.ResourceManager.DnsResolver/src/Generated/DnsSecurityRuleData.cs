@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     Properties = new DnsSecurityRuleProperties();
                 }
-                Properties.DnsSecurityRuleState = value.Value;
+                Properties.DnsSecurityRuleState = value;
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     Properties = new DnsSecurityRuleProperties();
                 }
-                Properties.ActionType = value.Value;
+                Properties.ActionType = value;
             }
         }
     }

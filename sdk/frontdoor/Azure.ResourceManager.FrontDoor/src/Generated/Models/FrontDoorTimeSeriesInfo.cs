@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     Properties = new TimeseriesProperties();
                 }
-                Properties.StartOn = value.Value;
+                Properties.StartOn = value;
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     Properties = new TimeseriesProperties();
                 }
-                Properties.EndOn = value.Value;
+                Properties.EndOn = value;
             }
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     Properties = new TimeseriesProperties();
                 }
-                Properties.AggregationInterval = value.Value;
+                Properties.AggregationInterval = value;
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     Properties = new TimeseriesProperties();
                 }
-                Properties.TimeSeriesType = value.Value;
+                Properties.TimeSeriesType = value;
             }
         }
 

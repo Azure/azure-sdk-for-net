@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     Properties = new ConnectionMonitorTestProperties();
                 }
-                Properties.DestinationPort = value.Value;
+                Properties.DestinationPort = value;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     Properties = new ConnectionMonitorTestProperties();
                 }
-                Properties.TestFrequencyInSec = value.Value;
+                Properties.TestFrequencyInSec = value;
             }
         }
 
