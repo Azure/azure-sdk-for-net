@@ -16,10 +16,22 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Visitors
 {
+    /// <summary>
+    /// Repairs hidden model factory compatibility overloads after flattening changes the current model factory shape.
+    /// Used from <see cref="ManagementClientGenerator.GetWriter(TypeProvider)"/> because some compatibility overloads are
+    /// synthesized from LastContractView after normal visitors have finished.
+    /// </summary>
     internal static class ModelFactoryBackwardCompatHelper
     {
+        /// <summary>
+        /// Updates hidden compatibility overload bodies so old parameters still flow into the current flattened model shape.
+        /// Input is the complete model factory method list; output is in-place method body updates for repairable overloads.
+        /// Used just before writing a <see cref="ModelFactoryProvider"/> to cover both visitor-created and LastContractView-created overloads.
+        /// </summary>
         internal static void FixModelFactoryBackwardCompatOverloads(IReadOnlyList<MethodProvider> methods)
         {
+            // First identify the current primary overload for each model factory method name. Hidden compatibility overloads
+            // are skipped here because they represent older signatures, not the current argument order/body shape.
             var primaryMethods = new Dictionary<string, MethodProvider>();
             foreach (var method in methods)
             {
@@ -33,6 +45,9 @@ namespace Azure.Generator.Management.Visitors
                 }
             }
 
+            // Then scan hidden compatibility overload bodies and repair the two shapes we know how to preserve:
+            // 1. A call into the primary overload with stale positional arguments.
+            // 2. A direct model construction with default arguments where the old overload still has matching inputs.
             foreach (var method in methods)
             {
                 if (!IsBackwardCompatMethod(method) || method.BodyStatements is null)
@@ -69,12 +84,22 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
+        /// <summary>
+        /// Returns true when a method is a hidden backward-compatibility overload.
+        /// Input is a method provider; output is whether it has <see cref="System.ComponentModel.EditorBrowsableAttribute"/>.
+        /// Used by this helper and tests to separate old compatibility overloads from current primary overloads.
+        /// </summary>
         internal static bool IsBackwardCompatMethod(MethodProvider method)
         {
             return method.Signature.Attributes.Any(a =>
                 a.Type is { IsFrameworkType: true } && a.Type.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
         }
 
+        /// <summary>
+        /// Rebuilds a hidden overload's primary-method invocation in the current primary method parameter order.
+        /// Inputs are one body statement and the primary method lookup; output is a replacement return statement when the call changed.
+        /// Used by <see cref="FixModelFactoryBackwardCompatOverloads"/> for overloads whose body delegates to another model factory method.
+        /// </summary>
         private static bool TryUpdatePrimaryMethodInvocation(
             MethodBodyStatement statement,
             IReadOnlyDictionary<string, MethodProvider> primaryMethods,
@@ -89,6 +114,8 @@ namespace Azure.Generator.Management.Visitors
                 return false;
             }
 
+            // The invoke signature describes the old overload's argument names, while primaryParams describes the current
+            // overload shape. If either side is unavailable, the safest behavior is to leave the old body unchanged.
             var primaryParams = primaryMethod.Signature.Parameters;
             var invokeArgs = invokeExpression.Arguments;
             var invokeSignatureParams = invokeExpression.MethodSignature?.Parameters;
@@ -111,6 +138,7 @@ namespace Azure.Generator.Management.Visitors
             var changed = false;
             for (int i = 0; i < primaryParams.Count; i++)
             {
+                // Preserve old arguments by matching parameter names instead of trusting old positional order.
                 if (argsByName.TryGetValue(primaryParams[i].Name, out var arg))
                 {
                     newArgs.Add(arg);
@@ -121,6 +149,8 @@ namespace Azure.Generator.Management.Visitors
                 }
                 else
                 {
+                    // Parameters added after the old overload was generated must remain defaulted, but we emit them as
+                    // named positional references so the generated call remains stable if later parameters move again.
                     newArgs.Add(Snippet.PositionalReference(primaryParams[i], primaryParams[i].DefaultValue ?? Default));
                     changed = true;
                 }
@@ -135,6 +165,11 @@ namespace Azure.Generator.Management.Visitors
             return true;
         }
 
+        /// <summary>
+        /// Replaces default arguments in a hidden overload's direct model construction with arguments rebuilt from old parameters.
+        /// Inputs are the old method and its returned <see cref="NewInstanceExpression"/>; outputs are updated constructor arguments
+        /// and the old parameters consumed by the repair. Used for compatibility overloads that construct the model directly.
+        /// </summary>
         private static bool TryUpdateNewInstanceArguments(
             MethodProvider method,
             NewInstanceExpression newInstanceExpression,
@@ -148,6 +183,8 @@ namespace Azure.Generator.Management.Visitors
                 return false;
             }
 
+            // The repair maps arguments by the generated full constructor. If the expression contains named arguments that
+            // target a customization constructor instead, the full-constructor parameter order is not authoritative.
             var constructorParameters = modelProvider.FullConstructor.Signature.Parameters;
             if (constructorParameters.Count != newInstanceExpression.Parameters.Count)
             {
@@ -163,6 +200,8 @@ namespace Azure.Generator.Management.Visitors
             List<ParameterProvider>? matched = null;
             for (int i = 0; i < newInstanceExpression.Parameters.Count; i++)
             {
+                // Only default slots are candidates for repair. Non-default arguments were intentionally present in the
+                // old generated body and should not be overwritten.
                 var currentArgument = newInstanceExpression.Parameters[i];
                 if (!IsDefaultExpression(currentArgument))
                 {
@@ -183,6 +222,11 @@ namespace Azure.Generator.Management.Visitors
             return arguments is not null;
         }
 
+        /// <summary>
+        /// Detects named constructor arguments that prove a <see cref="NewInstanceExpression"/> is not bound to the generated full constructor.
+        /// Inputs are rendered arguments and full-constructor parameters; output is true when a named argument targets a different slot.
+        /// Used before direct-constructor repair to avoid corrupting calls to custom constructors.
+        /// </summary>
         private static bool HasNamedArgumentMismatchingFullConstructor(IReadOnlyList<ValueExpression> arguments, IReadOnlyList<ParameterProvider> constructorParameters)
         {
             for (int i = 0; i < arguments.Count; i++)
@@ -197,6 +241,11 @@ namespace Azure.Generator.Management.Visitors
             return false;
         }
 
+        /// <summary>
+        /// Extracts the name from a rendered named argument expression such as <c>serializedAdditionalRawData: null</c>.
+        /// Input is an expression; output is the argument name when the expression looks like a simple named argument.
+        /// Used by <see cref="HasNamedArgumentMismatchingFullConstructor"/> to identify custom-constructor binding.
+        /// </summary>
         private static bool TryGetNamedArgumentName(ValueExpression argument, [NotNullWhen(true)] out string? name)
         {
             name = null;
@@ -217,6 +266,11 @@ namespace Azure.Generator.Management.Visitors
             return name.Length > 0;
         }
 
+        /// <summary>
+        /// Returns true for a null-coalescing assignment statement that initializes a parameter consumed by a repaired argument.
+        /// Inputs are a method body statement and repaired parameters; output is whether the statement should be removed.
+        /// Used after rebuilding nested model arguments because the new conditional construction handles null/default behavior.
+        /// </summary>
         private static bool IsNullCoalescingAssignmentToMatchedParameter(
             MethodBodyStatement statement,
             IReadOnlyList<ParameterProvider> parameters)
@@ -225,6 +279,11 @@ namespace Azure.Generator.Management.Visitors
             return parameters.Any(parameter => text.StartsWith($"{parameter.Name} ??=", StringComparison.Ordinal));
         }
 
+        /// <summary>
+        /// Builds a compatibility argument for one current constructor parameter from parameters still present on the old overload.
+        /// Inputs are the old method, target constructor parameter, recursion stack, and whether to wrap all-null inputs in default;
+        /// output is the rebuilt argument and matched old parameters. Used recursively for flattened nested model parameters.
+        /// </summary>
         private static bool TryBuildCompatibilityArgument(
             MethodProvider method,
             ParameterProvider constructorParameter,
@@ -232,12 +291,15 @@ namespace Azure.Generator.Management.Visitors
             bool wrapWithNullCheck,
             [NotNullWhen(true)] out CompatibilityArgument? argument)
         {
+            // Prefer a direct name/type match first; this handles parameters that remained on the old overload unchanged.
             if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, out var directParameter))
             {
                 argument = new CompatibilityArgument(BuildParameterArgument(directParameter, constructorParameter.Type), [directParameter]);
                 return true;
             }
 
+            // For flattened models, old overload parameters often correspond to leaves of a nested model. Track visited
+            // model types by name to avoid infinite recursion in self-referential model graphs.
             if (visitedTypes.Any(type => type.AreNamesEqual(constructorParameter.Type)))
             {
                 argument = null;
@@ -253,6 +315,8 @@ namespace Azure.Generator.Management.Visitors
                 return false;
             }
 
+            // Reconstruct the nested model by independently resolving each constructor parameter from the old overload.
+            // Missing nested parameters intentionally stay defaulted to preserve old overload shape.
             var nestedConstructorParameters = nestedModel.FullConstructor.Signature.Parameters;
             var nestedArguments = new List<ValueExpression>(nestedConstructorParameters.Count);
             var matchedParameters = new List<ParameterProvider>();
@@ -276,6 +340,8 @@ namespace Azure.Generator.Management.Visitors
                 return false;
             }
 
+            // For top-level replacement arguments, preserve old all-null behavior by returning default instead of creating
+            // an empty nested model. Recursive replacements are embedded inside an already-created parent and skip this guard.
             var newInstance = New.Instance(constructorParameter.Type, nestedArguments);
             var condition = wrapWithNullCheck ? BuildAllNullCondition(matchedParameters) : null;
             var expression = condition is null
@@ -286,8 +352,15 @@ namespace Azure.Generator.Management.Visitors
             return true;
         }
 
+        /// <summary>
+        /// Resolves one nested constructor parameter against the old overload signature.
+        /// Inputs are the old method, optional parent property, nested parameter, and recursion stack; output is the rebuilt nested argument.
+        /// Used by <see cref="TryBuildCompatibilityArgument"/> while reconstructing flattened nested model instances.
+        /// </summary>
         private static bool TryGetNestedCompatibilityArgument(MethodProvider method, PropertyProvider? parentProperty, ParameterProvider nestedParameter, List<CSharpType> visitedTypes, [NotNullWhen(true)] out CompatibilityArgument? argument)
         {
+            // Prefer the flattened combined name (for example, parent + child) when available so it wins over unrelated
+            // top-level parameters with the same child name.
             if (parentProperty is not null && nestedParameter.Property is not null)
             {
                 var combinedName = PropertyHelpers.GetCombinedPropertyName(nestedParameter.Property, parentProperty).ToVariableName();
@@ -298,6 +371,7 @@ namespace Azure.Generator.Management.Visitors
                 }
             }
 
+            // Fall back to the nested parameter's own name, then recursively attempt to build another nested model.
             if (TryGetMethodParameter(method, nestedParameter.Name, nestedParameter.Type, out var directParameter))
             {
                 argument = new CompatibilityArgument(BuildParameterArgument(directParameter, nestedParameter.Type), [directParameter]);
@@ -307,6 +381,11 @@ namespace Azure.Generator.Management.Visitors
             return TryBuildCompatibilityArgument(method, nestedParameter, visitedTypes, wrapWithNullCheck: false, out argument);
         }
 
+        /// <summary>
+        /// Finds an old overload parameter by name and compatible type.
+        /// Inputs are the old method, expected parameter name, and expected type; output is the matching parameter.
+        /// Used whenever direct or nested compatibility repair needs to reuse an existing old overload argument.
+        /// </summary>
         private static bool TryGetMethodParameter(MethodProvider method, string name, CSharpType expectedType, [NotNullWhen(true)] out ParameterProvider? parameter)
         {
             parameter = method.Signature.Parameters.FirstOrDefault(p =>
@@ -315,17 +394,32 @@ namespace Azure.Generator.Management.Visitors
             return parameter is not null;
         }
 
+        /// <summary>
+        /// Determines whether an old parameter can be used for a current constructor parameter.
+        /// Inputs are old and expected types; output is whether direct assignment or helper conversion can make them compatible.
+        /// Used by <see cref="TryGetMethodParameter"/> to allow nullable/value and list-interface shape differences.
+        /// </summary>
         private static bool AreCompatibleParameterTypes(CSharpType parameterType, CSharpType expectedType)
             => parameterType.AreNamesEqual(expectedType)
             || parameterType.InputType.AreNamesEqual(expectedType.InputType)
             || AreCompatibleListTypes(parameterType, expectedType);
 
+        /// <summary>
+        /// Determines whether two list-like types have compatible element types.
+        /// Inputs are old and expected list types; output is whether their element type names match.
+        /// Used when old overloads expose <c>IEnumerable&lt;T&gt;</c> but current constructors need another list interface.
+        /// </summary>
         private static bool AreCompatibleListTypes(CSharpType parameterType, CSharpType expectedType)
             => parameterType.IsList
             && expectedType.IsList
             && parameterType.Arguments.Count == expectedType.Arguments.Count
             && parameterType.Arguments.Zip(expectedType.Arguments).All(pair => pair.First.AreNamesEqual(pair.Second));
 
+        /// <summary>
+        /// Converts an old overload parameter into an expression suitable for a current constructor parameter.
+        /// Inputs are the matched old parameter and expected type; output is the expression to pass to generated code.
+        /// Used after name/type matching to handle list materialization and nullable value-type unwrapping.
+        /// </summary>
         private static ValueExpression BuildParameterArgument(ParameterProvider parameter, CSharpType expectedType)
         {
             if (AreCompatibleListTypes(parameter.Type, expectedType) && !parameter.Type.AreNamesEqual(expectedType))
@@ -341,6 +435,11 @@ namespace Azure.Generator.Management.Visitors
             return parameter;
         }
 
+        /// <summary>
+        /// Builds the guard that preserves old "all flattened inputs are null" behavior.
+        /// Input is the set of old parameters consumed by a reconstructed nested model; output is the combined null check.
+        /// Used for top-level nested model reconstruction to emit <c>allNull ? default : new Nested(...)</c>.
+        /// </summary>
         private static ScopedApi<bool>? BuildAllNullCondition(IEnumerable<ParameterProvider> parameters)
         {
             ScopedApi<bool>? result = null;
@@ -358,12 +457,22 @@ namespace Azure.Generator.Management.Visitors
             return result;
         }
 
+        /// <summary>
+        /// Returns true when an expression renders as a C# default literal/expression.
+        /// Input is a generated value expression; output is whether it is eligible for replacement.
+        /// Used by <see cref="TryUpdateNewInstanceArguments"/> so only previously defaulted constructor slots are repaired.
+        /// </summary>
         private static bool IsDefaultExpression(ValueExpression expression)
         {
             var displayString = expression.ToDisplayString();
             return displayString == "default" || displayString.StartsWith("default(", StringComparison.Ordinal);
         }
 
+        /// <summary>
+        /// Resolves a generated model provider from a C# type.
+        /// Input is a constructor parameter type; output is the corresponding model provider when the type is a generated model.
+        /// Used by direct-constructor repair to recursively reconstruct nested flattened model arguments.
+        /// </summary>
         private static bool TryGetModelProvider(CSharpType type, [NotNullWhen(true)] out ModelProvider? modelProvider)
         {
             if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(type, out var typeProvider) && typeProvider is ModelProvider model)
