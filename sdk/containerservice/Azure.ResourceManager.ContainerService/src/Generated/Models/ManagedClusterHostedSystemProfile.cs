@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Settings for hosted system addons. </summary>
-    internal partial class ManagedClusterHostedSystemProfile
+    public partial class ManagedClusterHostedSystemProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -24,15 +25,27 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterHostedSystemProfile"/>. </summary>
         /// <param name="isHostedSystemAddonsEnabled"> Whether to enable hosted system addons for the cluster. </param>
+        /// <param name="systemNodeSubnetID"> The ID of the subnet that will be joined by system nodes managed and hosted by AKS for running critical system addons. This ID must be provided together with `nodeSubnetID` and `apiserverAccessProfile.subnetId`, and all three subnet IDs must belong to the same VNet. If you don’t specify it, AKS will create a subnet in the managed resource group using a default /26 CIDR. </param>
+        /// <param name="nodeSubnetID"> The ID of the subnet that will be joined by worker nodes managed by node auto provisioner for running workload pods in your tenant. This must be provided together with `systemNodeSubnetID` and `apiserverAccessProfile.subnetId`, and all three subnet IDs must be in the same VNet. If you don’t specify it, AKS will create a subnet in the managed resource group using a default /16 CIDR. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterHostedSystemProfile(bool? isHostedSystemAddonsEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterHostedSystemProfile(bool? isHostedSystemAddonsEnabled, ResourceIdentifier systemNodeSubnetID, ResourceIdentifier nodeSubnetID, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsHostedSystemAddonsEnabled = isHostedSystemAddonsEnabled;
+            SystemNodeSubnetID = systemNodeSubnetID;
+            NodeSubnetID = nodeSubnetID;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to enable hosted system addons for the cluster. </summary>
         [WirePath("enabled")]
         public bool? IsHostedSystemAddonsEnabled { get; set; }
+
+        /// <summary> The ID of the subnet that will be joined by system nodes managed and hosted by AKS for running critical system addons. This ID must be provided together with `nodeSubnetID` and `apiserverAccessProfile.subnetId`, and all three subnet IDs must belong to the same VNet. If you don’t specify it, AKS will create a subnet in the managed resource group using a default /26 CIDR. </summary>
+        [WirePath("systemNodeSubnetID")]
+        public ResourceIdentifier SystemNodeSubnetID { get; set; }
+
+        /// <summary> The ID of the subnet that will be joined by worker nodes managed by node auto provisioner for running workload pods in your tenant. This must be provided together with `systemNodeSubnetID` and `apiserverAccessProfile.subnetId`, and all three subnet IDs must be in the same VNet. If you don’t specify it, AKS will create a subnet in the managed resource group using a default /16 CIDR. </summary>
+        [WirePath("nodeSubnetID")]
+        public ResourceIdentifier NodeSubnetID { get; set; }
     }
 }

@@ -63,26 +63,6 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> List of components grouped by kubernetes major.minor version. </summary>
-        [WirePath("properties.componentsByReleases")]
-        public IList<KubernetesVersionComponents> ComponentsByReleases
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ComponentsByReleases;
-            }
-        }
-
-        /// <summary> List of historical good versions for rollback operations. </summary>
-        [WirePath("properties.recentlyUsedVersions")]
-        public IReadOnlyList<AgentPoolRecentlyUsedVersion> RecentlyUsedVersions
-        {
-            get
-            {
-                return Properties is null ? default : Properties.RecentlyUsedVersions;
-            }
-        }
-
         /// <summary> The latest AKS supported node image version. </summary>
         [WirePath("properties.latestNodeImageVersion")]
         public string LatestNodeImageVersion
