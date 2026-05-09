@@ -201,8 +201,7 @@ Creates a custom analyzer trained from **labeled documents** stored in Azure Blo
 - Key concepts: `LabeledDataKnowledgeSource`, knowledge sources on `ContentAnalyzerConfig`, container SAS URLs, optional path prefix; falls back to creating an analyzer **without** training data if no SAS URL is configured (so the sample is always runnable)
 - Two ways to provide training data — see **"Setting up Sample16 training data"** below:
   - **Option A — Manual upload**: you upload labeled triplets (image + `.labels.json` + `.result.json`) yourself and provide a container SAS URL via `CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL`
-  - **Option B — Auto-upload (.NET only)**: the sample uses `DefaultAzureCredential` to upload the receipt files from `tests/samples/SampleFiles/receipt_labels/` into your storage account and mint a short-lived User Delegation SAS — set `CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT` and `CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER`
-- **Java parity**: Java only supports Option A. Option B (auto-upload) is a .NET-only convenience.
+  - **Option B — Auto-upload**: the sample uses `DefaultAzureCredential` to upload the receipt files from `tests/samples/SampleFiles/receipt_labels/` into your storage account and mint a short-lived User Delegation SAS — set `CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT` and `CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER`
 
 ### Setting up Sample15 cross-resource environment
 
