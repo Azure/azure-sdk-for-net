@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 tags,
                 location,
                 properties,
-                default,
+                etag,
                 zones.ToList(),
                 identity);
         }
@@ -948,7 +948,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 properties,
-                default,
+                etag,
                 tags);
         }
     }
