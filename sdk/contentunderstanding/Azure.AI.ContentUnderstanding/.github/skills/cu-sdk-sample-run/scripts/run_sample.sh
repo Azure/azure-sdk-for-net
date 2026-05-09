@@ -1,4 +1,5 @@
 #!/bin/bash
+# cspell:ignore esac
 # Run a specific .NET SDK sample for Azure AI Content Understanding
 # This script extracts code from sample markdown files, builds a console project, and runs it.
 #
@@ -34,11 +35,11 @@ print_cyan()    { echo -e "${CYAN}$1${NC}"; }
 # ─── Portable in-place sed (GNU vs BSD/macOS) ─────────────────────────────────
 # GNU sed accepts `-i` with no arg; BSD/macOS sed requires `-i ''`.
 if sed --version >/dev/null 2>&1; then
-    SED_INPLACE=(sed -i)
+    SED_IN_PLACE=(sed -i)
 else
-    SED_INPLACE=(sed -i '')
+    SED_IN_PLACE=(sed -i '')
 fi
-sed_inplace() { "${SED_INPLACE[@]}" "$@"; }
+sed_in_place() { "${SED_IN_PLACE[@]}" "$@"; }
 
 # ─── Prerequisite: python3 ────────────────────────────────────────────────────
 require_python3() {
@@ -454,7 +455,7 @@ DLL_PATH=""
 print_info "Checking if Azure.AI.ContentUnderstanding NuGet package is available..."
 NUGET_AVAILABLE=false
 NUGET_CHECK_DIR=$(mktemp -d)
-cat > "$NUGET_CHECK_DIR/check.csproj" << 'CHECKCSPROJ'
+cat > "$NUGET_CHECK_DIR/check.csproj" << 'CHECK_CSPROJ'
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -463,7 +464,7 @@ cat > "$NUGET_CHECK_DIR/check.csproj" << 'CHECKCSPROJ'
     <PackageReference Include="Azure.AI.ContentUnderstanding" Version="1.0.0-*" />
   </ItemGroup>
 </Project>
-CHECKCSPROJ
+CHECK_CSPROJ
 # Copy isolation files so the check project uses nuget.org only
 cp "$RUNNER_BASE/global.json" "$NUGET_CHECK_DIR/" 2>/dev/null || true
 echo '<Project />' > "$NUGET_CHECK_DIR/Directory.Build.props"
@@ -680,7 +681,7 @@ inject_fallback_var() {
     if grep -q "\b${var_name}\b" "$RUNNER_DIR/Program.cs" && \
        ! grep -qE "(string|var)\s+${var_name}\s*=" "$RUNNER_DIR/Program.cs"; then
         # Prepend after the PROGRAM_HEADER (after the auth block)
-        sed_inplace "/^Console\.WriteLine();$/a\\${var_decl}" "$RUNNER_DIR/Program.cs"
+        sed_in_place "/^Console\.WriteLine();$/a\\${var_decl}" "$RUNNER_DIR/Program.cs"
     fi
 }
 
@@ -691,49 +692,49 @@ inject_fallback_var "targetAnalyzerId" 'string targetAnalyzerId = $"copy_target_
 # Post-process Program.cs to replace placeholders
 if [ -n "$LOCAL_FILE" ]; then
     ESCAPED_FILE=$(echo "$LOCAL_FILE" | sed 's/\\/\\\\/g')
-    sed_inplace "s|<localDocumentFilePath>|$ESCAPED_FILE|g" "$RUNNER_DIR/Program.cs"
-    sed_inplace "s|<filePath>|$ESCAPED_FILE|g" "$RUNNER_DIR/Program.cs"
-    sed_inplace "s|<file_path>|$ESCAPED_FILE|g" "$RUNNER_DIR/Program.cs"
+    sed_in_place "s|<localDocumentFilePath>|$ESCAPED_FILE|g" "$RUNNER_DIR/Program.cs"
+    sed_in_place "s|<filePath>|$ESCAPED_FILE|g" "$RUNNER_DIR/Program.cs"
+    sed_in_place "s|<file_path>|$ESCAPED_FILE|g" "$RUNNER_DIR/Program.cs"
 fi
 
 # Replace any remaining <endpoint>, <apiKey> references that might be in the snippets
 # These are already handled by the config loading, but some snippets have them inline
-sed_inplace 's|"<endpoint>"|_endpoint|g' "$RUNNER_DIR/Program.cs"
-sed_inplace 's|"<apiKey>"|_apiKey|g' "$RUNNER_DIR/Program.cs"
-sed_inplace 's|"<document_url>"|"https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/mixed_financial_invoices.pdf"|g' "$RUNNER_DIR/Program.cs"
+sed_in_place 's|"<endpoint>"|_endpoint|g' "$RUNNER_DIR/Program.cs"
+sed_in_place 's|"<apiKey>"|_apiKey|g' "$RUNNER_DIR/Program.cs"
+sed_in_place 's|"<document_url>"|"https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/mixed_financial_invoices.pdf"|g' "$RUNNER_DIR/Program.cs"
 
 # Sample00: Replace model deployment name placeholders
-sed_inplace "s|<your-gpt-4.1-deployment-name>|$GPT41_DEPLOYMENT|g" "$RUNNER_DIR/Program.cs"
-sed_inplace "s|<your-gpt-4.1-mini-deployment-name>|$GPT41_MINI_DEPLOYMENT|g" "$RUNNER_DIR/Program.cs"
-sed_inplace "s|<your-text-embedding-3-large-deployment-name>|$EMBEDDING_DEPLOYMENT|g" "$RUNNER_DIR/Program.cs"
+sed_in_place "s|<your-gpt-4.1-deployment-name>|$GPT41_DEPLOYMENT|g" "$RUNNER_DIR/Program.cs"
+sed_in_place "s|<your-gpt-4.1-mini-deployment-name>|$GPT41_MINI_DEPLOYMENT|g" "$RUNNER_DIR/Program.cs"
+sed_in_place "s|<your-text-embedding-3-large-deployment-name>|$EMBEDDING_DEPLOYMENT|g" "$RUNNER_DIR/Program.cs"
 
 # Sample05: Replace <file_path> placeholder (also handled above for LOCAL_FILE)
 if [ -n "$LOCAL_FILE" ]; then
     ESCAPED_FILE=$(echo "$LOCAL_FILE" | sed 's/\\/\\\\/g')
-    sed_inplace "s|<file_path>|$ESCAPED_FILE|g" "$RUNNER_DIR/Program.cs"
+    sed_in_place "s|<file_path>|$ESCAPED_FILE|g" "$RUNNER_DIR/Program.cs"
 fi
 
 # Sample15: Replace cross-resource placeholders with config values
 # Source endpoint is the primary endpoint (matches Python SDK convention)
 if [ -n "$ENDPOINT" ]; then
-    sed_inplace "s|https://source-resource.services.ai.azure.com/|$ENDPOINT|g" "$RUNNER_DIR/Program.cs"
+    sed_in_place "s|https://source-resource.services.ai.azure.com/|$ENDPOINT|g" "$RUNNER_DIR/Program.cs"
 fi
 if [ -n "$TARGET_ENDPOINT" ]; then
-    sed_inplace "s|https://target-resource.services.ai.azure.com/|$TARGET_ENDPOINT|g" "$RUNNER_DIR/Program.cs"
+    sed_in_place "s|https://target-resource.services.ai.azure.com/|$TARGET_ENDPOINT|g" "$RUNNER_DIR/Program.cs"
 fi
 if [ -n "$SOURCE_RESOURCE_ID" ]; then
     # Replace only the sourceResourceId line (not targetResourceId which uses the same placeholder)
-    sed_inplace "/string sourceResourceId/s|/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{name}|$SOURCE_RESOURCE_ID|g" "$RUNNER_DIR/Program.cs"
+    sed_in_place "/string sourceResourceId/s|/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{name}|$SOURCE_RESOURCE_ID|g" "$RUNNER_DIR/Program.cs"
 fi
 if [ -n "$TARGET_RESOURCE_ID" ]; then
-    sed_inplace "/string targetResourceId/s|/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{name}|$TARGET_RESOURCE_ID|g" "$RUNNER_DIR/Program.cs"
+    sed_in_place "/string targetResourceId/s|/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{name}|$TARGET_RESOURCE_ID|g" "$RUNNER_DIR/Program.cs"
 fi
 if [ -n "$SOURCE_REGION" ]; then
     # Only replace the source region assignment line, not all occurrences of region strings
-    sed_inplace "s|string sourceRegion = \"eastus\";|string sourceRegion = \"$SOURCE_REGION\";|g" "$RUNNER_DIR/Program.cs"
+    sed_in_place "s|string sourceRegion = \"eastus\";|string sourceRegion = \"$SOURCE_REGION\";|g" "$RUNNER_DIR/Program.cs"
 fi
 if [ -n "$TARGET_REGION" ]; then
-    sed_inplace "s|string targetRegion = \"westus\";|string targetRegion = \"$TARGET_REGION\";|g" "$RUNNER_DIR/Program.cs"
+    sed_in_place "s|string targetRegion = \"westus\";|string targetRegion = \"$TARGET_REGION\";|g" "$RUNNER_DIR/Program.cs"
 fi
 
 # For samples that need a local file but none provided, download a test file
@@ -744,9 +745,9 @@ if grep -q '<localDocumentFilePath>\|<filePath>\|<file_path>' "$RUNNER_DIR/Progr
         TEST_FILE="$RUNNER_DIR/test_document.pdf"
         curl -sL "https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/mixed_financial_invoices.pdf" -o "$TEST_FILE"
         ESCAPED_TEST=$(echo "$TEST_FILE" | sed 's/\\/\\\\/g')
-        sed_inplace "s|<localDocumentFilePath>|$ESCAPED_TEST|g" "$RUNNER_DIR/Program.cs"
-        sed_inplace "s|<filePath>|$ESCAPED_TEST|g" "$RUNNER_DIR/Program.cs"
-        sed_inplace "s|<file_path>|$ESCAPED_TEST|g" "$RUNNER_DIR/Program.cs"
+        sed_in_place "s|<localDocumentFilePath>|$ESCAPED_TEST|g" "$RUNNER_DIR/Program.cs"
+        sed_in_place "s|<filePath>|$ESCAPED_TEST|g" "$RUNNER_DIR/Program.cs"
+        sed_in_place "s|<file_path>|$ESCAPED_TEST|g" "$RUNNER_DIR/Program.cs"
     fi
 fi
 
@@ -766,7 +767,7 @@ if [ "$SAMPLE_NAME" = "Sample16_CreateAnalyzerWithLabels" ]; then
         # Add a csproj item to copy the folder to the build output directory.
         # We append before the final </Project> closing tag.
         if grep -q "</Project>" "$RUNNER_DIR/${SAMPLE_NAME}.csproj"; then
-            sed_inplace 's|</Project>|  <ItemGroup>\n    <None Update="receipt_labels/**/*">\n      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>\n    </None>\n  </ItemGroup>\n</Project>|' "$RUNNER_DIR/${SAMPLE_NAME}.csproj"
+            sed_in_place 's|</Project>|  <ItemGroup>\n    <None Update="receipt_labels/**/*">\n      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>\n    </None>\n  </ItemGroup>\n</Project>|' "$RUNNER_DIR/${SAMPLE_NAME}.csproj"
         fi
     fi
 fi
