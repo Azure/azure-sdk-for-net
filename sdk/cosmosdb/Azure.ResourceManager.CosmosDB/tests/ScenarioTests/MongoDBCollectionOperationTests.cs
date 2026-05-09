@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task MongoDBCollectionCreateAndUpdate()
         {
@@ -98,7 +97,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyMongoDBCollections(collection, collection2);
         }
 
-        [Test]
         [RecordedTest]
         [Ignore("Need to rerun once the null timestamp value from the collection resource fixed")]
         public async Task MongoDBCollectionRestoreTest()
@@ -150,7 +148,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.IsFalse(exists);
         }
 
-        [Test]
         [RecordedTest]
         public async Task MongoDBCollectionList()
         {
@@ -163,7 +160,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyMongoDBCollections(collections[0], collection);
         }
 
-        [Test]
         [RecordedTest]
         public async Task MongoDBCollectionThroughput()
         {
@@ -181,9 +177,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("Need to diagnose The operation has not completed yet.")]
+
+        [Ignore("MPG migration WIP: ResourceIdentifier strict-validation rejects action segment in LRO response id.")]
         public async Task MongoDBCollectionMigrateToAutoscale()
         {
             var collection = await CreateMongoDBCollection(null);
@@ -194,9 +190,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             AssertAutoscale(throughputData);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("Need to diagnose The operation has not completed yet.")]
+
+        [Ignore("MPG migration WIP: ResourceIdentifier strict-validation rejects action segment in LRO response id.")]
         public async Task MongoDBCollectionMigrateToManual()
         {
             var collection = await CreateMongoDBCollection(new AutoscaleSettings()
@@ -211,7 +207,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             AssertManualThroughput(throughputData);
         }
 
-        [Test]
         [RecordedTest]
         public async Task MongoDBCollectionDelete()
         {

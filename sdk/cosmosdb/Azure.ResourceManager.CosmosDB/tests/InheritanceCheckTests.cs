@@ -15,7 +15,24 @@ namespace Azure.ResourceManager.TestFramework
         [OneTimeSetUp]
         public void SetExceptionList()
         {
-            ExceptionList = new string[] { "CosmosDBTablePropertiesResource", "RestorableMongoDBCollection" };
+            ExceptionList = new string[]
+            {
+                "CosmosDBTablePropertiesResource",
+                "RestorableMongoDBCollection",
+                // MPG migration: model types that happen to end with Resource/Collection but are not ARM resources/collections.
+                "CassandraResource",
+                "GremlinResource",
+                "MongoDBResource",
+                "SqlResource",
+                "TableResource",
+                "ARMProxyResource",
+                "CassandraViewGetPropertiesResource",
+                "CosmosDBMongoCollection",
+                "CosmosDBMongoVCoreCollection",
+                "PhysicalPartitionStorageInfoCollection",
+                "PhysicalPartitionThroughputInfoResource",
+                "RedistributeThroughputPropertiesResource",
+            };
         }
     }
 }

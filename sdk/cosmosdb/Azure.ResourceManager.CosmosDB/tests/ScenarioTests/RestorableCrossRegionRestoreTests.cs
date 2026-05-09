@@ -57,7 +57,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         [Ignore("Cross region restore is not supported for Continuous backup, need further investigation.")]
         public async Task TestCrossRegionRestore()
@@ -97,6 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var createOptions = new CosmosDBAccountCreateOrUpdateContent(location, locations)
             {
+                DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard,
                 Kind = kind,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds, null),
                 IPRules = { new CosmosDBIPAddressOrRange("23.43.231.120", null) },
@@ -136,6 +136,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             CosmosDBAccountCreateOrUpdateContent databaseAccountCreateUpdateParameters = new CosmosDBAccountCreateOrUpdateContent(armLocation, locations)
             {
+                DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard,
                 Kind = kind,
                 CreateMode = CosmosDBAccountCreateMode.Restore,
                 RestoreParameters = restoreParameters

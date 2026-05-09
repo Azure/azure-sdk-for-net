@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task SqlTriggerCreateAndUpdate()
         {
@@ -112,7 +111,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifySqlTriggers(trigger, trigger2);
         }
 
-        [Test]
         [RecordedTest]
         public async Task SqlTriggerList()
         {
@@ -125,7 +123,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifySqlTriggers(triggers[0], trigger);
         }
 
-        [Test]
         [RecordedTest]
         public async Task SqlTriggerDelete()
         {
