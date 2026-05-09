@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver;
@@ -166,7 +167,23 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 if (prop.NameEquals("dnsResolverOutboundEndpoints"u8))
                 {
-                    DeserializeDnsResolverOutboundEndpoints(prop, ref dnsResolverOutboundEndpoints);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsResolverContext.Default));
+                        }
+                    }
+                    dnsResolverOutboundEndpoints = array;
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
