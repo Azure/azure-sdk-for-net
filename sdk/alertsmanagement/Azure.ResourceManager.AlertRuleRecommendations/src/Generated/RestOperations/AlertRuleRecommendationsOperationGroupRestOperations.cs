@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByResourceRequest(string resourceUri, RequestContext context)
+        internal HttpMessage CreateGetAlertRuleRecommendationsRequest(string resourceUri, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
             return message;
         }
 
-        internal HttpMessage CreateNextGetByResourceRequest(Uri nextPage, string resourceUri, RequestContext context)
+        internal HttpMessage CreateNextGetAlertRuleRecommendationsRequest(Uri nextPage, string resourceUri, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
             return message;
         }
 
-        internal HttpMessage CreateGetByTargetTypeRequest(string subscriptionId, string targetType, RequestContext context)
+        internal HttpMessage CreateGetAlertRuleRecommendationsByTargetTypeRequest(string subscriptionId, string targetType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
             return message;
         }
 
-        internal HttpMessage CreateNextGetByTargetTypeRequest(Uri nextPage, string subscriptionId, string targetType, RequestContext context)
+        internal HttpMessage CreateNextGetAlertRuleRecommendationsByTargetTypeRequest(Uri nextPage, string subscriptionId, string targetType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

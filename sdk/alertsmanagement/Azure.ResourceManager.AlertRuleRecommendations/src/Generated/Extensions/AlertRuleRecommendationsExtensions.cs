@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
         /// Retrieve alert rule recommendations for a resource.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAlertRuleRecommendationsArmClient.GetByResourceAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAlertRuleRecommendationsArmClient.GetAlertRuleRecommendationsAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -43,18 +43,18 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="AlertRuleRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AlertRuleRecommendationResource> GetByResourceAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AlertRuleRecommendationResource> GetAlertRuleRecommendationsAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAlertRuleRecommendationsArmClient(client).GetByResourceAsync(scope, cancellationToken);
+            return GetMockableAlertRuleRecommendationsArmClient(client).GetAlertRuleRecommendationsAsync(scope, cancellationToken);
         }
 
         /// <summary>
         /// Retrieve alert rule recommendations for a resource.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAlertRuleRecommendationsArmClient.GetByResource(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAlertRuleRecommendationsArmClient.GetAlertRuleRecommendations(ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -62,18 +62,18 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="AlertRuleRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AlertRuleRecommendationResource> GetByResource(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public static Pageable<AlertRuleRecommendationResource> GetAlertRuleRecommendations(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAlertRuleRecommendationsArmClient(client).GetByResource(scope, cancellationToken);
+            return GetMockableAlertRuleRecommendationsArmClient(client).GetAlertRuleRecommendations(scope, cancellationToken);
         }
 
         /// <summary>
         /// Retrieve alert rule recommendations for a target type.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAlertRuleRecommendationsSubscriptionResource.GetByTargetTypeAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAlertRuleRecommendationsSubscriptionResource.GetAlertRuleRecommendationsByTargetTypeAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -81,18 +81,18 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="AlertRuleRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AlertRuleRecommendationResource> GetByTargetTypeAsync(this SubscriptionResource subscriptionResource, string targetType, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AlertRuleRecommendationResource> GetAlertRuleRecommendationsByTargetTypeAsync(this SubscriptionResource subscriptionResource, string targetType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAlertRuleRecommendationsSubscriptionResource(subscriptionResource).GetByTargetTypeAsync(targetType, cancellationToken);
+            return GetMockableAlertRuleRecommendationsSubscriptionResource(subscriptionResource).GetAlertRuleRecommendationsByTargetTypeAsync(targetType, cancellationToken);
         }
 
         /// <summary>
         /// Retrieve alert rule recommendations for a target type.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAlertRuleRecommendationsSubscriptionResource.GetByTargetType(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAlertRuleRecommendationsSubscriptionResource.GetAlertRuleRecommendationsByTargetType(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="AlertRuleRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AlertRuleRecommendationResource> GetByTargetType(this SubscriptionResource subscriptionResource, string targetType, CancellationToken cancellationToken = default)
+        public static Pageable<AlertRuleRecommendationResource> GetAlertRuleRecommendationsByTargetType(this SubscriptionResource subscriptionResource, string targetType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAlertRuleRecommendationsSubscriptionResource(subscriptionResource).GetByTargetType(targetType, cancellationToken);
+            return GetMockableAlertRuleRecommendationsSubscriptionResource(subscriptionResource).GetAlertRuleRecommendationsByTargetType(targetType, cancellationToken);
         }
     }
 }

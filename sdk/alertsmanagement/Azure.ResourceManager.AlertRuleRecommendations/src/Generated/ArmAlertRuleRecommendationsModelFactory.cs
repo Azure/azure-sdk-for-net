@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
         /// <param name="displayInformation"> A dictionary that provides the display information for an alert rule recommendation. </param>
         /// <param name="ruleArmTemplate"> A complete ARM template to deploy the alert rules. </param>
         /// <returns> A new <see cref="Models.AlertRuleRecommendationResource"/> instance for mocking. </returns>
-        public static AlertRuleRecommendationResource AlertRuleRecommendationResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string alertRuleType = default, string category = default, IDictionary<string, string> displayInformation = default, RuleArmTemplate ruleArmTemplate = default)
+        public static AlertRuleRecommendationResource AlertRuleRecommendationResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string alertRuleType = default, string category = default, IDictionary<string, string> displayInformation = default, AlertRuleRecommendationArmTemplate ruleArmTemplate = default)
         {
             return new AlertRuleRecommendationResource(
                 id,
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
         /// <param name="variables"> Variable definitions. </param>
         /// <param name="parameters"> Input parameter definitions. </param>
         /// <param name="resources"> Alert rule resource definitions. </param>
-        /// <returns> A new <see cref="Models.RuleArmTemplate"/> instance for mocking. </returns>
-        public static RuleArmTemplate RuleArmTemplate(string schema = default, string contentVersion = default, BinaryData variables = default, BinaryData parameters = default, IEnumerable<BinaryData> resources = default)
+        /// <returns> A new <see cref="Models.AlertRuleRecommendationArmTemplate"/> instance for mocking. </returns>
+        public static AlertRuleRecommendationArmTemplate AlertRuleRecommendationArmTemplate(string schema = default, string contentVersion = default, BinaryData variables = default, BinaryData parameters = default, IEnumerable<BinaryData> resources = default)
         {
             resources ??= new ChangeTrackingList<BinaryData>();
 
-            return new RuleArmTemplate(
+            return new AlertRuleRecommendationArmTemplate(
                 schema,
                 contentVersion,
                 variables,

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,39 +14,36 @@ using Azure.ResourceManager.AlertRuleRecommendations.Models;
 
 namespace Azure.ResourceManager.AlertRuleRecommendations
 {
-    internal partial class AlertRuleRecommendationsOperationGroupGetByTargetTypeAsyncCollectionResultOfT : AsyncPageable<AlertRuleRecommendationResource>
+    internal partial class AlertRuleRecommendationsOperationGroupGetAlertRuleRecommendationsCollectionResultOfT : Pageable<AlertRuleRecommendationResource>
     {
         private readonly AlertRuleRecommendationsOperationGroup _client;
-        private readonly string _subscriptionId;
-        private readonly string _targetType;
+        private readonly string _resourceUri;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of AlertRuleRecommendationsOperationGroupGetByTargetTypeAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of AlertRuleRecommendationsOperationGroupGetAlertRuleRecommendationsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AlertRuleRecommendationsOperationGroup client used to send requests. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="targetType"> The recommendations target type. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AlertRuleRecommendationsOperationGroupGetByTargetTypeAsyncCollectionResultOfT(AlertRuleRecommendationsOperationGroup client, string subscriptionId, string targetType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public AlertRuleRecommendationsOperationGroupGetAlertRuleRecommendationsCollectionResultOfT(AlertRuleRecommendationsOperationGroup client, string resourceUri, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _subscriptionId = subscriptionId;
-            _targetType = targetType;
+            _resourceUri = resourceUri;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of AlertRuleRecommendationsOperationGroupGetByTargetTypeAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of AlertRuleRecommendationsOperationGroupGetAlertRuleRecommendationsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of AlertRuleRecommendationsOperationGroupGetByTargetTypeAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<AlertRuleRecommendationResource>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of AlertRuleRecommendationsOperationGroupGetAlertRuleRecommendationsCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<AlertRuleRecommendationResource>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
@@ -65,14 +61,14 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByTargetTypeRequest(nextLink, _subscriptionId, _targetType, _context) : _client.CreateGetByTargetTypeRequest(_subscriptionId, _targetType, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAlertRuleRecommendationsRequest(nextLink, _resourceUri, _context) : _client.CreateGetAlertRuleRecommendationsRequest(_resourceUri, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

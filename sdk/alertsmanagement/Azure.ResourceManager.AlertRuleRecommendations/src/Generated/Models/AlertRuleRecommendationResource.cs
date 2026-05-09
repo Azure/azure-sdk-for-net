@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
         }
 
         /// <summary> A complete ARM template to deploy the alert rules. </summary>
-        public RuleArmTemplate RuleArmTemplate
+        public AlertRuleRecommendationArmTemplate RuleArmTemplate
         {
             get
             {

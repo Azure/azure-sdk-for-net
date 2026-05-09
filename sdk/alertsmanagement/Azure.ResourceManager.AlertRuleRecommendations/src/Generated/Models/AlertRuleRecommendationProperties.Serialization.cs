@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
             string alertRuleType = default;
             string category = default;
             IDictionary<string, string> displayInformation = default;
-            RuleArmTemplate ruleArmTemplate = default;
+            AlertRuleRecommendationArmTemplate ruleArmTemplate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
                 }
                 if (prop.NameEquals("ruleArmTemplate"u8))
                 {
-                    ruleArmTemplate = RuleArmTemplate.DeserializeRuleArmTemplate(prop.Value, options);
+                    ruleArmTemplate = AlertRuleRecommendationArmTemplate.DeserializeAlertRuleRecommendationArmTemplate(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

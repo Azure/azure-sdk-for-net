@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AlertRuleRecommendationArmTemplate))]
     [ModelReaderWriterBuildable(typeof(AlertRuleRecommendationProperties))]
     [ModelReaderWriterBuildable(typeof(AlertRuleRecommendationResource))]
     [ModelReaderWriterBuildable(typeof(AlertRuleRecommendationsListResponse))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(RuleArmTemplate))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerAlertRuleRecommendationsContext : ModelReaderWriterContext
     {

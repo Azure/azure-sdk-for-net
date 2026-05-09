@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
         /// <param name="alertRuleType"> The recommendation alert rule type. </param>
         /// <param name="displayInformation"> A dictionary that provides the display information for an alert rule recommendation. </param>
         /// <param name="ruleArmTemplate"> A complete ARM template to deploy the alert rules. </param>
-        internal AlertRuleRecommendationProperties(string alertRuleType, IDictionary<string, string> displayInformation, RuleArmTemplate ruleArmTemplate)
+        internal AlertRuleRecommendationProperties(string alertRuleType, IDictionary<string, string> displayInformation, AlertRuleRecommendationArmTemplate ruleArmTemplate)
         {
             AlertRuleType = alertRuleType;
             DisplayInformation = displayInformation;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
         /// <param name="displayInformation"> A dictionary that provides the display information for an alert rule recommendation. </param>
         /// <param name="ruleArmTemplate"> A complete ARM template to deploy the alert rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertRuleRecommendationProperties(string alertRuleType, string category, IDictionary<string, string> displayInformation, RuleArmTemplate ruleArmTemplate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertRuleRecommendationProperties(string alertRuleType, string category, IDictionary<string, string> displayInformation, AlertRuleRecommendationArmTemplate ruleArmTemplate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AlertRuleType = alertRuleType;
             Category = category;
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
         public IDictionary<string, string> DisplayInformation { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> A complete ARM template to deploy the alert rules. </summary>
-        public RuleArmTemplate RuleArmTemplate { get; }
+        public AlertRuleRecommendationArmTemplate RuleArmTemplate { get; }
     }
 }

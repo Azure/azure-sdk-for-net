@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="AlertRuleRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AlertRuleRecommendationResource> GetByResourceAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AlertRuleRecommendationResource> GetAlertRuleRecommendationsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AlertRuleRecommendationsOperationGroupGetByResourceAsyncCollectionResultOfT(AlertRuleRecommendationsOperationGroupRestClient, scope.ToString(), context, "MockableAlertRuleRecommendationsArmClient.GetByResource");
+            return new AlertRuleRecommendationsOperationGroupGetAlertRuleRecommendationsAsyncCollectionResultOfT(AlertRuleRecommendationsOperationGroupRestClient, scope.ToString(), context, "MockableAlertRuleRecommendationsArmClient.GetAlertRuleRecommendations");
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="AlertRuleRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AlertRuleRecommendationResource> GetByResource(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual Pageable<AlertRuleRecommendationResource> GetAlertRuleRecommendations(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AlertRuleRecommendationsOperationGroupGetByResourceCollectionResultOfT(AlertRuleRecommendationsOperationGroupRestClient, scope.ToString(), context, "MockableAlertRuleRecommendationsArmClient.GetByResource");
+            return new AlertRuleRecommendationsOperationGroupGetAlertRuleRecommendationsCollectionResultOfT(AlertRuleRecommendationsOperationGroupRestClient, scope.ToString(), context, "MockableAlertRuleRecommendationsArmClient.GetAlertRuleRecommendations");
         }
     }
 }

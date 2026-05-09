@@ -14,56 +14,56 @@ using Azure.ResourceManager.AlertRuleRecommendations;
 namespace Azure.ResourceManager.AlertRuleRecommendations.Models
 {
     /// <summary> A complete ARM template to deploy the alert rules. </summary>
-    public partial class RuleArmTemplate : IJsonModel<RuleArmTemplate>
+    public partial class AlertRuleRecommendationArmTemplate : IJsonModel<AlertRuleRecommendationArmTemplate>
     {
-        /// <summary> Initializes a new instance of <see cref="RuleArmTemplate"/> for deserialization. </summary>
-        internal RuleArmTemplate()
+        /// <summary> Initializes a new instance of <see cref="AlertRuleRecommendationArmTemplate"/> for deserialization. </summary>
+        internal AlertRuleRecommendationArmTemplate()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RuleArmTemplate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AlertRuleRecommendationArmTemplate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuleArmTemplate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertRuleRecommendationArmTemplate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRuleArmTemplate(document.RootElement, options);
+                        return DeserializeAlertRuleRecommendationArmTemplate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RuleArmTemplate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertRuleRecommendationArmTemplate)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuleArmTemplate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertRuleRecommendationArmTemplate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAlertRuleRecommendationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RuleArmTemplate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertRuleRecommendationArmTemplate)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RuleArmTemplate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AlertRuleRecommendationArmTemplate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RuleArmTemplate IPersistableModel<RuleArmTemplate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AlertRuleRecommendationArmTemplate IPersistableModel<AlertRuleRecommendationArmTemplate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RuleArmTemplate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AlertRuleRecommendationArmTemplate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RuleArmTemplate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AlertRuleRecommendationArmTemplate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuleArmTemplate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertRuleRecommendationArmTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleArmTemplate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertRuleRecommendationArmTemplate)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("$schema"u8);
             writer.WriteStringValue(Schema);
@@ -139,24 +139,24 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RuleArmTemplate IJsonModel<RuleArmTemplate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AlertRuleRecommendationArmTemplate IJsonModel<AlertRuleRecommendationArmTemplate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RuleArmTemplate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AlertRuleRecommendationArmTemplate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuleArmTemplate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertRuleRecommendationArmTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleArmTemplate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertRuleRecommendationArmTemplate)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRuleArmTemplate(document.RootElement, options);
+            return DeserializeAlertRuleRecommendationArmTemplate(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RuleArmTemplate DeserializeRuleArmTemplate(JsonElement element, ModelReaderWriterOptions options)
+        internal static AlertRuleRecommendationArmTemplate DeserializeAlertRuleRecommendationArmTemplate(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RuleArmTemplate(
+            return new AlertRuleRecommendationArmTemplate(
                 schema,
                 contentVersion,
                 variables,

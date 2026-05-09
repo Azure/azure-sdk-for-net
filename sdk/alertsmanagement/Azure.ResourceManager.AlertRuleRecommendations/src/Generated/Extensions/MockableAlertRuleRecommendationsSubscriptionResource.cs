@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="targetType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="AlertRuleRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AlertRuleRecommendationResource> GetByTargetTypeAsync(string targetType, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AlertRuleRecommendationResource> GetAlertRuleRecommendationsByTargetTypeAsync(string targetType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetType, nameof(targetType));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AlertRuleRecommendationsOperationGroupGetByTargetTypeAsyncCollectionResultOfT(AlertRuleRecommendationsOperationGroupRestClient, Id.SubscriptionId, targetType, context, "MockableAlertRuleRecommendationsSubscriptionResource.GetByTargetType");
+            return new AlertRuleRecommendationsOperationGroupGetAlertRuleRecommendationsByTargetTypeAsyncCollectionResultOfT(AlertRuleRecommendationsOperationGroupRestClient, Id.SubscriptionId, targetType, context, "MockableAlertRuleRecommendationsSubscriptionResource.GetAlertRuleRecommendationsByTargetType");
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="targetType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="AlertRuleRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AlertRuleRecommendationResource> GetByTargetType(string targetType, CancellationToken cancellationToken = default)
+        public virtual Pageable<AlertRuleRecommendationResource> GetAlertRuleRecommendationsByTargetType(string targetType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetType, nameof(targetType));
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AlertRuleRecommendationsOperationGroupGetByTargetTypeCollectionResultOfT(AlertRuleRecommendationsOperationGroupRestClient, Id.SubscriptionId, targetType, context, "MockableAlertRuleRecommendationsSubscriptionResource.GetByTargetType");
+            return new AlertRuleRecommendationsOperationGroupGetAlertRuleRecommendationsByTargetTypeCollectionResultOfT(AlertRuleRecommendationsOperationGroupRestClient, Id.SubscriptionId, targetType, context, "MockableAlertRuleRecommendationsSubscriptionResource.GetAlertRuleRecommendationsByTargetType");
         }
     }
 }

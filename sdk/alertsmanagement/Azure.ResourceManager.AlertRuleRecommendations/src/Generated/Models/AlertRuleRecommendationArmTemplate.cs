@@ -13,18 +13,18 @@ using System.Text.Json;
 namespace Azure.ResourceManager.AlertRuleRecommendations.Models
 {
     /// <summary> A complete ARM template to deploy the alert rules. </summary>
-    public partial class RuleArmTemplate
+    public partial class AlertRuleRecommendationArmTemplate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RuleArmTemplate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleRecommendationArmTemplate"/>. </summary>
         /// <param name="schema"> JSON schema reference. </param>
         /// <param name="contentVersion"> A 4 number format for the version number of this template file. For example, 1.0.0.0. </param>
         /// <param name="variables"> Variable definitions. </param>
         /// <param name="parameters"> Input parameter definitions. </param>
         /// <param name="resources"> Alert rule resource definitions. </param>
-        internal RuleArmTemplate(string schema, string contentVersion, BinaryData variables, BinaryData parameters, IEnumerable<BinaryData> resources)
+        internal AlertRuleRecommendationArmTemplate(string schema, string contentVersion, BinaryData variables, BinaryData parameters, IEnumerable<BinaryData> resources)
         {
             Schema = schema;
             ContentVersion = contentVersion;
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
             Resources = resources.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RuleArmTemplate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleRecommendationArmTemplate"/>. </summary>
         /// <param name="schema"> JSON schema reference. </param>
         /// <param name="contentVersion"> A 4 number format for the version number of this template file. For example, 1.0.0.0. </param>
         /// <param name="variables"> Variable definitions. </param>
         /// <param name="parameters"> Input parameter definitions. </param>
         /// <param name="resources"> Alert rule resource definitions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RuleArmTemplate(string schema, string contentVersion, BinaryData variables, BinaryData parameters, IList<BinaryData> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertRuleRecommendationArmTemplate(string schema, string contentVersion, BinaryData variables, BinaryData parameters, IList<BinaryData> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Schema = schema;
             ContentVersion = contentVersion;
