@@ -375,9 +375,19 @@ namespace Azure.Generator.Management.Visitors
             && parameterType.Arguments.Zip(expectedType.Arguments).All(pair => pair.First.AreNamesEqual(pair.Second));
 
         private static ValueExpression BuildParameterArgument(ParameterProvider parameter, CSharpType expectedType)
-            => AreCompatibleListTypes(parameter.Type, expectedType) && !parameter.Type.AreNamesEqual(expectedType)
-                ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList()
-                : parameter;
+        {
+            if (AreCompatibleListTypes(parameter.Type, expectedType) && !parameter.Type.AreNamesEqual(expectedType))
+            {
+                return parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList();
+            }
+
+            if (parameter.Type.IsValueType && parameter.Type.IsNullable && expectedType.IsValueType && !expectedType.IsNullable)
+            {
+                return parameter.Invoke(nameof(Nullable<int>.GetValueOrDefault));
+            }
+
+            return parameter;
+        }
 
         private record CompatibilityArgument(ValueExpression Argument, IReadOnlyList<ParameterProvider> MatchedParameters);
 
