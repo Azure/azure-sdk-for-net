@@ -2221,12 +2221,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudBareMetalMachineData NetworkCloudBareMetalMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IEnumerable<NetworkCloudActionState> actionStates, IEnumerable<ResourceIdentifier> associatedResourceIds, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, NetworkCloudCertificateInfo caCertificate, ResourceIdentifier clusterId, BareMetalMachineCordonStatus? cordonStatus, BareMetalMachineDetailedStatus? detailedStatus, string detailedStatusMessage, HardwareInventory hardwareInventory, HardwareValidationStatus hardwareValidationStatus, IEnumerable<string> hybridAksClustersAssociatedIds, string kubernetesNodeName, string kubernetesVersion, string machineClusterVersion, string machineDetails, string machineName, IEnumerable<string> machineRoles, string machineSkuId, IPAddress oamIPv4Address, string oamIPv6Address, string osImage, BareMetalMachinePowerState? powerState, BareMetalMachineProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, BareMetalMachineReadyState? readyState, RuntimeProtectionStatus runtimeProtectionStatus, IEnumerable<SecretRotationStatus> secretRotationStatus, string serialNumber, string serviceTag, IEnumerable<string> virtualMachinesAssociatedIds)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            actionStates ??= new ChangeTrackingList<NetworkCloudActionState>();
-            associatedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            hybridAksClustersAssociatedIds ??= new ChangeTrackingList<string>();
-            machineRoles ??= new ChangeTrackingList<string>();
-            secretRotationStatus ??= new ChangeTrackingList<SecretRotationStatus>();
-            virtualMachinesAssociatedIds ??= new ChangeTrackingList<string>();
 
             return new NetworkCloudBareMetalMachineData(
                 id,
@@ -2236,8 +2230,45 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                bmcConnectionString is null && bmcCredentials is null && bmcMacAddress is null && bootMacAddress is null && machineDetails is null && machineName is null && machineSkuId is null && rackId is null && serialNumber is null && actionStates is null && associatedResourceIds is null && caCertificate is null && clusterId is null && cordonStatus is null && detailedStatus is null && detailedStatusMessage is null && hardwareInventory is null && hardwareValidationStatus is null && hybridAksClustersAssociatedIds is null && kubernetesNodeName is null && kubernetesVersion is null && machineClusterVersion is null && machineRoles is null && oamIPv4Address is null && oamIPv6Address is null && osImage is null && powerState is null && readyState is null && runtimeProtectionStatus is null && secretRotationStatus is null && serviceTag is null && virtualMachinesAssociatedIds is null && provisioningState is null ? default : new BareMetalMachineProperties(
+                    bmcConnectionString,
+                    bmcCredentials,
+                    bmcMacAddress,
+                    bootMacAddress,
+                    machineDetails,
+                    machineName,
+                    machineSkuId,
+                    rackId,
+                    rackSlot,
+                    serialNumber,
+                    (actionStates ?? new ChangeTrackingList<NetworkCloudActionState>()).ToList(),
+                    (associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    default,
+                    default,
+                    caCertificate,
+                    clusterId,
+                    cordonStatus,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    hardwareInventory,
+                    hardwareValidationStatus,
+                    (hybridAksClustersAssociatedIds ?? new ChangeTrackingList<string>()).ToList(),
+                    kubernetesNodeName,
+                    kubernetesVersion,
+                    machineClusterVersion,
+                    (machineRoles ?? new ChangeTrackingList<string>()).ToList(),
+                    oamIPv4Address,
+                    oamIPv6Address,
+                    osImage,
+                    powerState,
+                    readyState,
+                    runtimeProtectionStatus,
+                    (secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>()).ToList(),
+                    serviceTag,
+                    (virtualMachinesAssociatedIds ?? new ChangeTrackingList<string>()).ToList(),
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation);
         }
 
@@ -2281,11 +2312,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudCloudServicesNetworkData NetworkCloudCloudServicesNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IEnumerable<EgressEndpoint> additionalEgressEndpoints, IEnumerable<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, CloudServicesNetworkDetailedStatus? detailedStatus, string detailedStatusMessage, CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints, IEnumerable<EgressEndpoint> enabledEgressEndpoints, IEnumerable<ResourceIdentifier> hybridAksClustersAssociatedIds, string interfaceName, CloudServicesNetworkProvisioningState? provisioningState, CloudServicesNetworkStorageOptions storageOptions, CloudServicesNetworkStorageStatus storageStatus, IEnumerable<ResourceIdentifier> virtualMachinesAssociatedIds)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            additionalEgressEndpoints ??= new ChangeTrackingList<EgressEndpoint>();
-            associatedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            enabledEgressEndpoints ??= new ChangeTrackingList<EgressEndpoint>();
-            hybridAksClustersAssociatedIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            virtualMachinesAssociatedIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new NetworkCloudCloudServicesNetworkData(
                 id,
@@ -2295,8 +2321,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                additionalEgressEndpoints is null && enableDefaultEgressEndpoints is null && storageOptions is null && associatedResourceIds is null && clusterId is null && detailedStatus is null && detailedStatusMessage is null && enabledEgressEndpoints is null && hybridAksClustersAssociatedIds is null && interfaceName is null && storageStatus is null && virtualMachinesAssociatedIds is null && provisioningState is null ? default : new CloudServicesNetworkProperties(
+                    (additionalEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>()).ToList(),
+                    enableDefaultEgressEndpoints,
+                    storageOptions,
+                    (associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    clusterId,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    (enabledEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>()).ToList(),
+                    (hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    interfaceName,
+                    storageStatus,
+                    (virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation);
         }
 
@@ -2324,8 +2364,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudClusterManagerData NetworkCloudClusterManagerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, ResourceIdentifier analyticsWorkspaceId, IEnumerable<string> availabilityZones, IEnumerable<ClusterAvailableVersion> clusterVersions, ClusterManagerDetailedStatus? detailedStatus, string detailedStatusMessage, ResourceIdentifier fabricControllerId, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ExtendedLocation managerExtendedLocation, ClusterManagerProvisioningState? provisioningState, string vmSize)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            availabilityZones ??= new ChangeTrackingList<string>();
-            clusterVersions ??= new ChangeTrackingList<ClusterAvailableVersion>();
 
             return new NetworkCloudClusterManagerData(
                 id,
@@ -2335,8 +2373,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                analyticsWorkspaceId is null && availabilityZones is null && clusterVersions is null && detailedStatus is null && detailedStatusMessage is null && fabricControllerId is null && managedResourceGroupConfiguration is null && provisioningState is null && vmSize is null ? default : new ClusterManagerProperties(
+                    analyticsWorkspaceId,
+                    (availabilityZones ?? new ChangeTrackingList<string>()).ToList(),
+                    (clusterVersions ?? new ChangeTrackingList<ClusterAvailableVersion>()).ToList(),
+                    detailedStatus,
+                    detailedStatusMessage,
+                    fabricControllerId,
+                    managedResourceGroupConfiguration,
+                    default,
+                    provisioningState,
+                    default,
+                    vmSize,
+                    default),
+                etag,
                 identity,
                 default);
         }
@@ -2387,10 +2437,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudClusterData NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, IEnumerable<NetworkCloudActionState> actionStates, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, ResourceIdentifier analyticsWorkspaceId, IEnumerable<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, ExtendedLocation clusterExtendedLocation, string clusterLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, ExtendedLocation hybridAksExtendedLocation, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, ResourceIdentifier networkFabricId, ClusterProvisioningState? provisioningState, RuntimeProtectionEnforcementLevel? runtimeProtectionEnforcementLevel, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, DateTimeOffset? supportExpireOn, ClusterUpdateStrategy updateStrategy, VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan, IEnumerable<ResourceIdentifier> workloadResourceIds)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            actionStates ??= new ChangeTrackingList<NetworkCloudActionState>();
-            availableUpgradeVersions ??= new ChangeTrackingList<ClusterAvailableUpgradeVersion>();
-            computeRackDefinitions ??= new ChangeTrackingList<NetworkCloudRackDefinition>();
-            workloadResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new NetworkCloudClusterData(
                 id,
@@ -2400,8 +2446,40 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                aggregatorOrSingleRackDefinition is null && analyticsOutputSettings is null && analyticsWorkspaceId is null && clusterLocation is null && clusterServicePrincipal is null && clusterVersion is null && commandOutputSettings is null && computeDeploymentThreshold is null && computeRackDefinitions is null && managedResourceGroupConfiguration is null && networkFabricId is null && runtimeProtectionEnforcementLevel is null && secretArchive is null && secretArchiveSettings is null && updateStrategy is null && vulnerabilityScanningContainerScan is null && actionStates is null && availableUpgradeVersions is null && clusterCapacity is null && clusterConnectionStatus is null && clusterManagerConnectionStatus is null && clusterManagerId is null && detailedStatus is null && detailedStatusMessage is null && manualActionCount is null && supportExpireOn is null && workloadResourceIds is null && provisioningState is null ? default : new ClusterProperties(
+                    aggregatorOrSingleRackDefinition,
+                    analyticsOutputSettings,
+                    analyticsWorkspaceId,
+                    clusterLocation,
+                    clusterServicePrincipal,
+                    clusterType,
+                    clusterVersion,
+                    commandOutputSettings,
+                    computeDeploymentThreshold,
+                    (computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>()).ToList(),
+                    managedResourceGroupConfiguration,
+                    networkFabricId,
+                    new RuntimeProtectionConfiguration(default, runtimeProtectionEnforcementLevel, default),
+                    secretArchive,
+                    secretArchiveSettings,
+                    updateStrategy,
+                    new VulnerabilityScanningSettings(vulnerabilityScanningContainerScan, default),
+                    (actionStates ?? new ChangeTrackingList<NetworkCloudActionState>()).ToList(),
+                    (availableUpgradeVersions ?? new ChangeTrackingList<ClusterAvailableUpgradeVersion>()).ToList(),
+                    clusterCapacity,
+                    clusterConnectionStatus,
+                    default,
+                    clusterManagerConnectionStatus,
+                    clusterManagerId,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    default,
+                    manualActionCount,
+                    supportExpireOn,
+                    (workloadResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation,
                 identity,
                 default);
@@ -2438,12 +2516,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudKubernetesClusterData NetworkCloudKubernetesClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IEnumerable<string> aadAdminGroupObjectIds, AdministratorConfiguration administratorConfiguration, IEnumerable<ResourceIdentifier> attachedNetworkIds, IEnumerable<AvailableUpgrade> availableUpgrades, ResourceIdentifier clusterId, ResourceIdentifier connectedClusterId, string controlPlaneKubernetesVersion, ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, KubernetesClusterDetailedStatus? detailedStatus, string detailedStatusMessage, IEnumerable<FeatureStatus> featureStatuses, IEnumerable<InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, KubernetesClusterNetworkConfiguration networkConfiguration, IEnumerable<KubernetesClusterNode> nodes, KubernetesClusterProvisioningState? provisioningState)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            aadAdminGroupObjectIds ??= new ChangeTrackingList<string>();
-            attachedNetworkIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            availableUpgrades ??= new ChangeTrackingList<AvailableUpgrade>();
-            featureStatuses ??= new ChangeTrackingList<FeatureStatus>();
-            initialAgentPoolConfigurations ??= new ChangeTrackingList<InitialAgentPoolConfiguration>();
-            nodes ??= new ChangeTrackingList<KubernetesClusterNode>();
 
             return new NetworkCloudKubernetesClusterData(
                 id,
@@ -2453,8 +2525,26 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                aadAdminGroupObjectIds is null && administratorConfiguration is null && controlPlaneNodeConfiguration is null && initialAgentPoolConfigurations is null && kubernetesVersion is null && managedResourceGroupConfiguration is null && networkConfiguration is null && attachedNetworkIds is null && availableUpgrades is null && clusterId is null && connectedClusterId is null && controlPlaneKubernetesVersion is null && detailedStatus is null && detailedStatusMessage is null && featureStatuses is null && nodes is null && provisioningState is null ? default : new KubernetesClusterProperties(
+                    new NetworkCloudAadConfiguration((aadAdminGroupObjectIds ?? new ChangeTrackingList<string>()).ToList(), default),
+                    administratorConfiguration,
+                    controlPlaneNodeConfiguration,
+                    (initialAgentPoolConfigurations ?? new ChangeTrackingList<InitialAgentPoolConfiguration>()).ToList(),
+                    kubernetesVersion,
+                    managedResourceGroupConfiguration,
+                    networkConfiguration,
+                    (attachedNetworkIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    (availableUpgrades ?? new ChangeTrackingList<AvailableUpgrade>()).ToList(),
+                    clusterId,
+                    connectedClusterId,
+                    controlPlaneKubernetesVersion,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    (featureStatuses ?? new ChangeTrackingList<FeatureStatus>()).ToList(),
+                    (nodes ?? new ChangeTrackingList<KubernetesClusterNode>()).ToList(),
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation);
         }
 
@@ -2482,9 +2572,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudL2NetworkData NetworkCloudL2NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IEnumerable<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, L2NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IEnumerable<ResourceIdentifier> hybridAksClustersAssociatedIds, HybridAksPluginType? hybridAksPluginType, string interfaceName, ResourceIdentifier l2IsolationDomainId, L2NetworkProvisioningState? provisioningState, IEnumerable<ResourceIdentifier> virtualMachinesAssociatedIds)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            associatedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            hybridAksClustersAssociatedIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            virtualMachinesAssociatedIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new NetworkCloudL2NetworkData(
                 id,
@@ -2494,8 +2581,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                hybridAksPluginType is null && interfaceName is null && l2IsolationDomainId is null && associatedResourceIds is null && clusterId is null && detailedStatus is null && detailedStatusMessage is null && hybridAksClustersAssociatedIds is null && virtualMachinesAssociatedIds is null && provisioningState is null ? default : new L2NetworkProperties(
+                    hybridAksPluginType,
+                    interfaceName,
+                    l2IsolationDomainId,
+                    (associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    clusterId,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    (hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    (virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation);
         }
 
@@ -2528,9 +2626,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudL3NetworkData NetworkCloudL3NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IEnumerable<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, L3NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IEnumerable<ResourceIdentifier> hybridAksClustersAssociatedIds, HybridAksIpamEnabled? hybridAksIpamEnabled, HybridAksPluginType? hybridAksPluginType, string interfaceName, IPAllocationType? ipAllocationType, string ipv4ConnectedPrefix, string ipv6ConnectedPrefix, ResourceIdentifier l3IsolationDomainId, L3NetworkProvisioningState? provisioningState, IEnumerable<ResourceIdentifier> virtualMachinesAssociatedIds, long vlan)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            associatedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            hybridAksClustersAssociatedIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            virtualMachinesAssociatedIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new NetworkCloudL3NetworkData(
                 id,
@@ -2540,8 +2635,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                hybridAksIpamEnabled is null && hybridAksPluginType is null && interfaceName is null && ipAllocationType is null && ipv4ConnectedPrefix is null && ipv6ConnectedPrefix is null && l3IsolationDomainId is null && associatedResourceIds is null && clusterId is null && detailedStatus is null && detailedStatusMessage is null && hybridAksClustersAssociatedIds is null && virtualMachinesAssociatedIds is null && provisioningState is null ? default : new L3NetworkProperties(
+                    hybridAksIpamEnabled,
+                    hybridAksPluginType,
+                    interfaceName,
+                    ipAllocationType,
+                    ipv4ConnectedPrefix,
+                    ipv6ConnectedPrefix,
+                    l3IsolationDomainId,
+                    vlan,
+                    (associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    clusterId,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    (hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    (virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation);
         }
 
@@ -2628,8 +2739,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                availabilityZone is null && rackLocation is null && rackSerialNumber is null && rackSkuId is null && clusterId is null && detailedStatus is null && detailedStatusMessage is null && provisioningState is null ? default : new RackProperties(
+                    availabilityZone,
+                    rackLocation,
+                    rackSerialNumber,
+                    rackSkuId,
+                    clusterId,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation);
         }
 
@@ -2666,7 +2786,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudStorageApplianceData NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, AdministrativeCredentials administratorCredentials, NetworkCloudCertificateInfo caCertificate, long? capacity, long? capacityUsed, ResourceIdentifier clusterId, StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, IPAddress managementIPv4Address, string manufacturer, string model, StorageApplianceProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, RemoteVendorManagementFeature? remoteVendorManagementFeature, RemoteVendorManagementStatus? remoteVendorManagementStatus, IEnumerable<SecretRotationStatus> secretRotationStatus, string serialNumber, string storageApplianceSkuId, string version)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            secretRotationStatus ??= new ChangeTrackingList<SecretRotationStatus>();
 
             return new NetworkCloudStorageApplianceData(
                 id,
@@ -2676,8 +2795,29 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                rackId is null && storageApplianceSkuId is null && serialNumber is null && administratorCredentials is null && caCertificate is null && capacity is null && capacityUsed is null && clusterId is null && detailedStatus is null && detailedStatusMessage is null && managementIPv4Address is null && manufacturer is null && model is null && remoteVendorManagementFeature is null && remoteVendorManagementStatus is null && secretRotationStatus is null && version is null && provisioningState is null ? default : new StorageApplianceProperties(
+                    rackId,
+                    storageApplianceSkuId,
+                    rackSlot,
+                    serialNumber,
+                    administratorCredentials,
+                    caCertificate,
+                    capacity,
+                    capacityUsed,
+                    clusterId,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    default,
+                    managementIPv4Address,
+                    manufacturer,
+                    model,
+                    remoteVendorManagementFeature,
+                    remoteVendorManagementStatus,
+                    (secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>()).ToList(),
+                    version,
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation);
         }
 
@@ -2706,11 +2846,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudTrunkedNetworkData NetworkCloudTrunkedNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IEnumerable<string> associatedResourceIds, ResourceIdentifier clusterId, TrunkedNetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IEnumerable<ResourceIdentifier> hybridAksClustersAssociatedIds, HybridAksPluginType? hybridAksPluginType, string interfaceName, IEnumerable<ResourceIdentifier> isolationDomainIds, TrunkedNetworkProvisioningState? provisioningState, IEnumerable<ResourceIdentifier> virtualMachinesAssociatedIds, IEnumerable<long> vlans)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            associatedResourceIds ??= new ChangeTrackingList<string>();
-            hybridAksClustersAssociatedIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            isolationDomainIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            virtualMachinesAssociatedIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            vlans ??= new ChangeTrackingList<long>();
 
             return new NetworkCloudTrunkedNetworkData(
                 id,
@@ -2720,8 +2855,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                hybridAksPluginType is null && interfaceName is null && isolationDomainIds is null && vlans is null && associatedResourceIds is null && clusterId is null && detailedStatus is null && detailedStatusMessage is null && hybridAksClustersAssociatedIds is null && virtualMachinesAssociatedIds is null && provisioningState is null ? default : new TrunkedNetworkProperties(
+                    hybridAksPluginType,
+                    interfaceName,
+                    (isolationDomainIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    (vlans ?? new ChangeTrackingList<long>()).ToList(),
+                    (associatedResourceIds ?? new ChangeTrackingList<string>()).ToList(),
+                    clusterId,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    (hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    (virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation);
         }
 
@@ -2767,10 +2914,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudVirtualMachineData NetworkCloudVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, string adminUsername, string availabilityZone, ResourceIdentifier bareMetalMachineId, VirtualMachineBootMethod? bootMethod, NetworkAttachment cloudServicesNetworkAttachment, ResourceIdentifier clusterId, ExtendedLocation consoleExtendedLocation, long cpuCores, VirtualMachineDetailedStatus? detailedStatus, string detailedStatusMessage, VirtualMachineIsolateEmulatorThread? isolateEmulatorThread, long memorySizeInGB, IEnumerable<NetworkAttachment> networkAttachments, string networkData, string networkDataContent, IEnumerable<VirtualMachinePlacementHint> placementHints, VirtualMachinePowerState? powerState, VirtualMachineProvisioningState? provisioningState, IEnumerable<NetworkCloudSshPublicKey> sshPublicKeys, NetworkCloudStorageProfile storageProfile, string userData, string userDataContent, VirtualMachineVirtioInterfaceType? virtioInterface, VirtualMachineDeviceModelType? vmDeviceModel, string vmImage, ImageRepositoryCredentials vmImageRepositoryCredentials, IEnumerable<ResourceIdentifier> volumes)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            networkAttachments ??= new ChangeTrackingList<NetworkAttachment>();
-            placementHints ??= new ChangeTrackingList<VirtualMachinePlacementHint>();
-            sshPublicKeys ??= new ChangeTrackingList<NetworkCloudSshPublicKey>();
-            volumes ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new NetworkCloudVirtualMachineData(
                 id,
@@ -2780,8 +2923,36 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                adminUsername is null && bootMethod is null && cloudServicesNetworkAttachment is null && isolateEmulatorThread is null && networkAttachments is null && networkData is null && networkDataContent is null && placementHints is null && sshPublicKeys is null && storageProfile is null && userData is null && userDataContent is null && virtioInterface is null && vmDeviceModel is null && vmImage is null && vmImageRepositoryCredentials is null && availabilityZone is null && bareMetalMachineId is null && clusterId is null && detailedStatus is null && detailedStatusMessage is null && powerState is null && volumes is null && provisioningState is null ? default : new VirtualMachineProperties(
+                    adminUsername,
+                    bootMethod,
+                    cloudServicesNetworkAttachment,
+                    cpuCores,
+                    isolateEmulatorThread,
+                    memorySizeInGB,
+                    (networkAttachments ?? new ChangeTrackingList<NetworkAttachment>()).ToList(),
+                    networkData,
+                    networkDataContent,
+                    (placementHints ?? new ChangeTrackingList<VirtualMachinePlacementHint>()).ToList(),
+                    (sshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>()).ToList(),
+                    storageProfile,
+                    userData,
+                    userDataContent,
+                    virtioInterface,
+                    vmDeviceModel,
+                    vmImage,
+                    vmImageRepositoryCredentials,
+                    availabilityZone,
+                    bareMetalMachineId,
+                    clusterId,
+                    default,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    powerState,
+                    (volumes ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation,
                 identity);
         }
@@ -2808,7 +2979,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudVolumeData NetworkCloudVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, long? allocatedInSizeMiB, IEnumerable<string> attachedTo, VolumeDetailedStatus? detailedStatus, string detailedStatusMessage, VolumeProvisioningState? provisioningState, string serialNumber, long sizeInMiB, ResourceIdentifier storageApplianceId)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            attachedTo ??= new ChangeTrackingList<string>();
 
             return new NetworkCloudVolumeData(
                 id,
@@ -2818,8 +2988,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                storageApplianceId is null && allocatedInSizeMiB is null && attachedTo is null && detailedStatus is null && detailedStatusMessage is null && serialNumber is null && provisioningState is null ? default : new VolumeProperties(
+                    sizeInMiB,
+                    storageApplianceId,
+                    allocatedInSizeMiB,
+                    (attachedTo ?? new ChangeTrackingList<string>()).ToList(),
+                    detailedStatus,
+                    detailedStatusMessage,
+                    serialNumber,
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation);
         }
 
@@ -2882,9 +3061,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudBareMetalMachineKeySetData NetworkCloudBareMetalMachineKeySetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, string azureGroupId, BareMetalMachineKeySetDetailedStatus? detailedStatus, string detailedStatusMessage, DateTimeOffset expireOn, IEnumerable<IPAddress> jumpHostsAllowed, DateTimeOffset? lastValidatedOn, string osGroupName, BareMetalMachineKeySetPrivilegeLevel privilegeLevel, string privilegeLevelName, BareMetalMachineKeySetProvisioningState? provisioningState, IEnumerable<KeySetUser> userList, IEnumerable<KeySetUserStatus> userListStatus)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            jumpHostsAllowed ??= new ChangeTrackingList<IPAddress>();
-            userList ??= new ChangeTrackingList<KeySetUser>();
-            userListStatus ??= new ChangeTrackingList<KeySetUserStatus>();
 
             return new NetworkCloudBareMetalMachineKeySetData(
                 id,
@@ -2894,8 +3070,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                azureGroupId is null && jumpHostsAllowed is null && osGroupName is null && privilegeLevelName is null && userList is null && detailedStatus is null && detailedStatusMessage is null && lastValidatedOn is null && userListStatus is null && provisioningState is null ? default : new BareMetalMachineKeySetProperties(
+                    azureGroupId,
+                    expireOn,
+                    (jumpHostsAllowed ?? new ChangeTrackingList<IPAddress>()).ToList(),
+                    osGroupName,
+                    privilegeLevel,
+                    privilegeLevelName,
+                    (userList ?? new ChangeTrackingList<KeySetUser>()).ToList(),
+                    detailedStatus,
+                    detailedStatusMessage,
+                    lastValidatedOn,
+                    (userListStatus ?? new ChangeTrackingList<KeySetUserStatus>()).ToList(),
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation);
         }
 
@@ -2922,8 +3111,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudBmcKeySetData NetworkCloudBmcKeySetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, string azureGroupId, BmcKeySetDetailedStatus? detailedStatus, string detailedStatusMessage, DateTimeOffset expireOn, DateTimeOffset? lastValidatedOn, BmcKeySetPrivilegeLevel privilegeLevel, BmcKeySetProvisioningState? provisioningState, IEnumerable<KeySetUser> userList, IEnumerable<KeySetUserStatus> userListStatus)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            userList ??= new ChangeTrackingList<KeySetUser>();
-            userListStatus ??= new ChangeTrackingList<KeySetUserStatus>();
 
             return new NetworkCloudBmcKeySetData(
                 id,
@@ -2933,8 +3120,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                azureGroupId is null && userList is null && detailedStatus is null && detailedStatusMessage is null && lastValidatedOn is null && userListStatus is null && provisioningState is null ? default : new BmcKeySetProperties(
+                    azureGroupId,
+                    expireOn,
+                    privilegeLevel,
+                    (userList ?? new ChangeTrackingList<KeySetUser>()).ToList(),
+                    detailedStatus,
+                    detailedStatusMessage,
+                    lastValidatedOn,
+                    (userListStatus ?? new ChangeTrackingList<KeySetUserStatus>()).ToList(),
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation);
         }
 
@@ -2958,8 +3155,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudClusterMetricsConfigurationData NetworkCloudClusterMetricsConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, long collectionInterval, ClusterMetricsConfigurationDetailedStatus? detailedStatus, string detailedStatusMessage, IEnumerable<string> disabledMetrics, IEnumerable<string> enabledMetrics, ClusterMetricsConfigurationProvisioningState? provisioningState)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            disabledMetrics ??= new ChangeTrackingList<string>();
-            enabledMetrics ??= new ChangeTrackingList<string>();
 
             return new NetworkCloudClusterMetricsConfigurationData(
                 id,
@@ -2969,8 +3164,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                enabledMetrics is null && detailedStatus is null && detailedStatusMessage is null && disabledMetrics is null && provisioningState is null ? default : new ClusterMetricsConfigurationProperties(
+                    (enabledMetrics ?? new ChangeTrackingList<string>()).ToList(),
+                    collectionInterval,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    (disabledMetrics ?? new ChangeTrackingList<string>()).ToList(),
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation);
         }
 
@@ -3002,9 +3204,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudAgentPoolData NetworkCloudAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, AdministratorConfiguration administratorConfiguration, NetworkCloudAgentConfiguration agentOptions, AttachedNetworkConfiguration attachedNetworkConfiguration, IEnumerable<string> availabilityZones, long count, AgentPoolDetailedStatus? detailedStatus, string detailedStatusMessage, string kubernetesVersion, IEnumerable<KubernetesLabel> labels, NetworkCloudAgentPoolMode mode, AgentPoolProvisioningState? provisioningState, IEnumerable<KubernetesLabel> taints, AgentPoolUpgradeSettings upgradeSettings, string vmSkuName)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            availabilityZones ??= new ChangeTrackingList<string>();
-            labels ??= new ChangeTrackingList<KubernetesLabel>();
-            taints ??= new ChangeTrackingList<KubernetesLabel>();
 
             return new NetworkCloudAgentPoolData(
                 id,
@@ -3014,8 +3213,23 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                administratorConfiguration is null && agentOptions is null && attachedNetworkConfiguration is null && availabilityZones is null && labels is null && taints is null && upgradeSettings is null && vmSkuName is null && detailedStatus is null && detailedStatusMessage is null && kubernetesVersion is null && provisioningState is null ? default : new AgentPoolProperties(
+                    administratorConfiguration,
+                    agentOptions,
+                    attachedNetworkConfiguration,
+                    (availabilityZones ?? new ChangeTrackingList<string>()).ToList(),
+                    count,
+                    (labels ?? new ChangeTrackingList<KubernetesLabel>()).ToList(),
+                    mode,
+                    (taints ?? new ChangeTrackingList<KubernetesLabel>()).ToList(),
+                    upgradeSettings,
+                    vmSkuName,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    kubernetesVersion,
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation);
         }
 
@@ -3039,7 +3253,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudKubernetesClusterFeatureData NetworkCloudKubernetesClusterFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, KubernetesClusterFeatureAvailabilityLifecycle? availabilityLifecycle, KubernetesClusterFeatureDetailedStatus? detailedStatus, string detailedStatusMessage, IEnumerable<StringKeyValuePair> options, KubernetesClusterFeatureProvisioningState? provisioningState, KubernetesClusterFeatureRequired? @required, string version)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            options ??= new ChangeTrackingList<StringKeyValuePair>();
 
             return new NetworkCloudKubernetesClusterFeatureData(
                 id,
@@ -3049,8 +3262,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default);
+                options is null && availabilityLifecycle is null && detailedStatus is null && detailedStatusMessage is null && @required is null && version is null && provisioningState is null ? default : new KubernetesClusterFeatureProperties(
+                    (options ?? new ChangeTrackingList<StringKeyValuePair>()).ToList(),
+                    availabilityLifecycle,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    @required,
+                    version,
+                    provisioningState,
+                    default),
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudVirtualMachineConsoleData"/>. </summary>
@@ -3084,8 +3305,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                expireOn is null && keyData is null && detailedStatus is null && detailedStatusMessage is null && privateLinkServiceId is null && virtualMachineAccessId is null && provisioningState is null ? default : new ConsoleProperties(
+                    enabled,
+                    expireOn,
+                    new NetworkCloudSshPublicKey(keyData, default),
+                    detailedStatus,
+                    detailedStatusMessage,
+                    privateLinkServiceId,
+                    virtualMachineAccessId,
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation);
         }
 
@@ -3135,11 +3365,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudBareMetalMachineData NetworkCloudBareMetalMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IEnumerable<ResourceIdentifier> associatedResourceIds, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, ResourceIdentifier clusterId, BareMetalMachineCordonStatus? cordonStatus, BareMetalMachineDetailedStatus? detailedStatus, string detailedStatusMessage, HardwareInventory hardwareInventory, HardwareValidationStatus hardwareValidationStatus, IEnumerable<string> hybridAksClustersAssociatedIds, string kubernetesNodeName, string kubernetesVersion, string machineClusterVersion, string machineDetails, string machineName, IEnumerable<string> machineRoles, string machineSkuId, IPAddress oamIPv4Address, string oamIPv6Address, string osImage, BareMetalMachinePowerState? powerState, BareMetalMachineProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, BareMetalMachineReadyState? readyState, RuntimeProtectionStatus runtimeProtectionStatus, IEnumerable<SecretRotationStatus> secretRotationStatus, string serialNumber, string serviceTag, IEnumerable<string> virtualMachinesAssociatedIds)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            associatedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            hybridAksClustersAssociatedIds ??= new ChangeTrackingList<string>();
-            machineRoles ??= new ChangeTrackingList<string>();
-            secretRotationStatus ??= new ChangeTrackingList<SecretRotationStatus>();
-            virtualMachinesAssociatedIds ??= new ChangeTrackingList<string>();
 
             return new NetworkCloudBareMetalMachineData(
                 id,
@@ -3149,8 +3374,45 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                bmcConnectionString is null && bmcCredentials is null && bmcMacAddress is null && bootMacAddress is null && machineDetails is null && machineName is null && machineSkuId is null && rackId is null && serialNumber is null && associatedResourceIds is null && clusterId is null && cordonStatus is null && detailedStatus is null && detailedStatusMessage is null && hardwareInventory is null && hardwareValidationStatus is null && hybridAksClustersAssociatedIds is null && kubernetesNodeName is null && kubernetesVersion is null && machineClusterVersion is null && machineRoles is null && oamIPv4Address is null && oamIPv6Address is null && osImage is null && powerState is null && readyState is null && runtimeProtectionStatus is null && secretRotationStatus is null && serviceTag is null && virtualMachinesAssociatedIds is null && provisioningState is null ? default : new BareMetalMachineProperties(
+                    bmcConnectionString,
+                    bmcCredentials,
+                    bmcMacAddress,
+                    bootMacAddress,
+                    machineDetails,
+                    machineName,
+                    machineSkuId,
+                    rackId,
+                    rackSlot,
+                    serialNumber,
+                    default,
+                    (associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    default,
+                    default,
+                    default,
+                    clusterId,
+                    cordonStatus,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    hardwareInventory,
+                    hardwareValidationStatus,
+                    (hybridAksClustersAssociatedIds ?? new ChangeTrackingList<string>()).ToList(),
+                    kubernetesNodeName,
+                    kubernetesVersion,
+                    machineClusterVersion,
+                    (machineRoles ?? new ChangeTrackingList<string>()).ToList(),
+                    oamIPv4Address,
+                    oamIPv6Address,
+                    osImage,
+                    powerState,
+                    readyState,
+                    runtimeProtectionStatus,
+                    (secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>()).ToList(),
+                    serviceTag,
+                    (virtualMachinesAssociatedIds ?? new ChangeTrackingList<string>()).ToList(),
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation);
         }
 
@@ -3213,9 +3475,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudClusterData NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, ResourceIdentifier analyticsWorkspaceId, IEnumerable<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, ExtendedLocation clusterExtendedLocation, string clusterLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, ExtendedLocation hybridAksExtendedLocation, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, ResourceIdentifier networkFabricId, ClusterProvisioningState? provisioningState, RuntimeProtectionEnforcementLevel? runtimeProtectionEnforcementLevel, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, DateTimeOffset? supportExpireOn, ClusterUpdateStrategy updateStrategy, VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan, IEnumerable<ResourceIdentifier> workloadResourceIds)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            availableUpgradeVersions ??= new ChangeTrackingList<ClusterAvailableUpgradeVersion>();
-            computeRackDefinitions ??= new ChangeTrackingList<NetworkCloudRackDefinition>();
-            workloadResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new NetworkCloudClusterData(
                 id,
@@ -3225,8 +3484,40 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                aggregatorOrSingleRackDefinition is null && analyticsOutputSettings is null && analyticsWorkspaceId is null && clusterLocation is null && clusterServicePrincipal is null && clusterVersion is null && commandOutputSettings is null && computeDeploymentThreshold is null && computeRackDefinitions is null && managedResourceGroupConfiguration is null && networkFabricId is null && runtimeProtectionEnforcementLevel is null && secretArchive is null && secretArchiveSettings is null && updateStrategy is null && vulnerabilityScanningContainerScan is null && availableUpgradeVersions is null && clusterCapacity is null && clusterConnectionStatus is null && clusterManagerConnectionStatus is null && clusterManagerId is null && detailedStatus is null && detailedStatusMessage is null && manualActionCount is null && supportExpireOn is null && workloadResourceIds is null && provisioningState is null ? default : new ClusterProperties(
+                    aggregatorOrSingleRackDefinition,
+                    analyticsOutputSettings,
+                    analyticsWorkspaceId,
+                    clusterLocation,
+                    clusterServicePrincipal,
+                    clusterType,
+                    clusterVersion,
+                    commandOutputSettings,
+                    computeDeploymentThreshold,
+                    (computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>()).ToList(),
+                    managedResourceGroupConfiguration,
+                    networkFabricId,
+                    new RuntimeProtectionConfiguration(default, runtimeProtectionEnforcementLevel, default),
+                    secretArchive,
+                    secretArchiveSettings,
+                    updateStrategy,
+                    new VulnerabilityScanningSettings(vulnerabilityScanningContainerScan, default),
+                    default,
+                    (availableUpgradeVersions ?? new ChangeTrackingList<ClusterAvailableUpgradeVersion>()).ToList(),
+                    clusterCapacity,
+                    clusterConnectionStatus,
+                    default,
+                    clusterManagerConnectionStatus,
+                    clusterManagerId,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    default,
+                    manualActionCount,
+                    supportExpireOn,
+                    (workloadResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation,
                 identity,
                 default);
@@ -3264,7 +3555,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudStorageApplianceData NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, AdministrativeCredentials administratorCredentials, long? capacity, long? capacityUsed, ResourceIdentifier clusterId, StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, IPAddress managementIPv4Address, string manufacturer, string model, StorageApplianceProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, RemoteVendorManagementFeature? remoteVendorManagementFeature, RemoteVendorManagementStatus? remoteVendorManagementStatus, IEnumerable<SecretRotationStatus> secretRotationStatus, string serialNumber, string storageApplianceSkuId, string version)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            secretRotationStatus ??= new ChangeTrackingList<SecretRotationStatus>();
 
             return new NetworkCloudStorageApplianceData(
                 id,
@@ -3274,8 +3564,29 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
+                rackId is null && storageApplianceSkuId is null && serialNumber is null && administratorCredentials is null && capacity is null && capacityUsed is null && clusterId is null && detailedStatus is null && detailedStatusMessage is null && managementIPv4Address is null && manufacturer is null && model is null && remoteVendorManagementFeature is null && remoteVendorManagementStatus is null && secretRotationStatus is null && version is null && provisioningState is null ? default : new StorageApplianceProperties(
+                    rackId,
+                    storageApplianceSkuId,
+                    rackSlot,
+                    serialNumber,
+                    administratorCredentials,
+                    default,
+                    capacity,
+                    capacityUsed,
+                    clusterId,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    default,
+                    managementIPv4Address,
+                    manufacturer,
+                    model,
+                    remoteVendorManagementFeature,
+                    remoteVendorManagementStatus,
+                    (secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>()).ToList(),
+                    version,
+                    provisioningState,
+                    default),
+                etag,
                 extendedLocation);
         }
 
@@ -3349,8 +3660,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudClusterManagerData NetworkCloudClusterManagerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier analyticsWorkspaceId, IEnumerable<string> availabilityZones, IEnumerable<ClusterAvailableVersion> clusterVersions, ClusterManagerDetailedStatus? detailedStatus, string detailedStatusMessage, ResourceIdentifier fabricControllerId, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ExtendedLocation managerExtendedLocation, ClusterManagerProvisioningState? provisioningState, string vmSize)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            availabilityZones ??= new ChangeTrackingList<string>();
-            clusterVersions ??= new ChangeTrackingList<ClusterAvailableVersion>();
 
             return new NetworkCloudClusterManagerData(
                 id,
@@ -3360,7 +3669,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
+                analyticsWorkspaceId is null && availabilityZones is null && clusterVersions is null && detailedStatus is null && detailedStatusMessage is null && fabricControllerId is null && managedResourceGroupConfiguration is null && provisioningState is null && vmSize is null ? default : new ClusterManagerProperties(
+                    analyticsWorkspaceId,
+                    (availabilityZones ?? new ChangeTrackingList<string>()).ToList(),
+                    (clusterVersions ?? new ChangeTrackingList<ClusterAvailableVersion>()).ToList(),
+                    detailedStatus,
+                    detailedStatusMessage,
+                    fabricControllerId,
+                    managedResourceGroupConfiguration,
+                    default,
+                    provisioningState,
+                    default,
+                    vmSize,
+                    default),
                 default,
                 identity,
                 default);
@@ -3410,9 +3731,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudClusterData NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ResourceIdentifier analyticsWorkspaceId, IEnumerable<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, ExtendedLocation clusterExtendedLocation, string clusterLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, ExtendedLocation hybridAksExtendedLocation, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, ResourceIdentifier networkFabricId, ClusterProvisioningState? provisioningState, RuntimeProtectionEnforcementLevel? runtimeProtectionEnforcementLevel, ClusterSecretArchive secretArchive, DateTimeOffset? supportExpireOn, ClusterUpdateStrategy updateStrategy, IEnumerable<ResourceIdentifier> workloadResourceIds)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            availableUpgradeVersions ??= new ChangeTrackingList<ClusterAvailableUpgradeVersion>();
-            computeRackDefinitions ??= new ChangeTrackingList<NetworkCloudRackDefinition>();
-            workloadResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new NetworkCloudClusterData(
                 id,
@@ -3422,7 +3740,39 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
+                aggregatorOrSingleRackDefinition is null && analyticsWorkspaceId is null && analyticsWorkspaceId is null && clusterLocation is null && clusterServicePrincipal is null && clusterVersion is null && commandOutputSettings is null && computeDeploymentThreshold is null && computeRackDefinitions is null && managedResourceGroupConfiguration is null && networkFabricId is null && runtimeProtectionEnforcementLevel is null && secretArchive is null && updateStrategy is null && availableUpgradeVersions is null && clusterCapacity is null && clusterConnectionStatus is null && clusterManagerConnectionStatus is null && clusterManagerId is null && detailedStatus is null && detailedStatusMessage is null && manualActionCount is null && supportExpireOn is null && workloadResourceIds is null && provisioningState is null ? default : new ClusterProperties(
+                    aggregatorOrSingleRackDefinition,
+                    new AnalyticsOutputSettings(analyticsWorkspaceId, default, default),
+                    analyticsWorkspaceId,
+                    clusterLocation,
+                    clusterServicePrincipal,
+                    clusterType,
+                    clusterVersion,
+                    commandOutputSettings,
+                    computeDeploymentThreshold,
+                    (computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>()).ToList(),
+                    managedResourceGroupConfiguration,
+                    networkFabricId,
+                    new RuntimeProtectionConfiguration(default, runtimeProtectionEnforcementLevel, default),
+                    secretArchive,
+                    default,
+                    updateStrategy,
+                    default,
+                    default,
+                    (availableUpgradeVersions ?? new ChangeTrackingList<ClusterAvailableUpgradeVersion>()).ToList(),
+                    clusterCapacity,
+                    clusterConnectionStatus,
+                    default,
+                    clusterManagerConnectionStatus,
+                    clusterManagerId,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    default,
+                    manualActionCount,
+                    supportExpireOn,
+                    (workloadResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    provisioningState,
+                    default),
                 default,
                 extendedLocation,
                 identity,
@@ -3463,9 +3813,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudL3NetworkData NetworkCloudL3NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IEnumerable<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, L3NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IEnumerable<ResourceIdentifier> hybridAksClustersAssociatedIds, HybridAksIpamEnabled? hybridAksIpamEnabled, HybridAksPluginType? hybridAksPluginType, string interfaceName, IPAllocationType? ipAllocationType, string ipv4ConnectedPrefix, string ipv6ConnectedPrefix, ResourceIdentifier l3IsolationDomainId, L3NetworkProvisioningState? provisioningState, IEnumerable<ResourceIdentifier> virtualMachinesAssociatedIds, long vlan)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            associatedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            hybridAksClustersAssociatedIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            virtualMachinesAssociatedIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new NetworkCloudL3NetworkData(
                 id,
@@ -3475,7 +3822,23 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
+                hybridAksIpamEnabled is null && hybridAksPluginType is null && interfaceName is null && ipAllocationType is null && ipv4ConnectedPrefix is null && ipv6ConnectedPrefix is null && l3IsolationDomainId is null && associatedResourceIds is null && clusterId is null && detailedStatus is null && detailedStatusMessage is null && hybridAksClustersAssociatedIds is null && virtualMachinesAssociatedIds is null && provisioningState is null ? default : new L3NetworkProperties(
+                    hybridAksIpamEnabled,
+                    hybridAksPluginType,
+                    interfaceName,
+                    ipAllocationType,
+                    ipv4ConnectedPrefix,
+                    ipv6ConnectedPrefix,
+                    l3IsolationDomainId,
+                    vlan,
+                    (associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    clusterId,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    (hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    (virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    provisioningState,
+                    default),
                 default,
                 extendedLocation);
         }
@@ -3578,8 +3941,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudClusterManagerData NetworkCloudClusterManagerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier analyticsWorkspaceId, IEnumerable<string> availabilityZones, IEnumerable<ClusterAvailableVersion> clusterVersions, ClusterManagerDetailedStatus? detailedStatus, string detailedStatusMessage, ResourceIdentifier fabricControllerId, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ExtendedLocation managerExtendedLocation, ClusterManagerProvisioningState? provisioningState, string vmSize)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            availabilityZones ??= new ChangeTrackingList<string>();
-            clusterVersions ??= new ChangeTrackingList<ClusterAvailableVersion>();
 
             return new NetworkCloudClusterManagerData(
                 id,
@@ -3589,7 +3950,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
+                analyticsWorkspaceId is null && availabilityZones is null && clusterVersions is null && detailedStatus is null && detailedStatusMessage is null && fabricControllerId is null && managedResourceGroupConfiguration is null && provisioningState is null && vmSize is null ? default : new ClusterManagerProperties(
+                    analyticsWorkspaceId,
+                    (availabilityZones ?? new ChangeTrackingList<string>()).ToList(),
+                    (clusterVersions ?? new ChangeTrackingList<ClusterAvailableVersion>()).ToList(),
+                    detailedStatus,
+                    detailedStatusMessage,
+                    fabricControllerId,
+                    managedResourceGroupConfiguration,
+                    default,
+                    provisioningState,
+                    default,
+                    vmSize,
+                    default),
                 default,
                 default,
                 default);
@@ -3634,9 +4007,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudClusterData NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ResourceIdentifier analyticsWorkspaceId, IEnumerable<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, ExtendedLocation clusterExtendedLocation, string clusterLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, ValidationThreshold computeDeploymentThreshold, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, ExtendedLocation hybridAksExtendedLocation, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, ResourceIdentifier networkFabricId, ClusterProvisioningState? provisioningState, DateTimeOffset? supportExpireOn, IEnumerable<ResourceIdentifier> workloadResourceIds)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            availableUpgradeVersions ??= new ChangeTrackingList<ClusterAvailableUpgradeVersion>();
-            computeRackDefinitions ??= new ChangeTrackingList<NetworkCloudRackDefinition>();
-            workloadResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new NetworkCloudClusterData(
                 id,
@@ -3646,7 +4016,39 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
+                aggregatorOrSingleRackDefinition is null && analyticsWorkspaceId is null && analyticsWorkspaceId is null && clusterLocation is null && clusterServicePrincipal is null && clusterVersion is null && computeDeploymentThreshold is null && computeRackDefinitions is null && managedResourceGroupConfiguration is null && networkFabricId is null && availableUpgradeVersions is null && clusterCapacity is null && clusterConnectionStatus is null && clusterManagerConnectionStatus is null && clusterManagerId is null && detailedStatus is null && detailedStatusMessage is null && manualActionCount is null && supportExpireOn is null && workloadResourceIds is null && provisioningState is null ? default : new ClusterProperties(
+                    aggregatorOrSingleRackDefinition,
+                    new AnalyticsOutputSettings(analyticsWorkspaceId, default, default),
+                    analyticsWorkspaceId,
+                    clusterLocation,
+                    clusterServicePrincipal,
+                    clusterType,
+                    clusterVersion,
+                    default,
+                    computeDeploymentThreshold,
+                    (computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>()).ToList(),
+                    managedResourceGroupConfiguration,
+                    networkFabricId,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    (availableUpgradeVersions ?? new ChangeTrackingList<ClusterAvailableUpgradeVersion>()).ToList(),
+                    clusterCapacity,
+                    clusterConnectionStatus,
+                    default,
+                    clusterManagerConnectionStatus,
+                    clusterManagerId,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    default,
+                    manualActionCount,
+                    supportExpireOn,
+                    (workloadResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    provisioningState,
+                    default),
                 default,
                 extendedLocation,
                 default,
