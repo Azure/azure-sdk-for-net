@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="AlertRuleRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AlertRuleRecommendationResource> GetAlertRuleRecommendationsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AlertRuleRecommendation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AlertRuleRecommendation> GetAlertRuleRecommendationsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="AlertRuleRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AlertRuleRecommendationResource> GetAlertRuleRecommendations(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AlertRuleRecommendation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AlertRuleRecommendation> GetAlertRuleRecommendations(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 

@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> A collection of <see cref="AlertRuleRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AlertRuleRecommendationResource> GetAlertRuleRecommendationsAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AlertRuleRecommendation"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AlertRuleRecommendation> GetAlertRuleRecommendationsAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> A collection of <see cref="AlertRuleRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AlertRuleRecommendationResource> GetAlertRuleRecommendations(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AlertRuleRecommendation"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AlertRuleRecommendation> GetAlertRuleRecommendations(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
         /// <param name="targetType"> The recommendations target type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AlertRuleRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AlertRuleRecommendationResource> GetAlertRuleRecommendationsByTargetTypeAsync(this SubscriptionResource subscriptionResource, string targetType, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AlertRuleRecommendation"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AlertRuleRecommendation> GetAlertRuleRecommendationsByTargetTypeAsync(this SubscriptionResource subscriptionResource, string targetType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
         /// <param name="targetType"> The recommendations target type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AlertRuleRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AlertRuleRecommendationResource> GetAlertRuleRecommendationsByTargetType(this SubscriptionResource subscriptionResource, string targetType, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AlertRuleRecommendation"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AlertRuleRecommendation> GetAlertRuleRecommendationsByTargetType(this SubscriptionResource subscriptionResource, string targetType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

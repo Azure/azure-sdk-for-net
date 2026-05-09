@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetType"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="AlertRuleRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AlertRuleRecommendationResource> GetAlertRuleRecommendationsByTargetTypeAsync(string targetType, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AlertRuleRecommendation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AlertRuleRecommendation> GetAlertRuleRecommendationsByTargetTypeAsync(string targetType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetType, nameof(targetType));
 
@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetType"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="AlertRuleRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AlertRuleRecommendationResource> GetAlertRuleRecommendationsByTargetType(string targetType, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AlertRuleRecommendation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AlertRuleRecommendation> GetAlertRuleRecommendationsByTargetType(string targetType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetType, nameof(targetType));
 

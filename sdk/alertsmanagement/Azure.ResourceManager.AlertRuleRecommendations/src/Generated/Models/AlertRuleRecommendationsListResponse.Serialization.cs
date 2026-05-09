@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AlertRuleRecommendationResource item in Value)
+            foreach (AlertRuleRecommendation item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
             {
                 return null;
             }
-            IList<AlertRuleRecommendationResource> value = default;
+            IList<AlertRuleRecommendation> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AlertRuleRecommendationResource> array = new List<AlertRuleRecommendationResource>();
+                    List<AlertRuleRecommendation> array = new List<AlertRuleRecommendation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AlertRuleRecommendationResource.DeserializeAlertRuleRecommendationResource(item, options));
+                        array.Add(AlertRuleRecommendation.DeserializeAlertRuleRecommendation(item, options));
                     }
                     value = array;
                     continue;

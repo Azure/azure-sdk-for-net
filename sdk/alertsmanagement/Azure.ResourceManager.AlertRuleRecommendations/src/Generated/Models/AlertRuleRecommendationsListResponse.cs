@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
 
         /// <summary> Initializes a new instance of <see cref="AlertRuleRecommendationsListResponse"/>. </summary>
         /// <param name="value"> The AlertRuleRecommendationResource items on this page. </param>
-        internal AlertRuleRecommendationsListResponse(IEnumerable<AlertRuleRecommendationResource> value)
+        internal AlertRuleRecommendationsListResponse(IEnumerable<AlertRuleRecommendation> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
         /// <param name="value"> The AlertRuleRecommendationResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertRuleRecommendationsListResponse(IList<AlertRuleRecommendationResource> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertRuleRecommendationsListResponse(IList<AlertRuleRecommendation> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
         }
 
         /// <summary> The AlertRuleRecommendationResource items on this page. </summary>
-        public IList<AlertRuleRecommendationResource> Value { get; }
+        public IList<AlertRuleRecommendation> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

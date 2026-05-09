@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
         /// <param name="category"> The recommendation alert rule category. </param>
         /// <param name="displayInformation"> A dictionary that provides the display information for an alert rule recommendation. </param>
         /// <param name="ruleArmTemplate"> A complete ARM template to deploy the alert rules. </param>
-        /// <returns> A new <see cref="Models.AlertRuleRecommendationResource"/> instance for mocking. </returns>
-        public static AlertRuleRecommendationResource AlertRuleRecommendationResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string alertRuleType = default, string category = default, IDictionary<string, string> displayInformation = default, AlertRuleRecommendationArmTemplate ruleArmTemplate = default)
+        /// <returns> A new <see cref="Models.AlertRuleRecommendation"/> instance for mocking. </returns>
+        public static AlertRuleRecommendation AlertRuleRecommendation(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string alertRuleType = default, string category = default, IDictionary<string, string> displayInformation = default, AlertRuleRecommendationArmTemplate ruleArmTemplate = default)
         {
-            return new AlertRuleRecommendationResource(
+            return new AlertRuleRecommendation(
                 id,
                 name,
                 resourceType,
