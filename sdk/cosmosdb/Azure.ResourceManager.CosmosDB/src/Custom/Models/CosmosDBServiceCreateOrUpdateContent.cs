@@ -5,6 +5,15 @@
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
+    // CosmosDBServiceCreateOrUpdateContent is generated as a wrapper around a
+    // ServiceResourceCreateUpdateProperties envelope (Properties property). The
+    // legacy SDK exposed InstanceSize, InstanceCount and ServiceType as top-level
+    // read/write properties via x-ms-client-flatten. The MPG generator does not
+    // flatten this envelope (the inner properties model is a discriminated base
+    // with required ctor args, so @@flattenProperty / BuildSetterForSafeFlatten
+    // cannot synthesize lazy-create setters). Re-emit the historical top-level
+    // accessors as proxies onto Properties to preserve back-compat without a spec
+    // change.
     public partial class CosmosDBServiceCreateOrUpdateContent
     {
         /// <summary> Instance type for the service. </summary>
