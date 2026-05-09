@@ -111,7 +111,7 @@ namespace Azure.Generator.Mgmt.Tests
                 null,
                 []);
             var primaryMethod = new MethodProvider(primarySignature, MethodBodyStatement.Empty, enclosingType);
-            Assert.That(FlattenPropertyVisitor.IsBackwardCompatMethod(primaryMethod), Is.False);
+            Assert.That(ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(primaryMethod), Is.False);
 
             // Create a method WITH the EditorBrowsable(Never) attribute
             var backCompatSignature = new MethodSignature(
@@ -123,7 +123,7 @@ namespace Azure.Generator.Mgmt.Tests
                 [],
                 Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
             var backCompatMethod = new MethodProvider(backCompatSignature, MethodBodyStatement.Empty, enclosingType);
-            Assert.That(FlattenPropertyVisitor.IsBackwardCompatMethod(backCompatMethod), Is.True);
+            Assert.That(ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(backCompatMethod), Is.True);
         }
 
         [Test]
@@ -234,7 +234,7 @@ namespace Azure.Generator.Mgmt.Tests
             var backCompatMethod = new MethodProvider(oldSignature, backCompatBody, enclosingType);
 
             // Act: Run the fix
-            FlattenPropertyVisitor.FixModelFactoryBackwardCompatOverloads([primaryMethod, backCompatMethod]);
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads([primaryMethod, backCompatMethod]);
 
             // Assert: The backward-compat overload's body should now have arguments
             // in the PRIMARY method's current parameter order
@@ -301,7 +301,7 @@ namespace Azure.Generator.Mgmt.Tests
             var method = new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory);
             modelFactory.Update(methods: [method]);
 
-            FlattenPropertyVisitor.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
 
             var updatedMethod = modelFactory.Methods.Single();
             var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
@@ -352,7 +352,7 @@ namespace Azure.Generator.Mgmt.Tests
             var method = new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory);
             modelFactory.Update(methods: [method]);
 
-            FlattenPropertyVisitor.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
 
             var updatedMethod = modelFactory.Methods.Single();
             var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
@@ -361,6 +361,59 @@ namespace Azure.Generator.Mgmt.Tests
             var propertiesArgument = newInstance!.Parameters[propertiesIndex].ToDisplayString();
             Assert.That(propertiesArgument, Does.Contain("keyExpirationPeriodInDays is null"));
             Assert.That(propertiesArgument, Does.Contain("keyExpirationPeriodInDays.GetValueOrDefault()"));
+        }
+
+        [Test]
+        public void TestBackwardCompatNewInstanceSkipsNamedConstructorMismatch()
+        {
+            var provisioningStateProperty = InputFactory.Property("provisioningState", InputPrimitiveType.String, serializedName: "provisioningState");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [provisioningStateProperty]);
+
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var oldProvisioningStateParam = new ParameterProvider("testProvisioningState", $"", typeof(string));
+            var oldSignature = new MethodSignature(
+                "TestResource",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldProvisioningStateParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+
+            var constructorParameters = parentProvider.FullConstructor.Signature.Parameters;
+            var propertiesIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "properties").i;
+            var additionalDataIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "additionalBinaryDataProperties").i;
+            var constructorArguments = constructorParameters
+                .Select(p => p.DefaultValue ?? Default)
+                .ToArray();
+            constructorArguments[propertiesIndex] = Default;
+            constructorArguments[additionalDataIndex] = Snippet.PositionalReference(new ParameterProvider("serializedAdditionalRawData", $"", constructorParameters[additionalDataIndex].Type), Null);
+            var method = new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+
+            var updatedMethod = modelFactory.Methods.Single();
+            var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
+            var keywordExpression = statement!.Expression as KeywordExpression;
+            var newInstance = keywordExpression!.Expression as NewInstanceExpression;
+            Assert.That(newInstance!.Parameters[propertiesIndex].ToDisplayString(), Is.EqualTo("default"));
+            Assert.That(newInstance.Parameters[additionalDataIndex].ToDisplayString(), Does.Contain("serializedAdditionalRawData"));
         }
 
         [Test]
@@ -427,7 +480,7 @@ namespace Azure.Generator.Mgmt.Tests
             var method = new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory);
             modelFactory.Update(methods: [method]);
 
-            FlattenPropertyVisitor.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
 
             var updatedMethod = modelFactory.Methods.Single();
             var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
