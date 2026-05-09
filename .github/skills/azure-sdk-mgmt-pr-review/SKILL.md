@@ -7,31 +7,23 @@ description: Review Azure SDK management-plane pull requests, check naming conve
 
 Review Azure SDK for .NET management library pull requests against the official API review guidelines.
 
-The review is split into three sequential phases: **Phase 1: Versioning & Configuration Review** (gate), **Phase 2: API Review**, and **Phase 3: Breaking Change Detection**. Each phase must pass before proceeding to the next.
+The review is split into three sequential phases: **Phase 1: Versioning Review** (gate), **Phase 2: API Review**, and **Phase 3: Breaking Change Detection**. Each phase must pass before proceeding to the next.
 
-## Phase 1: Versioning & Configuration Review
+## Phase 1: Versioning Review
 
-This phase checks version- and configuration-related rules that are simple and rule-based. **If any violation is found in this phase, stop the review immediately, submit the review with "Request Changes", and do not proceed to Phase 2.**
+This phase checks version-related rules that are simple and rule-based. **If any violation is found in this phase, stop the review immediately, submit the review with "Request Changes", and do not proceed to Phase 2.**
 
 ### Instructions
 
-1. Check the `.csproj` file, `CHANGELOG.md`, and `tsp-location.yaml` for the rules below.
-2. If all rules pass, proceed to Phase 2.
-3. If any rule is violated, record inline review comments on the violations (with file path and line number), submit the review as **"Request Changes"** with a summary explaining the violations, and **stop** — do not proceed to Phase 2.
+1. Check the `.csproj` file and CHANGELOG.md for the rules below.
+2. If all versioning rules pass, proceed to Phase 2.
+3. If any rule is violated, record inline review comments on the violations (with file path and line number), submit the review as **"Request Changes"** with a summary explaining the versioning violations, and **stop** — do not proceed to Phase 2.
 
 ### Versioning Rules
 
 - **No major version bump.** Management SDK packages follow a unified versioning strategy. No individual package is allowed to bump its major version unless a major version bump decision has been explicitly made by the .NET architects for all mgmt packages. If a PR bumps the major version (e.g., from `1.x` to `2.0.0`), flag as **Critical**: "You must not bump the major version without the .NET architects' explicit requirement."
 - **Do not remove `ApiCompatVersion`.** If a PR removes the `ApiCompatVersion` property from the `.csproj` file, flag as **Critical**. This property enforces API compatibility checks against the last stable release and must not be deleted. Removing it would allow breaking changes to slip through undetected.
 - **No newly added content in `ApiCompatBaseline.txt`.** If the PR adds new entries to the `ApiCompatBaseline.txt` file (which suppresses ApiCompat errors), flag as **Critical**. Suppressing API compatibility errors hides breaking changes from customers. The correct approach is to mitigate breaking changes through customization code, not to baseline them away.
-
-### Configuration Rules
-
-- **`emitterPackageJsonPath` must point to the mgmt emitter package.** If the package has a `tsp-location.yaml`, it **must** contain:
-  ```yaml
-  emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
-  ```
-  If `emitterPackageJsonPath` is missing or set to a different value, flag as **Critical**: "`emitterPackageJsonPath` in `tsp-location.yaml` must be set to `eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json`. Management-plane SDKs must use the mgmt emitter; using a different emitter (or none) will generate the SDK with the wrong generator and produce incorrect output." Add the inline comment on the `emitterPackageJsonPath` line in `tsp-location.yaml` (or, if missing entirely, on the last line of the file).
 
 ## Phase 2: API Review
 
