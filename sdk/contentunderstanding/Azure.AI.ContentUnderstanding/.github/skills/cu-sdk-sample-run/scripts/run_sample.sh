@@ -810,7 +810,7 @@ if [[ "$SAMPLE_NAME" == Sample16* ]] && [ "$RUN_AFTER_BUILD" = true ]; then
         print_warning "  ⚠️  Sample16 will run in DEMO MODE — NO training data is configured."
         print_warning ""
         print_warning "    The analyzer will be created WITHOUT labeled data. Expected output:"
-        print_warning "        Knowledge srcs: 0     (full-validation target is 1)"
+        print_warning "        Knowledge sources: 0     (full-validation target is 1)"
         print_warning ""
         print_warning "    To fully validate Sample16, set ONE of the following before re-running:"
         print_warning ""

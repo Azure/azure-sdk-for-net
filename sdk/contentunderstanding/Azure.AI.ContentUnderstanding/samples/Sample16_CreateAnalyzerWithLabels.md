@@ -226,7 +226,7 @@ string analyzerId = $"receipt_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds(
     Console.WriteLine($"  Description: {result.Description}");
     Console.WriteLine($"  Base analyzer: {result.BaseAnalyzerId}");
     Console.WriteLine($"  Fields: {result.FieldSchema?.Fields?.Count ?? 0}");
-    Console.WriteLine($"  Knowledge srcs: {result.KnowledgeSources?.Count ?? 0}");
+    Console.WriteLine($"  Knowledge sources: {result.KnowledgeSources?.Count ?? 0}");
 ```
 
 ## Helper: upload labeled files
