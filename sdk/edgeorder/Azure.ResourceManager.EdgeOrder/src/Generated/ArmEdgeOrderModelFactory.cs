@@ -935,12 +935,20 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProductFamily ProductFamily(string displayName, ProductDescription description, IEnumerable<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IEnumerable<FilterableProperty> filterableProperties, IEnumerable<ProductLine> productLines, IEnumerable<ResourceProviderDetails> resourceProviderDetails)
         {
-            imageInformation ??= new ChangeTrackingList<EdgeOrderProductImageInformation>();
-            filterableProperties ??= new ChangeTrackingList<FilterableProperty>();
-            productLines ??= new ChangeTrackingList<ProductLine>();
             resourceProviderDetails ??= new ChangeTrackingList<ResourceProviderDetails>();
 
-            return new ProductFamily(default, additionalBinaryDataProperties: null);
+            return new ProductFamily(displayName is null && description is null && imageInformation is null && costInformation is null && availabilityInformation is null && hierarchyInformation is null && filterableProperties is null && productLines is null ? default : new ProductFamilyProperties(
+                displayName,
+                description,
+                (imageInformation ?? new ChangeTrackingList<EdgeOrderProductImageInformation>()).ToList(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                default,
+                default,
+                (filterableProperties ?? new ChangeTrackingList<FilterableProperty>()).ToList(),
+                (productLines ?? new ChangeTrackingList<ProductLine>()).ToList(),
+                default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProductLine"/>. </summary>
@@ -1032,12 +1040,20 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProductFamiliesMetadata ProductFamiliesMetadata(string displayName, ProductDescription description, IEnumerable<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IEnumerable<FilterableProperty> filterableProperties, IEnumerable<ProductLine> productLines, IEnumerable<ResourceProviderDetails> resourceProviderDetails)
         {
-            imageInformation ??= new ChangeTrackingList<EdgeOrderProductImageInformation>();
-            filterableProperties ??= new ChangeTrackingList<FilterableProperty>();
-            productLines ??= new ChangeTrackingList<ProductLine>();
             resourceProviderDetails ??= new ChangeTrackingList<ResourceProviderDetails>();
 
-            return new ProductFamiliesMetadata(default, additionalBinaryDataProperties: null);
+            return new ProductFamiliesMetadata(displayName is null && description is null && imageInformation is null && costInformation is null && availabilityInformation is null && hierarchyInformation is null && filterableProperties is null && productLines is null ? default : new ProductFamilyProperties(
+                displayName,
+                description,
+                (imageInformation ?? new ChangeTrackingList<EdgeOrderProductImageInformation>()).ToList(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                default,
+                default,
+                (filterableProperties ?? new ChangeTrackingList<FilterableProperty>()).ToList(),
+                (productLines ?? new ChangeTrackingList<ProductLine>()).ToList(),
+                default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrder.EdgeOrderData"/>. </summary>
