@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// The object representing the policy for taking backups on an account.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PeriodicModeBackupPolicy"/> and <see cref="ContinuousModeBackupPolicy"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownCosmosDBAccountBackupPolicy))]
+    [PersistableModelProxy(typeof(UnknownBackupPolicy))]
     public abstract partial class CosmosDBAccountBackupPolicy : IJsonModel<CosmosDBAccountBackupPolicy>
     {
         /// <param name="data"> The data to parse. </param>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return ContinuousModeBackupPolicy.DeserializeContinuousModeBackupPolicy(element, options);
                 }
             }
-            return UnknownCosmosDBAccountBackupPolicy.DeserializeUnknownCosmosDBAccountBackupPolicy(element, options);
+            return UnknownBackupPolicy.DeserializeUnknownBackupPolicy(element, options);
         }
     }
 }

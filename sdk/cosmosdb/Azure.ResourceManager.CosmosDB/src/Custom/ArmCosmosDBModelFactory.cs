@@ -65,5 +65,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 cpuUsage: cpuUsage,
                 isLatestModel: default);
         }
+
+        // Back-compat factory for CosmosDBFleetData. The previous AutoRest contract
+        // exposed `provisioningState` directly as a constructor argument; the MPG
+        // generator wraps it inside FleetResourceProperties and only emits an
+        // internal constructor — so the historical public factory is missing.
+        // Re-introduce it here, projecting provisioningState through the inner
+        // FleetResourceProperties holder.
+        /// <summary> Initializes a new instance of <see cref="CosmosDBFleetData"/>. </summary>
+        public static CosmosDBFleetData CosmosDBFleetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBStatus? provisioningState = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            return new CosmosDBFleetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties: new FleetResourceProperties { ProvisioningState = provisioningState });
+        }
     }
 }

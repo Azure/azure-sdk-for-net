@@ -333,6 +333,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         // ----- Type-drift restorations (additive aliases / typed wrappers) -----
 
         /// <summary> List of IpRules. Back-compat alias for <see cref="IpRules"/>. </summary>
+        [WirePath("properties.ipRules")]
         public IList<CosmosDBIPAddressOrRange> IPRules => IpRules;
 
         /// <summary> The URI of the key vault. Back-compat wrapper for the inner string. </summary>
@@ -354,6 +355,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// so values assigned here are NOT serialized to the wire. To restore wire-serialization,
         /// remove "identity" from the OmitProperties list in client.tsp.
         /// </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Live-view <see cref="IList{T}"/> of <see cref="ResourceIdentifier"/> over the underlying <see cref="IList{T}"/> of strings. Mutations on this view propagate to the inner string list and therefore to the wire. </summary>

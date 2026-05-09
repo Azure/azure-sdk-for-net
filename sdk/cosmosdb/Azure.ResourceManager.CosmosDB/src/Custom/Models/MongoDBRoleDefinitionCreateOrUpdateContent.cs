@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.ResourceManager.CosmosDB;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     // MPG flattens MongoRoleDefinitionResource.type onto this wrapper, and the
@@ -12,6 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class MongoDBRoleDefinitionCreateOrUpdateContent
     {
         /// <summary> Indicates whether the Role Definition was built-in or user created. </summary>
+        [WirePath("properties.type")]
         public MongoDBRoleDefinitionType? DefinitionType
         {
             get => RoleDefinitionType;
