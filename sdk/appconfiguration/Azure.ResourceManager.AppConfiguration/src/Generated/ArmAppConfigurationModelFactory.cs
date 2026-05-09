@@ -402,8 +402,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppConfigurationSnapshotData AppConfigurationSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string snapshotType, AppConfigurationProvisioningState? provisioningState, AppConfigurationSnapshotStatus? status, IEnumerable<SnapshotKeyValueFilter> filters, SnapshotCompositionType? compositionType, DateTimeOffset? createdOn, DateTimeOffset? expireOn, long? retentionPeriod, long? size, long? itemsCount, IDictionary<string, string> tags, ETag? eTag)
         {
-            filters ??= new ChangeTrackingList<SnapshotKeyValueFilter>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new AppConfigurationSnapshotData(
                 id,
@@ -411,7 +409,19 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default);
+                provisioningState is null && status is null && filters is null && compositionType is null && createdOn is null && expireOn is null && retentionPeriod is null && size is null && itemsCount is null && tags is null && eTag is null ? default : new SnapshotProperties(
+                    provisioningState,
+                    status,
+                    (filters ?? new ChangeTrackingList<SnapshotKeyValueFilter>()).ToList(),
+                    compositionType,
+                    createdOn,
+                    expireOn,
+                    retentionPeriod,
+                    size,
+                    itemsCount,
+                    tags,
+                    eTag,
+                    default));
         }
 
         /// <summary> Initializes a new instance of <see cref="AppConfiguration.AppConfigurationStoreData"/>. </summary>
