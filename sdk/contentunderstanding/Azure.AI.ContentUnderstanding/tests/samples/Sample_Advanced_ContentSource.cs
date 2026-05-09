@@ -89,6 +89,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // Verify at least one field has grounding sources
             bool hasDocumentSource = false;
+            bool hasPolygonSource = false;
             foreach (var kvp in documentContent.Fields)
             {
                 if (kvp.Value.Sources != null)
@@ -98,16 +99,28 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         Assert.IsInstanceOf<DocumentSource>(source, $"Sources for document fields should be DocumentSource, got {source.GetType().Name}");
                         var ds = (DocumentSource)source;
                         Assert.IsTrue(ds.PageNumber >= 1, $"PageNumber should be >= 1, got {ds.PageNumber}");
-                        Assert.IsNotNull(ds.Polygon, "Polygon should not be null for document sources with coordinates");
-                        Assert.IsTrue(ds.Polygon!.Count >= 3, $"Polygon should have at least 3 points, got {ds.Polygon.Count}");
-                        Assert.IsTrue(ds.BoundingBox.HasValue, "BoundingBox should be computed from polygon");
-                        Assert.IsTrue(ds.BoundingBox!.Value.Width > 0, "BoundingBox width should be > 0");
-                        Assert.IsTrue(ds.BoundingBox!.Value.Height > 0, "BoundingBox height should be > 0");
+
+                        // DocumentSource supports both polygon (D(page,x1,y1,...)) and page-only
+                        // (D(page)) wire formats. When Polygon is present, BoundingBox must also
+                        // be computed; when Polygon is null, BoundingBox is null too.
+                        if (ds.Polygon != null)
+                        {
+                            Assert.IsTrue(ds.Polygon.Count >= 3, $"Polygon should have at least 3 points, got {ds.Polygon.Count}");
+                            Assert.IsTrue(ds.BoundingBox.HasValue, "BoundingBox should be computed when Polygon is present");
+                            Assert.IsTrue(ds.BoundingBox!.Value.Width > 0, "BoundingBox width should be > 0");
+                            Assert.IsTrue(ds.BoundingBox!.Value.Height > 0, "BoundingBox height should be > 0");
+                            hasPolygonSource = true;
+                        }
+                        else
+                        {
+                            Assert.IsFalse(ds.BoundingBox.HasValue, "BoundingBox should be null when Polygon is null");
+                        }
                         hasDocumentSource = true;
                     }
                 }
             }
             Assert.IsTrue(hasDocumentSource, "At least one field should have DocumentSource grounding");
+            Assert.IsTrue(hasPolygonSource, "At least one DocumentSource should have polygon coordinates");
             #endregion
 
             #region Snippet:ContentUnderstandingContentSourceParse
