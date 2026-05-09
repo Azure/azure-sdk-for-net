@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static MarketplaceSaaSInfo MarketplaceSaaSInfo(ResourceIdentifier marketplaceSubscriptionId, string marketplaceName, string marketplaceResourceId, string marketplaceStatus, string billedAzureSubscriptionId, bool? isSubscribed)
         {
             return new MarketplaceSaaSInfo(
-                default,
+                marketplaceSubscriptionId is null ? default : new MarketplaceSaaSInfoMarketplaceSubscription(marketplaceSubscriptionId, default, default, default),
                 marketplaceName,
                 marketplaceResourceId,
                 marketplaceStatus,

@@ -1605,7 +1605,6 @@ namespace Azure.ResourceManager.CostManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CostManagementExportData CostManagementExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportFormatType? format, ExportDeliveryDestination deliveryInfoDestination, ExportDefinition definition, IEnumerable<ExportRun> runHistoryValue, bool? partitionData, DateTimeOffset? nextRunTimeEstimate, ExportSchedule schedule, ETag? eTag)
         {
-            runHistoryValue ??= new ChangeTrackingList<ExportRun>();
 
             return new CostManagementExportData(
                 id,
@@ -1613,7 +1612,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
+                format is null && deliveryInfoDestination is null && definition is null && runHistoryValue is null && partitionData is null && nextRunTimeEstimate is null && schedule is null ? default : new ExportProperties(
+                    format,
+                    new ExportDeliveryInfo(deliveryInfoDestination, default),
+                    definition,
+                    new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), default),
+                    partitionData,
+                    default,
+                    default,
+                    default,
+                    nextRunTimeEstimate,
+                    default,
+                    default,
+                    schedule),
                 default,
                 default,
                 eTag);
@@ -1658,7 +1669,20 @@ namespace Azure.ResourceManager.CostManagement.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
+                executionType is null && status is null && submittedBy is null && submittedOn is null && processingStartOn is null && processingEndOn is null && fileName is null && runSettings is null && error is null ? default : new ExportRunProperties(
+                    executionType,
+                    status,
+                    submittedBy,
+                    submittedOn,
+                    processingStartOn,
+                    processingEndOn,
+                    default,
+                    default,
+                    fileName,
+                    default,
+                    runSettings,
+                    error,
+                    default),
                 eTag);
         }
 
@@ -1681,7 +1705,6 @@ namespace Azure.ResourceManager.CostManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ScheduledActionData ScheduledActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IEnumerable<ScheduledActionFileFormat> fileFormats, NotificationProperties notification, string notificationEmail, ScheduleProperties schedule, ResourceIdentifier scope, ScheduledActionStatus? status, ResourceIdentifier viewId, ETag? eTag, ScheduledActionKind? kind)
         {
-            fileFormats ??= new ChangeTrackingList<ScheduledActionFileFormat>();
 
             return new ScheduledActionData(
                 id,
@@ -1689,7 +1712,16 @@ namespace Azure.ResourceManager.CostManagement.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
+                displayName is null && fileFormats is null && notification is null && notificationEmail is null && schedule is null && scope is null && status is null && viewId is null ? default : new ScheduledActionProperties(
+                    displayName,
+                    new FileDestination((fileFormats ?? new ChangeTrackingList<ScheduledActionFileFormat>()).ToList(), default),
+                    notification,
+                    notificationEmail,
+                    schedule,
+                    scope,
+                    status,
+                    viewId,
+                    default),
                 eTag,
                 kind);
         }

@@ -496,9 +496,21 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RedisEnterpriseDatabasePatch RedisEnterpriseDatabasePatch(RedisEnterpriseClientProtocol? clientProtocol, int? port, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, RedisEnterpriseClusteringPolicy? clusteringPolicy, RedisEnterpriseEvictionPolicy? evictionPolicy, RedisPersistenceSettings persistence, IEnumerable<RedisEnterpriseModule> modules, RedisEnterpriseDatabaseGeoReplication geoReplication, string redisVersion, DeferUpgradeSetting? deferUpgrade, AccessKeysAuthentication? accessKeysAuthentication)
         {
-            modules ??= new ChangeTrackingList<RedisEnterpriseModule>();
 
-            return new RedisEnterpriseDatabasePatch(default, additionalBinaryDataProperties: null);
+            return new RedisEnterpriseDatabasePatch(clientProtocol is null && port is null && provisioningState is null && resourceState is null && clusteringPolicy is null && evictionPolicy is null && persistence is null && modules is null && geoReplication is null && redisVersion is null && deferUpgrade is null && accessKeysAuthentication is null ? default : new DatabaseUpdateProperties(
+                clientProtocol,
+                port,
+                provisioningState,
+                resourceState,
+                clusteringPolicy,
+                evictionPolicy,
+                persistence,
+                (modules ?? new ChangeTrackingList<RedisEnterpriseModule>()).ToList(),
+                geoReplication,
+                redisVersion,
+                deferUpgrade,
+                accessKeysAuthentication,
+                default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterprise.RedisEnterpriseClusterData"/>. </summary>
@@ -625,9 +637,21 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RedisEnterpriseDatabasePatch RedisEnterpriseDatabasePatch(RedisEnterpriseClientProtocol? clientProtocol, int? port, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, RedisEnterpriseClusteringPolicy? clusteringPolicy, RedisEnterpriseEvictionPolicy? evictionPolicy, RedisPersistenceSettings persistence, IEnumerable<RedisEnterpriseModule> modules, RedisEnterpriseDatabaseGeoReplication geoReplication)
         {
-            modules ??= new ChangeTrackingList<RedisEnterpriseModule>();
 
-            return new RedisEnterpriseDatabasePatch(default, additionalBinaryDataProperties: null);
+            return new RedisEnterpriseDatabasePatch(clientProtocol is null && port is null && provisioningState is null && resourceState is null && clusteringPolicy is null && evictionPolicy is null && persistence is null && modules is null && geoReplication is null ? default : new DatabaseUpdateProperties(
+                clientProtocol,
+                port,
+                provisioningState,
+                resourceState,
+                clusteringPolicy,
+                evictionPolicy,
+                persistence,
+                (modules ?? new ChangeTrackingList<RedisEnterpriseModule>()).ToList(),
+                geoReplication,
+                default,
+                default,
+                default,
+                default), additionalBinaryDataProperties: null);
         }
     }
 }
