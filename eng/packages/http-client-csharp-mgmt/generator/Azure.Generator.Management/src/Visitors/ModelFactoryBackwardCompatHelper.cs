@@ -169,7 +169,7 @@ namespace Azure.Generator.Management.Visitors
                     continue;
                 }
 
-                if (TryBuildCompatibilityArgument(method, constructorParameters[i], new HashSet<CSharpType>(new CSharpTypeNameComparer()), wrapWithNullCheck: true, out var replacement))
+                if (TryBuildCompatibilityArgument(method, constructorParameters[i], [], wrapWithNullCheck: true, out var replacement))
                 {
                     arguments ??= [.. newInstanceExpression.Parameters];
                     matched ??= [];
@@ -228,7 +228,7 @@ namespace Azure.Generator.Management.Visitors
         private static bool TryBuildCompatibilityArgument(
             MethodProvider method,
             ParameterProvider constructorParameter,
-            HashSet<CSharpType> visitedTypes,
+            List<CSharpType> visitedTypes,
             bool wrapWithNullCheck,
             [NotNullWhen(true)] out CompatibilityArgument? argument)
         {
@@ -238,11 +238,13 @@ namespace Azure.Generator.Management.Visitors
                 return true;
             }
 
-            if (!visitedTypes.Add(constructorParameter.Type))
+            if (visitedTypes.Any(type => type.AreNamesEqual(constructorParameter.Type)))
             {
                 argument = null;
                 return false;
             }
+
+            visitedTypes.Add(constructorParameter.Type);
 
             if (!TryGetModelProvider(constructorParameter.Type, out var nestedModel))
             {
@@ -284,7 +286,7 @@ namespace Azure.Generator.Management.Visitors
             return true;
         }
 
-        private static bool TryGetNestedCompatibilityArgument(MethodProvider method, PropertyProvider? parentProperty, ParameterProvider nestedParameter, HashSet<CSharpType> visitedTypes, [NotNullWhen(true)] out CompatibilityArgument? argument)
+        private static bool TryGetNestedCompatibilityArgument(MethodProvider method, PropertyProvider? parentProperty, ParameterProvider nestedParameter, List<CSharpType> visitedTypes, [NotNullWhen(true)] out CompatibilityArgument? argument)
         {
             if (parentProperty is not null && nestedParameter.Property is not null)
             {
@@ -374,29 +376,5 @@ namespace Azure.Generator.Management.Visitors
         }
 
         private record CompatibilityArgument(ValueExpression Argument, IReadOnlyList<ParameterProvider> MatchedParameters);
-
-        private class CSharpTypeNameComparer : IEqualityComparer<CSharpType>
-        {
-            public bool Equals(CSharpType? x, CSharpType? y)
-            {
-                if (x is null && y is null)
-                {
-                    return true;
-                }
-                if (x is null || y is null)
-                {
-                    return false;
-                }
-                return x.Namespace == y.Namespace && x.Name == y.Name;
-            }
-
-            public int GetHashCode(CSharpType obj)
-            {
-                HashCode hashCode = new HashCode();
-                hashCode.Add(obj.Namespace);
-                hashCode.Add(obj.Name);
-                return hashCode.ToHashCode();
-            }
-        }
     }
 }
