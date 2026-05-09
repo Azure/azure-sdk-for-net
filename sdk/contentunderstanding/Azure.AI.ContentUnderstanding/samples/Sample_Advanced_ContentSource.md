@@ -9,18 +9,22 @@ This sample demonstrates how to access **grounding source references** from anal
 | `ContentSource` (abstract) | — | Base class; use `ContentSource.Parse()` to create typed instances |
 | `DocumentSource` | `D(page,x1,y1,...,xN,yN)` or `D(page)` | Document/image: page number + polygon coordinates + computed `BoundingBox` |
 
-Multiple source regions are separated by `;` in the raw string. `ContentSource.Parse()` splits them and returns a typed array. For example, a field spanning two regions on page 1:
+In the wire format (what the result JSON returns), each source is an encoded string that contains the page number and polygon coordinates. This can be useful when you want to render these sources by location in a PDF viewer — for example, for human review.
+
+However, given that these are encoded, for ease of access we provide a `ContentSource` class that parses the encoded string and returns the page number and the enclosing polygons in the unit of the document (such as inches or pixels). `ContentSource` even computes a `BoundingBox` — a rectangle that encompasses the polygons — if you only want to draw the bounding rectangles.
+
+Multiple regions are separated by `;` in the raw string. For example, a field whose value spans two regions on page 1:
 
 ```
 D(1,0.10,0.20,0.50,0.20,0.50,0.25,0.10,0.25);D(1,0.10,0.30,0.50,0.30,0.50,0.35,0.10,0.35)
 ```
 
-```csharp
-// Parse a multi-segment source string into individual DocumentSource instances.
-string rawSource = field.Sources.ToRawString();    // e.g. "D(1,...);D(1,...)"
-ContentSource[] sources = ContentSource.Parse(rawSource);
-// sources.Length == 2, each is a DocumentSource with its own page + polygon
-```
+The source of this value is from two polygons:
+
+- The first polygon is on page **1** and has four points (in inches): (0.10, 0.20), (0.50, 0.20), (0.50, 0.25) and (0.10, 0.25).
+- The second polygon is also on page **1** and has four points (in inches): (0.10, 0.30), (0.50, 0.30), (0.50, 0.35) and (0.10, 0.35).
+
+To eliminate the need for you to parse these, we provide `DocumentSource` to access the page number and polygons in an object model. See the sample code below.
 
 ## Prerequisites
 
@@ -104,6 +108,8 @@ foreach (var kvp in documentContent.Fields)
 ```
 
 ## Parsing source strings
+
+These two APIs are used by the `ContentSource` implementation, and it's rare that you need to call these two directly. However, they are included here for completeness.
 
 The SDK provides two parse APIs for converting wire-format source strings back into typed objects:
 
