@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                             {
                                 StorageAccountType = StorageAccountType.StandardLRS
                             },
-                            DeleteOption = DiskDeleteOptionType.Detach,
+                            DeleteOption = DiskDeleteOptionType.Delete,
                             DiskSizeGB = 127
                         },
                         DiskControllerType = DiskControllerType.SCSI
