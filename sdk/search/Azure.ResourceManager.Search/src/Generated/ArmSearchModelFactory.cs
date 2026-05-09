@@ -531,10 +531,6 @@ namespace Azure.ResourceManager.Search.Models
         public static SearchServiceData SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSkuName? skuName, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, Uri endpoint, SearchServiceHostingMode? hostingMode, SearchServiceComputeType? computeType, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, IEnumerable<SearchServiceIPRule> ipRules, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, bool? upgradeAvailable, DateTimeOffset? serviceUpgradeOn)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            ipRules ??= new ChangeTrackingList<SearchServiceIPRule>();
-            dataExfiltrationProtections ??= new ChangeTrackingList<SearchDataExfiltrationProtection>();
-            privateEndpointConnections ??= new ChangeTrackingList<SearchPrivateEndpointConnectionData>();
-            sharedPrivateLinkResources ??= new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
 
             return new SearchServiceData(
                 id,
@@ -544,7 +540,29 @@ namespace Azure.ResourceManager.Search.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
+                replicaCount is null && partitionCount is null && endpoint is null && hostingMode is null && computeType is null && status is null && statusDetails is null && provisioningState is null && ipRules is null && dataExfiltrationProtections is null && encryptionWithCmk is null && isLocalAuthDisabled is null && authOptions is null && semanticSearch is null && privateEndpointConnections is null && sharedPrivateLinkResources is null ? default : new SearchServiceProperties(
+                    replicaCount,
+                    partitionCount,
+                    endpoint,
+                    hostingMode,
+                    computeType,
+                    default,
+                    status,
+                    statusDetails,
+                    provisioningState,
+                    new SearchServiceNetworkRuleSet((ipRules ?? new ChangeTrackingList<SearchServiceIPRule>()).ToList(), default, default),
+                    (dataExfiltrationProtections ?? new ChangeTrackingList<SearchDataExfiltrationProtection>()).ToList(),
+                    encryptionWithCmk,
+                    isLocalAuthDisabled,
+                    authOptions,
+                    semanticSearch,
+                    default,
+                    (privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>()).ToList(),
+                    (sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>()).ToList(),
+                    default,
+                    default,
+                    default,
+                    default),
                 default,
                 identity);
         }
@@ -577,9 +595,6 @@ namespace Azure.ResourceManager.Search.Models
         public static SearchServiceData SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSkuName? skuName, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, IEnumerable<SearchServiceIPRule> ipRules, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections, SearchSemanticSearch? semanticSearch, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            ipRules ??= new ChangeTrackingList<SearchServiceIPRule>();
-            privateEndpointConnections ??= new ChangeTrackingList<SearchPrivateEndpointConnectionData>();
-            sharedPrivateLinkResources ??= new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
 
             return new SearchServiceData(
                 id,
@@ -589,7 +604,29 @@ namespace Azure.ResourceManager.Search.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
+                replicaCount is null && partitionCount is null && hostingMode is null && status is null && statusDetails is null && provisioningState is null && ipRules is null && encryptionWithCmk is null && isLocalAuthDisabled is null && authOptions is null && semanticSearch is null && privateEndpointConnections is null && sharedPrivateLinkResources is null ? default : new SearchServiceProperties(
+                    replicaCount,
+                    partitionCount,
+                    default,
+                    hostingMode,
+                    default,
+                    default,
+                    status,
+                    statusDetails,
+                    provisioningState,
+                    new SearchServiceNetworkRuleSet((ipRules ?? new ChangeTrackingList<SearchServiceIPRule>()).ToList(), default, default),
+                    default,
+                    encryptionWithCmk,
+                    isLocalAuthDisabled,
+                    authOptions,
+                    semanticSearch,
+                    default,
+                    (privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>()).ToList(),
+                    (sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>()).ToList(),
+                    default,
+                    default,
+                    default,
+                    default),
                 default,
                 identity);
         }
@@ -627,10 +664,6 @@ namespace Azure.ResourceManager.Search.Models
         public static SearchServicePatch SearchServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSkuName? skuName, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, Uri endpoint, SearchServiceHostingMode? hostingMode, SearchServiceComputeType? computeType, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, IEnumerable<SearchServiceIPRule> ipRules, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, bool? upgradeAvailable, DateTimeOffset? serviceUpgradeOn)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            ipRules ??= new ChangeTrackingList<SearchServiceIPRule>();
-            dataExfiltrationProtections ??= new ChangeTrackingList<SearchDataExfiltrationProtection>();
-            privateEndpointConnections ??= new ChangeTrackingList<SearchPrivateEndpointConnectionData>();
-            sharedPrivateLinkResources ??= new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
 
             return new SearchServicePatch(
                 id,
@@ -639,7 +672,29 @@ namespace Azure.ResourceManager.Search.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 location,
-                default,
+                replicaCount is null && partitionCount is null && endpoint is null && hostingMode is null && computeType is null && status is null && statusDetails is null && provisioningState is null && ipRules is null && dataExfiltrationProtections is null && encryptionWithCmk is null && isLocalAuthDisabled is null && authOptions is null && semanticSearch is null && privateEndpointConnections is null && sharedPrivateLinkResources is null ? default : new SearchServiceProperties(
+                    replicaCount,
+                    partitionCount,
+                    endpoint,
+                    hostingMode,
+                    computeType,
+                    default,
+                    status,
+                    statusDetails,
+                    provisioningState,
+                    new SearchServiceNetworkRuleSet((ipRules ?? new ChangeTrackingList<SearchServiceIPRule>()).ToList(), default, default),
+                    (dataExfiltrationProtections ?? new ChangeTrackingList<SearchDataExfiltrationProtection>()).ToList(),
+                    encryptionWithCmk,
+                    isLocalAuthDisabled,
+                    authOptions,
+                    semanticSearch,
+                    default,
+                    (privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>()).ToList(),
+                    (sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>()).ToList(),
+                    default,
+                    default,
+                    default,
+                    default),
                 default,
                 tags,
                 identity);
@@ -673,9 +728,6 @@ namespace Azure.ResourceManager.Search.Models
         public static SearchServicePatch SearchServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSkuName? skuName, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, IEnumerable<SearchServiceIPRule> ipRules, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections, SearchSemanticSearch? semanticSearch, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            ipRules ??= new ChangeTrackingList<SearchServiceIPRule>();
-            privateEndpointConnections ??= new ChangeTrackingList<SearchPrivateEndpointConnectionData>();
-            sharedPrivateLinkResources ??= new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
 
             return new SearchServicePatch(
                 id,
@@ -684,7 +736,29 @@ namespace Azure.ResourceManager.Search.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 location,
-                default,
+                replicaCount is null && partitionCount is null && hostingMode is null && status is null && statusDetails is null && provisioningState is null && ipRules is null && encryptionWithCmk is null && isLocalAuthDisabled is null && authOptions is null && semanticSearch is null && privateEndpointConnections is null && sharedPrivateLinkResources is null ? default : new SearchServiceProperties(
+                    replicaCount,
+                    partitionCount,
+                    default,
+                    hostingMode,
+                    default,
+                    default,
+                    status,
+                    statusDetails,
+                    provisioningState,
+                    new SearchServiceNetworkRuleSet((ipRules ?? new ChangeTrackingList<SearchServiceIPRule>()).ToList(), default, default),
+                    default,
+                    encryptionWithCmk,
+                    isLocalAuthDisabled,
+                    authOptions,
+                    semanticSearch,
+                    default,
+                    (privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>()).ToList(),
+                    (sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>()).ToList(),
+                    default,
+                    default,
+                    default,
+                    default),
                 default,
                 tags,
                 identity);
