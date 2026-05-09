@@ -85,11 +85,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("securityMonitoring"u8);
                 writer.WriteObjectValue(SecurityMonitoring, options);
             }
-            if (Optional.IsDefined(SecurityGating))
-            {
-                writer.WritePropertyName("securityGating"u8);
-                writer.WriteObjectValue(SecurityGating, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,7 +129,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             ResourceIdentifier logAnalyticsWorkspaceResourceId = default;
             ManagedClusterSecurityProfileDefenderSecurityMonitoring securityMonitoring = default;
-            ManagedClusterSecurityProfileDefenderSecurityGating securityGating = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,21 +150,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     securityMonitoring = ManagedClusterSecurityProfileDefenderSecurityMonitoring.DeserializeManagedClusterSecurityProfileDefenderSecurityMonitoring(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("securityGating"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    securityGating = ManagedClusterSecurityProfileDefenderSecurityGating.DeserializeManagedClusterSecurityProfileDefenderSecurityGating(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterSecurityProfileDefender(logAnalyticsWorkspaceResourceId, securityMonitoring, securityGating, additionalBinaryDataProperties);
+            return new ManagedClusterSecurityProfileDefender(logAnalyticsWorkspaceResourceId, securityMonitoring, additionalBinaryDataProperties);
         }
     }
 }

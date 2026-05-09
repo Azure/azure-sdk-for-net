@@ -125,11 +125,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("backendPoolType"u8);
                 writer.WriteStringValue(BackendPoolType.Value.ToString());
             }
-            if (Optional.IsDefined(ClusterServiceLoadBalancerHealthProbeMode))
-            {
-                writer.WritePropertyName("clusterServiceLoadBalancerHealthProbeMode"u8);
-                writer.WriteStringValue(ClusterServiceLoadBalancerHealthProbeMode.Value.ToString());
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -180,7 +175,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             int? idleTimeoutInMinutes = default;
             bool? isMultipleStandardLoadBalancersEnabled = default;
             ManagedClusterLoadBalancerBackendPoolType? backendPoolType = default;
-            ClusterServiceLoadBalancerHealthProbeMode? clusterServiceLoadBalancerHealthProbeMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -252,15 +246,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                     backendPoolType = new ManagedClusterLoadBalancerBackendPoolType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("clusterServiceLoadBalancerHealthProbeMode"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    clusterServiceLoadBalancerHealthProbeMode = new ClusterServiceLoadBalancerHealthProbeMode(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -275,7 +260,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 idleTimeoutInMinutes,
                 isMultipleStandardLoadBalancersEnabled,
                 backendPoolType,
-                clusterServiceLoadBalancerHealthProbeMode,
                 additionalBinaryDataProperties);
         }
     }
