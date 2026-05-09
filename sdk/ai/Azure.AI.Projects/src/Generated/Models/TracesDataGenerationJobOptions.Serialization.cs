@@ -103,7 +103,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            DataGenerationJobType @type = default;
+            DataGenerationJobKind @type = default;
             int maxSamples = default;
             float? trainSplit = default;
             DataGenerationModelOptions modelOptions = default;
@@ -112,7 +112,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new DataGenerationJobType(prop.Value.GetString());
+                    @type = new DataGenerationJobKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("max_samples"u8))

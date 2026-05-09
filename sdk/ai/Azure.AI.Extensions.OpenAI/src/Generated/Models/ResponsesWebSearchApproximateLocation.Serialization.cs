@@ -71,7 +71,7 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(ResponsesWebSearchApproximateLocation)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
@@ -134,7 +134,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            string @type = default;
+            string kind = default;
             string country = default;
             string region = default;
             string city = default;
@@ -144,7 +144,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    kind = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("country"u8))
@@ -193,7 +193,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
             }
             return new ResponsesWebSearchApproximateLocation(
-                @type,
+                kind,
                 country,
                 region,
                 city,
