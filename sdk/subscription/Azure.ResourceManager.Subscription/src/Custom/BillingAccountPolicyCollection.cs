@@ -196,10 +196,6 @@ namespace Azure.ResourceManager.Subscription
                 HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(billingAccountId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingAccountPolicyData> response = Response.FromValue(BillingAccountPolicyData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,10 +245,6 @@ namespace Azure.ResourceManager.Subscription
                 HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(billingAccountId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingAccountPolicyData> response = Response.FromValue(BillingAccountPolicyData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
