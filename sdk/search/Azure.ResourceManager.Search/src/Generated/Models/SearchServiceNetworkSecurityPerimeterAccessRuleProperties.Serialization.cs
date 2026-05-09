@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Search;
@@ -249,7 +250,23 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 if (prop.NameEquals("subscriptions"u8))
                 {
-                    DeserializeIsSubscriptions(prop, ref subscriptions);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSearchContext.Default));
+                        }
+                    }
+                    subscriptions = array;
                     continue;
                 }
                 if (prop.NameEquals("networkSecurityPerimeters"u8))
