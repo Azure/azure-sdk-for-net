@@ -9,7 +9,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.ContentUnderstanding;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.AI.ContentUnderstanding.Tests
 {
@@ -145,6 +147,24 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var path = CreatePath(filename);
             var bytes = File.ReadAllBytes(path);
             return BinaryData.FromBytes(bytes);
+        }
+
+        /// <summary>
+        /// Returns a developer credential for local Record/Live runs.
+        /// </summary>
+        /// <remarks>
+        /// The base implementation pins broker-based interactive auth to the Azure SDK test
+        /// tenant, which is not suitable for Content Understanding because the service and
+        /// associated training storage live in the user's home tenant. Prepend
+        /// <see cref="AzureCliCredential"/> so that <c>az login</c> is honored on dev boxes
+        /// (and in WSL) without requiring an interactive broker window. The base chain
+        /// remains as a fallback for environments without the Azure CLI.
+        /// </remarks>
+        protected override TokenCredential CreateDeveloperCredential()
+        {
+            return new ChainedTokenCredential(
+                new AzureCliCredential(),
+                base.CreateDeveloperCredential());
         }
 
         protected override async ValueTask<bool> IsEnvironmentReadyAsync()
