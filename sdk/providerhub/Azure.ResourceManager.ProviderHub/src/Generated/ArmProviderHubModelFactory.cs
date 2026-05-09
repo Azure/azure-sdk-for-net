@@ -1373,7 +1373,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static LinkedOperationRule LinkedOperationRule(LinkedOperation linkedOperation, LinkedAction linkedAction)
         {
-            return LinkedOperationRule(linkedOperation, linkedAction, dependsOnTypes: default);
+            return LinkedOperationRule(linkedOperation: linkedOperation, linkedAction: linkedAction, dependsOnTypes: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProviderResourceType"/>. </summary>
@@ -1465,7 +1465,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourceProviderEndpoint ResourceProviderEndpoint(bool? isEnabled, IEnumerable<string> apiVersions, Uri endpointUri, IEnumerable<AzureLocation> locations, IEnumerable<string> requiredFeatures, FeaturesPolicy? requiredFeaturesPolicy, TimeSpan? timeout)
         {
-            return ResourceProviderEndpoint(isEnabled, apiVersions, endpointUri, locations, requiredFeatures, requiredFeaturesPolicy, timeout, endpointType: default, skuLink: default);
+            return ResourceProviderEndpoint(isEnabled: isEnabled, apiVersions: apiVersions, endpointUri: endpointUri, locations: locations, requiredFeatures: requiredFeatures, requiredFeaturesPolicy: requiredFeaturesPolicy, timeout: timeout, endpointType: default, skuLink: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TemplateDeploymentPolicy"/>. </summary>
@@ -1510,7 +1510,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProviderRegistrationData ProviderRegistrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProviderRegistrationProperties properties)
         {
-            return ProviderRegistrationData(id, name, resourceType, systemData, properties, kind: default);
+            return ProviderRegistrationData(id: id, name: name, resourceType: resourceType, systemData: systemData, properties: properties, kind: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderHub.ResourceTypeRegistrationData"/>. </summary>
@@ -1523,7 +1523,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourceTypeRegistrationData ResourceTypeRegistrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceTypeRegistrationProperties properties)
         {
-            return ResourceTypeRegistrationData(id, name, resourceType, systemData, properties, kind: default);
+            return ResourceTypeRegistrationData(id: id, name: name, resourceType: resourceType, systemData: systemData, properties: properties, kind: default);
         }
     }
 }
