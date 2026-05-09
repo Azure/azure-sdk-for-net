@@ -1177,7 +1177,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeDeviceData DataBoxEdgeDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxEdgeSku sku, ETag? etag, ManagedServiceIdentity identity, DataBoxEdgeDeviceKind? kind, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus, string serialNumber, string description, string modelDescription, DataBoxEdgeDeviceType? deviceType, string friendlyName, string culture, string deviceModel, string deviceSoftwareVersion, long? deviceLocalCapacity, string timeZone, string deviceHcsVersion, IEnumerable<DataBoxEdgeRoleType> configuredRoleTypes, int? nodeCount, DataBoxEdgeResourceMoveDetails resourceMoveDetails, EdgeProfileSubscription edgeSubscription, DataBoxEdgeDataResidencyType? residencyType)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            configuredRoleTypes ??= new ChangeTrackingList<DataBoxEdgeRoleType>();
 
             return new DataBoxEdgeDeviceData(
                 id,
@@ -1187,9 +1186,29 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
+                dataBoxEdgeDeviceStatus is null && serialNumber is null && description is null && modelDescription is null && deviceType is null && friendlyName is null && culture is null && deviceModel is null && deviceSoftwareVersion is null && deviceLocalCapacity is null && timeZone is null && deviceHcsVersion is null && configuredRoleTypes is null && nodeCount is null && resourceMoveDetails is null && edgeSubscription is null && residencyType is null ? default : new DataBoxEdgeDeviceProperties(
+                    default,
+                    dataBoxEdgeDeviceStatus,
+                    serialNumber,
+                    description,
+                    modelDescription,
+                    deviceType,
+                    friendlyName,
+                    culture,
+                    deviceModel,
+                    deviceSoftwareVersion,
+                    deviceLocalCapacity,
+                    timeZone,
+                    deviceHcsVersion,
+                    (configuredRoleTypes ?? new ChangeTrackingList<DataBoxEdgeRoleType>()).ToList(),
+                    nodeCount,
+                    resourceMoveDetails,
+                    new EdgeProfile(edgeSubscription, default),
+                    new DataResidency(residencyType, default),
+                    default,
+                    default),
                 sku,
-                default,
+                etag,
                 identity,
                 kind);
         }
@@ -1302,7 +1321,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static UploadCertificateContent UploadCertificateContent(DataBoxEdgeAuthenticationType? authenticationType, string certificate)
         {
-            return new UploadCertificateContent(default, additionalBinaryDataProperties: null);
+            return new UploadCertificateContent(authenticationType is null && certificate is null ? default : new RawCertificateData(authenticationType, certificate, default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CloudEdgeManagementRole"/>. </summary>
