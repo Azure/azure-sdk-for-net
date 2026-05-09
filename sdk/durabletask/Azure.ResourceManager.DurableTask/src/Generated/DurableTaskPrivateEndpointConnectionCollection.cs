@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DurableTask
         {
             if (id.ResourceType != DurableTaskSchedulerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DurableTaskSchedulerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DurableTaskSchedulerResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DurableTaskPrivateEndpointConnectionData, DurableTaskPrivateEndpointConnectionResource>(new SchedulersGetPrivateEndpointConnectionsAsyncCollectionResultOfT(_schedulersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DurableTaskPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<DurableTaskPrivateEndpointConnectionData, DurableTaskPrivateEndpointConnectionResource>(new SchedulersGetPrivateEndpointConnectionsAsyncCollectionResultOfT(
+                _schedulersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DurableTaskPrivateEndpointConnectionCollection.GetAll"), data => new DurableTaskPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DurableTaskPrivateEndpointConnectionData, DurableTaskPrivateEndpointConnectionResource>(new SchedulersGetPrivateEndpointConnectionsCollectionResultOfT(_schedulersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DurableTaskPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<DurableTaskPrivateEndpointConnectionData, DurableTaskPrivateEndpointConnectionResource>(new SchedulersGetPrivateEndpointConnectionsCollectionResultOfT(
+                _schedulersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DurableTaskPrivateEndpointConnectionCollection.GetAll"), data => new DurableTaskPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

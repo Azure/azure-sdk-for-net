@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResponseError ErrorDetail
         {
-            get => new ResponseError( ProvisioningInfo?.ErrorDetail?.Code, ProvisioningInfo?.ErrorDetail?.Message );
+            get => new ResponseError(ProvisioningInfo?.ErrorDetail?.Code, ProvisioningInfo?.ErrorDetail?.Message);
         }
     }
 }

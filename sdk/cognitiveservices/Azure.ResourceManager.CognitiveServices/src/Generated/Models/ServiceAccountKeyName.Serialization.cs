@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     internal static partial class ServiceAccountKeyNameExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ServiceAccountKeyName value) => value switch
         {
             ServiceAccountKeyName.Key1 => "Key1",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceAccountKeyName value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ServiceAccountKeyName ToServiceAccountKeyName(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Key1")) return ServiceAccountKeyName.Key1;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Key2")) return ServiceAccountKeyName.Key2;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Key1"))
+            {
+                return ServiceAccountKeyName.Key1;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Key2"))
+            {
+                return ServiceAccountKeyName.Key2;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceAccountKeyName value.");
         }
     }

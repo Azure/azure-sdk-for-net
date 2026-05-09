@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary> Default memory store implementation. </summary>
     public partial class MemoryStoreDefaultDefinition : MemoryStoreDefinition

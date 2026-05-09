@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class DevCenterCatalogCollection : ArmCollection, IEnumerable<DevCenterCatalogResource>, IAsyncEnumerable<DevCenterCatalogResource>
     {
-        private readonly ClientDiagnostics _devCenterCatalogCatalogsClientDiagnostics;
-        private readonly CatalogsRestOperations _devCenterCatalogCatalogsRestClient;
+        private readonly ClientDiagnostics _catalogsClientDiagnostics;
+        private readonly Catalogs _catalogsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DevCenterCatalogCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DevCenterCatalogCollection for mocking. </summary>
         protected DevCenterCatalogCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevCenterCatalogCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterCatalogCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DevCenterCatalogCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _devCenterCatalogCatalogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterCatalogResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DevCenterCatalogResource.ResourceType, out string devCenterCatalogCatalogsApiVersion);
-            _devCenterCatalogCatalogsRestClient = new CatalogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterCatalogCatalogsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DevCenterCatalogResource.ResourceType, out string devCenterCatalogApiVersion);
+            _catalogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterCatalogResource.ResourceType.Namespace, Diagnostics);
+            _catalogsRestClient = new Catalogs(_catalogsClientDiagnostics, Pipeline, Endpoint, devCenterCatalogApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DevCenterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DevCenterResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevCenterResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a catalog.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Catalogs_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CatalogOperationGroup_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterCatalogResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="catalogName"> The name of the Catalog. </param>
         /// <param name="data"> Represents a catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<DevCenterCatalogResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string catalogName, DevCenterCatalogData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _devCenterCatalogCatalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _catalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _devCenterCatalogCatalogsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<DevCenterCatalogResource>(new DevCenterCatalogOperationSource(Client), _devCenterCatalogCatalogsClientDiagnostics, Pipeline, _devCenterCatalogCatalogsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _catalogsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, catalogName, DevCenterCatalogData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevCenterArmOperation<DevCenterCatalogResource> operation = new DevCenterArmOperation<DevCenterCatalogResource>(
+                    new DevCenterCatalogOperationSource(Client),
+                    _catalogsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.DevCenter
         /// Creates or updates a catalog.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Catalogs_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CatalogOperationGroup_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterCatalogResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="catalogName"> The name of the Catalog. </param>
         /// <param name="data"> Represents a catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<DevCenterCatalogResource> CreateOrUpdate(WaitUntil waitUntil, string catalogName, DevCenterCatalogData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _devCenterCatalogCatalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _catalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _devCenterCatalogCatalogsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, data, cancellationToken);
-                var operation = new DevCenterArmOperation<DevCenterCatalogResource>(new DevCenterCatalogOperationSource(Client), _devCenterCatalogCatalogsClientDiagnostics, Pipeline, _devCenterCatalogCatalogsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _catalogsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, catalogName, DevCenterCatalogData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevCenterArmOperation<DevCenterCatalogResource> operation = new DevCenterArmOperation<DevCenterCatalogResource>(
+                    new DevCenterCatalogOperationSource(Client),
+                    _catalogsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -150,41 +171,45 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets a catalog
+        /// Gets a catalog.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Catalogs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CatalogOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterCatalogResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="catalogName"> The name of the Catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DevCenterCatalogResource>> GetAsync(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using var scope = _devCenterCatalogCatalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.Get");
+            using DiagnosticScope scope = _catalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.Get");
             scope.Start();
             try
             {
-                var response = await _devCenterCatalogCatalogsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _catalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, catalogName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DevCenterCatalogData> response = Response.FromValue(DevCenterCatalogData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevCenterCatalogResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -195,41 +220,45 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets a catalog
+        /// Gets a catalog.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Catalogs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CatalogOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterCatalogResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="catalogName"> The name of the Catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DevCenterCatalogResource> Get(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using var scope = _devCenterCatalogCatalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.Get");
+            using DiagnosticScope scope = _catalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.Get");
             scope.Start();
             try
             {
-                var response = _devCenterCatalogCatalogsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _catalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, catalogName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DevCenterCatalogData> response = Response.FromValue(DevCenterCatalogData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevCenterCatalogResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,98 +272,122 @@ namespace Azure.ResourceManager.DevCenter
         /// Lists catalogs for a devcenter.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Catalogs_ListByDevCenter</description>
+        /// <term> Operation Id. </term>
+        /// <description> CatalogOperationGroup_ListByDevCenter. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterCatalogResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterCatalogResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevCenterCatalogResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterCatalogCatalogsRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterCatalogCatalogsRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterCatalogResource(Client, DevCenterCatalogData.DeserializeDevCenterCatalogData(e)), _devCenterCatalogCatalogsClientDiagnostics, Pipeline, "DevCenterCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists catalogs for a devcenter.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Catalogs_ListByDevCenter</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterCatalogResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevCenterCatalogResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevCenterCatalogResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevCenterCatalogResource> GetAllAsync(int? top = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterCatalogCatalogsRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterCatalogCatalogsRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterCatalogResource(Client, DevCenterCatalogData.DeserializeDevCenterCatalogData(e)), _devCenterCatalogCatalogsClientDiagnostics, Pipeline, "DevCenterCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DevCenterCatalogData, DevCenterCatalogResource>(new CatalogsGetByDevCenterAsyncCollectionResultOfT(
+                _catalogsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                top,
+                context,
+                "DevCenterCatalogCollection.GetAll"), data => new DevCenterCatalogResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists catalogs for a devcenter.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CatalogOperationGroup_ListByDevCenter. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevCenterCatalogResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevCenterCatalogResource> GetAll(int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DevCenterCatalogData, DevCenterCatalogResource>(new CatalogsGetByDevCenterCollectionResultOfT(
+                _catalogsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                top,
+                context,
+                "DevCenterCatalogCollection.GetAll"), data => new DevCenterCatalogResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Catalogs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CatalogOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterCatalogResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="catalogName"> The name of the Catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using var scope = _devCenterCatalogCatalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.Exists");
+            using DiagnosticScope scope = _catalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _devCenterCatalogCatalogsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _catalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, catalogName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DevCenterCatalogData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevCenterCatalogData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevCenterCatalogData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -348,36 +401,50 @@ namespace Azure.ResourceManager.DevCenter
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Catalogs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CatalogOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterCatalogResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="catalogName"> The name of the Catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using var scope = _devCenterCatalogCatalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.Exists");
+            using DiagnosticScope scope = _catalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.Exists");
             scope.Start();
             try
             {
-                var response = _devCenterCatalogCatalogsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _catalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, catalogName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DevCenterCatalogData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevCenterCatalogData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevCenterCatalogData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,38 +458,54 @@ namespace Azure.ResourceManager.DevCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Catalogs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CatalogOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterCatalogResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="catalogName"> The name of the Catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DevCenterCatalogResource>> GetIfExistsAsync(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using var scope = _devCenterCatalogCatalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.GetIfExists");
+            using DiagnosticScope scope = _catalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _devCenterCatalogCatalogsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _catalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, catalogName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DevCenterCatalogData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevCenterCatalogData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevCenterCatalogData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DevCenterCatalogResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevCenterCatalogResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -436,38 +519,54 @@ namespace Azure.ResourceManager.DevCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Catalogs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CatalogOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterCatalogResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="catalogName"> The name of the Catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DevCenterCatalogResource> GetIfExists(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using var scope = _devCenterCatalogCatalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.GetIfExists");
+            using DiagnosticScope scope = _catalogsClientDiagnostics.CreateScope("DevCenterCatalogCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _devCenterCatalogCatalogsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _catalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, catalogName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DevCenterCatalogData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevCenterCatalogData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevCenterCatalogData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DevCenterCatalogResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevCenterCatalogResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -487,6 +586,7 @@ namespace Azure.ResourceManager.DevCenter
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DevCenterCatalogResource> IAsyncEnumerable<DevCenterCatalogResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

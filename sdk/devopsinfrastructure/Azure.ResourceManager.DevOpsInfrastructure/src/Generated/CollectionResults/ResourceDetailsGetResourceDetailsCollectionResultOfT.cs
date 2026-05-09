@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         private readonly string _resourceGroupName;
         private readonly string _poolName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ResourceDetailsGetResourceDetailsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ResourceDetails client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="poolName"> Name of the pool. It needs to be globally unique. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ResourceDetailsGetResourceDetailsCollectionResultOfT(ResourceDetails client, Guid subscriptionId, string resourceGroupName, string poolName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ResourceDetailsGetResourceDetailsCollectionResultOfT(ResourceDetails client, Guid subscriptionId, string resourceGroupName, string poolName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _poolName = poolName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ResourceDetailsGetResourceDetailsCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetResourceDetailsRequest(nextLink, _subscriptionId, _resourceGroupName, _poolName, _context) : _client.CreateGetResourceDetailsRequest(_subscriptionId, _resourceGroupName, _poolName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DevOpsPoolResource.GetResourceDetails");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

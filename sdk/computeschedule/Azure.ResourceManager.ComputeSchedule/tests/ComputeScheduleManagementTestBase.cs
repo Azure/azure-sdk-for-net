@@ -116,7 +116,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
                 { "name", subnetName },
                 { "properties", new Dictionary<string, object>()
                 {
-                    { "addressPrefix", "10.0.2.0/24" }
+                    { "addressPrefix", "10.0.2.0/24" },
+                    { "defaultOutboundAccess", false }
                 } }
             };
             var subnets = new List<object>() { subnet };
@@ -517,6 +518,29 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             try
             {
                 result = await subscriptionResource.ExecuteVirtualMachineCreateOperationAsync(location, content);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.InnerException?.Message);
+                throw;
+            }
+            return result;
+        }
+
+        protected static async Task<ScheduledActionCreateFlexResult> TestExecuteCreateFlexAsync(AzureLocation location, ExecuteCreateFlexContent executeCreateFlexRequest, string subid, ArmClient client)
+        {
+            SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
+            ExecuteCreateFlexContent content = executeCreateFlexRequest;
+            ScheduledActionCreateFlexResult result;
+
+            try
+            {
+                result = await subscriptionResource.ExecuteVirtualMachineCreateFlexOperationAsync(location, content);
             }
             catch (RequestFailedException ex)
             {

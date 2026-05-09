@@ -60,6 +60,14 @@ namespace Azure.Developer.DevCenter
         public virtual Azure.AsyncPageable<Azure.Developer.DevCenter.Models.DevCenterEnvironmentType> GetEnvironmentTypesAsync(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class DeploymentEnvironmentsClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddDeploymentEnvironmentsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddDeploymentEnvironmentsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Developer.DevCenter.DeploymentEnvironmentsClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDeploymentEnvironmentsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDeploymentEnvironmentsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Developer.DevCenter.DeploymentEnvironmentsClientSettings> configureSettings) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public partial class DeploymentEnvironmentsClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public DeploymentEnvironmentsClientSettings() { }
@@ -153,6 +161,14 @@ namespace Azure.Developer.DevCenter
         public virtual System.Threading.Tasks.Task<Azure.Operation> StopDevBoxAsync(Azure.WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class DevBoxesClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddDevBoxesClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddDevBoxesClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Developer.DevCenter.DevBoxesClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDevBoxesClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDevBoxesClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Developer.DevCenter.DevBoxesClientSettings> configureSettings) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public partial class DevBoxesClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public DevBoxesClientSettings() { }
@@ -178,6 +194,14 @@ namespace Azure.Developer.DevCenter
         public virtual Azure.Pageable<Azure.Developer.DevCenter.Models.DevCenterProject> GetProjects(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetProjectsAsync(Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Developer.DevCenter.Models.DevCenterProject> GetProjectsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class DevCenterClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddDevCenterClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddDevCenterClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Developer.DevCenter.DevCenterClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDevCenterClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDevCenterClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Developer.DevCenter.DevCenterClientSettings> configureSettings) { throw null; }
     }
     public partial class DevCenterClientOptions : Azure.Core.ClientOptions
     {
@@ -300,7 +324,7 @@ namespace Azure.Developer.DevCenter.Models
     }
     public partial class DevBoxHardwareProfile : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxHardwareProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxHardwareProfile>
     {
-        public DevBoxHardwareProfile() { }
+        internal DevBoxHardwareProfile() { }
         public int? MemoryGB { get { throw null; } }
         public Azure.Developer.DevCenter.Models.SkuName? SkuName { get { throw null; } }
         public int? VCPUs { get { throw null; } }
@@ -316,7 +340,7 @@ namespace Azure.Developer.DevCenter.Models
     }
     public partial class DevBoxImageReference : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxImageReference>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxImageReference>
     {
-        public DevBoxImageReference() { }
+        internal DevBoxImageReference() { }
         public string Name { get { throw null; } }
         public string OperatingSystem { get { throw null; } }
         public string OSBuildNumber { get { throw null; } }
@@ -434,8 +458,8 @@ namespace Azure.Developer.DevCenter.Models
     }
     public partial class DevBoxStorageProfile : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxStorageProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxStorageProfile>
     {
-        public DevBoxStorageProfile() { }
-        public Azure.Developer.DevCenter.Models.OSDisk OSDisk { get { throw null; } set { } }
+        internal DevBoxStorageProfile() { }
+        public Azure.Developer.DevCenter.Models.OSDisk OSDisk { get { throw null; } }
         protected virtual Azure.Developer.DevCenter.Models.DevBoxStorageProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.Developer.DevCenter.Models.DevBoxStorageProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -683,7 +707,7 @@ namespace Azure.Developer.DevCenter.Models
     }
     public partial class OSDisk : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.OSDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.OSDisk>
     {
-        public OSDisk() { }
+        internal OSDisk() { }
         public int? DiskSizeGB { get { throw null; } }
         protected virtual Azure.Developer.DevCenter.Models.OSDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

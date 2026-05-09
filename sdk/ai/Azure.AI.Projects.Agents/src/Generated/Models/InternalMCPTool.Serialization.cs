@@ -138,6 +138,11 @@ namespace OpenAI
                 }
 #endif
             }
+            if (Optional.IsDefined(DeferLoading))
+            {
+                writer.WritePropertyName("defer_loading"u8);
+                writer.WriteBooleanValue(DeferLoading.Value);
+            }
             if (Optional.IsDefined(ProjectConnectionId))
             {
                 writer.WritePropertyName("project_connection_id"u8);
@@ -180,6 +185,7 @@ namespace OpenAI
             IDictionary<string, string> headers = default;
             BinaryData allowedTools = default;
             BinaryData requireApproval = default;
+            bool? deferLoading = default;
             string projectConnectionId = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -262,6 +268,15 @@ namespace OpenAI
                     requireApproval = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
+                if (prop.NameEquals("defer_loading"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deferLoading = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("project_connection_id"u8))
                 {
                     projectConnectionId = prop.Value.GetString();
@@ -283,6 +298,7 @@ namespace OpenAI
                 headers ?? new ChangeTrackingDictionary<string, string>(),
                 allowedTools,
                 requireApproval,
+                deferLoading,
                 projectConnectionId);
         }
     }

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         {
             get
             {
-                return ErrorResponse.Error;
+                return ErrorResponse is null ? default : ErrorResponse.Error;
             }
         }
     }

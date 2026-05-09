@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Purview
 {
+    /// <summary></summary>
     public partial class PurviewKafkaConfigurationResource : IJsonModel<PurviewKafkaConfigurationData>
     {
-        private static PurviewKafkaConfigurationData s_dataDeserializationInstance;
-        private static PurviewKafkaConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PurviewKafkaConfigurationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PurviewKafkaConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PurviewKafkaConfigurationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PurviewKafkaConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PurviewKafkaConfigurationData>)Data).Write(writer, options);
 
-        PurviewKafkaConfigurationData IJsonModel<PurviewKafkaConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PurviewKafkaConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PurviewKafkaConfigurationData IJsonModel<PurviewKafkaConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PurviewKafkaConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PurviewKafkaConfigurationData>(Data, options, AzureResourceManagerPurviewContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PurviewKafkaConfigurationData IPersistableModel<PurviewKafkaConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PurviewKafkaConfigurationData>(data, options, AzureResourceManagerPurviewContext.Default);
 
-        string IPersistableModel<PurviewKafkaConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PurviewKafkaConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PurviewKafkaConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

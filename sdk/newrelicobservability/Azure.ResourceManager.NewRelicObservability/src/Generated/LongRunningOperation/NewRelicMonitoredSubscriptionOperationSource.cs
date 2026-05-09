@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
-    internal class NewRelicMonitoredSubscriptionOperationSource : IOperationSource<NewRelicMonitoredSubscriptionResource>
+    /// <summary></summary>
+    internal partial class NewRelicMonitoredSubscriptionOperationSource : IOperationSource<NewRelicMonitoredSubscriptionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NewRelicMonitoredSubscriptionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NewRelicMonitoredSubscriptionResource IOperationSource<NewRelicMonitoredSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NewRelicMonitoredSubscriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNewRelicObservabilityContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NewRelicMonitoredSubscriptionData data = NewRelicMonitoredSubscriptionData.DeserializeNewRelicMonitoredSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NewRelicMonitoredSubscriptionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NewRelicMonitoredSubscriptionResource> IOperationSource<NewRelicMonitoredSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NewRelicMonitoredSubscriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNewRelicObservabilityContext.Default);
-            return await Task.FromResult(new NewRelicMonitoredSubscriptionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NewRelicMonitoredSubscriptionData data = NewRelicMonitoredSubscriptionData.DeserializeNewRelicMonitoredSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NewRelicMonitoredSubscriptionResource(_client, data);
         }
     }
 }

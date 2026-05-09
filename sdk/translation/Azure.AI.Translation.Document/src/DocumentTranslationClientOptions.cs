@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Translation.Document
 {
@@ -11,7 +12,7 @@ namespace Azure.AI.Translation.Document
     /// Options that allow to configure the management of the request sent to the service.
     /// </summary>
     [CodeGenSuppress("AzureAITranslationDocumentClientOptions", typeof(ServiceVersion))]
-    [CodeGenModel("AzureAITranslationDocumentClientOptions")]
+    [CodeGenType("TranslationDocumentClientOptions")]
     public partial class DocumentTranslationClientOptions : ClientOptions
     {
         /// <summary>

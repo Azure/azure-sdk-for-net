@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ComputeFleet
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ComputeFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ComputeFleetData, ComputeFleetResource>(new FleetsGetByResourceGroupAsyncCollectionResultOfT(_fleetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ComputeFleetResource(Client, data));
+            return new AsyncPageableWrapper<ComputeFleetData, ComputeFleetResource>(new FleetsGetByResourceGroupAsyncCollectionResultOfT(_fleetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ComputeFleetCollection.GetAll"), data => new ComputeFleetResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ComputeFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ComputeFleetData, ComputeFleetResource>(new FleetsGetByResourceGroupCollectionResultOfT(_fleetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ComputeFleetResource(Client, data));
+            return new PageableWrapper<ComputeFleetData, ComputeFleetResource>(new FleetsGetByResourceGroupCollectionResultOfT(_fleetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ComputeFleetCollection.GetAll"), data => new ComputeFleetResource(Client, data));
         }
 
         /// <summary>

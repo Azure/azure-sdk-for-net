@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultResourcesGetInSubscriptionAsyncCollectionResultOfT(BackupVaultResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DataProtectionBackupVaultResource(Client, data));
+            return new AsyncPageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultResourcesGetInSubscriptionAsyncCollectionResultOfT(BackupVaultResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataProtectionBackupSubscriptionResource.GetDataProtectionBackupVaults"), data => new DataProtectionBackupVaultResource(Client, data));
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultResourcesGetInSubscriptionCollectionResultOfT(BackupVaultResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DataProtectionBackupVaultResource(Client, data));
+            return new PageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultResourcesGetInSubscriptionCollectionResultOfT(BackupVaultResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataProtectionBackupSubscriptionResource.GetDataProtectionBackupVaults"), data => new DataProtectionBackupVaultResource(Client, data));
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardResourcesGetResourcesInSubscriptionAsyncCollectionResultOfT(ResourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ResourceGuardResource(Client, data));
+            return new AsyncPageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardResourcesGetResourcesInSubscriptionAsyncCollectionResultOfT(ResourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataProtectionBackupSubscriptionResource.GetResourceGuards"), data => new ResourceGuardResource(Client, data));
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardResourcesGetResourcesInSubscriptionCollectionResultOfT(ResourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ResourceGuardResource(Client, data));
+            return new PageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardResourcesGetResourcesInSubscriptionCollectionResultOfT(ResourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataProtectionBackupSubscriptionResource.GetResourceGuards"), data => new ResourceGuardResource(Client, data));
         }
 
         /// <summary>

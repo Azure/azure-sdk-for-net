@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Relay
         private readonly string _namespaceName;
         private readonly string _hybridConnectionName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of HybridConnectionsGetAuthorizationRulesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The HybridConnections client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.Relay
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="hybridConnectionName"> The hybrid connection name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public HybridConnectionsGetAuthorizationRulesCollectionResultOfT(HybridConnections client, string subscriptionId, string resourceGroupName, string namespaceName, string hybridConnectionName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public HybridConnectionsGetAuthorizationRulesCollectionResultOfT(HybridConnections client, string subscriptionId, string resourceGroupName, string namespaceName, string hybridConnectionName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Relay
             _namespaceName = namespaceName;
             _hybridConnectionName = hybridConnectionName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of HybridConnectionsGetAuthorizationRulesCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.Relay
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAuthorizationRulesRequest(nextLink, _subscriptionId, _resourceGroupName, _namespaceName, _hybridConnectionName, _context) : _client.CreateGetAuthorizationRulesRequest(_subscriptionId, _resourceGroupName, _namespaceName, _hybridConnectionName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RelayHybridConnectionAuthorizationRuleCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

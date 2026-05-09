@@ -509,13 +509,13 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="updatedAtUtc"> Exact time the Schema Group was updated. </param>
         /// <param name="createdAtUtc"> Exact time the Schema Group was created. </param>
-        /// <param name="etag"> The ETag value. </param>
+        /// <param name="eTag"> The ETag value. </param>
         /// <param name="groupProperties"> dictionary object for SchemaGroup group properties. </param>
         /// <param name="schemaCompatibility"> Gets or sets the SchemaCompatibility. </param>
         /// <param name="schemaType"> Gets or sets the SchemaType. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="EventHubs.EventHubsSchemaGroupData"/> instance for mocking. </returns>
-        public static EventHubsSchemaGroupData EventHubsSchemaGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? updatedAtUtc = default, DateTimeOffset? createdAtUtc = default, ETag? etag = default, IDictionary<string, string> groupProperties = default, EventHubsSchemaCompatibility? schemaCompatibility = default, EventHubsSchemaType? schemaType = default, AzureLocation? location = default)
+        public static EventHubsSchemaGroupData EventHubsSchemaGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? updatedAtUtc = default, DateTimeOffset? createdAtUtc = default, ETag? eTag = default, IDictionary<string, string> groupProperties = default, EventHubsSchemaCompatibility? schemaCompatibility = default, EventHubsSchemaType? schemaType = default, AzureLocation? location = default)
         {
             return new EventHubsSchemaGroupData(
                 id,
@@ -523,10 +523,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                updatedAtUtc is null && createdAtUtc is null && etag is null && groupProperties is null && schemaCompatibility is null && schemaType is null ? default : new SchemaGroupProperties(
+                updatedAtUtc is null && createdAtUtc is null && eTag is null && groupProperties is null && schemaCompatibility is null && schemaType is null ? default : new SchemaGroupProperties(
                     updatedAtUtc,
                     createdAtUtc,
-                    etag,
+                    eTag,
                     groupProperties,
                     schemaCompatibility,
                     schemaType,
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static EventHubsClusterData EventHubsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsClusterSku sku, DateTimeOffset? createdOn, EventHubsClusterProvisioningState? provisioningState, DateTimeOffset? updatedOn, string metricId, string status, bool? supportsScaling)
         {
-            return EventHubsClusterData(id, name, resourceType, location, createdOn, provisioningState, updatedOn, metricId, status, supportsScaling, platformCapabilitiesConfidentialComputeMode: default, tags, sku, systemData);
+            return EventHubsClusterData(id: id, name: name, resourceType: resourceType, location: location, createdOn: createdOn, provisioningState: provisioningState, updatedOn: updatedOn, metricId: metricId, status: status, supportsScaling: supportsScaling, platformCapabilitiesConfidentialComputeMode: default, tags: tags, sku: sku, systemData: systemData);
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubs.EventHubsNamespaceData"/>. </summary>
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static EventHubsNamespaceData EventHubsNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsSku sku, ManagedServiceIdentity identity, EventHubsTlsVersion? minimumTlsVersion, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, ResourceIdentifier clusterArmId, string metricId, bool? isAutoInflateEnabled, EventHubsPublicNetworkAccess? publicNetworkAccess, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, EventHubsEncryption encryption, IEnumerable<EventHubsPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName)
         {
-            return EventHubsNamespaceData(id, name, resourceType, location, minimumTlsVersion, provisioningState, status, createdOn, updatedOn, serviceBusEndpoint, clusterArmId, metricId, isAutoInflateEnabled, publicNetworkAccess, maximumThroughputUnits, kafkaEnabled, zoneRedundant, encryption, privateEndpointConnections, disableLocalAuth, alternateName, geoDataReplication: default, platformCapabilitiesConfidentialComputeMode: default, tags, systemData, sku, identity);
+            return EventHubsNamespaceData(id: id, name: name, resourceType: resourceType, location: location, minimumTlsVersion: minimumTlsVersion, provisioningState: provisioningState, status: status, createdOn: createdOn, updatedOn: updatedOn, serviceBusEndpoint: serviceBusEndpoint, clusterArmId: clusterArmId, metricId: metricId, isAutoInflateEnabled: isAutoInflateEnabled, publicNetworkAccess: publicNetworkAccess, maximumThroughputUnits: maximumThroughputUnits, kafkaEnabled: kafkaEnabled, zoneRedundant: zoneRedundant, encryption: encryption, privateEndpointConnections: privateEndpointConnections, disableLocalAuth: disableLocalAuth, alternateName: alternateName, geoDataReplication: default, platformCapabilitiesConfidentialComputeMode: default, tags: tags, systemData: systemData, sku: sku, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubs.EventHubsPrivateEndpointConnectionData"/>. </summary>
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static EventHubData EventHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<string> partitionIds, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, long? partitionCount, EventHubEntityStatus? status, string userMetadata, CaptureDescription captureDescription, RetentionDescription retentionDescription, AzureLocation? location)
         {
-            return EventHubData(id, name, resourceType, systemData, partitionIds, createdOn, updatedOn, messageRetentionInDays: default, partitionCount, status, captureDescription, retentionDescription, identifier: default, userMetadata, messageTimestampType: default, location);
+            return EventHubData(id: id, name: name, resourceType: resourceType, systemData: systemData, partitionIds: partitionIds, createdOn: createdOn, updatedOn: updatedOn, messageRetentionInDays: default, partitionCount: partitionCount, status: status, captureDescription: captureDescription, retentionDescription: retentionDescription, identifier: default, userMetadata: userMetadata, messageTimestampType: default, location: location);
         }
     }
 }

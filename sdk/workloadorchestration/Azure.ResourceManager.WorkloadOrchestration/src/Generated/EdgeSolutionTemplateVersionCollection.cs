@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != EdgeSolutionTemplateResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeSolutionTemplateResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeSolutionTemplateResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSolutionTemplateVersionData, EdgeSolutionTemplateVersionResource>(new SolutionTemplateVersionsGetBySolutionTemplateAsyncCollectionResultOfT(_solutionTemplateVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeSolutionTemplateVersionResource(Client, data));
+            return new AsyncPageableWrapper<EdgeSolutionTemplateVersionData, EdgeSolutionTemplateVersionResource>(new SolutionTemplateVersionsGetBySolutionTemplateAsyncCollectionResultOfT(
+                _solutionTemplateVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeSolutionTemplateVersionCollection.GetAll"), data => new EdgeSolutionTemplateVersionResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSolutionTemplateVersionData, EdgeSolutionTemplateVersionResource>(new SolutionTemplateVersionsGetBySolutionTemplateCollectionResultOfT(_solutionTemplateVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeSolutionTemplateVersionResource(Client, data));
+            return new PageableWrapper<EdgeSolutionTemplateVersionData, EdgeSolutionTemplateVersionResource>(new SolutionTemplateVersionsGetBySolutionTemplateCollectionResultOfT(
+                _solutionTemplateVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeSolutionTemplateVersionCollection.GetAll"), data => new EdgeSolutionTemplateVersionResource(Client, data));
         }
 
         /// <summary>

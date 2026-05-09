@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.AI.Projects;
 using Azure.Identity;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.ClientModel.TestFramework;
@@ -11,7 +12,6 @@ using OpenAI.Responses;
 using OpenTelemetry;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using Azure.AI.Projects;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -47,7 +47,7 @@ public class Sample_Responses_Tracing : ProjectsOpenAITestBase
         {
             AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
-            ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+            ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
             ResponseResult response = await responseClient.CreateResponseAsync("What is the capital of France?");
             Console.WriteLine(response.GetOutputText());
         }
@@ -79,7 +79,7 @@ public class Sample_Responses_Tracing : ProjectsOpenAITestBase
         {
             AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
-            ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+            ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
             ResponseResult response = responseClient.CreateResponse("What is the capital of France?");
             Console.WriteLine(response.GetOutputText());
         }
@@ -117,7 +117,7 @@ public class Sample_Responses_Tracing : ProjectsOpenAITestBase
 
         using (tracerProvider)
         {
-            ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+            ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
             ResponseResult response = await responseClient.CreateResponseAsync("What is the capital of France?");
             Console.WriteLine(response.GetOutputText());
         }
@@ -153,7 +153,7 @@ public class Sample_Responses_Tracing : ProjectsOpenAITestBase
 
         using (tracerProvider)
         {
-            ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+            ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
             ResponseResult response = responseClient.CreateResponse("What is the capital of France?");
             Console.WriteLine(response.GetOutputText());
         }

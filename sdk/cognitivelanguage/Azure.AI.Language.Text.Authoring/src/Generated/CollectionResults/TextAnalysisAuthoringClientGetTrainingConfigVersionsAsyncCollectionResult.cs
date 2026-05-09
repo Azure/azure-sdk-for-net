@@ -23,6 +23,7 @@ namespace Azure.AI.Language.Text.Authoring
         private readonly int? _skip;
         private readonly int? _maxPageSize;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of TextAnalysisAuthoringClientGetTrainingConfigVersionsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The TextAnalysisAuthoringClient client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public TextAnalysisAuthoringClientGetTrainingConfigVersionsAsyncCollectionResult(TextAnalysisAuthoringClient client, string projectKind, int? maxCount, int? skip, int? maxPageSize, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public TextAnalysisAuthoringClientGetTrainingConfigVersionsAsyncCollectionResult(TextAnalysisAuthoringClient client, string projectKind, int? maxCount, int? skip, int? maxPageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _projectKind = projectKind;
@@ -39,6 +41,7 @@ namespace Azure.AI.Language.Text.Authoring
             _skip = skip;
             _maxPageSize = maxPageSize;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of TextAnalysisAuthoringClientGetTrainingConfigVersionsAsyncCollectionResult as an enumerable collection. </summary>
@@ -77,7 +80,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetTrainingConfigVersionsRequest(nextLink, pageSize, _context) : _client.CreateGetTrainingConfigVersionsRequest(_projectKind, _maxCount, _skip, pageSize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("TextAnalysisAuthoringClient.GetTrainingConfigVersions");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

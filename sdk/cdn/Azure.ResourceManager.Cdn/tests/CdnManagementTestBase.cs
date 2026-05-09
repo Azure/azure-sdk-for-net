@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -21,11 +21,13 @@ namespace Azure.ResourceManager.Cdn.Tests
         protected CdnManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            LegacyExcludedHeaders.Add("Accept");
         }
 
         protected CdnManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            LegacyExcludedHeaders.Add("Accept");
         }
 
         [SetUp]

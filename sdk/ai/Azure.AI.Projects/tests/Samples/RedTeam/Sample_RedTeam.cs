@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Evaluation;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;

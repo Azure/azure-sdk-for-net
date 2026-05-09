@@ -103,7 +103,7 @@ internal class NameVisitor : ScmLibraryVisitor
         }
         var enclosingType = propertyProvider.EnclosingType;
         if (enclosingType is not InheritableSystemObjectModelProvider modelProvider
-            || !modelProvider.CrossLanguageDefinitionId.Equals(KnownManagementTypes.ArmResourceId))
+            || modelProvider.CrossLanguageDefinitionId?.Equals(KnownManagementTypes.ArmResourceId) != true)
         {
             return;
         }

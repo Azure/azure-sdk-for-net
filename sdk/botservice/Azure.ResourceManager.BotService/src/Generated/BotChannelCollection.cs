@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.BotService
         {
             if (id.ResourceType != BotResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BotResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BotResource.ResourceType), nameof(id));
             }
         }
 
@@ -186,7 +186,13 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BotChannelData, BotChannelResource>(new BotChannelsGetByResourceGroupAsyncCollectionResultOfT(_botChannelsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new BotChannelResource(Client, data));
+            return new AsyncPageableWrapper<BotChannelData, BotChannelResource>(new BotChannelsGetByResourceGroupAsyncCollectionResultOfT(
+                _botChannelsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BotChannelCollection.GetAll"), data => new BotChannelResource(Client, data));
         }
 
         /// <summary>
@@ -214,7 +220,13 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BotChannelData, BotChannelResource>(new BotChannelsGetByResourceGroupCollectionResultOfT(_botChannelsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new BotChannelResource(Client, data));
+            return new PageableWrapper<BotChannelData, BotChannelResource>(new BotChannelsGetByResourceGroupCollectionResultOfT(
+                _botChannelsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BotChannelCollection.GetAll"), data => new BotChannelResource(Client, data));
         }
 
         IEnumerator<BotChannelResource> IEnumerable<BotChannelResource>.GetEnumerator()

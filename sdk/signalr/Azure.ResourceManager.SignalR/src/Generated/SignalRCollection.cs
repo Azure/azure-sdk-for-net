@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SignalR
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SignalRData, SignalRResource>(new SignalRResourcesGetByResourceGroupAsyncCollectionResultOfT(_signalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new SignalRResource(Client, data));
+            return new AsyncPageableWrapper<SignalRData, SignalRResource>(new SignalRResourcesGetByResourceGroupAsyncCollectionResultOfT(_signalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SignalRCollection.GetAll"), data => new SignalRResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SignalRData, SignalRResource>(new SignalRResourcesGetByResourceGroupCollectionResultOfT(_signalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new SignalRResource(Client, data));
+            return new PageableWrapper<SignalRData, SignalRResource>(new SignalRResourcesGetByResourceGroupCollectionResultOfT(_signalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SignalRCollection.GetAll"), data => new SignalRResource(Client, data));
         }
 
         /// <summary>

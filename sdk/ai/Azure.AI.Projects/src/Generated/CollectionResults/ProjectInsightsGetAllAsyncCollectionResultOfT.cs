@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    internal partial class ProjectInsightsGetAllAsyncCollectionResultOfT : AsyncCollectionResult<ProjectInsight>
+    internal partial class ProjectInsightsGetAllAsyncCollectionResultOfT : AsyncCollectionResult<ProjectsInsight>
     {
         private readonly ProjectInsights _client;
         private readonly string _foundryFeatures;
@@ -82,9 +82,9 @@ namespace Azure.AI.Projects
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override async IAsyncEnumerable<ProjectInsight> GetValuesFromPageAsync(ClientResult page)
+        protected override async IAsyncEnumerable<ProjectsInsight> GetValuesFromPageAsync(ClientResult page)
         {
-            foreach (ProjectInsight item in ((PagedInsight)page).Value)
+            foreach (ProjectsInsight item in ((PagedInsight)page).Value)
             {
                 yield return item;
                 await Task.Yield();

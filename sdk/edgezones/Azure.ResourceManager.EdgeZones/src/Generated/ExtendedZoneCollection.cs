@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EdgeZones
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.EdgeZones
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExtendedZoneData, ExtendedZoneResource>(new ExtendedZonesGetBySubscriptionAsyncCollectionResultOfT(_extendedZonesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ExtendedZoneResource(Client, data));
+            return new AsyncPageableWrapper<ExtendedZoneData, ExtendedZoneResource>(new ExtendedZonesGetBySubscriptionAsyncCollectionResultOfT(_extendedZonesRestClient, Guid.Parse(Id.SubscriptionId), context, "ExtendedZoneCollection.GetAll"), data => new ExtendedZoneResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.EdgeZones
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExtendedZoneData, ExtendedZoneResource>(new ExtendedZonesGetBySubscriptionCollectionResultOfT(_extendedZonesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ExtendedZoneResource(Client, data));
+            return new PageableWrapper<ExtendedZoneData, ExtendedZoneResource>(new ExtendedZonesGetBySubscriptionCollectionResultOfT(_extendedZonesRestClient, Guid.Parse(Id.SubscriptionId), context, "ExtendedZoneCollection.GetAll"), data => new ExtendedZoneResource(Client, data));
         }
 
         /// <summary>

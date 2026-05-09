@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Nginx
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentsGetByResourceGroupAsyncCollectionResultOfT(_nginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new NginxDeploymentResource(Client, data));
+            return new AsyncPageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentsGetByResourceGroupAsyncCollectionResultOfT(_nginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NginxDeploymentCollection.GetAll"), data => new NginxDeploymentResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentsGetByResourceGroupCollectionResultOfT(_nginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new NginxDeploymentResource(Client, data));
+            return new PageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentsGetByResourceGroupCollectionResultOfT(_nginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NginxDeploymentCollection.GetAll"), data => new NginxDeploymentResource(Client, data));
         }
 
         /// <summary>

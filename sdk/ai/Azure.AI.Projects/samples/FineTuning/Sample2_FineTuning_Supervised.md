@@ -29,7 +29,7 @@ string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_
 var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+ProjectOpenAIClient oaiClient = projectClient.ProjectOpenAIClient;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
 ```
@@ -42,7 +42,7 @@ string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_
 var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+ProjectOpenAIClient oaiClient = projectClient.ProjectOpenAIClient;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
 ```
@@ -541,7 +541,7 @@ Once a fine-tuning job succeeds, you need to deploy the resulting model before i
 // Get the completed fine-tuning job
 var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-FineTuningClient fineTuningClient = projectClient.OpenAI.GetFineTuningClient();
+FineTuningClient fineTuningClient = projectClient.ProjectOpenAIClient.GetFineTuningClient();
 
 FineTuningJob completedJob = await fineTuningClient.GetJobAsync("your-completed-job-id");
 
@@ -593,7 +593,7 @@ Console.WriteLine($"Deployment '{deploymentName}' completed successfully");
 // Get the completed fine-tuning job
 var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-FineTuningClient fineTuningClient = projectClient.OpenAI.GetFineTuningClient();
+FineTuningClient fineTuningClient = projectClient.ProjectOpenAIClient.GetFineTuningClient();
 
 FineTuningJob completedJob = fineTuningClient.GetJob("your-completed-job-id");
 
@@ -653,7 +653,7 @@ var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
 // Get responses client for the specific deployment
-var responsesClient = projectClient.OpenAI.GetProjectResponsesClientForModel(deploymentName);
+var responsesClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(deploymentName);
 
 // Perform inference
 string prompt = "What is the capital of France?";
@@ -679,7 +679,7 @@ var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
 // Get responses client for the specific deployment
-var responsesClient = projectClient.OpenAI.GetProjectResponsesClientForModel(deploymentName);
+var responsesClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(deploymentName);
 
 // Perform inference
 string prompt = "What is the capital of France?";

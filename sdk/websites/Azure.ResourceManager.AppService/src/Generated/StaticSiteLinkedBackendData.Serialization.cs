@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 backendResourceId,
                 region,
                 createdOn,
                 provisioningState,
-                kind,
                 serializedAdditionalRawData);
         }
 

@@ -1,0 +1,14 @@
+id: anti-trigger
+name: anti-trigger
+description: Should not trigger on unrelated prompts
+inputs:
+  prompt: "How do I write a TypeSpec definition for a new Azure service?"
+expected:
+  skill_activated: false
+graders:
+  - type: text
+    name: no-pipeline-advice
+    config:
+      not_contains:
+        - "pipeline"
+        - "CI failure"

@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Insight task for the schedule. </summary>
     public partial class InsightScheduleTask : ProjectsScheduleTask, IJsonModel<InsightScheduleTask>
@@ -108,7 +109,7 @@ namespace Azure.AI.Projects
             ScheduleTaskType @type = default;
             IDictionary<string, string> configuration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ProjectInsight insight = default;
+            ProjectsInsight insight = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -139,7 +140,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("insight"u8))
                 {
-                    insight = ProjectInsight.DeserializeProjectInsight(prop.Value, options);
+                    insight = ProjectsInsight.DeserializeProjectsInsight(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
@@ -12,12 +13,6 @@ namespace Azure.Generator.Management.Visitors
 {
     internal class ModelFactoryVisitor : ScmLibraryVisitor
     {
-        // Dictionary mapping property names to their preferred parameter names
-        private static readonly Dictionary<string, string> PropertyToParameterNameMap = new()
-        {
-            { "ETag", "etag" }
-        };
-
         protected override TypeProvider? VisitType(TypeProvider type)
         {
             if (type is ModelFactoryProvider modelFactory)
@@ -58,26 +53,57 @@ namespace Azure.Generator.Management.Visitors
 
         private void UpdateParameterNames(MethodProvider method)
         {
-            bool updated = false;
-
-            // Check if any parameter needs to be renamed based on the property name mapping
-            foreach (var parameter in method.Signature.Parameters)
+            if (PreservePreviousParameterNames(method))
             {
-                // Check if the parameter is associated with a property and needs renaming
-                if (parameter.Property != null &&
-                    PropertyToParameterNameMap.TryGetValue(parameter.Property.Name, out var newName) &&
-                    parameter.Name != newName)
-                {
-                    parameter.Update(name: newName);
-                    updated = true;
-                }
-            }
-
-            if (updated)
-            {
-                // Update the method signature to refresh documentation
+                // Update the method signature to refresh documentation after parameter renames.
                 method.Update(signature: method.Signature);
             }
+        }
+
+        private static bool PreservePreviousParameterNames(MethodProvider method)
+        {
+            var previousMethods = method.EnclosingType.LastContractView?.Methods;
+            if (previousMethods is null || previousMethods.Count == 0)
+            {
+                return false;
+            }
+
+            var previousMethod = previousMethods.FirstOrDefault(previous => MethodSignature.MethodSignatureComparer.Equals(method.Signature, previous.Signature));
+            if (previousMethod is null)
+            {
+                return false;
+            }
+
+            var currentParameters = method.Signature.Parameters;
+            var previousParameters = previousMethod.Signature.Parameters;
+            if (currentParameters.Count != previousParameters.Count)
+            {
+                return false;
+            }
+
+            var updated = false;
+            var currentParameterNames = currentParameters.Select(parameter => parameter.Name).ToHashSet(StringComparer.Ordinal);
+            for (int i = 0; i < currentParameters.Count; i++)
+            {
+                var previousName = previousParameters[i].Name;
+                var currentParameter = currentParameters[i];
+                if (string.IsNullOrEmpty(previousName) || currentParameter.Name == previousName)
+                {
+                    continue;
+                }
+
+                if (currentParameterNames.Contains(previousName))
+                {
+                    continue;
+                }
+
+                currentParameterNames.Remove(currentParameter.Name);
+                currentParameter.Update(name: previousName);
+                currentParameterNames.Add(previousName);
+                updated = true;
+            }
+
+            return updated;
         }
     }
 }

@@ -8,9 +8,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    internal partial class ProjectInsightsGetAllCollectionResultOfT : CollectionResult<ProjectInsight>
+    internal partial class ProjectInsightsGetAllCollectionResultOfT : CollectionResult<ProjectsInsight>
     {
         private readonly ProjectInsights _client;
         private readonly string _foundryFeatures;
@@ -81,7 +81,7 @@ namespace Azure.AI.Projects
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override IEnumerable<ProjectInsight> GetValuesFromPage(ClientResult page)
+        protected override IEnumerable<ProjectsInsight> GetValuesFromPage(ClientResult page)
         {
             return ((PagedInsight)page).Value;
         }

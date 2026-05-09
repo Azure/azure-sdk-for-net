@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Storage
         private readonly string _filter;
         private readonly string _expand;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of FileServicesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The FileServices client used to send requests. </param>
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.Storage
         /// <param name="filter"> Optional. When specified, only share names starting with the filter will be listed. </param>
         /// <param name="expand"> Optional, used to expand the properties within share's properties. Valid values are: deleted, snapshots. Should be passed as a string with delimiter ','. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public FileServicesGetAllAsyncCollectionResultOfT(FileServices client, Guid subscriptionId, string resourceGroupName, string accountName, string maxpagesize, string filter, string expand, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public FileServicesGetAllAsyncCollectionResultOfT(FileServices client, Guid subscriptionId, string resourceGroupName, string accountName, string maxpagesize, string filter, string expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.Storage
             _filter = filter;
             _expand = expand;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of FileServicesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -77,7 +80,7 @@ namespace Azure.ResourceManager.Storage
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _maxpagesize, _filter, _expand, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _accountName, _maxpagesize, _filter, _expand, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("FileShareCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

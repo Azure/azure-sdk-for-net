@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Elastic
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorResourcesGetByResourceGroupAsyncCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ElasticMonitorResource(Client, data));
+            return new AsyncPageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorResourcesGetByResourceGroupAsyncCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ElasticMonitorCollection.GetAll"), data => new ElasticMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorResourcesGetByResourceGroupCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ElasticMonitorResource(Client, data));
+            return new PageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorResourcesGetByResourceGroupCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ElasticMonitorCollection.GetAll"), data => new ElasticMonitorResource(Client, data));
         }
 
         /// <summary>

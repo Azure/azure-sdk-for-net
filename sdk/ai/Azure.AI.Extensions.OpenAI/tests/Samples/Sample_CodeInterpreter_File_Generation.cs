@@ -43,13 +43,13 @@ public class Sample_CodeInterpreter_File_Generation : ProjectsOpenAITestBase
                 ),
             }
         };
-        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_CodeInterpreter_File_Generation_Async
         AgentReference agentReference = new(name: agentVersion.Name, version: agentVersion.Version);
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentReference);
         ResponseResult response = await responseClient.CreateResponseAsync("Please create PDF file showing the rendering of Mandelbrot set");
         if (response.Status != ResponseStatus.Completed)
         {
@@ -82,7 +82,7 @@ public class Sample_CodeInterpreter_File_Generation : ProjectsOpenAITestBase
         Console.WriteLine($"Container: {containerAnnotation.ContainerId}, fileID: {containerAnnotation.FileId}");
         #endregion
         #region Snippet:Sample_Download_CodeInterpreter_File_Generation_Async
-        ContainerClient containerClient = projectClient.OpenAI.GetContainerClient();
+        ContainerClient containerClient = projectClient.ProjectOpenAIClient.GetContainerClient();
         BinaryData fileData = await containerClient.DownloadContainerFileAsync(containerId: containerAnnotation.ContainerId, fileId: containerAnnotation.FileId);
         File.WriteAllBytes(
             path: "./results.pdf",
@@ -92,7 +92,7 @@ public class Sample_CodeInterpreter_File_Generation : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_Cleanup_CodeInterpreter_File_Generation_Async
         await containerClient.DeleteContainerFileAsync(containerId: containerAnnotation.ContainerId, fileId: containerAnnotation.FileId);
-        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
@@ -121,13 +121,13 @@ public class Sample_CodeInterpreter_File_Generation : ProjectsOpenAITestBase
                 ),
             }
         };
-        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_CodeInterpreter_File_Generation_Sync
         AgentReference agentReference = new(name: agentVersion.Name, version: agentVersion.Version);
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentReference);
         ResponseResult response = responseClient.CreateResponse("Please create PDF file showing the rendering of Mandelbrot set");
         if (response.Status != ResponseStatus.Completed)
         {
@@ -158,7 +158,7 @@ public class Sample_CodeInterpreter_File_Generation : ProjectsOpenAITestBase
         }
         Console.WriteLine($"Container: {containerAnnotation.ContainerId}, fileID: {containerAnnotation.FileId}");
         #region Snippet:Sample_Download_CodeInterpreter_File_Generation_Sync
-        ContainerClient containerClient = projectClient.OpenAI.GetContainerClient();
+        ContainerClient containerClient = projectClient.ProjectOpenAIClient.GetContainerClient();
         BinaryData fileData = containerClient.DownloadContainerFile(containerId: containerAnnotation.ContainerId, fileId: containerAnnotation.FileId);
         File.WriteAllBytes(
             path: "./results.pdf",
@@ -168,7 +168,7 @@ public class Sample_CodeInterpreter_File_Generation : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_Cleanup_CodeInterpreter_File_Generation_Sync
         containerClient.DeleteContainerFile(containerId: containerAnnotation.ContainerId, fileId: containerAnnotation.FileId);
-        projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

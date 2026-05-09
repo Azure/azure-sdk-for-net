@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Adhoc trigger context. </summary>
     public partial class AdhocBasedBackupTriggerContext : DataProtectionBackupTriggerContext, IJsonModel<AdhocBasedBackupTriggerContext>
     {
-        /// <summary> Initializes a new instance of <see cref="AdhocBasedBackupTriggerContext"/> for deserialization. </summary>
-        internal AdhocBasedBackupTriggerContext()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataProtectionBackupTriggerContext PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

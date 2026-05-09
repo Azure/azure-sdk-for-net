@@ -10,6 +10,7 @@ using System.Threading;
 using Azure;
 using Azure.Core.Pipeline;
 using Payload.Pageable;
+using Payload.Pageable._ServerDrivenPagination.AlternateInitialVerb;
 using Payload.Pageable._ServerDrivenPagination.ContinuationToken;
 
 namespace Payload.Pageable._ServerDrivenPagination
@@ -45,6 +46,8 @@ namespace Payload.Pageable._ServerDrivenPagination
         public virtual Pageable<Pet> NestedLink(CancellationToken cancellationToken = default) => throw null;
 
         public virtual AsyncPageable<Pet> NestedLinkAsync(CancellationToken cancellationToken = default) => throw null;
+
+        public virtual ServerDrivenPaginationAlternateInitialVerb GetServerDrivenPaginationAlternateInitialVerbClient() => throw null;
 
         public virtual ServerDrivenPaginationContinuationToken GetServerDrivenPaginationContinuationTokenClient() => throw null;
     }

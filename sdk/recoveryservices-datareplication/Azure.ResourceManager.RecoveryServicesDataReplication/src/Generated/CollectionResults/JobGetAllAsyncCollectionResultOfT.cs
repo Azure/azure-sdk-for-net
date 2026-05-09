@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         private readonly string _continuationToken;
         private readonly int? _pageSize;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of JobGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Job client used to send requests. </param>
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="pageSize"> Page size. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public JobGetAllAsyncCollectionResultOfT(Job client, Guid subscriptionId, string resourceGroupName, string vaultName, string odataOptions, string continuationToken, int? pageSize, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public JobGetAllAsyncCollectionResultOfT(Job client, Guid subscriptionId, string resourceGroupName, string vaultName, string odataOptions, string continuationToken, int? pageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             _continuationToken = continuationToken;
             _pageSize = pageSize;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of JobGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -77,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _odataOptions, _continuationToken, _pageSize, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _vaultName, _odataOptions, _continuationToken, _pageSize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DataReplicationJobCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

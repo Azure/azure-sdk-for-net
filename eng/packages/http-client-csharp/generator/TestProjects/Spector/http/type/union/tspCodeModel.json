@@ -394,7 +394,7 @@
     {
       "$id": "34",
       "kind": "constant",
-      "name": "GetResponseProp5",
+      "name": "MixedLiteralsCasesStringLiteral1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -410,7 +410,7 @@
     {
       "$id": "36",
       "kind": "constant",
-      "name": "GetResponseProp6",
+      "name": "MixedLiteralsCasesStringLiteral2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -426,7 +426,7 @@
     {
       "$id": "38",
       "kind": "constant",
-      "name": "GetResponseProp7",
+      "name": "MixedLiteralsCasesStringLiteral3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -442,7 +442,7 @@
     {
       "$id": "40",
       "kind": "constant",
-      "name": "MixedLiteralsCasesStringLiteral1",
+      "name": "MixedLiteralsCasesStringLiteral4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -458,7 +458,7 @@
     {
       "$id": "42",
       "kind": "constant",
-      "name": "GetResponseProp51",
+      "name": "MixedLiteralsCasesStringLiteral11",
       "namespace": "",
       "usage": "None",
       "valueType": {

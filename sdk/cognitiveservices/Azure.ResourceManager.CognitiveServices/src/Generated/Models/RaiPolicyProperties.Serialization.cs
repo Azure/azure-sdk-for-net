@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class RaiPolicyProperties : IUtf8JsonSerializable, IJsonModel<RaiPolicyProperties>
+    /// <summary> Azure OpenAI Content Filters properties. </summary>
+    public partial class RaiPolicyProperties : IJsonModel<RaiPolicyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RaiPolicyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RaiPolicyProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RaiPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRaiPolicyProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RaiPolicyProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RaiPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RaiPolicyProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RaiPolicyProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RaiPolicyProperties IPersistableModel<RaiPolicyProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RaiPolicyProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RaiPolicyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RaiPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RaiPolicyProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(PolicyType))
             {
                 writer.WritePropertyName("type"u8);
@@ -55,7 +93,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("contentFilters"u8);
                 writer.WriteStartArray();
-                foreach (var item in ContentFilters)
+                foreach (RaiPolicyContentFilter item in ContentFilters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -65,21 +103,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("customBlocklists"u8);
                 writer.WriteStartArray();
-                foreach (var item in CustomBlocklists)
+                foreach (CustomBlocklistConfig item in CustomBlocklists)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsCollectionDefined(SafetyProviders))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("safetyProviders"u8);
+                writer.WriteStartArray();
+                foreach (SafetyProviderConfig item in SafetyProviders)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,246 +136,118 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
         }
 
-        RaiPolicyProperties IJsonModel<RaiPolicyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RaiPolicyProperties IJsonModel<RaiPolicyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RaiPolicyProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RaiPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RaiPolicyProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRaiPolicyProperties(document.RootElement, options);
         }
 
-        internal static RaiPolicyProperties DeserializeRaiPolicyProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RaiPolicyProperties DeserializeRaiPolicyProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            RaiPolicyType? type = default;
+            RaiPolicyType? policyType = default;
             RaiPolicyMode? mode = default;
             string basePolicyName = default;
             IList<RaiPolicyContentFilter> contentFilters = default;
             IList<CustomBlocklistConfig> customBlocklists = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<SafetyProviderConfig> safetyProviders = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    type = new RaiPolicyType(property.Value.GetString());
+                    policyType = new RaiPolicyType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mode"u8))
+                if (prop.NameEquals("mode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mode = new RaiPolicyMode(property.Value.GetString());
+                    mode = new RaiPolicyMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("basePolicyName"u8))
+                if (prop.NameEquals("basePolicyName"u8))
                 {
-                    basePolicyName = property.Value.GetString();
+                    basePolicyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contentFilters"u8))
+                if (prop.NameEquals("contentFilters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<RaiPolicyContentFilter> array = new List<RaiPolicyContentFilter>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(RaiPolicyContentFilter.DeserializeRaiPolicyContentFilter(item, options));
                     }
                     contentFilters = array;
                     continue;
                 }
-                if (property.NameEquals("customBlocklists"u8))
+                if (prop.NameEquals("customBlocklists"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CustomBlocklistConfig> array = new List<CustomBlocklistConfig>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(CustomBlocklistConfig.DeserializeCustomBlocklistConfig(item, options));
                     }
                     customBlocklists = array;
                     continue;
                 }
+                if (prop.NameEquals("safetyProviders"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SafetyProviderConfig> array = new List<SafetyProviderConfig>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(SafetyProviderConfig.DeserializeSafetyProviderConfig(item, options));
+                    }
+                    safetyProviders = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RaiPolicyProperties(
-                type,
+                policyType,
                 mode,
                 basePolicyName,
                 contentFilters ?? new ChangeTrackingList<RaiPolicyContentFilter>(),
                 customBlocklists ?? new ChangeTrackingList<CustomBlocklistConfig>(),
-                serializedAdditionalRawData);
+                safetyProviders ?? new ChangeTrackingList<SafetyProviderConfig>(),
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PolicyType))
-                {
-                    builder.Append("  type: ");
-                    builder.AppendLine($"'{PolicyType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  mode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Mode))
-                {
-                    builder.Append("  mode: ");
-                    builder.AppendLine($"'{Mode.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BasePolicyName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  basePolicyName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BasePolicyName))
-                {
-                    builder.Append("  basePolicyName: ");
-                    if (BasePolicyName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{BasePolicyName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{BasePolicyName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentFilters), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  contentFilters: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ContentFilters))
-                {
-                    if (ContentFilters.Any())
-                    {
-                        builder.Append("  contentFilters: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ContentFilters)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  contentFilters: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomBlocklists), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  customBlocklists: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(CustomBlocklists))
-                {
-                    if (CustomBlocklists.Any())
-                    {
-                        builder.Append("  customBlocklists: ");
-                        builder.AppendLine("[");
-                        foreach (var item in CustomBlocklists)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  customBlocklists: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<RaiPolicyProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RaiPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(RaiPolicyProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RaiPolicyProperties IPersistableModel<RaiPolicyProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RaiPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRaiPolicyProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RaiPolicyProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RaiPolicyProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

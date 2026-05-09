@@ -21,18 +21,21 @@ namespace Azure.Security.KeyVault.Administration
         private readonly string _scope;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of KeyVaultAccessControlClientGetRoleDefinitionsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The KeyVaultAccessControlClient client used to send requests. </param>
         /// <param name="scope"> The scope of the role definition. </param>
         /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public KeyVaultAccessControlClientGetRoleDefinitionsCollectionResult(KeyVaultAccessControlClient client, string scope, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public KeyVaultAccessControlClientGetRoleDefinitionsCollectionResult(KeyVaultAccessControlClient client, string scope, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _scope = scope;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of KeyVaultAccessControlClientGetRoleDefinitionsCollectionResult as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.Security.KeyVault.Administration
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetRoleDefinitionsRequest(nextLink, _scope, _filter, _context) : _client.CreateGetRoleDefinitionsRequest(_scope, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("KeyVaultAccessControlClient.GetRoleDefinitions");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

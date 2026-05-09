@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Batch
         private readonly string _select;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PoolGetByBatchAccountAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Pool client used to send requests. </param>
@@ -48,7 +49,8 @@ namespace Azure.ResourceManager.Batch
         /// properties/scaleSettings/fixedScale
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PoolGetByBatchAccountAsyncCollectionResultOfT(Pool client, Guid subscriptionId, string resourceGroupName, string accountName, int? maxresults, string @select, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PoolGetByBatchAccountAsyncCollectionResultOfT(Pool client, Guid subscriptionId, string resourceGroupName, string accountName, int? maxresults, string @select, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.Batch
             _select = @select;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PoolGetByBatchAccountAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -90,7 +93,7 @@ namespace Azure.ResourceManager.Batch
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByBatchAccountRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _maxresults, _select, _filter, _context) : _client.CreateGetByBatchAccountRequest(_subscriptionId, _resourceGroupName, _accountName, _maxresults, _select, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BatchAccountPoolCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     Properties = new DomainProperties();
                 }
-                Properties.UserEngagementTracking = value.Value;
+                Properties.UserEngagementTracking = value;
             }
         }
     }

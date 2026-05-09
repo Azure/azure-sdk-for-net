@@ -19,16 +19,19 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private readonly BackupInstancesExtensionRoutingOperationGroup _client;
         private readonly ResourceIdentifier _scope;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of BackupInstancesExtensionRoutingOperationGroupGetDataProtectionBackupInstancesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BackupInstancesExtensionRoutingOperationGroup client used to send requests. </param>
         /// <param name="scope"> ARM path of the resource to be protected using Microsoft.DataProtection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BackupInstancesExtensionRoutingOperationGroupGetDataProtectionBackupInstancesCollectionResultOfT(BackupInstancesExtensionRoutingOperationGroup client, ResourceIdentifier scope, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public BackupInstancesExtensionRoutingOperationGroupGetDataProtectionBackupInstancesCollectionResultOfT(BackupInstancesExtensionRoutingOperationGroup client, ResourceIdentifier scope, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _scope = scope;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of BackupInstancesExtensionRoutingOperationGroupGetDataProtectionBackupInstancesCollectionResultOfT as an enumerable collection. </summary>
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetDataProtectionBackupInstancesRequest(nextLink, _scope, _context) : _client.CreateGetDataProtectionBackupInstancesRequest(_scope, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDataProtectionBackupArmClient.GetDataProtectionBackupInstances");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

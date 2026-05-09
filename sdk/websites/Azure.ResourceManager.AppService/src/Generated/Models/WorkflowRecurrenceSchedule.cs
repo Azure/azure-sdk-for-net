@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The recurrence schedule. </summary>
+    /// <summary>
+    /// The recurrence schedule.
+    /// Serialized Name: RecurrenceSchedule
+    /// </summary>
     public partial class WorkflowRecurrenceSchedule
     {
         /// <summary>
@@ -56,11 +59,26 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRecurrenceSchedule"/>. </summary>
-        /// <param name="minutes"> The minutes. </param>
-        /// <param name="hours"> The hours. </param>
-        /// <param name="weekDays"> The days of the week. </param>
-        /// <param name="monthDays"> The month days. </param>
-        /// <param name="monthlyOccurrences"> The monthly occurrences. </param>
+        /// <param name="minutes">
+        /// The minutes.
+        /// Serialized Name: RecurrenceSchedule.minutes
+        /// </param>
+        /// <param name="hours">
+        /// The hours.
+        /// Serialized Name: RecurrenceSchedule.hours
+        /// </param>
+        /// <param name="weekDays">
+        /// The days of the week.
+        /// Serialized Name: RecurrenceSchedule.weekDays
+        /// </param>
+        /// <param name="monthDays">
+        /// The month days.
+        /// Serialized Name: RecurrenceSchedule.monthDays
+        /// </param>
+        /// <param name="monthlyOccurrences">
+        /// The monthly occurrences.
+        /// Serialized Name: RecurrenceSchedule.monthlyOccurrences
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowRecurrenceSchedule(IReadOnlyList<int> minutes, IReadOnlyList<int> hours, IReadOnlyList<WebAppDayOfWeek> weekDays, IReadOnlyList<int> monthDays, IReadOnlyList<RecurrenceScheduleOccurrence> monthlyOccurrences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,19 +90,34 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The minutes. </summary>
+        /// <summary>
+        /// The minutes.
+        /// Serialized Name: RecurrenceSchedule.minutes
+        /// </summary>
         [WirePath("minutes")]
         public IReadOnlyList<int> Minutes { get; }
-        /// <summary> The hours. </summary>
+        /// <summary>
+        /// The hours.
+        /// Serialized Name: RecurrenceSchedule.hours
+        /// </summary>
         [WirePath("hours")]
         public IReadOnlyList<int> Hours { get; }
-        /// <summary> The days of the week. </summary>
+        /// <summary>
+        /// The days of the week.
+        /// Serialized Name: RecurrenceSchedule.weekDays
+        /// </summary>
         [WirePath("weekDays")]
         public IReadOnlyList<WebAppDayOfWeek> WeekDays { get; }
-        /// <summary> The month days. </summary>
+        /// <summary>
+        /// The month days.
+        /// Serialized Name: RecurrenceSchedule.monthDays
+        /// </summary>
         [WirePath("monthDays")]
         public IReadOnlyList<int> MonthDays { get; }
-        /// <summary> The monthly occurrences. </summary>
+        /// <summary>
+        /// The monthly occurrences.
+        /// Serialized Name: RecurrenceSchedule.monthlyOccurrences
+        /// </summary>
         [WirePath("monthlyOccurrences")]
         public IReadOnlyList<RecurrenceScheduleOccurrence> MonthlyOccurrences { get; }
     }

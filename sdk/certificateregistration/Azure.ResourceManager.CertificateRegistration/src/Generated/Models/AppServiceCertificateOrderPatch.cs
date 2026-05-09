@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 {
                     Properties = new AppServiceCertificateOrderPatchResourceProperties();
                 }
-                Properties.ValidityInYears = value.Value;
+                Properties.ValidityInYears = value;
             }
         }
 
@@ -108,16 +108,16 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 {
                     Properties = new AppServiceCertificateOrderPatchResourceProperties();
                 }
-                Properties.KeySize = value.Value;
+                Properties.KeySize = value;
             }
         }
 
         /// <summary> Certificate product type. </summary>
-        public CertificateProductType ProductType
+        public CertificateProductType? CertificateProductType
         {
             get
             {
-                return Properties is null ? default : Properties.ProductType;
+                return Properties is null ? default : Properties.CertificateProductType;
             }
         }
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 {
                     Properties = new AppServiceCertificateOrderPatchResourceProperties();
                 }
-                Properties.IsAutoRenew = value.Value;
+                Properties.IsAutoRenew = value;
             }
         }
 

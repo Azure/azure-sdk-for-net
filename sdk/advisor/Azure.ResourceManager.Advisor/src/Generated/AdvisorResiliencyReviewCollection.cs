@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Advisor
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -187,7 +187,8 @@ namespace Azure.ResourceManager.Advisor
                 top,
                 skip,
                 filter,
-                context), data => new AdvisorResiliencyReviewResource(Client, data));
+                context,
+                "AdvisorResiliencyReviewCollection.GetAll"), data => new AdvisorResiliencyReviewResource(Client, data));
         }
 
         /// <summary>
@@ -224,7 +225,8 @@ namespace Azure.ResourceManager.Advisor
                 top,
                 skip,
                 filter,
-                context), data => new AdvisorResiliencyReviewResource(Client, data));
+                context,
+                "AdvisorResiliencyReviewCollection.GetAll"), data => new AdvisorResiliencyReviewResource(Client, data));
         }
 
         /// <summary>

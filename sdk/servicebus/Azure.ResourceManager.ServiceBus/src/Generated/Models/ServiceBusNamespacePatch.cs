@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     Properties = new SBNamespaceUpdateProperties();
                 }
-                Properties.DisableLocalAuth = value.Value;
+                Properties.DisableLocalAuth = value;
             }
         }
 

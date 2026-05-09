@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 description,
                 provisioningState,
                 version,
-                schemaRegistryRefResourceId is null ? default : new SchemaRegistryRef(schemaRegistryRefResourceId, null),
+                new SchemaRegistryRef(schemaRegistryRefResourceId, null),
                 defaultSecretProviderClassRefResourceId is null ? default : new SecretProviderClassRef(defaultSecretProviderClassRefResourceId, null),
                 features,
                 adrNamespaceRefResourceId is null ? default : new AzureDeviceRegistryNamespaceRef(adrNamespaceRefResourceId, null),
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         {
             topics ??= new ChangeTrackingList<string>();
 
-            return new BrokerRetainMessagesSettings(topics.ToList(), dynamicMode is null ? default : new BrokerRetainMessagesDynamic(dynamicMode.Value, null), additionalBinaryDataProperties: null);
+            return new BrokerRetainMessagesSettings(topics.ToList(), dynamicMode is null ? default : new BrokerRetainMessagesDynamic(dynamicMode.GetValueOrDefault(), null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="stateStoreResources"> List of key and key type to persist to disk. </param>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         {
             stateStoreResources ??= new ChangeTrackingList<BrokerStateStorePolicyResources>();
 
-            return new BrokerStateStorePolicySettings(stateStoreResources.ToList(), dynamicMode is null ? default : new BrokerStateStoreDynamic(dynamicMode.Value, null), additionalBinaryDataProperties: null);
+            return new BrokerStateStorePolicySettings(stateStoreResources.ToList(), dynamicMode is null ? default : new BrokerStateStoreDynamic(dynamicMode.GetValueOrDefault(), null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Broker State Store Policy Resources properties. </summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         {
             subscriberClientIds ??= new ChangeTrackingList<string>();
 
-            return new BrokerSubscriberQueueCustomPolicySettings(subscriberClientIds.ToList(), dynamicMode is null ? default : new BrokerSubscriberQueueDynamic(dynamicMode.Value, null), additionalBinaryDataProperties: null);
+            return new BrokerSubscriberQueueCustomPolicySettings(subscriberClientIds.ToList(), dynamicMode is null ? default : new BrokerSubscriberQueueDynamic(dynamicMode.GetValueOrDefault(), null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Instance broker resource. </summary>

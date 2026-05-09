@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Support
         {
             if (id.ResourceType != SupportAzureServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SupportAzureServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SupportAzureServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProblemClassificationData, ProblemClassificationResource>(new ProblemClassificationsGetAllAsyncCollectionResultOfT(_problemClassificationsRestClient, Id.Name, context), data => new ProblemClassificationResource(Client, data));
+            return new AsyncPageableWrapper<ProblemClassificationData, ProblemClassificationResource>(new ProblemClassificationsGetAllAsyncCollectionResultOfT(_problemClassificationsRestClient, Id.Name, context, "ProblemClassificationCollection.GetAll"), data => new ProblemClassificationResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProblemClassificationData, ProblemClassificationResource>(new ProblemClassificationsGetAllCollectionResultOfT(_problemClassificationsRestClient, Id.Name, context), data => new ProblemClassificationResource(Client, data));
+            return new PageableWrapper<ProblemClassificationData, ProblemClassificationResource>(new ProblemClassificationsGetAllCollectionResultOfT(_problemClassificationsRestClient, Id.Name, context, "ProblemClassificationCollection.GetAll"), data => new ProblemClassificationResource(Client, data));
         }
 
         /// <summary>

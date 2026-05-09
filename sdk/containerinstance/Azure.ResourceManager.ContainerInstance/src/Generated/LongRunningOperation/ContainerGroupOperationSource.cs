@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
-    internal class ContainerGroupOperationSource : IOperationSource<ContainerGroupResource>
+    /// <summary></summary>
+    internal partial class ContainerGroupOperationSource : IOperationSource<ContainerGroupResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ContainerGroupOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ContainerGroupResource IOperationSource<ContainerGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerInstanceContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ContainerGroupData data = ContainerGroupData.DeserializeContainerGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ContainerGroupResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ContainerGroupResource> IOperationSource<ContainerGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerInstanceContext.Default);
-            return await Task.FromResult(new ContainerGroupResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ContainerGroupData data = ContainerGroupData.DeserializeContainerGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ContainerGroupResource(_client, data);
         }
     }
 }

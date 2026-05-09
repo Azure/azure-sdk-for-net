@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Application logs to file system configuration. </summary>
+    /// <summary>
+    /// Application logs to file system configuration.
+    /// Serialized Name: FileSystemApplicationLogsConfig
+    /// </summary>
     internal partial class FileSystemApplicationLogsConfig
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FileSystemApplicationLogsConfig"/>. </summary>
-        /// <param name="level"> Log level. </param>
+        /// <param name="level">
+        /// Log level.
+        /// Serialized Name: FileSystemApplicationLogsConfig.level
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FileSystemApplicationLogsConfig(WebAppLogLevel? level, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Log level. </summary>
+        /// <summary>
+        /// Log level.
+        /// Serialized Name: FileSystemApplicationLogsConfig.level
+        /// </summary>
         [WirePath("level")]
         public WebAppLogLevel? Level { get; set; }
     }

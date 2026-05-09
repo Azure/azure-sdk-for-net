@@ -17,8 +17,6 @@ namespace Azure.ResourceManager.Storage.Models
         private readonly string _value;
         private const string RunOnceValue = "RunOnce";
         private const string OnScheduleValue = "OnSchedule";
-        /// <summary> Run the task as a mock for testing. </summary>
-        private const string MockRunValue = "MockRun";
 
         /// <summary> Initializes a new instance of <see cref="TaskExecutionTriggerType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,9 +33,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Gets the OnSchedule. </summary>
         public static TaskExecutionTriggerType OnSchedule { get; } = new TaskExecutionTriggerType(OnScheduleValue);
-
-        /// <summary> Run the task as a mock for testing. </summary>
-        public static TaskExecutionTriggerType MockRun { get; } = new TaskExecutionTriggerType(MockRunValue);
 
         /// <summary> Determines if two <see cref="TaskExecutionTriggerType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

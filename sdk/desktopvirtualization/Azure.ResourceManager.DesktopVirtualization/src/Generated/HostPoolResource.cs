@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -444,7 +444,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ActiveSessionHostConfigurationData, ActiveSessionHostConfigurationResource>(new ActiveSessionHostConfigurationsGetByHostPoolAsyncCollectionResultOfT(_activeSessionHostConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ActiveSessionHostConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<ActiveSessionHostConfigurationData, ActiveSessionHostConfigurationResource>(new ActiveSessionHostConfigurationsGetByHostPoolAsyncCollectionResultOfT(
+                _activeSessionHostConfigurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HostPoolResource.GetByHostPool"), data => new ActiveSessionHostConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -476,7 +482,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ActiveSessionHostConfigurationData, ActiveSessionHostConfigurationResource>(new ActiveSessionHostConfigurationsGetByHostPoolCollectionResultOfT(_activeSessionHostConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ActiveSessionHostConfigurationResource(Client, data));
+            return new PageableWrapper<ActiveSessionHostConfigurationData, ActiveSessionHostConfigurationResource>(new ActiveSessionHostConfigurationsGetByHostPoolCollectionResultOfT(
+                _activeSessionHostConfigurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HostPoolResource.GetByHostPool"), data => new ActiveSessionHostConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -518,7 +530,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Id.ResourceGroupName,
                 Id.Name,
                 ImportPackageInfoContent.ToRequestContent(content),
-                context), data => new AppAttachPackageResource(Client, data));
+                context,
+                "HostPoolResource.ImportAppAttachPackageInfos"), data => new AppAttachPackageResource(Client, data));
         }
 
         /// <summary>
@@ -560,7 +573,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Id.ResourceGroupName,
                 Id.Name,
                 ImportPackageInfoContent.ToRequestContent(content),
-                context), data => new AppAttachPackageResource(Client, data));
+                context,
+                "HostPoolResource.ImportAppAttachPackageInfos"), data => new AppAttachPackageResource(Client, data));
         }
 
         /// <summary>
@@ -603,7 +617,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new ScalingPlanResource(Client, data));
+                context,
+                "HostPoolResource.GetScalingPlans"), data => new ScalingPlanResource(Client, data));
         }
 
         /// <summary>
@@ -646,7 +661,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new ScalingPlanResource(Client, data));
+                context,
+                "HostPoolResource.GetScalingPlans"), data => new ScalingPlanResource(Client, data));
         }
 
         /// <summary>
@@ -691,7 +707,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new UserSessionResource(Client, data));
+                context,
+                "HostPoolResource.GetUserSessions"), data => new UserSessionResource(Client, data));
         }
 
         /// <summary>
@@ -736,7 +753,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new UserSessionResource(Client, data));
+                context,
+                "HostPoolResource.GetUserSessions"), data => new UserSessionResource(Client, data));
         }
 
         /// <summary>
@@ -768,7 +786,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new HostPoolsGetRegistrationTokensAsyncCollectionResultOfT(_hostPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new HostPoolsGetRegistrationTokensAsyncCollectionResultOfT(
+                _hostPoolsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HostPoolResource.GetRegistrationTokens");
         }
 
         /// <summary>
@@ -800,7 +824,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new HostPoolsGetRegistrationTokensCollectionResultOfT(_hostPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new HostPoolsGetRegistrationTokensCollectionResultOfT(
+                _hostPoolsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HostPoolResource.GetRegistrationTokens");
         }
 
         /// <summary>
@@ -939,7 +969,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Id.ResourceGroupName,
                 Id.Name,
                 MsixImageUri.ToRequestContent(msixImageUri),
-                context);
+                context,
+                "HostPoolResource.ExpandMsixImages");
         }
 
         /// <summary>
@@ -982,7 +1013,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Id.ResourceGroupName,
                 Id.Name,
                 MsixImageUri.ToRequestContent(msixImageUri),
-                context);
+                context,
+                "HostPoolResource.ExpandMsixImages");
         }
 
         /// <summary>
@@ -1025,7 +1057,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context);
+                context,
+                "HostPoolResource.GetPrivateLinkResources");
         }
 
         /// <summary>
@@ -1068,7 +1101,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context);
+                context,
+                "HostPoolResource.GetPrivateLinkResources");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
+    /// <summary></summary>
     public partial class NetworkCloudBmcKeySetResource : IJsonModel<NetworkCloudBmcKeySetData>
     {
-        private static NetworkCloudBmcKeySetData s_dataDeserializationInstance;
-        private static NetworkCloudBmcKeySetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkCloudBmcKeySetData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkCloudBmcKeySetData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkCloudBmcKeySetData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkCloudBmcKeySetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudBmcKeySetData>)Data).Write(writer, options);
 
-        NetworkCloudBmcKeySetData IJsonModel<NetworkCloudBmcKeySetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudBmcKeySetData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkCloudBmcKeySetData IJsonModel<NetworkCloudBmcKeySetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkCloudBmcKeySetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudBmcKeySetData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkCloudBmcKeySetData IPersistableModel<NetworkCloudBmcKeySetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudBmcKeySetData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        string IPersistableModel<NetworkCloudBmcKeySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudBmcKeySetData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkCloudBmcKeySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

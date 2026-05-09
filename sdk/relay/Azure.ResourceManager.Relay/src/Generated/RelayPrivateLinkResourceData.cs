@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Relay
         {
             get
             {
-                return Properties.GroupId;
+                return Properties is null ? default : Properties.GroupId;
             }
         }
     }

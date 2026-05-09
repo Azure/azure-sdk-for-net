@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     new AzureFrontDoorProperties(azureFrontDoorResourceId, null),
                     null),
                 identity,
-                skuName is null ? default : new AppConfigurationSku(skuName, null));
+                new AppConfigurationSku(skuName, null));
         }
 
         /// <summary> The state of a private link service connection. </summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// The content type of the key-value's value.
         /// Providing a proper content-type can enable transformations of values when they are retrieved by applications.
         /// </param>
-        /// <param name="etag"> An ETag indicating the state of a key-value within a configuration store. </param>
+        /// <param name="eTag"> An ETag indicating the state of a key-value within a configuration store. </param>
         /// <param name="lastModifiedOn"> The last time a modifying operation was performed on the given key-value. </param>
         /// <param name="isLocked">
         /// A value indicating whether the key-value is locked.
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// </param>
         /// <param name="tags"> A dictionary of tags that can help identify what a key-value may be applicable for. </param>
         /// <returns> A new <see cref="AppConfiguration.AppConfigurationKeyValueData"/> instance for mocking. </returns>
-        public static AppConfigurationKeyValueData AppConfigurationKeyValueData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string key = default, string label = default, string value = default, string contentType = default, ETag? etag = default, DateTimeOffset? lastModifiedOn = default, bool? isLocked = default, IDictionary<string, string> tags = default)
+        public static AppConfigurationKeyValueData AppConfigurationKeyValueData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string key = default, string label = default, string value = default, string contentType = default, ETag? eTag = default, DateTimeOffset? lastModifiedOn = default, bool? isLocked = default, IDictionary<string, string> tags = default)
         {
             return new AppConfigurationKeyValueData(
                 id,
@@ -223,12 +223,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                key is null && label is null && value is null && contentType is null && etag is null && lastModifiedOn is null && isLocked is null && tags is null ? default : new KeyValueProperties(
+                key is null && label is null && value is null && contentType is null && eTag is null && lastModifiedOn is null && isLocked is null && tags is null ? default : new KeyValueProperties(
                     key,
                     label,
                     value,
                     contentType,
-                    etag,
+                    eTag,
                     lastModifiedOn,
                     isLocked,
                     tags,
@@ -249,9 +249,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="size"> The size in bytes of the snapshot. </param>
         /// <param name="itemsCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. NOTE: These are data plane tags, not ARM tags. </param>
-        /// <param name="etag"> A value representing the current state of the snapshot. </param>
+        /// <param name="eTag"> A value representing the current state of the snapshot. </param>
         /// <returns> A new <see cref="AppConfiguration.AppConfigurationSnapshotData"/> instance for mocking. </returns>
-        public static AppConfigurationSnapshotData AppConfigurationSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppConfigurationProvisioningState? provisioningState = default, AppConfigurationSnapshotStatus? status = default, IEnumerable<SnapshotKeyValueFilter> filters = default, SnapshotCompositionType? compositionType = default, DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, long? retentionPeriod = default, long? size = default, long? itemsCount = default, IDictionary<string, string> tags = default, ETag? etag = default)
+        public static AppConfigurationSnapshotData AppConfigurationSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppConfigurationProvisioningState? provisioningState = default, AppConfigurationSnapshotStatus? status = default, IEnumerable<SnapshotKeyValueFilter> filters = default, SnapshotCompositionType? compositionType = default, DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, long? retentionPeriod = default, long? size = default, long? itemsCount = default, IDictionary<string, string> tags = default, ETag? eTag = default)
         {
             return new AppConfigurationSnapshotData(
                 id,
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && status is null && filters is null && compositionType is null && createdOn is null && expireOn is null && retentionPeriod is null && size is null && itemsCount is null && tags is null && etag is null ? default : new SnapshotProperties(
+                provisioningState is null && status is null && filters is null && compositionType is null && createdOn is null && expireOn is null && retentionPeriod is null && size is null && itemsCount is null && tags is null && eTag is null ? default : new SnapshotProperties(
                     provisioningState,
                     status,
                     (filters ?? new ChangeTrackingList<SnapshotKeyValueFilter>()).ToList(),
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     size,
                     itemsCount,
                     tags,
-                    etag,
+                    eTag,
                     null));
         }
 
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppConfigurationStoreData AppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string skuName, AppConfigurationProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, AppConfigurationKeyVaultProperties encryptionKeyVaultProperties, IEnumerable<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, bool? enablePurgeProtection, AppConfigurationDataPlaneProxyProperties dataPlaneProxy, AppConfigurationCreateMode? createMode)
         {
-            return AppConfigurationStoreData(id, name, resourceType, systemData, tags, location, provisioningState, createdOn, endpoint, privateEndpointConnections, publicNetworkAccess, disableLocalAuth, softDeleteRetentionInDays, defaultKeyValueRevisionRetentionPeriodInSeconds: default, enablePurgeProtection, dataPlaneProxy, createMode, encryptionKeyVaultProperties, telemetryResourceId: default, managedOnBehalfOfMoboBrokerResources: default, azureFrontDoorResourceId: default, identity, skuName);
+            return AppConfigurationStoreData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, createdOn: createdOn, endpoint: endpoint, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess, disableLocalAuth: disableLocalAuth, softDeleteRetentionInDays: softDeleteRetentionInDays, defaultKeyValueRevisionRetentionPeriodInSeconds: default, enablePurgeProtection: enablePurgeProtection, dataPlaneProxy: dataPlaneProxy, createMode: createMode, encryptionKeyVaultProperties: encryptionKeyVaultProperties, telemetryResourceId: default, managedOnBehalfOfMoboBrokerResources: default, azureFrontDoorResourceId: default, identity: identity, skuName: skuName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppConfigurationPrivateEndpointConnectionReference"/>. </summary>
@@ -402,8 +402,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppConfigurationSnapshotData AppConfigurationSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string snapshotType, AppConfigurationProvisioningState? provisioningState, AppConfigurationSnapshotStatus? status, IEnumerable<SnapshotKeyValueFilter> filters, SnapshotCompositionType? compositionType, DateTimeOffset? createdOn, DateTimeOffset? expireOn, long? retentionPeriod, long? size, long? itemsCount, IDictionary<string, string> tags, ETag? eTag)
         {
-            filters ??= new ChangeTrackingList<SnapshotKeyValueFilter>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new AppConfigurationSnapshotData(
                 id,
@@ -411,7 +409,19 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default);
+                provisioningState is null && status is null && filters is null && compositionType is null && createdOn is null && expireOn is null && retentionPeriod is null && size is null && itemsCount is null && tags is null && eTag is null ? default : new SnapshotProperties(
+                    provisioningState,
+                    status,
+                    (filters ?? new ChangeTrackingList<SnapshotKeyValueFilter>()).ToList(),
+                    compositionType,
+                    createdOn,
+                    expireOn,
+                    retentionPeriod,
+                    size,
+                    itemsCount,
+                    tags,
+                    eTag,
+                    default));
         }
 
         /// <summary> Initializes a new instance of <see cref="AppConfiguration.AppConfigurationStoreData"/>. </summary>
@@ -437,7 +447,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppConfigurationStoreData AppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string skuName, AppConfigurationProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, AppConfigurationKeyVaultProperties encryptionKeyVaultProperties, IEnumerable<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, bool? enablePurgeProtection, AppConfigurationCreateMode? createMode)
         {
-            return AppConfigurationStoreData(id, name, resourceType, systemData, tags, location, provisioningState, createdOn, endpoint, privateEndpointConnections, publicNetworkAccess, disableLocalAuth, softDeleteRetentionInDays, defaultKeyValueRevisionRetentionPeriodInSeconds: default, enablePurgeProtection, dataPlaneProxy: default, createMode, encryptionKeyVaultProperties, telemetryResourceId: default, managedOnBehalfOfMoboBrokerResources: default, azureFrontDoorResourceId: default, identity, skuName);
+            return AppConfigurationStoreData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, createdOn: createdOn, endpoint: endpoint, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess, disableLocalAuth: disableLocalAuth, softDeleteRetentionInDays: softDeleteRetentionInDays, defaultKeyValueRevisionRetentionPeriodInSeconds: default, enablePurgeProtection: enablePurgeProtection, dataPlaneProxy: default, createMode: createMode, encryptionKeyVaultProperties: encryptionKeyVaultProperties, telemetryResourceId: default, managedOnBehalfOfMoboBrokerResources: default, azureFrontDoorResourceId: default, identity: identity, skuName: skuName);
         }
     }
 }

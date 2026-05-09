@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             if (id.ResourceType != LoadTestingResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, LoadTestingResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, LoadTestingResource.ResourceType), nameof(id));
             }
         }
 

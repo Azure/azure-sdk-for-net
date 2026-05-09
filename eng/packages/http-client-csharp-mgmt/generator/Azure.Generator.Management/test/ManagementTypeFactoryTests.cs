@@ -8,7 +8,6 @@ using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Input;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Generator.Mgmt.Tests
 {
@@ -44,8 +43,8 @@ namespace Azure.Generator.Mgmt.Tests
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [enumType]);
             var result = plugin.Object.TypeFactory.CreateCSharpType(enumType);
-            Assert.IsNotNull(result);
-            Assert.AreEqual(expectedType, result!.FrameworkType);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result!.FrameworkType, Is.EqualTo(expectedType));
         }
 
         [TestCase("Azure.ResourceManager.CommonTypes.ExtendedLocationType")]
@@ -67,7 +66,7 @@ namespace Azure.Generator.Mgmt.Tests
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [enumType]);
             var result = plugin.Object.TypeFactory.CreateEnum(enumType, null);
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
 
         [TestCase]
@@ -93,7 +92,7 @@ namespace Azure.Generator.Mgmt.Tests
             enumValues.Add(InputFactory.EnumMember.String("SystemAssignedUserAssigned", "SystemAssigned,UserAssigned", enumType));
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [enumType]);
-            Assert.IsTrue(plugin.Object.TypeFactory.UseManagedServiceIdentityV3);
+            Assert.That(plugin.Object.TypeFactory.UseManagedServiceIdentityV3, Is.True);
         }
 
         [TestCase]
@@ -119,7 +118,7 @@ namespace Azure.Generator.Mgmt.Tests
             enumValues.Add(InputFactory.EnumMember.String("SystemAssignedUserAssigned", "SystemAssigned, UserAssigned", enumType));
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [enumType]);
-            Assert.IsFalse(plugin.Object.TypeFactory.UseManagedServiceIdentityV3);
+            Assert.That(plugin.Object.TypeFactory.UseManagedServiceIdentityV3, Is.False);
         }
 
         [TestCase]
@@ -127,48 +126,7 @@ namespace Azure.Generator.Mgmt.Tests
         {
             // No ManagedServiceIdentityType enum at all
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => []);
-            Assert.IsFalse(plugin.Object.TypeFactory.UseManagedServiceIdentityV3);
-        }
-
-        [TestCase("Azure.ResourceManager.CommonTypes.TrackedResource", typeof(Azure.ResourceManager.Models.TrackedResourceData))]
-        [TestCase("Azure.ResourceManager.CommonTypes.ProxyResource", typeof(Azure.ResourceManager.Models.ResourceData))]
-        [TestCase("Azure.ResourceManager.CommonTypes.ExtensionResource", typeof(Azure.ResourceManager.Models.ResourceData))]
-        public void CreateCSharpTypeReturnsCorrectTypeForInheritableSystemModel(string crossLanguageDefinitionId, System.Type expectedType)
-        {
-            // When CreateCSharpType is called for an inheritable system model (TrackedResource,
-            // ProxyResource, etc.), it should return the corresponding system type
-            // (TrackedResourceData, ResourceData). Without this, derived models that reference
-            // the base model during type resolution can get the wrong cached BaseType.
-            var model = new InputModelType(
-                "TestResource",
-                "Azure.ResourceManager.CommonTypes",
-                crossLanguageDefinitionId,
-                "public",
-                null,
-                null,
-                "ARM resource",
-                InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
-                [
-                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
-                ],
-                null,
-                [],
-                null,
-                null,
-                new Dictionary<string, InputModelType>(),
-                null,
-                false,
-                new InputSerializationOptions(),
-                false);
-
-            var plugin = ManagementMockHelpers.LoadMockPlugin(
-                inputModels: () => [model]);
-
-            var result = plugin.Object.TypeFactory.CreateCSharpType(model);
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result!.IsFrameworkType,
-                $"Expected framework type {expectedType.Name} but got non-framework type: {result}");
-            Assert.AreEqual(expectedType, result.FrameworkType);
+            Assert.That(plugin.Object.TypeFactory.UseManagedServiceIdentityV3, Is.False);
         }
     }
 }

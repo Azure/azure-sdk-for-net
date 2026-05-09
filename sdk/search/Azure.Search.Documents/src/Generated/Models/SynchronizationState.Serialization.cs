@@ -87,6 +87,16 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             writer.WriteNumberValue(ItemsUpdatesFailed);
             writer.WritePropertyName("itemsSkipped"u8);
             writer.WriteNumberValue(ItemsSkipped);
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (KnowledgeSourceSynchronizationError item in Errors)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,6 +143,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             int itemsUpdatesProcessed = default;
             int itemsUpdatesFailed = default;
             int itemsSkipped = default;
+            IList<KnowledgeSourceSynchronizationError> errors = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,12 +167,32 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     itemsSkipped = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("errors"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<KnowledgeSourceSynchronizationError> array = new List<KnowledgeSourceSynchronizationError>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(KnowledgeSourceSynchronizationError.DeserializeKnowledgeSourceSynchronizationError(item, options));
+                    }
+                    errors = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SynchronizationState(startTime, itemsUpdatesProcessed, itemsUpdatesFailed, itemsSkipped, additionalBinaryDataProperties);
+            return new SynchronizationState(
+                startTime,
+                itemsUpdatesProcessed,
+                itemsUpdatesFailed,
+                itemsSkipped,
+                errors ?? new ChangeTrackingList<KnowledgeSourceSynchronizationError>(),
+                additionalBinaryDataProperties);
         }
     }
 }

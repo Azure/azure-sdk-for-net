@@ -94,20 +94,17 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
 {
   $additionalValidationPackages = @()
 
-  $DependencyCalculationPackages = @(
-    "Azure.Core",
-    "Azure.ResourceManager",
-    "System.ClientModel"
-  )
-
-  $TestDependsOnDependencySet = $LocatedPackages | Where-Object { $_.Name -in $DependencyCalculationPackages }
-  $TestDependsOnDependency = $TestDependsOnDependencySet.Name -join " "
+  # Use all directly changed packages for dependency calculation. This ensures that
+  # when any package changes, all cross-service packages that depend on it are included
+  # as indirect packages for validation testing.
+  $TestDependsOnDependencySet = $LocatedPackages | Where-Object { $_.IncludedForValidation -eq $false }
+  $TestDependsOnDependency = ($TestDependsOnDependencySet | ForEach-Object { $_.Name }) -join " "
 
   if (!$TestDependsOnDependency) {
     return $additionalValidationPackages
   }
 
-  Write-Host "Calculating dependencies for $($pkgProp.Name)"
+  Write-Host "Calculating dependencies for: $TestDependsOnDependency"
 
   $outputFilePath = Join-Path $RepoRoot "_dependencylist.txt"
 
@@ -145,33 +142,21 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
 # Returns the nuget publish status of a package id and version.
 function IsNugetPackageVersionPublished ($pkgId, $pkgVersion)
 {
-  $nugetUri = "https://api.nuget.org/v3-flatcontainer/$($pkgId.ToLowerInvariant())/index.json"
+  $existingVersions = GetExistingPackageVersions -PackageName $pkgId
 
-  try
-  {
-    $nugetVersions = Invoke-RestMethod -MaximumRetryCount 3 -RetryIntervalSec 10 -uri $nugetUri -Method "GET"
-    return $nugetVersions.versions.Contains($pkgVersion)
+  # If the feed returned nothing, the package has not been published.
+  if (!$existingVersions) {
+    return $False
   }
-  catch
-  {
-    $statusCode = $_.Exception.Response.StatusCode.value__
-    $statusDescription = $_.Exception.Response.ReasonPhrase
 
-    # if this is 404ing, then this pkg has never been published before
-    if ($statusCode -eq 404) {
-      return $False
-    }
-
-    Write-Host "Nuget Invocation failed:"
-    Write-Host "StatusCode:" $statusCode
-    Write-Host "StatusDescription:" $statusDescription
-    exit(1)
-  }
+  return $existingVersions.Contains($pkgVersion)
 }
 
 # Parse out package publishing information given a nupkg ZIP format.
 function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
 {
+  Write-Host "Parsing package file $($pkg.FullName)"
+
   $workFolder = "$workingDirectory$($pkg.Basename)"
   $zipFileLocation = "$workFolder/$($pkg.Basename).zip"
   $releaseNotes = ""
@@ -357,13 +342,15 @@ function GetExistingPackageVersions ($PackageName, $GroupId=$null)
 {
   try {
     $PackageName = $PackageName.ToLower()
-    $existingVersion = Invoke-RestMethod -Method GET -Uri "https://api.nuget.org/v3-flatcontainer/${PackageName}/index.json"
+    $uri = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/flat2/${PackageName}/index.json"
+    $existingVersion = Invoke-RestMethod -MaximumRetryCount 3 -RetryIntervalSec 10 -Method GET -Uri $uri
     return $existingVersion.versions
   }
   catch {
     if ($_.Exception.Response.StatusCode -ne 404)
     {
       LogError "Failed to retrieve package versions for ${PackageName}. $($_.Exception.Message)"
+      throw
     }
     return $null
   }

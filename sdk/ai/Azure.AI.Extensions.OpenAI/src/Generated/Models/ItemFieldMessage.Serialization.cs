@@ -89,6 +89,11 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Phase))
+            {
+                writer.WritePropertyName("phase"u8);
+                writer.WriteStringValue(Phase.Value.ToSerialString());
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -122,6 +127,7 @@ namespace Azure.AI.Extensions.OpenAI
             MessageStatus status = default;
             MessageRole role = default;
             IList<InternalMessageContent> content = default;
+            MessagePhase? phase = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -154,6 +160,16 @@ namespace Azure.AI.Extensions.OpenAI
                     content = array;
                     continue;
                 }
+                if (prop.NameEquals("phase"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        phase = null;
+                        continue;
+                    }
+                    phase = prop.Value.GetString().ToMessagePhase();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -165,7 +181,8 @@ namespace Azure.AI.Extensions.OpenAI
                 id,
                 status,
                 role,
-                content);
+                content,
+                phase);
         }
     }
 }

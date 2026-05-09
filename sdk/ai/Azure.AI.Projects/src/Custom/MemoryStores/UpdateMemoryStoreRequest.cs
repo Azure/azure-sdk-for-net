@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects;
+namespace Azure.AI.Projects.Memory;
 
 internal partial class UpdateMemoryStoreRequest
 {

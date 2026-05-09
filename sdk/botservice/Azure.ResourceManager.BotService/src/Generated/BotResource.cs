@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.BotService
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -520,7 +520,13 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new BotsGetPrivateLinkResourcesByBotResourceAsyncCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new BotsGetPrivateLinkResourcesByBotResourceAsyncCollectionResultOfT(
+                _botsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BotResource.GetPrivateLinkResourcesByBotResource");
         }
 
         /// <summary>
@@ -552,7 +558,13 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new BotsGetPrivateLinkResourcesByBotResourceCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new BotsGetPrivateLinkResourcesByBotResourceCollectionResultOfT(
+                _botsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BotResource.GetPrivateLinkResourcesByBotResource");
         }
 
         /// <summary> Add a tag to the current resource. </summary>
@@ -586,7 +598,7 @@ namespace Azure.ResourceManager.BotService
                 else
                 {
                     BotData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BotData patch = new BotData();
+                    BotData patch = new BotData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -634,7 +646,7 @@ namespace Azure.ResourceManager.BotService
                 else
                 {
                     BotData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BotData patch = new BotData();
+                    BotData patch = new BotData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -681,7 +693,7 @@ namespace Azure.ResourceManager.BotService
                 else
                 {
                     BotData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BotData patch = new BotData();
+                    BotData patch = new BotData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<BotResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -724,7 +736,7 @@ namespace Azure.ResourceManager.BotService
                 else
                 {
                     BotData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BotData patch = new BotData();
+                    BotData patch = new BotData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<BotResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -766,7 +778,7 @@ namespace Azure.ResourceManager.BotService
                 else
                 {
                     BotData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BotData patch = new BotData();
+                    BotData patch = new BotData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -812,7 +824,7 @@ namespace Azure.ResourceManager.BotService
                 else
                 {
                     BotData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BotData patch = new BotData();
+                    BotData patch = new BotData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

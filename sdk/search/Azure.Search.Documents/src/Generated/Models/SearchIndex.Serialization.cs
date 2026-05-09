@@ -205,16 +205,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("vectorSearch"u8);
                 writer.WriteObjectValue(VectorSearch, options);
             }
-            if (Optional.IsDefined(PermissionFilterOption))
-            {
-                writer.WritePropertyName("permissionFilterOption"u8);
-                writer.WriteStringValue(PermissionFilterOption.Value.ToString());
-            }
-            if (Optional.IsDefined(PurviewEnabled))
-            {
-                writer.WritePropertyName("purviewEnabled"u8);
-                writer.WriteBooleanValue(PurviewEnabled.Value);
-            }
             writer.WritePropertyName("fields"u8);
             writer.WriteStartArray();
             foreach (SearchField item in _fields)
@@ -284,8 +274,6 @@ namespace Azure.Search.Documents.Indexes.Models
             SimilarityAlgorithm similarity = default;
             SemanticSearch semanticSearch = default;
             VectorSearch vectorSearch = default;
-            SearchIndexPermissionFilterOption? permissionFilterOption = default;
-            bool? purviewEnabled = default;
             IList<SearchField> fields = default;
             string etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -453,26 +441,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     vectorSearch = VectorSearch.DeserializeVectorSearch(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("permissionFilterOption"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        permissionFilterOption = null;
-                        continue;
-                    }
-                    permissionFilterOption = new SearchIndexPermissionFilterOption(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("purviewEnabled"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        purviewEnabled = null;
-                        continue;
-                    }
-                    purviewEnabled = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (prop.NameEquals("fields"u8))
                 {
                     List<SearchField> array = new List<SearchField>();
@@ -509,8 +477,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 similarity,
                 semanticSearch,
                 vectorSearch,
-                permissionFilterOption,
-                purviewEnabled,
                 fields,
                 etag,
                 additionalBinaryDataProperties);

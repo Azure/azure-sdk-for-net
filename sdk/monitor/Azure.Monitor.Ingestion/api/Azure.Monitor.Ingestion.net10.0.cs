@@ -38,6 +38,14 @@ namespace Azure.Monitor.Ingestion
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Serialization is performed at runtime without a serialization context available.")]
         public virtual Azure.Response Upload<T>(string ruleId, string streamName, System.Collections.Generic.IEnumerable<T> logs, Azure.Monitor.Ingestion.LogsUploadOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class LogsIngestionClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedLogsIngestionClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedLogsIngestionClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Monitor.Ingestion.LogsIngestionClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddLogsIngestionClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddLogsIngestionClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Monitor.Ingestion.LogsIngestionClientSettings> configureSettings) { throw null; }
+    }
     public partial class LogsIngestionClientOptions : Azure.Core.ClientOptions
     {
         public LogsIngestionClientOptions(Azure.Monitor.Ingestion.LogsIngestionClientOptions.ServiceVersion version = Azure.Monitor.Ingestion.LogsIngestionClientOptions.ServiceVersion.V2023_01_01) { }

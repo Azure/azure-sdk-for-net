@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetBySubscriptionAsyncCollectionResultOfT(ConfluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ConfluentOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetBySubscriptionAsyncCollectionResultOfT(ConfluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableConfluentSubscriptionResource.GetConfluentOrganizations"), data => new ConfluentOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetBySubscriptionCollectionResultOfT(ConfluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ConfluentOrganizationResource(Client, data));
+            return new PageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetBySubscriptionCollectionResultOfT(ConfluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableConfluentSubscriptionResource.GetConfluentOrganizations"), data => new ConfluentOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MarketplaceAgreementsOperationGroupGetMarketplaceAgreementsAsyncCollectionResultOfT(MarketplaceAgreementsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context);
+            return new MarketplaceAgreementsOperationGroupGetMarketplaceAgreementsAsyncCollectionResultOfT(MarketplaceAgreementsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableConfluentSubscriptionResource.GetMarketplaceAgreements");
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MarketplaceAgreementsOperationGroupGetMarketplaceAgreementsCollectionResultOfT(MarketplaceAgreementsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context);
+            return new MarketplaceAgreementsOperationGroupGetMarketplaceAgreementsCollectionResultOfT(MarketplaceAgreementsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableConfluentSubscriptionResource.GetMarketplaceAgreements");
         }
 
         /// <summary>

@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.Nginx.Models
     }
     public partial class NginxDeploymentPropertiesNginxAppProtect : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentPropertiesNginxAppProtect>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentPropertiesNginxAppProtect>
     {
-        internal NginxDeploymentPropertiesNginxAppProtect() { }
+        public NginxDeploymentPropertiesNginxAppProtect() { }
         public Azure.ResourceManager.Nginx.Models.WebApplicationFirewallActivationState? WebApplicationFirewallActivationState { get { throw null; } set { } }
         public Azure.ResourceManager.Nginx.Models.WebApplicationFirewallStatus WebApplicationFirewallStatus { get { throw null; } }
         protected virtual Azure.ResourceManager.Nginx.Models.NginxDeploymentPropertiesNginxAppProtect JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

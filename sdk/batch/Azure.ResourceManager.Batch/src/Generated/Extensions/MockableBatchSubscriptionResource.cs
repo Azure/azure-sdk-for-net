@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Batch.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BatchAccountData, BatchAccountResource>(new BatchAccountGetAllAsyncCollectionResultOfT(BatchAccountRestClient, Guid.Parse(Id.SubscriptionId), context), data => new BatchAccountResource(Client, data));
+            return new AsyncPageableWrapper<BatchAccountData, BatchAccountResource>(new BatchAccountGetAllAsyncCollectionResultOfT(BatchAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBatchSubscriptionResource.GetBatchAccounts"), data => new BatchAccountResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Batch.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BatchAccountData, BatchAccountResource>(new BatchAccountGetAllCollectionResultOfT(BatchAccountRestClient, Guid.Parse(Id.SubscriptionId), context), data => new BatchAccountResource(Client, data));
+            return new PageableWrapper<BatchAccountData, BatchAccountResource>(new BatchAccountGetAllCollectionResultOfT(BatchAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBatchSubscriptionResource.GetBatchAccounts"), data => new BatchAccountResource(Client, data));
         }
 
         /// <summary>
@@ -226,7 +226,8 @@ namespace Azure.ResourceManager.Batch.Mocking
                 locationName,
                 maxresults,
                 filter,
-                context);
+                context,
+                "MockableBatchSubscriptionResource.GetBatchSupportedVirtualMachineSkus");
         }
 
         /// <summary>
@@ -263,7 +264,8 @@ namespace Azure.ResourceManager.Batch.Mocking
                 locationName,
                 maxresults,
                 filter,
-                context);
+                context,
+                "MockableBatchSubscriptionResource.GetBatchSupportedVirtualMachineSkus");
         }
 
         /// <summary>

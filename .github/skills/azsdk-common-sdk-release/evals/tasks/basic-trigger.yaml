@@ -1,0 +1,13 @@
+id: basic-trigger
+name: basic-trigger
+description: Should trigger on SDK release requests
+inputs:
+  prompt: "I need to release a new version of my Azure SDK package. Walk me through the process."
+expected:
+  skill_activated: true
+graders:
+  - type: text
+    name: mentions-release
+    config:
+      contains:
+        - "release"

@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         private readonly string _resourceGroupName;
         private readonly string _storagePoolName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of AvsVmsGetByStoragePoolCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AvsVms client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storagePoolName"> Name of the storage pool. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AvsVmsGetByStoragePoolCollectionResultOfT(AvsVms client, Guid subscriptionId, string resourceGroupName, string storagePoolName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public AvsVmsGetByStoragePoolCollectionResultOfT(AvsVms client, Guid subscriptionId, string resourceGroupName, string storagePoolName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _storagePoolName = storagePoolName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of AvsVmsGetByStoragePoolCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByStoragePoolRequest(nextLink, _subscriptionId, _resourceGroupName, _storagePoolName, _context) : _client.CreateGetByStoragePoolRequest(_subscriptionId, _resourceGroupName, _storagePoolName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PureStorageAvsVmCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

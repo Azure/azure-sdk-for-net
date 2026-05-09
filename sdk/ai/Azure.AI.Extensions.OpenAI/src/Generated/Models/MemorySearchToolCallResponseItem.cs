@@ -18,7 +18,7 @@ namespace Azure.AI.Extensions.OpenAI
         public MemorySearchToolCallResponseItem(MemorySearchToolCallStatus status) : base(AgentResponseItemKind.MemorySearchCall)
         {
             Status = status;
-            Results = new ChangeTrackingList<MemorySearchItem>();
+            Results = new ChangeTrackingList<MemoryToolSearchItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MemorySearchToolCallResponseItem"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// `searching`, `completed`, `incomplete` or `failed`,
         /// </param>
         /// <param name="results"> The results returned from the memory search. </param>
-        internal MemorySearchToolCallResponseItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, MemorySearchToolCallStatus status, IList<MemorySearchItem> results) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal MemorySearchToolCallResponseItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, MemorySearchToolCallStatus status, IList<MemoryToolSearchItem> results) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             Results = results;
@@ -45,6 +45,6 @@ namespace Azure.AI.Extensions.OpenAI
         public MemorySearchToolCallStatus Status { get; set; }
 
         /// <summary> The results returned from the memory search. </summary>
-        public IList<MemorySearchItem> Results { get; set; }
+        public IList<MemoryToolSearchItem> Results { get; set; }
     }
 }

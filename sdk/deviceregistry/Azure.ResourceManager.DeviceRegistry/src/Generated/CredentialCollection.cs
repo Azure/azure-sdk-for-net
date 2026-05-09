@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             if (id.ResourceType != DeviceRegistryNamespaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeviceRegistryNamespaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeviceRegistryNamespaceResource.ResourceType), nameof(id));
             }
         }
 
@@ -277,7 +277,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CredentialData, CredentialResource>(new CredentialsGetByResourceGroupAsyncCollectionResultOfT(_credentialsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CredentialResource(Client, data));
+            return new AsyncPageableWrapper<CredentialData, CredentialResource>(new CredentialsGetByResourceGroupAsyncCollectionResultOfT(
+                _credentialsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CredentialCollection.GetAll"), data => new CredentialResource(Client, data));
         }
 
         /// <summary>
@@ -305,7 +311,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CredentialData, CredentialResource>(new CredentialsGetByResourceGroupCollectionResultOfT(_credentialsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CredentialResource(Client, data));
+            return new PageableWrapper<CredentialData, CredentialResource>(new CredentialsGetByResourceGroupCollectionResultOfT(
+                _credentialsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CredentialCollection.GetAll"), data => new CredentialResource(Client, data));
         }
 
         /// <summary>

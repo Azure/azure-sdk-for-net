@@ -20,18 +20,21 @@ namespace Azure.ResourceManager.Datadog
         private readonly string _subscriptionId;
         private readonly string _datadogOrganizationId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CreationSupportedGetSubscriptionStatusesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CreationSupported client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="datadogOrganizationId"> Datadog Organization Id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CreationSupportedGetSubscriptionStatusesCollectionResultOfT(CreationSupported client, string subscriptionId, string datadogOrganizationId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public CreationSupportedGetSubscriptionStatusesCollectionResultOfT(CreationSupported client, string subscriptionId, string datadogOrganizationId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _datadogOrganizationId = datadogOrganizationId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of CreationSupportedGetSubscriptionStatusesCollectionResultOfT as an enumerable collection. </summary>
@@ -64,7 +67,7 @@ namespace Azure.ResourceManager.Datadog
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetSubscriptionStatusesRequest(nextLink, _subscriptionId, _datadogOrganizationId, _context) : _client.CreateGetSubscriptionStatusesRequest(_subscriptionId, _datadogOrganizationId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDatadogSubscriptionResource.GetSubscriptionStatuses");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

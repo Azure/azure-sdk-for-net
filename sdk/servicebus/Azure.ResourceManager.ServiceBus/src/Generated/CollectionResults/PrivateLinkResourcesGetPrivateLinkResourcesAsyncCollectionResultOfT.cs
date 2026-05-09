@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly string _resourceGroupName;
         private readonly string _namespaceName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrivateLinkResources client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT(PrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string namespaceName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT(PrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string namespaceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _namespaceName = namespaceName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -55,7 +58,7 @@ namespace Azure.ResourceManager.ServiceBus
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateGetPrivateLinkResourcesRequest(_subscriptionId, _resourceGroupName, _namespaceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ServiceBusNamespaceResource.GetPrivateLinkResources");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

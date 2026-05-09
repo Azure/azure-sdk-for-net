@@ -206,7 +206,7 @@ namespace Azure.AI.Language.Text.Authoring
             int? maxpagesize = null,
             CancellationToken cancellationToken = default)
         {
-            return new TextAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResultOfT(this, _projectName, _trainedModelLabel, stringIndexType.ToString(), maxCount, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return new TextAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResultOfT(this, _projectName, _trainedModelLabel, stringIndexType.ToString(), maxCount, skip, maxpagesize, cancellationToken.ToRequestContext(), "TextAuthoringTrainedModel.GetModelEvaluationResults");
         }
 
         /// <summary> Gets the detailed results of the evaluation for a trained model. </summary>
@@ -222,7 +222,7 @@ namespace Azure.AI.Language.Text.Authoring
             int? maxpagesize = null,
             CancellationToken cancellationToken = default)
         {
-            return new TextAuthoringTrainedModelGetModelEvaluationResultsCollectionResultOfT(this, _projectName, _trainedModelLabel, stringIndexType.ToString(), maxCount, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return new TextAuthoringTrainedModelGetModelEvaluationResultsCollectionResultOfT(this, _projectName, _trainedModelLabel, stringIndexType.ToString(), maxCount, skip, maxpagesize, cancellationToken.ToRequestContext(), "TextAuthoringTrainedModel.GetModelEvaluationResults");
         }
 
         /// <summary> Triggers evaluation operation on a trained model. </summary>
@@ -645,7 +645,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual AsyncPageable<BinaryData> GetModelEvaluationResultsAsync(string stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return new TextAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResult(this, _projectName, _trainedModelLabel, stringIndexType, maxCount, skip, maxpagesize, context);
+            return new TextAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResult(this, _projectName, _trainedModelLabel, stringIndexType, maxCount, skip, maxpagesize, context, "TextAuthoringTrainedModel.GetModelEvaluationResults");
         }
 
         /// <summary>
@@ -672,7 +672,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual Pageable<BinaryData> GetModelEvaluationResults(string stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return new TextAuthoringTrainedModelGetModelEvaluationResultsCollectionResult(this, _projectName, _trainedModelLabel, stringIndexType, maxCount, skip, maxpagesize, context);
+            return new TextAuthoringTrainedModelGetModelEvaluationResultsCollectionResult(this, _projectName, _trainedModelLabel, stringIndexType, maxCount, skip, maxpagesize, context, "TextAuthoringTrainedModel.GetModelEvaluationResults");
         }
 
         /// <summary>

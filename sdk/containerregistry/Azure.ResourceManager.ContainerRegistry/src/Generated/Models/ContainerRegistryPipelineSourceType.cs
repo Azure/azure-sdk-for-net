@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public readonly partial struct ContainerRegistryPipelineSourceType : IEquatable<ContainerRegistryPipelineSourceType>
     {
         private readonly string _value;
+        private const string AzureStorageBlobContainerValue = "AzureStorageBlobContainer";
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryPipelineSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerRegistryPipelineSourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AzureStorageBlobContainerValue = "AzureStorageBlobContainer";
-
-        /// <summary> AzureStorageBlobContainer. </summary>
+        /// <summary> Gets the AzureStorageBlobContainer. </summary>
         public static ContainerRegistryPipelineSourceType AzureStorageBlobContainer { get; } = new ContainerRegistryPipelineSourceType(AzureStorageBlobContainerValue);
+
         /// <summary> Determines if two <see cref="ContainerRegistryPipelineSourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerRegistryPipelineSourceType left, ContainerRegistryPipelineSourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerRegistryPipelineSourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerRegistryPipelineSourceType left, ContainerRegistryPipelineSourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryPipelineSourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerRegistryPipelineSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerRegistryPipelineSourceType(string value) => new ContainerRegistryPipelineSourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerRegistryPipelineSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerRegistryPipelineSourceType?(string value) => value == null ? null : new ContainerRegistryPipelineSourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerRegistryPipelineSourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerRegistryPipelineSourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

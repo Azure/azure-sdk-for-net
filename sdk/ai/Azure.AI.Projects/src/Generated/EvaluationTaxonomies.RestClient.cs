@@ -5,8 +5,9 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary></summary>
     public partial class EvaluationTaxonomies

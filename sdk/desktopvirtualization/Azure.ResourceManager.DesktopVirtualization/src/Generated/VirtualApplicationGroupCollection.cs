@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -304,7 +304,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new VirtualApplicationGroupResource(Client, data));
+                context,
+                "VirtualApplicationGroupCollection.GetAll"), data => new VirtualApplicationGroupResource(Client, data));
         }
 
         /// <summary>
@@ -344,7 +345,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new VirtualApplicationGroupResource(Client, data));
+                context,
+                "VirtualApplicationGroupCollection.GetAll"), data => new VirtualApplicationGroupResource(Client, data));
         }
 
         /// <summary>

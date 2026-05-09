@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.AI.Projects;
+namespace Azure.AI.Projects.Evaluation;
 
 public partial class ProjectInsights
 {

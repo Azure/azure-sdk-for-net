@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     Properties = new ApplicationGroupProperties();
                 }
-                Properties.IsEnabled = value.Value;
+                Properties.IsEnabled = value;
             }
         }
 

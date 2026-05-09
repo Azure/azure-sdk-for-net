@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             if (id.ResourceType != WebPubSubReplicaResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebPubSubReplicaResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebPubSubReplicaResource.ResourceType), nameof(id));
             }
         }
 
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.WebPubSub
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new WebPubSubReplicaSharedPrivateLinkResource(Client, data));
+                context,
+                "WebPubSubReplicaSharedPrivateLinkCollection.GetAll"), data => new WebPubSubReplicaSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.WebPubSub
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new WebPubSubReplicaSharedPrivateLinkResource(Client, data));
+                context,
+                "WebPubSubReplicaSharedPrivateLinkCollection.GetAll"), data => new WebPubSubReplicaSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> AzureDisk CSI Driver settings for the storage profile. </summary>
-    internal partial class ManagedClusterStorageProfileDiskCsiDriver : IJsonModel<ManagedClusterStorageProfileDiskCsiDriver>
+    public partial class ManagedClusterStorageProfileDiskCsiDriver : IJsonModel<ManagedClusterStorageProfileDiskCsiDriver>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsDiskCsiDriverEnabled.Value);
             }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool? isDiskCsiDriverEnabled = default;
+            string version = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +140,17 @@ namespace Azure.ResourceManager.ContainerService.Models
                     isDiskCsiDriverEnabled = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("version"u8))
+                {
+                    version = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterStorageProfileDiskCsiDriver(isDiskCsiDriverEnabled, additionalBinaryDataProperties);
+            return new ManagedClusterStorageProfileDiskCsiDriver(isDiskCsiDriverEnabled, version, additionalBinaryDataProperties);
         }
     }
 }

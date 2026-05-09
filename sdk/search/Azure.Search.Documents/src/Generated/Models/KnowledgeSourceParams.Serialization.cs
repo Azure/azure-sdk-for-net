@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for knowledge source runtime parameters.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSourceParams"/>, <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="WebKnowledgeSourceParams"/>, and <see cref="RemoteSharePointKnowledgeSourceParams"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSourceParams"/>, <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, and <see cref="WebKnowledgeSourceParams"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeSourceParams))]
     public abstract partial class KnowledgeSourceParams : IJsonModel<KnowledgeSourceParams>
@@ -94,11 +94,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("includeReferenceSourceData"u8);
                 writer.WriteBooleanValue(IncludeReferenceSourceData.Value);
             }
-            if (Optional.IsDefined(AlwaysQuerySource))
-            {
-                writer.WritePropertyName("alwaysQuerySource"u8);
-                writer.WriteBooleanValue(AlwaysQuerySource.Value);
-            }
             if (Optional.IsDefined(RerankerThreshold))
             {
                 writer.WritePropertyName("rerankerThreshold"u8);
@@ -156,14 +151,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                         return SearchIndexKnowledgeSourceParams.DeserializeSearchIndexKnowledgeSourceParams(element, options);
                     case "azureBlob":
                         return AzureBlobKnowledgeSourceParams.DeserializeAzureBlobKnowledgeSourceParams(element, options);
-                    case "indexedSharePoint":
-                        return IndexedSharePointKnowledgeSourceParams.DeserializeIndexedSharePointKnowledgeSourceParams(element, options);
                     case "indexedOneLake":
                         return IndexedOneLakeKnowledgeSourceParams.DeserializeIndexedOneLakeKnowledgeSourceParams(element, options);
                     case "web":
                         return WebKnowledgeSourceParams.DeserializeWebKnowledgeSourceParams(element, options);
-                    case "remoteSharePoint":
-                        return RemoteSharePointKnowledgeSourceParams.DeserializeRemoteSharePointKnowledgeSourceParams(element, options);
                 }
             }
             return UnknownKnowledgeSourceParams.DeserializeUnknownKnowledgeSourceParams(element, options);

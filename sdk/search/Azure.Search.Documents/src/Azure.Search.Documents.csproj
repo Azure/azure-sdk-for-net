@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Search.Documents client library</AssemblyTitle>
-    <Version>11.8.0-beta.2</Version>
+    <Version>12.1.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>11.7.0</ApiCompatVersion>
+    <ApiCompatVersion>12.0.0</ApiCompatVersion>
     <Description>
-      This is the Azure Cognitive Search client library for developing .NET
+      This is the Azure AI Search client library for developing .NET
       applications with rich search experiences.  It enables you to query your
       indexes, update documents in your indexes, and manage indexes, synonym
       maps, indexers, data sources, or other service-level resources.
     </Description>
-    <PackageTags>Azure Cognitive Search;Azure Search Documents;Azure Search;Search;Cognitive;Search Engine;Azure</PackageTags>
+    <PackageTags>Azure AI Search;Azure Search Documents;Azure Search;Search;AI Search;Search Engine;Azure</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
@@ -19,6 +19,13 @@
      AZC0004;
     </NoWarn>
     <AotCompatOptOut>true</AotCompatOptOut>
+  </PropertyGroup>
+
+  <!-- Define AZURE_SEARCH_PREVIEW when the package version indicates a preview/beta release.
+       This enables preview-only API surface (ServiceVersion enum values, preview operations).
+       When the version has no pre-release suffix (GA), preview code is excluded at compile time. -->
+  <PropertyGroup Condition="$(Version.Contains('beta'))">
+    <DefineConstants>$(DefineConstants);AZURE_SEARCH_PREVIEW</DefineConstants>
   </PropertyGroup>
 
   <!-- Pull in Shared Source from Azure.Core -->

@@ -85,7 +85,7 @@ namespace Azure.Developer.DevCenter
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetProjects(RequestContext context)
         {
-            return new DevCenterClientGetProjectsCollectionResult(this, context);
+            return new DevCenterClientGetProjectsCollectionResult(this, context, "DevCenterClient.GetProjects");
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Azure.Developer.DevCenter
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(RequestContext context)
         {
-            return new DevCenterClientGetProjectsAsyncCollectionResult(this, context);
+            return new DevCenterClientGetProjectsAsyncCollectionResult(this, context, "DevCenterClient.GetProjects");
         }
 
         /// <summary> Lists all projects. </summary>
@@ -109,7 +109,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<DevCenterProject> GetProjects(CancellationToken cancellationToken = default)
         {
-            return new DevCenterClientGetProjectsCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new DevCenterClientGetProjectsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DevCenterClient.GetProjects");
         }
 
         /// <summary> Lists all projects. </summary>
@@ -117,7 +117,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<DevCenterProject> GetProjectsAsync(CancellationToken cancellationToken = default)
         {
-            return new DevCenterClientGetProjectsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new DevCenterClientGetProjectsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DevCenterClient.GetProjects");
         }
 
         /// <summary>
