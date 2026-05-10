@@ -752,7 +752,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceDeletionInfo BackupInstanceDeletionInfo(System.DateTimeOffset? deleteOn = default(System.DateTimeOffset?), System.DateTimeOffset? billingEndOn = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledPurgeOn = default(System.DateTimeOffset?), string deleteActivityId = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupInstancePolicyInfo BackupInstancePolicyInfo(Azure.Core.ResourceIdentifier policyId = null, string policyVersion = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstancePolicySettings policyParameters = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupInstancePolicySettings BackupInstancePolicySettings(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.DataStoreSettings> dataStoreParametersList = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.BackupDataSourceSettings> backupDataSourceParametersList = null) { throw null; }
-        public static Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatusDetails BackupInstanceProtectionStatusDetails(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupUserFacingError protectionStatusErrorDetails = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatus? status = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatus?)) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatusDetails BackupInstanceProtectionStatusDetails(Azure.ResponseError errorDetails, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatus? status) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupJobExtendedInfo BackupJobExtendedInfo(System.Collections.Generic.IReadOnlyDictionary<string, string> additionalDetails, string backupInstanceState, double? dataTransferredInBytes, string recoveryDestination, Azure.ResourceManager.DataProtectionBackup.Models.RestoreJobRecoveryPointDetails sourceRecoverPoint, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.BackupJobSubTask> subTasks, Azure.ResourceManager.DataProtectionBackup.Models.RestoreJobRecoveryPointDetails targetRecoverPoint) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupJobExtendedInfo BackupJobExtendedInfo(System.Collections.Generic.IReadOnlyDictionary<string, string> additionalDetails = null, string backupInstanceState = null, double? dataTransferredInBytes = default(double?), string recoveryDestination = null, Azure.ResourceManager.DataProtectionBackup.Models.RestoreJobRecoveryPointDetails sourceRecoverPoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.BackupJobSubTask> subTasks = null, Azure.ResourceManager.DataProtectionBackup.Models.RestoreJobRecoveryPointDetails targetRecoverPoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.UserFacingWarningDetail> warningDetails = null) { throw null; }
@@ -831,7 +830,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResourceData ResourceGuardProxyBaseResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProxyBase properties = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.RestoreFilesTargetDetails RestoreFilesTargetDetails(string filePrefix = null, Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetLocationType restoreTargetLocationType = default(Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetLocationType), System.Uri uri = null, Azure.Core.ResourceIdentifier targetResourceArmId = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.RestoreFilesTargetInfo RestoreFilesTargetInfo(Azure.ResourceManager.DataProtectionBackup.Models.RecoverySetting recoverySetting = default(Azure.ResourceManager.DataProtectionBackup.Models.RecoverySetting), Azure.Core.AzureLocation? restoreLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.DataProtectionBackup.Models.RestoreFilesTargetDetails targetDetails = null) { throw null; }
-        public static Azure.ResourceManager.DataProtectionBackup.Models.RestoreJobRecoveryPointDetails RestoreJobRecoveryPointDetails(string recoveryPointId = null, System.DateTimeOffset? recoverOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.DataProtectionBackup.Models.RestoreJobRecoveryPointDetails RestoreJobRecoveryPointDetails(string recoveryPointId, System.DateTimeOffset? recoverOn) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetInfo RestoreTargetInfo(Azure.ResourceManager.DataProtectionBackup.Models.RecoverySetting recoverySetting = default(Azure.ResourceManager.DataProtectionBackup.Models.RecoverySetting), Azure.Core.AzureLocation? restoreLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.DataProtectionBackup.Models.DataSourceInfo dataSourceInfo = null, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceSetInfo dataSourceSetInfo = null, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupAuthCredentials dataSourceAuthCredentials = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetInfoBase RestoreTargetInfoBase(string objectType = null, Azure.ResourceManager.DataProtectionBackup.Models.RecoverySetting recoverySetting = default(Azure.ResourceManager.DataProtectionBackup.Models.RecoverySetting), Azure.Core.AzureLocation? restoreLocation = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.RuleBasedBackupPolicy RuleBasedBackupPolicy(System.Collections.Generic.IEnumerable<string> dataSourceTypes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBasePolicyRule> policyRules = null) { throw null; }
@@ -997,7 +996,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     }
     public partial class BackupInstanceDeletionInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceDeletionInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceDeletionInfo>
     {
-        internal BackupInstanceDeletionInfo() { }
+        public BackupInstanceDeletionInfo() { }
         public System.DateTimeOffset? BillingEndOn { get { throw null; } }
         public string DeleteActivityId { get { throw null; } }
         public System.DateTimeOffset? DeleteOn { get { throw null; } }
@@ -1068,11 +1067,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     }
     public partial class BackupInstanceProtectionStatusDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatusDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatusDetails>
     {
-        internal BackupInstanceProtectionStatusDetails() { }
+        public BackupInstanceProtectionStatusDetails() { }
         [System.ObsoleteAttribute("This property is deprecated and not supported. Retrieve the error details from the new ProtectionStatusErrorDetails property.", true)]
         public Azure.ResponseError ErrorDetails { get { throw null; } }
-        public Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupUserFacingError ProtectionStatusErrorDetails { get { throw null; } }
-        public Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupUserFacingError ProtectionStatusErrorDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatus? Status { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatusDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatusDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1116,7 +1115,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     }
     public partial class BackupJobExtendedInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupJobExtendedInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupJobExtendedInfo>
     {
-        internal BackupJobExtendedInfo() { }
+        public BackupJobExtendedInfo() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> AdditionalDetails { get { throw null; } }
         public string BackupInstanceState { get { throw null; } }
         public double? DataTransferredInBytes { get { throw null; } }
@@ -1137,12 +1136,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     }
     public partial class BackupJobSubTask : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupJobSubTask>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupJobSubTask>
     {
-        internal BackupJobSubTask() { }
+        public BackupJobSubTask(int taskId, string taskName, string taskStatus) { }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> AdditionalDetails { get { throw null; } }
-        public int TaskId { get { throw null; } }
-        public string TaskName { get { throw null; } }
+        public int TaskId { get { throw null; } set { } }
+        public string TaskName { get { throw null; } set { } }
         public string TaskProgress { get { throw null; } }
-        public string TaskStatus { get { throw null; } }
+        public string TaskStatus { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.BackupJobSubTask JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.BackupJobSubTask PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3163,9 +3162,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     }
     public partial class RestoreJobRecoveryPointDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.RestoreJobRecoveryPointDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.RestoreJobRecoveryPointDetails>
     {
-        internal RestoreJobRecoveryPointDetails() { }
-        public System.DateTimeOffset? RecoverOn { get { throw null; } }
-        public string RecoveryPointId { get { throw null; } }
+        public RestoreJobRecoveryPointDetails() { }
+        public System.DateTimeOffset? RecoverOn { get { throw null; } set { } }
+        public string RecoveryPointId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.RestoreJobRecoveryPointDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.RestoreJobRecoveryPointDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

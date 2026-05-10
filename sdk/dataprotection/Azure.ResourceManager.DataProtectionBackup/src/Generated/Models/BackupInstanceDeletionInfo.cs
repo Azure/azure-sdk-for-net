@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackupInstanceDeletionInfo"/>. </summary>
-        internal BackupInstanceDeletionInfo()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BackupInstanceDeletionInfo"/>. </summary>
         /// <param name="deleteOn"> Specifies time of deletion. </param>
         /// <param name="billingEndOn"> Specifies billing end date. </param>
         /// <param name="scheduledPurgeOn"> Specifies purge time. </param>

@@ -172,15 +172,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new BlobBackupRuleBasedAutoProtectionSettings("BlobBackupRuleBasedAutoProtectionSettings", enabled, additionalBinaryDataProperties: null, rules.ToList());
         }
 
-        /// <summary> Protection status details. </summary>
-        /// <param name="protectionStatusErrorDetails"> Specifies the protection status error of the resource. </param>
-        /// <param name="status"> Specifies the protection status of the resource. </param>
-        /// <returns> A new <see cref="Models.BackupInstanceProtectionStatusDetails"/> instance for mocking. </returns>
-        public static BackupInstanceProtectionStatusDetails BackupInstanceProtectionStatusDetails(DataProtectionBackupUserFacingError protectionStatusErrorDetails = default, BackupInstanceProtectionStatus? status = default)
-        {
-            return new BackupInstanceProtectionStatusDetails(protectionStatusErrorDetails, status, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Error object used by layers that have access to localized content, and propagate that to user. </summary>
         /// <param name="code"> Unique code for this error. </param>
         /// <param name="details"> Additional related Errors. </param>
@@ -1166,15 +1157,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The RestoreJobRecoveryPointDetails. </summary>
-        /// <param name="recoveryPointId"></param>
-        /// <param name="recoverOn"></param>
-        /// <returns> A new <see cref="Models.RestoreJobRecoveryPointDetails"/> instance for mocking. </returns>
-        public static RestoreJobRecoveryPointDetails RestoreJobRecoveryPointDetails(string recoveryPointId = default, DateTimeOffset? recoverOn = default)
-        {
-            return new RestoreJobRecoveryPointDetails(recoveryPointId, recoverOn, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Details of Job's Sub Task. </summary>
         /// <param name="additionalDetails"> Additional details of Sub Tasks. </param>
         /// <param name="taskId"> Task Id of the Sub Task. </param>
@@ -1691,6 +1673,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 sourceDataStoreName,
                 destinationDataStoreName,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RestoreJobRecoveryPointDetails"/>. </summary>
+        /// <param name="recoveryPointId"></param>
+        /// <param name="recoverOn"></param>
+        /// <returns> A new <see cref="Models.RestoreJobRecoveryPointDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RestoreJobRecoveryPointDetails RestoreJobRecoveryPointDetails(string recoveryPointId, DateTimeOffset? recoverOn)
+        {
+            return new RestoreJobRecoveryPointDetails(recoveryPointId, recoverOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UserFacingWarningDetail"/>. </summary>
