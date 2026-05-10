@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RestoreJobRecoveryPointDetails"/>. </summary>
-        public RestoreJobRecoveryPointDetails()
+        internal RestoreJobRecoveryPointDetails()
         {
         }
 
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the RecoveryPointId. </summary>
-        public string RecoveryPointId { get; set; }
+        /// <summary> Gets the RecoveryPointId. </summary>
+        public string RecoveryPointId { get; }
 
-        /// <summary> Gets or sets the RecoverOn. </summary>
-        public DateTimeOffset? RecoverOn { get; set; }
+        /// <summary> Gets the RecoverOn. </summary>
+        public DateTimeOffset? RecoverOn { get; }
     }
 }

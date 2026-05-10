@@ -21,12 +21,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="taskId"> Task Id of the Sub Task. </param>
         /// <param name="taskName"> Name of the Sub Task. </param>
         /// <param name="taskStatus"> Status of the Sub Task. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> or <paramref name="taskStatus"/> is null. </exception>
-        public BackupJobSubTask(int taskId, string taskName, string taskStatus)
+        internal BackupJobSubTask(int taskId, string taskName, string taskStatus)
         {
-            Argument.AssertNotNull(taskName, nameof(taskName));
-            Argument.AssertNotNull(taskStatus, nameof(taskStatus));
-
             AdditionalDetails = new ChangeTrackingDictionary<string, string>();
             TaskId = taskId;
             TaskName = taskName;
@@ -54,15 +50,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public IReadOnlyDictionary<string, string> AdditionalDetails { get; }
 
         /// <summary> Task Id of the Sub Task. </summary>
-        public int TaskId { get; set; }
+        public int TaskId { get; }
 
         /// <summary> Name of the Sub Task. </summary>
-        public string TaskName { get; set; }
+        public string TaskName { get; }
 
         /// <summary> Progress of the Sub Task. </summary>
         public string TaskProgress { get; }
 
         /// <summary> Status of the Sub Task. </summary>
-        public string TaskStatus { get; set; }
+        public string TaskStatus { get; }
     }
 }
