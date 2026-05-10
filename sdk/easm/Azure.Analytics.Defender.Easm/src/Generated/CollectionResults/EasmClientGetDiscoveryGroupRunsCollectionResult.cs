@@ -22,6 +22,7 @@ namespace Azure.Analytics.Defender.Easm
         private readonly int? _skip;
         private readonly int? _maxPageSize;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of EasmClientGetDiscoveryGroupRunsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The EasmClient client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EasmClientGetDiscoveryGroupRunsCollectionResult(EasmClient client, string groupName, string filter, int? skip, int? maxPageSize, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public EasmClientGetDiscoveryGroupRunsCollectionResult(EasmClient client, string groupName, string filter, int? skip, int? maxPageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _groupName = groupName;
@@ -38,6 +40,7 @@ namespace Azure.Analytics.Defender.Easm
             _skip = skip;
             _maxPageSize = maxPageSize;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of EasmClientGetDiscoveryGroupRunsCollectionResult as an enumerable collection. </summary>
@@ -77,7 +80,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetDiscoveryGroupRunsRequest(nextLink, pageSize, _context) : _client.CreateGetDiscoveryGroupRunsRequest(_groupName, _filter, _skip, pageSize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EasmClient.GetDiscoveryGroupRuns");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClustersGetByResourceGroupAsyncCollectionResultOfT(_exadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ExadbVmClusterResource(Client, data));
+            return new AsyncPageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClustersGetByResourceGroupAsyncCollectionResultOfT(_exadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExadbVmClusterCollection.GetAll"), data => new ExadbVmClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClustersGetByResourceGroupCollectionResultOfT(_exadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ExadbVmClusterResource(Client, data));
+            return new PageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClustersGetByResourceGroupCollectionResultOfT(_exadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExadbVmClusterCollection.GetAll"), data => new ExadbVmClusterResource(Client, data));
         }
 
         /// <summary>

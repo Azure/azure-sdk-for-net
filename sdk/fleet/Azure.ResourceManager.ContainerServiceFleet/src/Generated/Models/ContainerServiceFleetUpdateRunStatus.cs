@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         {
             get
             {
-                return NodeImageSelection.SelectedNodeImageVersions;
+                return NodeImageSelection is null ? default : NodeImageSelection.SelectedNodeImageVersions;
             }
         }
     }

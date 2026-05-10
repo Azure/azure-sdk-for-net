@@ -1,0 +1,1 @@
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.CognitiveServices.WirePathAttribute' exists on 'Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties.AdditionalProperties' in the contract but not the implementation.

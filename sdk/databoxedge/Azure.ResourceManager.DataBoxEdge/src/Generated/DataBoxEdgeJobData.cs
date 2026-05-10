@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary>
-    /// A class representing the DataBoxEdgeJob data model.
-    /// A device job.
-    /// </summary>
+    /// <summary> A device job. </summary>
     public partial class DataBoxEdgeJobData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeJobData"/>. </summary>
         internal DataBoxEdgeJobData()
@@ -57,67 +25,116 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the job. </param>
         /// <param name="status"> The current status of the job. </param>
         /// <param name="startOn"> The UTC date and time at which the job started. </param>
         /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="percentComplete"> The percentage of the job that is complete. </param>
         /// <param name="error"> The error details. </param>
-        /// <param name="jobType"> The type of the job. </param>
-        /// <param name="currentStage"> Current stage of the update operation. </param>
-        /// <param name="downloadProgress"> The download progress. </param>
-        /// <param name="installProgress"> The install progress. </param>
-        /// <param name="totalRefreshErrors"> Total number of errors encountered during the refresh process. </param>
-        /// <param name="errorManifestFile"> Local share/remote container relative path to the error manifest file of the refresh. </param>
-        /// <param name="refreshedEntityId"> ARM ID of the entity that was refreshed. </param>
-        /// <param name="folder"> If only subfolders need to be refreshed, then the subfolder path inside the share or container. (The path is empty if there are no subfolders.). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, int? percentComplete, DataBoxEdgeJobErrorDetails error, DataBoxEdgeJobType? jobType, UpdateOperationStage? currentStage, UpdateDownloadProgress downloadProgress, UpdateInstallProgress installProgress, int? totalRefreshErrors, string errorManifestFile, ResourceIdentifier refreshedEntityId, string folder, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DataBoxEdgeJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, JobProperties properties, DataBoxEdgeJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, int? percentComplete, DataBoxEdgeJobErrorDetails error) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Status = status;
             StartOn = startOn;
             EndOn = endOn;
             PercentComplete = percentComplete;
             Error = error;
-            JobType = jobType;
-            CurrentStage = currentStage;
-            DownloadProgress = downloadProgress;
-            InstallProgress = installProgress;
-            TotalRefreshErrors = totalRefreshErrors;
-            ErrorManifestFile = errorManifestFile;
-            RefreshedEntityId = refreshedEntityId;
-            Folder = folder;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> The properties of the job. </summary>
+        internal JobProperties Properties { get; }
 
         /// <summary> The current status of the job. </summary>
         public DataBoxEdgeJobStatus? Status { get; }
+
         /// <summary> The UTC date and time at which the job started. </summary>
         public DateTimeOffset? StartOn { get; }
+
         /// <summary> The UTC date and time at which the job completed. </summary>
         public DateTimeOffset? EndOn { get; }
+
         /// <summary> The percentage of the job that is complete. </summary>
         public int? PercentComplete { get; }
+
         /// <summary> The error details. </summary>
         public DataBoxEdgeJobErrorDetails Error { get; }
+
         /// <summary> The type of the job. </summary>
-        public DataBoxEdgeJobType? JobType { get; }
+        public DataBoxEdgeJobType? JobType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.JobType;
+            }
+        }
+
         /// <summary> Current stage of the update operation. </summary>
-        public UpdateOperationStage? CurrentStage { get; }
+        public UpdateOperationStage? CurrentStage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentStage;
+            }
+        }
+
         /// <summary> The download progress. </summary>
-        public UpdateDownloadProgress DownloadProgress { get; }
+        public UpdateDownloadProgress DownloadProgress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DownloadProgress;
+            }
+        }
+
         /// <summary> The install progress. </summary>
-        public UpdateInstallProgress InstallProgress { get; }
+        public UpdateInstallProgress InstallProgress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstallProgress;
+            }
+        }
+
         /// <summary> Total number of errors encountered during the refresh process. </summary>
-        public int? TotalRefreshErrors { get; }
+        public int? TotalRefreshErrors
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalRefreshErrors;
+            }
+        }
+
         /// <summary> Local share/remote container relative path to the error manifest file of the refresh. </summary>
-        public string ErrorManifestFile { get; }
+        public string ErrorManifestFile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ErrorManifestFile;
+            }
+        }
+
         /// <summary> ARM ID of the entity that was refreshed. </summary>
-        public ResourceIdentifier RefreshedEntityId { get; }
+        public ResourceIdentifier RefreshedEntityId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RefreshedEntityId;
+            }
+        }
+
         /// <summary> If only subfolders need to be refreshed, then the subfolder path inside the share or container. (The path is empty if there are no subfolders.). </summary>
-        public string Folder { get; }
+        public string Folder
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Folder;
+            }
+        }
     }
 }

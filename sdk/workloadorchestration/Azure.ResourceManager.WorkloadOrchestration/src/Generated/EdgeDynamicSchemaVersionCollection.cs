@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != EdgeDynamicSchemaResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeDynamicSchemaResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeDynamicSchemaResource.ResourceType), nameof(id));
             }
         }
 
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EdgeDynamicSchemaVersionResource(Client, data));
+                context,
+                "EdgeDynamicSchemaVersionCollection.GetAll"), data => new EdgeDynamicSchemaVersionResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EdgeDynamicSchemaVersionResource(Client, data));
+                context,
+                "EdgeDynamicSchemaVersionCollection.GetAll"), data => new EdgeDynamicSchemaVersionResource(Client, data));
         }
 
         /// <summary>

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Purview
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -303,7 +303,13 @@ namespace Azure.ResourceManager.Purview
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PurviewAccountData, PurviewAccountResource>(new AccountsGetByResourceGroupAsyncCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, skipToken, context), data => new PurviewAccountResource(Client, data));
+            return new AsyncPageableWrapper<PurviewAccountData, PurviewAccountResource>(new AccountsGetByResourceGroupAsyncCollectionResultOfT(
+                _accountsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                skipToken,
+                context,
+                "PurviewAccountCollection.GetAll"), data => new PurviewAccountResource(Client, data));
         }
 
         /// <summary>
@@ -332,7 +338,13 @@ namespace Azure.ResourceManager.Purview
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PurviewAccountData, PurviewAccountResource>(new AccountsGetByResourceGroupCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, skipToken, context), data => new PurviewAccountResource(Client, data));
+            return new PageableWrapper<PurviewAccountData, PurviewAccountResource>(new AccountsGetByResourceGroupCollectionResultOfT(
+                _accountsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                skipToken,
+                context,
+                "PurviewAccountCollection.GetAll"), data => new PurviewAccountResource(Client, data));
         }
 
         /// <summary>

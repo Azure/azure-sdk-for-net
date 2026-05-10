@@ -25,6 +25,18 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
         }
 
         [Test]
+        public void ManualSetup()
+        {
+            #region Snippet:Invocations_ReadMe_ManualSetup
+
+            var builder = AgentHost.CreateBuilder();
+            builder.AddInvocations<EchoHandler>();
+            builder.Build().Run();
+
+            #endregion
+        }
+
+        [Test]
         public void Implement_EchoHandler()
         {
             var handler = new EchoHandler();

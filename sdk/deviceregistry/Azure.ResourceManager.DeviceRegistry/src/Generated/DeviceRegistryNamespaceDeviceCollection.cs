@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             if (id.ResourceType != DeviceRegistryNamespaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeviceRegistryNamespaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeviceRegistryNamespaceResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistryNamespaceDeviceData, DeviceRegistryNamespaceDeviceResource>(new NamespaceDevicesGetByResourceGroupAsyncCollectionResultOfT(_namespaceDevicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DeviceRegistryNamespaceDeviceResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistryNamespaceDeviceData, DeviceRegistryNamespaceDeviceResource>(new NamespaceDevicesGetByResourceGroupAsyncCollectionResultOfT(
+                _namespaceDevicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DeviceRegistryNamespaceDeviceCollection.GetAll"), data => new DeviceRegistryNamespaceDeviceResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistryNamespaceDeviceData, DeviceRegistryNamespaceDeviceResource>(new NamespaceDevicesGetByResourceGroupCollectionResultOfT(_namespaceDevicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DeviceRegistryNamespaceDeviceResource(Client, data));
+            return new PageableWrapper<DeviceRegistryNamespaceDeviceData, DeviceRegistryNamespaceDeviceResource>(new NamespaceDevicesGetByResourceGroupCollectionResultOfT(
+                _namespaceDevicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DeviceRegistryNamespaceDeviceCollection.GetAll"), data => new DeviceRegistryNamespaceDeviceResource(Client, data));
         }
 
         /// <summary>

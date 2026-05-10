@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         {
             get
             {
-                return ManagedOnBehalfOfConfiguration.MoboBrokerResources;
+                return ManagedOnBehalfOfConfiguration is null ? default : ManagedOnBehalfOfConfiguration.MoboBrokerResources;
             }
         }
 

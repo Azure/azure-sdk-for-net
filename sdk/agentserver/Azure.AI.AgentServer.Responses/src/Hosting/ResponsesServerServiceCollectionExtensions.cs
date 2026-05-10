@@ -4,10 +4,11 @@
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 
 namespace Azure.AI.AgentServer.Responses;
 
@@ -17,6 +18,11 @@ namespace Azure.AI.AgentServer.Responses;
 /// </summary>
 public static class ResponsesServerServiceCollectionExtensions
 {
+    /// <summary>
+    /// The OAuth scope used for authenticating with the Azure AI Foundry storage API.
+    /// </summary>
+    internal const string FoundryStorageScope = "https://ai.azure.com/.default";
+
     /// <summary>
     /// Registers the Responses API server SDK services into the dependency injection container.
     /// </summary>
@@ -70,20 +76,46 @@ public static class ResponsesServerServiceCollectionExtensions
         services.TryAddSingleton<ResponsesStreamProvider>(sp =>
             new InMemoryStreamProvider(sp.GetRequiredService<InMemoryResponsesProvider>()));
 
-        // Auto-detect hosted environment: if FOUNDRY_PROJECT_ENDPOINT is set,
+        // Auto-detect hosted environment: when FoundryEnvironment.IsHosted is true,
+        // meaning the .NET hosting environment is not Development and
+        // FOUNDRY_PROJECT_ENDPOINT, FOUNDRY_AGENT_NAME, and FOUNDRY_AGENT_VERSION are all configured,
         // use FoundryStorageProvider for persistence; otherwise use in-memory.
-        if (!string.IsNullOrWhiteSpace(FoundryEnvironment.ProjectEndpoint))
+        if (FoundryEnvironment.IsHosted)
         {
-            services.TryAddSingleton<ResponsesProvider, FoundryStorageProvider>();
-
             services.TryAddSingleton<TokenCredential>(_ => new DefaultAzureCredential());
 
-            services.AddTransient<BearerTokenHandler>();
-            services.AddTransient<BaseUrlRewriteHandler>();
+            // Build the Azure.Core HttpPipeline with BearerTokenAuthenticationPolicy.
+            // This automatically provides: retry, request ID, user-agent telemetry,
+            // distributed tracing, logging, and token caching.
+            // The ServerVersionPolicy prepends the composed server version (from all
+            // registered protocols and developer segments) to the User-Agent header.
+            // The FoundryStorageLoggingPolicy is added as a per-retry policy so each
+            // attempt (including retries) is logged with correlation headers.
+            services.TryAddSingleton(sp =>
+            {
+                var credential = sp.GetRequiredService<TokenCredential>();
+                var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<FoundryStorageLoggingPolicy>();
+                var options = new FoundryStorageClientOptions();
 
-            services.AddHttpClient(FoundryStorageProvider.HttpClientName)
-                .AddHttpMessageHandler<BaseUrlRewriteHandler>()
-                .AddHttpMessageHandler<BearerTokenHandler>();
+                var registry = sp.GetService<ServerVersionRegistry>();
+                if (registry is not null)
+                {
+                    options.AddPolicy(new ServerVersionPolicy(registry), HttpPipelinePosition.PerCall);
+                }
+
+                options.AddPolicy(new FoundryStorageLoggingPolicy(logger), HttpPipelinePosition.PerRetry);
+
+                return HttpPipelineBuilder.Build(
+                    options,
+                    new BearerTokenAuthenticationPolicy(credential, FoundryStorageScope));
+            });
+
+            services.TryAddSingleton<ResponsesProvider>(sp =>
+            {
+                var pipeline = sp.GetRequiredService<HttpPipeline>();
+                var storageBaseUri = ResolveStorageBaseUri();
+                return new FoundryStorageProvider(pipeline, storageBaseUri);
+            });
         }
         else
         {
@@ -97,6 +129,44 @@ public static class ResponsesServerServiceCollectionExtensions
         services.AddScoped<ResponseEndpointHandler>();
         services.AddScoped<ResponsesExceptionFilter>();
 
+        // Log startup configuration when the host starts
+        services.AddHostedService<ResponsesStartupLogger>();
+
         return services;
+    }
+
+    /// <summary>
+    /// Resolves the Foundry storage base URI from the project endpoint environment variable.
+    /// </summary>
+    internal static Uri ResolveStorageBaseUri()
+    {
+        var endpoint = FoundryEnvironment.ProjectEndpoint;
+
+        if (string.IsNullOrWhiteSpace(endpoint))
+        {
+            throw new InvalidOperationException(
+                "FoundryEnvironment.ProjectEndpoint is required. " +
+                "In hosted environments, the Azure AI Foundry platform must set the FOUNDRY_PROJECT_ENDPOINT variable.");
+        }
+
+        if (!Uri.TryCreate(endpoint, UriKind.Absolute, out var uri))
+        {
+            throw new InvalidOperationException(
+                "FoundryEnvironment.ProjectEndpoint contains an invalid absolute URI.");
+        }
+
+        // Require HTTPS in non-development environments.
+        var hostingEnv = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
+            ?? Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+        bool isDevelopment = string.Equals(hostingEnv, "Development", StringComparison.OrdinalIgnoreCase);
+
+        if (!isDevelopment
+            && !string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException(
+                "FoundryEnvironment.ProjectEndpoint must use the HTTPS scheme.");
+        }
+
+        return new Uri(uri.GetLeftPart(UriPartial.Path).TrimEnd('/') + "/storage/");
     }
 }

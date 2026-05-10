@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Datadog
         {
             if (id.ResourceType != DatadogMonitorResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatadogMonitorResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatadogMonitorResource.ResourceType), nameof(id));
             }
         }
 
@@ -291,7 +291,13 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatadogMonitoredSubscriptionData, DatadogMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllAsyncCollectionResultOfT(_monitoredSubscriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DatadogMonitoredSubscriptionResource(Client, data));
+            return new AsyncPageableWrapper<DatadogMonitoredSubscriptionData, DatadogMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllAsyncCollectionResultOfT(
+                _monitoredSubscriptionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatadogMonitoredSubscriptionCollection.GetAll"), data => new DatadogMonitoredSubscriptionResource(Client, data));
         }
 
         /// <summary>
@@ -319,7 +325,13 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatadogMonitoredSubscriptionData, DatadogMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllCollectionResultOfT(_monitoredSubscriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DatadogMonitoredSubscriptionResource(Client, data));
+            return new PageableWrapper<DatadogMonitoredSubscriptionData, DatadogMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllCollectionResultOfT(
+                _monitoredSubscriptionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatadogMonitoredSubscriptionCollection.GetAll"), data => new DatadogMonitoredSubscriptionResource(Client, data));
         }
 
         /// <summary>

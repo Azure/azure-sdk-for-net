@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             get
             {
-                return Config.Kind;
+                return Config is null ? default : Config.Kind;
             }
         }
     }

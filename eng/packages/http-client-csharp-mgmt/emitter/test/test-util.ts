@@ -136,6 +136,9 @@ export function normalizeSchemaForComparison(
   // it is a known issue that the following properties might different therefore we need to ignore them:
   // - resources.metadata.resourceName
   // - resources.metadata.parentResourceModelId
+  // - nonResourceMethods[].resourceModelId (buildArmProviderSchema may not set it for methods
+  //   whose @armResourceAction decorator isn't found by parseResourceOperation, while
+  //   resolveArmResources sets it via postProcessArmResources when filtering incomplete resources)
   for (const resource of normalizedSchema.resources) {
     resource.metadata.resourceName = "<normalized>";
     resource.metadata.parentResourceModelId = "<normalized>";
@@ -158,6 +161,11 @@ export function normalizeSchemaForComparison(
   normalizedSchema.nonResourceMethods.sort((a, b) =>
     a.methodId.localeCompare(b.methodId)
   );
+
+  // Normalize resourceModelId on non-resource methods (known discrepancy between the two paths)
+  for (const method of normalizedSchema.nonResourceMethods) {
+    delete (method as any).resourceModelId;
+  }
 
   return normalizedSchema;
 }

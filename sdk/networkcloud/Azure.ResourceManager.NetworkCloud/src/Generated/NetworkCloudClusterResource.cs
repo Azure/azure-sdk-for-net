@@ -7,47 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
-    /// A Class representing a NetworkCloudCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudClusterResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkCloudCluster method.
+    /// A class representing a NetworkCloudCluster along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudClusterResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkCloudClusters method.
     /// </summary>
     public partial class NetworkCloudClusterResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="NetworkCloudClusterResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="clusterName"> The clusterName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _networkCloudClusterClustersClientDiagnostics;
-        private readonly ClustersRestOperations _networkCloudClusterClustersRestClient;
+        private readonly ClientDiagnostics _clustersClientDiagnostics;
+        private readonly Clusters _clustersRestClient;
         private readonly NetworkCloudClusterData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/clusters";
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkCloudClusterResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkCloudClusterResource for mocking. </summary>
         protected NetworkCloudClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkCloudClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudClusterResource(ArmClient client, NetworkCloudClusterData data) : this(client, data.Id)
@@ -56,278 +46,92 @@ namespace Azure.ResourceManager.NetworkCloud
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkCloudClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkCloudClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string networkCloudClusterClustersApiVersion);
-            _networkCloudClusterClustersRestClient = new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudClusterClustersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string networkCloudClusterApiVersion);
+            _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
+            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Endpoint, networkCloudClusterApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual NetworkCloudClusterData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of NetworkCloudBareMetalMachineKeySetResources in the NetworkCloudCluster. </summary>
-        /// <returns> An object representing collection of NetworkCloudBareMetalMachineKeySetResources and their operations over a NetworkCloudBareMetalMachineKeySetResource. </returns>
-        public virtual NetworkCloudBareMetalMachineKeySetCollection GetNetworkCloudBareMetalMachineKeySets()
-        {
-            return GetCachedClient(client => new NetworkCloudBareMetalMachineKeySetCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get bare metal machine key set of the provided cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachineKeySets_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="bareMetalMachineKeySetName"> The name of the bare metal machine key set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkCloudBareMetalMachineKeySetResource>> GetNetworkCloudBareMetalMachineKeySetAsync(string bareMetalMachineKeySetName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkCloudBareMetalMachineKeySets().GetAsync(bareMetalMachineKeySetName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get bare metal machine key set of the provided cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachineKeySets_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="bareMetalMachineKeySetName"> The name of the bare metal machine key set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkCloudBareMetalMachineKeySetResource> GetNetworkCloudBareMetalMachineKeySet(string bareMetalMachineKeySetName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkCloudBareMetalMachineKeySets().Get(bareMetalMachineKeySetName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkCloudBmcKeySetResources in the NetworkCloudCluster. </summary>
-        /// <returns> An object representing collection of NetworkCloudBmcKeySetResources and their operations over a NetworkCloudBmcKeySetResource. </returns>
-        public virtual NetworkCloudBmcKeySetCollection GetNetworkCloudBmcKeySets()
-        {
-            return GetCachedClient(client => new NetworkCloudBmcKeySetCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get baseboard management controller key set of the provided cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets/{bmcKeySetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BmcKeySets_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBmcKeySetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkCloudBmcKeySetResource>> GetNetworkCloudBmcKeySetAsync(string bmcKeySetName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkCloudBmcKeySets().GetAsync(bmcKeySetName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get baseboard management controller key set of the provided cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets/{bmcKeySetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BmcKeySets_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBmcKeySetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkCloudBmcKeySetResource> GetNetworkCloudBmcKeySet(string bmcKeySetName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkCloudBmcKeySets().Get(bmcKeySetName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkCloudClusterMetricsConfigurationResources in the NetworkCloudCluster. </summary>
-        /// <returns> An object representing collection of NetworkCloudClusterMetricsConfigurationResources and their operations over a NetworkCloudClusterMetricsConfigurationResource. </returns>
-        public virtual NetworkCloudClusterMetricsConfigurationCollection GetNetworkCloudClusterMetricsConfigurations()
-        {
-            return GetCachedClient(client => new NetworkCloudClusterMetricsConfigurationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get metrics configuration of the provided cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/metricsConfigurations/{metricsConfigurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterMetricsConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="metricsConfigurationName"> The name of the metrics configuration for the cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricsConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="metricsConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkCloudClusterMetricsConfigurationResource>> GetNetworkCloudClusterMetricsConfigurationAsync(string metricsConfigurationName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkCloudClusterMetricsConfigurations().GetAsync(metricsConfigurationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get metrics configuration of the provided cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/metricsConfigurations/{metricsConfigurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterMetricsConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="metricsConfigurationName"> The name of the metrics configuration for the cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricsConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="metricsConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkCloudClusterMetricsConfigurationResource> GetNetworkCloudClusterMetricsConfiguration(string metricsConfigurationName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkCloudClusterMetricsConfigurations().Get(metricsConfigurationName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get properties of the provided cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetworkCloudClusterResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.Get");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.Get");
             scope.Start();
             try
             {
-                var response = await _networkCloudClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkCloudClusterData> response = Response.FromValue(NetworkCloudClusterData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkCloudClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -341,33 +145,41 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Get properties of the provided cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkCloudClusterResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.Get");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.Get");
             scope.Start();
             try
             {
-                var response = _networkCloudClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkCloudClusterData> response = Response.FromValue(NetworkCloudClusterData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkCloudClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -378,84 +190,53 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Delete the provided cluster.
+        /// Patch the properties of the provided cluster, or update the tags associated with the cluster. Properties and tag updates can be done independently.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="patch"> The request body. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudClusterResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudClusterPatch patch, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.Delete");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.Update");
             scope.Start();
             try
             {
-                var response = await _networkCloudClusterClustersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudClusterClustersClientDiagnostics, Pipeline, _networkCloudClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudClusterPatch.ToRequestContent(patch), matchConditions, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudClusterResource> operation = new NetworkCloudArmOperation<NetworkCloudClusterResource>(
+                    new NetworkCloudClusterOperationSource(Client),
+                    _clustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete the provided cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _networkCloudClusterClustersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudClusterClustersClientDiagnostics, Pipeline, _networkCloudClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -469,41 +250,50 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Patch the properties of the provided cluster, or update the tags associated with the cluster. Properties and tag updates can be done independently.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The request body. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkCloudClusterResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudClusterPatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudClusterResource> Update(WaitUntil waitUntil, NetworkCloudClusterPatch patch, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.Update");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.Update");
             scope.Start();
             try
             {
-                var response = await _networkCloudClusterClustersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudClusterResource>(new NetworkCloudClusterOperationSource(Client), _networkCloudClusterClustersClientDiagnostics, Pipeline, _networkCloudClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudClusterPatch.ToRequestContent(patch), matchConditions, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudClusterResource> operation = new NetworkCloudArmOperation<NetworkCloudClusterResource>(
+                    new NetworkCloudClusterOperationSource(Client),
+                    _clustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -514,44 +304,108 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Patch the properties of the provided cluster, or update the tags associated with the cluster. Properties and tag updates can be done independently.
+        /// Delete the provided cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The request body. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<NetworkCloudClusterResource> Update(WaitUntil waitUntil, NetworkCloudClusterPatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.Update");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.Delete");
             scope.Start();
             try
             {
-                var response = _networkCloudClusterClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudClusterResource>(new NetworkCloudClusterOperationSource(Client), _networkCloudClusterClustersClientDiagnostics, Pipeline, _networkCloudClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, matchConditions, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _clustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete the provided cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, matchConditions, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _clustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -565,20 +419,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Trigger the continuation of an update for a cluster with a matching update strategy that has paused after completing a segment of the update.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/continueUpdateVersion</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/continueUpdateVersion. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_ContinueUpdateVersion</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_ContinueUpdateVersion. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -590,14 +444,27 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.ContinueUpdateVersion");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.ContinueUpdateVersion");
             scope.Start();
             try
             {
-                var response = await _networkCloudClusterClustersRestClient.ContinueUpdateVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudClusterClustersClientDiagnostics, Pipeline, _networkCloudClusterClustersRestClient.CreateContinueUpdateVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateContinueUpdateVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterContinueUpdateVersionContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _clustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -611,20 +478,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Trigger the continuation of an update for a cluster with a matching update strategy that has paused after completing a segment of the update.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/continueUpdateVersion</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/continueUpdateVersion. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_ContinueUpdateVersion</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_ContinueUpdateVersion. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -636,14 +503,27 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.ContinueUpdateVersion");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.ContinueUpdateVersion");
             scope.Start();
             try
             {
-                var response = _networkCloudClusterClustersRestClient.ContinueUpdateVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudClusterClustersClientDiagnostics, Pipeline, _networkCloudClusterClustersRestClient.CreateContinueUpdateVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateContinueUpdateVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterContinueUpdateVersionContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _clustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -657,36 +537,49 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Deploy the cluster using the rack configuration provided during creation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/deploy</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/deploy. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Deploy</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Deploy. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeployAsync(WaitUntil waitUntil, ClusterDeployContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeployAsync(WaitUntil waitUntil, ClusterDeployContent content = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.Deploy");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.Deploy");
             scope.Start();
             try
             {
-                var response = await _networkCloudClusterClustersRestClient.DeployAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudClusterClustersClientDiagnostics, Pipeline, _networkCloudClusterClustersRestClient.CreateDeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateDeployRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterDeployContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _clustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -700,36 +593,49 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Deploy the cluster using the rack configuration provided during creation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/deploy</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/deploy. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Deploy</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Deploy. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkCloudOperationStatusResult> Deploy(WaitUntil waitUntil, ClusterDeployContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> Deploy(WaitUntil waitUntil, ClusterDeployContent content = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.Deploy");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.Deploy");
             scope.Start();
             try
             {
-                var response = _networkCloudClusterClustersRestClient.Deploy(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudClusterClustersClientDiagnostics, Pipeline, _networkCloudClusterClustersRestClient.CreateDeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateDeployRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterDeployContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _clustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -740,39 +646,108 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Triggers the execution of a runtime protection scan to detect and remediate detected issues, in accordance with the cluster configuration.
+        /// Trigger an inspection of the cluster to perform validation and optional corrective actions based on the supplied additional actions and filters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/scanRuntime</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/inspect. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_ScanRuntime</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Inspect. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> ScanRuntimeAsync(WaitUntil waitUntil, ClusterScanRuntimeContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> InspectAsync(WaitUntil waitUntil, NetworkCloudClusterInspectContent content = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.ScanRuntime");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.Inspect");
             scope.Start();
             try
             {
-                var response = await _networkCloudClusterClustersRestClient.ScanRuntimeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudClusterClustersClientDiagnostics, Pipeline, _networkCloudClusterClustersRestClient.CreateScanRuntimeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateInspectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudClusterInspectContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _clustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Trigger an inspection of the cluster to perform validation and optional corrective actions based on the supplied additional actions and filters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/inspect. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Inspect. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> Inspect(WaitUntil waitUntil, NetworkCloudClusterInspectContent content = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.Inspect");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateInspectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudClusterInspectContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _clustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -786,36 +761,105 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Triggers the execution of a runtime protection scan to detect and remediate detected issues, in accordance with the cluster configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/scanRuntime</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/scanRuntime. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_ScanRuntime</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_ScanRuntime. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkCloudOperationStatusResult> ScanRuntime(WaitUntil waitUntil, ClusterScanRuntimeContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> ScanRuntimeAsync(WaitUntil waitUntil, ClusterScanRuntimeContent content = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.ScanRuntime");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.ScanRuntime");
             scope.Start();
             try
             {
-                var response = _networkCloudClusterClustersRestClient.ScanRuntime(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudClusterClustersClientDiagnostics, Pipeline, _networkCloudClusterClustersRestClient.CreateScanRuntimeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateScanRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterScanRuntimeContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _clustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers the execution of a runtime protection scan to detect and remediate detected issues, in accordance with the cluster configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/scanRuntime. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_ScanRuntime. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> ScanRuntime(WaitUntil waitUntil, ClusterScanRuntimeContent content = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.ScanRuntime");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateScanRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterScanRuntimeContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _clustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -829,20 +873,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Update the version of the provided cluster to one of the available supported versions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/updateVersion</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/updateVersion. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_UpdateVersion</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_UpdateVersion. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -854,14 +898,27 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.UpdateVersion");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.UpdateVersion");
             scope.Start();
             try
             {
-                var response = await _networkCloudClusterClustersRestClient.UpdateVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudClusterClustersClientDiagnostics, Pipeline, _networkCloudClusterClustersRestClient.CreateUpdateVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateUpdateVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterUpdateVersionContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _clustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -875,20 +932,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Update the version of the provided cluster to one of the available supported versions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/updateVersion</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/updateVersion. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_UpdateVersion</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_UpdateVersion. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -900,14 +957,27 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.UpdateVersion");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.UpdateVersion");
             scope.Start();
             try
             {
-                var response = _networkCloudClusterClustersRestClient.UpdateVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudClusterClustersClientDiagnostics, Pipeline, _networkCloudClusterClustersRestClient.CreateUpdateVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateUpdateVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterUpdateVersionContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _clustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -917,27 +987,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -947,28 +997,34 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.AddTag");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkCloudClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new NetworkCloudClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<NetworkCloudClusterData> response = Response.FromValue(NetworkCloudClusterData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkCloudClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetworkCloudClusterPatch();
-                    foreach (var tag in current.Tags)
+                    NetworkCloudClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<NetworkCloudClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -979,27 +1035,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1009,28 +1045,34 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.AddTag");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkCloudClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new NetworkCloudClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<NetworkCloudClusterData> response = Response.FromValue(NetworkCloudClusterData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkCloudClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetworkCloudClusterPatch();
-                    foreach (var tag in current.Tags)
+                    NetworkCloudClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<NetworkCloudClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1041,53 +1083,39 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudClusterResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.SetTags");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkCloudClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new NetworkCloudClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<NetworkCloudClusterData> response = Response.FromValue(NetworkCloudClusterData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkCloudClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetworkCloudClusterPatch();
+                    NetworkCloudClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<NetworkCloudClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1098,53 +1126,39 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<NetworkCloudClusterResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.SetTags");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkCloudClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new NetworkCloudClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<NetworkCloudClusterData> response = Response.FromValue(NetworkCloudClusterData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkCloudClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetworkCloudClusterPatch();
+                    NetworkCloudClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<NetworkCloudClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1155,27 +1169,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1183,28 +1177,34 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.RemoveTag");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkCloudClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new NetworkCloudClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<NetworkCloudClusterData> response = Response.FromValue(NetworkCloudClusterData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkCloudClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetworkCloudClusterPatch();
-                    foreach (var tag in current.Tags)
+                    NetworkCloudClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<NetworkCloudClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1215,27 +1215,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1243,28 +1223,34 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _networkCloudClusterClustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.RemoveTag");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("NetworkCloudClusterResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkCloudClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new NetworkCloudClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<NetworkCloudClusterData> response = Response.FromValue(NetworkCloudClusterData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkCloudClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetworkCloudClusterPatch();
-                    foreach (var tag in current.Tags)
+                    NetworkCloudClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<NetworkCloudClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1273,6 +1259,105 @@ namespace Azure.ResourceManager.NetworkCloud
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of NetworkCloudBareMetalMachineKeySets in the <see cref="NetworkCloudClusterResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudBareMetalMachineKeySets and their operations over a NetworkCloudBareMetalMachineKeySetResource. </returns>
+        public virtual NetworkCloudBareMetalMachineKeySetCollection GetNetworkCloudBareMetalMachineKeySets()
+        {
+            return GetCachedClient(client => new NetworkCloudBareMetalMachineKeySetCollection(client, Id));
+        }
+
+        /// <summary> Get bare metal machine key set of the provided cluster. </summary>
+        /// <param name="bareMetalMachineKeySetName"> The name of the bare metal machine key set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkCloudBareMetalMachineKeySetResource>> GetNetworkCloudBareMetalMachineKeySetAsync(string bareMetalMachineKeySetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bareMetalMachineKeySetName, nameof(bareMetalMachineKeySetName));
+
+            return await GetNetworkCloudBareMetalMachineKeySets().GetAsync(bareMetalMachineKeySetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get bare metal machine key set of the provided cluster. </summary>
+        /// <param name="bareMetalMachineKeySetName"> The name of the bare metal machine key set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkCloudBareMetalMachineKeySetResource> GetNetworkCloudBareMetalMachineKeySet(string bareMetalMachineKeySetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bareMetalMachineKeySetName, nameof(bareMetalMachineKeySetName));
+
+            return GetNetworkCloudBareMetalMachineKeySets().Get(bareMetalMachineKeySetName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkCloudBmcKeySets in the <see cref="NetworkCloudClusterResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudBmcKeySets and their operations over a NetworkCloudBmcKeySetResource. </returns>
+        public virtual NetworkCloudBmcKeySetCollection GetNetworkCloudBmcKeySets()
+        {
+            return GetCachedClient(client => new NetworkCloudBmcKeySetCollection(client, Id));
+        }
+
+        /// <summary> Get baseboard management controller key set of the provided cluster. </summary>
+        /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkCloudBmcKeySetResource>> GetNetworkCloudBmcKeySetAsync(string bmcKeySetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
+
+            return await GetNetworkCloudBmcKeySets().GetAsync(bmcKeySetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get baseboard management controller key set of the provided cluster. </summary>
+        /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkCloudBmcKeySetResource> GetNetworkCloudBmcKeySet(string bmcKeySetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
+
+            return GetNetworkCloudBmcKeySets().Get(bmcKeySetName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkCloudClusterMetricsConfigurations in the <see cref="NetworkCloudClusterResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudClusterMetricsConfigurations and their operations over a NetworkCloudClusterMetricsConfigurationResource. </returns>
+        public virtual NetworkCloudClusterMetricsConfigurationCollection GetNetworkCloudClusterMetricsConfigurations()
+        {
+            return GetCachedClient(client => new NetworkCloudClusterMetricsConfigurationCollection(client, Id));
+        }
+
+        /// <summary> Get metrics configuration of the provided cluster. </summary>
+        /// <param name="metricsConfigurationName"> The name of the metrics configuration for the cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metricsConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="metricsConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkCloudClusterMetricsConfigurationResource>> GetNetworkCloudClusterMetricsConfigurationAsync(string metricsConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(metricsConfigurationName, nameof(metricsConfigurationName));
+
+            return await GetNetworkCloudClusterMetricsConfigurations().GetAsync(metricsConfigurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get metrics configuration of the provided cluster. </summary>
+        /// <param name="metricsConfigurationName"> The name of the metrics configuration for the cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metricsConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="metricsConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkCloudClusterMetricsConfigurationResource> GetNetworkCloudClusterMetricsConfiguration(string metricsConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(metricsConfigurationName, nameof(metricsConfigurationName));
+
+            return GetNetworkCloudClusterMetricsConfigurations().Get(metricsConfigurationName, cancellationToken);
         }
     }
 }

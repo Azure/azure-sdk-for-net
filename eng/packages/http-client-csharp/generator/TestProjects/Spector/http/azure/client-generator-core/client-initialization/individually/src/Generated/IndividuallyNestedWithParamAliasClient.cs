@@ -18,13 +18,13 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClie
     {
         protected IndividuallyNestedWithParamAliasClient() => throw null;
 
-        public IndividuallyNestedWithParamAliasClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new IndividuallyNestedWithParamAliasClientOptions()) => throw null;
+        public IndividuallyNestedWithParamAliasClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new SpecsAzureTcgcClientInitIndividuallyClientOptions()) => throw null;
 
-        public IndividuallyNestedWithParamAliasClient(string blobName, IndividuallyNestedWithParamAliasClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
+        public IndividuallyNestedWithParamAliasClient(string blobName, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
 
-        internal IndividuallyNestedWithParamAliasClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, IndividuallyNestedWithParamAliasClientOptions options) => throw null;
+        internal IndividuallyNestedWithParamAliasClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, SpecsAzureTcgcClientInitIndividuallyClientOptions options) => throw null;
 
-        public IndividuallyNestedWithParamAliasClient(Uri endpoint, string blobName, IndividuallyNestedWithParamAliasClientOptions options) : this(null, endpoint, blobName, options) => throw null;
+        public IndividuallyNestedWithParamAliasClient(Uri endpoint, string blobName, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(null, endpoint, blobName, options) => throw null;
 
         [Experimental("SCME0002")]
         public IndividuallyNestedWithParamAliasClient(IndividuallyNestedWithParamAliasClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;

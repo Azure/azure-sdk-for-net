@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MongoCluster
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -442,7 +442,13 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinksGetPrivateLinksAsyncCollectionResultOfT(_privateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new PrivateLinksGetPrivateLinksAsyncCollectionResultOfT(
+                _privateLinksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MongoClusterResource.GetPrivateLinks");
         }
 
         /// <summary>
@@ -474,7 +480,13 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinksGetPrivateLinksCollectionResultOfT(_privateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new PrivateLinksGetPrivateLinksCollectionResultOfT(
+                _privateLinksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MongoClusterResource.GetPrivateLinks");
         }
 
         /// <summary>
@@ -506,7 +518,13 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new ReplicasGetReplicasByParentAsyncCollectionResultOfT(_replicasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ReplicasGetReplicasByParentAsyncCollectionResultOfT(
+                _replicasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MongoClusterResource.GetReplicasByParent");
         }
 
         /// <summary>
@@ -538,7 +556,13 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new ReplicasGetReplicasByParentCollectionResultOfT(_replicasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ReplicasGetReplicasByParentCollectionResultOfT(
+                _replicasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MongoClusterResource.GetReplicasByParent");
         }
 
         /// <summary>

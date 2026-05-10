@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    /// <summary>
-    /// A class representing the ContainerRegistryArchive data model.
-    /// An object that represents a archive for a container registry.
-    /// </summary>
+    /// <summary> An object that represents a archive for a container registry. </summary>
     public partial class ContainerRegistryArchiveData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryArchiveData"/>. </summary>
         public ContainerRegistryArchiveData()
@@ -57,40 +25,94 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryArchiveData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="packageSource"> The package source of the archive. </param>
-        /// <param name="publishedVersion"> The published version of the archive. </param>
-        /// <param name="repositoryEndpointPrefix"></param>
-        /// <param name="repositoryEndpoint"></param>
-        /// <param name="provisioningState"> The provisioning state of the archive at the time the operation was called. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryArchiveData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerRegistryArchivePackageSourceProperties packageSource, string publishedVersion, string repositoryEndpointPrefix, string repositoryEndpoint, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the private link resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the archive. </param>
+        internal ContainerRegistryArchiveData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ArchiveProperties properties) : base(id, name, resourceType, systemData)
         {
-            PackageSource = packageSource;
-            PublishedVersion = publishedVersion;
-            RepositoryEndpointPrefix = repositoryEndpointPrefix;
-            RepositoryEndpoint = repositoryEndpoint;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> The properties of the archive. </summary>
+        [WirePath("properties")]
+        internal ArchiveProperties Properties { get; set; }
 
         /// <summary> The package source of the archive. </summary>
         [WirePath("properties.packageSource")]
-        public ContainerRegistryArchivePackageSourceProperties PackageSource { get; set; }
+        public ContainerRegistryArchivePackageSourceProperties PackageSource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PackageSource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArchiveProperties();
+                }
+                Properties.PackageSource = value;
+            }
+        }
+
         /// <summary> The published version of the archive. </summary>
         [WirePath("properties.publishedVersion")]
-        public string PublishedVersion { get; set; }
-        /// <summary> Gets or sets the repository endpoint prefix. </summary>
+        public string PublishedVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublishedVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArchiveProperties();
+                }
+                Properties.PublishedVersion = value;
+            }
+        }
+
+        /// <summary> Gets or sets the RepositoryEndpointPrefix. </summary>
         [WirePath("properties.repositoryEndpointPrefix")]
-        public string RepositoryEndpointPrefix { get; set; }
-        /// <summary> Gets the repository endpoint. </summary>
+        public string RepositoryEndpointPrefix
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RepositoryEndpointPrefix;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArchiveProperties();
+                }
+                Properties.RepositoryEndpointPrefix = value;
+            }
+        }
+
+        /// <summary> Gets the RepositoryEndpoint. </summary>
         [WirePath("properties.repositoryEndpoint")]
-        public string RepositoryEndpoint { get; }
+        public string RepositoryEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RepositoryEndpoint;
+            }
+        }
+
         /// <summary> The provisioning state of the archive at the time the operation was called. </summary>
         [WirePath("properties.provisioningState")]
-        public ContainerRegistryProvisioningState? ProvisioningState { get; }
+        public ContainerRegistryProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

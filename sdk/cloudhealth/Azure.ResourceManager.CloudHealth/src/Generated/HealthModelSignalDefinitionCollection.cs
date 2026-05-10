@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CloudHealth
         {
             if (id.ResourceType != HealthModelResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HealthModelResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HealthModelResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,8 @@ namespace Azure.ResourceManager.CloudHealth
                 Id.ResourceGroupName,
                 Id.Name,
                 timestamp,
-                context), data => new HealthModelSignalDefinitionResource(Client, data));
+                context,
+                "HealthModelSignalDefinitionCollection.GetAll"), data => new HealthModelSignalDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -329,7 +330,8 @@ namespace Azure.ResourceManager.CloudHealth
                 Id.ResourceGroupName,
                 Id.Name,
                 timestamp,
-                context), data => new HealthModelSignalDefinitionResource(Client, data));
+                context,
+                "HealthModelSignalDefinitionCollection.GetAll"), data => new HealthModelSignalDefinitionResource(Client, data));
         }
 
         /// <summary>

@@ -3,6 +3,7 @@
     <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.AI.AgentServer.Core</RootNamespace>
+    <Version>1.0.0-beta.24</Version>
     <Description>Shared foundation for Azure AI Agent Server packages — provides port binding, health probes, OpenTelemetry, graceful shutdown, and the composable AgentHostBuilder.</Description>
     <PackageTags>Microsoft Azure AI Agent Server Core ASP.NET Core OpenTelemetry</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -16,8 +17,7 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Monitor.OpenTelemetry.AspNetCore" />
-    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
+    <PackageReference Include="Microsoft.OpenTelemetry" />
   </ItemGroup>
   <!-- Ship a global using so consumers can write AgentHost.Run<T>() with zero usings. -->
   <ItemGroup>

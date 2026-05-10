@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -99,7 +99,7 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             InternalMetadataContainer internalMetadata = default;
-            IList<global::OpenAI.Responses.ResponseItem> items = default;
+            IList<ResponseItem> items = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -123,7 +123,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectConversationCreationOptions(internalMetadata, items ?? new ChangeTrackingList<global::OpenAI.Responses.ResponseItem>(), additionalBinaryDataProperties);
+            return new ProjectConversationCreationOptions(internalMetadata, items ?? new ChangeTrackingList<ResponseItem>(), additionalBinaryDataProperties);
         }
     }
 }

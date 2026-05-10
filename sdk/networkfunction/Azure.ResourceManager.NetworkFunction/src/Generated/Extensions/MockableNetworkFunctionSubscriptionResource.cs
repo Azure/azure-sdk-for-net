@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsBySubscriptionGetAllAsyncCollectionResultOfT(AzureTrafficCollectorsBySubscriptionRestClient, Id.SubscriptionId, context), data => new AzureTrafficCollectorResource(Client, data));
+            return new AsyncPageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsBySubscriptionGetAllAsyncCollectionResultOfT(AzureTrafficCollectorsBySubscriptionRestClient, Id.SubscriptionId, context, "MockableNetworkFunctionSubscriptionResource.GetAzureTrafficCollectors"), data => new AzureTrafficCollectorResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsBySubscriptionGetAllCollectionResultOfT(AzureTrafficCollectorsBySubscriptionRestClient, Id.SubscriptionId, context), data => new AzureTrafficCollectorResource(Client, data));
+            return new PageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsBySubscriptionGetAllCollectionResultOfT(AzureTrafficCollectorsBySubscriptionRestClient, Id.SubscriptionId, context, "MockableNetworkFunctionSubscriptionResource.GetAzureTrafficCollectors"), data => new AzureTrafficCollectorResource(Client, data));
         }
     }
 }

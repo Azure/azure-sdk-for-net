@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Advisor
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AdvisorTriageRecommendationResource.ResourceType)
+            if (id.ResourceType != "Microsoft.Advisor/triageRecommendations")
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AdvisorTriageRecommendationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Advisor/triageRecommendations"), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AdvisorTriageData, AdvisorTriageResource>(new TriageResourcesGetAllAsyncCollectionResultOfT(_triageResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context), data => new AdvisorTriageResource(Client, data));
+            return new AsyncPageableWrapper<AdvisorTriageData, AdvisorTriageResource>(new TriageResourcesGetAllAsyncCollectionResultOfT(
+                _triageResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "AdvisorTriageCollection.GetAll"), data => new AdvisorTriageResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AdvisorTriageData, AdvisorTriageResource>(new TriageResourcesGetAllCollectionResultOfT(_triageResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context), data => new AdvisorTriageResource(Client, data));
+            return new PageableWrapper<AdvisorTriageData, AdvisorTriageResource>(new TriageResourcesGetAllCollectionResultOfT(
+                _triageResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "AdvisorTriageCollection.GetAll"), data => new AdvisorTriageResource(Client, data));
         }
 
         /// <summary>

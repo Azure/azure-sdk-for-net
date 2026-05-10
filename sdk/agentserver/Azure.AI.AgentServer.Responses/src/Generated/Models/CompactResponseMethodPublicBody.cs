@@ -28,13 +28,15 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="input"></param>
         /// <param name="previousResponseId"></param>
         /// <param name="instructions"></param>
+        /// <param name="promptCacheKey"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CompactResponseMethodPublicBody(ModelIdsCompaction? model, BinaryData input, string previousResponseId, string instructions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CompactResponseMethodPublicBody(ModelIdsCompaction? model, BinaryData input, string previousResponseId, string instructions, string promptCacheKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Input = input;
             PreviousResponseId = previousResponseId;
             Instructions = instructions;
+            PromptCacheKey = promptCacheKey;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -87,5 +89,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Gets the Instructions. </summary>
         public string Instructions { get; }
+
+        /// <summary> Gets the PromptCacheKey. </summary>
+        public string PromptCacheKey { get; }
     }
 }

@@ -1,0 +1,381 @@
+{
+  "name": "_Specs_.Azure.ClientGenerator.Core.ClientDoc",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [
+    {
+      "$id": "1",
+      "kind": "constant",
+      "name": "harvestContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "3",
+      "kind": "constant",
+      "name": "harvestContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "4",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    }
+  ],
+  "models": [
+    {
+      "$id": "5",
+      "kind": "model",
+      "name": "Plant",
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation",
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation.Plant",
+      "usage": "Input,Output,Json",
+      "doc": "A plant in the garden.\nThis model is used to represent a plant in the client SDK.",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Plant"
+        }
+      },
+      "properties": [
+        {
+          "$id": "6",
+          "kind": "property",
+          "name": "name",
+          "serializedName": "name",
+          "doc": "The name of the plant.",
+          "type": {
+            "$id": "7",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation.Plant.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "8",
+          "kind": "property",
+          "name": "species",
+          "serializedName": "species",
+          "doc": "The species of the plant.",
+          "type": {
+            "$id": "9",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation.Plant.species",
+          "serializationOptions": {
+            "json": {
+              "name": "species"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "$id": "10",
+      "kind": "client",
+      "name": "ClientDocClient",
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientDoc",
+      "doc": "Test for @clientDoc decorator.",
+      "methods": [],
+      "parameters": [
+        {
+          "$id": "11",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "12",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "13",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.endpoint"
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [],
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc",
+      "apiVersions": [],
+      "children": [
+        {
+          "$id": "14",
+          "kind": "client",
+          "name": "Documentation",
+          "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation",
+          "methods": [
+            {
+              "$id": "15",
+              "kind": "basic",
+              "name": "harvest",
+              "accessibility": "public",
+              "apiVersions": [],
+              "doc": "Retrieves a plant from the garden by submitting its name.",
+              "operation": {
+                "$id": "16",
+                "name": "harvest",
+                "resourceName": "Documentation",
+                "doc": "Retrieves a plant from the garden by submitting its name.",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "17",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "1"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation.harvest.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "18",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "1"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation.harvest.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "19",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "3"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation.harvest.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "20",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "3"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation.harvest.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "21",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$ref": "5"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation.harvest.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "22",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "5"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation.harvest.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "5"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-doc/harvest",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation.harvest",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation"
+              },
+              "parameters": [
+                {
+                  "$ref": "22"
+                },
+                {
+                  "$ref": "18"
+                },
+                {
+                  "$ref": "20"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "5"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation.harvest"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "23",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "24",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "25",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation.endpoint"
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "10"
+          },
+          "isMultiServiceClient": false
+        }
+      ],
+      "isMultiServiceClient": false
+    }
+  ]
+}

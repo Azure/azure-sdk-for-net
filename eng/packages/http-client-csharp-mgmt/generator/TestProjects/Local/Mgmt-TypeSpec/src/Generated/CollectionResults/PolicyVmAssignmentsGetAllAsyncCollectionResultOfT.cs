@@ -22,6 +22,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private readonly string _resourceGroupName;
         private readonly string _vmName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PolicyVmAssignmentsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PolicyVmAssignments client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vmName"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PolicyVmAssignmentsGetAllAsyncCollectionResultOfT(PolicyVmAssignments client, Guid subscriptionId, string resourceGroupName, string vmName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PolicyVmAssignmentsGetAllAsyncCollectionResultOfT(PolicyVmAssignments client, Guid subscriptionId, string resourceGroupName, string vmName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _vmName = vmName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PolicyVmAssignmentsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _vmName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _vmName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PolicyVmAssignmentCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

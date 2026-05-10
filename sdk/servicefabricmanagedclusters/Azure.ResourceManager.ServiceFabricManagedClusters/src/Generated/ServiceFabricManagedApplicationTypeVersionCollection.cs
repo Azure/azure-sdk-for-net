@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             if (id.ResourceType != ServiceFabricManagedApplicationTypeResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceFabricManagedApplicationTypeResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceFabricManagedApplicationTypeResource.ResourceType), nameof(id));
             }
         }
 
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ServiceFabricManagedApplicationTypeVersionResource(Client, data));
+                context,
+                "ServiceFabricManagedApplicationTypeVersionCollection.GetAll"), data => new ServiceFabricManagedApplicationTypeVersionResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ServiceFabricManagedApplicationTypeVersionResource(Client, data));
+                context,
+                "ServiceFabricManagedApplicationTypeVersionCollection.GetAll"), data => new ServiceFabricManagedApplicationTypeVersionResource(Client, data));
         }
 
         /// <summary>

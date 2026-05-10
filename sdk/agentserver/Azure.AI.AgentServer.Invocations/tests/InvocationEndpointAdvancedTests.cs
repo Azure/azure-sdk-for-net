@@ -277,7 +277,7 @@ public class InvocationEndpointAdvancedTests
 
         public override async Task GetAsync(
             string invocationId, HttpRequest request, HttpResponse response,
-            CancellationToken cancellationToken)
+            InvocationContext context, CancellationToken cancellationToken)
         {
             response.StatusCode = 200;
             await response.WriteAsync($"get:{invocationId}", cancellationToken);
@@ -285,7 +285,7 @@ public class InvocationEndpointAdvancedTests
 
         public override async Task CancelAsync(
             string invocationId, HttpRequest request, HttpResponse response,
-            CancellationToken cancellationToken)
+            InvocationContext context, CancellationToken cancellationToken)
         {
             response.StatusCode = 200;
             await response.WriteAsync($"cancel:{invocationId}", cancellationToken);

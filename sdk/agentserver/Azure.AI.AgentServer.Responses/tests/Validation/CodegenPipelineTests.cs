@@ -131,7 +131,7 @@ public class CodegenPipelineTests
     public void ResponseValidator_Exists_And_ValidatesResponse()
     {
         // Verify ResponseValidator exists and can validate a response object
-        var json = """{"id":"resp_1","model":"gpt-4o","object":"response","output":[],"status":"completed","output_text":""}""";
+        var json = """{"id":"resp_1","model":"gpt-4o","object":"response","output":[],"status":"completed"}""";
         using var doc = JsonDocument.Parse(json);
         var result = ResponseValidator.Validate(doc.RootElement);
 

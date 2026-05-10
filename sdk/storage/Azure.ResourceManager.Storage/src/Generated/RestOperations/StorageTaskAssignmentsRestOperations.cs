@@ -245,29 +245,5 @@ namespace Azure.ResourceManager.Storage
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
-
-        internal HttpMessage CreateStopAssignmentRequest(Guid subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
-            uri.AppendPath(accountName, true);
-            uri.AppendPath("/storageTaskAssignments/", false);
-            uri.AppendPath(storageTaskAssignmentName, true);
-            uri.AppendPath("/stopAssignment", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            return message;
-        }
     }
 }

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RedisEnterpriseClusterData, RedisEnterpriseClusterResource>(new RedisEnterpriseClusterGetAllAsyncCollectionResultOfT(RedisEnterpriseClusterRestClient, Guid.Parse(Id.SubscriptionId), context), data => new RedisEnterpriseClusterResource(Client, data));
+            return new AsyncPageableWrapper<RedisEnterpriseClusterData, RedisEnterpriseClusterResource>(new RedisEnterpriseClusterGetAllAsyncCollectionResultOfT(RedisEnterpriseClusterRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRedisEnterpriseSubscriptionResource.GetRedisEnterpriseClusters"), data => new RedisEnterpriseClusterResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RedisEnterpriseClusterData, RedisEnterpriseClusterResource>(new RedisEnterpriseClusterGetAllCollectionResultOfT(RedisEnterpriseClusterRestClient, Guid.Parse(Id.SubscriptionId), context), data => new RedisEnterpriseClusterResource(Client, data));
+            return new PageableWrapper<RedisEnterpriseClusterData, RedisEnterpriseClusterResource>(new RedisEnterpriseClusterGetAllCollectionResultOfT(RedisEnterpriseClusterRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRedisEnterpriseSubscriptionResource.GetRedisEnterpriseClusters"), data => new RedisEnterpriseClusterResource(Client, data));
         }
 
         /// <summary>

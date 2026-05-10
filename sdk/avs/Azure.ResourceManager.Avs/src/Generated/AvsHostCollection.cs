@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != AvsPrivateCloudClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -183,7 +183,8 @@ namespace Azure.ResourceManager.Avs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new AvsHostResource(Client, data));
+                context,
+                "AvsHostCollection.GetAll"), data => new AvsHostResource(Client, data));
         }
 
         /// <summary>
@@ -217,7 +218,8 @@ namespace Azure.ResourceManager.Avs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new AvsHostResource(Client, data));
+                context,
+                "AvsHostCollection.GetAll"), data => new AvsHostResource(Client, data));
         }
 
         /// <summary>

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceBusNamespaceData, ServiceBusNamespaceResource>(new NamespacesGetAllAsyncCollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ServiceBusNamespaceResource(Client, data));
+            return new AsyncPageableWrapper<ServiceBusNamespaceData, ServiceBusNamespaceResource>(new NamespacesGetAllAsyncCollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableServiceBusSubscriptionResource.GetServiceBusNamespaces"), data => new ServiceBusNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceBusNamespaceData, ServiceBusNamespaceResource>(new NamespacesGetAllCollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ServiceBusNamespaceResource(Client, data));
+            return new PageableWrapper<ServiceBusNamespaceData, ServiceBusNamespaceResource>(new NamespacesGetAllCollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableServiceBusSubscriptionResource.GetServiceBusNamespaces"), data => new ServiceBusNamespaceResource(Client, data));
         }
 
         /// <summary>

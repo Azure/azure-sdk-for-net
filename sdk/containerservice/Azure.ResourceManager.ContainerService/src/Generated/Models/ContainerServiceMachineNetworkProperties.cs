@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> network properties of the machine. </summary>
-    internal partial class ContainerServiceMachineNetworkProperties
+    public partial class ContainerServiceMachineNetworkProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,19 +22,50 @@ namespace Azure.ResourceManager.ContainerService.Models
         internal ContainerServiceMachineNetworkProperties()
         {
             IPAddresses = new ChangeTrackingList<ContainerServiceMachineIPAddress>();
+            NodePublicIPTags = new ChangeTrackingList<ContainerServiceIPTag>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineNetworkProperties"/>. </summary>
         /// <param name="ipAddresses"> IPv4, IPv6 addresses of the machine. </param>
+        /// <param name="vnetSubnetId"> The ID of the subnet which node and optionally pods will join on startup. If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
+        /// <param name="podSubnetId"> The ID of the subnet which pods will join when launched. If omitted, pod IPs are statically assigned on the node subnet (see vnetSubnetID for more details). This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
+        /// <param name="isNodePublicIpEnabled"> Whether the machine is allocated its own public IP. Some scenarios may require the machine to receive their own dedicated public IP addresses. A common scenario is for gaming workloads, where a console needs to make a direct connection to a cloud virtual machine to minimize hops. The default is false. </param>
+        /// <param name="nodePublicIpPrefixId"> The public IP prefix ID which VM node should use IPs from. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}. </param>
+        /// <param name="nodePublicIPTags"> IPTags of instance-level public IPs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceMachineNetworkProperties(IReadOnlyList<ContainerServiceMachineIPAddress> ipAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceMachineNetworkProperties(IReadOnlyList<ContainerServiceMachineIPAddress> ipAddresses, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, bool? isNodePublicIpEnabled, ResourceIdentifier nodePublicIpPrefixId, IList<ContainerServiceIPTag> nodePublicIPTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IPAddresses = ipAddresses;
+            VnetSubnetId = vnetSubnetId;
+            PodSubnetId = podSubnetId;
+            IsNodePublicIpEnabled = isNodePublicIpEnabled;
+            NodePublicIpPrefixId = nodePublicIpPrefixId;
+            NodePublicIPTags = nodePublicIPTags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> IPv4, IPv6 addresses of the machine. </summary>
         [WirePath("ipAddresses")]
         public IReadOnlyList<ContainerServiceMachineIPAddress> IPAddresses { get; }
+
+        /// <summary> The ID of the subnet which node and optionally pods will join on startup. If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </summary>
+        [WirePath("vnetSubnetID")]
+        public ResourceIdentifier VnetSubnetId { get; }
+
+        /// <summary> The ID of the subnet which pods will join when launched. If omitted, pod IPs are statically assigned on the node subnet (see vnetSubnetID for more details). This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </summary>
+        [WirePath("podSubnetID")]
+        public ResourceIdentifier PodSubnetId { get; }
+
+        /// <summary> Whether the machine is allocated its own public IP. Some scenarios may require the machine to receive their own dedicated public IP addresses. A common scenario is for gaming workloads, where a console needs to make a direct connection to a cloud virtual machine to minimize hops. The default is false. </summary>
+        [WirePath("enableNodePublicIP")]
+        public bool? IsNodePublicIpEnabled { get; }
+
+        /// <summary> The public IP prefix ID which VM node should use IPs from. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}. </summary>
+        [WirePath("nodePublicIPPrefixID")]
+        public ResourceIdentifier NodePublicIpPrefixId { get; }
+
+        /// <summary> IPTags of instance-level public IPs. </summary>
+        [WirePath("nodePublicIPTags")]
+        public IList<ContainerServiceIPTag> NodePublicIPTags { get; }
     }
 }

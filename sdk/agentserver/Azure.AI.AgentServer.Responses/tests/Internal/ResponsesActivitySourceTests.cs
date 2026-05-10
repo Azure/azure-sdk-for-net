@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.AspNetCore.Http;
 
@@ -73,6 +74,7 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             request, "caresp_123", EmptyHeaders());
 
         Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.Kind, Is.EqualTo(ActivityKind.Server));
         Assert.That(activity.DisplayName, Is.EqualTo("invoke_agent gpt-4o"));
         Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ResponseId), Is.EqualTo("caresp_123"));
         Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName), Is.EqualTo(ResponsesTracingConstants.ProviderName));
@@ -114,6 +116,49 @@ public sealed class ResponsesActivitySourceTests : IDisposable
 
         Assert.That(activity, Is.Not.Null);
         Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedStreaming), Is.EqualTo(false));
+    }
+
+    [Test]
+    public void StartCreateResponseActivity_SetsFoundryProjectId_WhenEnvSet()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID",
+            "/subscriptions/1234/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/ws");
+        FoundryEnvironment.Reload();
+
+        try
+        {
+            var source = CreateListeningSource();
+            var request = new CreateResponse { Model = "test" };
+
+            using var activity = source.StartCreateResponseActivity(
+                request, "caresp_proj", EmptyHeaders());
+
+            Assert.That(activity, Is.Not.Null);
+            Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.FoundryProjectId),
+                Is.EqualTo("/subscriptions/1234/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/ws"));
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID", null);
+            FoundryEnvironment.Reload();
+        }
+    }
+
+    [Test]
+    public void StartCreateResponseActivity_SetsFoundryProjectId_EmptyWhenNoEnv()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID", null);
+        FoundryEnvironment.Reload();
+
+        var source = CreateListeningSource();
+        var request = new CreateResponse { Model = "test" };
+
+        using var activity = source.StartCreateResponseActivity(
+            request, "caresp_noproj", EmptyHeaders());
+
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.FoundryProjectId),
+            Is.EqualTo(string.Empty));
     }
 
     [Test]

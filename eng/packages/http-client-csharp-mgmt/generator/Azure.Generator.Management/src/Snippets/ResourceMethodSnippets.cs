@@ -175,7 +175,7 @@ namespace Azure.Generator.Management.Snippets
                 [new AttributeStatement(typeof(ConditionalAttribute), Literal("DEBUG"))]);
             var bodyStatements = new IfStatement(idParameter.As<ResourceIdentifier>().ResourceType().NotEqual(resourceType))
             {
-                Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid resource type {0} expected {1}"), idParameter.As<ResourceIdentifier>().ResourceType(), resourceType), false))
+                Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid resource type {0} expected {1}"), idParameter.As<ResourceIdentifier>().ResourceType(), resourceType), wrapInNameOf: true))
             };
             return new MethodProvider(signature, bodyStatements, enclosingType);
         }

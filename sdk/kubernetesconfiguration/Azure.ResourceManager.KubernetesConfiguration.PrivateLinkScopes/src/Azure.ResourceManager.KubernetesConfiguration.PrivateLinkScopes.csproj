@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-beta.1</Version>
+    <PackageId>Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes</PackageId>
+    <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.KubernetesConfiguration PrivateLinkScopes.</Description>
+    <PackageTags>azure;management;arm;resource manager;kubernetesconfiguration;privatelinkscopes</PackageTags>
+    <NoWarn>$(NoWarn);SA1402;CS1591</NoWarn>
+  </PropertyGroup>
+</Project>

@@ -41,7 +41,8 @@ public class InvocationsActivitySourceAdvancedTests
         var context = new InvocationContext(
             "inv-1", "sess-1",
             new Dictionary<string, string>(),
-            new Dictionary<string, StringValues>());
+            new Dictionary<string, StringValues>(),
+            IsolationContext.Empty);
 
         // Create x-request-id longer than 256 characters
         var longRequestId = new string('x', 300);
@@ -78,7 +79,8 @@ public class InvocationsActivitySourceAdvancedTests
         var context = new InvocationContext(
             "inv-1", "sess-1",
             new Dictionary<string, string>(),
-            new Dictionary<string, StringValues>());
+            new Dictionary<string, StringValues>(),
+            IsolationContext.Empty);
 
         var exactRequestId = new string('y', 256);
         var headers = new HeaderDictionary { ["x-request-id"] = exactRequestId };
@@ -106,7 +108,8 @@ public class InvocationsActivitySourceAdvancedTests
         var context = new InvocationContext(
             "inv-1", "sess-1",
             new Dictionary<string, string>(),
-            new Dictionary<string, StringValues>());
+            new Dictionary<string, StringValues>(),
+            IsolationContext.Empty);
 
         using var activity = source.StartInvocationActivity(context, new HeaderDictionary());
 

@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class CanMigrateResultOperationSource : IOperationSource<CanMigrateResult>
+    /// <summary></summary>
+    internal partial class CanMigrateResultOperationSource : IOperationSource<CanMigrateResult>
     {
-        CanMigrateResult IOperationSource<CanMigrateResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal CanMigrateResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return CanMigrateResult.DeserializeCanMigrateResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        CanMigrateResult IOperationSource<CanMigrateResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            CanMigrateResult result = CanMigrateResult.DeserializeCanMigrateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<CanMigrateResult> IOperationSource<CanMigrateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return CanMigrateResult.DeserializeCanMigrateResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            CanMigrateResult result = CanMigrateResult.DeserializeCanMigrateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

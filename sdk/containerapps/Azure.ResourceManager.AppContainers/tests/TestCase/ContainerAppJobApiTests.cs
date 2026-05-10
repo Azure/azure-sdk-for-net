@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/57787 - Recordings need re-recording for api-version 2025-07-01")]
         public async Task CreateOrUpdate()
         {
             string envName = Recording.GenerateAssetName("env");

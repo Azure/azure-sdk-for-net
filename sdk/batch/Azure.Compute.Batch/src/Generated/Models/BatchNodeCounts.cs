@@ -33,8 +33,8 @@ namespace Azure.Compute.Batch
         /// <param name="deallocated"> The number of Compute Nodes in the deallocated state. </param>
         /// <param name="deallocating"> The number of Compute Nodes in the deallocating state. </param>
         /// <param name="total"> The total number of Compute Nodes. </param>
-        /// <param name="upgradingOs"> The number of Compute Nodes in the upgradingOS state. </param>
-        internal BatchNodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int deallocated, int deallocating, int total, int upgradingOs)
+        /// <param name="upgradingOS"> The number of Compute Nodes in the upgradingOS state. </param>
+        internal BatchNodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int deallocated, int deallocating, int total, int upgradingOS)
         {
             Creating = creating;
             Idle = idle;
@@ -52,7 +52,7 @@ namespace Azure.Compute.Batch
             Deallocated = deallocated;
             Deallocating = deallocating;
             Total = total;
-            UpgradingOs = upgradingOs;
+            UpgradingOS = upgradingOS;
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeCounts"/>. </summary>
@@ -72,9 +72,9 @@ namespace Azure.Compute.Batch
         /// <param name="deallocated"> The number of Compute Nodes in the deallocated state. </param>
         /// <param name="deallocating"> The number of Compute Nodes in the deallocating state. </param>
         /// <param name="total"> The total number of Compute Nodes. </param>
-        /// <param name="upgradingOs"> The number of Compute Nodes in the upgradingOS state. </param>
+        /// <param name="upgradingOS"> The number of Compute Nodes in the upgradingOS state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int deallocated, int deallocating, int total, int upgradingOs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int deallocated, int deallocating, int total, int upgradingOS, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Creating = creating;
             Idle = idle;
@@ -92,7 +92,7 @@ namespace Azure.Compute.Batch
             Deallocated = deallocated;
             Deallocating = deallocating;
             Total = total;
-            UpgradingOs = upgradingOs;
+            UpgradingOS = upgradingOS;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -145,6 +145,6 @@ namespace Azure.Compute.Batch
         public int Total { get; }
 
         /// <summary> The number of Compute Nodes in the upgradingOS state. </summary>
-        public int UpgradingOs { get; }
+        public int UpgradingOS { get; }
     }
 }

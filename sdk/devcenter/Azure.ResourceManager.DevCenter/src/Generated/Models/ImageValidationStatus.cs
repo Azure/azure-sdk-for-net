@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.DevCenter.Models
     public readonly partial struct ImageValidationStatus : IEquatable<ImageValidationStatus>
     {
         private readonly string _value;
+        /// <summary> Unknown image validation status. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Pending image validation status. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Succeeded image validation status. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed image validation status. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Timed out image validation status. </summary>
+        private const string TimedOutValue = "TimedOut";
 
         /// <summary> Initializes a new instance of <see cref="ImageValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ImageValidationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string UnknownValue = "Unknown";
-        private const string PendingValue = "Pending";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string TimedOutValue = "TimedOut";
-
-        /// <summary> Unknown. </summary>
+        /// <summary> Unknown image validation status. </summary>
         public static ImageValidationStatus Unknown { get; } = new ImageValidationStatus(UnknownValue);
-        /// <summary> Pending. </summary>
+
+        /// <summary> Pending image validation status. </summary>
         public static ImageValidationStatus Pending { get; } = new ImageValidationStatus(PendingValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Succeeded image validation status. </summary>
         public static ImageValidationStatus Succeeded { get; } = new ImageValidationStatus(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Failed image validation status. </summary>
         public static ImageValidationStatus Failed { get; } = new ImageValidationStatus(FailedValue);
-        /// <summary> TimedOut. </summary>
+
+        /// <summary> Timed out image validation status. </summary>
         public static ImageValidationStatus TimedOut { get; } = new ImageValidationStatus(TimedOutValue);
+
         /// <summary> Determines if two <see cref="ImageValidationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImageValidationStatus left, ImageValidationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ImageValidationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImageValidationStatus left, ImageValidationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ImageValidationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ImageValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ImageValidationStatus(string value) => new ImageValidationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ImageValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ImageValidationStatus?(string value) => value == null ? null : new ImageValidationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ImageValidationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ImageValidationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

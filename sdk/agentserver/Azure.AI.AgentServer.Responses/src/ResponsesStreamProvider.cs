@@ -65,4 +65,16 @@ public abstract class ResponsesStreamProvider
         IAsyncObserver<ResponseStreamEvent> observer,
         long? cursor = null,
         CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Deletes the event stream for the specified response, removing all buffered events.
+    /// Called when a response is deleted or when a non-background/non-streaming response
+    /// completes (its event stream is not eligible for SSE replay per B2).
+    /// </summary>
+    /// <param name="responseId">The unique response identifier.</param>
+    /// <param name="cancellationToken">A token to cancel the operation.</param>
+    public virtual Task DeleteEventStreamAsync(
+        string responseId,
+        CancellationToken cancellationToken = default)
+        => Task.CompletedTask;
 }

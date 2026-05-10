@@ -170,7 +170,7 @@ namespace Azure.Generator.Tests.Visitors
         [TestCase(false, ScmMethodKind.Protocol)]
         [TestCase(true, ScmMethodKind.Convenience)]
         [TestCase(false, ScmMethodKind.Convenience)]
-        public void TestSkipsInstrumentationForPagingMethods(bool isAsync, ScmMethodKind methodKind)
+        public void TestPagingMethodsGetScopeInjected(bool isAsync, ScmMethodKind methodKind)
         {
             var visitor = new TestDistributedTracingVisitor();
 
@@ -196,8 +196,9 @@ namespace Azure.Generator.Tests.Visitors
                 ? new CSharpType(typeof(AsyncPageable<>), typeof(BinaryData))
                 : new CSharpType(typeof(Pageable<>), typeof(BinaryData));
 
+            var methodName = isAsync ? "ListItemsAsync" : "ListItems";
             var methodSignature = new MethodSignature(
-                isAsync ? "ListItemsAsync" : "ListItems",
+                methodName,
                 null,
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
                 pagingReturnType,
@@ -210,13 +211,14 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsNotNull(updatedMethod?.BodyStatements);
 
             var result = updatedMethod!.BodyStatements!.ToDisplayString();
-            // Verify that the method body does NOT contain DiagnosticScope instrumentation
+            // Verify that the method body does NOT contain DiagnosticScope instrumentation (no wrapping)
             Assert.IsFalse(result.Contains("DiagnosticScope"),
                 $"Paging method should not have DiagnosticScope instrumentation. Method: {(isAsync ? "AsyncPageable" : "Pageable")}, Kind: {methodKind}");
             Assert.IsFalse(result.Contains("scope.Start()"),
                 $"Paging method should not have scope.Start() call. Method: {(isAsync ? "AsyncPageable" : "Pageable")}, Kind: {methodKind}");
-            Assert.IsFalse(result.Contains("scope.Failed"),
-                $"Paging method should not have scope.Failed() call. Method: {(isAsync ? "AsyncPageable" : "Pageable")}, Kind: {methodKind}");
+            // Verify the scope name is injected as a constructor argument
+            Assert.IsTrue(result.Contains("\"TestClient.ListItems\""),
+                $"Paging method should have scope name injected. Method: {(isAsync ? "AsyncPageable" : "Pageable")}, Kind: {methodKind}");
         }
 
         private static IEnumerable<TestCaseData> TestUpdatesConstructorsTestCases

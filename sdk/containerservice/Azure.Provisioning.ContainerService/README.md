@@ -41,9 +41,9 @@ ProvisioningParameter sshRsaPublicKey = new(nameof(sshRsaPublicKey), typeof(stri
 infra.Add(sshRsaPublicKey);
 
 ContainerServiceManagedCluster aks =
-    new(nameof(aks), ContainerServiceManagedCluster.ResourceVersions.V2024_08_01)
+    new(nameof(aks), ContainerServiceManagedCluster.ResourceVersions.V2026_01_01)
     {
-        ClusterIdentity = new ManagedClusterIdentity { ResourceIdentityType = ManagedServiceIdentityType.SystemAssigned },
+        ClusterIdentity = new ManagedClusterIdentity { IdentityType = ManagedServiceIdentityType.SystemAssigned },
         DnsPrefix = dnsPrefix,
         LinuxProfile =
             new ContainerServiceLinuxProfile

@@ -30,4 +30,10 @@ internal sealed class InMemoryStreamProvider : ResponsesStreamProvider
         long? cursor = null,
         CancellationToken cancellationToken = default)
         => _provider.SubscribeToEventsAsync(responseId, observer, cursor, cancellationToken);
+
+    /// <inheritdoc/>
+    public override Task DeleteEventStreamAsync(
+        string responseId,
+        CancellationToken cancellationToken = default)
+        => _provider.DeleteEventStreamAsync(responseId);
 }

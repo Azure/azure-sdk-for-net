@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Marketplace
 {
+    /// <summary></summary>
     public partial class PrivateStoreOfferResource : IJsonModel<PrivateStoreOfferData>
     {
-        private static PrivateStoreOfferData s_dataDeserializationInstance;
-        private static PrivateStoreOfferData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PrivateStoreOfferData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PrivateStoreOfferData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PrivateStoreOfferData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PrivateStoreOfferData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PrivateStoreOfferData>)Data).Write(writer, options);
 
-        PrivateStoreOfferData IJsonModel<PrivateStoreOfferData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateStoreOfferData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PrivateStoreOfferData IJsonModel<PrivateStoreOfferData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PrivateStoreOfferData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PrivateStoreOfferData>(Data, options, AzureResourceManagerMarketplaceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PrivateStoreOfferData IPersistableModel<PrivateStoreOfferData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateStoreOfferData>(data, options, AzureResourceManagerMarketplaceContext.Default);
 
-        string IPersistableModel<PrivateStoreOfferData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateStoreOfferData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PrivateStoreOfferData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

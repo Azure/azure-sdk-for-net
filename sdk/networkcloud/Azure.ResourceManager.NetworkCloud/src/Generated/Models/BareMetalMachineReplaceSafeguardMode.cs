@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct BareMetalMachineReplaceSafeguardMode : IEquatable<BareMetalMachineReplaceSafeguardMode>
     {
         private readonly string _value;
+        /// <summary> All safeguards will be utilized during the replace action. </summary>
+        private const string AllValue = "All";
+        /// <summary> No safeguards will be utilized during the replace action. </summary>
+        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineReplaceSafeguardMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BareMetalMachineReplaceSafeguardMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AllValue = "All";
-        private const string NoneValue = "None";
-
-        /// <summary> All. </summary>
+        /// <summary> All safeguards will be utilized during the replace action. </summary>
         public static BareMetalMachineReplaceSafeguardMode All { get; } = new BareMetalMachineReplaceSafeguardMode(AllValue);
-        /// <summary> None. </summary>
+
+        /// <summary> No safeguards will be utilized during the replace action. </summary>
         public static BareMetalMachineReplaceSafeguardMode None { get; } = new BareMetalMachineReplaceSafeguardMode(NoneValue);
+
         /// <summary> Determines if two <see cref="BareMetalMachineReplaceSafeguardMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BareMetalMachineReplaceSafeguardMode left, BareMetalMachineReplaceSafeguardMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BareMetalMachineReplaceSafeguardMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BareMetalMachineReplaceSafeguardMode left, BareMetalMachineReplaceSafeguardMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BareMetalMachineReplaceSafeguardMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BareMetalMachineReplaceSafeguardMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BareMetalMachineReplaceSafeguardMode(string value) => new BareMetalMachineReplaceSafeguardMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BareMetalMachineReplaceSafeguardMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BareMetalMachineReplaceSafeguardMode?(string value) => value == null ? null : new BareMetalMachineReplaceSafeguardMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BareMetalMachineReplaceSafeguardMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BareMetalMachineReplaceSafeguardMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

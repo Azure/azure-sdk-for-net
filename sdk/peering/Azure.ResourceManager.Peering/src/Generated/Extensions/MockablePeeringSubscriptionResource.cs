@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PeeringData, PeeringResource>(new PeeringsGetBySubscriptionAsyncCollectionResultOfT(PeeringsRestClient, Id.SubscriptionId, context), data => new PeeringResource(Client, data));
+            return new AsyncPageableWrapper<PeeringData, PeeringResource>(new PeeringsGetBySubscriptionAsyncCollectionResultOfT(PeeringsRestClient, Id.SubscriptionId, context, "MockablePeeringSubscriptionResource.GetPeerings"), data => new PeeringResource(Client, data));
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PeeringData, PeeringResource>(new PeeringsGetBySubscriptionCollectionResultOfT(PeeringsRestClient, Id.SubscriptionId, context), data => new PeeringResource(Client, data));
+            return new PageableWrapper<PeeringData, PeeringResource>(new PeeringsGetBySubscriptionCollectionResultOfT(PeeringsRestClient, Id.SubscriptionId, context, "MockablePeeringSubscriptionResource.GetPeerings"), data => new PeeringResource(Client, data));
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PeeringServiceData, PeeringServiceResource>(new PeeringServicesGetBySubscriptionAsyncCollectionResultOfT(PeeringServicesRestClient, Id.SubscriptionId, context), data => new PeeringServiceResource(Client, data));
+            return new AsyncPageableWrapper<PeeringServiceData, PeeringServiceResource>(new PeeringServicesGetBySubscriptionAsyncCollectionResultOfT(PeeringServicesRestClient, Id.SubscriptionId, context, "MockablePeeringSubscriptionResource.GetPeeringServices"), data => new PeeringServiceResource(Client, data));
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PeeringServiceData, PeeringServiceResource>(new PeeringServicesGetBySubscriptionCollectionResultOfT(PeeringServicesRestClient, Id.SubscriptionId, context), data => new PeeringServiceResource(Client, data));
+            return new PageableWrapper<PeeringServiceData, PeeringServiceResource>(new PeeringServicesGetBySubscriptionCollectionResultOfT(PeeringServicesRestClient, Id.SubscriptionId, context, "MockablePeeringSubscriptionResource.GetPeeringServices"), data => new PeeringServiceResource(Client, data));
         }
 
         /// <summary>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CdnPeeringPrefixesGetCdnPeeringPrefixesAsyncCollectionResultOfT(CdnPeeringPrefixesRestClient, Id.SubscriptionId, peeringLocation, context);
+            return new CdnPeeringPrefixesGetCdnPeeringPrefixesAsyncCollectionResultOfT(CdnPeeringPrefixesRestClient, Id.SubscriptionId, peeringLocation, context, "MockablePeeringSubscriptionResource.GetCdnPeeringPrefixes");
         }
 
         /// <summary>
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CdnPeeringPrefixesGetCdnPeeringPrefixesCollectionResultOfT(CdnPeeringPrefixesRestClient, Id.SubscriptionId, peeringLocation, context);
+            return new CdnPeeringPrefixesGetCdnPeeringPrefixesCollectionResultOfT(CdnPeeringPrefixesRestClient, Id.SubscriptionId, peeringLocation, context, "MockablePeeringSubscriptionResource.GetCdnPeeringPrefixes");
         }
 
         /// <summary>
@@ -552,7 +552,8 @@ namespace Azure.ResourceManager.Peering.Mocking
                 kind.ToString(),
                 asn,
                 directPeeringType?.ToString(),
-                context), data => new PeeringResource(Client, data));
+                context,
+                "MockablePeeringSubscriptionResource.GetPeeringsByLegacyPeering"), data => new PeeringResource(Client, data));
         }
 
         /// <summary>
@@ -595,7 +596,8 @@ namespace Azure.ResourceManager.Peering.Mocking
                 kind.ToString(),
                 asn,
                 directPeeringType?.ToString(),
-                context), data => new PeeringResource(Client, data));
+                context,
+                "MockablePeeringSubscriptionResource.GetPeeringsByLegacyPeering"), data => new PeeringResource(Client, data));
         }
 
         /// <summary>
@@ -731,7 +733,13 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PeeringLocationsGetPeeringLocationsAsyncCollectionResultOfT(PeeringLocationsRestClient, Id.SubscriptionId, kind.ToString(), directPeeringType?.ToString(), context);
+            return new PeeringLocationsGetPeeringLocationsAsyncCollectionResultOfT(
+                PeeringLocationsRestClient,
+                Id.SubscriptionId,
+                kind.ToString(),
+                directPeeringType?.ToString(),
+                context,
+                "MockablePeeringSubscriptionResource.GetPeeringLocations");
         }
 
         /// <summary>
@@ -761,7 +769,13 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PeeringLocationsGetPeeringLocationsCollectionResultOfT(PeeringLocationsRestClient, Id.SubscriptionId, kind.ToString(), directPeeringType?.ToString(), context);
+            return new PeeringLocationsGetPeeringLocationsCollectionResultOfT(
+                PeeringLocationsRestClient,
+                Id.SubscriptionId,
+                kind.ToString(),
+                directPeeringType?.ToString(),
+                context,
+                "MockablePeeringSubscriptionResource.GetPeeringLocations");
         }
 
         /// <summary>
@@ -789,7 +803,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PeeringServiceCountriesGetPeeringServiceCountriesAsyncCollectionResultOfT(PeeringServiceCountriesRestClient, Id.SubscriptionId, context);
+            return new PeeringServiceCountriesGetPeeringServiceCountriesAsyncCollectionResultOfT(PeeringServiceCountriesRestClient, Id.SubscriptionId, context, "MockablePeeringSubscriptionResource.GetPeeringServiceCountries");
         }
 
         /// <summary>
@@ -817,7 +831,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PeeringServiceCountriesGetPeeringServiceCountriesCollectionResultOfT(PeeringServiceCountriesRestClient, Id.SubscriptionId, context);
+            return new PeeringServiceCountriesGetPeeringServiceCountriesCollectionResultOfT(PeeringServiceCountriesRestClient, Id.SubscriptionId, context, "MockablePeeringSubscriptionResource.GetPeeringServiceCountries");
         }
 
         /// <summary>
@@ -846,7 +860,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PeeringServiceLocationsGetPeeringServiceLocationsAsyncCollectionResultOfT(PeeringServiceLocationsRestClient, Id.SubscriptionId, country, context);
+            return new PeeringServiceLocationsGetPeeringServiceLocationsAsyncCollectionResultOfT(PeeringServiceLocationsRestClient, Id.SubscriptionId, country, context, "MockablePeeringSubscriptionResource.GetPeeringServiceLocations");
         }
 
         /// <summary>
@@ -875,7 +889,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PeeringServiceLocationsGetPeeringServiceLocationsCollectionResultOfT(PeeringServiceLocationsRestClient, Id.SubscriptionId, country, context);
+            return new PeeringServiceLocationsGetPeeringServiceLocationsCollectionResultOfT(PeeringServiceLocationsRestClient, Id.SubscriptionId, country, context, "MockablePeeringSubscriptionResource.GetPeeringServiceLocations");
         }
 
         /// <summary>
@@ -903,7 +917,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PeeringServiceProvidersGetPeeringServiceProvidersAsyncCollectionResultOfT(PeeringServiceProvidersRestClient, Id.SubscriptionId, context);
+            return new PeeringServiceProvidersGetPeeringServiceProvidersAsyncCollectionResultOfT(PeeringServiceProvidersRestClient, Id.SubscriptionId, context, "MockablePeeringSubscriptionResource.GetPeeringServiceProviders");
         }
 
         /// <summary>
@@ -931,7 +945,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PeeringServiceProvidersGetPeeringServiceProvidersCollectionResultOfT(PeeringServiceProvidersRestClient, Id.SubscriptionId, context);
+            return new PeeringServiceProvidersGetPeeringServiceProvidersCollectionResultOfT(PeeringServiceProvidersRestClient, Id.SubscriptionId, context, "MockablePeeringSubscriptionResource.GetPeeringServiceProviders");
         }
     }
 }

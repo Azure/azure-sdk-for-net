@@ -1,0 +1,19 @@
+id: owners-view-001
+name: View Package Owners
+description: |
+  Test that the skill queries CODEOWNERS for a specific package.
+tags:
+  - basic
+  - happy-path
+inputs:
+  prompt: "Who owns azure-storage-blob in the Python SDK repo?"
+expected:
+  output_contains:
+    - "owner"
+    - "azure-storage-blob"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_engsys_codeowner_view
+  behavior:
+    max_tool_calls: 3
+    max_response_time_ms: 30000

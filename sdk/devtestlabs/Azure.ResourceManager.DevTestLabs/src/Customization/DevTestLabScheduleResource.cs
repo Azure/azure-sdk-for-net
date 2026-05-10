@@ -57,7 +57,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new DevTestLabScheduleResource(Client, data));
+                context,
+                "DevTestLabScheduleResource.GetApplicable"), data => new DevTestLabScheduleResource(Client, data));
         }
 
         /// <summary>
@@ -95,7 +96,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new DevTestLabScheduleResource(Client, data));
+                context,
+                "DevTestLabScheduleResource.GetApplicable"), data => new DevTestLabScheduleResource(Client, data));
         }
     }
 }

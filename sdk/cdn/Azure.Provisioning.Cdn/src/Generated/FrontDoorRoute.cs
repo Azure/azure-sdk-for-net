@@ -10,6 +10,7 @@ using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
+using System.ComponentModel;
 
 namespace Azure.Provisioning.Cdn;
 
@@ -263,4 +264,12 @@ public partial class FrontDoorRoute : ProvisionableResource
     /// <returns>The existing FrontDoorRoute resource.</returns>
     public static FrontDoorRoute FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
+
+    /// <summary>
+    /// Get the requirements for naming this FrontDoorRoute resource.
+    /// </summary>
+    /// <returns>Naming requirements.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ResourceNameRequirements GetResourceNameRequirements() =>
+        new(minLength: 1, maxLength: 90, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
 }

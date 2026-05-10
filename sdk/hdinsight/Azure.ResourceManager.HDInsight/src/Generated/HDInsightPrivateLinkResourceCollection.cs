@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HDInsight
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.HDInsight
     /// </summary>
     public partial class HDInsightPrivateLinkResourceCollection : ArmCollection, IEnumerable<HDInsightPrivateLinkResource>, IAsyncEnumerable<HDInsightPrivateLinkResource>
     {
-        private readonly ClientDiagnostics _hdInsightPrivateLinkResourcePrivateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _hdInsightPrivateLinkResourcePrivateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _hdInsightPrivateLinkResourcesClientDiagnostics;
+        private readonly HDInsightPrivateLinkResources _hdInsightPrivateLinkResourcesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HDInsightPrivateLinkResourceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HDInsightPrivateLinkResourceCollection for mocking. </summary>
         protected HDInsightPrivateLinkResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HDInsightPrivateLinkResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HDInsightPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hdInsightPrivateLinkResourcePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HDInsightPrivateLinkResource.ResourceType, out string hdInsightPrivateLinkResourcePrivateLinkResourcesApiVersion);
-            _hdInsightPrivateLinkResourcePrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hdInsightPrivateLinkResourcePrivateLinkResourcesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(HDInsightPrivateLinkResource.ResourceType, out string hdInsightPrivateLinkResourceApiVersion);
+            _hdInsightPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightPrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            _hdInsightPrivateLinkResourcesRestClient = new HDInsightPrivateLinkResources(_hdInsightPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, hdInsightPrivateLinkResourceApiVersion ?? "2025-01-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != HDInsightClusterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HDInsightClusterResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HDInsightClusterResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the specific private link resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HDInsightPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<HDInsightPrivateLinkResource>> GetAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            using var scope = _hdInsightPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResourceCollection.Get");
+            using DiagnosticScope scope = _hdInsightPrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hdInsightPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hdInsightPrivateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HDInsightPrivateLinkResourceData> response = Response.FromValue(HDInsightPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HDInsightPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.HDInsight
         /// Gets the specific private link resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HDInsightPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<HDInsightPrivateLinkResource> Get(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            using var scope = _hdInsightPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResourceCollection.Get");
+            using DiagnosticScope scope = _hdInsightPrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _hdInsightPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hdInsightPrivateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HDInsightPrivateLinkResourceData> response = Response.FromValue(HDInsightPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HDInsightPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,49 +156,50 @@ namespace Azure.ResourceManager.HDInsight
         /// Lists the private link resources in a HDInsight cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_ListByCluster</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_ListByCluster. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HDInsightPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HDInsightPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HDInsightPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HDInsightPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new HDInsightPrivateLinkResource(Client, HDInsightPrivateLinkResourceData.DeserializeHDInsightPrivateLinkResourceData(e)), _hdInsightPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "HDInsightPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HDInsightPrivateLinkResourceData, HDInsightPrivateLinkResource>(new HDInsightPrivateLinkResourcesGetByClusterAsyncCollectionResultOfT(
+                _hdInsightPrivateLinkResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HDInsightPrivateLinkResourceCollection.GetAll"), data => new HDInsightPrivateLinkResource(Client, data));
         }
 
         /// <summary>
         /// Lists the private link resources in a HDInsight cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_ListByCluster</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_ListByCluster. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HDInsightPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,44 +207,67 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> A collection of <see cref="HDInsightPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new HDInsightPrivateLinkResource(Client, HDInsightPrivateLinkResourceData.DeserializeHDInsightPrivateLinkResourceData(e)), _hdInsightPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "HDInsightPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HDInsightPrivateLinkResourceData, HDInsightPrivateLinkResource>(new HDInsightPrivateLinkResourcesGetByClusterCollectionResultOfT(
+                _hdInsightPrivateLinkResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HDInsightPrivateLinkResourceCollection.GetAll"), data => new HDInsightPrivateLinkResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HDInsightPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            using var scope = _hdInsightPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResourceCollection.Exists");
+            using DiagnosticScope scope = _hdInsightPrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _hdInsightPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hdInsightPrivateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HDInsightPrivateLinkResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HDInsightPrivateLinkResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HDInsightPrivateLinkResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -246,36 +281,50 @@ namespace Azure.ResourceManager.HDInsight
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HDInsightPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            using var scope = _hdInsightPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResourceCollection.Exists");
+            using DiagnosticScope scope = _hdInsightPrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _hdInsightPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hdInsightPrivateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HDInsightPrivateLinkResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HDInsightPrivateLinkResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HDInsightPrivateLinkResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -289,38 +338,54 @@ namespace Azure.ResourceManager.HDInsight
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HDInsightPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<HDInsightPrivateLinkResource>> GetIfExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            using var scope = _hdInsightPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _hdInsightPrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _hdInsightPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hdInsightPrivateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HDInsightPrivateLinkResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HDInsightPrivateLinkResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HDInsightPrivateLinkResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HDInsightPrivateLinkResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HDInsightPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -334,38 +399,54 @@ namespace Azure.ResourceManager.HDInsight
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HDInsightPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<HDInsightPrivateLinkResource> GetIfExists(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            using var scope = _hdInsightPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _hdInsightPrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _hdInsightPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hdInsightPrivateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HDInsightPrivateLinkResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HDInsightPrivateLinkResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HDInsightPrivateLinkResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HDInsightPrivateLinkResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HDInsightPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -385,6 +466,7 @@ namespace Azure.ResourceManager.HDInsight
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HDInsightPrivateLinkResource> IAsyncEnumerable<HDInsightPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmDeploymentOperationProperties : IUtf8JsonSerializable, IJsonModel<ArmDeploymentOperationProperties>
+    /// <summary> Deployment operation properties. </summary>
+    public partial class ArmDeploymentOperationProperties : IJsonModel<ArmDeploymentOperationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentOperationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ArmDeploymentOperationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeArmDeploymentOperationProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ArmDeploymentOperationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ArmDeploymentOperationProperties IPersistableModel<ArmDeploymentOperationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ArmDeploymentOperationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ArmDeploymentOperationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ProvisioningOperation))
             {
                 writer.WritePropertyName("provisioningOperation"u8);
@@ -67,15 +106,8 @@ namespace Azure.ResourceManager.Resources.Models
             }
             if (options.Format != "W" && Optional.IsDefined(StatusMessage))
             {
-                if (StatusMessage != null)
-                {
-                    writer.WritePropertyName("statusMessage"u8);
-                    writer.WriteObjectValue(StatusMessage, options);
-                }
-                else
-                {
-                    writer.WriteNull("statusMessage");
-                }
+                writer.WritePropertyName("statusMessage"u8);
+                writer.WriteObjectValue(StatusMessage, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TargetResource))
             {
@@ -92,15 +124,15 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("response"u8);
                 writer.WriteObjectValue(Response, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -109,22 +141,27 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
-        ArmDeploymentOperationProperties IJsonModel<ArmDeploymentOperationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ArmDeploymentOperationProperties IJsonModel<ArmDeploymentOperationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ArmDeploymentOperationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeArmDeploymentOperationProperties(document.RootElement, options);
         }
 
-        internal static ArmDeploymentOperationProperties DeserializeArmDeploymentOperationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ArmDeploymentOperationProperties DeserializeArmDeploymentOperationProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -139,95 +176,92 @@ namespace Azure.ResourceManager.Resources.Models
             TargetResource targetResource = default;
             HttpMessage request = default;
             HttpMessage response = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningOperation"u8))
+                if (prop.NameEquals("provisioningOperation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningOperation = property.Value.GetString().ToProvisioningOperationKind();
+                    provisioningOperation = prop.Value.GetString().ToProvisioningOperationKind();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    provisioningState = property.Value.GetString();
+                    provisioningState = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timestamp"u8))
+                if (prop.NameEquals("timestamp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timestamp = property.Value.GetDateTimeOffset("O");
+                    timestamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("duration"u8))
+                if (prop.NameEquals("duration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    duration = property.Value.GetTimeSpan("P");
+                    duration = prop.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("serviceRequestId"u8))
+                if (prop.NameEquals("serviceRequestId"u8))
                 {
-                    serviceRequestId = property.Value.GetString();
+                    serviceRequestId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusCode"u8))
+                if (prop.NameEquals("statusCode"u8))
                 {
-                    statusCode = property.Value.GetString();
+                    statusCode = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusMessage"u8))
+                if (prop.NameEquals("statusMessage"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        statusMessage = null;
-                        continue;
-                    }
-                    statusMessage = StatusMessage.DeserializeStatusMessage(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("targetResource"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetResource = TargetResource.DeserializeTargetResource(property.Value, options);
+                    statusMessage = StatusMessage.DeserializeStatusMessage(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("request"u8))
+                if (prop.NameEquals("targetResource"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    request = HttpMessage.DeserializeHttpMessage(property.Value, options);
+                    targetResource = TargetResource.DeserializeTargetResource(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("response"u8))
+                if (prop.NameEquals("request"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    response = HttpMessage.DeserializeHttpMessage(property.Value, options);
+                    request = HttpMessage.DeserializeHttpMessage(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("response"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    response = HttpMessage.DeserializeHttpMessage(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ArmDeploymentOperationProperties(
                 provisioningOperation,
                 provisioningState,
@@ -239,237 +273,7 @@ namespace Azure.ResourceManager.Resources.Models
                 targetResource,
                 request,
                 response,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningOperation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  provisioningOperation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningOperation))
-                {
-                    builder.Append("  provisioningOperation: ");
-                    builder.AppendLine($"'{ProvisioningOperation.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("  provisioningState: ");
-                    if (ProvisioningState.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ProvisioningState}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ProvisioningState}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  timestamp: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Timestamp))
-                {
-                    builder.Append("  timestamp: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(Timestamp.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Duration), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  duration: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Duration))
-                {
-                    builder.Append("  duration: ");
-                    var formattedTimeSpan = TypeFormatters.ToString(Duration.Value, "P");
-                    builder.AppendLine($"'{formattedTimeSpan}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceRequestId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  serviceRequestId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServiceRequestId))
-                {
-                    builder.Append("  serviceRequestId: ");
-                    if (ServiceRequestId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ServiceRequestId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ServiceRequestId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatusCode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  statusCode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StatusCode))
-                {
-                    builder.Append("  statusCode: ");
-                    if (StatusCode.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{StatusCode}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{StatusCode}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatusMessage), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  statusMessage: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StatusMessage))
-                {
-                    builder.Append("  statusMessage: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, StatusMessage, options, 2, false, "  statusMessage: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetResource), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  targetResource: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TargetResource))
-                {
-                    builder.Append("  targetResource: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, TargetResource, options, 2, false, "  targetResource: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RequestContent", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  request: ");
-                builder.AppendLine("{");
-                builder.Append("    content: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Request))
-                {
-                    builder.Append("  request: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Request, options, 2, false, "  request: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ResponseContent", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  response: ");
-                builder.AppendLine("{");
-                builder.Append("    content: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Response))
-                {
-                    builder.Append("  response: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Response, options, 2, false, "  response: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ArmDeploymentOperationProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ArmDeploymentOperationProperties IPersistableModel<ArmDeploymentOperationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeArmDeploymentOperationProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ArmDeploymentOperationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

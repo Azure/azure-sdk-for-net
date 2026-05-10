@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.ImpactReporting
         private readonly string _resourceType;
         private readonly string _categoryName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ImpactCategoriesGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ImpactCategories client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.ImpactReporting
         /// <param name="resourceType"> Filter by resource type. </param>
         /// <param name="categoryName"> Filter by category name . </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ImpactCategoriesGetBySubscriptionCollectionResultOfT(ImpactCategories client, string subscriptionId, string resourceType, string categoryName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ImpactCategoriesGetBySubscriptionCollectionResultOfT(ImpactCategories client, string subscriptionId, string resourceType, string categoryName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceType = resourceType;
             _categoryName = categoryName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ImpactCategoriesGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.ImpactReporting
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _resourceType, _categoryName, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _resourceType, _categoryName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ImpactCategoryCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

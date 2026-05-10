@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Attestation
         private readonly string _resourceGroupName;
         private readonly string _providerName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrivateEndpointConnections client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="providerName"> Name of the attestation provider. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(PrivateEndpointConnections client, string subscriptionId, string resourceGroupName, string providerName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(PrivateEndpointConnections client, string subscriptionId, string resourceGroupName, string providerName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _providerName = providerName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.Attestation
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _providerName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _providerName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AttestationPrivateEndpointConnectionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

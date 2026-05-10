@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             if (id.ResourceType != ServiceFabricManagedClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceFabricManagedClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceFabricManagedClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricManagedApplicationData, ServiceFabricManagedApplicationResource>(new ApplicationsGetAllAsyncCollectionResultOfT(_applicationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ServiceFabricManagedApplicationResource(Client, data));
+            return new AsyncPageableWrapper<ServiceFabricManagedApplicationData, ServiceFabricManagedApplicationResource>(new ApplicationsGetAllAsyncCollectionResultOfT(
+                _applicationsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ServiceFabricManagedApplicationCollection.GetAll"), data => new ServiceFabricManagedApplicationResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricManagedApplicationData, ServiceFabricManagedApplicationResource>(new ApplicationsGetAllCollectionResultOfT(_applicationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ServiceFabricManagedApplicationResource(Client, data));
+            return new PageableWrapper<ServiceFabricManagedApplicationData, ServiceFabricManagedApplicationResource>(new ApplicationsGetAllCollectionResultOfT(
+                _applicationsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ServiceFabricManagedApplicationCollection.GetAll"), data => new ServiceFabricManagedApplicationResource(Client, data));
         }
 
         /// <summary>

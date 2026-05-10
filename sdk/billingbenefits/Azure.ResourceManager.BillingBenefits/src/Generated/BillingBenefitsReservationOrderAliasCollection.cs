@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.BillingBenefits.Models;
 using Azure.ResourceManager.Resources;
 
@@ -23,51 +25,49 @@ namespace Azure.ResourceManager.BillingBenefits
     /// </summary>
     public partial class BillingBenefitsReservationOrderAliasCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics;
-        private readonly ReservationOrderAliasRestOperations _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient;
+        private readonly ClientDiagnostics _reservationOrderAliasClientDiagnostics;
+        private readonly ReservationOrderAlias _reservationOrderAliasRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BillingBenefitsReservationOrderAliasCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingBenefitsReservationOrderAliasCollection for mocking. </summary>
         protected BillingBenefitsReservationOrderAliasCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingBenefitsReservationOrderAliasCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsReservationOrderAliasCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingBenefitsReservationOrderAliasCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", BillingBenefitsReservationOrderAliasResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BillingBenefitsReservationOrderAliasResource.ResourceType, out string billingBenefitsReservationOrderAliasReservationOrderAliasApiVersion);
-            _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient = new ReservationOrderAliasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingBenefitsReservationOrderAliasReservationOrderAliasApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(BillingBenefitsReservationOrderAliasResource.ResourceType, out string billingBenefitsReservationOrderAliasApiVersion);
+            _reservationOrderAliasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", BillingBenefitsReservationOrderAliasResource.ResourceType.Namespace, Diagnostics);
+            _reservationOrderAliasRestClient = new ReservationOrderAlias(_reservationOrderAliasClientDiagnostics, Pipeline, Endpoint, billingBenefitsReservationOrderAliasApiVersion ?? "2025-12-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != TenantResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create a reservation order alias.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrderAlias_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderAliasResponses_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsReservationOrderAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,21 +75,34 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
         /// <param name="content"> Request body for creating a reservation order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<BillingBenefitsReservationOrderAliasResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _reservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.CreateAsync(reservationOrderAliasName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource>(new BillingBenefitsReservationOrderAliasOperationSource(Client), _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics, Pipeline, _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.CreateCreateRequest(reservationOrderAliasName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrderAliasRestClient.CreateCreateRequest(reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource> operation = new BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource>(
+                    new BillingBenefitsReservationOrderAliasOperationSource(Client),
+                    _reservationOrderAliasClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -103,20 +116,16 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Create a reservation order alias.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrderAlias_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderAliasResponses_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsReservationOrderAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,21 +133,34 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
         /// <param name="content"> Request body for creating a reservation order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<BillingBenefitsReservationOrderAliasResource> CreateOrUpdate(WaitUntil waitUntil, string reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _reservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.Create(reservationOrderAliasName, content, cancellationToken);
-                var operation = new BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource>(new BillingBenefitsReservationOrderAliasOperationSource(Client), _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics, Pipeline, _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.CreateCreateRequest(reservationOrderAliasName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrderAliasRestClient.CreateCreateRequest(reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource> operation = new BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource>(
+                    new BillingBenefitsReservationOrderAliasOperationSource(Client),
+                    _reservationOrderAliasClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -152,38 +174,42 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Get a reservation order alias.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrderAlias_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderAliasResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsReservationOrderAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<BillingBenefitsReservationOrderAliasResource>> GetAsync(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
 
-            using var scope = _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.Get");
+            using DiagnosticScope scope = _reservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.Get");
             scope.Start();
             try
             {
-                var response = await _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.GetAsync(reservationOrderAliasName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrderAliasRestClient.CreateGetRequest(reservationOrderAliasName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingBenefitsReservationOrderAliasData> response = Response.FromValue(BillingBenefitsReservationOrderAliasData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingBenefitsReservationOrderAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -197,38 +223,42 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Get a reservation order alias.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrderAlias_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderAliasResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsReservationOrderAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<BillingBenefitsReservationOrderAliasResource> Get(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
 
-            using var scope = _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.Get");
+            using DiagnosticScope scope = _reservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.Get");
             scope.Start();
             try
             {
-                var response = _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.Get(reservationOrderAliasName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrderAliasRestClient.CreateGetRequest(reservationOrderAliasName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingBenefitsReservationOrderAliasData> response = Response.FromValue(BillingBenefitsReservationOrderAliasData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingBenefitsReservationOrderAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -242,36 +272,50 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrderAlias_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderAliasResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsReservationOrderAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
 
-            using var scope = _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.Exists");
+            using DiagnosticScope scope = _reservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.GetAsync(reservationOrderAliasName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrderAliasRestClient.CreateGetRequest(reservationOrderAliasName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingBenefitsReservationOrderAliasData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingBenefitsReservationOrderAliasData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingBenefitsReservationOrderAliasData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -285,36 +329,50 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrderAlias_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderAliasResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsReservationOrderAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
 
-            using var scope = _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.Exists");
+            using DiagnosticScope scope = _reservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.Exists");
             scope.Start();
             try
             {
-                var response = _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.Get(reservationOrderAliasName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrderAliasRestClient.CreateGetRequest(reservationOrderAliasName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingBenefitsReservationOrderAliasData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingBenefitsReservationOrderAliasData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingBenefitsReservationOrderAliasData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -328,38 +386,54 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrderAlias_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderAliasResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsReservationOrderAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<BillingBenefitsReservationOrderAliasResource>> GetIfExistsAsync(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
 
-            using var scope = _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.GetIfExists");
+            using DiagnosticScope scope = _reservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.GetAsync(reservationOrderAliasName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrderAliasRestClient.CreateGetRequest(reservationOrderAliasName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingBenefitsReservationOrderAliasData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingBenefitsReservationOrderAliasData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingBenefitsReservationOrderAliasData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingBenefitsReservationOrderAliasResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingBenefitsReservationOrderAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -373,38 +447,54 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrderAlias_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderAliasResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsReservationOrderAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<BillingBenefitsReservationOrderAliasResource> GetIfExists(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
 
-            using var scope = _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.GetIfExists");
+            using DiagnosticScope scope = _reservationOrderAliasClientDiagnostics.CreateScope("BillingBenefitsReservationOrderAliasCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.Get(reservationOrderAliasName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrderAliasRestClient.CreateGetRequest(reservationOrderAliasName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingBenefitsReservationOrderAliasData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingBenefitsReservationOrderAliasData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingBenefitsReservationOrderAliasData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingBenefitsReservationOrderAliasResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingBenefitsReservationOrderAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

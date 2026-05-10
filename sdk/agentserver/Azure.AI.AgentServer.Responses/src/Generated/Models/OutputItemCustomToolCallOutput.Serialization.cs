@@ -12,7 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Custom tool call output. </summary>
+    /// <summary> ResponseCustomToolCallOutputItem. </summary>
     public partial class OutputItemCustomToolCallOutput : OutputItem, IJsonModel<OutputItemCustomToolCallOutput>
     {
         /// <summary> Initializes a new instance of <see cref="OutputItemCustomToolCallOutput"/> for deserialization. </summary>
@@ -95,6 +95,13 @@ namespace Azure.AI.AgentServer.Responses.Models
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToSerialString());
+            if (Optional.IsDefined(CreatedBy))
+            {
+                writer.WritePropertyName("created_by"u8);
+                writer.WriteRawValue(CreatedBy);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -123,27 +130,19 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             OutputItemType @type = default;
-            BinaryData createdBy = default;
             AgentReference agentReference = default;
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
             BinaryData output = default;
+            FunctionCallOutputStatusEnum status = default;
+            BinaryData createdBy = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new OutputItemType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("created_by"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    createdBy = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("agent_reference"u8))
@@ -175,6 +174,16 @@ namespace Azure.AI.AgentServer.Responses.Models
                     output = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
+                if (prop.NameEquals("status"u8))
+                {
+                    status = prop.Value.GetString().ToFunctionCallOutputStatusEnum();
+                    continue;
+                }
+                if (prop.NameEquals("created_by"u8))
+                {
+                    createdBy = BinaryData.FromString(prop.Value.GetRawText());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -182,13 +191,14 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return new OutputItemCustomToolCallOutput(
                 @type,
-                createdBy,
                 agentReference,
                 responseId,
                 additionalBinaryDataProperties,
                 id,
                 callId,
-                output);
+                output,
+                status,
+                createdBy);
         }
     }
 }

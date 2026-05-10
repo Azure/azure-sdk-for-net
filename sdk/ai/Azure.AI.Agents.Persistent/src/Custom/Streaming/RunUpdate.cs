@@ -20,7 +20,7 @@ public class RunUpdate : StreamingUpdate<ThreadRun>
         StreamingUpdateReason updateKind,
         ModelReaderWriterOptions options = null)
     {
-        ThreadRun run = ThreadRun.DeserializeThreadRun(element, options);
+        ThreadRun run = ThreadRun.DeserializeThreadRun(element, options ?? ModelSerializationExtensions.WireOptions);
         return updateKind switch
         {
             _ => new List<StreamingUpdate<ThreadRun>> { new RunUpdate(run, updateKind) },

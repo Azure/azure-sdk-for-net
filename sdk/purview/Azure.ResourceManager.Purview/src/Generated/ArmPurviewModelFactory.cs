@@ -277,14 +277,15 @@ namespace Azure.ResourceManager.Purview.Models
                     null));
         }
 
-        /// <summary> A privately linkable resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The private link resource properties. </param>
+        /// <param name="groupId"> The private link resource group identifier. </param>
+        /// <param name="requiredMembers"> This translates to how many Private IPs should be created for each privately linkable resource. </param>
+        /// <param name="requiredZoneNames"> The required zone names for private link resource. </param>
         /// <returns> A new <see cref="Purview.PurviewPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static PurviewPrivateLinkResourceData PurviewPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PurviewPrivateLinkResourceProperties properties = default)
+        public static PurviewPrivateLinkResourceData PurviewPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
         {
             return new PurviewPrivateLinkResourceData(
                 id,
@@ -292,7 +293,7 @@ namespace Azure.ResourceManager.Purview.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                properties);
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new PurviewPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null));
         }
 
         /// <summary> Feature request model. </summary>
@@ -387,7 +388,7 @@ namespace Azure.ResourceManager.Purview.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PurviewAccountData PurviewAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PurviewAccountSku sku, string cloudConnectorsAwsExternalId, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, PurviewAccountEndpoint endpoints, string friendlyName, string managedResourceGroupName, PurviewManagedResource managedResources, IEnumerable<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState, PurviewPublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity)
         {
-            return PurviewAccountData(id, name, resourceType, systemData, location, accountStatus: default, createdOn, createdBy, createdByObjectId, defaultDomain: default, endpoints, friendlyName, ingestionStorage: default, managedEventHubState: default, managedResourceGroupName, managedResources, managedResourcesPublicNetworkAccess: default, mergeInfo: default, privateEndpointConnections, provisioningState, publicNetworkAccess, tenantEndpointState: default, cloudConnectorsAwsExternalId, tags, identity, sku);
+            return PurviewAccountData(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, accountStatus: default, createdOn: createdOn, createdBy: createdBy, createdByObjectId: createdByObjectId, defaultDomain: default, endpoints: endpoints, friendlyName: friendlyName, ingestionStorage: default, managedEventHubState: default, managedResourceGroupName: managedResourceGroupName, managedResources: managedResources, managedResourcesPublicNetworkAccess: default, mergeInfo: default, privateEndpointConnections: privateEndpointConnections, provisioningState: provisioningState, publicNetworkAccess: publicNetworkAccess, tenantEndpointState: default, cloudConnectorsAwsExternalId: cloudConnectorsAwsExternalId, tags: tags, identity: identity, sku: sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PurviewAccountEndpoint"/>. </summary>
@@ -409,6 +410,25 @@ namespace Azure.ResourceManager.Purview.Models
         public static PurviewAccountSku PurviewAccountSku(int? capacity, PurviewAccountSkuName? name)
         {
             return new PurviewAccountSku(capacity, name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Purview.PurviewPrivateLinkResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The private link resource properties. </param>
+        /// <returns> A new <see cref="Purview.PurviewPrivateLinkResourceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PurviewPrivateLinkResourceData PurviewPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PurviewPrivateLinkResourceProperties properties)
+        {
+            return new PurviewPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
         }
     }
 }

@@ -15,11 +15,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     // parameters. The new TypeSpec generator produces different signatures (added publisherId,
     // offerId, subscriptionState, etc.). These shims delegate to the new overloads to avoid
     // breaking existing callers that use the old parameter lists.
-    // Suppress generated factory methods that expose internal property types.
-    // See https://github.com/Azure/azure-sdk-for-net/issues/57525
-    [CodeGenSuppress("NewRelicAccountResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(AccountProperties))]
-    [CodeGenSuppress("NewRelicOrganizationResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(OrganizationProperties))]
-    [CodeGenSuppress("NewRelicPlanData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(PlanDataProperties))]
     public static partial class ArmNewRelicObservabilityModelFactory
     {
         /// <summary> Initializes a new instance of MarketplaceSaaSInfo (5-param overload). </summary>

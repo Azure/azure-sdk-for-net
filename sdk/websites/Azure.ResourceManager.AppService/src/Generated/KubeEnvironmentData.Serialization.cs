@@ -304,6 +304,7 @@ namespace Azure.ResourceManager.AppService
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
+                kind,
                 provisioningState,
                 deploymentErrors,
                 internalLoadBalancerEnabled,
@@ -314,7 +315,6 @@ namespace Azure.ResourceManager.AppService
                 appLogsConfiguration,
                 containerAppsConfiguration,
                 aksResourceId,
-                kind,
                 serializedAdditionalRawData);
         }
 

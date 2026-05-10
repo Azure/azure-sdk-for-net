@@ -40,60 +40,6 @@ namespace Azure.Search.Documents
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary>
-        /// [Protocol Method] Queries the number of documents in the index.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDocumentCount(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocumentCount");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetDocumentCountRequest(context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Queries the number of documents in the index.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDocumentCountAsync(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocumentCount");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetDocumentCountRequest(context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Queries the number of documents in the index. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -120,8 +66,6 @@ namespace Azure.Search.Documents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
         /// <param name="searchText"> A full-text search query expression; Use "*" or omit this parameter to match all documents. </param>
         /// <param name="includeTotalResultCount"> A value that specifies whether to fetch the total count of results. Default is false. Setting this value to true may have a performance impact. Note that the count returned is an approximation. </param>
         /// <param name="facets"> The list of facet expressions to apply to the search query. Each facet expression contains a field name, optionally followed by a comma-separated list of name:value pairs. </param>
@@ -147,21 +91,17 @@ namespace Azure.Search.Documents
         /// <param name="answers"> This parameter is only valid if the query type is `semantic`. If set, the query returns answers extracted from key passages in the highest ranked documents. The number of answers returned can be configured by appending the pipe character `|` followed by the `count-&lt;number of answers&gt;` option after the answers parameter value, such as `extractive|count-3`. Default count is 1. The confidence threshold can be configured by appending the pipe character `|` followed by the `threshold-&lt;confidence threshold&gt;` option after the answers parameter value, such as `extractive|threshold-0.9`. Default threshold is 0.7. The maximum character length of answers can be configured by appending the pipe character '|' followed by the 'count-&lt;number of maximum character length&gt;', such as 'extractive|maxcharlength-600'. </param>
         /// <param name="captions"> This parameter is only valid if the query type is `semantic`. If set, the query returns captions extracted from key passages in the highest ranked documents. When Captions is set to `extractive`, highlighting is enabled by default, and can be configured by appending the pipe character `|` followed by the `highlight-&lt;true/false&gt;` option, such as `extractive|highlight-true`. Defaults to `None`. The maximum character length of captions can be configured by appending the pipe character '|' followed by the 'count-&lt;number of maximum character length&gt;', such as 'extractive|maxcharlength-600'. </param>
         /// <param name="semanticQuery"> Allows setting a separate search query that will be solely used for semantic reranking, semantic captions and semantic answers. Is useful for scenarios where there is a need to use different queries between the base retrieval and ranking phase, and the L2 semantic phase. </param>
-        /// <param name="queryRewrites"> When QueryRewrites is set to `generative`, the query terms are sent to a generate model which will produce 10 (default) rewrites to help increase the recall of the request. The requested count can be configured by appending the pipe character `|` followed by the `count-&lt;number of rewrites&gt;` option, such as `generative|count-3`. Defaults to `None`. This parameter is only valid if the query type is `semantic`. </param>
         /// <param name="debug"> Enables a debugging tool that can be used to further explore your search results. </param>
-        /// <param name="queryLanguage"> The language of the query. </param>
-        /// <param name="speller"> Improve search recall by spell-correcting individual search query terms. </param>
-        /// <param name="semanticFields"> The list of field names used for semantic ranking. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response SearchGet(string querySourceAuthorization, bool? enableElevatedRead, string searchText, bool? includeTotalResultCount, IEnumerable<string> facets, string filter, IEnumerable<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IEnumerable<string> orderBy, string queryType, IEnumerable<string> scoringParameters, string scoringProfile, IEnumerable<string> searchFields, string searchMode, string scoringStatistics, string sessionId, IEnumerable<string> @select, int? skip, int? top, string semanticConfiguration, string semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string answers, string captions, string semanticQuery, string queryRewrites, string debug, string queryLanguage, string speller, IEnumerable<string> semanticFields, RequestContext context)
+        internal virtual Response SearchGet(string searchText, bool? includeTotalResultCount, IEnumerable<string> facets, string filter, IEnumerable<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IEnumerable<string> orderBy, string queryType, IEnumerable<string> scoringParameters, string scoringProfile, IEnumerable<string> searchFields, string searchMode, string scoringStatistics, string sessionId, IEnumerable<string> @select, int? skip, int? top, string semanticConfiguration, string semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string answers, string captions, string semanticQuery, string debug, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.SearchGet");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSearchGetRequest(querySourceAuthorization, enableElevatedRead, searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType, scoringParameters, scoringProfile, searchFields, searchMode, scoringStatistics, sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling, semanticMaxWaitInMilliseconds, answers, captions, semanticQuery, queryRewrites, debug, queryLanguage, speller, semanticFields, context);
+                using HttpMessage message = CreateSearchGetRequest(searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType, scoringParameters, scoringProfile, searchFields, searchMode, scoringStatistics, sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling, semanticMaxWaitInMilliseconds, answers, captions, semanticQuery, debug, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -179,8 +119,6 @@ namespace Azure.Search.Documents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
         /// <param name="searchText"> A full-text search query expression; Use "*" or omit this parameter to match all documents. </param>
         /// <param name="includeTotalResultCount"> A value that specifies whether to fetch the total count of results. Default is false. Setting this value to true may have a performance impact. Note that the count returned is an approximation. </param>
         /// <param name="facets"> The list of facet expressions to apply to the search query. Each facet expression contains a field name, optionally followed by a comma-separated list of name:value pairs. </param>
@@ -206,21 +144,17 @@ namespace Azure.Search.Documents
         /// <param name="answers"> This parameter is only valid if the query type is `semantic`. If set, the query returns answers extracted from key passages in the highest ranked documents. The number of answers returned can be configured by appending the pipe character `|` followed by the `count-&lt;number of answers&gt;` option after the answers parameter value, such as `extractive|count-3`. Default count is 1. The confidence threshold can be configured by appending the pipe character `|` followed by the `threshold-&lt;confidence threshold&gt;` option after the answers parameter value, such as `extractive|threshold-0.9`. Default threshold is 0.7. The maximum character length of answers can be configured by appending the pipe character '|' followed by the 'count-&lt;number of maximum character length&gt;', such as 'extractive|maxcharlength-600'. </param>
         /// <param name="captions"> This parameter is only valid if the query type is `semantic`. If set, the query returns captions extracted from key passages in the highest ranked documents. When Captions is set to `extractive`, highlighting is enabled by default, and can be configured by appending the pipe character `|` followed by the `highlight-&lt;true/false&gt;` option, such as `extractive|highlight-true`. Defaults to `None`. The maximum character length of captions can be configured by appending the pipe character '|' followed by the 'count-&lt;number of maximum character length&gt;', such as 'extractive|maxcharlength-600'. </param>
         /// <param name="semanticQuery"> Allows setting a separate search query that will be solely used for semantic reranking, semantic captions and semantic answers. Is useful for scenarios where there is a need to use different queries between the base retrieval and ranking phase, and the L2 semantic phase. </param>
-        /// <param name="queryRewrites"> When QueryRewrites is set to `generative`, the query terms are sent to a generate model which will produce 10 (default) rewrites to help increase the recall of the request. The requested count can be configured by appending the pipe character `|` followed by the `count-&lt;number of rewrites&gt;` option, such as `generative|count-3`. Defaults to `None`. This parameter is only valid if the query type is `semantic`. </param>
         /// <param name="debug"> Enables a debugging tool that can be used to further explore your search results. </param>
-        /// <param name="queryLanguage"> The language of the query. </param>
-        /// <param name="speller"> Improve search recall by spell-correcting individual search query terms. </param>
-        /// <param name="semanticFields"> The list of field names used for semantic ranking. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> SearchGetAsync(string querySourceAuthorization, bool? enableElevatedRead, string searchText, bool? includeTotalResultCount, IEnumerable<string> facets, string filter, IEnumerable<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IEnumerable<string> orderBy, string queryType, IEnumerable<string> scoringParameters, string scoringProfile, IEnumerable<string> searchFields, string searchMode, string scoringStatistics, string sessionId, IEnumerable<string> @select, int? skip, int? top, string semanticConfiguration, string semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string answers, string captions, string semanticQuery, string queryRewrites, string debug, string queryLanguage, string speller, IEnumerable<string> semanticFields, RequestContext context)
+        internal virtual async Task<Response> SearchGetAsync(string searchText, bool? includeTotalResultCount, IEnumerable<string> facets, string filter, IEnumerable<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IEnumerable<string> orderBy, string queryType, IEnumerable<string> scoringParameters, string scoringProfile, IEnumerable<string> searchFields, string searchMode, string scoringStatistics, string sessionId, IEnumerable<string> @select, int? skip, int? top, string semanticConfiguration, string semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string answers, string captions, string semanticQuery, string debug, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.SearchGet");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSearchGetRequest(querySourceAuthorization, enableElevatedRead, searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType, scoringParameters, scoringProfile, searchFields, searchMode, scoringStatistics, sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling, semanticMaxWaitInMilliseconds, answers, captions, semanticQuery, queryRewrites, debug, queryLanguage, speller, semanticFields, context);
+                using HttpMessage message = CreateSearchGetRequest(searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType, scoringParameters, scoringProfile, searchFields, searchMode, scoringStatistics, sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling, semanticMaxWaitInMilliseconds, answers, captions, semanticQuery, debug, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -231,8 +165,6 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Searches for documents in the index. </summary>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
         /// <param name="searchText"> A full-text search query expression; Use "*" or omit this parameter to match all documents. </param>
         /// <param name="includeTotalResultCount"> A value that specifies whether to fetch the total count of results. Default is false. Setting this value to true may have a performance impact. Note that the count returned is an approximation. </param>
         /// <param name="facets"> The list of facet expressions to apply to the search query. Each facet expression contains a field name, optionally followed by a comma-separated list of name:value pairs. </param>
@@ -258,22 +190,16 @@ namespace Azure.Search.Documents
         /// <param name="answers"> This parameter is only valid if the query type is `semantic`. If set, the query returns answers extracted from key passages in the highest ranked documents. The number of answers returned can be configured by appending the pipe character `|` followed by the `count-&lt;number of answers&gt;` option after the answers parameter value, such as `extractive|count-3`. Default count is 1. The confidence threshold can be configured by appending the pipe character `|` followed by the `threshold-&lt;confidence threshold&gt;` option after the answers parameter value, such as `extractive|threshold-0.9`. Default threshold is 0.7. The maximum character length of answers can be configured by appending the pipe character '|' followed by the 'count-&lt;number of maximum character length&gt;', such as 'extractive|maxcharlength-600'. </param>
         /// <param name="captions"> This parameter is only valid if the query type is `semantic`. If set, the query returns captions extracted from key passages in the highest ranked documents. When Captions is set to `extractive`, highlighting is enabled by default, and can be configured by appending the pipe character `|` followed by the `highlight-&lt;true/false&gt;` option, such as `extractive|highlight-true`. Defaults to `None`. The maximum character length of captions can be configured by appending the pipe character '|' followed by the 'count-&lt;number of maximum character length&gt;', such as 'extractive|maxcharlength-600'. </param>
         /// <param name="semanticQuery"> Allows setting a separate search query that will be solely used for semantic reranking, semantic captions and semantic answers. Is useful for scenarios where there is a need to use different queries between the base retrieval and ranking phase, and the L2 semantic phase. </param>
-        /// <param name="queryRewrites"> When QueryRewrites is set to `generative`, the query terms are sent to a generate model which will produce 10 (default) rewrites to help increase the recall of the request. The requested count can be configured by appending the pipe character `|` followed by the `count-&lt;number of rewrites&gt;` option, such as `generative|count-3`. Defaults to `None`. This parameter is only valid if the query type is `semantic`. </param>
         /// <param name="debug"> Enables a debugging tool that can be used to further explore your search results. </param>
-        /// <param name="queryLanguage"> The language of the query. </param>
-        /// <param name="speller"> Improve search recall by spell-correcting individual search query terms. </param>
-        /// <param name="semanticFields"> The list of field names used for semantic ranking. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SearchDocumentsResult> SearchGet(string querySourceAuthorization = default, bool? enableElevatedRead = default, string searchText = default, bool? includeTotalResultCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfiguration = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, string semanticQuery = default, QueryRewritesType? queryRewrites = default, QueryDebugMode? debug = default, QueryLanguage? queryLanguage = default, QuerySpellerType? speller = default, IEnumerable<string> semanticFields = default, CancellationToken cancellationToken = default)
+        internal virtual Response<SearchDocumentsResult> SearchGet(string searchText = default, bool? includeTotalResultCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfiguration = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, string semanticQuery = default, QueryDebugMode? debug = default, CancellationToken cancellationToken = default)
         {
-            Response result = SearchGet(querySourceAuthorization, enableElevatedRead, searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType?.ToSerialString(), scoringParameters, scoringProfile, searchFields, searchMode?.ToSerialString(), scoringStatistics?.ToSerialString(), sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling?.ToString(), semanticMaxWaitInMilliseconds, answers?.ToString(), captions?.ToString(), semanticQuery, queryRewrites?.ToString(), debug?.ToString(), queryLanguage?.ToString(), speller?.ToString(), semanticFields, cancellationToken.ToRequestContext());
+            Response result = SearchGet(searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType?.ToSerialString(), scoringParameters, scoringProfile, searchFields, searchMode?.ToSerialString(), scoringStatistics?.ToSerialString(), sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling?.ToString(), semanticMaxWaitInMilliseconds, answers?.ToString(), captions?.ToString(), semanticQuery, debug?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((SearchDocumentsResult)result, result);
         }
 
         /// <summary> Searches for documents in the index. </summary>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
         /// <param name="searchText"> A full-text search query expression; Use "*" or omit this parameter to match all documents. </param>
         /// <param name="includeTotalResultCount"> A value that specifies whether to fetch the total count of results. Default is false. Setting this value to true may have a performance impact. Note that the count returned is an approximation. </param>
         /// <param name="facets"> The list of facet expressions to apply to the search query. Each facet expression contains a field name, optionally followed by a comma-separated list of name:value pairs. </param>
@@ -299,16 +225,12 @@ namespace Azure.Search.Documents
         /// <param name="answers"> This parameter is only valid if the query type is `semantic`. If set, the query returns answers extracted from key passages in the highest ranked documents. The number of answers returned can be configured by appending the pipe character `|` followed by the `count-&lt;number of answers&gt;` option after the answers parameter value, such as `extractive|count-3`. Default count is 1. The confidence threshold can be configured by appending the pipe character `|` followed by the `threshold-&lt;confidence threshold&gt;` option after the answers parameter value, such as `extractive|threshold-0.9`. Default threshold is 0.7. The maximum character length of answers can be configured by appending the pipe character '|' followed by the 'count-&lt;number of maximum character length&gt;', such as 'extractive|maxcharlength-600'. </param>
         /// <param name="captions"> This parameter is only valid if the query type is `semantic`. If set, the query returns captions extracted from key passages in the highest ranked documents. When Captions is set to `extractive`, highlighting is enabled by default, and can be configured by appending the pipe character `|` followed by the `highlight-&lt;true/false&gt;` option, such as `extractive|highlight-true`. Defaults to `None`. The maximum character length of captions can be configured by appending the pipe character '|' followed by the 'count-&lt;number of maximum character length&gt;', such as 'extractive|maxcharlength-600'. </param>
         /// <param name="semanticQuery"> Allows setting a separate search query that will be solely used for semantic reranking, semantic captions and semantic answers. Is useful for scenarios where there is a need to use different queries between the base retrieval and ranking phase, and the L2 semantic phase. </param>
-        /// <param name="queryRewrites"> When QueryRewrites is set to `generative`, the query terms are sent to a generate model which will produce 10 (default) rewrites to help increase the recall of the request. The requested count can be configured by appending the pipe character `|` followed by the `count-&lt;number of rewrites&gt;` option, such as `generative|count-3`. Defaults to `None`. This parameter is only valid if the query type is `semantic`. </param>
         /// <param name="debug"> Enables a debugging tool that can be used to further explore your search results. </param>
-        /// <param name="queryLanguage"> The language of the query. </param>
-        /// <param name="speller"> Improve search recall by spell-correcting individual search query terms. </param>
-        /// <param name="semanticFields"> The list of field names used for semantic ranking. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SearchDocumentsResult>> SearchGetAsync(string querySourceAuthorization = default, bool? enableElevatedRead = default, string searchText = default, bool? includeTotalResultCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfiguration = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, string semanticQuery = default, QueryRewritesType? queryRewrites = default, QueryDebugMode? debug = default, QueryLanguage? queryLanguage = default, QuerySpellerType? speller = default, IEnumerable<string> semanticFields = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<SearchDocumentsResult>> SearchGetAsync(string searchText = default, bool? includeTotalResultCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfiguration = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, string semanticQuery = default, QueryDebugMode? debug = default, CancellationToken cancellationToken = default)
         {
-            Response result = await SearchGetAsync(querySourceAuthorization, enableElevatedRead, searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType?.ToSerialString(), scoringParameters, scoringProfile, searchFields, searchMode?.ToSerialString(), scoringStatistics?.ToSerialString(), sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling?.ToString(), semanticMaxWaitInMilliseconds, answers?.ToString(), captions?.ToString(), semanticQuery, queryRewrites?.ToString(), debug?.ToString(), queryLanguage?.ToString(), speller?.ToString(), semanticFields, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await SearchGetAsync(searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType?.ToSerialString(), scoringParameters, scoringProfile, searchFields, searchMode?.ToSerialString(), scoringStatistics?.ToSerialString(), sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling?.ToString(), semanticMaxWaitInMilliseconds, answers?.ToString(), captions?.ToString(), semanticQuery, debug?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SearchDocumentsResult)result, result);
         }
 
@@ -321,18 +243,16 @@ namespace Azure.Search.Documents
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response SearchPost(RequestContent content, string querySourceAuthorization = default, bool? enableElevatedRead = default, RequestContext context = null)
+        internal virtual Response SearchPost(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.SearchPost");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSearchPostRequest(content, querySourceAuthorization, enableElevatedRead, context);
+                using HttpMessage message = CreateSearchPostRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -351,18 +271,16 @@ namespace Azure.Search.Documents
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> SearchPostAsync(RequestContent content, string querySourceAuthorization = default, bool? enableElevatedRead = default, RequestContext context = null)
+        internal virtual async Task<Response> SearchPostAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.SearchPost");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSearchPostRequest(content, querySourceAuthorization, enableElevatedRead, context);
+                using HttpMessage message = CreateSearchPostRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -390,8 +308,6 @@ namespace Azure.Search.Documents
         /// <param name="searchText"> A full-text search query expression; Use "*" or omit this parameter to match all documents. </param>
         /// <param name="searchFields"> The comma-separated list of field names to which to scope the full-text search. When using fielded search (fieldName:searchExpression) in a full Lucene query, the field names of each fielded search expression take precedence over any field names listed in this parameter. </param>
         /// <param name="searchMode"> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </param>
-        /// <param name="queryLanguage"> A value that specifies the language of the search query. </param>
-        /// <param name="querySpeller"> A value that specifies the type of the speller to use to spell-correct individual search query terms. </param>
         /// <param name="select"> The comma-separated list of fields to retrieve. If unspecified, all fields marked as retrievable in the schema are included. </param>
         /// <param name="skip"> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </param>
         /// <param name="top"> The number of search results to retrieve. This can be used in conjunction with $skip to implement client-side paging of search results. If results are truncated due to server-side paging, the response will include a continuation token that can be used to issue another Search request for the next page of results. </param>
@@ -401,16 +317,11 @@ namespace Azure.Search.Documents
         /// <param name="semanticQuery"> Allows setting a separate search query that will be solely used for semantic reranking, semantic captions and semantic answers. Is useful for scenarios where there is a need to use different queries between the base retrieval and ranking phase, and the L2 semantic phase. </param>
         /// <param name="answers"> A value that specifies whether answers should be returned as part of the search response. </param>
         /// <param name="captions"> A value that specifies whether captions should be returned as part of the search response. </param>
-        /// <param name="queryRewrites"> A value that specifies whether query rewrites should be generated to augment the search query. </param>
-        /// <param name="semanticFields"> The comma-separated list of field names used for semantic ranking. </param>
         /// <param name="vectorQueries"> The query parameters for vector and hybrid search queries. </param>
         /// <param name="vectorFilterMode"> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter' for new indexes. </param>
-        /// <param name="hybridSearch"> The query parameters to configure hybrid search behaviors. </param>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SearchDocumentsResult> SearchPost(bool? includeTotalCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, QueryDebugMode? debug = default, string searchText = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, QueryLanguage? queryLanguage = default, QuerySpellerType? querySpeller = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfigurationName = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, string semanticQuery = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, QueryRewritesType? queryRewrites = default, IEnumerable<string> semanticFields = default, IEnumerable<VectorQuery> vectorQueries = default, VectorFilterMode? vectorFilterMode = default, HybridSearch hybridSearch = default, string querySourceAuthorization = default, bool? enableElevatedRead = default, CancellationToken cancellationToken = default)
+        internal virtual Response<SearchDocumentsResult> SearchPost(bool? includeTotalCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, QueryDebugMode? debug = default, string searchText = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfigurationName = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, string semanticQuery = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, IEnumerable<VectorQuery> vectorQueries = default, VectorFilterMode? vectorFilterMode = default, CancellationToken cancellationToken = default)
         {
             SearchPostRequest spreadModel = new SearchPostRequest(
                 includeTotalCount,
@@ -430,8 +341,6 @@ namespace Azure.Search.Documents
                 searchText,
                 searchFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
                 searchMode,
-                queryLanguage,
-                querySpeller,
                 @select?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
                 skip,
                 top,
@@ -441,13 +350,10 @@ namespace Azure.Search.Documents
                 semanticQuery,
                 answers,
                 captions,
-                queryRewrites,
-                semanticFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
                 vectorQueries?.ToList() as IList<VectorQuery> ?? new ChangeTrackingList<VectorQuery>(),
                 vectorFilterMode,
-                hybridSearch,
                 default);
-            Response result = SearchPost(spreadModel, querySourceAuthorization, enableElevatedRead, cancellationToken.ToRequestContext());
+            Response result = SearchPost(spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((SearchDocumentsResult)result, result);
         }
 
@@ -469,8 +375,6 @@ namespace Azure.Search.Documents
         /// <param name="searchText"> A full-text search query expression; Use "*" or omit this parameter to match all documents. </param>
         /// <param name="searchFields"> The comma-separated list of field names to which to scope the full-text search. When using fielded search (fieldName:searchExpression) in a full Lucene query, the field names of each fielded search expression take precedence over any field names listed in this parameter. </param>
         /// <param name="searchMode"> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </param>
-        /// <param name="queryLanguage"> A value that specifies the language of the search query. </param>
-        /// <param name="querySpeller"> A value that specifies the type of the speller to use to spell-correct individual search query terms. </param>
         /// <param name="select"> The comma-separated list of fields to retrieve. If unspecified, all fields marked as retrievable in the schema are included. </param>
         /// <param name="skip"> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </param>
         /// <param name="top"> The number of search results to retrieve. This can be used in conjunction with $skip to implement client-side paging of search results. If results are truncated due to server-side paging, the response will include a continuation token that can be used to issue another Search request for the next page of results. </param>
@@ -480,16 +384,11 @@ namespace Azure.Search.Documents
         /// <param name="semanticQuery"> Allows setting a separate search query that will be solely used for semantic reranking, semantic captions and semantic answers. Is useful for scenarios where there is a need to use different queries between the base retrieval and ranking phase, and the L2 semantic phase. </param>
         /// <param name="answers"> A value that specifies whether answers should be returned as part of the search response. </param>
         /// <param name="captions"> A value that specifies whether captions should be returned as part of the search response. </param>
-        /// <param name="queryRewrites"> A value that specifies whether query rewrites should be generated to augment the search query. </param>
-        /// <param name="semanticFields"> The comma-separated list of field names used for semantic ranking. </param>
         /// <param name="vectorQueries"> The query parameters for vector and hybrid search queries. </param>
         /// <param name="vectorFilterMode"> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter' for new indexes. </param>
-        /// <param name="hybridSearch"> The query parameters to configure hybrid search behaviors. </param>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SearchDocumentsResult>> SearchPostAsync(bool? includeTotalCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, QueryDebugMode? debug = default, string searchText = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, QueryLanguage? queryLanguage = default, QuerySpellerType? querySpeller = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfigurationName = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, string semanticQuery = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, QueryRewritesType? queryRewrites = default, IEnumerable<string> semanticFields = default, IEnumerable<VectorQuery> vectorQueries = default, VectorFilterMode? vectorFilterMode = default, HybridSearch hybridSearch = default, string querySourceAuthorization = default, bool? enableElevatedRead = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<SearchDocumentsResult>> SearchPostAsync(bool? includeTotalCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, QueryDebugMode? debug = default, string searchText = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfigurationName = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, string semanticQuery = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, IEnumerable<VectorQuery> vectorQueries = default, VectorFilterMode? vectorFilterMode = default, CancellationToken cancellationToken = default)
         {
             SearchPostRequest spreadModel = new SearchPostRequest(
                 includeTotalCount,
@@ -509,8 +408,6 @@ namespace Azure.Search.Documents
                 searchText,
                 searchFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
                 searchMode,
-                queryLanguage,
-                querySpeller,
                 @select?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
                 skip,
                 top,
@@ -520,118 +417,11 @@ namespace Azure.Search.Documents
                 semanticQuery,
                 answers,
                 captions,
-                queryRewrites,
-                semanticFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
                 vectorQueries?.ToList() as IList<VectorQuery> ?? new ChangeTrackingList<VectorQuery>(),
                 vectorFilterMode,
-                hybridSearch,
                 default);
-            Response result = await SearchPostAsync(spreadModel, querySourceAuthorization, enableElevatedRead, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await SearchPostAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SearchDocumentsResult)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Retrieves a document from the index.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> The key of the document to retrieve. </param>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
-        /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDocument(string key, string querySourceAuthorization, bool? enableElevatedRead, IEnumerable<string> selectedFields, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocument");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-                using HttpMessage message = CreateGetDocumentRequest(key, querySourceAuthorization, enableElevatedRead, selectedFields, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Retrieves a document from the index.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> The key of the document to retrieve. </param>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
-        /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDocumentAsync(string key, string querySourceAuthorization, bool? enableElevatedRead, IEnumerable<string> selectedFields, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocument");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-                using HttpMessage message = CreateGetDocumentRequest(key, querySourceAuthorization, enableElevatedRead, selectedFields, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Retrieves a document from the index. </summary>
-        /// <param name="key"> The key of the document to retrieve. </param>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
-        /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<LookupDocument> GetDocument(string key, string querySourceAuthorization = default, bool? enableElevatedRead = default, IEnumerable<string> selectedFields = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            Response result = GetDocument(key, querySourceAuthorization, enableElevatedRead, selectedFields, cancellationToken.ToRequestContext());
-            return Response.FromValue((LookupDocument)result, result);
-        }
-
-        /// <summary> Retrieves a document from the index. </summary>
-        /// <param name="key"> The key of the document to retrieve. </param>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
-        /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<LookupDocument>> GetDocumentAsync(string key, string querySourceAuthorization = default, bool? enableElevatedRead = default, IEnumerable<string> selectedFields = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            Response result = await GetDocumentAsync(key, querySourceAuthorization, enableElevatedRead, selectedFields, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((LookupDocument)result, result);
         }
 
         /// <summary>

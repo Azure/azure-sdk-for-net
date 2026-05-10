@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             if (id.ResourceType != TrafficControllerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TrafficControllerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TrafficControllerResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrafficControllerAssociationData, TrafficControllerAssociationResource>(new AssociationsInterfaceGetByTrafficControllerAsyncCollectionResultOfT(_associationsInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new TrafficControllerAssociationResource(Client, data));
+            return new AsyncPageableWrapper<TrafficControllerAssociationData, TrafficControllerAssociationResource>(new AssociationsInterfaceGetByTrafficControllerAsyncCollectionResultOfT(
+                _associationsInterfaceRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "TrafficControllerAssociationCollection.GetAll"), data => new TrafficControllerAssociationResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrafficControllerAssociationData, TrafficControllerAssociationResource>(new AssociationsInterfaceGetByTrafficControllerCollectionResultOfT(_associationsInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new TrafficControllerAssociationResource(Client, data));
+            return new PageableWrapper<TrafficControllerAssociationData, TrafficControllerAssociationResource>(new AssociationsInterfaceGetByTrafficControllerCollectionResultOfT(
+                _associationsInterfaceRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "TrafficControllerAssociationCollection.GetAll"), data => new TrafficControllerAssociationResource(Client, data));
         }
 
         /// <summary>

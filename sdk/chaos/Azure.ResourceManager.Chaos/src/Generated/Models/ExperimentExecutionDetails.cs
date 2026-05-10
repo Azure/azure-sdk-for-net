@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             get
             {
-                return Properties.StartedOn;
+                return Properties is null ? default : Properties.StartedOn;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             get
             {
-                return Properties.StoppedOn;
+                return Properties is null ? default : Properties.StoppedOn;
             }
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             get
             {
-                return Properties.FailureReason;
+                return Properties is null ? default : Properties.FailureReason;
             }
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             get
             {
-                return Properties.LastActionOn;
+                return Properties is null ? default : Properties.LastActionOn;
             }
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             get
             {
-                return Properties.RunInformationSteps;
+                return Properties is null ? default : Properties.RunInformationSteps;
             }
         }
     }

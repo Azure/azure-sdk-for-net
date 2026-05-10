@@ -18,8 +18,18 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalLocalShellTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalLocalShellTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        internal InternalLocalShellTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description) : base(@type, additionalBinaryDataProperties)
         {
+            Name = name;
+            Description = description;
         }
+
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceGroups
 {
-    internal class ServiceGroupOperationSource : IOperationSource<ServiceGroupResource>
+    /// <summary></summary>
+    internal partial class ServiceGroupOperationSource : IOperationSource<ServiceGroupResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ServiceGroupOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ServiceGroupResource IOperationSource<ServiceGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServiceGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceGroupsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ServiceGroupData data = ServiceGroupData.DeserializeServiceGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ServiceGroupResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ServiceGroupResource> IOperationSource<ServiceGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServiceGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceGroupsContext.Default);
-            return await Task.FromResult(new ServiceGroupResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ServiceGroupData data = ServiceGroupData.DeserializeServiceGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ServiceGroupResource(_client, data);
         }
     }
 }

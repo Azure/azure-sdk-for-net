@@ -10,16 +10,80 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudClusterManagerData : IUtf8JsonSerializable, IJsonModel<NetworkCloudClusterManagerData>
+    /// <summary> ClusterManager represents a control-plane to manage one or more on-premises clusters. </summary>
+    public partial class NetworkCloudClusterManagerData : TrackedResourceData, IJsonModel<NetworkCloudClusterManagerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudClusterManagerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterManagerData"/> for deserialization. </summary>
+        internal NetworkCloudClusterManagerData()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudClusterManagerData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkCloudClusterManagerData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkCloudClusterManagerData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudClusterManagerData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkCloudClusterManagerData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkCloudClusterManagerData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkCloudClusterManagerData IPersistableModel<NetworkCloudClusterManagerData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkCloudClusterManagerData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkCloudClusterManagerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="networkCloudClusterManagerData"> The <see cref="NetworkCloudClusterManagerData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetworkCloudClusterManagerData networkCloudClusterManagerData)
+        {
+            if (networkCloudClusterManagerData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(networkCloudClusterManagerData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetworkCloudClusterManagerData"/> from. </param>
+        internal static NetworkCloudClusterManagerData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeNetworkCloudClusterManagerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkCloudClusterManagerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,13 +95,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudClusterManagerData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudClusterManagerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkCloudClusterManagerData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -46,330 +111,160 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(AnalyticsWorkspaceId))
+            if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("analyticsWorkspaceId"u8);
-                writer.WriteStringValue(AnalyticsWorkspaceId);
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AvailabilityZones))
-            {
-                writer.WritePropertyName("availabilityZones"u8);
-                writer.WriteStartArray();
-                foreach (var item in AvailabilityZones)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ClusterVersions))
-            {
-                writer.WritePropertyName("clusterVersions"u8);
-                writer.WriteStartArray();
-                foreach (var item in ClusterVersions)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
-            {
-                writer.WritePropertyName("detailedStatus"u8);
-                writer.WriteStringValue(DetailedStatus.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
-            {
-                writer.WritePropertyName("detailedStatusMessage"u8);
-                writer.WriteStringValue(DetailedStatusMessage);
-            }
-            writer.WritePropertyName("fabricControllerId"u8);
-            writer.WriteStringValue(FabricControllerId);
-            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
-            {
-                writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ManagerExtendedLocation))
-            {
-                writer.WritePropertyName("managerExtendedLocation"u8);
-                writer.WriteObjectValue(ManagerExtendedLocation, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(VmSize))
-            {
-                writer.WritePropertyName("vmSize"u8);
-                writer.WriteStringValue(VmSize);
-            }
-            writer.WriteEndObject();
         }
 
-        NetworkCloudClusterManagerData IJsonModel<NetworkCloudClusterManagerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkCloudClusterManagerData IJsonModel<NetworkCloudClusterManagerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkCloudClusterManagerData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudClusterManagerData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudClusterManagerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkCloudClusterManagerData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkCloudClusterManagerData(document.RootElement, options);
         }
 
-        internal static NetworkCloudClusterManagerData DeserializeNetworkCloudClusterManagerData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkCloudClusterManagerData DeserializeNetworkCloudClusterManagerData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? etag = default;
-            ManagedServiceIdentity identity = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            ResourceIdentifier analyticsWorkspaceId = default;
-            IList<string> availabilityZones = default;
-            IReadOnlyList<ClusterAvailableVersion> clusterVersions = default;
-            ClusterManagerDetailedStatus? detailedStatus = default;
-            string detailedStatusMessage = default;
-            ResourceIdentifier fabricControllerId = default;
-            ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
-            ExtendedLocation managerExtendedLocation = default;
-            ClusterManagerProvisioningState? provisioningState = default;
-            string vmSize = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            ClusterManagerProperties properties = default;
+            ETag? eTag = default;
+            ManagedServiceIdentity identity = default;
+            NetworkCloudDeploymentType? kind = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerNetworkCloudContext.Default);
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    properties = ClusterManagerProperties.DeserializeClusterManagerProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("etag"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerNetworkCloudContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("analyticsWorkspaceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
-                            {
-                                continue;
-                            }
-                            analyticsWorkspaceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("availabilityZones"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            availabilityZones = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterVersions"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ClusterAvailableVersion> array = new List<ClusterAvailableVersion>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ClusterAvailableVersion.DeserializeClusterAvailableVersion(item, options));
-                            }
-                            clusterVersions = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("detailedStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            detailedStatus = new ClusterManagerDetailedStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("detailedStatusMessage"u8))
-                        {
-                            detailedStatusMessage = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("fabricControllerId"u8))
-                        {
-                            fabricControllerId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("managedResourceGroupConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("managerExtendedLocation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managerExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ClusterManagerProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("vmSize"u8))
-                        {
-                            vmSize = property0.Value.GetString();
-                            continue;
-                        }
+                        continue;
                     }
+                    kind = new NetworkCloudDeploymentType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkCloudClusterManagerData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
+                properties,
+                eTag,
                 identity,
-                analyticsWorkspaceId,
-                availabilityZones ?? new ChangeTrackingList<string>(),
-                clusterVersions ?? new ChangeTrackingList<ClusterAvailableVersion>(),
-                detailedStatus,
-                detailedStatusMessage,
-                fabricControllerId,
-                managedResourceGroupConfiguration,
-                managerExtendedLocation,
-                provisioningState,
-                vmSize,
-                serializedAdditionalRawData);
+                kind);
         }
-
-        BinaryData IPersistableModel<NetworkCloudClusterManagerData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudClusterManagerData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetworkCloudClusterManagerData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetworkCloudClusterManagerData IPersistableModel<NetworkCloudClusterManagerData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudClusterManagerData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkCloudClusterManagerData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkCloudClusterManagerData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetworkCloudClusterManagerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

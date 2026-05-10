@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -438,7 +438,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceDetailsGetResourceDetailsAsyncCollectionResultOfT(_resourceDetailsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ResourceDetailsGetResourceDetailsAsyncCollectionResultOfT(
+                _resourceDetailsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DevOpsPoolResource.GetResourceDetails");
         }
 
         /// <summary>
@@ -470,7 +476,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceDetailsGetResourceDetailsCollectionResultOfT(_resourceDetailsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ResourceDetailsGetResourceDetailsCollectionResultOfT(
+                _resourceDetailsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DevOpsPoolResource.GetResourceDetails");
         }
 
         /// <summary>

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SignalR
         {
             if (id.ResourceType != SignalRResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SignalRResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SignalRResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SignalRCustomDomainData, SignalRCustomDomainResource>(new CustomDomainsGetAllAsyncCollectionResultOfT(_customDomainsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SignalRCustomDomainResource(Client, data));
+            return new AsyncPageableWrapper<SignalRCustomDomainData, SignalRCustomDomainResource>(new CustomDomainsGetAllAsyncCollectionResultOfT(
+                _customDomainsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRCustomDomainCollection.GetAll"), data => new SignalRCustomDomainResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SignalRCustomDomainData, SignalRCustomDomainResource>(new CustomDomainsGetAllCollectionResultOfT(_customDomainsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SignalRCustomDomainResource(Client, data));
+            return new PageableWrapper<SignalRCustomDomainData, SignalRCustomDomainResource>(new CustomDomainsGetAllCollectionResultOfT(
+                _customDomainsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRCustomDomainCollection.GetAll"), data => new SignalRCustomDomainResource(Client, data));
         }
 
         /// <summary>

@@ -219,6 +219,8 @@ public abstract partial class Specification
         {
             if (parameter.ParameterType == typeof(WaitUntil)) { continue; }
             if (parameter.ParameterType == typeof(CancellationToken)) { continue; }
+            if (parameter.ParameterType == typeof(Azure.MatchConditions)) { continue; }
+            if (parameter.ParameterType == typeof(Azure.RequestConditions)) { continue; }
             ContextualException.WithContext(
                 $"Analyzing parameter {parameter.ParameterType.Name} {parameter.Name} of creation method {creator.DeclaringType?.Name ?? "????"}::{creator.Name}",
                 () =>
@@ -312,7 +314,7 @@ public abstract partial class Specification
                 existing.ArmMember ??= property;
                 if (existing.Path is null)
                 {
-                    string? path = property.GetCustomAttributes().Where(a => a.GetType().Name == "WirePathAttribute").FirstOrDefault()?.ToString();
+                    string? path = property.GetCustomAttributes().Where(a => a.GetType().Name == "WirePathAttribute").Select(GetWirePathFromAttribute).FirstOrDefault();
                     if (path is not null)
                     {
                         existing.Path = path.Split('.');
@@ -337,7 +339,7 @@ public abstract partial class Specification
 
         // Fish out any path attributes
         var attributes = property.GetCustomAttributes();
-        string? path = attributes.Where(a => a.GetType().Name == "WirePathAttribute").FirstOrDefault()?.ToString();
+        string? path = attributes.Where(a => a.GetType().Name == "WirePathAttribute").Select(GetWirePathFromAttribute).FirstOrDefault();
 
         // Patch up the well known id/systemData property paths
         if (path is null)
@@ -377,6 +379,19 @@ public abstract partial class Specification
         }
 
         return prop;
+    }
+
+    private static string? GetWirePathFromAttribute(Attribute wirePathAttr)
+    {
+        // Try ToString() first — works for old AutoRest-generated WirePathAttribute
+        string? path = wirePathAttr.ToString();
+        if (path is not null && !path.Contains("WirePathAttribute"))
+        {
+            return path;
+        }
+        // Fall back to reading the _wirePath field — new TypeSpec-generated WirePathAttribute doesn't override ToString()
+        var field = wirePathAttr.GetType().GetField("_wirePath", BindingFlags.NonPublic | BindingFlags.Instance);
+        return field?.GetValue(wirePathAttr) as string;
     }
 
     private static ModelBase GetOrCreateModelType(Type armType, Resource resource, bool ignorePropertiesWithoutPath)

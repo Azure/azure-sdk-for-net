@@ -91,4 +91,149 @@ public class ConversationStoreProtocolTests : ProtocolTestBase
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
+
+    // ── Conversation ID round-trip tests ──
+
+    [Test]
+    public async Task POST_Default_WithConversationString_RoundTripsInResponse()
+    {
+        var response = await PostResponsesAsync(new
+        {
+            model = "test",
+            conversation = "conv_abc123"
+        });
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        using var doc = await ParseJsonAsync(response);
+        var conv = doc.RootElement.GetProperty("conversation");
+        Assert.That(conv.GetProperty("id").GetString(), Is.EqualTo("conv_abc123"));
+    }
+
+    [Test]
+    public async Task POST_Default_WithConversationObject_RoundTripsInResponse()
+    {
+        var response = await PostResponsesAsync(new
+        {
+            model = "test",
+            conversation = new { id = "conv_xyz789" }
+        });
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        using var doc = await ParseJsonAsync(response);
+        var conv = doc.RootElement.GetProperty("conversation");
+        Assert.That(conv.GetProperty("id").GetString(), Is.EqualTo("conv_xyz789"));
+    }
+
+    [Test]
+    public async Task POST_Streaming_WithConversationString_RoundTripsInCreatedEvent()
+    {
+        var response = await PostResponsesAsync(new
+        {
+            model = "test",
+            stream = true,
+            conversation = "conv_stream1"
+        });
+
+        var events = await ParseSseAsync(response);
+        var createdEvent = events.First(e => e.EventType == "response.created");
+        using var doc = JsonDocument.Parse(createdEvent.Data);
+        var conv = doc.RootElement.GetProperty("response").GetProperty("conversation");
+        Assert.That(conv.GetProperty("id").GetString(), Is.EqualTo("conv_stream1"));
+    }
+
+    [Test]
+    public async Task POST_Streaming_WithConversationObject_RoundTripsInCreatedEvent()
+    {
+        var response = await PostResponsesAsync(new
+        {
+            model = "test",
+            stream = true,
+            conversation = new { id = "conv_stream2" }
+        });
+
+        var events = await ParseSseAsync(response);
+        var createdEvent = events.First(e => e.EventType == "response.created");
+        using var doc = JsonDocument.Parse(createdEvent.Data);
+        var conv = doc.RootElement.GetProperty("response").GetProperty("conversation");
+        Assert.That(conv.GetProperty("id").GetString(), Is.EqualTo("conv_stream2"));
+    }
+
+    [Test]
+    public async Task POST_Streaming_ConversationStamped_OnCompletedEvent()
+    {
+        var response = await PostResponsesAsync(new
+        {
+            model = "test",
+            stream = true,
+            conversation = "conv_completed1"
+        });
+
+        var events = await ParseSseAsync(response);
+        var completedEvent = events.First(e => e.EventType == "response.completed");
+        using var doc = JsonDocument.Parse(completedEvent.Data);
+        var conv = doc.RootElement.GetProperty("response").GetProperty("conversation");
+        Assert.That(conv.GetProperty("id").GetString(), Is.EqualTo("conv_completed1"));
+    }
+
+    [Test]
+    public async Task POST_Streaming_ConversationStamped_OnAllLifecycleEvents()
+    {
+        var response = await PostResponsesAsync(new
+        {
+            model = "test",
+            stream = true,
+            conversation = "conv_lifecycle1"
+        });
+
+        var events = await ParseSseAsync(response);
+
+        // Check every response.* lifecycle event that embeds a response snapshot
+        var lifecycleEventTypes = new[] { "response.created", "response.in_progress", "response.completed" };
+        foreach (var eventType in lifecycleEventTypes)
+        {
+            var evt = events.FirstOrDefault(e => e.EventType == eventType);
+            if (evt is null)
+                continue;
+
+            using var doc = JsonDocument.Parse(evt.Data);
+            Assert.That(
+                doc.RootElement.TryGetProperty("response", out var resp), Is.True,
+                $"{eventType} should have a 'response' property");
+            var conv = resp.GetProperty("conversation");
+            Assert.That(
+                conv.GetProperty("id").GetString(),
+                Is.EqualTo("conv_lifecycle1"),
+                $"Conversation ID not stamped on {eventType}");
+        }
+    }
+
+    [Test]
+    public async Task POST_Background_WithConversationString_RoundTripsInResponse()
+    {
+        var response = await PostResponsesAsync(new
+        {
+            model = "test",
+            background = true,
+            conversation = "conv_bg1"
+        });
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        using var doc = await ParseJsonAsync(response);
+        var conv = doc.RootElement.GetProperty("conversation");
+        Assert.That(conv.GetProperty("id").GetString(), Is.EqualTo("conv_bg1"));
+    }
+
+    [Test]
+    public async Task POST_Default_WithoutConversation_ResponseHasNullConversation()
+    {
+        var response = await PostResponsesAsync(new { model = "test" });
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        using var doc = await ParseJsonAsync(response);
+        // conversation should be absent or null when not provided
+        if (doc.RootElement.TryGetProperty("conversation", out var conv))
+        {
+            Assert.That(conv.ValueKind, Is.EqualTo(JsonValueKind.Null));
+        }
+    }
 }

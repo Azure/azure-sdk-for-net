@@ -40,6 +40,11 @@ namespace Azure.AI.Projects
             {
                 Version = version;
             }
+            string userAgentApplicationId = section["UserAgentApplicationId"];
+            if (!string.IsNullOrEmpty(userAgentApplicationId))
+            {
+                UserAgentApplicationId = userAgentApplicationId;
+            }
         }
 
         /// <summary> Gets the Version. </summary>

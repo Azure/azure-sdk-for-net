@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Search
         {
             if (id.ResourceType != SearchServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SearchServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SearchServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -305,7 +305,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context), data => new SharedSearchServicePrivateLinkResource(Client, data));
+                context,
+                "SharedSearchServicePrivateLinkResourceCollection.GetAll"), data => new SharedSearchServicePrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +341,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context), data => new SharedSearchServicePrivateLinkResource(Client, data));
+                context,
+                "SharedSearchServicePrivateLinkResourceCollection.GetAll"), data => new SharedSearchServicePrivateLinkResource(Client, data));
         }
 
         /// <summary>

@@ -21,6 +21,7 @@ public class FoundryEnvironmentTests
         Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT", null);
         Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", null);
         Environment.SetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL", null);
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", null);
         FoundryEnvironment.Reload();
     }
 
@@ -170,5 +171,40 @@ public class FoundryEnvironmentTests
         Environment.SetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL", "not-a-number");
         FoundryEnvironment.Reload();
         Assert.That(FoundryEnvironment.SseKeepAliveInterval, Is.EqualTo(Timeout.InfiniteTimeSpan));
+    }
+
+    // ---------------------------------------------------------------
+    // IsHosted (driven by FOUNDRY_HOSTING_ENVIRONMENT env var)
+    // ---------------------------------------------------------------
+
+    [Test]
+    public void IsHosted_ReturnsTrue_WhenFoundryHostingEnvironmentIsSet()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "production");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.IsHosted, Is.True);
+    }
+
+    [Test]
+    public void IsHosted_ReturnsTrue_WhenAnyNonEmptyValue()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "staging");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.IsHosted, Is.True);
+    }
+
+    [Test]
+    public void IsHosted_ReturnsFalse_WhenNotSet()
+    {
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.IsHosted, Is.False);
+    }
+
+    [Test]
+    public void IsHosted_ReturnsFalse_WhenEmpty()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.IsHosted, Is.False);
     }
 }

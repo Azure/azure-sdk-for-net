@@ -63,10 +63,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diffDiskSettings"> Specifies the ephemeral Disk Settings for the operating system disk used by the virtual machine. </param>
         /// <param name="createOption"> Specifies how the virtual machine disk should be created. Possible values are **Attach:** This value is used when you are using a specialized disk to create the virtual machine. **FromImage:** This value is used when you are using an image to create the virtual machine. If you are using a platform image, you should also use the imageReference element described above. If you are using a marketplace image, you should also use the plan element previously described. </param>
         /// <param name="diskSizeGB"> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. The property 'diskSizeGB' is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. </param>
+        /// <param name="storageFaultDomainAlignment"> Specifies the storage fault domain alignment type for the disk. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VM deletion. Possible values are: **Delete.** If this value is used, the OS disk is deleted when VM is deleted. **Detach.** If this value is used, the os disk is retained after VM is deleted. The default value is set to **Detach**. For an ephemeral OS Disk, the default value is set to **Delete**. The user cannot change the delete option for an ephemeral OS Disk. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineOSDisk(SupportedOperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingType? caching, bool? writeAcceleratorEnabled, DiffDiskSettings diffDiskSettings, DiskCreateOptionType createOption, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineOSDisk(SupportedOperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingType? caching, bool? writeAcceleratorEnabled, DiffDiskSettings diffDiskSettings, DiskCreateOptionType createOption, int? diskSizeGB, StorageFaultDomainAlignmentType? storageFaultDomainAlignment, VirtualMachineManagedDisk managedDisk, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OSType = osType;
             EncryptionSettings = encryptionSettings;
@@ -78,6 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
             DiffDiskSettings = diffDiskSettings;
             CreateOption = createOption;
             DiskSizeGB = diskSizeGB;
+            StorageFaultDomainAlignment = storageFaultDomainAlignment;
             ManagedDisk = managedDisk;
             DeleteOption = deleteOption;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -132,6 +134,8 @@ namespace Azure.ResourceManager.Compute.Models
         public DiskCreateOptionType CreateOption { get; set; }
         /// <summary> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. The property 'diskSizeGB' is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. </summary>
         public int? DiskSizeGB { get; set; }
+        /// <summary> Specifies the storage fault domain alignment type for the disk. </summary>
+        public StorageFaultDomainAlignmentType? StorageFaultDomainAlignment { get; set; }
         /// <summary> The managed disk parameters. </summary>
         public VirtualMachineManagedDisk ManagedDisk { get; set; }
         /// <summary> Specifies whether OS Disk should be deleted or detached upon VM deletion. Possible values are: **Delete.** If this value is used, the OS disk is deleted when VM is deleted. **Detach.** If this value is used, the os disk is retained after VM is deleted. The default value is set to **Detach**. For an ephemeral OS Disk, the default value is set to **Delete**. The user cannot change the delete option for an ephemeral OS Disk. </summary>

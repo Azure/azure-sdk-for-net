@@ -325,14 +325,14 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<ClassificationPolicy> GetClassificationPoliciesAsync(CancellationToken cancellationToken = default)
         {
-            return new JobRouterAdministrationClientGetClassificationPoliciesAsyncCollectionResultOfT(this, null, cancellationToken.ToRequestContext());
+            return new JobRouterAdministrationClientGetClassificationPoliciesAsyncCollectionResultOfT(this, null, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetClassificationPolicies");
         }
 
         /// <summary> Retrieves existing classification policies. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<ClassificationPolicy> GetClassificationPolicies(CancellationToken cancellationToken = default)
         {
-            return new JobRouterAdministrationClientGetClassificationPoliciesCollectionResultOfT(this, null, cancellationToken.ToRequestContext());
+            return new JobRouterAdministrationClientGetClassificationPoliciesCollectionResultOfT(this, null, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetClassificationPolicies");
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual AsyncPageable<BinaryData> GetClassificationPoliciesAsync(RequestContext context)
         {
-            return new JobRouterAdministrationClientGetClassificationPoliciesAsyncCollectionResult(this, null, context);
+            return new JobRouterAdministrationClientGetClassificationPoliciesAsyncCollectionResult(this, null, context, "JobRouterAdministrationClient.GetClassificationPolicies");
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual Pageable<BinaryData> GetClassificationPolicies(RequestContext context)
         {
-            return new JobRouterAdministrationClientGetClassificationPoliciesCollectionResult(this, null, context);
+            return new JobRouterAdministrationClientGetClassificationPoliciesCollectionResult(this, null, context, "JobRouterAdministrationClient.GetClassificationPolicies");
         }
 
         #endregion ClassificationPolicy
@@ -591,14 +591,14 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<DistributionPolicy> GetDistributionPoliciesAsync(CancellationToken cancellationToken = default)
         {
-            return new JobRouterAdministrationClientGetDistributionPoliciesAsyncCollectionResultOfT(this, null, cancellationToken.ToRequestContext());
+            return new JobRouterAdministrationClientGetDistributionPoliciesAsyncCollectionResultOfT(this, null, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetDistributionPolicies");
         }
 
         /// <summary> Retrieves existing distribution policies. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<DistributionPolicy> GetDistributionPolicies(CancellationToken cancellationToken = default)
         {
-            return new JobRouterAdministrationClientGetDistributionPoliciesCollectionResultOfT(this, null, cancellationToken.ToRequestContext());
+            return new JobRouterAdministrationClientGetDistributionPoliciesCollectionResultOfT(this, null, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetDistributionPolicies");
         }
 
         /// <summary>
@@ -621,7 +621,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual AsyncPageable<BinaryData> GetDistributionPoliciesAsync(RequestContext context)
         {
-            return new JobRouterAdministrationClientGetDistributionPoliciesAsyncCollectionResult(this, null, context);
+            return new JobRouterAdministrationClientGetDistributionPoliciesAsyncCollectionResult(this, null, context, "JobRouterAdministrationClient.GetDistributionPolicies");
         }
 
         /// <summary>
@@ -644,7 +644,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual Pageable<BinaryData> GetDistributionPolicies(RequestContext context)
         {
-            return new JobRouterAdministrationClientGetDistributionPoliciesCollectionResult(this, null, context);
+            return new JobRouterAdministrationClientGetDistributionPoliciesCollectionResult(this, null, context, "JobRouterAdministrationClient.GetDistributionPolicies");
         }
 
         #endregion DistributionPolicy
@@ -861,14 +861,14 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<ExceptionPolicy> GetExceptionPoliciesAsync(CancellationToken cancellationToken = default)
         {
-            return new JobRouterAdministrationClientGetExceptionPoliciesAsyncCollectionResultOfT(this, null, cancellationToken.ToRequestContext());
+            return new JobRouterAdministrationClientGetExceptionPoliciesAsyncCollectionResultOfT(this, null, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetExceptionPolicies");
         }
 
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<ExceptionPolicy> GetExceptionPolicies(CancellationToken cancellationToken = default)
         {
-            return new JobRouterAdministrationClientGetExceptionPoliciesCollectionResultOfT(this, null, cancellationToken.ToRequestContext());
+            return new JobRouterAdministrationClientGetExceptionPoliciesCollectionResultOfT(this, null, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetExceptionPolicies");
         }
 
         /// <summary>
@@ -891,7 +891,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual AsyncPageable<BinaryData> GetExceptionPoliciesAsync(RequestContext context)
         {
-            return new JobRouterAdministrationClientGetExceptionPoliciesAsyncCollectionResult(this, null, context);
+            return new JobRouterAdministrationClientGetExceptionPoliciesAsyncCollectionResult(this, null, context, "JobRouterAdministrationClient.GetExceptionPolicies");
         }
 
         /// <summary>
@@ -914,7 +914,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual Pageable<BinaryData> GetExceptionPolicies(RequestContext context)
         {
-            return new JobRouterAdministrationClientGetExceptionPoliciesCollectionResult(this, null, context);
+            return new JobRouterAdministrationClientGetExceptionPoliciesCollectionResult(this, null, context, "JobRouterAdministrationClient.GetExceptionPolicies");
         }
 
         #endregion ExceptionPolicy
@@ -1142,14 +1142,14 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<RouterQueue> GetQueuesAsync(CancellationToken cancellationToken = default)
         {
-            return new JobRouterAdministrationClientGetQueuesAsyncCollectionResultOfT(this, null, cancellationToken.ToRequestContext());
+            return new JobRouterAdministrationClientGetQueuesAsyncCollectionResultOfT(this, null, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetQueues");
         }
 
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<RouterQueue> GetQueues(CancellationToken cancellationToken = default)
         {
-            return new JobRouterAdministrationClientGetQueuesCollectionResultOfT(this, null, cancellationToken.ToRequestContext());
+            return new JobRouterAdministrationClientGetQueuesCollectionResultOfT(this, null, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetQueues");
         }
 
         /// <summary>
@@ -1172,7 +1172,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual AsyncPageable<BinaryData> GetQueuesAsync(RequestContext context)
         {
-            return new JobRouterAdministrationClientGetQueuesAsyncCollectionResult(this, null, context);
+            return new JobRouterAdministrationClientGetQueuesAsyncCollectionResult(this, null, context, "JobRouterAdministrationClient.GetQueues");
         }
 
         /// <summary>
@@ -1195,7 +1195,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual Pageable<BinaryData> GetQueues(RequestContext context)
         {
-            return new JobRouterAdministrationClientGetQueuesCollectionResult(this, null, context);
+            return new JobRouterAdministrationClientGetQueuesCollectionResult(this, null, context, "JobRouterAdministrationClient.GetQueues");
         }
 
         #endregion Queue

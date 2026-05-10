@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 
@@ -19,10 +20,11 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         internal PageBlobClient BlobClient { get; set; }
         internal PageBlobStorageResourceOptions _options;
+        private Uri _uri;
 
         protected override string ResourceId => DataMovementBlobConstants.ResourceId.PageBlob;
 
-        public override Uri Uri => BlobClient.Uri;
+        public override Uri Uri => _uri ??= BlobClient.Uri.BuildSanitizedUri();
 
         public override string ProviderId => "blob";
 
@@ -48,8 +50,15 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="options"></param>
         public PageBlobStorageResource(PageBlobClient blobClient, PageBlobStorageResourceOptions options = default)
         {
-            BlobClient = blobClient;
             _options = options;
+
+            blobClient = blobClient.ValidateAndApplySnapshotAndVersionId(
+                blobClient.Uri,
+                _options,
+                (c, s) => c.WithSnapshot(s),
+                (c, v) => c.WithVersion(v));
+
+            BlobClient = blobClient;
         }
 
         /// <summary>
@@ -324,6 +333,8 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
+            // Snapshot and versionId are preserved in the URI (from BuildSanitizedUri)
+            // No need to store them separately in checkpoint details
             return new BlobSourceCheckpointDetails();
         }
 

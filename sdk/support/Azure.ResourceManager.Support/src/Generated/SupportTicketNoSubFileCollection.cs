@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Support
         {
             if (id.ResourceType != TenantFileWorkspaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantFileWorkspaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantFileWorkspaceResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SupportFileDetailData, SupportTicketNoSubFileResource>(new SupportTicketNoSubFileGetAllAsyncCollectionResultOfT(_supportTicketNoSubFileRestClient, Id.Name, context), data => new SupportTicketNoSubFileResource(Client, data));
+            return new AsyncPageableWrapper<SupportFileDetailData, SupportTicketNoSubFileResource>(new SupportTicketNoSubFileGetAllAsyncCollectionResultOfT(_supportTicketNoSubFileRestClient, Id.Name, context, "SupportTicketNoSubFileCollection.GetAll"), data => new SupportTicketNoSubFileResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SupportFileDetailData, SupportTicketNoSubFileResource>(new SupportTicketNoSubFileGetAllCollectionResultOfT(_supportTicketNoSubFileRestClient, Id.Name, context), data => new SupportTicketNoSubFileResource(Client, data));
+            return new PageableWrapper<SupportFileDetailData, SupportTicketNoSubFileResource>(new SupportTicketNoSubFileGetAllCollectionResultOfT(_supportTicketNoSubFileRestClient, Id.Name, context, "SupportTicketNoSubFileCollection.GetAll"), data => new SupportTicketNoSubFileResource(Client, data));
         }
 
         /// <summary>

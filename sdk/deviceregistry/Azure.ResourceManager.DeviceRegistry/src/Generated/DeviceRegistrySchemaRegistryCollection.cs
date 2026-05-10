@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistrySchemaRegistryData, DeviceRegistrySchemaRegistryResource>(new SchemaRegistriesGetByResourceGroupAsyncCollectionResultOfT(_schemaRegistriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeviceRegistrySchemaRegistryResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistrySchemaRegistryData, DeviceRegistrySchemaRegistryResource>(new SchemaRegistriesGetByResourceGroupAsyncCollectionResultOfT(_schemaRegistriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeviceRegistrySchemaRegistryCollection.GetAll"), data => new DeviceRegistrySchemaRegistryResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistrySchemaRegistryData, DeviceRegistrySchemaRegistryResource>(new SchemaRegistriesGetByResourceGroupCollectionResultOfT(_schemaRegistriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeviceRegistrySchemaRegistryResource(Client, data));
+            return new PageableWrapper<DeviceRegistrySchemaRegistryData, DeviceRegistrySchemaRegistryResource>(new SchemaRegistriesGetByResourceGroupCollectionResultOfT(_schemaRegistriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeviceRegistrySchemaRegistryCollection.GetAll"), data => new DeviceRegistrySchemaRegistryResource(Client, data));
         }
 
         /// <summary>

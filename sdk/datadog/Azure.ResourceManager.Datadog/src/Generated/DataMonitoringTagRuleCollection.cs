@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Datadog
         {
             if (id.ResourceType != DatadogMonitorResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatadogMonitorResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatadogMonitorResource.ResourceType), nameof(id));
             }
         }
 
@@ -285,7 +285,13 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataMonitoringTagRuleData, DataMonitoringTagRuleResource>(new TagRulesGetAllAsyncCollectionResultOfT(_tagRulesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DataMonitoringTagRuleResource(Client, data));
+            return new AsyncPageableWrapper<DataMonitoringTagRuleData, DataMonitoringTagRuleResource>(new TagRulesGetAllAsyncCollectionResultOfT(
+                _tagRulesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataMonitoringTagRuleCollection.GetAll"), data => new DataMonitoringTagRuleResource(Client, data));
         }
 
         /// <summary>
@@ -313,7 +319,13 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataMonitoringTagRuleData, DataMonitoringTagRuleResource>(new TagRulesGetAllCollectionResultOfT(_tagRulesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DataMonitoringTagRuleResource(Client, data));
+            return new PageableWrapper<DataMonitoringTagRuleData, DataMonitoringTagRuleResource>(new TagRulesGetAllCollectionResultOfT(
+                _tagRulesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataMonitoringTagRuleCollection.GetAll"), data => new DataMonitoringTagRuleResource(Client, data));
         }
 
         /// <summary>

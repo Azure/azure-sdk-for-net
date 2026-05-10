@@ -30,12 +30,14 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="description"> A human-readable description of the agent. </param>
         /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
+        /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalUpdateAgentRequest(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalUpdateAgentRequest(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Description = description;
             Definition = definition;
+            BlueprintReference = blueprintReference;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -50,5 +52,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> A human-readable description of the agent. </summary>
         public string Description { get; }
+
+        /// <summary> The blueprint reference for the agent. </summary>
+        public AgentBlueprintReference BlueprintReference { get; }
     }
 }

@@ -54,7 +54,7 @@ public class ResponseMutationsTests
     }
 
     [Test]
-    public void SetCompleted_ComputesOutputText()
+    public void SetCompleted_DoesNotSetOutputText()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
         var msg = new OutputItemMessage(
@@ -68,7 +68,8 @@ public class ResponseMutationsTests
 
         response.SetCompleted();
 
-        Assert.That(response.OutputText, Is.EqualTo("Hello "));
+        // output_text is a client SDK convenience property; the server never sets it.
+        Assert.That(response.OutputText, Is.Null);
     }
 
     // ── SetFailed ─────────────────────────────────────────────
@@ -170,7 +171,7 @@ public class ResponseMutationsTests
     }
 
     [Test]
-    public void SetFailed_ComputesOutputText()
+    public void SetFailed_DoesNotSetOutputText()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
         var msg = new OutputItemMessage(
@@ -184,7 +185,8 @@ public class ResponseMutationsTests
 
         response.SetFailed();
 
-        Assert.That(response.OutputText, Is.EqualTo("Partial"));
+        // output_text is a client SDK convenience property; the server never sets it.
+        Assert.That(response.OutputText, Is.Null);
     }
 
     // ── SetIncomplete ─────────────────────────────────────────
@@ -242,7 +244,7 @@ public class ResponseMutationsTests
     }
 
     [Test]
-    public void SetIncomplete_ComputesOutputText()
+    public void SetIncomplete_DoesNotSetOutputText()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
         var msg = new OutputItemMessage(
@@ -256,74 +258,8 @@ public class ResponseMutationsTests
 
         response.SetIncomplete();
 
-        Assert.That(response.OutputText, Is.EqualTo("Partial output"));
-    }
-
-    // ── ComputeOutputText ─────────────────────────────────────
-
-    [Test]
-    public void ComputeOutputText_ConcatenatesTextFromOutputMessages()
-    {
-        var response = new Models.ResponseObject("resp_test", "gpt-4o");
-        response.Output.Add(new OutputItemMessage(
-            "msg_1",
-            MessageStatus.Completed,
-            new MessageContent[]
-            {
-                new MessageContentOutputTextContent("Hello ", Array.Empty<Annotation>(), Array.Empty<LogProb>()),
-                new MessageContentOutputTextContent("World", Array.Empty<Annotation>(), Array.Empty<LogProb>())
-            }));
-
-        var result = response.ComputeOutputText();
-
-        Assert.That(result, Is.EqualTo("Hello World"));
-    }
-
-    [Test]
-    public void ComputeOutputText_ReturnsEmptyStringForNoTextContent()
-    {
-        var response = new Models.ResponseObject("resp_test", "gpt-4o");
-
-        var result = response.ComputeOutputText();
-
-        Assert.That(result, Is.EqualTo(""));
-    }
-
-    [Test]
-    public void ComputeOutputText_IgnoresNonMessageOutputItems()
-    {
-        var response = new Models.ResponseObject("resp_test", "gpt-4o");
-        var fc = new OutputItemFunctionToolCall("call1", "myFunc", "{}");
-        fc.Id = "fc_1";
-        response.Output.Add(fc);
-
-        var result = response.ComputeOutputText();
-
-        Assert.That(result, Is.EqualTo(""));
-    }
-
-    [Test]
-    public void ComputeOutputText_ConcatenatesAcrossMultipleMessages()
-    {
-        var response = new Models.ResponseObject("resp_test", "gpt-4o");
-        response.Output.Add(new OutputItemMessage(
-            "msg_1",
-            MessageStatus.Completed,
-            new MessageContent[]
-            {
-                new MessageContentOutputTextContent("First ", Array.Empty<Annotation>(), Array.Empty<LogProb>())
-            }));
-        response.Output.Add(new OutputItemMessage(
-            "msg_2",
-            MessageStatus.Completed,
-            new MessageContent[]
-            {
-                new MessageContentOutputTextContent("Second", Array.Empty<Annotation>(), Array.Empty<LogProb>())
-            }));
-
-        var result = response.ComputeOutputText();
-
-        Assert.That(result, Is.EqualTo("First Second"));
+        // output_text is a client SDK convenience property; the server never sets it.
+        Assert.That(response.OutputText, Is.Null);
     }
 
     // ── CopyTerminalFields ──────────────────────────────────
@@ -338,7 +274,6 @@ public class ResponseMutationsTests
             Error = new Models.ResponseErrorInfo(ResponseErrorCode.ServerError, "test"),
             IncompleteDetails = new ResponseIncompleteDetails { Reason = ResponseIncompleteDetailsReason.MaxOutputTokens },
             Usage = new ResponseUsage(10, new ResponseUsageInputTokensDetails(0), 20, new ResponseUsageOutputTokensDetails(0), 30),
-            OutputText = "Hello",
         };
 
         var target = new Models.ResponseObject("resp_tgt", "gpt-4o") { Status = ResponseStatus.InProgress };
@@ -351,7 +286,8 @@ public class ResponseMutationsTests
         Assert.That(target.Error, Is.SameAs(source.Error));
         Assert.That(target.IncompleteDetails, Is.SameAs(source.IncompleteDetails));
         Assert.That(target.Usage, Is.SameAs(source.Usage));
-        Assert.That(target.OutputText, Is.EqualTo("Hello"));
+        // OutputText is NOT copied — it is a client SDK convenience property
+        Assert.That(target.OutputText, Is.Null);
         // Output is NOT copied — accumulated via output item events
         Assert.That(target.Output, Is.Empty);
     }
@@ -366,7 +302,6 @@ public class ResponseMutationsTests
         var source = new Models.ResponseObject("resp_src", "gpt-4o")
         {
             Status = ResponseStatus.InProgress,
-            OutputText = "test",
         };
         var target = new Models.ResponseObject("resp_tgt", "gpt-4o") { Status = ResponseStatus.InProgress };
         var evt = new ResponseCreatedEvent(0, source);
@@ -374,7 +309,7 @@ public class ResponseMutationsTests
         target.UpdateFromEvent(evt);
 
         // No fields are copied — ReplaceResponse handles full replacement
-        Assert.That(target.OutputText, Is.Null);
+        Assert.That(target.Status, Is.EqualTo(ResponseStatus.InProgress));
     }
 
     [Test]
@@ -386,7 +321,6 @@ public class ResponseMutationsTests
         {
             Status = ResponseStatus.Completed,
             CompletedAt = DateTimeOffset.UtcNow,
-            OutputText = "Done",
         };
         var target = new Models.ResponseObject("resp_tgt", "gpt-4o");
         var evt = new ResponseCompletedEvent(0, source);
@@ -396,7 +330,6 @@ public class ResponseMutationsTests
         // No fields are set — handler must set status via SetCompleted()
         Assert.That(target.Status, Is.Null);
         Assert.That(target.CompletedAt, Is.Null);
-        Assert.That(target.OutputText, Is.Null);
     }
 
     [Test]
@@ -447,7 +380,6 @@ public class ResponseMutationsTests
         var source = new Models.ResponseObject("resp_src", "gpt-4o")
         {
             Status = ResponseStatus.Queued,
-            OutputText = "queued",
         };
         var target = new Models.ResponseObject("resp_tgt", "gpt-4o") { Status = ResponseStatus.InProgress };
         var evt = new ResponseQueuedEvent(0, source);
@@ -455,7 +387,7 @@ public class ResponseMutationsTests
         target.UpdateFromEvent(evt);
 
         // No fields are copied — ReplaceResponse handles full replacement
-        Assert.That(target.OutputText, Is.Null);
+        Assert.That(target.Status, Is.EqualTo(ResponseStatus.InProgress));
     }
 
     [Test]
@@ -466,7 +398,6 @@ public class ResponseMutationsTests
         var source = new Models.ResponseObject("resp_src", "gpt-4o")
         {
             Status = ResponseStatus.InProgress,
-            OutputText = "prog",
         };
         var target = new Models.ResponseObject("resp_tgt", "gpt-4o") { Status = ResponseStatus.InProgress };
         var evt = new ResponseInProgressEvent(0, source);
@@ -474,7 +405,7 @@ public class ResponseMutationsTests
         target.UpdateFromEvent(evt);
 
         // No fields are copied — ReplaceResponse handles full replacement
-        Assert.That(target.OutputText, Is.Null);
+        Assert.That(target.Status, Is.EqualTo(ResponseStatus.InProgress));
     }
 
     [Test]

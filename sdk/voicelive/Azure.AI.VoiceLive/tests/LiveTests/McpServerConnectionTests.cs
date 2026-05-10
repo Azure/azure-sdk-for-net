@@ -30,13 +30,13 @@ namespace Azure.AI.VoiceLive.Tests
         {
         }
 
-        private VoiceLiveMcpServerDefinition CreateMicrosoftLearnMcpServer(string requireApproval = "never")
+        private VoiceLiveMcpServerDefinition CreateMicrosoftLearnMcpServer(MCPApprovalType? requireApproval = null)
         {
             return new VoiceLiveMcpServerDefinition(
                 serverLabel: TestConstants.MicrosoftLearnMcpServerLabel,
                 serverUrl: TestConstants.MicrosoftLearnMcpServerUrl)
             {
-                RequireApproval = BinaryData.FromString($"\"{requireApproval}\"")
+                RequireApproval = requireApproval ?? MCPApprovalType.Never
             };
         }
 
@@ -303,7 +303,7 @@ namespace Azure.AI.VoiceLive.Tests
                 serverLabel: "invalid-server",
                 serverUrl: "https://nonexistent.invalid.microsoft.com/mcp")
             {
-                RequireApproval = BinaryData.FromString("\"never\"")
+                RequireApproval = MCPApprovalType.Never
             };
 
             var options = new VoiceLiveSessionOptions

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Relay
         {
             if (id.ResourceType != RelayNamespaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RelayNamespaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RelayNamespaceResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayHybridConnectionData, RelayHybridConnectionResource>(new HybridConnectionsGetByNamespaceAsyncCollectionResultOfT(_hybridConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new RelayHybridConnectionResource(Client, data));
+            return new AsyncPageableWrapper<RelayHybridConnectionData, RelayHybridConnectionResource>(new HybridConnectionsGetByNamespaceAsyncCollectionResultOfT(
+                _hybridConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RelayHybridConnectionCollection.GetAll"), data => new RelayHybridConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayHybridConnectionData, RelayHybridConnectionResource>(new HybridConnectionsGetByNamespaceCollectionResultOfT(_hybridConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new RelayHybridConnectionResource(Client, data));
+            return new PageableWrapper<RelayHybridConnectionData, RelayHybridConnectionResource>(new HybridConnectionsGetByNamespaceCollectionResultOfT(
+                _hybridConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RelayHybridConnectionCollection.GetAll"), data => new RelayHybridConnectionResource(Client, data));
         }
 
         /// <summary>

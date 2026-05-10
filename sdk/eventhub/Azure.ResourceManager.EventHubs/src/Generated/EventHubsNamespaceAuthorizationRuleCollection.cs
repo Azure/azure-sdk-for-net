@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             if (id.ResourceType != EventHubsNamespaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EventHubsNamespaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EventHubsNamespaceResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventHubsAuthorizationRuleData, EventHubsNamespaceAuthorizationRuleResource>(new EventHubsNamespaceAuthorizationRuleGetAuthorizationRulesAsyncCollectionResultOfT(_eventHubsNamespaceAuthorizationRuleRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new EventHubsNamespaceAuthorizationRuleResource(Client, data));
+            return new AsyncPageableWrapper<EventHubsAuthorizationRuleData, EventHubsNamespaceAuthorizationRuleResource>(new EventHubsNamespaceAuthorizationRuleGetAuthorizationRulesAsyncCollectionResultOfT(
+                _eventHubsNamespaceAuthorizationRuleRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EventHubsNamespaceAuthorizationRuleCollection.GetAll"), data => new EventHubsNamespaceAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventHubsAuthorizationRuleData, EventHubsNamespaceAuthorizationRuleResource>(new EventHubsNamespaceAuthorizationRuleGetAuthorizationRulesCollectionResultOfT(_eventHubsNamespaceAuthorizationRuleRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new EventHubsNamespaceAuthorizationRuleResource(Client, data));
+            return new PageableWrapper<EventHubsAuthorizationRuleData, EventHubsNamespaceAuthorizationRuleResource>(new EventHubsNamespaceAuthorizationRuleGetAuthorizationRulesCollectionResultOfT(
+                _eventHubsNamespaceAuthorizationRuleRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EventHubsNamespaceAuthorizationRuleCollection.GetAll"), data => new EventHubsNamespaceAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>

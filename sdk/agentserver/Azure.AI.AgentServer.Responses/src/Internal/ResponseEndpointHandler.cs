@@ -60,6 +60,26 @@ internal sealed class ResponseEndpointHandler
     }
 
     /// <summary>
+    /// B40: Validates that a path-parameter response ID matches the expected <c>caresp_*</c> format.
+    /// Throws <see cref="BadRequestException"/> with <c>code: "invalid_parameters"</c> for malformed IDs.
+    /// </summary>
+    /// <remarks>
+    /// Deliberately validates prefix and length only — character-set validation is not required.
+    /// IDs with valid prefix/length but unexpected characters will fall through to the provider
+    /// and return 404 (not found), which is an acceptable outcome.
+    /// </remarks>
+    private static void ValidateResponseIdFormat(string responseId)
+    {
+        if (!IdGenerator.IsValid(responseId, out _, allowedPrefixes: ["caresp"]))
+        {
+            throw new BadRequestException(
+                "Malformed identifier.",
+                code: "invalid_parameters",
+                paramName: $"responseId{{{responseId}}}");
+        }
+    }
+
+    /// <summary>
     /// Handles POST /responses — creates a new response and handles all 4 modes.
     /// </summary>
     public async Task<IResult> CreateResponseAsync(HttpContext httpContext)
@@ -114,11 +134,10 @@ internal sealed class ResponseEndpointHandler
         // Resolve model: request-level → DefaultModel → empty string (PW-006)
         request.Model ??= _options.Value.DefaultModel ?? string.Empty;
 
-        _logger.LogInformation(
-            "Creating response: Streaming={IsStreaming} Background={IsBackground} Model={Model}",
-            isStreaming, isBackground, request.Model);
+        // Cache conversation ID — GetConversationId() parses the conversation JSON each call.
+        var conversationId = request.GetConversationId();
 
-        // S-047: Use x-agent-response-id header as the response ID if present,
+        // B38: Use x-agent-response-id header as the response ID if present,
         // giving platform/middletier services full control over ID generation.
         // Otherwise, generate one with partition key colocation.
         string responseId;
@@ -126,27 +145,50 @@ internal sealed class ResponseEndpointHandler
             && !string.IsNullOrEmpty(agentResponseIdValue.ToString()))
         {
             responseId = agentResponseIdValue.ToString();
+            if (!IdGenerator.IsValid(responseId, out var idError, allowedPrefixes: ["caresp"]))
+            {
+                throw new BadRequestException(
+                    $"x-agent-response-id header value is invalid: {idError}",
+                    code: "invalid_request",
+                    paramName: "x-agent-response-id");
+            }
         }
         else
         {
             var partitionKeyHint = request.PreviousResponseId
-                ?? request.GetConversationId()
+                ?? conversationId
                 ?? "";
             responseId = IdGenerator.NewResponseId(partitionKeyHint);
         }
 
-        // S-048: Resolve session ID — request payload → environment variable → generated UUID.
+        var isolation = IsolationContext.FromRequest(httpContext.Request);
+
+        _logger.LogInformation(
+            "Creating response {ResponseId}: Streaming={IsStreaming} Background={IsBackground} Store={Store} Model={Model} ConversationId={ConversationId} PreviousResponseId={PreviousResponseId} HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
+            responseId, isStreaming, isBackground, store, request.Model, conversationId, request.PreviousResponseId,
+            isolation.UserIsolationKey is not null, isolation.ChatIsolationKey is not null);
+
+        // B39: Resolve session ID — request payload → environment variable → deterministic derivation.
         // Stamp on the request so the orchestrator can propagate it to the ResponseObject.
         if (string.IsNullOrEmpty(request.AgentSessionId))
         {
             request.AgentSessionId = !string.IsNullOrEmpty(FoundryEnvironment.SessionId)
                 ? FoundryEnvironment.SessionId
-                : Guid.NewGuid().ToString();
+                : SessionIdDerivation.Derive(
+                    conversationId,
+                    request.PreviousResponseId,
+                    request.AgentReference);
         }
+
+        // Store resolved session ID for the response header filter (§8).
+        httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = request.AgentSessionId;
 
         // Start distributed tracing span — delegates all tag/baggage logic
         // to ResponsesActivitySource.StartCreateResponseActivity (virtual, overridable).
-        using var activity = _activitySource.StartCreateResponseActivity(
+        // Do NOT use 'using' — for streaming, SseResult takes ownership and disposes
+        // the activity when the SSE stream completes so the span covers the full
+        // streaming duration. For non-streaming, disposed in the finally block below.
+        var activity = _activitySource.StartCreateResponseActivity(
             request, responseId, httpContext.Request.Headers);
 
         // Structured log scope — matches Core's HostedAgentTelemetry.StartActivity
@@ -154,7 +196,7 @@ internal sealed class ResponseEndpointHandler
         using var logScope = _logger.BeginScope(new Dictionary<string, object?>
         {
             [ResponsesTracingConstants.LogScope.ResponseId] = responseId,
-            [ResponsesTracingConstants.LogScope.ConversationId] = request.GetConversationId() ?? string.Empty,
+            [ResponsesTracingConstants.LogScope.ConversationId] = conversationId ?? string.Empty,
             [ResponsesTracingConstants.LogScope.Streaming] = isStreaming,
         });
 
@@ -164,6 +206,12 @@ internal sealed class ResponseEndpointHandler
         var clientHeaders = ExtractClientHeaders(httpContext.Request);
         var queryParameters = ExtractQueryParameters(httpContext.Request);
 
+        // Record the creation-time session ID and chat isolation key on the execution
+        // so subsequent GET/Cancel/Delete can emit x-agent-session-id even before
+        // the handler yields response.created (when execution.Response is still null).
+        execution.AgentSessionId = request.AgentSessionId;
+        execution.ChatIsolationKey = isolation.ChatIsolationKey;
+
         var context = new ResponseContextImpl(
             responseId,
             _provider,
@@ -171,8 +219,19 @@ internal sealed class ResponseEndpointHandler
             _options,
             rawBody,
             clientHeaders,
-            queryParameters);
+            queryParameters,
+            isolation);
         execution.Context = context;
+
+        // Eager history validation: if previous_response_id or conversation.id is present,
+        // resolve history item IDs now to validate referenced state before the handler runs.
+        // Invalid references are provider-validated here and may surface as 404 or 400
+        // depending on which identifier is invalid.
+        // The Lazy<Task<>> cache means the handler and persistence can reuse the result.
+        if (!string.IsNullOrEmpty(request.PreviousResponseId) || !string.IsNullOrEmpty(conversationId))
+        {
+            await context.GetHistoryItemIdsAsync();
+        }
 
         // Get cancellation token from provider (supports external cancel)
         var providerCt = await _cancellationProvider.GetResponseCancellationTokenAsync(responseId);
@@ -182,61 +241,100 @@ internal sealed class ResponseEndpointHandler
             // Streaming (bg or non-bg): create orchestrator event stream, return SSE result.
             // CTS includes httpContext.RequestAborted for non-bg only (disconnect → cancel).
             // Do NOT use 'using' — SseResult takes ownership and disposes the CTS.
-            CancellationTokenSource linkedCts;
-            if (isBackground)
+            CancellationTokenSource? linkedCts = null;
+            try
             {
-                linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
-                    providerCt, execution.CancellationTokenSource.Token);
+                if (isBackground)
+                {
+                    linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
+                        providerCt, execution.CancellationTokenSource.Token);
+                }
+                else
+                {
+                    // Order matters: CancellationToken callbacks fire LIFO, so register
+                    // the linked CTS first and the flag second — flag is set before
+                    // the linked CTS propagates cancellation to the handler.
+                    linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
+                        providerCt, execution.CancellationTokenSource.Token, httpContext.RequestAborted);
+                    httpContext.RequestAborted.Register(() => execution.ClientDisconnected = true);
+                }
+
+                var result = await _orchestrator.CreateAsync(request, execution, context, linkedCts.Token);
+
+                // SseResult takes ownership of linkedCts and activity — it will
+                // dispose both when the SSE stream completes, ensuring the tracing
+                // span covers the full streaming duration.
+                var sseResult = new SseResult(
+                    result.Events!, execution, linkedCts, activity,
+                    SharedJsonOptions.Instance, _logger, FoundryEnvironment.SseKeepAliveInterval);
+
+                // Ownership transferred — prevent the catch/finally from disposing.
+                linkedCts = null;
+                activity = null;
+                return sseResult;
             }
-            else
+            catch
             {
-                // Order matters: CancellationToken callbacks fire LIFO, so register
-                // the linked CTS first and the flag second — flag is set before
-                // the linked CTS propagates cancellation to the handler.
-                linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
-                    providerCt, execution.CancellationTokenSource.Token, httpContext.RequestAborted);
-                httpContext.RequestAborted.Register(() => execution.ClientDisconnected = true);
+                // If CreateAsync or SseResult construction fails, we still own
+                // the resources — dispose them before re-throwing.
+                linkedCts?.Dispose();
+                activity?.Dispose();
+                throw;
             }
-
-            var result = await _orchestrator.CreateAsync(request, execution, context, linkedCts.Token);
-
-            return new SseResult(
-                result.Events!, execution, linkedCts,
-                SharedJsonOptions.Instance, _logger, FoundryEnvironment.SseKeepAliveInterval);
         }
         else if (isBackground)
         {
-            // Background (non-streaming): run handler in background task.
-            // Wait for response.created before returning — the handler's response
-            // is the source of truth, not a SDK-constructed seed.
-            execution.ExecutionTask = Task.Run(async () =>
+            try
             {
-                using var bgLinkedCts = CancellationTokenSource.CreateLinkedTokenSource(
-                    providerCt, execution.CancellationTokenSource.Token);
-                await _orchestrator.CreateAsync(request, execution, context, bgLinkedCts.Token);
-            });
+                // Background (non-streaming): run handler in background task.
+                // Wait for response.created before returning — the handler's response
+                // is the source of truth, not a SDK-constructed seed.
+                execution.ExecutionTask = Task.Run(async () =>
+                {
+                    using var bgLinkedCts = CancellationTokenSource.CreateLinkedTokenSource(
+                        providerCt, execution.CancellationTokenSource.Token);
+                    await _orchestrator.CreateAsync(request, execution, context, bgLinkedCts.Token);
+                });
 
-            // Await the handler's response.created (or a pre-created error).
-            // If the handler fails before response.created, the signal faults
-            // and the exception propagates to the exception filter → HTTP 500.
-            // The signal delivers an independent snapshot — no re-snapshot needed.
-            var handlerResponse = await execution.ResponseCreatedSignal.Task;
-            return Results.Json(handlerResponse, SharedJsonOptions.Instance, statusCode: 200);
+                // Await the handler's response.created (or a pre-created error).
+                // If the handler fails before response.created, the signal faults
+                // and the exception propagates to the exception filter → HTTP 500.
+                // The signal delivers an independent snapshot — no re-snapshot needed.
+                var handlerResponse = await execution.ResponseCreatedSignal.Task;
+                _logger.LogInformation(
+                    "Background response created signal received for {ResponseId}, status={Status}",
+                    responseId, handlerResponse.Status);
+                return Results.Json(handlerResponse, SharedJsonOptions.Instance, statusCode: 200);
+            }
+            finally
+            {
+                activity?.Dispose();
+            }
         }
         else
         {
-            // Default (non-streaming, non-background): run to completion, return final response.
-            // Order matters: register linked CTS first, then ClientDisconnected flag.
-            // CancellationToken callbacks fire in LIFO order, so registering the flag
-            // second ensures it is set before the linked CTS propagates cancellation
-            // to the handler — matching the streaming path's registration order.
-            using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
-                providerCt, execution.CancellationTokenSource.Token, httpContext.RequestAborted);
-            httpContext.RequestAborted.Register(() => execution.ClientDisconnected = true);
+            try
+            {
+                // Default (non-streaming, non-background): run to completion, return final response.
+                // Order matters: register linked CTS first, then ClientDisconnected flag.
+                // CancellationToken callbacks fire in LIFO order, so registering the flag
+                // second ensures it is set before the linked CTS propagates cancellation
+                // to the handler — matching the streaming path's registration order.
+                using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
+                    providerCt, execution.CancellationTokenSource.Token, httpContext.RequestAborted);
+                httpContext.RequestAborted.Register(() => execution.ClientDisconnected = true);
 
-            await _orchestrator.CreateAsync(request, execution, context, linkedCts.Token);
+                await _orchestrator.CreateAsync(request, execution, context, linkedCts.Token);
 
-            return Results.Json(execution.Response!.Snapshot(), SharedJsonOptions.Instance, statusCode: 200);
+                _logger.LogInformation(
+                    "Response {ResponseId} completed: Status={Status} OutputCount={OutputCount}",
+                    responseId, execution.Response!.Status, execution.Response!.Output.Count);
+                return Results.Json(execution.Response!.Snapshot(), SharedJsonOptions.Instance, statusCode: 200);
+            }
+            finally
+            {
+                activity?.Dispose();
+            }
         }
     }
 
@@ -247,40 +345,70 @@ internal sealed class ResponseEndpointHandler
     /// </summary>
     public async Task<IResult> GetResponseAsync(HttpContext httpContext, string responseId)
     {
-        // SSE replay trigger: ?stream=true query parameter (FR-005)
+        ValidateResponseIdFormat(responseId);
+        var isolation = IsolationContext.FromRequest(httpContext.Request);
+
+        // SSE replay trigger: ?stream=true query parameter (B2)
         if (httpContext.Request.Query.TryGetValue("stream", out var streamValue)
             && string.Equals(streamValue, "true", StringComparison.OrdinalIgnoreCase))
         {
+            _logger.LogInformation(
+                "Getting response {ResponseId} with SSE replay: HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
+                responseId, isolation.UserIsolationKey is not null, isolation.ChatIsolationKey is not null);
             // Apply B2 guards: SSE replay requires background + streaming + store.
             if (_tracker.TryGet(responseId, out var execution) && execution is not null)
             {
+                // Chat isolation enforcement for in-flight responses
+                execution.EnforceChatIsolation(isolation);
+
+                // Store resolved session ID for the response header filter.
+                // Use execution.AgentSessionId (set at creation time) instead of
+                // execution.Response?.AgentSessionId, which can be null before
+                // the handler yields response.created.
+                httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = execution.AgentSessionId;
+
                 // In-flight: mode flags are available on the execution.
                 if (!execution.Store)
                 {
                     throw new ResourceNotFoundException($"Response '{responseId}' not found.");
                 }
 
-                // Guard: SSE replay requires background + streaming (B2, FR-013)
-                if (!execution.IsBackground || !execution.IsStreaming)
+                // Guard: SSE replay requires background (B2)
+                if (!execution.IsBackground)
                 {
                     throw new BadRequestException(
-                        "SSE replay is only available for background streaming responses.");
+                        "This response cannot be streamed because it was not created with background=true.",
+                        code: null,
+                        paramName: "stream");
+                }
+
+                // Guard: SSE replay requires streaming (B2)
+                if (!execution.IsStreaming)
+                {
+                    throw new BadRequestException(
+                        "This response cannot be streamed because it was not created with stream=true.",
+                        code: null,
+                        paramName: "stream");
                 }
             }
             else
             {
-                // Not in-flight: verify the response exists in the provider before
-                // attempting replay. Provider throws ResourceNotFoundException (404)
-                // for unknown IDs and BadRequestException (400) for deleted responses.
+                // Not in-flight (evicted or never tracked): verify the response exists
+                // in the provider and check B2 mode flags from the persisted response.
+                // Provider throws ResourceNotFoundException (404) for unknown IDs.
                 // This also covers store=false (never persisted → 404).
-                await _provider.GetResponseAsync(responseId);
+                var persisted = await _provider.GetResponseAsync(responseId, isolation);
+                httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = persisted.AgentSessionId;
 
-                // TODO: B2 requires checking that the response was created with
-                // background=true AND stream=true. After the execution leaves the
-                // tracker, mode flags are not persisted on the Response model.
-                // The stream provider may still have events for non-bg responses
-                // within the EventStreamTtl window. A full fix requires storing
-                // mode flags in the provider or stream provider abstract class.
+                // B2: SSE replay requires background mode. Non-bg responses never
+                // have event streams (they use NullPublisher).
+                if (persisted.Background != true)
+                {
+                    throw new BadRequestException(
+                        "This response cannot be streamed because it was not created with background=true.",
+                        code: null,
+                        paramName: "stream");
+                }
             }
 
             // In-flight and passed guards OR not-in-flight and exists in provider —
@@ -288,7 +416,7 @@ internal sealed class ResponseEndpointHandler
             // backed by persistent storage (Redis, Kafka, etc.) can replay events
             // even after the in-flight execution is gone.
 
-            // Parse starting_after query parameter (FR-016)
+            // Parse starting_after query parameter (B4)
             long? startingAfter = null;
             if (httpContext.Request.Query.TryGetValue("starting_after", out var startingAfterValue)
                 && long.TryParse(startingAfterValue, out var parsedValue))
@@ -302,7 +430,14 @@ internal sealed class ResponseEndpointHandler
         }
 
         // Delegate guard logic and snapshot to orchestrator
-        var response = await _orchestrator.GetAsync(responseId);
+        _logger.LogInformation(
+            "Getting response {ResponseId}: HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
+            responseId, isolation.UserIsolationKey is not null, isolation.ChatIsolationKey is not null);
+        var response = await _orchestrator.GetAsync(responseId, isolation);
+        httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = response.AgentSessionId;
+        _logger.LogInformation(
+            "Retrieved response {ResponseId}: Status={Status} OutputCount={OutputCount}",
+            responseId, response.Status, response.Output.Count);
         return Results.Json(response, SharedJsonOptions.Instance, statusCode: 200);
     }
     /// <summary>
@@ -310,7 +445,14 @@ internal sealed class ResponseEndpointHandler
     /// </summary>
     public async Task<IResult> CancelResponseAsync(HttpContext httpContext, string responseId)
     {
-        var response = await _orchestrator.CancelAsync(responseId);
+        ValidateResponseIdFormat(responseId);
+        var isolation = IsolationContext.FromRequest(httpContext.Request);
+        _logger.LogInformation(
+            "Cancelling response {ResponseId}: HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
+            responseId, isolation.UserIsolationKey is not null, isolation.ChatIsolationKey is not null);
+        var response = await _orchestrator.CancelAsync(responseId, isolation);
+        httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = response.AgentSessionId;
+        _logger.LogInformation("Cancelled response {ResponseId}, status={Status}", responseId, response.Status);
         return Results.Json(response, SharedJsonOptions.Instance, statusCode: 200);
     }
 
@@ -320,36 +462,92 @@ internal sealed class ResponseEndpointHandler
     /// </summary>
     public async Task<IResult> DeleteResponseAsync(HttpContext httpContext, string responseId)
     {
-        // Guard: if response is in-flight, check for store=false and in-progress guards
+        ValidateResponseIdFormat(responseId);
+        var isolation = IsolationContext.FromRequest(httpContext.Request);
+        _logger.LogInformation(
+            "Deleting response {ResponseId}: HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
+            responseId, isolation.UserIsolationKey is not null, isolation.ChatIsolationKey is not null);
+
+        // Guard: if response is in-flight, reject deletion.
+        // With eager eviction, all tracked executions are in-flight — completed
+        // responses are evicted by FinalizeExecutionAsync and served from the provider.
         if (_tracker.TryGet(responseId, out var execution) && execution is not null)
         {
+            // Chat isolation enforcement for in-flight responses
+            execution.EnforceChatIsolation(isolation);
+
+            // Store resolved session ID for the response header filter (error paths).
+            // Use execution.AgentSessionId (set at creation time) — execution.Response
+            // can be null before handler yields response.created.
+            httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = execution.AgentSessionId;
+
             if (!execution.Store)
             {
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
             }
 
+            // Persistence-failed responses are terminal — evict from tracker and
+            // attempt to clean up storage. In background mode, Phase 1 (CreateResponse)
+            // may have succeeded before Phase 2 (UpdateResponse) failed, so the response
+            // could exist in storage. Best-effort delete — ignore NotFound.
+            if (execution.PersistenceFailed)
+            {
+                _tracker.TryEvict(responseId);
+
+                try
+                {
+                    await _provider.DeleteResponseAsync(responseId, isolation);
+                }
+                catch (ResourceNotFoundException)
+                {
+                    // Expected for non-background mode where CreateResponse never ran.
+                }
+
+                try
+                {
+                    await _streamProvider.DeleteEventStreamAsync(responseId);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "DeleteEventStreamAsync failed during persistence-failed cleanup for {ResponseId}", responseId);
+                }
+
+                var deleteResult = AgentServerResponsesModelFactory.DeleteResponseResult(id: responseId);
+                _logger.LogInformation("Deleted persistence-failed response {ResponseId}", responseId);
+                return Results.Json(deleteResult, SharedJsonOptions.Instance, statusCode: 200);
+            }
+
             // B16: non-background in-flight responses are not findable
-            if (!execution.IsBackground && execution.CompletedAt is null)
+            if (!execution.IsBackground)
             {
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
             }
 
-            // In-flight guard: background response with no terminal state cannot be deleted
-            if (execution.CompletedAt is null)
-            {
-                throw new BadRequestException(
-                    "Response is currently in progress and cannot be deleted.");
-            }
-
-            _tracker.TryRemove(responseId);
+            // Background execution is still in progress — cannot delete
+            throw new BadRequestException(
+                "Cannot delete an in-flight response.");
         }
 
         // Delegate deletion to provider (throws ResourceNotFoundException if not found).
         // This works whether or not the response was in the tracker — the provider
         // is the source of truth for persisted responses.
-        await _provider.DeleteResponseAsync(responseId);
+        // Read response first to capture session ID for the response header.
+        var persisted = await _provider.GetResponseAsync(responseId, isolation);
+        httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = persisted.AgentSessionId;
+        await _provider.DeleteResponseAsync(responseId, isolation);
 
-        var result = AzureAIAgentServerResponsesModelFactory.DeleteResponseResult(id: responseId);
+        // Clean up event stream — deleted responses should not be replayable.
+        try
+        {
+            await _streamProvider.DeleteEventStreamAsync(responseId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "DeleteEventStreamAsync failed during response deletion for {ResponseId}", responseId);
+        }
+
+        var result = AgentServerResponsesModelFactory.DeleteResponseResult(id: responseId);
+        _logger.LogInformation("Deleted response {ResponseId}", responseId);
         return Results.Json(result, SharedJsonOptions.Instance, statusCode: 200);
     }
 
@@ -360,6 +558,17 @@ internal sealed class ResponseEndpointHandler
     /// </summary>
     public async Task<IResult> GetInputItemsAsync(HttpContext httpContext, string responseId)
     {
+        ValidateResponseIdFormat(responseId);
+        var isolation = IsolationContext.FromRequest(httpContext.Request);
+        _logger.LogInformation(
+            "Getting input items for response {ResponseId}: HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
+            responseId, isolation.UserIsolationKey is not null, isolation.ChatIsolationKey is not null);
+
+        // Read response to capture session ID for the response header.
+        // Also validates existence (throws ResourceNotFoundException if not found).
+        var response = await _provider.GetResponseAsync(responseId, isolation);
+        httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = response.AgentSessionId;
+
         // Parse limit (default 20, range 1–100)
         int limit = 20;
         if (httpContext.Request.Query.TryGetValue("limit", out var limitValue))
@@ -395,7 +604,7 @@ internal sealed class ResponseEndpointHandler
             ? (string?)beforeValue : null;
 
         var result = await _provider.GetInputItemsAsync(
-            responseId, limit, ascending, after, before, httpContext.RequestAborted);
+            responseId, isolation, limit, ascending, after, before, httpContext.RequestAborted);
 
         return Results.Json(result, SharedJsonOptions.Instance, statusCode: 200);
     }

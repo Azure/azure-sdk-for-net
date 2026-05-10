@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    internal class ContainerRegistryExportPipelineOperationSource : IOperationSource<ContainerRegistryExportPipelineResource>
+    /// <summary></summary>
+    internal partial class ContainerRegistryExportPipelineOperationSource : IOperationSource<ContainerRegistryExportPipelineResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ContainerRegistryExportPipelineOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ContainerRegistryExportPipelineResource IOperationSource<ContainerRegistryExportPipelineResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerRegistryExportPipelineData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerRegistryContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ContainerRegistryExportPipelineData data = ContainerRegistryExportPipelineData.DeserializeContainerRegistryExportPipelineData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ContainerRegistryExportPipelineResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ContainerRegistryExportPipelineResource> IOperationSource<ContainerRegistryExportPipelineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerRegistryExportPipelineData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerRegistryContext.Default);
-            return await Task.FromResult(new ContainerRegistryExportPipelineResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ContainerRegistryExportPipelineData data = ContainerRegistryExportPipelineData.DeserializeContainerRegistryExportPipelineData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ContainerRegistryExportPipelineResource(_client, data);
         }
     }
 }

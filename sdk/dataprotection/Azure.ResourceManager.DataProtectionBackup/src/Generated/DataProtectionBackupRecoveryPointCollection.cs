@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             if (id.ResourceType != DataProtectionBackupInstanceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataProtectionBackupInstanceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataProtectionBackupInstanceResource.ResourceType), nameof(id));
             }
         }
 
@@ -187,7 +187,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 Id.Name,
                 filter,
                 skipToken,
-                context), data => new DataProtectionBackupRecoveryPointResource(Client, data));
+                context,
+                "DataProtectionBackupRecoveryPointCollection.GetAll"), data => new DataProtectionBackupRecoveryPointResource(Client, data));
         }
 
         /// <summary>
@@ -225,7 +226,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 Id.Name,
                 filter,
                 skipToken,
-                context), data => new DataProtectionBackupRecoveryPointResource(Client, data));
+                context,
+                "DataProtectionBackupRecoveryPointCollection.GetAll"), data => new DataProtectionBackupRecoveryPointResource(Client, data));
         }
 
         /// <summary>

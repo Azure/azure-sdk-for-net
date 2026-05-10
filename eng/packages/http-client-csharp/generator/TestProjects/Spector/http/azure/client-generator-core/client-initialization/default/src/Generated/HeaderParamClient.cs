@@ -19,13 +19,13 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
     {
         protected HeaderParamClient() => throw null;
 
-        public HeaderParamClient(string name) : this(new Uri("http://localhost:3000"), name, new HeaderParamClientOptions()) => throw null;
+        public HeaderParamClient(string name) : this(new Uri("http://localhost:3000"), name, new SpecsAzureTcgcClientInitDefaultClientOptions()) => throw null;
 
-        public HeaderParamClient(string name, HeaderParamClientOptions options) : this(new Uri("http://localhost:3000"), name, options) => throw null;
+        public HeaderParamClient(string name, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(new Uri("http://localhost:3000"), name, options) => throw null;
 
-        internal HeaderParamClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, HeaderParamClientOptions options) => throw null;
+        internal HeaderParamClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, SpecsAzureTcgcClientInitDefaultClientOptions options) => throw null;
 
-        public HeaderParamClient(Uri endpoint, string name, HeaderParamClientOptions options) : this(null, endpoint, name, options) => throw null;
+        public HeaderParamClient(Uri endpoint, string name, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(null, endpoint, name, options) => throw null;
 
         [Experimental("SCME0002")]
         public HeaderParamClient(HeaderParamClientSettings settings) : this(null, settings?.Endpoint, settings?.Name, settings?.Options) => throw null;

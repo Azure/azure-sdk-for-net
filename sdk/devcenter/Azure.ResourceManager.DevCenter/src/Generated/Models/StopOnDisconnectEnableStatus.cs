@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DevCenter.Models
     public readonly partial struct StopOnDisconnectEnableStatus : IEquatable<StopOnDisconnectEnableStatus>
     {
         private readonly string _value;
+        /// <summary> Stop on disconnect is enabled. </summary>
+        private const string IsEnabledValue = "Enabled";
+        /// <summary> Stop on disconnect is disabled. </summary>
+        private const string IsDisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="StopOnDisconnectEnableStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StopOnDisconnectEnableStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string IsEnabledValue = "Enabled";
-        private const string IsDisabledValue = "Disabled";
-
-        /// <summary> Enabled. </summary>
+        /// <summary> Stop on disconnect is enabled. </summary>
         public static StopOnDisconnectEnableStatus IsEnabled { get; } = new StopOnDisconnectEnableStatus(IsEnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Stop on disconnect is disabled. </summary>
         public static StopOnDisconnectEnableStatus IsDisabled { get; } = new StopOnDisconnectEnableStatus(IsDisabledValue);
+
         /// <summary> Determines if two <see cref="StopOnDisconnectEnableStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StopOnDisconnectEnableStatus left, StopOnDisconnectEnableStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StopOnDisconnectEnableStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StopOnDisconnectEnableStatus left, StopOnDisconnectEnableStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StopOnDisconnectEnableStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StopOnDisconnectEnableStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StopOnDisconnectEnableStatus(string value) => new StopOnDisconnectEnableStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StopOnDisconnectEnableStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StopOnDisconnectEnableStatus?(string value) => value == null ? null : new StopOnDisconnectEnableStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StopOnDisconnectEnableStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StopOnDisconnectEnableStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

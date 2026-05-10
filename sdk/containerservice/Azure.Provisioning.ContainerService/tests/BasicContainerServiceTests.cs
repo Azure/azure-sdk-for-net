@@ -28,9 +28,9 @@ public class BasicContainerServiceTests
                 infra.Add(sshRsaPublicKey);
 
                 ContainerServiceManagedCluster aks =
-                    new(nameof(aks), ContainerServiceManagedCluster.ResourceVersions.V2024_08_01)
+                    new(nameof(aks), ContainerServiceManagedCluster.ResourceVersions.V2026_01_01)
                     {
-                        ClusterIdentity = new ManagedClusterIdentity { ResourceIdentityType = ManagedServiceIdentityType.SystemAssigned },
+                        ClusterIdentity = new ManagedClusterIdentity { IdentityType = ManagedServiceIdentityType.SystemAssigned },
                         DnsPrefix = dnsPrefix,
                         LinuxProfile =
                             new ContainerServiceLinuxProfile
@@ -77,10 +77,11 @@ public class BasicContainerServiceTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource aks 'Microsoft.ContainerService/managedClusters@2024-08-01' = {
+            resource aks 'Microsoft.ContainerService/managedClusters@2026-01-01' = {
               name: take('aks-${uniqueString(resourceGroup().id)}', 63)
               location: location
               properties: {
+                dnsPrefix: dnsPrefix
                 agentPoolProfiles: [
                   {
                     name: 'agentpool'
@@ -91,7 +92,6 @@ public class BasicContainerServiceTests
                     mode: 'System'
                   }
                 ]
-                dnsPrefix: dnsPrefix
                 linuxProfile: {
                   adminUsername: linuxAdminUsername
                   ssh: {

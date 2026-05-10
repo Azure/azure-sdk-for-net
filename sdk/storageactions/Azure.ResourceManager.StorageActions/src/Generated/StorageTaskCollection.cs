@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageActions
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.StorageActions
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetByResourceGroupAsyncCollectionResultOfT(_storageTasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StorageTaskResource(Client, data));
+            return new AsyncPageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetByResourceGroupAsyncCollectionResultOfT(_storageTasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StorageTaskCollection.GetAll"), data => new StorageTaskResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.StorageActions
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetByResourceGroupCollectionResultOfT(_storageTasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StorageTaskResource(Client, data));
+            return new PageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetByResourceGroupCollectionResultOfT(_storageTasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StorageTaskCollection.GetAll"), data => new StorageTaskResource(Client, data));
         }
 
         /// <summary>

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> A snapshot of an app. </summary>
+    /// <summary>
+    /// A snapshot of an app.
+    /// Serialized Name: Snapshot
+    /// </summary>
     public partial class AppSnapshot : ResourceData
     {
         /// <summary>
@@ -57,8 +60,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="time"> The time the snapshot was taken. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="time">
+        /// The time the snapshot was taken.
+        /// Serialized Name: Snapshot.properties.time
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppSnapshot(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string time, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -67,10 +76,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The time the snapshot was taken. </summary>
+        /// <summary>
+        /// The time the snapshot was taken.
+        /// Serialized Name: Snapshot.properties.time
+        /// </summary>
         [WirePath("properties.time")]
         public string Time { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }
