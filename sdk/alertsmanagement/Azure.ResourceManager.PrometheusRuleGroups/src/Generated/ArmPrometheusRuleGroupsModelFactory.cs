@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         /// <param name="actionGroupId"> The resource id of the action group to use. </param>
         /// <param name="actionProperties"> The properties of an action group object. </param>
         /// <returns> A new <see cref="Models.PrometheusRuleGroupAction"/> instance for mocking. </returns>
-        public static PrometheusRuleGroupAction PrometheusRuleGroupAction(string actionGroupId = default, IDictionary<string, string> actionProperties = default)
+        public static PrometheusRuleGroupAction PrometheusRuleGroupAction(ResourceIdentifier actionGroupId = default, IDictionary<string, string> actionProperties = default)
         {
             actionProperties ??= new ChangeTrackingDictionary<string, string>();
 

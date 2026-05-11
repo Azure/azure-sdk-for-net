@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
             {
                 throw new FormatException($"The model {nameof(PrometheusRuleResolveConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AutoResolved))
+            if (Optional.IsDefined(IsAutoResolved))
             {
                 writer.WritePropertyName("autoResolved"u8);
-                writer.WriteBooleanValue(AutoResolved.Value);
+                writer.WriteBooleanValue(IsAutoResolved.Value);
             }
             if (Optional.IsDefined(TimeToResolve))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
             {
                 return null;
             }
-            bool? autoResolved = default;
+            bool? isAutoResolved = default;
             TimeSpan? timeToResolve = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                     {
                         continue;
                     }
-                    autoResolved = prop.Value.GetBoolean();
+                    isAutoResolved = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("timeToResolve"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrometheusRuleResolveConfiguration(autoResolved, timeToResolve, additionalBinaryDataProperties);
+            return new PrometheusRuleResolveConfiguration(isAutoResolved, timeToResolve, additionalBinaryDataProperties);
         }
     }
 }

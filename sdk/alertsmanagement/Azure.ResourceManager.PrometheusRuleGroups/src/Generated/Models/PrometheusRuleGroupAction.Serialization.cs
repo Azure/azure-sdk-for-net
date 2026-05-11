@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.PrometheusRuleGroups;
 
 namespace Azure.ResourceManager.PrometheusRuleGroups.Models
@@ -137,14 +138,18 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
             {
                 return null;
             }
-            string actionGroupId = default;
+            ResourceIdentifier actionGroupId = default;
             IDictionary<string, string> actionProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("actionGroupId"u8))
                 {
-                    actionGroupId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    actionGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("actionProperties"u8))

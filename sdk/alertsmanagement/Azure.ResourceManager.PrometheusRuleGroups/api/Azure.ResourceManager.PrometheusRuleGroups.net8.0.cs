@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
     public static partial class ArmPrometheusRuleGroupsModelFactory
     {
         public static Azure.ResourceManager.PrometheusRuleGroups.Models.PrometheusRule PrometheusRule(string record = null, string alert = null, bool? enabled = default(bool?), string expression = null, System.Collections.Generic.IDictionary<string, string> labels = null, int? severity = default(int?), System.TimeSpan? @for = default(System.TimeSpan?), System.Collections.Generic.IDictionary<string, string> annotations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PrometheusRuleGroups.Models.PrometheusRuleGroupAction> actions = null, Azure.ResourceManager.PrometheusRuleGroups.Models.PrometheusRuleResolveConfiguration resolveConfiguration = null) { throw null; }
-        public static Azure.ResourceManager.PrometheusRuleGroups.Models.PrometheusRuleGroupAction PrometheusRuleGroupAction(string actionGroupId = null, System.Collections.Generic.IDictionary<string, string> actionProperties = null) { throw null; }
+        public static Azure.ResourceManager.PrometheusRuleGroups.Models.PrometheusRuleGroupAction PrometheusRuleGroupAction(Azure.Core.ResourceIdentifier actionGroupId = null, System.Collections.Generic.IDictionary<string, string> actionProperties = null) { throw null; }
         public static Azure.ResourceManager.PrometheusRuleGroups.PrometheusRuleGroupData PrometheusRuleGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string description = null, bool? enabled = default(bool?), string clusterName = null, System.Collections.Generic.IEnumerable<string> scopes = null, System.TimeSpan? interval = default(System.TimeSpan?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PrometheusRuleGroups.Models.PrometheusRule> rules = null) { throw null; }
         public static Azure.ResourceManager.PrometheusRuleGroups.Models.PrometheusRuleGroupPatch PrometheusRuleGroupPatch(System.Collections.Generic.IDictionary<string, string> tags = null, bool? enabled = default(bool?)) { throw null; }
     }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
     public partial class PrometheusRuleGroupAction : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrometheusRuleGroups.Models.PrometheusRuleGroupAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrometheusRuleGroups.Models.PrometheusRuleGroupAction>
     {
         public PrometheusRuleGroupAction() { }
-        public string ActionGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ActionGroupId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> ActionProperties { get { throw null; } }
         protected virtual Azure.ResourceManager.PrometheusRuleGroups.Models.PrometheusRuleGroupAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
     public partial class PrometheusRuleResolveConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrometheusRuleGroups.Models.PrometheusRuleResolveConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrometheusRuleGroups.Models.PrometheusRuleResolveConfiguration>
     {
         public PrometheusRuleResolveConfiguration() { }
-        public bool? AutoResolved { get { throw null; } set { } }
+        public bool? IsAutoResolved { get { throw null; } set { } }
         public System.TimeSpan? TimeToResolve { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.PrometheusRuleGroups.Models.PrometheusRuleResolveConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

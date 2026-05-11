@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.PrometheusRuleGroups;
 
 namespace Azure.ResourceManager.PrometheusRuleGroups.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         /// <param name="actionGroupId"> The resource id of the action group to use. </param>
         /// <param name="actionProperties"> The properties of an action group object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrometheusRuleGroupAction(string actionGroupId, IDictionary<string, string> actionProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrometheusRuleGroupAction(ResourceIdentifier actionGroupId, IDictionary<string, string> actionProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionGroupId = actionGroupId;
             ActionProperties = actionProperties;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         }
 
         /// <summary> The resource id of the action group to use. </summary>
-        public string ActionGroupId { get; set; }
+        public ResourceIdentifier ActionGroupId { get; set; }
 
         /// <summary> The properties of an action group object. </summary>
         public IDictionary<string, string> ActionProperties { get; }

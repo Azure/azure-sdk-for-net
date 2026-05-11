@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PrometheusRuleResolveConfiguration"/>. </summary>
-        /// <param name="autoResolved"> Enable alert auto-resolution. </param>
+        /// <param name="isAutoResolved"> Enable alert auto-resolution. </param>
         /// <param name="timeToResolve"> Alert auto-resolution timeout. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrometheusRuleResolveConfiguration(bool? autoResolved, TimeSpan? timeToResolve, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrometheusRuleResolveConfiguration(bool? isAutoResolved, TimeSpan? timeToResolve, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AutoResolved = autoResolved;
+            IsAutoResolved = isAutoResolved;
             TimeToResolve = timeToResolve;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enable alert auto-resolution. </summary>
-        public bool? AutoResolved { get; set; }
+        public bool? IsAutoResolved { get; set; }
 
         /// <summary> Alert auto-resolution timeout. </summary>
         public TimeSpan? TimeToResolve { get; set; }
