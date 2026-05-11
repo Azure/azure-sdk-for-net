@@ -33,10 +33,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties?.Options;
             set
             {
-                if (Properties != null)
+                if (Properties == null)
                 {
-                    Properties.Options = value;
+                    throw new InvalidOperationException("Options cannot be set before Resource is initialized; set Resource first to establish the inner Properties holder.");
                 }
+                Properties.Options = value;
             }
         }
 
