@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 tags,
                 zones.ToList(),
                 identity,
-                provisioningState is null && containers is null && imageRegistryCredentials is null && restartPolicy is null && ipAddress is null && volumes is null && instanceView is null && diagnosticsLogAnalytics is null && subnetIds is null && dnsConfig is null && sku is null && encryptionProperties is null && initContainers is null && extensions is null && confidentialComputeCcePolicy is null && priority is null && id is null && id is null ? default : new ContainerGroupPropertiesProperties(
+                provisioningState is null && containers is null && imageRegistryCredentials is null && restartPolicy is null && ipAddress is null && volumes is null && instanceView is null && diagnosticsLogAnalytics is null && subnetIds is null && dnsConfig is null && sku is null && encryptionProperties is null && initContainers is null && extensions is null && confidentialComputeCcePolicy is null && priority is null ? default : new ContainerGroupPropertiesProperties(
                     provisioningState,
                     default,
                     (containers ?? new ChangeTrackingList<ContainerInstanceContainer>()).ToList(),
@@ -479,8 +479,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     new ConfidentialComputeProperties(confidentialComputeCcePolicy, default),
                     priority,
                     default,
-                    new ContainerGroupProfileReferenceDefinition(id, default, default),
-                    new StandbyPoolProfileDefinition(id, default, default),
+                    default,
+                    default,
                     default,
                     default));
         }
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 livenessProbe,
                 readinessProbe,
                 securityContext,
-                new ConfigMap(configMapKeyValuePairs, default),
+                new ConfigMap(configMapKeyValuePairs ?? new ChangeTrackingDictionary<string, string>(), default),
                 default), additionalBinaryDataProperties: null);
         }
 
