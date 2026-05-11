@@ -3,45 +3,19 @@
 
 #nullable disable
 
-// Backward-compat: New extensible enum type with implicit conversions to/from old
-// StorageAccountFailoverType. Bridges the type rename from old GA to new generated type.
+// Backward-compat: cross-conversion operators between FailoverRequestFailoverType and
+// the deprecated StorageAccountFailoverType alias. The rest of FailoverRequestFailoverType
+// is fully generated; this partial only adds the operators required by the prior GA contract.
 
 using System;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> The parameter is set to 'Planned' to indicate whether a Planned failover is requested. </summary>
-    public readonly partial struct FailoverRequestFailoverType : IEquatable<FailoverRequestFailoverType>
+    public readonly partial struct FailoverRequestFailoverType
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="FailoverRequestFailoverType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FailoverRequestFailoverType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string PlannedValue = "Planned";
-
-        /// <summary> Planned. </summary>
-        public static FailoverRequestFailoverType Planned { get; } = new FailoverRequestFailoverType(PlannedValue);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is FailoverRequestFailoverType other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(FailoverRequestFailoverType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
-
         // Backward-compatible: Converts to StorageAccountFailoverType.
-        public static implicit operator StorageAccountFailoverType(FailoverRequestFailoverType value) => new StorageAccountFailoverType(value._value);
+        public static implicit operator StorageAccountFailoverType(FailoverRequestFailoverType value) => new StorageAccountFailoverType(value.ToString());
         // Backward-compatible: Converts from StorageAccountFailoverType.
         public static implicit operator FailoverRequestFailoverType(StorageAccountFailoverType value) => new FailoverRequestFailoverType(value.ToString());
     }

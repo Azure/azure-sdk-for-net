@@ -3,45 +3,19 @@
 
 #nullable disable
 
-// Backward-compat: New extensible enum with implicit conversions to/from old
-// StorageListKeyExpand type. Bridges the type rename from prior GA.
+// Backward-compat: cross-conversion operators between ListKeysRequestExpand and the
+// deprecated StorageListKeyExpand alias. The rest of ListKeysRequestExpand is fully
+// generated; this partial only adds the operators required by the prior GA contract.
 
 using System;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Specifies type of the key to be listed. Possible value is kerb. </summary>
-    public readonly partial struct ListKeysRequestExpand : IEquatable<ListKeysRequestExpand>
+    public readonly partial struct ListKeysRequestExpand
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ListKeysRequestExpand"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ListKeysRequestExpand(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string KerbValue = "kerb";
-
-        /// <summary> kerb. </summary>
-        public static ListKeysRequestExpand Kerb { get; } = new ListKeysRequestExpand(KerbValue);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ListKeysRequestExpand other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(ListKeysRequestExpand other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
-
         // Backward-compatible: Converts to StorageListKeyExpand.
-        public static implicit operator StorageListKeyExpand(ListKeysRequestExpand value) => new StorageListKeyExpand(value._value);
+        public static implicit operator StorageListKeyExpand(ListKeysRequestExpand value) => new StorageListKeyExpand(value.ToString());
         // Backward-compatible: Converts from StorageListKeyExpand.
         public static implicit operator ListKeysRequestExpand(StorageListKeyExpand value) => new ListKeysRequestExpand(value.ToString());
     }
