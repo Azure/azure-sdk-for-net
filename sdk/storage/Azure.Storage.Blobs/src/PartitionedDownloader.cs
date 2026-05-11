@@ -579,11 +579,6 @@ namespace Azure.Storage.Blobs
                 // avoiding repeated calls to a degraded layout endpoint.
                 return null;
             }
-            catch (RequestFailedException)
-            {
-                // Hard-fail the download for any non-soft RequestFailedException.
-                throw;
-            }
 
             // 204: service explicitly responded that this blob has no layout.
             // Return an empty array so the cache treats it as a valid answer
