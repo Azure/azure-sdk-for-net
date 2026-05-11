@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.RedHatOpenShift;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RedHatOpenShift.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableRedHatOpenShiftResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableRedHatOpenShiftResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableRedHatOpenShiftResourceGroupResource for mocking. </summary>
         protected MockableRedHatOpenShiftResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableRedHatOpenShiftResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableRedHatOpenShiftResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableRedHatOpenShiftResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of OpenShiftClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of OpenShiftClusterResources and their operations over a OpenShiftClusterResource. </returns>
+        /// <summary> Gets a collection of OpenShiftClusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of OpenShiftClusters and their operations over a OpenShiftClusterResource. </returns>
         public virtual OpenShiftClusterCollection GetOpenShiftClusters()
         {
             return GetCachedClient(client => new OpenShiftClusterCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
         /// The operation returns properties of a OpenShift cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftClusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<OpenShiftClusterResource>> GetOpenShiftClusterAsync(string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             return await GetOpenShiftClusters().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
         /// The operation returns properties of a OpenShift cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftClusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
         [ForwardsClientCalls]
         public virtual Response<OpenShiftClusterResource> GetOpenShiftCluster(string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             return GetOpenShiftClusters().Get(resourceName, cancellationToken);
         }
     }

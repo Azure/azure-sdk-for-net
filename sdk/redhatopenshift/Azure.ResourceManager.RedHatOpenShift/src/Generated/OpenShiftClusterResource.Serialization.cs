@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RedHatOpenShift
 {
+    /// <summary></summary>
     public partial class OpenShiftClusterResource : IJsonModel<OpenShiftClusterData>
     {
-        private static OpenShiftClusterData s_dataDeserializationInstance;
-        private static OpenShiftClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<OpenShiftClusterData> s_dataDeserializationInstance;
 
+        private static IJsonModel<OpenShiftClusterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new OpenShiftClusterData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OpenShiftClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OpenShiftClusterData>)Data).Write(writer, options);
 
-        OpenShiftClusterData IJsonModel<OpenShiftClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OpenShiftClusterData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OpenShiftClusterData IJsonModel<OpenShiftClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<OpenShiftClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OpenShiftClusterData>(Data, options, AzureResourceManagerRedHatOpenShiftContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         OpenShiftClusterData IPersistableModel<OpenShiftClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OpenShiftClusterData>(data, options, AzureResourceManagerRedHatOpenShiftContext.Default);
 
-        string IPersistableModel<OpenShiftClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OpenShiftClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OpenShiftClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

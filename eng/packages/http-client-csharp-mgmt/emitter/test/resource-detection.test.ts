@@ -4088,21 +4088,21 @@ interface PrivateEndpointConnections {
     strictEqual(
       armProviderSchema.resources.length,
       4,
-      `Expected 4 resources, got ${armProviderSchema.resources.length}: ${armProviderSchema.resources.map((r) => r.metadata.resourceName).join(", ")}`
+      `Expected 4 resources, got ${
+        armProviderSchema.resources.length
+      }: ${armProviderSchema.resources
+        .map((r) => r.metadata.resourceName)
+        .join(", ")}`
     );
 
     // Verify parent resources exist
     const topicResource = armProviderSchema.resources.find(
-      (r) =>
-        r.metadata.resourceType ===
-        "Microsoft.ContosoProviderHub/topics"
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/topics"
     );
     ok(topicResource, "Topic resource should exist");
 
     const domainResource = armProviderSchema.resources.find(
-      (r) =>
-        r.metadata.resourceType ===
-        "Microsoft.ContosoProviderHub/domains"
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/domains"
     );
     ok(domainResource, "Domain resource should exist");
 
@@ -4112,10 +4112,7 @@ interface PrivateEndpointConnections {
         r.metadata.resourceType ===
         "Microsoft.ContosoProviderHub/topics/privateEndpointConnections"
     );
-    ok(
-      topicPec,
-      "TopicPrivateEndpointConnection resource should exist"
-    );
+    ok(topicPec, "TopicPrivateEndpointConnection resource should exist");
     strictEqual(
       topicPec.metadata.resourceName,
       "TopicPrivateEndpointConnection"
@@ -4126,10 +4123,7 @@ interface PrivateEndpointConnections {
         r.metadata.resourceType ===
         "Microsoft.ContosoProviderHub/domains/privateEndpointConnections"
     );
-    ok(
-      domainPec,
-      "DomainPrivateEndpointConnection resource should exist"
-    );
+    ok(domainPec, "DomainPrivateEndpointConnection resource should exist");
     strictEqual(
       domainPec.metadata.resourceName,
       "DomainPrivateEndpointConnection"
@@ -4167,8 +4161,14 @@ interface PrivateEndpointConnections {
       const hasCreate = pec.metadata.methods.some((m) => m.kind === "Create");
       const hasDelete = pec.metadata.methods.some((m) => m.kind === "Delete");
       ok(hasRead, `${pec.metadata.resourceName} should have Read operation`);
-      ok(hasCreate, `${pec.metadata.resourceName} should have Create operation`);
-      ok(hasDelete, `${pec.metadata.resourceName} should have Delete operation`);
+      ok(
+        hasCreate,
+        `${pec.metadata.resourceName} should have Create operation`
+      );
+      ok(
+        hasDelete,
+        `${pec.metadata.resourceName} should have Delete operation`
+      );
     }
 
     // Verify there are NO operations left on non-resource methods for private endpoint connections

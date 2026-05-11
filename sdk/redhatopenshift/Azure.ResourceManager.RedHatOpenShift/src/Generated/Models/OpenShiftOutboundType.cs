@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedHatOpenShift;
 
 namespace Azure.ResourceManager.RedHatOpenShift.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
     public readonly partial struct OpenShiftOutboundType : IEquatable<OpenShiftOutboundType>
     {
         private readonly string _value;
+        /// <summary> Loadbalancer. </summary>
+        private const string LoadBalancerValue = "Loadbalancer";
+        /// <summary> UserDefinedRouting. </summary>
+        private const string UserDefinedRoutingValue = "UserDefinedRouting";
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftOutboundType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OpenShiftOutboundType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LoadBalancerValue = "Loadbalancer";
-        private const string UserDefinedRoutingValue = "UserDefinedRouting";
+            _value = value;
+        }
 
         /// <summary> Loadbalancer. </summary>
         public static OpenShiftOutboundType LoadBalancer { get; } = new OpenShiftOutboundType(LoadBalancerValue);
+
         /// <summary> UserDefinedRouting. </summary>
         public static OpenShiftOutboundType UserDefinedRouting { get; } = new OpenShiftOutboundType(UserDefinedRoutingValue);
+
         /// <summary> Determines if two <see cref="OpenShiftOutboundType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OpenShiftOutboundType left, OpenShiftOutboundType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OpenShiftOutboundType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OpenShiftOutboundType left, OpenShiftOutboundType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OpenShiftOutboundType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OpenShiftOutboundType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OpenShiftOutboundType(string value) => new OpenShiftOutboundType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OpenShiftOutboundType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OpenShiftOutboundType?(string value) => value == null ? null : new OpenShiftOutboundType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OpenShiftOutboundType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OpenShiftOutboundType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
