@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GuestConfigurationNavigation GuestConfigurationNavigation(GuestConfigurationKind? kind, string name, string version, Uri contentUri, string contentHash, GuestConfigurationAssignmentType? assignmentType, string assignmentSource, string contentType, IEnumerable<GuestConfigurationParameter> configurationParameters, IEnumerable<GuestConfigurationParameter> configurationProtectedParameters, LcmConfigurationSetting configurationSetting)
         {
-            return GuestConfigurationNavigation(kind, name, version, contentUri, contentHash, contentManagedIdentity: default, assignmentType, assignmentSource, contentType, configurationParameters, configurationProtectedParameters, configurationSetting);
+            return GuestConfigurationNavigation(kind: kind, name: name, version: version, contentUri: contentUri, contentHash: contentHash, contentManagedIdentity: default, assignmentType: assignmentType, assignmentSource: assignmentSource, contentType: contentType, configurationParameters: configurationParameters, configurationProtectedParameters: configurationProtectedParameters, configurationSetting: configurationSetting);
         }
     }
 }

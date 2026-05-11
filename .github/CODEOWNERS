@@ -40,6 +40,7 @@
 
 # PRLabel: %Azure.Core
 /sdk/core/                                                         @m-nash @Azure/azure-sdk-write-net-core
+/sdk/core/Azure.Core/**/Identity/                                  @christothes @JonathanCrd @Azure/azure-sdk-write-identity
 
 # ServiceLabel: %Azure.Core
 # ServiceOwners:                                                   @m-nash @Azure/azure-sdk-write-net-core
@@ -67,10 +68,10 @@
 ####################
 
 # PRLabel: %AI Agents
-/sdk/agentserver/    @ankitbko @RaviPidaparthi
+/sdk/agentserver/    @ankitbko @RaviPidaparthi @vangarp
 
 # ServiceLabel: %AI Agents
-# ServiceOwners: @ankitbko @RaviPidaparthi
+# ServiceOwners: @ankitbko @RaviPidaparthi @vangarp
 
 # PRLabel: %AI Model Inference %AI Projects
 /sdk/ai/    @dargilco @glharper @nick863 @trangevi @trrwilson
@@ -260,6 +261,13 @@
 
 # ServiceLabel: %Digital Twins
 # ServiceOwners: @Aashish93-stack @abhinav-ghai @efriesner @johngallardo @Satya-Kolluri @sjiherzig
+
+# PRLabel: %EngSys
+/sdk/template/    @danieljurek @weshaggard
+
+# AzureSdkOwners: @danieljurek @weshaggard
+# ServiceLabel: %EngSys
+# ServiceOwners: @danieljurek @weshaggard
 
 # PRLabel: %Event Grid
 /sdk/eventgrid/    @Kishp01 @rajeshka @shankarsama
@@ -509,7 +517,7 @@
 /sdk/webpubsub/    @JialinXin @KrzysztofCwalina @vicancy
 
 # PRLabel: %WebPubSub
-/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/    @vicancy
+/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/    @JialinXin @vicancy @Y-Sindo
 
 # ServiceLabel: %WebPubSub
 # ServiceOwners: @JialinXin @vicancy
