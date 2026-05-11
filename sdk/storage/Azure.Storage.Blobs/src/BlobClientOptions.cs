@@ -238,6 +238,12 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public Request100ContinueOptions Request100ContinueOptions { get; set; }
 
+        /// <summary>
+        /// Options for configuring session token authentication for blob operations.
+        /// Note: Session token authentication currently only applies when using TokenCredentials for Blob Download operations.
+        /// </summary>
+        public SessionOptions SessionOptions { get; set; }
+
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
         #endregion

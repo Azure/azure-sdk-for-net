@@ -392,19 +392,39 @@ namespace Azure.Storage.Files.DataLake
             _uri = serviceUri;
             _blobUri = new DataLakeUriBuilder(serviceUri).ToBlobUri();
 
+            // Build the DFS pipeline from the supplied authentication policy as-is.
+            // For token-credential scenarios, only the inner blob service client gets a
+            // separate pipeline wrapped with SessionAuthenticationPolicy, so DFS endpoint
+            // requests can never route through session auth.
+            HttpPipeline dfsPipeline = options.Build(authentication);
+
+            HttpPipeline blobPipeline = dfsPipeline;
+            HttpPipelinePolicy blobAuthentication = authentication;
+            if (tokenCredential != null)
+            {
+                blobAuthentication = BlobServiceClientInternals.CreateSessionPolicy(
+                    authentication,
+                    () => _blobServiceClient,
+                    options.SessionOptions);
+                blobPipeline = options.Build(blobAuthentication);
+            }
+
             _clientConfiguration = new DataLakeClientConfiguration(
-                pipeline: options.Build(authentication),
+                pipeline: dfsPipeline,
                 sharedKeyCredential: storageSharedKeyCredential,
                 sasCredential: sasCredential,
                 tokenCredential: tokenCredential,
                 clientDiagnostics: new ClientDiagnostics(options),
                 clientOptions: options,
-                customerProvidedKey: options.CustomerProvidedKey);
+                customerProvidedKey: options.CustomerProvidedKey)
+            {
+                BlobPipeline = blobPipeline,
+            };
 
             _blobServiceClient = BlobServiceClientInternals.Create(
                 _blobUri,
                 _clientConfiguration,
-                authentication);
+                blobAuthentication);
 
             DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
@@ -413,7 +433,7 @@ namespace Azure.Storage.Files.DataLake
         /// Helper to access protected static members of BlobServiceClient
         /// that should not be exposed directly to customers.
         /// </summary>
-        private class BlobServiceClientInternals : BlobServiceClient
+        internal class BlobServiceClientInternals : BlobServiceClient
         {
             public static BlobServiceClient Create(
                 Uri uri,
@@ -427,10 +447,21 @@ namespace Azure.Storage.Files.DataLake
                         Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled }
                     },
                     authentication,
-                    clientConfiguration.Pipeline,
+                    clientConfiguration.BlobPipeline,
                     clientConfiguration.SharedKeyCredential,
                     clientConfiguration.SasCredential,
                     clientConfiguration.TokenCredential);
+            }
+
+            public static HttpPipelinePolicy CreateSessionPolicy(
+                HttpPipelinePolicy bearerTokenPolicy,
+                Func<BlobServiceClient> blobServiceClientFactory,
+                Blobs.Models.SessionOptions sessionOptions)
+            {
+                return BlobServiceClient.CreateSessionAuthenticationPolicy(
+                    bearerTokenPolicy,
+                    blobServiceClientFactory,
+                    sessionOptions);
             }
         }
         #endregion ctors

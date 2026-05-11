@@ -358,19 +358,32 @@ namespace Azure.Storage.Blobs
             HttpPipelinePolicy authentication,
             TokenCredential tokenCredential,
             BlobClientOptions options)
-            : this(serviceUri,
-                  new BlobClientConfiguration(
-                      pipeline: options.Build(authentication),
-                      tokenCredential: tokenCredential,
-                      clientDiagnostics: new ClientDiagnostics(options),
-                      version: options?.Version ?? BlobClientOptions.LatestVersion,
-                      customerProvidedKey: options?.CustomerProvidedKey,
-                      transferValidation: options.TransferValidation,
-                      encryptionScope: options?.EncryptionScope,
-                      trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false),
-                  authentication,
-                  options?._clientSideEncryptionOptions?.Clone())
         {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
+
+            if (tokenCredential != null)
+            {
+                authentication = new SessionAuthenticationPolicy(
+                    bearerTokenPolicy: authentication,
+                    blobServiceClientFactory: () => this,
+                    sessionOptions: options.SessionOptions);
+            }
+
+            _uri = serviceUri;
+            _clientConfiguration = new BlobClientConfiguration(
+                pipeline: options.Build(authentication),
+                tokenCredential: tokenCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options?.Version ?? BlobClientOptions.LatestVersion,
+                customerProvidedKey: options?.CustomerProvidedKey,
+                transferValidation: options.TransferValidation,
+                encryptionScope: options?.EncryptionScope,
+                trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false);
+            _authenticationPolicy = authentication;
+            _clientSideEncryption = options?._clientSideEncryptionOptions?.Clone();
+            _serviceRestClient = BuildServiceRestClient(serviceUri);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -550,6 +563,21 @@ namespace Azure.Storage.Blobs
                     trimBlobNameSlashes: options.TrimBlobNameSlashes),
                 authentication,
                 clientSideEncryption: null);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="SessionAuthenticationPolicy"/> wrapping the given bearer token policy.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected static HttpPipelinePolicy CreateSessionAuthenticationPolicy(
+            HttpPipelinePolicy bearerTokenPolicy,
+            Func<BlobServiceClient> blobServiceClientFactory,
+            SessionOptions sessionOptions)
+        {
+            return new SessionAuthenticationPolicy(
+                bearerTokenPolicy,
+                blobServiceClientFactory,
+                sessionOptions);
         }
 
         private ServiceRestClient BuildServiceRestClient(Uri uri)

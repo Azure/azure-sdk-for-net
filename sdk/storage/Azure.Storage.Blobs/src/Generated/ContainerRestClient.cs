@@ -1589,6 +1589,91 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal HttpMessage CreateCreateSessionRequest(CreateSessionConfiguration createSessionConfiguration, int? timeout)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "session", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", _version);
+            request.Headers.Add("Accept", "application/xml");
+            request.Headers.Add("Content-Type", "application/xml");
+            var content = new XmlWriterContent();
+            content.XmlWriter.WriteObjectValue(createSessionConfiguration, "CreateSessionRequest");
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> The Create Session operation enables users to create a session scoped to a container. </summary>
+        /// <param name="createSessionConfiguration"> The <see cref="CreateSessionConfiguration"/> to use. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="createSessionConfiguration"/> is null. </exception>
+        public async Task<Response<CreateSessionResponse>> CreateSessionAsync(CreateSessionConfiguration createSessionConfiguration, int? timeout = null, CancellationToken cancellationToken = default)
+        {
+            if (createSessionConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(createSessionConfiguration));
+            }
+
+            using var message = CreateCreateSessionRequest(createSessionConfiguration, timeout);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    {
+                        CreateSessionResponse value = default;
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("CreateSessionResult") is XElement createSessionResultElement)
+                        {
+                            value = CreateSessionResponse.DeserializeCreateSessionResponse(createSessionResultElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> The Create Session operation enables users to create a session scoped to a container. </summary>
+        /// <param name="createSessionConfiguration"> The <see cref="CreateSessionConfiguration"/> to use. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="createSessionConfiguration"/> is null. </exception>
+        public Response<CreateSessionResponse> CreateSession(CreateSessionConfiguration createSessionConfiguration, int? timeout = null, CancellationToken cancellationToken = default)
+        {
+            if (createSessionConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(createSessionConfiguration));
+            }
+
+            using var message = CreateCreateSessionRequest(createSessionConfiguration, timeout);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    {
+                        CreateSessionResponse value = default;
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("CreateSessionResult") is XElement createSessionResultElement)
+                        {
+                            value = CreateSessionResponse.DeserializeCreateSessionResponse(createSessionResultElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateListBlobFlatSegmentNextPageRequest(string nextLink, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, string startFrom, int? timeout)
         {
             var message = _pipeline.CreateMessage();
