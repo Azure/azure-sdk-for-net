@@ -1,4 +1,4 @@
 directory: specification/alertsmanagement/resource-manager/Microsoft.AlertsManagement/PreviewAlertRule
-commit: 3753b537e9db3596fad1351079461112b60e894b
+commit: 9f1e5e9edbe
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
