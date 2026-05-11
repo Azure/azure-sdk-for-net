@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaccData, MaccResource>(new MockableBillingBenefitsTenantResourceGetAllAsyncCollectionResultOfT(SellerResourceRestClient, SellerResourceListRequest.ToRequestContent(content), context, "MockableBillingBenefitsTenantResource.GetAll"), data => new MaccResource(Client, data));
+            return new AsyncPageableWrapper<MaccData, MaccResource>(new MicrosoftBillingBenefitsSellerResourceOperationGroupListAsyncCollectionResultOfT(SellerResourceRestClient, SellerResourceListRequest.ToRequestContent(content), context, "MockableBillingBenefitsTenantResource.GetAll"), data => new MaccResource(Client, data));
         }
 
         /// <summary>
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaccData, MaccResource>(new MockableBillingBenefitsTenantResourceGetAllCollectionResultOfT(SellerResourceRestClient, SellerResourceListRequest.ToRequestContent(content), context, "MockableBillingBenefitsTenantResource.GetAll"), data => new MaccResource(Client, data));
+            return new PageableWrapper<MaccData, MaccResource>(new MicrosoftBillingBenefitsSellerResourceOperationGroupListCollectionResultOfT(SellerResourceRestClient, SellerResourceListRequest.ToRequestContent(content), context, "MockableBillingBenefitsTenantResource.GetAll"), data => new MaccResource(Client, data));
         }
     }
 }

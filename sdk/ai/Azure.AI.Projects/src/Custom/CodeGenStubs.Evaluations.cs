@@ -54,7 +54,6 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("InsightSummary")] public partial class InsightSummary { }
 [CodeGenType("InsightType")] public readonly partial struct InsightType { }
 [CodeGenType("ListVersionsRequestType")] public readonly partial struct ListVersionsRequestType { }
-[CodeGenType("ModelSamplingParams")] public partial class ModelSamplingParams { }
 [CodeGenType("MonthlyRecurrenceSchedule")] public partial class MonthlyRecurrenceSchedule { }
 [CodeGenType("OneTimeTrigger")] public partial class OneTimeTrigger { }
 [CodeGenType("OperationStatus")] public readonly partial struct OperationStatus { }

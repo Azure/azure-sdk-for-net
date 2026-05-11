@@ -23,7 +23,7 @@ namespace Azure.AI.Projects
         /// <param name="completionTokens"> The number of completion tokens generated. </param>
         /// <param name="totalTokens"> Total number of tokens used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationTokenUsage(long? promptTokens, long? completionTokens, long? totalTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationTokenUsage(long promptTokens, long completionTokens, long totalTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PromptTokens = promptTokens;
             CompletionTokens = completionTokens;
@@ -32,12 +32,12 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The number of prompt tokens used. </summary>
-        public long? PromptTokens { get; }
+        public long PromptTokens { get; }
 
         /// <summary> The number of completion tokens generated. </summary>
-        public long? CompletionTokens { get; }
+        public long CompletionTokens { get; }
 
         /// <summary> Total number of tokens used. </summary>
-        public long? TotalTokens { get; }
+        public long TotalTokens { get; }
     }
 }

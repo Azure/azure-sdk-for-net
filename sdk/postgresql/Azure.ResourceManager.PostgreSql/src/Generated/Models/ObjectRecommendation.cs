@@ -9,121 +9,72 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Object recommendation properties. </summary>
     public partial class ObjectRecommendation : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ObjectRecommendation"/>. </summary>
         public ObjectRecommendation()
         {
-            ImprovedQueryIds = new ChangeTrackingList<long>();
-            EstimatedImpact = new ChangeTrackingList<RecommendationImpactRecord>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ObjectRecommendation"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Always empty. </param>
-        /// <param name="initialRecommendedOn"> Creation time (UTC) of this recommendation. </param>
-        /// <param name="lastRecommendedOn"> Last time (UTC) that this recommendation was produced. </param>
-        /// <param name="timesRecommended"> Number of times this recommendation has been produced. </param>
-        /// <param name="improvedQueryIds"> List of identifiers for all queries identified as targets for improvement if the recommendation is applied. The list is only populated for CREATE INDEX recommendations. </param>
-        /// <param name="recommendationReason"> Reason for this recommendation. </param>
-        /// <param name="currentState"> Current state. </param>
-        /// <param name="recommendationType"> Type for this recommendation. </param>
-        /// <param name="implementationDetails"> Implementation details for the recommended action. </param>
-        /// <param name="analyzedWorkload"> Workload information for the recommended action. </param>
-        /// <param name="estimatedImpact"> Estimated impact of this recommended action. </param>
-        /// <param name="details"> Recommendation details for the recommended action. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, DateTimeOffset? initialRecommendedOn, DateTimeOffset? lastRecommendedOn, int? timesRecommended, IList<long> improvedQueryIds, string recommendationReason, string currentState, PostgreSqlFlexibleServerRecommendationType? recommendationType, ObjectRecommendationImplementationDetails implementationDetails, ObjectRecommendationAnalyzedWorkload analyzedWorkload, IReadOnlyList<RecommendationImpactRecord> estimatedImpact, ObjectRecommendationDetails details, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Properties of an object recommendation. </param>
+        internal ObjectRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string kind, ObjectRecommendationProperties properties) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Kind = kind;
-            InitialRecommendedOn = initialRecommendedOn;
-            LastRecommendedOn = lastRecommendedOn;
-            TimesRecommended = timesRecommended;
-            ImprovedQueryIds = improvedQueryIds;
-            RecommendationReason = recommendationReason;
-            CurrentState = currentState;
-            RecommendationType = recommendationType;
-            ImplementationDetails = implementationDetails;
-            AnalyzedWorkload = analyzedWorkload;
-            EstimatedImpact = estimatedImpact;
-            Details = details;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
         }
 
         /// <summary> Always empty. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary> Creation time (UTC) of this recommendation. </summary>
-        [WirePath("properties.initialRecommendedTime")]
-        public DateTimeOffset? InitialRecommendedOn { get; set; }
-        /// <summary> Last time (UTC) that this recommendation was produced. </summary>
-        [WirePath("properties.lastRecommendedTime")]
-        public DateTimeOffset? LastRecommendedOn { get; set; }
-        /// <summary> Number of times this recommendation has been produced. </summary>
-        [WirePath("properties.timesRecommended")]
-        public int? TimesRecommended { get; set; }
+
+        /// <summary> Properties of an object recommendation. </summary>
+        [WirePath("properties")]
+        internal ObjectRecommendationProperties Properties { get; }
+
         /// <summary> List of identifiers for all queries identified as targets for improvement if the recommendation is applied. The list is only populated for CREATE INDEX recommendations. </summary>
         [WirePath("properties.improvedQueryIds")]
-        public IList<long> ImprovedQueryIds { get; }
-        /// <summary> Reason for this recommendation. </summary>
-        [WirePath("properties.recommendationReason")]
-        public string RecommendationReason { get; set; }
-        /// <summary> Current state. </summary>
-        [WirePath("properties.currentState")]
-        public string CurrentState { get; set; }
-        /// <summary> Type for this recommendation. </summary>
-        [WirePath("properties.recommendationType")]
-        public PostgreSqlFlexibleServerRecommendationType? RecommendationType { get; set; }
-        /// <summary> Implementation details for the recommended action. </summary>
-        [WirePath("properties.implementationDetails")]
-        public ObjectRecommendationImplementationDetails ImplementationDetails { get; set; }
-        /// <summary> Workload information for the recommended action. </summary>
-        [WirePath("properties.analyzedWorkload")]
-        public ObjectRecommendationAnalyzedWorkload AnalyzedWorkload { get; set; }
+        public IList<long> ImprovedQueryIds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImprovedQueryIds;
+            }
+        }
+
         /// <summary> Estimated impact of this recommended action. </summary>
         [WirePath("properties.estimatedImpact")]
-        public IReadOnlyList<RecommendationImpactRecord> EstimatedImpact { get; }
+        public IReadOnlyList<RecommendationImpactRecord> EstimatedImpact
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EstimatedImpact;
+            }
+        }
+
         /// <summary> Recommendation details for the recommended action. </summary>
         [WirePath("properties.details")]
-        public ObjectRecommendationDetails Details { get; }
+        public ObjectRecommendationDetails Details
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Details;
+            }
+        }
     }
 }
