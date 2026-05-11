@@ -179,6 +179,16 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("searchMode"u8);
                 writer.WriteStringValue(SearchMode.Value.ToSerialString());
             }
+            if (Optional.IsDefined(QueryLanguage))
+            {
+                writer.WritePropertyName("queryLanguage"u8);
+                writer.WriteStringValue(QueryLanguage.Value.ToString());
+            }
+            if (Optional.IsDefined(QuerySpeller))
+            {
+                writer.WritePropertyName("speller"u8);
+                writer.WriteStringValue(QuerySpeller.Value.ToString());
+            }
             if (Optional.IsDefined(SelectRaw))
             {
                 writer.WritePropertyName("select"u8);
@@ -224,6 +234,16 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("captions"u8);
                 writer.WriteStringValue(QueryCaptionRaw);
             }
+            if (Optional.IsDefined(QueryRewrites))
+            {
+                writer.WritePropertyName("queryRewrites"u8);
+                writer.WriteStringValue(QueryRewrites.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(SemanticFields))
+            {
+                writer.WritePropertyName("semanticFields"u8);
+                writer.WriteStringValue(string.Join(",", SemanticFields));
+            }
             if (Optional.IsCollectionDefined(VectorQueries))
             {
                 writer.WritePropertyName("vectorQueries"u8);
@@ -238,6 +258,11 @@ namespace Azure.Search.Documents
             {
                 writer.WritePropertyName("vectorFilterMode"u8);
                 writer.WriteStringValue(FilterMode.Value.ToString());
+            }
+            if (Optional.IsDefined(HybridSearch))
+            {
+                writer.WritePropertyName("hybridSearch"u8);
+                writer.WriteObjectValue(HybridSearch, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -298,6 +323,8 @@ namespace Azure.Search.Documents
             string searchText = default;
             string searchFieldsRaw = default;
             SearchMode? searchMode = default;
+            QueryLanguage? queryLanguage = default;
+            QuerySpellerType? querySpeller = default;
             string selectRaw = default;
             int? skip = default;
             int? size = default;
@@ -307,8 +334,11 @@ namespace Azure.Search.Documents
             string semanticQuery = default;
             string queryAnswerRaw = default;
             string queryCaptionRaw = default;
+            QueryRewritesType? queryRewrites = default;
+            IList<string> semanticFields = default;
             IList<VectorQuery> vectorQueries = default;
             VectorFilterMode? filterMode = default;
+            HybridSearch hybridSearch = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -453,6 +483,24 @@ namespace Azure.Search.Documents
                     searchMode = prop.Value.GetString().ToSearchMode();
                     continue;
                 }
+                if (prop.NameEquals("queryLanguage"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    queryLanguage = new QueryLanguage(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("speller"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    querySpeller = new QuerySpellerType(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("select"u8))
                 {
                     selectRaw = prop.Value.GetString();
@@ -514,6 +562,25 @@ namespace Azure.Search.Documents
                     queryCaptionRaw = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("queryRewrites"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    queryRewrites = new QueryRewritesType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("semanticFields"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    string stringValue = prop.Value.GetString();
+                    semanticFields = string.IsNullOrEmpty(stringValue) ? new List<string>() : new List<string>(stringValue.Split(','));
+                    continue;
+                }
                 if (prop.NameEquals("vectorQueries"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -535,6 +602,15 @@ namespace Azure.Search.Documents
                         continue;
                     }
                     filterMode = new VectorFilterMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("hybridSearch"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hybridSearch = HybridSearch.DeserializeHybridSearch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -560,6 +636,8 @@ namespace Azure.Search.Documents
                 searchText,
                 searchFieldsRaw,
                 searchMode,
+                queryLanguage,
+                querySpeller,
                 selectRaw,
                 skip,
                 size,
@@ -569,8 +647,11 @@ namespace Azure.Search.Documents
                 semanticQuery,
                 queryAnswerRaw,
                 queryCaptionRaw,
+                queryRewrites,
+                semanticFields ?? new ChangeTrackingList<string>(),
                 vectorQueries ?? new ChangeTrackingList<VectorQuery>(),
                 filterMode,
+                hybridSearch,
                 additionalBinaryDataProperties);
         }
     }

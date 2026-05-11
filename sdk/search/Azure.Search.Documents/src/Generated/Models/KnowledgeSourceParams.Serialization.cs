@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for knowledge source runtime parameters.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSourceParams"/>, <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, and <see cref="WebKnowledgeSourceParams"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSourceParams"/>, <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="WebKnowledgeSourceParams"/>, <see cref="RemoteSharePointKnowledgeSourceParams"/>, <see cref="WorkIQKnowledgeSourceParams"/>, <see cref="FabricDataAgentKnowledgeSourceParams"/>, and <see cref="FabricOntologyKnowledgeSourceParams"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeSourceParams))]
     public abstract partial class KnowledgeSourceParams : IJsonModel<KnowledgeSourceParams>
@@ -94,13 +94,33 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("includeReferenceSourceData"u8);
                 writer.WriteBooleanValue(IncludeReferenceSourceData.Value);
             }
+            if (Optional.IsDefined(AlwaysQuerySource))
+            {
+                writer.WritePropertyName("alwaysQuerySource"u8);
+                writer.WriteBooleanValue(AlwaysQuerySource.Value);
+            }
+            if (Optional.IsDefined(FailOnError))
+            {
+                writer.WritePropertyName("failOnError"u8);
+                writer.WriteBooleanValue(FailOnError.Value);
+            }
             if (Optional.IsDefined(RerankerThreshold))
             {
                 writer.WritePropertyName("rerankerThreshold"u8);
                 writer.WriteNumberValue(RerankerThreshold.Value);
             }
+            if (Optional.IsDefined(MaxOutputDocuments))
+            {
+                writer.WritePropertyName("maxOutputDocuments"u8);
+                writer.WriteNumberValue(MaxOutputDocuments.Value);
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (Optional.IsDefined(EnableImageServing))
+            {
+                writer.WritePropertyName("enableImageServing"u8);
+                writer.WriteBooleanValue(EnableImageServing.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -151,10 +171,20 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                         return SearchIndexKnowledgeSourceParams.DeserializeSearchIndexKnowledgeSourceParams(element, options);
                     case "azureBlob":
                         return AzureBlobKnowledgeSourceParams.DeserializeAzureBlobKnowledgeSourceParams(element, options);
+                    case "indexedSharePoint":
+                        return IndexedSharePointKnowledgeSourceParams.DeserializeIndexedSharePointKnowledgeSourceParams(element, options);
                     case "indexedOneLake":
                         return IndexedOneLakeKnowledgeSourceParams.DeserializeIndexedOneLakeKnowledgeSourceParams(element, options);
                     case "web":
                         return WebKnowledgeSourceParams.DeserializeWebKnowledgeSourceParams(element, options);
+                    case "remoteSharePoint":
+                        return RemoteSharePointKnowledgeSourceParams.DeserializeRemoteSharePointKnowledgeSourceParams(element, options);
+                    case "workIQ":
+                        return WorkIQKnowledgeSourceParams.DeserializeWorkIQKnowledgeSourceParams(element, options);
+                    case "fabricDataAgent":
+                        return FabricDataAgentKnowledgeSourceParams.DeserializeFabricDataAgentKnowledgeSourceParams(element, options);
+                    case "fabricOntology":
+                        return FabricOntologyKnowledgeSourceParams.DeserializeFabricOntologyKnowledgeSourceParams(element, options);
                 }
             }
             return UnknownKnowledgeSourceParams.DeserializeUnknownKnowledgeSourceParams(element, options);
