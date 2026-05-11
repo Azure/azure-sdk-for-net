@@ -111,7 +111,6 @@ string json = @"{
       ""y"": 2,
       ""z"": 3
     }";
-
 ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
 
 // Base library registers a proxy
