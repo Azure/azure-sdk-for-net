@@ -232,7 +232,7 @@ namespace Azure.Generator.Management.Visitors
         {
             for (int i = 0; i < arguments.Count; i++)
             {
-                if (TryGetNamedArgumentName(arguments[i], out var argumentName)
+                if (arguments[i] is PositionalParameterReferenceExpression { ParameterName: var argumentName }
                     && !string.Equals(argumentName, constructorParameters[i].Name, StringComparison.Ordinal))
                 {
                     return true;
@@ -240,31 +240,6 @@ namespace Azure.Generator.Management.Visitors
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Extracts the name from a rendered named argument expression such as <c>serializedAdditionalRawData: null</c>.
-        /// Input is an expression; output is the argument name when the expression looks like a simple named argument.
-        /// Used by <see cref="HasNamedArgumentMismatchingFullConstructor"/> to identify custom-constructor binding.
-        /// </summary>
-        private static bool TryGetNamedArgumentName(ValueExpression argument, [NotNullWhen(true)] out string? name)
-        {
-            name = null;
-            var text = argument.ToDisplayString();
-            var colonIndex = text.IndexOf(':');
-            if (colonIndex <= 0)
-            {
-                return false;
-            }
-
-            var candidate = text[..colonIndex].Trim();
-            if (candidate.Length == 0 || candidate.Any(c => !char.IsLetterOrDigit(c) && c != '_' && c != '@'))
-            {
-                return false;
-            }
-
-            name = candidate[0] == '@' ? candidate[1..] : candidate;
-            return name.Length > 0;
         }
 
         /// <summary>
@@ -277,9 +252,13 @@ namespace Azure.Generator.Management.Visitors
             IReadOnlyList<ParameterProvider> parameters,
             IReadOnlyList<ValueExpression> originalArguments)
         {
-            var text = statement.ToDisplayString();
+            if (statement is not ExpressionStatement { Expression: AssignmentExpression { UseNullCoalesce: true } assignment })
+            {
+                return false;
+            }
+
             return parameters.Any(parameter =>
-                text.StartsWith($"{parameter.Name} ??=", StringComparison.Ordinal)
+                ReferencesParameter(assignment.Variable, parameter)
                 && !IsParameterUsedByOriginalArgument(parameter, originalArguments));
         }
 
@@ -324,6 +303,8 @@ namespace Azure.Generator.Management.Visitors
             return expression switch
             {
                 VariableExpression variable => string.Equals(variable.Declaration.RequestedName, parameter.Name, StringComparison.Ordinal),
+                PositionalParameterReferenceExpression positional => string.Equals(positional.ParameterName, parameter.Name, StringComparison.Ordinal)
+                    || ReferencesParameter(positional.ParameterValue, parameter),
                 InvokeMethodExpression invoke => (invoke.InstanceReference is not null && ReferencesParameter(invoke.InstanceReference, parameter))
                     || invoke.Arguments.Any(argument => ReferencesParameter(argument, parameter)),
                 NewInstanceExpression newInstance => newInstance.Parameters.Any(argument => ReferencesParameter(argument, parameter)),
@@ -579,8 +560,7 @@ namespace Azure.Generator.Management.Visitors
         /// </summary>
         private static bool IsDefaultExpression(ValueExpression expression)
         {
-            var displayString = expression.ToDisplayString();
-            return displayString == "default" || displayString.StartsWith("default(", StringComparison.Ordinal);
+            return expression is KeywordExpression { Keyword: "default" };
         }
 
         /// <summary>
