@@ -856,6 +856,205 @@ public class CredentialResolverTests
         Assert.That(providerA, Is.Not.SameAs(providerB));
     }
 
+    // -------- Built-in ApiKey fallback (Phase 1.7) --------
+
+    [Test]
+    public void GetCredential_ApiKeySource_NoResolvers_BuiltInFallbackProducesProvider()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "secret-key",
+        });
+
+        AuthenticationTokenProvider? cred = config.GetCredential("TestClient:Credential");
+
+        Assert.That(cred, Is.InstanceOf<ApiKeyTokenProvider>());
+        AuthenticationToken token = cred!.GetToken(
+            new GetTokenOptions(new Dictionary<string, object>
+            {
+                { GetTokenOptions.ScopesPropertyName, new[] { "ignored" } }
+            }),
+            default);
+        Assert.That(token.TokenValue, Is.EqualTo("secret-key"));
+    }
+
+    [Test]
+    public void GetCredential_ApiKeyCredentialAlias_NoResolvers_BuiltInFallbackProducesProvider()
+    {
+        // CredentialSettings normalizes "ApiKey" -> "apikeycredential"; the built-in
+        // resolver must accept either spelling so users can write either form.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "ApiKeyCredential",
+            ["TestClient:Credential:Key"] = "secret-key",
+        });
+
+        AuthenticationTokenProvider? cred = config.GetCredential("TestClient:Credential");
+
+        Assert.That(cred, Is.InstanceOf<ApiKeyTokenProvider>());
+    }
+
+    [Test]
+    public void GetCredential_ApiKeySource_MissingKey_ReturnsNull()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+        });
+
+        AuthenticationTokenProvider? cred = config.GetCredential("TestClient:Credential");
+
+        Assert.That(cred, Is.Null);
+    }
+
+    [Test]
+    public void GetCredential_ApiKeySource_EmptyKey_ReturnsNull()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "",
+        });
+
+        AuthenticationTokenProvider? cred = config.GetCredential("TestClient:Credential");
+
+        Assert.That(cred, Is.Null);
+    }
+
+    [Test]
+    public void GetCredential_NonApiKeySource_NoResolvers_BuiltInDoesNotFire()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "TokenCredential",
+            ["TestClient:Credential:Key"] = "secret-key",
+        });
+
+        AuthenticationTokenProvider? cred = config.GetCredential("TestClient:Credential");
+
+        Assert.That(cred, Is.Null);
+    }
+
+    [Test]
+    public void GetCredential_ApiKeySource_CustomResolverInterceptsBeforeBuiltIn()
+    {
+        // Customer resolver matches ApiKey first; built-in must not run when a
+        // customer resolver claims the section.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "secret-key",
+        });
+
+        var customer = new ScopedRecordingResolver("ApiKey", "customer");
+
+        AuthenticationTokenProvider? cred = config.GetCredential("TestClient:Credential", customer);
+
+        Assert.That(cred, Is.SameAs(customer.LastProvider));
+        Assert.That(cred, Is.Not.InstanceOf<ApiKeyTokenProvider>());
+    }
+
+    [Test]
+    public void GetCredential_ApiKeySource_FallsThroughCustomerResolverToBuiltIn()
+    {
+        // Customer resolver does not match ApiKey -> built-in fallback claims it.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "secret-key",
+        });
+
+        var nonMatching = new ScopedRecordingResolver("Other", "nope");
+
+        AuthenticationTokenProvider? cred = config.GetCredential("TestClient:Credential", nonMatching);
+
+        Assert.That(cred, Is.InstanceOf<ApiKeyTokenProvider>());
+    }
+
+    [Test]
+    public void GetCredential_ApiKeySource_RepeatedCalls_ReturnSameInstance()
+    {
+        // The built-in resolver is a process-wide singleton, so repeated
+        // resolutions of the same ApiKey section share one cached provider.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "secret-key",
+        });
+
+        AuthenticationTokenProvider? a = config.GetCredential("TestClient:Credential");
+        AuthenticationTokenProvider? b = config.GetCredential("TestClient:Credential");
+
+        Assert.That(a, Is.Not.Null);
+        Assert.That(b, Is.SameAs(a));
+    }
+
+    [Test]
+    public void GetCredential_ApiKeySource_ConfigureOverridesAppliedBeforeBuiltIn()
+    {
+        // ConfigureOverrides must apply to the section the built-in sees so a
+        // caller can mutate the inline Key without touching the underlying config.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "original",
+        });
+
+        AuthenticationTokenProvider? cred = config.GetCredential(
+            "TestClient:Credential",
+            Array.Empty<CredentialResolver>(),
+            section => section["Key"] = "override");
+
+        Assert.That(cred, Is.InstanceOf<ApiKeyTokenProvider>());
+        AuthenticationToken token = cred!.GetToken(
+            new GetTokenOptions(new Dictionary<string, object>
+            {
+                { GetTokenOptions.ScopesPropertyName, new[] { "ignored" } }
+            }),
+            default);
+        Assert.That(token.TokenValue, Is.EqualTo("override"));
+    }
+
+    [Test]
+    public void GetClientSettings_ApiKeySource_WithEmptyResolverChain_AutoFillsCredentialProvider()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Endpoint"] = "https://example.com",
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "secret-key",
+        });
+
+        TestClientSettings settings = config.GetClientSettings<TestClientSettings>(
+            "TestClient",
+            Array.Empty<CredentialResolver>());
+
+        Assert.That(settings.CredentialProvider, Is.InstanceOf<ApiKeyTokenProvider>());
+    }
+
+    [Test]
+    public void DI_AddClient_ApiKeySource_NoCustomResolvers_BuiltInAutoFills()
+    {
+        // Real-world non-branded OpenAI scenario: customer registers a client
+        // with an ApiKey config and never registers any CredentialResolver.
+        // Built-in fallback must populate CredentialProvider.
+        var builder = Host.CreateEmptyApplicationBuilder(null);
+        builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["TestClient:Endpoint"] = "https://example.com",
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "secret-key",
+        });
+
+        builder.AddClient<TestClient, TestClientSettings>("TestClient");
+
+        using IHost host = builder.Build();
+        TestClient client = host.Services.GetRequiredService<TestClient>();
+
+        Assert.That(client.Settings.CredentialProvider, Is.InstanceOf<ApiKeyTokenProvider>());
+    }
+
     private sealed class MatchAllNamedAResolver : CredentialResolver
     {
         public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)

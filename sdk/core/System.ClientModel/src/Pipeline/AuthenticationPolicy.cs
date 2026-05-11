@@ -65,11 +65,11 @@ public abstract class AuthenticationPolicy : PipelinePolicy
 
         if (settings.CredentialProvider is AuthenticationTokenProvider apiKeyProvider)
         {
-            if (scope is not null)
-            {
-                throw new InvalidOperationException("Scope is not applicable for API key authentication.");
-            }
-
+            // Scope is meaningless for API-key auth; silently ignore any value
+            // present under AdditionalProperties so that callers using the
+            // built-in resolver chain (which auto-fills CredentialProvider with
+            // an ApiKeyTokenProvider for inline ApiKey sections) don't have
+            // their config rejected just because Scope happens to be set.
             GetTokenOptions options = new(new Dictionary<string, object>
             {
                 // TokenCredential requires at least one scope, so we provide a dummy value

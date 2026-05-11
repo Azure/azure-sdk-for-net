@@ -1,14 +1,14 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
+## 1.12.0 (2026-05-12)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- `CredentialResolverEngine` now applies a built-in API-key fallback after caller-supplied resolvers: configuration sections with `CredentialSource: ApiKey` (or its alias `ApiKeyCredential`) and a non-empty `Key` resolve to an `AuthenticationTokenProvider` that returns the configured key as the access-token value. Custom `CredentialResolver` instances run first and may intercept the section (e.g., a vault-backed key lookup).
 
 ### Other Changes
+
+- `AuthenticationPolicy.Create` no longer throws `InvalidOperationException` when an API-key configuration carries a stray `Scope` value under `AdditionalProperties` while `CredentialProvider` is set. Scope is silently ignored for API-key authentication, which keeps configurations compatible with the new built-in API-key resolver fallback.
 
 ## 1.11.0 (2026-05-05)
 
