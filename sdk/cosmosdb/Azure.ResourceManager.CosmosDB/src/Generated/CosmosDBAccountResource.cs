@@ -2909,7 +2909,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The notebook workspace to create for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<NotebookWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, NotebookWorkspaceName notebookWorkspaceName, NotebookWorkspaceCreateUpdateParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NotebookWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, NotebookWorkspaceName notebookWorkspaceName, NotebookWorkspaceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2921,7 +2921,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notebookWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, notebookWorkspaceName.ToString(), NotebookWorkspaceCreateUpdateParameters.ToRequestContent(content), context);
+                HttpMessage message = _notebookWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, notebookWorkspaceName.ToString(), NotebookWorkspaceCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<NotebookWorkspaceResource> operation = new CosmosDBArmOperation<NotebookWorkspaceResource>(
                     new NotebookWorkspaceOperationSource(Client),
@@ -2969,7 +2969,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The notebook workspace to create for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<NotebookWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, NotebookWorkspaceName notebookWorkspaceName, NotebookWorkspaceCreateUpdateParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NotebookWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, NotebookWorkspaceName notebookWorkspaceName, NotebookWorkspaceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2981,7 +2981,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notebookWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, notebookWorkspaceName.ToString(), NotebookWorkspaceCreateUpdateParameters.ToRequestContent(content), context);
+                HttpMessage message = _notebookWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, notebookWorkspaceName.ToString(), NotebookWorkspaceCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<NotebookWorkspaceResource> operation = new CosmosDBArmOperation<NotebookWorkspaceResource>(
                     new NotebookWorkspaceOperationSource(Client),
@@ -3277,11 +3277,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets a collection of CopyJobs in the <see cref="CosmosDBAccountResource"/>. </summary>
-        /// <returns> An object representing collection of CopyJobs and their operations over a CopyJobResource. </returns>
-        public virtual CopyJobCollection GetCopyJobs()
+        /// <summary> Gets a collection of CosmosDBCopyJobs in the <see cref="CosmosDBAccountResource"/>. </summary>
+        /// <returns> An object representing collection of CosmosDBCopyJobs and their operations over a CosmosDBCopyJobResource. </returns>
+        public virtual CosmosDBCopyJobCollection GetCosmosDBCopyJobs()
         {
-            return GetCachedClient(client => new CopyJobCollection(client, Id));
+            return GetCachedClient(client => new CosmosDBCopyJobCollection(client, Id));
         }
 
         /// <summary> Get a Copy Job. </summary>
@@ -3290,11 +3290,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CopyJobResource>> GetCopyJobAsync(string jobName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBCopyJobResource>> GetCosmosDBCopyJobAsync(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            return await GetCopyJobs().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBCopyJobs().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Copy Job. </summary>
@@ -3303,11 +3303,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CopyJobResource> GetCopyJob(string jobName, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBCopyJobResource> GetCosmosDBCopyJob(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            return GetCopyJobs().Get(jobName, cancellationToken);
+            return GetCosmosDBCopyJobs().Get(jobName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CosmosDBGraphs in the <see cref="CosmosDBAccountResource"/>. </summary>

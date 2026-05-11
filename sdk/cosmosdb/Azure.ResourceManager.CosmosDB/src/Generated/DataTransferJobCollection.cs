@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<DataTransferJobResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string jobName, CreateJobRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataTransferJobResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string jobName, CosmosDBJobCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
             Argument.AssertNotNull(content, nameof(content));
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataTransferJobsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, CreateJobRequest.ToRequestContent(content), context);
+                HttpMessage message = _dataTransferJobsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, CosmosDBJobCreateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataTransferJobData> response = Response.FromValue(DataTransferJobData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<DataTransferJobResource> CreateOrUpdate(WaitUntil waitUntil, string jobName, CreateJobRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataTransferJobResource> CreateOrUpdate(WaitUntil waitUntil, string jobName, CosmosDBJobCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
             Argument.AssertNotNull(content, nameof(content));
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataTransferJobsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, CreateJobRequest.ToRequestContent(content), context);
+                HttpMessage message = _dataTransferJobsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, CosmosDBJobCreateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataTransferJobData> response = Response.FromValue(DataTransferJobData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

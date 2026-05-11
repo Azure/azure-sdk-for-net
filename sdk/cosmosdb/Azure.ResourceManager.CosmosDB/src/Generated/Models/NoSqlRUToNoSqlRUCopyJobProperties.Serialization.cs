@@ -14,7 +14,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Source SQL to Destination SQL copy job properties. </summary>
-    public partial class NoSqlRUToNoSqlRUCopyJobProperties : BaseCopyJobProperties, IJsonModel<NoSqlRUToNoSqlRUCopyJobProperties>
+    public partial class NoSqlRUToNoSqlRUCopyJobProperties : CosmosDBCopyJobBaseProperties, IJsonModel<NoSqlRUToNoSqlRUCopyJobProperties>
     {
         /// <summary> Initializes a new instance of <see cref="NoSqlRUToNoSqlRUCopyJobProperties"/> for deserialization. </summary>
         internal NoSqlRUToNoSqlRUCopyJobProperties()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BaseCopyJobProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CosmosDBCopyJobBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NoSqlRUToNoSqlRUCopyJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BaseCopyJobProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CosmosDBCopyJobBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NoSqlRUToNoSqlRUCopyJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

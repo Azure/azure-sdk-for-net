@@ -89,20 +89,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("previousCapacityMode"u8);
                 writer.WriteStringValue(PreviousCapacityMode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CapacityModeTransitionBeginTimestamp))
+            if (options.Format != "W" && Optional.IsDefined(CapacityModeTransitionBeganOn))
             {
                 writer.WritePropertyName("capacityModeTransitionBeginTimestamp"u8);
-                writer.WriteStringValue(CapacityModeTransitionBeginTimestamp.Value, "O");
+                writer.WriteStringValue(CapacityModeTransitionBeganOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CapacityModeTransitionEndTimestamp))
+            if (options.Format != "W" && Optional.IsDefined(CapacityModeTransitionEndedOn))
             {
                 writer.WritePropertyName("capacityModeTransitionEndTimestamp"u8);
-                writer.WriteStringValue(CapacityModeTransitionEndTimestamp.Value, "O");
+                writer.WriteStringValue(CapacityModeTransitionEndedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CapacityModeLastSuccessfulTransitionEndTimestamp))
+            if (options.Format != "W" && Optional.IsDefined(CapacityModeLastSuccessfulTransitionEndedOn))
             {
                 writer.WritePropertyName("capacityModeLastSuccessfulTransitionEndTimestamp"u8);
-                writer.WriteStringValue(CapacityModeLastSuccessfulTransitionEndTimestamp.Value, "O");
+                writer.WriteStringValue(CapacityModeLastSuccessfulTransitionEndedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -149,9 +149,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             CapacityModeTransitionStatus? capacityModeTransitionStatus = default;
             CapacityMode? currentCapacityMode = default;
             CapacityMode? previousCapacityMode = default;
-            DateTimeOffset? capacityModeTransitionBeginTimestamp = default;
-            DateTimeOffset? capacityModeTransitionEndTimestamp = default;
-            DateTimeOffset? capacityModeLastSuccessfulTransitionEndTimestamp = default;
+            DateTimeOffset? capacityModeTransitionBeganOn = default;
+            DateTimeOffset? capacityModeTransitionEndedOn = default;
+            DateTimeOffset? capacityModeLastSuccessfulTransitionEndedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    capacityModeTransitionBeginTimestamp = prop.Value.GetDateTimeOffset("O");
+                    capacityModeTransitionBeganOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("capacityModeTransitionEndTimestamp"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    capacityModeTransitionEndTimestamp = prop.Value.GetDateTimeOffset("O");
+                    capacityModeTransitionEndedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("capacityModeLastSuccessfulTransitionEndTimestamp"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    capacityModeLastSuccessfulTransitionEndTimestamp = prop.Value.GetDateTimeOffset("O");
+                    capacityModeLastSuccessfulTransitionEndedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -218,9 +218,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 capacityModeTransitionStatus,
                 currentCapacityMode,
                 previousCapacityMode,
-                capacityModeTransitionBeginTimestamp,
-                capacityModeTransitionEndTimestamp,
-                capacityModeLastSuccessfulTransitionEndTimestamp,
+                capacityModeTransitionBeganOn,
+                capacityModeTransitionEndedOn,
+                capacityModeLastSuccessfulTransitionEndedOn,
                 additionalBinaryDataProperties);
         }
     }

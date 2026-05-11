@@ -63,21 +63,21 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CopyJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="CosmosDBCopyJobResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCopyJobResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBCopyJobResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CopyJobResource"/> object. </returns>
-        public static CopyJobResource GetCopyJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBCopyJobResource"/> object. </returns>
+        public static CosmosDBCopyJobResource GetCosmosDBCopyJobResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCosmosDBArmClient(client).GetCopyJobResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBCopyJobResource(id);
         }
 
         /// <summary>

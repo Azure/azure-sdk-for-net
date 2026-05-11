@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="RetrieveThroughputProperties"/>. </summary>
         /// <param name="resourcePhysicalPartitionIds"> Array of PhysicalPartitionId objects. </param>
-        public RetrieveThroughputProperties(IList<PhysicalPartitionId> resourcePhysicalPartitionIds)
+        public RetrieveThroughputProperties(IList<CosmosDBPhysicalPartitionId> resourcePhysicalPartitionIds)
         {
             Resource = new RetrieveThroughputPropertiesResource(resourcePhysicalPartitionIds);
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Array of PhysicalPartitionId objects. </summary>
         [WirePath("resource.physicalPartitionIds")]
-        public IList<PhysicalPartitionId> ResourcePhysicalPartitionIds
+        public IList<CosmosDBPhysicalPartitionId> ResourcePhysicalPartitionIds
         {
             get
             {

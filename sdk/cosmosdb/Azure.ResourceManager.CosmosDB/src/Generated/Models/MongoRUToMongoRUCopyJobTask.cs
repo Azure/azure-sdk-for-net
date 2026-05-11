@@ -12,7 +12,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The MongoRUToMongoRUCopyJobTask. </summary>
-    public partial class MongoRUToMongoRUCopyJobTask : BaseCopyJobTask
+    public partial class MongoRUToMongoRUCopyJobTask : CosmosDBCopyJobBaseTask
     {
         /// <summary> Initializes a new instance of <see cref="MongoRUToMongoRUCopyJobTask"/>. </summary>
         /// <param name="source"> Source Mongo (RU) collection. </param>

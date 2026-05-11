@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("physicalPartitionIds"u8);
             writer.WriteStartArray();
-            foreach (PhysicalPartitionId item in PhysicalPartitionIds)
+            foreach (CosmosDBPhysicalPartitionId item in PhysicalPartitionIds)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -128,16 +128,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IList<PhysicalPartitionId> physicalPartitionIds = default;
+            IList<CosmosDBPhysicalPartitionId> physicalPartitionIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("physicalPartitionIds"u8))
                 {
-                    List<PhysicalPartitionId> array = new List<PhysicalPartitionId>();
+                    List<CosmosDBPhysicalPartitionId> array = new List<CosmosDBPhysicalPartitionId>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PhysicalPartitionId.DeserializePhysicalPartitionId(item, options));
+                        array.Add(CosmosDBPhysicalPartitionId.DeserializeCosmosDBPhysicalPartitionId(item, options));
                     }
                     physicalPartitionIds = array;
                     continue;

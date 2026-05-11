@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Gets the Options. </summary>
         [WirePath("properties.options")]
-        public CassandraViewGetPropertiesOptions Options
+        public CassandraViewConfig Options
         {
             get
             {

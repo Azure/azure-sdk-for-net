@@ -13,7 +13,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Source SQL to Destination SQL copy job properties. </summary>
-    public partial class NoSqlRUToNoSqlRUCopyJobProperties : BaseCopyJobProperties
+    public partial class NoSqlRUToNoSqlRUCopyJobProperties : CosmosDBCopyJobBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="NoSqlRUToNoSqlRUCopyJobProperties"/>. </summary>
         /// <param name="tasks"> Copy Job tasks. </param>

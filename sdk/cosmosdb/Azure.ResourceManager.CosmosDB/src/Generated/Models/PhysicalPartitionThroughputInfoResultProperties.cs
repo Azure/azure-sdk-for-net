@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Array of physical partition throughput info objects. </summary>
         [WirePath("resource.physicalPartitionThroughputInfo")]
-        public IList<PhysicalPartitionThroughputInfoResource> ResourcePhysicalPartitionThroughputInfo
+        public IList<CosmosDBPhysicalPartitionThroughputInfo> ResourcePhysicalPartitionThroughputInfo
         {
             get
             {

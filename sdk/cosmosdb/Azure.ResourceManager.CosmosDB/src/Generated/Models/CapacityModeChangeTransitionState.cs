@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="capacityModeTransitionStatus"> The transition status of capacity mode. </param>
         /// <param name="currentCapacityMode"> Indicates the current capacity mode of the account. </param>
         /// <param name="previousCapacityMode"> Indicates the previous capacity mode of the account before successful transition. </param>
-        /// <param name="capacityModeTransitionBeginTimestamp"> Begin time in UTC of the capacity mode change. </param>
-        /// <param name="capacityModeTransitionEndTimestamp"> End time in UTC of the capacity mode change. </param>
-        /// <param name="capacityModeLastSuccessfulTransitionEndTimestamp"> End time in UTC of the last successful capacity mode change. </param>
+        /// <param name="capacityModeTransitionBeganOn"> Begin time in UTC of the capacity mode change. </param>
+        /// <param name="capacityModeTransitionEndedOn"> End time in UTC of the capacity mode change. </param>
+        /// <param name="capacityModeLastSuccessfulTransitionEndedOn"> End time in UTC of the last successful capacity mode change. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityModeChangeTransitionState(CapacityModeTransitionStatus? capacityModeTransitionStatus, CapacityMode? currentCapacityMode, CapacityMode? previousCapacityMode, DateTimeOffset? capacityModeTransitionBeginTimestamp, DateTimeOffset? capacityModeTransitionEndTimestamp, DateTimeOffset? capacityModeLastSuccessfulTransitionEndTimestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapacityModeChangeTransitionState(CapacityModeTransitionStatus? capacityModeTransitionStatus, CapacityMode? currentCapacityMode, CapacityMode? previousCapacityMode, DateTimeOffset? capacityModeTransitionBeganOn, DateTimeOffset? capacityModeTransitionEndedOn, DateTimeOffset? capacityModeLastSuccessfulTransitionEndedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CapacityModeTransitionStatus = capacityModeTransitionStatus;
             CurrentCapacityMode = currentCapacityMode;
             PreviousCapacityMode = previousCapacityMode;
-            CapacityModeTransitionBeginTimestamp = capacityModeTransitionBeginTimestamp;
-            CapacityModeTransitionEndTimestamp = capacityModeTransitionEndTimestamp;
-            CapacityModeLastSuccessfulTransitionEndTimestamp = capacityModeLastSuccessfulTransitionEndTimestamp;
+            CapacityModeTransitionBeganOn = capacityModeTransitionBeganOn;
+            CapacityModeTransitionEndedOn = capacityModeTransitionEndedOn;
+            CapacityModeLastSuccessfulTransitionEndedOn = capacityModeLastSuccessfulTransitionEndedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Begin time in UTC of the capacity mode change. </summary>
         [WirePath("capacityModeTransitionBeginTimestamp")]
-        public DateTimeOffset? CapacityModeTransitionBeginTimestamp { get; }
+        public DateTimeOffset? CapacityModeTransitionBeganOn { get; }
 
         /// <summary> End time in UTC of the capacity mode change. </summary>
         [WirePath("capacityModeTransitionEndTimestamp")]
-        public DateTimeOffset? CapacityModeTransitionEndTimestamp { get; }
+        public DateTimeOffset? CapacityModeTransitionEndedOn { get; }
 
         /// <summary> End time in UTC of the last successful capacity mode change. </summary>
         [WirePath("capacityModeLastSuccessfulTransitionEndTimestamp")]
-        public DateTimeOffset? CapacityModeLastSuccessfulTransitionEndTimestamp { get; }
+        public DateTimeOffset? CapacityModeLastSuccessfulTransitionEndedOn { get; }
     }
 }

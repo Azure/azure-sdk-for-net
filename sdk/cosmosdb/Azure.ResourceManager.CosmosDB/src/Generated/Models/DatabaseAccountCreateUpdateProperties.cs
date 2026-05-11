@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Describe the level of detail with which queries are to be logged. </summary>
         [WirePath("diagnosticLogSettings.enableFullTextQuery")]
-        public EnableFullTextQuery? DiagnosticLogEnableFullTextQuery
+        public CosmosDBFullTextQueryState? DiagnosticLogEnableFullTextQuery
         {
             get
             {

@@ -10,57 +10,58 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The core properties of ARM resources. </summary>
-    public partial class ARMResourceProperties : IJsonModel<ARMResourceProperties>
+    public partial class ArmResourceProperties : IJsonModel<ArmResourceProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ARMResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ArmResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ARMResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeARMResourceProperties(document.RootElement, options);
+                        return DeserializeArmResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ARMResourceProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ARMResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ARMResourceProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ARMResourceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ArmResourceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ARMResourceProperties IPersistableModel<ARMResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ArmResourceProperties IPersistableModel<ArmResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ARMResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ArmResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ARMResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ArmResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -71,10 +72,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ARMResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ARMResourceProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmResourceProperties)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -136,24 +137,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ARMResourceProperties IJsonModel<ARMResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ArmResourceProperties IJsonModel<ArmResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ARMResourceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ArmResourceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ARMResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ARMResourceProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmResourceProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeARMResourceProperties(document.RootElement, options);
+            return DeserializeArmResourceProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ARMResourceProperties DeserializeARMResourceProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ArmResourceProperties DeserializeArmResourceProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string id = default;
             string name = default;
             string @type = default;
-            string location = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -185,7 +186,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -223,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ARMResourceProperties(
+            return new ArmResourceProperties(
                 id,
                 name,
                 @type,

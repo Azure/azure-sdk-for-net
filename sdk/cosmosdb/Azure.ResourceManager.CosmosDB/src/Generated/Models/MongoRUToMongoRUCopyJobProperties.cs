@@ -13,7 +13,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Source Mongo to Destination Mongo copy job properties. </summary>
-    public partial class MongoRUToMongoRUCopyJobProperties : BaseCopyJobProperties
+    public partial class MongoRUToMongoRUCopyJobProperties : CosmosDBCopyJobBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="MongoRUToMongoRUCopyJobProperties"/>. </summary>
         /// <param name="tasks"> Copy Job tasks. </param>

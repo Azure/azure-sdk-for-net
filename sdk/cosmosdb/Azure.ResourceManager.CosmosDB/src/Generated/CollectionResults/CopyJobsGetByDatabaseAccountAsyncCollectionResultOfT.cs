@@ -15,7 +15,7 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal partial class CopyJobsGetByDatabaseAccountAsyncCollectionResultOfT : AsyncPageable<CopyJobData>
+    internal partial class CopyJobsGetByDatabaseAccountAsyncCollectionResultOfT : AsyncPageable<CosmosDBCopyJobData>
     {
         private readonly CopyJobs _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CopyJobsGetByDatabaseAccountAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<CopyJobData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<CosmosDBCopyJobData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB
                     yield break;
                 }
                 CopyJobFeedResults result = CopyJobFeedResults.FromResponse(response);
-                yield return Page<CopyJobData>.FromValues((IReadOnlyList<CopyJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CosmosDBCopyJobData>.FromValues((IReadOnlyList<CosmosDBCopyJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

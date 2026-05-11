@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="resource"></param>
         /// <param name="options"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GraphResourceGetProperties(GraphResourceGetPropertiesResource resource, GraphResourceGetPropertiesOptions options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GraphResourceGetProperties(GraphResourceGetPropertiesResource resource, CosmosDBGraphConfig options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resource = resource;
             Options = options;
@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Gets the Options. </summary>
         [WirePath("options")]
-        public GraphResourceGetPropertiesOptions Options { get; }
+        public CosmosDBGraphConfig Options { get; }
 
         /// <summary> Name of the Cosmos DB Graph. </summary>
         [WirePath("resource.id")]
-        public string ResourceId
+        public string ResourceGraphName
         {
             get
             {
-                return Resource is null ? default : Resource.Id;
+                return Resource is null ? default : Resource.GraphName;
             }
         }
     }

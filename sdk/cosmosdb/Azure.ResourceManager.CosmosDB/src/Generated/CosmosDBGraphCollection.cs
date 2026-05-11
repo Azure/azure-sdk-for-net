@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<CosmosDBGraphResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string graphName, GraphResourceCreateUpdateParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CosmosDBGraphResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string graphName, CosmosDBGraphCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
             Argument.AssertNotNull(content, nameof(content));
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphResourcesRestClient.CreateCreateUpdateGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, GraphResourceCreateUpdateParameters.ToRequestContent(content), context);
+                HttpMessage message = _graphResourcesRestClient.CreateCreateUpdateGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, CosmosDBGraphCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBGraphResource> operation = new CosmosDBArmOperation<CosmosDBGraphResource>(
                     new CosmosDBGraphOperationSource(Client),
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<CosmosDBGraphResource> CreateOrUpdate(WaitUntil waitUntil, string graphName, GraphResourceCreateUpdateParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CosmosDBGraphResource> CreateOrUpdate(WaitUntil waitUntil, string graphName, CosmosDBGraphCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
             Argument.AssertNotNull(content, nameof(content));
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphResourcesRestClient.CreateCreateUpdateGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, GraphResourceCreateUpdateParameters.ToRequestContent(content), context);
+                HttpMessage message = _graphResourcesRestClient.CreateCreateUpdateGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, CosmosDBGraphCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBGraphResource> operation = new CosmosDBArmOperation<CosmosDBGraphResource>(
                     new CosmosDBGraphOperationSource(Client),

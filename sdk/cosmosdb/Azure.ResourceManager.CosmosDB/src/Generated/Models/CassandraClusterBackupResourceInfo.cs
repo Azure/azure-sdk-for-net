@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="CassandraClusterBackupResourceInfo"/>. </summary>
         /// <param name="backupId"> The unique identifier of backup. </param>
         /// <param name="backupState"> The current state of the backup. </param>
-        /// <param name="backupStartTimestamp"> The time at which the backup process begins. </param>
-        /// <param name="backupStopTimestamp"> The time at which the backup process ends. </param>
-        /// <param name="backupExpiryTimestamp"> The time at which the backup will expire. </param>
+        /// <param name="backupStartedOn"> The time at which the backup process begins. </param>
+        /// <param name="backupStoppedOn"> The time at which the backup process ends. </param>
+        /// <param name="backupExpiresOn"> The time at which the backup will expire. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraClusterBackupResourceInfo(string backupId, CassandraClusterBackupState? backupState, DateTimeOffset? backupStartTimestamp, DateTimeOffset? backupStopTimestamp, DateTimeOffset? backupExpiryTimestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CassandraClusterBackupResourceInfo(string backupId, CassandraClusterBackupState? backupState, DateTimeOffset? backupStartedOn, DateTimeOffset? backupStoppedOn, DateTimeOffset? backupExpiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupId = backupId;
             BackupState = backupState;
-            BackupStartTimestamp = backupStartTimestamp;
-            BackupStopTimestamp = backupStopTimestamp;
-            BackupExpiryTimestamp = backupExpiryTimestamp;
+            BackupStartedOn = backupStartedOn;
+            BackupStoppedOn = backupStoppedOn;
+            BackupExpiresOn = backupExpiresOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The time at which the backup process begins. </summary>
         [WirePath("backupStartTimestamp")]
-        public DateTimeOffset? BackupStartTimestamp { get; }
+        public DateTimeOffset? BackupStartedOn { get; }
 
         /// <summary> The time at which the backup process ends. </summary>
         [WirePath("backupStopTimestamp")]
-        public DateTimeOffset? BackupStopTimestamp { get; }
+        public DateTimeOffset? BackupStoppedOn { get; }
 
         /// <summary> The time at which the backup will expire. </summary>
         [WirePath("backupExpiryTimestamp")]
-        public DateTimeOffset? BackupExpiryTimestamp { get; }
+        public DateTimeOffset? BackupExpiresOn { get; }
     }
 }

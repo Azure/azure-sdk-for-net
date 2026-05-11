@@ -18,26 +18,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GraphResource"/>. </summary>
-        /// <param name="id"> Name of the Cosmos DB Graph. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public GraphResource(string id)
+        /// <param name="graphName"> Name of the Cosmos DB Graph. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
+        public GraphResource(string graphName)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(graphName, nameof(graphName));
 
-            Id = id;
+            GraphName = graphName;
         }
 
         /// <summary> Initializes a new instance of <see cref="GraphResource"/>. </summary>
-        /// <param name="id"> Name of the Cosmos DB Graph. </param>
+        /// <param name="graphName"> Name of the Cosmos DB Graph. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GraphResource(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GraphResource(string graphName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
+            GraphName = graphName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the Cosmos DB Graph. </summary>
         [WirePath("id")]
-        public string Id { get; set; }
+        public string GraphName { get; set; }
     }
 }

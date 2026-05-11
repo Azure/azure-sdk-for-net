@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -102,11 +101,8 @@ namespace Azure.ResourceManager.CosmosDB
             return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetCassandraCluster(clusterName, cancellationToken);
         }
 
-        /// <summary>
-        /// Companion accessor that mirrors the generator-private GetMockableCosmosDBTenantResource helper.
-        /// Required to delegate the back-compat extension methods below to the mockable.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        // Companion accessor that mirrors the generator-private GetMockableCosmosDBTenantResource helper.
+        // Required to delegate the back-compat extension methods below to the mockable.
         private static Mocking.MockableCosmosDBTenantResource GetMockableCosmosDBTenantResourceForCustom(TenantResource tenantResource)
         {
             return tenantResource.GetCachedClient(client => new Mocking.MockableCosmosDBTenantResource(client, tenantResource.Id));

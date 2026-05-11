@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="PhysicalPartitionThroughputInfoProperties"/>. </summary>
         internal PhysicalPartitionThroughputInfoProperties()
         {
-            PhysicalPartitionThroughputInfo = new ChangeTrackingList<PhysicalPartitionThroughputInfoResource>();
+            PhysicalPartitionThroughputInfo = new ChangeTrackingList<CosmosDBPhysicalPartitionThroughputInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PhysicalPartitionThroughputInfoProperties"/>. </summary>
         /// <param name="physicalPartitionThroughputInfo"> Array of physical partition throughput info objects. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PhysicalPartitionThroughputInfoProperties(IList<PhysicalPartitionThroughputInfoResource> physicalPartitionThroughputInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PhysicalPartitionThroughputInfoProperties(IList<CosmosDBPhysicalPartitionThroughputInfo> physicalPartitionThroughputInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PhysicalPartitionThroughputInfo = physicalPartitionThroughputInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Array of physical partition throughput info objects. </summary>
         [WirePath("physicalPartitionThroughputInfo")]
-        public IList<PhysicalPartitionThroughputInfoResource> PhysicalPartitionThroughputInfo { get; }
+        public IList<CosmosDBPhysicalPartitionThroughputInfo> PhysicalPartitionThroughputInfo { get; }
     }
 }

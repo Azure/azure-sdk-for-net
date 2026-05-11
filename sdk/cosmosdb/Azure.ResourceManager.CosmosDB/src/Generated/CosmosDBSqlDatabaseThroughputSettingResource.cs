@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The parameters to provide for redistributing throughput for the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<PhysicalPartitionThroughputInfoResult>> SqlDatabaseRedistributeThroughputAsync(WaitUntil waitUntil, RedistributeThroughputParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CosmosDBPhysicalPartitionThroughputResult>> SqlDatabaseRedistributeThroughputAsync(WaitUntil waitUntil, RedistributeThroughputContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -565,10 +565,10 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateSqlDatabaseRedistributeThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, RedistributeThroughputParameters.ToRequestContent(content), context);
+                HttpMessage message = _sqlResourcesRestClient.CreateSqlDatabaseRedistributeThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, RedistributeThroughputContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CosmosDBArmOperation<PhysicalPartitionThroughputInfoResult> operation = new CosmosDBArmOperation<PhysicalPartitionThroughputInfoResult>(
-                    new PhysicalPartitionThroughputInfoResultOperationSource(),
+                CosmosDBArmOperation<CosmosDBPhysicalPartitionThroughputResult> operation = new CosmosDBArmOperation<CosmosDBPhysicalPartitionThroughputResult>(
+                    new CosmosDBPhysicalPartitionThroughputResultOperationSource(),
                     _sqlResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The parameters to provide for redistributing throughput for the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<PhysicalPartitionThroughputInfoResult> SqlDatabaseRedistributeThroughput(WaitUntil waitUntil, RedistributeThroughputParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CosmosDBPhysicalPartitionThroughputResult> SqlDatabaseRedistributeThroughput(WaitUntil waitUntil, RedistributeThroughputContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -624,10 +624,10 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateSqlDatabaseRedistributeThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, RedistributeThroughputParameters.ToRequestContent(content), context);
+                HttpMessage message = _sqlResourcesRestClient.CreateSqlDatabaseRedistributeThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, RedistributeThroughputContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CosmosDBArmOperation<PhysicalPartitionThroughputInfoResult> operation = new CosmosDBArmOperation<PhysicalPartitionThroughputInfoResult>(
-                    new PhysicalPartitionThroughputInfoResultOperationSource(),
+                CosmosDBArmOperation<CosmosDBPhysicalPartitionThroughputResult> operation = new CosmosDBArmOperation<CosmosDBPhysicalPartitionThroughputResult>(
+                    new CosmosDBPhysicalPartitionThroughputResultOperationSource(),
                     _sqlResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The parameters to provide for retrieving throughput distribution for the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<PhysicalPartitionThroughputInfoResult>> SqlDatabaseRetrieveThroughputDistributionAsync(WaitUntil waitUntil, RetrieveThroughputParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CosmosDBPhysicalPartitionThroughputResult>> SqlDatabaseRetrieveThroughputDistributionAsync(WaitUntil waitUntil, RetrieveThroughputContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -683,10 +683,10 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateSqlDatabaseRetrieveThroughputDistributionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, RetrieveThroughputParameters.ToRequestContent(content), context);
+                HttpMessage message = _sqlResourcesRestClient.CreateSqlDatabaseRetrieveThroughputDistributionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, RetrieveThroughputContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CosmosDBArmOperation<PhysicalPartitionThroughputInfoResult> operation = new CosmosDBArmOperation<PhysicalPartitionThroughputInfoResult>(
-                    new PhysicalPartitionThroughputInfoResultOperationSource(),
+                CosmosDBArmOperation<CosmosDBPhysicalPartitionThroughputResult> operation = new CosmosDBArmOperation<CosmosDBPhysicalPartitionThroughputResult>(
+                    new CosmosDBPhysicalPartitionThroughputResultOperationSource(),
                     _sqlResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The parameters to provide for retrieving throughput distribution for the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<PhysicalPartitionThroughputInfoResult> SqlDatabaseRetrieveThroughputDistribution(WaitUntil waitUntil, RetrieveThroughputParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CosmosDBPhysicalPartitionThroughputResult> SqlDatabaseRetrieveThroughputDistribution(WaitUntil waitUntil, RetrieveThroughputContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -742,10 +742,10 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateSqlDatabaseRetrieveThroughputDistributionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, RetrieveThroughputParameters.ToRequestContent(content), context);
+                HttpMessage message = _sqlResourcesRestClient.CreateSqlDatabaseRetrieveThroughputDistributionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, RetrieveThroughputContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CosmosDBArmOperation<PhysicalPartitionThroughputInfoResult> operation = new CosmosDBArmOperation<PhysicalPartitionThroughputInfoResult>(
-                    new PhysicalPartitionThroughputInfoResultOperationSource(),
+                CosmosDBArmOperation<CosmosDBPhysicalPartitionThroughputResult> operation = new CosmosDBArmOperation<CosmosDBPhysicalPartitionThroughputResult>(
+                    new CosmosDBPhysicalPartitionThroughputResultOperationSource(),
                     _sqlResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

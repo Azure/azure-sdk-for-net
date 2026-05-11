@@ -14,7 +14,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Source Azure Blob Storage to Destination Cassandra copy job properties. </summary>
-    public partial class BlobToCassandraRUCopyJobProperties : BaseCopyJobProperties, IJsonModel<BlobToCassandraRUCopyJobProperties>
+    public partial class BlobToCassandraRUCopyJobProperties : CosmosDBCopyJobBaseProperties, IJsonModel<BlobToCassandraRUCopyJobProperties>
     {
         /// <summary> Initializes a new instance of <see cref="BlobToCassandraRUCopyJobProperties"/> for deserialization. </summary>
         internal BlobToCassandraRUCopyJobProperties()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BaseCopyJobProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CosmosDBCopyJobBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BlobToCassandraRUCopyJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BaseCopyJobProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CosmosDBCopyJobBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BlobToCassandraRUCopyJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

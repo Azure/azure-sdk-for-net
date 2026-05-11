@@ -14,51 +14,51 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The resource model definition for a ARM proxy resource. It will have everything other than required location and tags. </summary>
-    public partial class ARMProxyResource : IJsonModel<ARMProxyResource>
+    public partial class ArmProxyResource : IJsonModel<ArmProxyResource>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ARMProxyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ArmProxyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ARMProxyResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmProxyResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeARMProxyResource(document.RootElement, options);
+                        return DeserializeArmProxyResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ARMProxyResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmProxyResource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ARMProxyResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmProxyResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ARMProxyResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmProxyResource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ARMProxyResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ArmProxyResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ARMProxyResource IPersistableModel<ARMProxyResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ArmProxyResource IPersistableModel<ArmProxyResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ARMProxyResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ArmProxyResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ARMProxyResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ArmProxyResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ARMProxyResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmProxyResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ARMProxyResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmProxyResource)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ARMProxyResource IJsonModel<ARMProxyResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ArmProxyResource IJsonModel<ArmProxyResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ARMProxyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ArmProxyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ARMProxyResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmProxyResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ARMProxyResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmProxyResource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeARMProxyResource(document.RootElement, options);
+            return DeserializeArmProxyResource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ARMProxyResource DeserializeARMProxyResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static ArmProxyResource DeserializeArmProxyResource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ARMProxyResource(id, name, @type, additionalBinaryDataProperties);
+            return new ArmProxyResource(id, name, @type, additionalBinaryDataProperties);
         }
     }
 }

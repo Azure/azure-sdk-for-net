@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="targetPhysicalPartitionThroughputInfo"> Array of PhysicalPartitionThroughputInfoResource objects. </param>
         /// <param name="sourcePhysicalPartitionThroughputInfo"> Array of PhysicalPartitionThroughputInfoResource objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetPhysicalPartitionThroughputInfo"/> or <paramref name="sourcePhysicalPartitionThroughputInfo"/> is null. </exception>
-        public RedistributeThroughputPropertiesResource(ThroughputPolicyType throughputPolicy, IEnumerable<PhysicalPartitionThroughputInfoResource> targetPhysicalPartitionThroughputInfo, IEnumerable<PhysicalPartitionThroughputInfoResource> sourcePhysicalPartitionThroughputInfo)
+        public RedistributeThroughputPropertiesResource(ThroughputPolicyType throughputPolicy, IEnumerable<CosmosDBPhysicalPartitionThroughputInfo> targetPhysicalPartitionThroughputInfo, IEnumerable<CosmosDBPhysicalPartitionThroughputInfo> sourcePhysicalPartitionThroughputInfo)
         {
             Argument.AssertNotNull(targetPhysicalPartitionThroughputInfo, nameof(targetPhysicalPartitionThroughputInfo));
             Argument.AssertNotNull(sourcePhysicalPartitionThroughputInfo, nameof(sourcePhysicalPartitionThroughputInfo));
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="targetPhysicalPartitionThroughputInfo"> Array of PhysicalPartitionThroughputInfoResource objects. </param>
         /// <param name="sourcePhysicalPartitionThroughputInfo"> Array of PhysicalPartitionThroughputInfoResource objects. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedistributeThroughputPropertiesResource(ThroughputPolicyType throughputPolicy, IList<PhysicalPartitionThroughputInfoResource> targetPhysicalPartitionThroughputInfo, IList<PhysicalPartitionThroughputInfoResource> sourcePhysicalPartitionThroughputInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedistributeThroughputPropertiesResource(ThroughputPolicyType throughputPolicy, IList<CosmosDBPhysicalPartitionThroughputInfo> targetPhysicalPartitionThroughputInfo, IList<CosmosDBPhysicalPartitionThroughputInfo> sourcePhysicalPartitionThroughputInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ThroughputPolicy = throughputPolicy;
             TargetPhysicalPartitionThroughputInfo = targetPhysicalPartitionThroughputInfo;
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Array of PhysicalPartitionThroughputInfoResource objects. </summary>
         [WirePath("targetPhysicalPartitionThroughputInfo")]
-        public IList<PhysicalPartitionThroughputInfoResource> TargetPhysicalPartitionThroughputInfo { get; }
+        public IList<CosmosDBPhysicalPartitionThroughputInfo> TargetPhysicalPartitionThroughputInfo { get; }
 
         /// <summary> Array of PhysicalPartitionThroughputInfoResource objects. </summary>
         [WirePath("sourcePhysicalPartitionThroughputInfo")]
-        public IList<PhysicalPartitionThroughputInfoResource> SourcePhysicalPartitionThroughputInfo { get; }
+        public IList<CosmosDBPhysicalPartitionThroughputInfo> SourcePhysicalPartitionThroughputInfo { get; }
     }
 }

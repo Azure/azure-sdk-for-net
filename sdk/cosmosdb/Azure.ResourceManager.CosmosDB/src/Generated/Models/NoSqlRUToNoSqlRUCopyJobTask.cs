@@ -12,7 +12,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The NoSqlRUToNoSqlRUCopyJobTask. </summary>
-    public partial class NoSqlRUToNoSqlRUCopyJobTask : BaseCopyJobTask
+    public partial class NoSqlRUToNoSqlRUCopyJobTask : CosmosDBCopyJobBaseTask
     {
         /// <summary> Initializes a new instance of <see cref="NoSqlRUToNoSqlRUCopyJobTask"/>. </summary>
         /// <param name="source"> Source SQL container. </param>

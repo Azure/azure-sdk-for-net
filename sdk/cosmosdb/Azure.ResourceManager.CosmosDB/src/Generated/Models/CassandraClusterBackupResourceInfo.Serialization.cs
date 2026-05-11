@@ -92,20 +92,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("backupState"u8);
                 writer.WriteStringValue(BackupState.Value.ToString());
             }
-            if (Optional.IsDefined(BackupStartTimestamp))
+            if (Optional.IsDefined(BackupStartedOn))
             {
                 writer.WritePropertyName("backupStartTimestamp"u8);
-                writer.WriteStringValue(BackupStartTimestamp.Value, "O");
+                writer.WriteStringValue(BackupStartedOn.Value, "O");
             }
-            if (Optional.IsDefined(BackupStopTimestamp))
+            if (Optional.IsDefined(BackupStoppedOn))
             {
                 writer.WritePropertyName("backupStopTimestamp"u8);
-                writer.WriteStringValue(BackupStopTimestamp.Value, "O");
+                writer.WriteStringValue(BackupStoppedOn.Value, "O");
             }
-            if (Optional.IsDefined(BackupExpiryTimestamp))
+            if (Optional.IsDefined(BackupExpiresOn))
             {
                 writer.WritePropertyName("backupExpiryTimestamp"u8);
-                writer.WriteStringValue(BackupExpiryTimestamp.Value, "O");
+                writer.WriteStringValue(BackupExpiresOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -151,9 +151,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             string backupId = default;
             CassandraClusterBackupState? backupState = default;
-            DateTimeOffset? backupStartTimestamp = default;
-            DateTimeOffset? backupStopTimestamp = default;
-            DateTimeOffset? backupExpiryTimestamp = default;
+            DateTimeOffset? backupStartedOn = default;
+            DateTimeOffset? backupStoppedOn = default;
+            DateTimeOffset? backupExpiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    backupStartTimestamp = prop.Value.GetDateTimeOffset("O");
+                    backupStartedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("backupStopTimestamp"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    backupStopTimestamp = prop.Value.GetDateTimeOffset("O");
+                    backupStoppedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("backupExpiryTimestamp"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    backupExpiryTimestamp = prop.Value.GetDateTimeOffset("O");
+                    backupExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -206,9 +206,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CassandraClusterBackupResourceInfo(
                 backupId,
                 backupState,
-                backupStartTimestamp,
-                backupStopTimestamp,
-                backupExpiryTimestamp,
+                backupStartedOn,
+                backupStoppedOn,
+                backupExpiresOn,
                 additionalBinaryDataProperties);
         }
     }

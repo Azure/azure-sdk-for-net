@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 throw new FormatException($"The model {nameof(GraphResource)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            writer.WriteStringValue(GraphName);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            string id = default;
+            string graphName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    graphName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GraphResource(id, additionalBinaryDataProperties);
+            return new GraphResource(graphName, additionalBinaryDataProperties);
         }
     }
 }

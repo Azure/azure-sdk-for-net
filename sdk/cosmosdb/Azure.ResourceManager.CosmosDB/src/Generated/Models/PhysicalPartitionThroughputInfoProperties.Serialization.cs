@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("physicalPartitionThroughputInfo"u8);
                 writer.WriteStartArray();
-                foreach (PhysicalPartitionThroughputInfoResource item in PhysicalPartitionThroughputInfo)
+                foreach (CosmosDBPhysicalPartitionThroughputInfo item in PhysicalPartitionThroughputInfo)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IList<PhysicalPartitionThroughputInfoResource> physicalPartitionThroughputInfo = default;
+            IList<CosmosDBPhysicalPartitionThroughputInfo> physicalPartitionThroughputInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<PhysicalPartitionThroughputInfoResource> array = new List<PhysicalPartitionThroughputInfoResource>();
+                    List<CosmosDBPhysicalPartitionThroughputInfo> array = new List<CosmosDBPhysicalPartitionThroughputInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PhysicalPartitionThroughputInfoResource.DeserializePhysicalPartitionThroughputInfoResource(item, options));
+                        array.Add(CosmosDBPhysicalPartitionThroughputInfo.DeserializeCosmosDBPhysicalPartitionThroughputInfo(item, options));
                     }
                     physicalPartitionThroughputInfo = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PhysicalPartitionThroughputInfoProperties(physicalPartitionThroughputInfo ?? new ChangeTrackingList<PhysicalPartitionThroughputInfoResource>(), additionalBinaryDataProperties);
+            return new PhysicalPartitionThroughputInfoProperties(physicalPartitionThroughputInfo ?? new ChangeTrackingList<CosmosDBPhysicalPartitionThroughputInfo>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="DiagnosticLogSettings"/>. </summary>
         /// <param name="enableFullTextQuery"> Describe the level of detail with which queries are to be logged. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticLogSettings(EnableFullTextQuery? enableFullTextQuery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticLogSettings(CosmosDBFullTextQueryState? enableFullTextQuery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnableFullTextQuery = enableFullTextQuery;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Describe the level of detail with which queries are to be logged. </summary>
         [WirePath("enableFullTextQuery")]
-        public EnableFullTextQuery? EnableFullTextQuery { get; set; }
+        public CosmosDBFullTextQueryState? EnableFullTextQuery { get; set; }
     }
 }

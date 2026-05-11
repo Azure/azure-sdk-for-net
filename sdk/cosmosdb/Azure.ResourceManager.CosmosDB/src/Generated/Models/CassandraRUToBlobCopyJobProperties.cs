@@ -13,7 +13,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Source Cassandra to Destination Azure Blob Storage copy job properties. </summary>
-    public partial class CassandraRUToBlobCopyJobProperties : BaseCopyJobProperties
+    public partial class CassandraRUToBlobCopyJobProperties : CosmosDBCopyJobBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="CassandraRUToBlobCopyJobProperties"/>. </summary>
         /// <param name="destinationDetailsEndpointUri"> Azure Blob container endpoint. </param>

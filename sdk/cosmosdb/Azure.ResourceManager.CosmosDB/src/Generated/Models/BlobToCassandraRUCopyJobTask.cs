@@ -12,7 +12,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The BlobToCassandraRUCopyJobTask. </summary>
-    public partial class BlobToCassandraRUCopyJobTask : BaseCopyJobTask
+    public partial class BlobToCassandraRUCopyJobTask : CosmosDBCopyJobBaseTask
     {
         /// <summary> Initializes a new instance of <see cref="BlobToCassandraRUCopyJobTask"/>. </summary>
         /// <param name="sourceContainerName"> Azure Blob container. </param>

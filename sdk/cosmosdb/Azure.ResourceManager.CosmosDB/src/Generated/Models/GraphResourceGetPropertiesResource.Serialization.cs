@@ -107,13 +107,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            string id = default;
+            string graphName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    graphName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GraphResourceGetPropertiesResource(id, additionalBinaryDataProperties);
+            return new GraphResourceGetPropertiesResource(graphName, additionalBinaryDataProperties);
         }
     }
 }

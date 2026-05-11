@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("nodeSku"u8);
                 writer.WriteStringValue(NodeSku);
             }
-            if (Optional.IsDefined(AvailabilityZone))
+            if (Optional.IsDefined(IsAvailabilityZoneEnabled))
             {
                 writer.WritePropertyName("availabilityZone"u8);
-                writer.WriteBooleanValue(AvailabilityZone.Value);
+                writer.WriteBooleanValue(IsAvailabilityZoneEnabled.Value);
             }
             if (Optional.IsDefined(AllocationState))
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             int? replicationFactor = default;
             int? nodeCount = default;
             string nodeSku = default;
-            bool? availabilityZone = default;
+            bool? isAvailabilityZoneEnabled = default;
             AllocationState? allocationState = default;
             CassandraClusterType? clusterType = default;
             ResponseError provisionError = default;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    availabilityZone = prop.Value.GetBoolean();
+                    isAvailabilityZoneEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("allocationState"u8))
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 replicationFactor,
                 nodeCount,
                 nodeSku,
-                availabilityZone,
+                isAvailabilityZoneEnabled,
                 allocationState,
                 clusterType,
                 provisionError,

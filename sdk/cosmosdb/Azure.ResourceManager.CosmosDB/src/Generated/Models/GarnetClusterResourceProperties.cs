@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="replicationFactor"> Number of copies of data maintained by the cluster. </param>
         /// <param name="nodeCount"> Number of nodes. </param>
         /// <param name="nodeSku"> Virtual Machine SKU used for clusters. Default value is Standard_DS14_v2. </param>
-        /// <param name="availabilityZone"> If the data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the garnet cluster virtual machines. </param>
+        /// <param name="isAvailabilityZoneEnabled"> If the data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the garnet cluster virtual machines. </param>
         /// <param name="allocationState"> Allocation state of the cluster and data center resources. Active implies the virtual machines of the cluster are allocated, deallocated implies virtual machines and resources are deallocated. </param>
         /// <param name="clusterType"> Type of the cluster. If set to Production, some operations might not be permitted on cluster. </param>
         /// <param name="provisionError"> Error related to resource provisioning. </param>
         /// <param name="extensions"> Extensions to be added or updated on cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GarnetClusterResourceProperties(GarnetCacheProvisioningState? provisioningState, ResourceIdentifier subnetId, IReadOnlyList<GarnetClusterResourcePropertiesEndPointsItem> endPoints, int? replicationFactor, int? nodeCount, string nodeSku, bool? availabilityZone, AllocationState? allocationState, CassandraClusterType? clusterType, ResponseError provisionError, IList<string> extensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GarnetClusterResourceProperties(GarnetCacheProvisioningState? provisioningState, ResourceIdentifier subnetId, IReadOnlyList<GarnetClusterResourcePropertiesEndPointsItem> endPoints, int? replicationFactor, int? nodeCount, string nodeSku, bool? isAvailabilityZoneEnabled, AllocationState? allocationState, CassandraClusterType? clusterType, ResponseError provisionError, IList<string> extensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             SubnetId = subnetId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ReplicationFactor = replicationFactor;
             NodeCount = nodeCount;
             NodeSku = nodeSku;
-            AvailabilityZone = availabilityZone;
+            IsAvailabilityZoneEnabled = isAvailabilityZoneEnabled;
             AllocationState = allocationState;
             ClusterType = clusterType;
             ProvisionError = provisionError;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> If the data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the garnet cluster virtual machines. </summary>
         [WirePath("availabilityZone")]
-        public bool? AvailabilityZone { get; set; }
+        public bool? IsAvailabilityZoneEnabled { get; set; }
 
         /// <summary> Allocation state of the cluster and data center resources. Active implies the virtual machines of the cluster are allocated, deallocated implies virtual machines and resources are deallocated. </summary>
         [WirePath("allocationState")]

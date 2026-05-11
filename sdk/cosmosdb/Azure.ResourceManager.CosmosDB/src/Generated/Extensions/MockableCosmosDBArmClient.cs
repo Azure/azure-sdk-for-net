@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             return new CosmosDBAccountResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CopyJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBCopyJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CopyJobResource"/> object. </returns>
-        public virtual CopyJobResource GetCopyJobResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBCopyJobResource"/> object. </returns>
+        public virtual CosmosDBCopyJobResource GetCosmosDBCopyJobResource(ResourceIdentifier id)
         {
-            CopyJobResource.ValidateResourceId(id);
-            return new CopyJobResource(Client, id);
+            CosmosDBCopyJobResource.ValidateResourceId(id);
+            return new CosmosDBCopyJobResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="CosmosDBGraphResource"/> along with the instance operations that can be performed on it but with no data. </summary>

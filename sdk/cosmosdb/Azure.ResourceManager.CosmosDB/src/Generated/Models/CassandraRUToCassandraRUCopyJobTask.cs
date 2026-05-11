@@ -12,7 +12,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The CassandraRUToCassandraRUCopyJobTask. </summary>
-    public partial class CassandraRUToCassandraRUCopyJobTask : BaseCopyJobTask
+    public partial class CassandraRUToCassandraRUCopyJobTask : CosmosDBCopyJobBaseTask
     {
         /// <summary> Initializes a new instance of <see cref="CassandraRUToCassandraRUCopyJobTask"/>. </summary>
         /// <param name="source"> Source Cassandra table. </param>

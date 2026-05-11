@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            EnableFullTextQuery? enableFullTextQuery = default;
+            CosmosDBFullTextQueryState? enableFullTextQuery = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    enableFullTextQuery = prop.Value.GetString().ToEnableFullTextQuery();
+                    enableFullTextQuery = prop.Value.GetString().ToCosmosDBFullTextQueryState();
                     continue;
                 }
                 if (options.Format != "W")

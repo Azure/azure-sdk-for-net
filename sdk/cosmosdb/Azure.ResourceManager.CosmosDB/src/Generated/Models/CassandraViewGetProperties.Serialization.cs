@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             CassandraViewGetPropertiesResource resource = default;
-            CassandraViewGetPropertiesOptions options0 = default;
+            CassandraViewConfig options0 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    options0 = CassandraViewGetPropertiesOptions.DeserializeCassandraViewGetPropertiesOptions(prop.Value, options);
+                    options0 = CassandraViewConfig.DeserializeCassandraViewConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

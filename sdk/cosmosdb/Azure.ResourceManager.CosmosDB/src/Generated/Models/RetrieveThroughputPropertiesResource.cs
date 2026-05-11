@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="RetrieveThroughputPropertiesResource"/>. </summary>
         /// <param name="physicalPartitionIds"> Array of PhysicalPartitionId objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="physicalPartitionIds"/> is null. </exception>
-        public RetrieveThroughputPropertiesResource(IEnumerable<PhysicalPartitionId> physicalPartitionIds)
+        public RetrieveThroughputPropertiesResource(IEnumerable<CosmosDBPhysicalPartitionId> physicalPartitionIds)
         {
             Argument.AssertNotNull(physicalPartitionIds, nameof(physicalPartitionIds));
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="RetrieveThroughputPropertiesResource"/>. </summary>
         /// <param name="physicalPartitionIds"> Array of PhysicalPartitionId objects. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RetrieveThroughputPropertiesResource(IList<PhysicalPartitionId> physicalPartitionIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RetrieveThroughputPropertiesResource(IList<CosmosDBPhysicalPartitionId> physicalPartitionIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PhysicalPartitionIds = physicalPartitionIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Array of PhysicalPartitionId objects. </summary>
         [WirePath("physicalPartitionIds")]
-        public IList<PhysicalPartitionId> PhysicalPartitionIds { get; }
+        public IList<CosmosDBPhysicalPartitionId> PhysicalPartitionIds { get; }
     }
 }

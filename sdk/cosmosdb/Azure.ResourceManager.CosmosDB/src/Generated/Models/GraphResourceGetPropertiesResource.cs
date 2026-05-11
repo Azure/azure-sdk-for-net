@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
     internal partial class GraphResourceGetPropertiesResource : GraphResource
     {
         /// <summary> Initializes a new instance of <see cref="GraphResourceGetPropertiesResource"/>. </summary>
-        /// <param name="id"> Name of the Cosmos DB Graph. </param>
-        internal GraphResourceGetPropertiesResource(string id) : base(id)
+        /// <param name="graphName"> Name of the Cosmos DB Graph. </param>
+        internal GraphResourceGetPropertiesResource(string graphName) : base(graphName)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="GraphResourceGetPropertiesResource"/>. </summary>
-        /// <param name="id"> Name of the Cosmos DB Graph. </param>
+        /// <param name="graphName"> Name of the Cosmos DB Graph. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GraphResourceGetPropertiesResource(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, additionalBinaryDataProperties)
+        internal GraphResourceGetPropertiesResource(string graphName, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(graphName, additionalBinaryDataProperties)
         {
         }
     }

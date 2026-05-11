@@ -7,24 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The core properties of ARM resources. </summary>
-    public partial class ARMResourceProperties
+    public partial class ArmResourceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ARMResourceProperties"/>. </summary>
-        public ARMResourceProperties()
+        /// <summary> Initializes a new instance of <see cref="ArmResourceProperties"/>. </summary>
+        public ArmResourceProperties()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ARMResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmResourceProperties"/>. </summary>
         /// <param name="id"> The unique resource identifier of the ARM resource. </param>
         /// <param name="name"> The name of the ARM resource. </param>
         /// <param name="type"> The type of Azure resource. </param>
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ARMResourceProperties(string id, string name, string @type, string location, IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmResourceProperties(string id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The location of the resource group to which the resource belongs. </summary>
         [WirePath("location")]
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </summary>
         [WirePath("tags")]

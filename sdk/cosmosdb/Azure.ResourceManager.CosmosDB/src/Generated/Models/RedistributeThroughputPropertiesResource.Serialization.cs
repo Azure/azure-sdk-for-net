@@ -83,14 +83,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStringValue(ThroughputPolicy.ToString());
             writer.WritePropertyName("targetPhysicalPartitionThroughputInfo"u8);
             writer.WriteStartArray();
-            foreach (PhysicalPartitionThroughputInfoResource item in TargetPhysicalPartitionThroughputInfo)
+            foreach (CosmosDBPhysicalPartitionThroughputInfo item in TargetPhysicalPartitionThroughputInfo)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("sourcePhysicalPartitionThroughputInfo"u8);
             writer.WriteStartArray();
-            foreach (PhysicalPartitionThroughputInfoResource item in SourcePhysicalPartitionThroughputInfo)
+            foreach (CosmosDBPhysicalPartitionThroughputInfo item in SourcePhysicalPartitionThroughputInfo)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             ThroughputPolicyType throughputPolicy = default;
-            IList<PhysicalPartitionThroughputInfoResource> targetPhysicalPartitionThroughputInfo = default;
-            IList<PhysicalPartitionThroughputInfoResource> sourcePhysicalPartitionThroughputInfo = default;
+            IList<CosmosDBPhysicalPartitionThroughputInfo> targetPhysicalPartitionThroughputInfo = default;
+            IList<CosmosDBPhysicalPartitionThroughputInfo> sourcePhysicalPartitionThroughputInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,20 +150,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("targetPhysicalPartitionThroughputInfo"u8))
                 {
-                    List<PhysicalPartitionThroughputInfoResource> array = new List<PhysicalPartitionThroughputInfoResource>();
+                    List<CosmosDBPhysicalPartitionThroughputInfo> array = new List<CosmosDBPhysicalPartitionThroughputInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PhysicalPartitionThroughputInfoResource.DeserializePhysicalPartitionThroughputInfoResource(item, options));
+                        array.Add(CosmosDBPhysicalPartitionThroughputInfo.DeserializeCosmosDBPhysicalPartitionThroughputInfo(item, options));
                     }
                     targetPhysicalPartitionThroughputInfo = array;
                     continue;
                 }
                 if (prop.NameEquals("sourcePhysicalPartitionThroughputInfo"u8))
                 {
-                    List<PhysicalPartitionThroughputInfoResource> array = new List<PhysicalPartitionThroughputInfoResource>();
+                    List<CosmosDBPhysicalPartitionThroughputInfo> array = new List<CosmosDBPhysicalPartitionThroughputInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PhysicalPartitionThroughputInfoResource.DeserializePhysicalPartitionThroughputInfoResource(item, options));
+                        array.Add(CosmosDBPhysicalPartitionThroughputInfo.DeserializeCosmosDBPhysicalPartitionThroughputInfo(item, options));
                     }
                     sourcePhysicalPartitionThroughputInfo = array;
                     continue;

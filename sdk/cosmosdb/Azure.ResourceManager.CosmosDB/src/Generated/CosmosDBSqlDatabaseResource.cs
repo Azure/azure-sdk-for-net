@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The parameters for the merge operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<PhysicalPartitionStorageInfoCollection>> SqlDatabasePartitionMergeAsync(WaitUntil waitUntil, MergeParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CosmosDBPhysicalPartitionStorageInfoList>> SqlDatabasePartitionMergeAsync(WaitUntil waitUntil, MergeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -325,10 +325,10 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateSqlDatabasePartitionMergeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MergeParameters.ToRequestContent(content), context);
+                HttpMessage message = _sqlResourcesRestClient.CreateSqlDatabasePartitionMergeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MergeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CosmosDBArmOperation<PhysicalPartitionStorageInfoCollection> operation = new CosmosDBArmOperation<PhysicalPartitionStorageInfoCollection>(
-                    new PhysicalPartitionStorageInfoCollectionOperationSource(),
+                CosmosDBArmOperation<CosmosDBPhysicalPartitionStorageInfoList> operation = new CosmosDBArmOperation<CosmosDBPhysicalPartitionStorageInfoList>(
+                    new CosmosDBPhysicalPartitionStorageInfoListOperationSource(),
                     _sqlResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The parameters for the merge operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<PhysicalPartitionStorageInfoCollection> SqlDatabasePartitionMerge(WaitUntil waitUntil, MergeParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CosmosDBPhysicalPartitionStorageInfoList> SqlDatabasePartitionMerge(WaitUntil waitUntil, MergeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -384,10 +384,10 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateSqlDatabasePartitionMergeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MergeParameters.ToRequestContent(content), context);
+                HttpMessage message = _sqlResourcesRestClient.CreateSqlDatabasePartitionMergeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MergeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CosmosDBArmOperation<PhysicalPartitionStorageInfoCollection> operation = new CosmosDBArmOperation<PhysicalPartitionStorageInfoCollection>(
-                    new PhysicalPartitionStorageInfoCollectionOperationSource(),
+                CosmosDBArmOperation<CosmosDBPhysicalPartitionStorageInfoList> operation = new CosmosDBArmOperation<CosmosDBPhysicalPartitionStorageInfoList>(
+                    new CosmosDBPhysicalPartitionStorageInfoListOperationSource(),
                     _sqlResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

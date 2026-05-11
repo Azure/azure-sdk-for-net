@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="resource"></param>
         /// <param name="options"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraViewGetProperties(CassandraViewGetPropertiesResource resource, CassandraViewGetPropertiesOptions options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CassandraViewGetProperties(CassandraViewGetPropertiesResource resource, CassandraViewConfig options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resource = resource;
             Options = options;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Gets the Options. </summary>
         [WirePath("options")]
-        public CassandraViewGetPropertiesOptions Options { get; }
+        public CassandraViewConfig Options { get; }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(containerName, nameof(containerName));
 
             ContainerName = containerName;
-            MaterializedViews = new ChangeTrackingList<MaterializedViewDetails>();
+            MaterializedViews = new ChangeTrackingList<CosmosDBMaterializedViewDetails>();
             ComputedProperties = new ChangeTrackingList<ComputedProperty>();
         }
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="fullTextPolicy"> The FullText policy for the container. </param>
         /// <param name="dataMaskingPolicy"> The Data Masking policy for the container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, MaterializedViewDefinition materializedViewDefinition, IList<MaterializedViewDetails> materializedViews, MaterializedViewsProperties materializedViewsProperties, IList<ComputedProperty> computedProperties, VectorEmbeddingPolicy vectorEmbeddingPolicy, FullTextPolicy fullTextPolicy, DataMaskingPolicy dataMaskingPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, CosmosDBMaterializedViewDefinition materializedViewDefinition, IList<CosmosDBMaterializedViewDetails> materializedViews, MaterializedViewsProperties materializedViewsProperties, IList<ComputedProperty> computedProperties, VectorEmbeddingPolicy vectorEmbeddingPolicy, FullTextPolicy fullTextPolicy, DataMaskingPolicy dataMaskingPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContainerName = containerName;
             IndexingPolicy = indexingPolicy;
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The configuration for defining Materialized Views. This must be specified only for creating a Materialized View container. </summary>
         [WirePath("materializedViewDefinition")]
-        public MaterializedViewDefinition MaterializedViewDefinition { get; set; }
+        public CosmosDBMaterializedViewDefinition MaterializedViewDefinition { get; set; }
 
         /// <summary> Materialized Views defined on the container. </summary>
         [WirePath("materializedViews")]
-        public IList<MaterializedViewDetails> MaterializedViews { get; }
+        public IList<CosmosDBMaterializedViewDetails> MaterializedViews { get; }
 
         /// <summary> Materialized Views Properties defined for source container. </summary>
         [WirePath("materializedViewsProperties")]

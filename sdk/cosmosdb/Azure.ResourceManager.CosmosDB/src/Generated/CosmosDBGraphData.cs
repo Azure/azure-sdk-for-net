@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Gets the Options. </summary>
         [WirePath("properties.options")]
-        public GraphResourceGetPropertiesOptions Options
+        public CosmosDBGraphConfig Options
         {
             get
             {
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Name of the Cosmos DB Graph. </summary>
         [WirePath("properties.resource.id")]
-        public string ResourceId
+        public string ResourceGraphName
         {
             get
             {
-                return Properties is null ? default : Properties.ResourceId;
+                return Properties is null ? default : Properties.ResourceGraphName;
             }
         }
     }

@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("materializedViews"u8);
                 writer.WriteStartArray();
-                foreach (MaterializedViewDetails item in MaterializedViews)
+                foreach (CosmosDBMaterializedViewDetails item in MaterializedViews)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -223,8 +223,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             long? analyticalStorageTtl = default;
             ResourceRestoreParameters restoreParameters = default;
             CosmosDBAccountCreateMode? createMode = default;
-            MaterializedViewDefinition materializedViewDefinition = default;
-            IList<MaterializedViewDetails> materializedViews = default;
+            CosmosDBMaterializedViewDefinition materializedViewDefinition = default;
+            IList<CosmosDBMaterializedViewDetails> materializedViews = default;
             MaterializedViewsProperties materializedViewsProperties = default;
             IList<ComputedProperty> computedProperties = default;
             VectorEmbeddingPolicy vectorEmbeddingPolicy = default;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    materializedViewDefinition = MaterializedViewDefinition.DeserializeMaterializedViewDefinition(prop.Value, options);
+                    materializedViewDefinition = CosmosDBMaterializedViewDefinition.DeserializeCosmosDBMaterializedViewDefinition(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("materializedViews"u8))
@@ -334,10 +334,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<MaterializedViewDetails> array = new List<MaterializedViewDetails>();
+                    List<CosmosDBMaterializedViewDetails> array = new List<CosmosDBMaterializedViewDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MaterializedViewDetails.DeserializeMaterializedViewDetails(item, options));
+                        array.Add(CosmosDBMaterializedViewDetails.DeserializeCosmosDBMaterializedViewDetails(item, options));
                     }
                     materializedViews = array;
                     continue;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 restoreParameters,
                 createMode,
                 materializedViewDefinition,
-                materializedViews ?? new ChangeTrackingList<MaterializedViewDetails>(),
+                materializedViews ?? new ChangeTrackingList<CosmosDBMaterializedViewDetails>(),
                 materializedViewsProperties,
                 computedProperties ?? new ChangeTrackingList<ComputedProperty>(),
                 vectorEmbeddingPolicy,
