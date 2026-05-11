@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -17,18 +18,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
     // accessors as proxies onto Properties to preserve back-compat without a spec
     // change. The [WirePath] attributes mirror the wire-format paths the legacy
     // AutoRest SDK exposed on the flattened surface.
+    //
+    // Setters guard against a null Properties holder rather than throwing the
+    // less actionable NullReferenceException. ServiceType is additionally guarded
+    // against a null assignment because it is the polymorphism discriminator on
+    // the inner ServiceResourceCreateUpdateProperties model; silently coercing
+    // null to the default enum value would corrupt the request body.
     public partial class CosmosDBServiceCreateOrUpdateContent
     {
+        private const string PropertiesNotInitializedMessage =
+            "Properties has not been initialized; assign a ServiceResourceCreateUpdateProperties (or one of its derived types) before setting flattened accessors.";
+
         /// <summary> Instance type for the service. </summary>
         [WirePath("properties.instanceSize")]
         public CosmosDBServiceSize? InstanceSize
         {
             get
             {
-                return this.Properties.InstanceSize;
+                return this.Properties?.InstanceSize;
             }
             set
             {
+                if (this.Properties == null)
+                {
+                    throw new InvalidOperationException(PropertiesNotInitializedMessage);
+                }
                 this.Properties.InstanceSize = value;
             }
         }
@@ -39,10 +53,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return this.Properties.InstanceCount;
+                return this.Properties?.InstanceCount;
             }
             set
             {
+                if (this.Properties == null)
+                {
+                    throw new InvalidOperationException(PropertiesNotInitializedMessage);
+                }
                 this.Properties.InstanceCount = value;
             }
         }
@@ -53,11 +71,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return this.Properties.ServiceType;
+                return this.Properties?.ServiceType;
             }
             set
             {
-                this.Properties.ServiceType = value.GetValueOrDefault();
+                if (this.Properties == null)
+                {
+                    throw new InvalidOperationException(PropertiesNotInitializedMessage);
+                }
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value), "ServiceType is the polymorphism discriminator on ServiceResourceCreateUpdateProperties and cannot be set to null.");
+                }
+                this.Properties.ServiceType = value.Value;
             }
         }
     }
