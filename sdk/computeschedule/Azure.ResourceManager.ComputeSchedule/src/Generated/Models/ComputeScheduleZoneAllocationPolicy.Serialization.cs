@@ -79,8 +79,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 throw new FormatException($"The model {nameof(ComputeScheduleZoneAllocationPolicy)} does not support writing '{format}' format.");
             }
+            string distributionStrategy = DistributionStrategy.ToString();
+            if (distributionStrategy is null)
+            {
+                throw new InvalidOperationException($"{nameof(DistributionStrategy)} must be defined before serializing {nameof(ComputeScheduleZoneAllocationPolicy)}.");
+            }
             writer.WritePropertyName("distributionStrategy"u8);
-            writer.WriteStringValue(DistributionStrategy.ToString());
+            writer.WriteStringValue(distributionStrategy);
             if (Optional.IsCollectionDefined(ZonePreferences))
             {
                 writer.WritePropertyName("zonePreferences"u8);
