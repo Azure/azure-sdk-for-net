@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="quotaLimitName"> The quota limit name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The default and current quota limit. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppSubscriptionQuotaLimitAsync(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
             Response<NetAppSubscriptionQuotaItemResource> response = await GetNetAppSubscriptionQuotaItemAsync(location, quotaLimitName, cancellationToken).ConfigureAwait(false);
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="quotaLimitName"> The quota limit name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The default and current quota limit. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<NetAppSubscriptionQuotaItem> GetNetAppSubscriptionQuotaLimit(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
             Response<NetAppSubscriptionQuotaItemResource> response = GetNetAppSubscriptionQuotaItem(location, quotaLimitName, cancellationToken);
@@ -53,6 +55,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of quota limits. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<NetAppSubscriptionQuotaItem> GetNetAppSubscriptionQuotaLimitsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             var pageable = GetNetAppSubscriptionQuotaItems(location).GetAllAsync(cancellationToken);
@@ -65,6 +68,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of quota limits. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetAppSubscriptionQuotaItem> GetNetAppSubscriptionQuotaLimits(AzureLocation location, CancellationToken cancellationToken = default)
         {
             var pageable = GetNetAppSubscriptionQuotaItems(location).GetAll(cancellationToken);
@@ -75,6 +79,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="quotaLimitName"> The quota limit name. </param>
         /// <returns> The quota limit resource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<NetAppSubscriptionQuotaItemResource> GetNetAppQuotaLimitAsync(AzureLocation location, string quotaLimitName)
         {
             // v1.15 quirk: this overload returned the bare resource (without Response<>) and
@@ -84,9 +89,20 @@ namespace Azure.ResourceManager.NetApp.Mocking
             return response.Value;
         }
 
+        /// <summary> Gets the default and current quota limit for a subscription and location. </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="quotaLimitName"> The quota limit name. </param>
+        /// <returns> The quota limit resource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual NetAppSubscriptionQuotaItemResource GetNetAppQuotaLimit(AzureLocation location, string quotaLimitName)
+        {
+            return GetNetAppSubscriptionQuotaItem(location, quotaLimitName).Value;
+        }
+
         /// <summary> Lists quota limits for a subscription and location. </summary>
         /// <param name="location"> The location name. </param>
         /// <returns> A collection of quota limit resources. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<NetAppSubscriptionQuotaItemResource> GetNetAppQuotaLimitsAsync(AzureLocation location)
         {
             return GetNetAppSubscriptionQuotaItems(location).GetAllAsync();
@@ -97,6 +113,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="quotaLimitName"> The quota limit name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The default and current quota limit. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppQuotaLimitAsync(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
             => GetNetAppSubscriptionQuotaLimitAsync(location, quotaLimitName, cancellationToken);
 
@@ -105,6 +122,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="quotaLimitName"> The quota limit name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The default and current quota limit. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimit(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
             => GetNetAppSubscriptionQuotaLimit(location, quotaLimitName, cancellationToken);
 
@@ -112,6 +130,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of quota limits. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimitsAsync(AzureLocation location, CancellationToken cancellationToken = default)
             => GetNetAppSubscriptionQuotaLimitsAsync(location, cancellationToken);
 
@@ -119,6 +138,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of quota limits. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimits(AzureLocation location, CancellationToken cancellationToken = default)
             => GetNetAppSubscriptionQuotaLimits(location, cancellationToken);
 
@@ -409,6 +429,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The region info resource. </returns>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<RegionInfoResource>> GetRegionInfoResourceAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("GetRegionInfoResourceAsync with AzureLocation is not supported. Use GetRegionInfoResource() instead.");
@@ -419,6 +440,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The region info resource. </returns>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<RegionInfoResource> GetRegionInfoResource(AzureLocation location, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("GetRegionInfoResource with AzureLocation is not supported. Use GetRegionInfoResource() instead.");

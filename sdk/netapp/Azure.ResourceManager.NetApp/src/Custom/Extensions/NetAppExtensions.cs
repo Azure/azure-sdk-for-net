@@ -239,6 +239,13 @@ namespace Azure.ResourceManager.NetApp
             return await GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppQuotaLimitAsync(location, quotaLimitName).ConfigureAwait(false);
         }
 
+        /// <summary> Gets a quota limit resource (old name, returns old resource type). </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppSubscriptionQuotaItemResource GetNetAppQuotaLimit(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName)
+        {
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppQuotaLimit(location, quotaLimitName);
+        }
+
         /// <summary> Lists quota limits (old name, returns old resource type). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<NetAppSubscriptionQuotaItemResource> GetNetAppQuotaLimitsAsync(this SubscriptionResource subscriptionResource, AzureLocation location)
