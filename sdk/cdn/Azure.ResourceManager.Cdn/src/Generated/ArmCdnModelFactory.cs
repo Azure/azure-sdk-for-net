@@ -2970,7 +2970,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     new CustomRuleList((customRules ?? new ChangeTrackingList<CustomRule>()).ToList(), default),
                     new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<WafPolicyManagedRuleSet>()).ToList(), default),
                     (endpointLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
-                    extendedProperties,
+                    extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
                     provisioningState,
                     resourceState,
                     default),
