@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.CommonTypes.Models
 {
     /// <summary> The resource management error additional info. </summary>
     public partial class ErrorAdditionalInfo
@@ -24,19 +23,18 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ErrorAdditionalInfo"/>. </summary>
-        /// <param name="errorAdditionalInfoType"> The additional info type. </param>
+        /// <param name="type"> The additional info type. </param>
         /// <param name="info"> The additional info. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorAdditionalInfo(string errorAdditionalInfoType, BinaryData info, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ErrorAdditionalInfo(string @type, BinaryData info, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ErrorAdditionalInfoType = errorAdditionalInfoType;
+            Type = @type;
             Info = info;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The additional info type. </summary>
-        [WirePath("type")]
-        public string ErrorAdditionalInfoType { get; }
+        public string Type { get; }
 
         /// <summary>
         /// The additional info.
@@ -64,7 +62,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("info")]
         public BinaryData Info { get; }
     }
 }

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Microsoft.Resources.Models
 {
     internal static partial class WhatIfResultFormatExtensions
     {

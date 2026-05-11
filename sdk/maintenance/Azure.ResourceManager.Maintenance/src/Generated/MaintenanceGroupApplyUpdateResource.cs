@@ -189,15 +189,6 @@ namespace Azure.ResourceManager.Maintenance
             }
         }
 
-        // NOTE: CreateOrUpdate / CreateOrUpdateAsync / CreateOrUpdateApplyUpdateByParent /
-        // CreateOrUpdateApplyUpdateByParentAsync methods that previously lived here were removed
-        // because the spec applies @@scope(..., "!csharp") to ApplyUpdatesOperationGroup_CreateOrUpdate
-        // and ApplyUpdatesOperationGroup_CreateOrUpdateParent, which suppresses the underlying REST
-        // methods but the generator still emits these wrappers, causing CS1061 errors.
-        // Bridge stubs that throw NotSupportedException live in Custom/Extensions/MaintenanceExtensions.cs.
-        // Once the generator is fixed, these will be regenerated as empty.
-
-
         /// <summary>
         /// Update a MaintenanceGroupApplyUpdate.
         /// <list type="bullet">

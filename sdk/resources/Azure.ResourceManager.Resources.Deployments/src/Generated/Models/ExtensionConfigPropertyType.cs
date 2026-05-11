@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Resources;
+using Microsoft.Resources;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Microsoft.Resources.Models
 {
     /// <summary></summary>
     public readonly partial struct ExtensionConfigPropertyType : IEquatable<ExtensionConfigPropertyType>

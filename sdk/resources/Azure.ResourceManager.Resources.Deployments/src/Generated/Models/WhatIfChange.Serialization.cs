@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources;
+using Microsoft.Resources;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Microsoft.Resources.Models
 {
     /// <summary> Information about a single resource change predicted by What-If operation. </summary>
     public partial class WhatIfChange : IJsonModel<WhatIfChange>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WhatIfChange)} does not support writing '{options.Format}' format.");
             }
@@ -198,8 +198,8 @@ namespace Azure.ResourceManager.Resources.Models
             string deploymentId = default;
             string symbolicName = default;
             BinaryData identifiers = default;
-            ArmDeploymentExtensionDefinition extension = default;
-            WhatIfChangeType changeType = default;
+            DeploymentExtensionDefinition extension = default;
+            ChangeType changeType = default;
             string unsupportedReason = default;
             BinaryData before = default;
             BinaryData after = default;
@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    extension = ArmDeploymentExtensionDefinition.DeserializeArmDeploymentExtensionDefinition(prop.Value, options);
+                    extension = DeploymentExtensionDefinition.DeserializeDeploymentExtensionDefinition(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("changeType"u8))
                 {
-                    changeType = prop.Value.GetString().ToWhatIfChangeType();
+                    changeType = prop.Value.GetString().ToChangeType();
                     continue;
                 }
                 if (prop.NameEquals("unsupportedReason"u8))

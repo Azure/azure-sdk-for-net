@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Resources
+namespace Microsoft.Resources
 {
     internal partial class ChangeTrackingDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue>
         where TKey : notnull

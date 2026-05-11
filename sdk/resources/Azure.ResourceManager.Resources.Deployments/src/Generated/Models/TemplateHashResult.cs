@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Microsoft.Resources.Models
 {
     /// <summary> Result of the request to calculate template hash. It contains a string of minified template and its hash. </summary>
     public partial class TemplateHashResult
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The minified template string. </summary>
-        [WirePath("minifiedTemplate")]
         public string MinifiedTemplate { get; }
 
         /// <summary> The template hash. </summary>
-        [WirePath("templateHash")]
         public string TemplateHash { get; }
     }
 }

@@ -10,9 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Microsoft.Resources.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Microsoft.Resources
 {
     /// <summary></summary>
     internal partial class WhatIfOperationResultOperationSource : IOperationSource<WhatIfOperationResult>

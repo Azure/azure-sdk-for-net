@@ -16,7 +16,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Policy.Models;
 
 namespace Azure.ResourceManager.Resources.Policy
 {
@@ -346,12 +345,6 @@ namespace Azure.ResourceManager.Resources.Policy
                 "PolicySetDefinitionCollection.GetAll"), data => new PolicySetDefinitionResource(Client, data));
         }
 
-        // NOTE: The non-paged GetAll(CancellationToken) / GetAllAsync(CancellationToken) overloads
-        // for PolicySetDefinitionVersionsOperationGroup_ListAll were removed manually because the spec
-        // applies @@scope(..., "!csharp") to that operation, which suppresses the underlying REST
-        // method but the generator still emits the collection wrapper, causing CS7036/CS0121 errors.
-        // This is a temporary workaround; once the generator is fixed, these will be regenerated as empty.
-
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
@@ -594,12 +587,12 @@ namespace Azure.ResourceManager.Resources.Policy
 
         IEnumerator<PolicySetDefinitionResource> IEnumerable<PolicySetDefinitionResource>.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>

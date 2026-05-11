@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Maintenance.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
@@ -41,7 +40,6 @@ namespace Azure.ResourceManager.Maintenance
     [ModelReaderWriterBuildable(typeof(MaintenanceVmTagSettings))]
     [ModelReaderWriterBuildable(typeof(MaintenanceWindow))]
     [ModelReaderWriterBuildable(typeof(MaintenanceWindowsPatchSettings))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpdateProperties))]
     public partial class AzureResourceManagerMaintenanceContext : ModelReaderWriterContext
     {

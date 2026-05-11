@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.Resources;
+using Microsoft.Resources;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Microsoft.Resources.Models
 {
     /// <summary> Result of the What-If operation. Contains a list of predicted changes and a URL link to get to the next set of results. </summary>
     public partial class WhatIfOperationResult : IJsonModel<WhatIfOperationResult>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WhatIfOperationResult)} does not support writing '{options.Format}' format.");
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                SerializationError(writer, options);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
             string status = default;
             WhatIfOperationProperties properties = default;
-            ResponseError error = default;
+            ErrorResponse error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    DeserializeError(prop, ref error, options);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    error = ErrorResponse.DeserializeErrorResponse(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

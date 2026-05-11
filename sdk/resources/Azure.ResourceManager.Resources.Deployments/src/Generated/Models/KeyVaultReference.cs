@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources;
+using Microsoft.Resources;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Microsoft.Resources.Models
 {
     /// <summary> Azure Key Vault reference. </summary>
     internal partial class KeyVaultReference
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of <see cref="KeyVaultReference"/>. </summary>
         /// <param name="id"> Azure Key Vault resource id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public KeyVaultReference(ResourceIdentifier id)
+        public KeyVaultReference(string id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -31,14 +30,13 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of <see cref="KeyVaultReference"/>. </summary>
         /// <param name="id"> Azure Key Vault resource id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultReference(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultReference(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Azure Key Vault resource id. </summary>
-        [WirePath("id")]
-        public ResourceIdentifier Id { get; set; }
+        public string Id { get; set; }
     }
 }

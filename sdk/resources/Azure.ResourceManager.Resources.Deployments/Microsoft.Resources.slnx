@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Microsoft.Resources.csproj" />
+  <Project Path="tests/Microsoft.Resources.Tests.csproj" />
+</Solution>

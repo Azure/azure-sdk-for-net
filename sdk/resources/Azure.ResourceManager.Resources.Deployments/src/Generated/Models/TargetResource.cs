@@ -8,10 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Microsoft.Resources.Models
 {
     /// <summary> Target resource. </summary>
     public partial class TargetResource
@@ -33,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="apiVersion"> The API version the resource was deployed with. </param>
         /// <param name="symbolicName"> The symbolic name of the resource as defined in the deployment template. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TargetResource(string id, string resourceName, ResourceType? resourceType, ArmDeploymentExtensionDefinition extension, BinaryData identifiers, string apiVersion, string symbolicName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TargetResource(string id, string resourceName, string resourceType, DeploymentExtensionDefinition extension, BinaryData identifiers, string apiVersion, string symbolicName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ResourceName = resourceName;
@@ -46,20 +44,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The Azure resource ID of the resource. </summary>
-        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> The name of the resource. </summary>
-        [WirePath("resourceName")]
         public string ResourceName { get; }
 
         /// <summary> The type of the resource. </summary>
-        [WirePath("resourceType")]
-        public ResourceType? ResourceType { get; }
+        public string ResourceType { get; }
 
         /// <summary> The extension the resource was deployed with. </summary>
-        [WirePath("extension")]
-        public ArmDeploymentExtensionDefinition Extension { get; }
+        public DeploymentExtensionDefinition Extension { get; }
 
         /// <summary>
         /// The extensible resource identifiers.
@@ -87,15 +81,12 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("identifiers")]
         public BinaryData Identifiers { get; }
 
         /// <summary> The API version the resource was deployed with. </summary>
-        [WirePath("apiVersion")]
         public string ApiVersion { get; }
 
         /// <summary> The symbolic name of the resource as defined in the deployment template. </summary>
-        [WirePath("symbolicName")]
         public string SymbolicName { get; }
     }
 }

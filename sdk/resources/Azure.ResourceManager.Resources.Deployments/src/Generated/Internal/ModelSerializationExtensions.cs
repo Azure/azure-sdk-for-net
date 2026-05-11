@@ -13,7 +13,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Resources
+namespace Microsoft.Resources
 {
     internal static partial class ModelSerializationExtensions
     {
@@ -22,10 +22,6 @@ namespace Azure.ResourceManager.Resources
         {
             MaxDepth = 256
         };
-        /// <summary> The wire v3 options for model serialization. </summary>
-        internal static readonly ModelReaderWriterOptions WireV3Options = new ModelReaderWriterOptions("W|v3");
-        /// <summary> The JSON v3 options for model serialization. </summary>
-        internal static readonly ModelReaderWriterOptions JsonV3Options = new ModelReaderWriterOptions("J|v3");
 
         public static object GetObject(this JsonElement element)
         {

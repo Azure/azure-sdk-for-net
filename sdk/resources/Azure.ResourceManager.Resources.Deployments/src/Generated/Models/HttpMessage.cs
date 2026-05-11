@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Microsoft.Resources.Models
 {
     /// <summary> HTTP message. </summary>
     internal partial class HttpMessage
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("content")]
         public BinaryData Content { get; }
     }
 }

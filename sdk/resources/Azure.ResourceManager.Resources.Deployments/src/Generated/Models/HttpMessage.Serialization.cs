@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources;
+using Microsoft.Resources;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Microsoft.Resources.Models
 {
     /// <summary> HTTP message. </summary>
     internal partial class HttpMessage : IJsonModel<HttpMessage>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HttpMessage)} does not support writing '{options.Format}' format.");
             }

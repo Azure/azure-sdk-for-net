@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources;
+using Microsoft.Resources;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Microsoft.Resources.Models
 {
     /// <summary> Azure Key Vault parameter reference. </summary>
     public partial class KeyVaultParameterReference
@@ -22,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="keyVaultId"> Azure Key Vault resource id. </param>
         /// <param name="secretName"> Azure Key Vault secret name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultId"/> or <paramref name="secretName"/> is null. </exception>
-        public KeyVaultParameterReference(ResourceIdentifier keyVaultId, string secretName)
+        public KeyVaultParameterReference(string keyVaultId, string secretName)
         {
             Argument.AssertNotNull(keyVaultId, nameof(keyVaultId));
             Argument.AssertNotNull(secretName, nameof(secretName));
@@ -45,20 +44,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Azure Key Vault reference. </summary>
-        [WirePath("keyVault")]
         internal KeyVaultReference KeyVault { get; set; }
 
         /// <summary> Azure Key Vault secret name. </summary>
-        [WirePath("secretName")]
         public string SecretName { get; set; }
 
         /// <summary> Azure Key Vault secret version. </summary>
-        [WirePath("secretVersion")]
         public string SecretVersion { get; set; }
 
         /// <summary> Azure Key Vault resource id. </summary>
-        [WirePath("keyVault.id")]
-        public ResourceIdentifier KeyVaultId
+        public string KeyVaultId
         {
             get
             {

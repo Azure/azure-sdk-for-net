@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources;
+using Microsoft.Resources;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Microsoft.Resources.Models
 {
     /// <summary> The predicted change to the resource property. </summary>
     public partial class WhatIfPropertyChange : IJsonModel<WhatIfPropertyChange>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WhatIfPropertyChange)} does not support writing '{options.Format}' format.");
             }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             string path = default;
-            WhatIfPropertyChangeType propertyChangeType = default;
+            PropertyChangeType propertyChangeType = default;
             BinaryData before = default;
             BinaryData after = default;
             IList<WhatIfPropertyChange> children = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (prop.NameEquals("propertyChangeType"u8))
                 {
-                    propertyChangeType = prop.Value.GetString().ToWhatIfPropertyChangeType();
+                    propertyChangeType = prop.Value.GetString().ToPropertyChangeType();
                     continue;
                 }
                 if (prop.NameEquals("before"u8))

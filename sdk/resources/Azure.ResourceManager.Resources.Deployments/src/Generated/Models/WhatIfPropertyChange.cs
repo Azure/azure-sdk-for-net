@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources;
+using Microsoft.Resources;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Microsoft.Resources.Models
 {
     /// <summary> The predicted change to the resource property. </summary>
     public partial class WhatIfPropertyChange
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of <see cref="WhatIfPropertyChange"/>. </summary>
         /// <param name="path"> The path of the property. </param>
         /// <param name="propertyChangeType"> The type of property change. </param>
-        internal WhatIfPropertyChange(string path, WhatIfPropertyChangeType propertyChangeType)
+        internal WhatIfPropertyChange(string path, PropertyChangeType propertyChangeType)
         {
             Path = path;
             PropertyChangeType = propertyChangeType;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="after"> The value of the property after the deployment is executed. </param>
         /// <param name="children"> Nested property changes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WhatIfPropertyChange(string path, WhatIfPropertyChangeType propertyChangeType, BinaryData before, BinaryData after, IList<WhatIfPropertyChange> children, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WhatIfPropertyChange(string path, PropertyChangeType propertyChangeType, BinaryData before, BinaryData after, IList<WhatIfPropertyChange> children, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Path = path;
             PropertyChangeType = propertyChangeType;
@@ -46,12 +46,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The path of the property. </summary>
-        [WirePath("path")]
         public string Path { get; }
 
         /// <summary> The type of property change. </summary>
-        [WirePath("propertyChangeType")]
-        public WhatIfPropertyChangeType PropertyChangeType { get; }
+        public PropertyChangeType PropertyChangeType { get; }
 
         /// <summary>
         /// The value of the property before the deployment is executed.
@@ -79,7 +77,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("before")]
         public BinaryData Before { get; }
 
         /// <summary>
@@ -108,11 +105,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("after")]
         public BinaryData After { get; }
 
         /// <summary> Nested property changes. </summary>
-        [WirePath("children")]
         public IList<WhatIfPropertyChange> Children { get; }
     }
 }

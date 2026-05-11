@@ -7,7 +7,7 @@
 
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Resources
+namespace Microsoft.Resources
 {
     internal static partial class ProviderConstants
     {

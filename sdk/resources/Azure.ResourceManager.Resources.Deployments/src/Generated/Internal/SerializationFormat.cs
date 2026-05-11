@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources
+namespace Microsoft.Resources
 {
     internal enum SerializationFormat
     {

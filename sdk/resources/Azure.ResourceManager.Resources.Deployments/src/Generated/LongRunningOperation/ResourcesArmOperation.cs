@@ -13,7 +13,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Resources
+namespace Microsoft.Resources
 {
     internal partial class ResourcesArmOperation : ArmOperation
     {

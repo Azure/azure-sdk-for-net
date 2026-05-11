@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Resources
+namespace Microsoft.Resources
 {
     internal static partial class Optional
     {

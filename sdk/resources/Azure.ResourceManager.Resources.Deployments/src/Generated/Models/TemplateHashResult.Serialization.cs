@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.Resources;
+using Microsoft.Resources;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Microsoft.Resources.Models
 {
     /// <summary> Result of the request to calculate template hash. It contains a string of minified template and its hash. </summary>
     public partial class TemplateHashResult : IJsonModel<TemplateHashResult>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TemplateHashResult)} does not support writing '{options.Format}' format.");
             }

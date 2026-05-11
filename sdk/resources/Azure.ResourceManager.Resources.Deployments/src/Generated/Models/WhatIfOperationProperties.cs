@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources;
+using Microsoft.Resources;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Microsoft.Resources.Models
 {
     /// <summary> Deployment operation properties. </summary>
     internal partial class WhatIfOperationProperties
@@ -39,15 +39,12 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> List of resource changes predicted by What-If operation. </summary>
-        [WirePath("changes")]
         public IList<WhatIfChange> Changes { get; } = new ChangeTrackingList<WhatIfChange>();
 
         /// <summary> List of resource changes predicted by What-If operation. </summary>
-        [WirePath("potentialChanges")]
         public IList<WhatIfChange> PotentialChanges { get; } = new ChangeTrackingList<WhatIfChange>();
 
         /// <summary> List of resource diagnostics detected by What-If operation. </summary>
-        [WirePath("diagnostics")]
         public IReadOnlyList<DeploymentDiagnosticsDefinition> Diagnostics { get; } = new ChangeTrackingList<DeploymentDiagnosticsDefinition>();
     }
 }

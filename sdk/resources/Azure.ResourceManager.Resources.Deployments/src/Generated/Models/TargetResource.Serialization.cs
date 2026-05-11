@@ -9,10 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.Resources;
+using Microsoft.Resources;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Microsoft.Resources.Models
 {
     /// <summary> Target resource. </summary>
     public partial class TargetResource : IJsonModel<TargetResource>
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TargetResource)} does not support writing '{options.Format}' format.");
             }
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType.Value);
+                writer.WriteStringValue(ResourceType);
             }
             if (Optional.IsDefined(Extension))
             {
@@ -161,8 +160,8 @@ namespace Azure.ResourceManager.Resources.Models
             }
             string id = default;
             string resourceName = default;
-            ResourceType? resourceType = default;
-            ArmDeploymentExtensionDefinition extension = default;
+            string resourceType = default;
+            DeploymentExtensionDefinition extension = default;
             BinaryData identifiers = default;
             string apiVersion = default;
             string symbolicName = default;
@@ -181,11 +180,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (prop.NameEquals("resourceType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    resourceType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("extension"u8))
@@ -194,7 +189,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    extension = ArmDeploymentExtensionDefinition.DeserializeArmDeploymentExtensionDefinition(prop.Value, options);
+                    extension = DeploymentExtensionDefinition.DeserializeDeploymentExtensionDefinition(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identifiers"u8))

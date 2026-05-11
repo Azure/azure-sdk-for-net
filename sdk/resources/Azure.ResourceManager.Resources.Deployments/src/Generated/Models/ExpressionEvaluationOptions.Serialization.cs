@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources;
+using Microsoft.Resources;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Microsoft.Resources.Models
 {
     /// <summary> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. </summary>
     internal partial class ExpressionEvaluationOptions : IJsonModel<ExpressionEvaluationOptions>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ExpressionEvaluationOptions)} does not support writing '{options.Format}' format.");
             }
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 throw new FormatException($"The model {nameof(ExpressionEvaluationOptions)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ExpressionEvaluationScope))
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteStringValue(ExpressionEvaluationScope.Value.ToString());
+                writer.WriteStringValue(Scope.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            ExpressionEvaluationScope? expressionEvaluationScope = default;
+            ExpressionEvaluationOptionsScopeType? scope = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    expressionEvaluationScope = new ExpressionEvaluationScope(prop.Value.GetString());
+                    scope = new ExpressionEvaluationOptionsScopeType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExpressionEvaluationOptions(expressionEvaluationScope, additionalBinaryDataProperties);
+            return new ExpressionEvaluationOptions(scope, additionalBinaryDataProperties);
         }
     }
 }

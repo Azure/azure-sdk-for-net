@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources;
+using Microsoft.Resources;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Microsoft.Resources.Models
 {
     /// <summary> Information about a single resource change predicted by What-If operation. </summary>
     public partial class WhatIfChange
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of <see cref="WhatIfChange"/>. </summary>
         /// <param name="changeType"> Type of change that will be made to the resource when the deployment is executed. </param>
-        internal WhatIfChange(WhatIfChangeType changeType)
+        internal WhatIfChange(ChangeType changeType)
         {
             ChangeType = changeType;
             Delta = new ChangeTrackingList<WhatIfPropertyChange>();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="after"> The predicted snapshot of the resource after the deployment is executed. </param>
         /// <param name="delta"> The predicted changes to resource properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WhatIfChange(string resourceId, string deploymentId, string symbolicName, BinaryData identifiers, ArmDeploymentExtensionDefinition extension, WhatIfChangeType changeType, string unsupportedReason, BinaryData before, BinaryData after, IList<WhatIfPropertyChange> delta, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WhatIfChange(string resourceId, string deploymentId, string symbolicName, BinaryData identifiers, DeploymentExtensionDefinition extension, ChangeType changeType, string unsupportedReason, BinaryData before, BinaryData after, IList<WhatIfPropertyChange> delta, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             DeploymentId = deploymentId;
@@ -54,15 +54,12 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Resource ID. </summary>
-        [WirePath("resourceId")]
         public string ResourceId { get; }
 
         /// <summary> The resource id of the Deployment responsible for this change. </summary>
-        [WirePath("deploymentId")]
         public string DeploymentId { get; }
 
         /// <summary> The symbolic name of the resource responsible for this change. </summary>
-        [WirePath("symbolicName")]
         public string SymbolicName { get; }
 
         /// <summary>
@@ -91,19 +88,15 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("identifiers")]
         public BinaryData Identifiers { get; }
 
         /// <summary> The extension the resource was deployed with. </summary>
-        [WirePath("extension")]
-        public ArmDeploymentExtensionDefinition Extension { get; }
+        public DeploymentExtensionDefinition Extension { get; }
 
         /// <summary> Type of change that will be made to the resource when the deployment is executed. </summary>
-        [WirePath("changeType")]
-        public WhatIfChangeType ChangeType { get; }
+        public ChangeType ChangeType { get; }
 
         /// <summary> The explanation about why the resource is unsupported by What-If. </summary>
-        [WirePath("unsupportedReason")]
         public string UnsupportedReason { get; }
 
         /// <summary>
@@ -132,7 +125,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("before")]
         public BinaryData Before { get; }
 
         /// <summary>
@@ -161,11 +153,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("after")]
         public BinaryData After { get; }
 
         /// <summary> The predicted changes to resource properties. </summary>
-        [WirePath("delta")]
         public IList<WhatIfPropertyChange> Delta { get; }
     }
 }

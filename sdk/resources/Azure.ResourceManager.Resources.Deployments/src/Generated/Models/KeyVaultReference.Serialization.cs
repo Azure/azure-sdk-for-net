@@ -9,10 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.Resources;
+using Microsoft.Resources;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Microsoft.Resources.Models
 {
     /// <summary> Azure Key Vault reference. </summary>
     internal partial class KeyVaultReference : IJsonModel<KeyVaultReference>
@@ -46,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(KeyVaultReference)} does not support writing '{options.Format}' format.");
             }
@@ -124,13 +123,13 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

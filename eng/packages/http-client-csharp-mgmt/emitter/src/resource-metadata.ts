@@ -977,9 +977,32 @@ function postProcessExpandedArmResources(
  */
 export function assignNonResourceMethodsToResources(
   resources: ArmResourceSchema[],
-  nonResourceMethods: NonResourceMethod[]
+  nonResourceMethods: NonResourceMethod[],
+  methodResponseModelIdMap?: Map<string, string>
 ): void {
   const methodsToRemove = new Set<string>();
+
+  // If the relocated method is a paging operation whose response items are the
+  // target resource's model, classify it as a List on that resource. This
+  // covers operations that upstream did not recognize as resource lists — for
+  // example list-by-subscription / list-by-resourceGroup operations modeled as
+  // ArmProviderActionSync<...> in TypeSpec, which the ARM library treats as
+  // generic actions but which structurally are list operations of the resource.
+  // Without this, the generator would render them as plain Actions on the
+  // singular resource (e.g. a synthetic GetAll on FooResource) instead of on
+  // the right collection / extension surface.
+  const kindForRelocation = (
+    methodId: string,
+    targetModelId: string
+  ): ResourceOperationKind => {
+    if (methodResponseModelIdMap) {
+      const responseModelId = methodResponseModelIdMap.get(methodId);
+      if (responseModelId !== undefined && responseModelId === targetModelId) {
+        return ResourceOperationKind.List;
+      }
+    }
+    return ResourceOperationKind.Action;
+  };
 
   for (const method of nonResourceMethods) {
     const bestMatch = findLongestPrefixMatch(
@@ -992,7 +1015,7 @@ export function assignNonResourceMethodsToResources(
     if (bestMatch) {
       bestMatch.metadata.methods.push({
         methodId: method.methodId,
-        kind: ResourceOperationKind.Action,
+        kind: kindForRelocation(method.methodId, bestMatch.resourceModelId),
         operationPath: method.operationPath,
         scope: {
           kind: method.scope.kind,
@@ -1005,16 +1028,13 @@ export function assignNonResourceMethodsToResources(
       // Prefix matching failed — try matching by resource model ID.
       // This handles extension resources where the action path and resource ID pattern
       // have different parent path structures but originate from the same resource type.
-      // Non-resource methods can only be Actions on the matched resource: any operation
-      // that upstream classified as a real list would already be in the resource's
-      // `lists` bucket and would never appear here.
       const match = resources.find(
         (r) => r.resourceModelId === method.resourceModelId
       );
       if (match) {
         match.metadata.methods.push({
           methodId: method.methodId,
-          kind: ResourceOperationKind.Action,
+          kind: kindForRelocation(method.methodId, match.resourceModelId),
           operationPath: method.operationPath,
           scope: method.scope
         });
@@ -1033,12 +1053,15 @@ export function assignNonResourceMethodsToResources(
           ) {
             return false;
           }
-          return r.metadata.resourceType === operationType;
+          return (
+            r.metadata.resourceType === operationType &&
+            operationPathEndsWithResourceType(method.operationPath, operationType)
+          );
         });
         if (match) {
           match.metadata.methods.push({
             methodId: method.methodId,
-            kind: ResourceOperationKind.Action,
+            kind: kindForRelocation(method.methodId, match.resourceModelId),
             operationPath: method.operationPath,
             scope: method.scope
           });
@@ -1061,6 +1084,17 @@ export function assignNonResourceMethodsToResources(
       sortResourceMethods(resource.metadata.methods);
     }
   }
+}
+
+function operationPathEndsWithResourceType(
+  operationPath: RequestPath,
+  resourceType: string
+): boolean {
+  const lastTypeSegment = resourceType.split("/").at(-1);
+  return (
+    lastTypeSegment !== undefined &&
+    operationPath.segments[operationPath.length - 1] === lastTypeSegment
+  );
 }
 
 /**

@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                     {
                         continue;
                     }
-                    @type = new ResourceType(prop.Value.GetString());
+                    @type = ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identifiers"u8))
