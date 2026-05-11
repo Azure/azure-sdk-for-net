@@ -16,6 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Policy.Models;
 
 namespace Azure.ResourceManager.Resources.Policy
 {
@@ -346,6 +347,94 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary>
+        /// This operation lists all the policy set definition versions for all policy set definitions within a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/listPolicySetDefinitionVersions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicySetDefinitionVersionsOperationGroup_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PolicySetDefinitionVersionListResult>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _policySetDefinitionVersionsClientDiagnostics.CreateScope("PolicySetDefinitionCollection.GetAll");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PolicySetDefinitionVersionListResult> response = Response.FromValue(PolicySetDefinitionVersionListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This operation lists all the policy set definition versions for all policy set definitions within a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/listPolicySetDefinitionVersions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicySetDefinitionVersionsOperationGroup_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PolicySetDefinitionVersionListResult> GetAll(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _policySetDefinitionVersionsClientDiagnostics.CreateScope("PolicySetDefinitionCollection.GetAll");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PolicySetDefinitionVersionListResult> response = Response.FromValue(PolicySetDefinitionVersionListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -587,12 +676,12 @@ namespace Azure.ResourceManager.Resources.Policy
 
         IEnumerator<PolicySetDefinitionResource> IEnumerable<PolicySetDefinitionResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return this.GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return this.GetAll().GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
