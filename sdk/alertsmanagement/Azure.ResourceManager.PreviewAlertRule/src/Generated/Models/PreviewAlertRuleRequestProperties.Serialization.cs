@@ -14,7 +14,7 @@ using Azure.ResourceManager.PreviewAlertRule;
 namespace Azure.ResourceManager.PreviewAlertRule.Models
 {
     /// <summary> The PreviewAlertRuleRequestProperties. </summary>
-    public partial class PreviewAlertRuleRequestProperties : IJsonModel<PreviewAlertRuleRequestProperties>
+    internal partial class PreviewAlertRuleRequestProperties : IJsonModel<PreviewAlertRuleRequestProperties>
     {
         /// <summary> Initializes a new instance of <see cref="PreviewAlertRuleRequestProperties"/> for deserialization. </summary>
         internal PreviewAlertRuleRequestProperties()

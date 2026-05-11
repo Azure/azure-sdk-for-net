@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.PreviewAlertRule;
 
 namespace Azure.ResourceManager.PreviewAlertRule.Models
 {
@@ -20,14 +19,12 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
 
         /// <summary> Initializes a new instance of <see cref="PreviewAlertRuleRequest"/>. </summary>
         /// <param name="location"> The location of the rule resource. </param>
-        /// <param name="properties"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public PreviewAlertRuleRequest(AzureLocation location, PreviewAlertRuleRequestProperties properties)
+        /// <param name="timespan"> Specifies the timespan of the preview in ISO 8601 duration format. </param>
+        public PreviewAlertRuleRequest(AzureLocation location, TimeSpan timespan)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
 
             Location = location;
-            Properties = properties;
+            Properties = new PreviewAlertRuleRequestProperties(timespan);
         }
 
         /// <summary> Initializes a new instance of <see cref="PreviewAlertRuleRequest"/>. </summary>
@@ -45,6 +42,15 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         public AzureLocation Location { get; }
 
         /// <summary> Gets the Properties. </summary>
-        public PreviewAlertRuleRequestProperties Properties { get; }
+        internal PreviewAlertRuleRequestProperties Properties { get; }
+
+        /// <summary> Specifies the timespan of the preview in ISO 8601 duration format. </summary>
+        public TimeSpan Timespan
+        {
+            get
+            {
+                return Properties.Timespan;
+            }
+        }
     }
 }
