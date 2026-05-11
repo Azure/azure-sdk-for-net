@@ -38,8 +38,10 @@ foreach ($project in $testProjects) {
     $projectDir = Join-Path $testProjectsLocalDir $project.Folder
     $entryTsp = Join-Path $projectDir $project.EntryTsp
     $configFile = Join-Path $projectDir 'tspconfig.yaml'
+    $generatedDir = Join-Path $projectDir 'src' 'Generated'
 
     Write-Host "Generating $($project.FilterName)..." -ForegroundColor Cyan
+    Remove-Item -Recurse -Force $generatedDir -ErrorAction SilentlyContinue
 
     $command = "npx tsp compile `"$entryTsp`""
     $command += " --emit `"$emitterPackageDir`""

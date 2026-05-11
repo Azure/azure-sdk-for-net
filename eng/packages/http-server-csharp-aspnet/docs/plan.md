@@ -16,6 +16,9 @@ priority, but priorities will shift as we onboard pilot services.
   TypeSpec `@path` / `@query` / `@header` / `@body`
 - Generated/hand-written separation: generated abstract bases live under
   `Generated/`, concrete controllers live in user-owned files
+- End-to-end test scenario that generates contracts into an existing ASP.NET
+  Core project (`generator/TestProjects/Local/AzureSql/src`) while preserving
+  user-owned concrete controllers outside `src/Generated/`
 
 ## 🔜 Planned
 
@@ -111,8 +114,9 @@ without changing the spec.
 
 ### 8. Documentation, samples, and onboarding
 
-- Service-author guide: how to lay out a project, where to put concrete
-  controllers, how to wire DI, how to register the generated routing helper.
+- Service-author guide: how to lay out an existing ASP.NET Core project, where
+  to put concrete controllers, how to wire DI, how to register the generated
+  routing helper.
 - Sample service: a small ARM RP end-to-end using only generated scaffolding.
 - Migration guide for existing hand-written ARM controllers.
 
