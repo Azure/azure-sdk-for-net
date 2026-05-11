@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
+                etag,
                 default,
                 default,
                 properties,
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 name,
-                default,
+                etag,
                 properties);
         }
     }

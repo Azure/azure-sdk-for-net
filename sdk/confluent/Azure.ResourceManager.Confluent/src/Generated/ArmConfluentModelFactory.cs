@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 kafkaBootstrapEndpoint,
                 httpEndpoint,
                 apiEndpoint,
-                default,
+                configKind is null ? default : new ClusterConfigEntity(configKind, default),
                 environment,
                 network,
                 byok,

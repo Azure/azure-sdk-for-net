@@ -1454,14 +1454,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             storageSettings ??= new ChangeTrackingList<DataProtectionBackupStorageSetting>();
 
             return new DataProtectionBackupVaultProperties(
-                default,
+                alertSettingsForAllJobFailures is null ? default : new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures, default), default),
                 provisioningState,
                 resourceMoveState,
                 resourceMoveDetails,
                 securitySettings,
                 storageSettings.ToList(),
                 isVaultProtectedByResourceGuard,
-                default,
+                crossSubscriptionRestoreState is null ? default : new BackupVaultFeatureSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default, default),
                 default,
                 default,
                 default,
@@ -1486,7 +1486,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             storageSettings ??= new ChangeTrackingList<DataProtectionBackupStorageSetting>();
 
             return new DataProtectionBackupVaultProperties(
-                default,
+                alertSettingsForAllJobFailures is null ? default : new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures, default), default),
                 provisioningState,
                 resourceMoveState,
                 resourceMoveDetails,
@@ -1960,7 +1960,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             replicatedRegions ??= new ChangeTrackingList<AzureLocation>();
 
             return new DataProtectionBackupVaultProperties(
-                default,
+                alertSettingsForAllJobFailures is null ? default : new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures, default), default),
                 provisioningState,
                 resourceMoveState,
                 resourceMoveDetails,

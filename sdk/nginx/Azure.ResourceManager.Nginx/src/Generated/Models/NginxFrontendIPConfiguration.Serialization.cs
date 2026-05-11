@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Nginx;
 using Azure.ResourceManager.Resources.Models;
@@ -149,7 +150,23 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 if (prop.NameEquals("publicIPAddresses"u8))
                 {
-                    DeserializePublicIPAddresses(prop, ref publicIPAddresses);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNginxContext.Default));
+                        }
+                    }
+                    publicIPAddresses = array;
                     continue;
                 }
                 if (prop.NameEquals("privateIPAddresses"u8))

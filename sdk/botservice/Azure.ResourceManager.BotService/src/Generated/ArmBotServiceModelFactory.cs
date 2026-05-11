@@ -1188,7 +1188,7 @@ namespace Azure.ResourceManager.BotService.Models
                 properties,
                 sku,
                 kind,
-                default,
+                etag,
                 zones.ToList(),
                 systemData);
         }
@@ -1292,7 +1292,7 @@ namespace Azure.ResourceManager.BotService.Models
                 properties,
                 sku,
                 kind,
-                default,
+                etag,
                 zones.ToList(),
                 systemData);
         }
@@ -1344,7 +1344,7 @@ namespace Azure.ResourceManager.BotService.Models
                 properties,
                 sku,
                 kind,
-                default,
+                etag,
                 zones.ToList(),
                 systemData);
         }
@@ -1378,7 +1378,7 @@ namespace Azure.ResourceManager.BotService.Models
                 tags,
                 sku,
                 kind,
-                default,
+                etag,
                 zones.ToList(),
                 systemData);
         }

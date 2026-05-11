@@ -1601,7 +1601,6 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudClusterData AvsPrivateCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsSku sku, int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IEnumerable<string> hosts, string vsanDatastoreName)
         {
-            hosts ??= new ChangeTrackingList<string>();
 
             return new AvsPrivateCloudClusterData(
                 id,
@@ -1609,7 +1608,13 @@ namespace Azure.ResourceManager.Avs.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
+                clusterSize is null && provisioningState is null && clusterId is null && hosts is null && vsanDatastoreName is null ? default : new ClusterProperties(
+                    clusterSize,
+                    provisioningState,
+                    clusterId,
+                    (hosts ?? new ChangeTrackingList<string>()).ToList(),
+                    vsanDatastoreName,
+                    default),
                 sku);
         }
 

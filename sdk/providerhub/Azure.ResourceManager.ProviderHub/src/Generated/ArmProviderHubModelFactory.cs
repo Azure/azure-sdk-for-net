@@ -1411,7 +1411,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
             loggingRules ??= new ChangeTrackingList<LoggingRule>();
             throttlingRules ??= new ChangeTrackingList<ThrottlingRule>();
             endpoints ??= new ChangeTrackingList<ResourceProviderEndpoint>();
-            requiredFeatures ??= new ChangeTrackingList<string>();
             subscriptionStateRules ??= new ChangeTrackingList<ProviderSubscriptionStateRule>();
             serviceTreeInfos ??= new ChangeTrackingList<ServiceTreeInfo>();
             disallowedActionVerbs ??= new ChangeTrackingList<string>();
@@ -1433,20 +1432,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 throttlingRules.ToList(),
                 endpoints.ToList(),
                 marketplaceType,
-                default,
+                managementType is null ? default : new IdentityManagement(managementType, default),
                 metadata,
                 requiredFeatures.ToList(),
-                default,
+                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.GetValueOrDefault(), default),
                 subscriptionStateRules.ToList(),
                 serviceTreeInfos.ToList(),
-                default,
+                optInHeaders is null ? default : new ProviderRequestHeaderOptions(optInHeaders, default, default),
                 skuLink,
                 disallowedActionVerbs.ToList(),
                 templateDeploymentPolicy,
                 extendedLocations.ToList(),
                 linkedOperationRules.ToList(),
                 resourceDeletionPolicy,
-                default,
+                requiredFeatures is null ? default : new ProviderQuotaRule(default, default, (requiredFeatures ?? new ChangeTrackingList<string>()).ToList(), default),
                 default,
                 default,
                 default,

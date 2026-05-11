@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServiceFleetData ContainerServiceFleetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, ManagedServiceIdentity identity, FleetProvisioningState? provisioningState)
         {
-            return ContainerServiceFleetData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, hubProfile: default, status: default, eTag: eTag, identity: identity);
+            return ContainerServiceFleetData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, eTag: eTag, identity: identity, provisioningState: provisioningState, hubProfile: default, status: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.ContainerServiceFleetMemberData"/>. </summary>
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServiceFleetUpdateRunData ContainerServiceFleetUpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ContainerServiceFleetUpdateRunProvisioningState? provisioningState, ResourceIdentifier updateStrategyId, IEnumerable<ContainerServiceFleetUpdateStage> strategyStages, ContainerServiceFleetManagedClusterUpdate managedClusterUpdate, ContainerServiceFleetUpdateRunStatus status)
         {
-            return ContainerServiceFleetUpdateRunData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: provisioningState, updateStrategyId: updateStrategyId, managedClusterUpdate: managedClusterUpdate, status: status, autoUpgradeProfileId: default, strategyStages: strategyStages, eTag: eTag);
+            return ContainerServiceFleetUpdateRunData(id: id, name: name, resourceType: resourceType, systemData: systemData, eTag: eTag, provisioningState: provisioningState, updateStrategyId: updateStrategyId, strategyStages: strategyStages, managedClusterUpdate: managedClusterUpdate, status: status, autoUpgradeProfileId: default);
         }
     }
 }
