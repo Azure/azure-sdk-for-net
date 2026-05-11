@@ -20,12 +20,10 @@ namespace Azure.ResourceManager.TestFramework
                 "CosmosDBTablePropertiesResource",
                 "RestorableMongoDBCollection",
                 // MPG migration: model types that happen to end with Resource/Collection but are not ARM resources/collections.
-                "ARMProxyResource",
+                "ArmProxyResource",
                 "CassandraViewGetPropertiesResource",
                 "CosmosDBMongoCollection",
                 "CosmosDBMongoVCoreCollection",
-                "PhysicalPartitionStorageInfoCollection",
-                "PhysicalPartitionThroughputInfoResource",
                 "RedistributeThroughputPropertiesResource",
             };
         }
