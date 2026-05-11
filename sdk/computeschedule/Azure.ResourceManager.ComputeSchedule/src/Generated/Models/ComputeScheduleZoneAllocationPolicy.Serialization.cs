@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 if (prop.NameEquals("distributionStrategy"u8))
                 {
+                    hasDistributionStrategy = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         throw new FormatException($"Required property 'distributionStrategy' was null when deserializing {nameof(ComputeScheduleZoneAllocationPolicy)}.");
                     }
 
-                    hasDistributionStrategy = true;
                     distributionStrategy = new ComputeScheduleDistributionStrategy(prop.Value.GetString());
                     continue;
                 }

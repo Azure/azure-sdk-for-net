@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         [TestCase("{}", "missing")]
         public void DeserializeThrowsFormatExceptionWhenDistributionStrategyIsInvalid(string json, string expectedCondition)
         {
-            FormatException exception = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<ComputeScheduleZoneAllocationPolicy>(BinaryData.FromString(json), ModelReaderWriterOptions.Json));
+            static ComputeScheduleZoneAllocationPolicy Deserialize(string value) =>
+                ModelReaderWriter.Read<ComputeScheduleZoneAllocationPolicy>(BinaryData.FromString(value), ModelReaderWriterOptions.Json);
+
+            FormatException exception = Assert.Throws<FormatException>(() => Deserialize(json));
 
             Assert.That(exception.Message, Is.EqualTo($"Required property 'distributionStrategy' was {expectedCondition} when deserializing {nameof(ComputeScheduleZoneAllocationPolicy)}."));
         }
