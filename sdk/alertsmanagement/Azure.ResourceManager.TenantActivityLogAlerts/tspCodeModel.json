@@ -795,7 +795,7 @@
                                       {
                                         "$id": "66",
                                         "kind": "property",
-                                        "name": "equalTo",
+                                        "name": "EqualTo",
                                         "serializedName": "equals",
                                         "doc": "The value of the event's field will be compared to this value (case-insensitive) to determine if the condition is met.",
                                         "type": {

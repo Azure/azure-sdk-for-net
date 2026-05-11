@@ -11,22 +11,10 @@ using Azure.ResourceManager.TenantActivityLogAlerts;
 
 namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
 {
-    /// <summary> An Azure Activity Log Alert rule. </summary>
     internal partial class AlertRuleProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="AlertRuleProperties"/>. </summary>
-        /// <param name="conditionAllOf"> The list of Activity Log Alert rule conditions. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conditionAllOf"/> is null. </exception>
-        public AlertRuleProperties(IList<AlertRuleAnyOfOrLeafCondition> conditionAllOf)
-        {
-            Argument.AssertNotNull(conditionAllOf, nameof(conditionAllOf));
-
-            Scopes = new ChangeTrackingList<string>();
-            Condition = new AlertRuleAllOfCondition(conditionAllOf);
-        }
 
         /// <summary> Initializes a new instance of <see cref="AlertRuleProperties"/>. </summary>
         /// <param name="tenantScope"> The tenant GUID. Must be provided for tenant-level and management group events rules. </param>

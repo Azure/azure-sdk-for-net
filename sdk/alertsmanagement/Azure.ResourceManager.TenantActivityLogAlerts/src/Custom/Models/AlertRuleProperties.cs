@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
 {
@@ -11,7 +10,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
     // but TenantActivityLogAlertResourceData's public ctor (which takes IEnumerable<>) calls it with the IEnumerable
     // value directly, producing CS1503 (cannot convert IEnumerable<> to IList<>). Suppress the generated ctor and
     // re-emit one that accepts IEnumerable<> so both wrapper and properties have a consistent public surface.
-    [CodeGenSuppress("AlertRuleProperties", typeof(IList<AlertRuleAnyOfOrLeafCondition>))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("AlertRuleProperties", typeof(IList<AlertRuleAnyOfOrLeafCondition>))]
     internal partial class AlertRuleProperties
     {
         public AlertRuleProperties(IEnumerable<AlertRuleAnyOfOrLeafCondition> conditionAllOf)
