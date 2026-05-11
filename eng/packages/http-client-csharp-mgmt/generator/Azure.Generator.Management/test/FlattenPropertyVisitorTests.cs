@@ -15,6 +15,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -696,6 +697,20 @@ namespace Azure.Generator.Mgmt.Tests
             var propertiesArgument = newInstance!.Parameters[propertiesIndex].ToDisplayString();
             Assert.That(propertiesArgument, Does.Contain("provisioningState"));
             Assert.That(propertiesArgument, Does.Not.Match(@"new\s+[\w\.:]*TestProfileReference\s*\(\s*id\s*,"));
+        }
+
+        [Test]
+        public void TestBackwardCompatDictionaryArgumentUsesConcreteDictionaryForInterfaceMismatch()
+        {
+            var oldIconFileUrisParam = new ParameterProvider("iconFileUris", $"", typeof(IDictionary<string, string>));
+            var expectedType = new CSharpType(typeof(IReadOnlyDictionary<string, string>));
+            var buildParameterArgument = typeof(ModelFactoryBackwardCompatHelper).GetMethod(
+                "BuildParameterArgument",
+                BindingFlags.NonPublic | BindingFlags.Static)!;
+
+            var argument = (ValueExpression)buildParameterArgument.Invoke(null, [oldIconFileUrisParam, expectedType])!;
+
+            Assert.That(argument.ToDisplayString(), Does.Contain("new global::Samples.ChangeTrackingDictionary<string, string>((iconFileUris ?? new global::Samples.ChangeTrackingDictionary<string, string>()))"));
         }
 
         private static void AssertArgIsParameter(ValueExpression arg, string expectedName, string context)

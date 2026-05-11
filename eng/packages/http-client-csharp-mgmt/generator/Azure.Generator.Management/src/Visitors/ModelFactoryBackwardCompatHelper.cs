@@ -520,7 +520,11 @@ namespace Azure.Generator.Management.Visitors
 
             if (AreCompatibleDictionaryTypes(parameter.Type, expectedType))
             {
-                return parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.DictionaryInitializationType.MakeGenericType(parameter.Type.Arguments)));
+                var dictionaryType = ManagementClientGenerator.Instance.TypeFactory.DictionaryInitializationType.MakeGenericType(expectedType.Arguments);
+                var nullCoalescedDictionary = parameter.NullCoalesce(New.Instance(dictionaryType));
+                return parameter.Type.AreNamesEqual(expectedType)
+                    ? nullCoalescedDictionary
+                    : New.Instance(dictionaryType, nullCoalescedDictionary);
             }
 
             if (parameter.Type.IsValueType && parameter.Type.IsNullable && expectedType.IsValueType && !expectedType.IsNullable)
