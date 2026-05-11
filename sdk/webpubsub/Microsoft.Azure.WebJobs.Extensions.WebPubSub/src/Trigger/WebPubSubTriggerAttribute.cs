@@ -83,9 +83,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public WebPubSubEventType EventType { get; }
 
         /// <summary>
-        /// Allowed service upstream ConnectionString for Signature checks.
+        /// Allowed service upstream validation
         /// </summary>
-        public string[] Connections { get; }
+        public string[] Connections { get; private set; }
+
+        /// <summary>
+        /// Allowed service upstream validation.
+        /// Use <see cref="Connections"/> instead for multiple connections.
+        /// If both <see cref="Connection"/> and <see cref="Connections"/> are set, <see cref="Connections"/> takes precedence.
+        /// </summary>
+        [Obsolete("Use Connections instead.")]
+        public string Connection
+        {
+            get => Connections?.Length > 0 ? Connections[0] : null;
+            set
+            {
+                if (Connections == null || Connections.Length == 0)
+                {
+                    Connections = [value];
+                }
+            }
+        }
 
         /// <summary>
         /// Specifies which client protocol can trigger the Web PubSub trigger functions. By default, it accepts all client protocols.

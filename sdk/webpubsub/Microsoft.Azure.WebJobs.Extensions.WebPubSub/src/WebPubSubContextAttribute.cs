@@ -19,6 +19,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public string[] Connections { get; set; }
 
         /// <summary>
+        /// Allowed Web PubSub service connection used for Abuse Protection and signature checks.
+        /// Use <see cref="Connections"/> instead for multiple connections.
+        /// If both <see cref="Connection"/> and <see cref="Connections"/> are set, <see cref="Connections"/> takes precedence.
+        /// </summary>
+        [Obsolete("Use Connections instead.")]
+        public string Connection
+        {
+            get => Connections?.Length > 0 ? Connections[0] : null;
+            set
+            {
+                if (Connections == null || Connections.Length == 0)
+                {
+                    Connections = new[] { value };
+                }
+            }
+        }
+
+        /// <summary>
         /// Constructor to build the attribute.
         /// </summary>
         /// <param name="connections">Allowed service connections.</param>
