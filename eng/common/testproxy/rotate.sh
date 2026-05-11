@@ -32,15 +32,14 @@ openssl req -x509 -nodes -days 365 \
   -newkey rsa:2048 \
   -keyout "$KEYFILE" \
   -out "$CRTFILE" \
-  -config "$CONF_PATH" \
-  --passout pass:
+  -config "$CONF_PATH"
 
 # Bundle into a PKCS#12 archive (password: "password")
 openssl pkcs12 -export \
   -out "$PFXFILE" \
   -inkey "$KEYFILE" \
   -in "$CRTFILE" \
-  --passout pass:password
+  -passout pass:password
 
 echo ""
 echo "✓ Regenerated:"
