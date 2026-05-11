@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRestorableGremlinResourceDataRequest(Guid subscriptionId, AzureLocation location, Guid instanceId, string restoreLocation, string restoreTimestampInUtc, RequestContext context)
+        internal HttpMessage CreateGetRestorableGremlinResourcesRequest(Guid subscriptionId, AzureLocation location, Guid instanceId, AzureLocation? restoreLocation, string restoreTimestampInUtc, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
             if (restoreLocation != null)
             {
-                uri.AppendQuery("restoreLocation", restoreLocation, true);
+                uri.AppendQuery("restoreLocation", TypeFormatters.ConvertToString(restoreLocation), true);
             }
             if (restoreTimestampInUtc != null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRestorableGremlinResourceDataRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, Guid instanceId, string restoreLocation, string restoreTimestampInUtc, RequestContext context)
+        internal HttpMessage CreateNextGetRestorableGremlinResourcesRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, Guid instanceId, AzureLocation? restoreLocation, string restoreTimestampInUtc, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -1,0 +1,1 @@
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.CosmosDB.WirePathAttribute' exists on 'Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceProperties.AdditionalProperties' in the contract but not the implementation.

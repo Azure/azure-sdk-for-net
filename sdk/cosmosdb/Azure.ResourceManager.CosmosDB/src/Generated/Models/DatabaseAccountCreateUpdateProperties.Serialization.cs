@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -92,11 +93,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndArray();
             writer.WritePropertyName("databaseAccountOfferType"u8);
             writer.WriteStringValue(DatabaseAccountOfferType.ToString());
-            if (Optional.IsCollectionDefined(IpRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
-                foreach (CosmosDBIPAddressOrRange item in IpRules)
+                foreach (CosmosDBIPAddressOrRange item in IPRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(KeyVaultKeyUri))
             {
                 writer.WritePropertyName("keyVaultKeyUri"u8);
-                writer.WriteStringValue(KeyVaultKeyUri);
+                writer.WriteStringValue(KeyVaultKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DefaultIdentity))
             {
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("networkAclBypassResourceIds"u8);
                 writer.WriteStartArray();
-                foreach (string item in NetworkAclBypassResourceIds)
+                foreach (ResourceIdentifier item in NetworkAclBypassResourceIds)
                 {
                     if (item == null)
                     {
@@ -356,7 +357,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             bool? enableCassandraConnector = default;
             ConnectorOffer? connectorOffer = default;
             bool? disableKeyBasedMetadataWriteAccess = default;
-            string keyVaultKeyUri = default;
+            Uri keyVaultKeyUri = default;
             string defaultIdentity = default;
             CosmosDBPublicNetworkAccess? publicNetworkAccess = default;
             bool? isFreeTierEnabled = default;
@@ -367,7 +368,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             CosmosDBAccountBackupPolicy backupPolicy = default;
             IList<CosmosDBAccountCorsPolicy> cors = default;
             NetworkAclBypass? networkAclBypass = default;
-            IList<string> networkAclBypassResourceIds = default;
+            IList<ResourceIdentifier> networkAclBypassResourceIds = default;
             DiagnosticLogSettings diagnosticLogSettings = default;
             bool? disableLocalAuth = default;
             CosmosDBAccountRestoreParameters restoreParameters = default;
@@ -508,7 +509,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("keyVaultKeyUri"u8))
                 {
-                    keyVaultKeyUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultKeyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("defaultIdentity"u8))
@@ -608,7 +613,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -617,7 +622,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
                     networkAclBypassResourceIds = array;
@@ -783,7 +788,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 backupPolicy,
                 cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>(),
                 networkAclBypass,
-                networkAclBypassResourceIds ?? new ChangeTrackingList<string>(),
+                networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 diagnosticLogSettings,
                 disableLocalAuth,
                 restoreParameters,

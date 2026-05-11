@@ -98,6 +98,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
         }
@@ -135,6 +140,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             CosmosDBAccountKind? kind = default;
+            ManagedServiceIdentity identity = default;
             DatabaseAccountCreateUpdateProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -205,6 +211,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     kind = new CosmosDBAccountKind(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerCosmosDBContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     properties = DatabaseAccountCreateUpdateProperties.DeserializeDatabaseAccountCreateUpdateProperties(prop.Value, options);
@@ -224,6 +239,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 kind,
+                identity,
                 properties);
         }
     }

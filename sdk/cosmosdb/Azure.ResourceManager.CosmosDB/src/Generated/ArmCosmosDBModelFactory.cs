@@ -274,6 +274,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> Indicates the type of database account. This can only be set at database account creation. </param>
+        /// <param name="identity"></param>
         /// <param name="consistencyPolicy"> The consistency policy for the Cosmos DB account. </param>
         /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
         /// <param name="ipRules"> List of IpRules. </param>
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="capacityTotalThroughputLimit"> The total throughput limit imposed on the account. A totalThroughputLimit of 2000 imposes a strict limit of max throughput that can be provisioned on that account to be 2000. A totalThroughputLimit of -1 indicates no limits on provisioning of throughput. </param>
         /// <param name="databaseAccountOfferType"> The offer type for the Cosmos DB database account. </param>
         /// <returns> A new <see cref="Models.CosmosDBAccountCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static CosmosDBAccountCreateOrUpdateContent CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CosmosDBAccountKind? kind = default, ConsistencyPolicy consistencyPolicy = default, IEnumerable<CosmosDBAccountLocation> locations = default, IEnumerable<CosmosDBIPAddressOrRange> ipRules = default, bool? isVirtualNetworkFilterEnabled = default, bool? enableAutomaticFailover = default, IEnumerable<CosmosDBAccountCapability> capabilities = default, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = default, bool? enableMultipleWriteLocations = default, bool? enableCassandraConnector = default, ConnectorOffer? connectorOffer = default, bool? disableKeyBasedMetadataWriteAccess = default, string keyVaultKeyUri = default, string defaultIdentity = default, CosmosDBPublicNetworkAccess? publicNetworkAccess = default, bool? isFreeTierEnabled = default, bool? isAnalyticalStorageEnabled = default, CosmosDBAccountCreateMode? createMode = default, CosmosDBAccountBackupPolicy backupPolicy = default, IEnumerable<CosmosDBAccountCorsPolicy> cors = default, NetworkAclBypass? networkAclBypass = default, IEnumerable<string> networkAclBypassResourceIds = default, bool? disableLocalAuth = default, CosmosDBAccountRestoreParameters restoreParameters = default, CapacityMode? capacityMode = default, bool? enableMaterializedViews = default, DatabaseAccountKeysMetadata keysMetadata = default, bool? enablePartitionMerge = default, bool? enableBurstCapacity = default, CosmosDBMinimalTlsVersion? minimalTlsVersion = default, string customerManagedKeyStatus = default, bool? enablePriorityBasedExecution = default, DefaultPriorityLevel? defaultPriorityLevel = default, bool? enablePerRegionPerPartitionAutoscale = default, bool? enableAllVersionsAndDeletesChangeFeed = default, CosmosDBServerVersion? apiServerVersion = default, AnalyticalStorageSchemaType? analyticalStorageSchemaType = default, EnableFullTextQuery? diagnosticLogEnableFullTextQuery = default, int? capacityTotalThroughputLimit = default, CosmosDBAccountOfferType databaseAccountOfferType = default)
+        public static CosmosDBAccountCreateOrUpdateContent CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CosmosDBAccountKind? kind = default, ManagedServiceIdentity identity = default, ConsistencyPolicy consistencyPolicy = default, IEnumerable<CosmosDBAccountLocation> locations = default, IEnumerable<CosmosDBIPAddressOrRange> ipRules = default, bool? isVirtualNetworkFilterEnabled = default, bool? enableAutomaticFailover = default, IEnumerable<CosmosDBAccountCapability> capabilities = default, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = default, bool? enableMultipleWriteLocations = default, bool? enableCassandraConnector = default, ConnectorOffer? connectorOffer = default, bool? disableKeyBasedMetadataWriteAccess = default, Uri keyVaultKeyUri = default, string defaultIdentity = default, CosmosDBPublicNetworkAccess? publicNetworkAccess = default, bool? isFreeTierEnabled = default, bool? isAnalyticalStorageEnabled = default, CosmosDBAccountCreateMode? createMode = default, CosmosDBAccountBackupPolicy backupPolicy = default, IEnumerable<CosmosDBAccountCorsPolicy> cors = default, NetworkAclBypass? networkAclBypass = default, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds = default, bool? disableLocalAuth = default, CosmosDBAccountRestoreParameters restoreParameters = default, CapacityMode? capacityMode = default, bool? enableMaterializedViews = default, DatabaseAccountKeysMetadata keysMetadata = default, bool? enablePartitionMerge = default, bool? enableBurstCapacity = default, CosmosDBMinimalTlsVersion? minimalTlsVersion = default, string customerManagedKeyStatus = default, bool? enablePriorityBasedExecution = default, DefaultPriorityLevel? defaultPriorityLevel = default, bool? enablePerRegionPerPartitionAutoscale = default, bool? enableAllVersionsAndDeletesChangeFeed = default, CosmosDBServerVersion? apiServerVersion = default, AnalyticalStorageSchemaType? analyticalStorageSchemaType = default, EnableFullTextQuery? diagnosticLogEnableFullTextQuery = default, int? capacityTotalThroughputLimit = default, CosmosDBAccountOfferType databaseAccountOfferType = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -327,6 +328,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 tags,
                 location,
                 kind,
+                identity,
                 new DatabaseAccountCreateUpdateProperties(
                     consistencyPolicy,
                     (locations ?? new ChangeTrackingList<CosmosDBAccountLocation>()).ToList(),
@@ -351,7 +353,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     backupPolicy,
                     (cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>()).ToList(),
                     networkAclBypass,
-                    (networkAclBypassResourceIds ?? new ChangeTrackingList<string>()).ToList(),
+                    (networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     new DiagnosticLogSettings(diagnosticLogEnableFullTextQuery, null),
                     disableLocalAuth,
                     restoreParameters,
@@ -4385,59 +4387,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CosmosDBAccountCreateOrUpdateContent CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ManagedServiceIdentity identity, ConsistencyPolicy consistencyPolicy, IEnumerable<CosmosDBAccountLocation> locations, CosmosDBAccountOfferType databaseAccountOfferType, IEnumerable<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IEnumerable<CosmosDBAccountCapability> capabilities, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, CosmosDBServerVersion? apiServerVersion, bool? isAnalyticalStorageEnabled, AnalyticalStorageSchemaType? analyticalStorageSchemaType, CosmosDBAccountCreateMode? createMode, CosmosDBAccountBackupPolicy backupPolicy, IEnumerable<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds, bool? disableLocalAuth, CosmosDBAccountRestoreParameters restoreParameters, int? capacityTotalThroughputLimit, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, CosmosDBMinimalTlsVersion? minimalTlsVersion, bool? enableBurstCapacity, string customerManagedKeyStatus, bool? enablePerRegionPerPartitionAutoscale, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            networkAclBypassResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
-
-            return new CosmosDBAccountCreateOrUpdateContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                kind,
-                consistencyPolicy is null && locations is null && ipRules is null && isVirtualNetworkFilterEnabled is null && enableAutomaticFailover is null && capabilities is null && virtualNetworkRules is null && enableMultipleWriteLocations is null && enableCassandraConnector is null && connectorOffer is null && disableKeyBasedMetadataWriteAccess is null && defaultIdentity is null && publicNetworkAccess is null && isFreeTierEnabled is null && apiServerVersion is null && isAnalyticalStorageEnabled is null && analyticalStorageSchemaType is null && createMode is null && backupPolicy is null && cors is null && networkAclBypass is null && disableLocalAuth is null && restoreParameters is null && capacityTotalThroughputLimit is null && keysMetadata is null && enablePartitionMerge is null && enableBurstCapacity is null && minimalTlsVersion is null && customerManagedKeyStatus is null && enablePriorityBasedExecution is null && defaultPriorityLevel is null && enablePerRegionPerPartitionAutoscale is null ? default : new DatabaseAccountCreateUpdateProperties(
-                    consistencyPolicy,
-                    (locations ?? new ChangeTrackingList<CosmosDBAccountLocation>()).ToList(),
-                    databaseAccountOfferType,
-                    (ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>()).ToList(),
-                    isVirtualNetworkFilterEnabled,
-                    enableAutomaticFailover,
-                    (capabilities ?? new ChangeTrackingList<CosmosDBAccountCapability>()).ToList(),
-                    (virtualNetworkRules ?? new ChangeTrackingList<CosmosDBVirtualNetworkRule>()).ToList(),
-                    enableMultipleWriteLocations,
-                    enableCassandraConnector,
-                    connectorOffer,
-                    disableKeyBasedMetadataWriteAccess,
-                    default,
-                    defaultIdentity,
-                    publicNetworkAccess,
-                    isFreeTierEnabled,
-                    new ApiProperties(apiServerVersion, default),
-                    isAnalyticalStorageEnabled,
-                    new AnalyticalStorageConfiguration(analyticalStorageSchemaType, default),
-                    createMode,
-                    backupPolicy,
-                    (cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>()).ToList(),
-                    networkAclBypass,
-                    default,
-                    default,
-                    disableLocalAuth,
-                    restoreParameters,
-                    new CosmosDBAccountCapacity(capacityTotalThroughputLimit, default),
-                    default,
-                    default,
-                    keysMetadata,
-                    enablePartitionMerge,
-                    enableBurstCapacity,
-                    minimalTlsVersion,
-                    customerManagedKeyStatus,
-                    enablePriorityBasedExecution,
-                    defaultPriorityLevel,
-                    enablePerRegionPerPartitionAutoscale,
-                    default,
-                    default));
+            return CosmosDBAccountCreateOrUpdateContent(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, kind: kind, identity: identity, consistencyPolicy: consistencyPolicy, locations: locations, ipRules: ipRules, isVirtualNetworkFilterEnabled: isVirtualNetworkFilterEnabled, enableAutomaticFailover: enableAutomaticFailover, capabilities: capabilities, virtualNetworkRules: virtualNetworkRules, enableMultipleWriteLocations: enableMultipleWriteLocations, enableCassandraConnector: enableCassandraConnector, connectorOffer: connectorOffer, disableKeyBasedMetadataWriteAccess: disableKeyBasedMetadataWriteAccess, keyVaultKeyUri: keyVaultKeyUri, defaultIdentity: defaultIdentity, publicNetworkAccess: publicNetworkAccess, isFreeTierEnabled: isFreeTierEnabled, isAnalyticalStorageEnabled: isAnalyticalStorageEnabled, createMode: createMode, backupPolicy: backupPolicy, cors: cors, networkAclBypass: networkAclBypass, networkAclBypassResourceIds: networkAclBypassResourceIds, disableLocalAuth: disableLocalAuth, restoreParameters: restoreParameters, capacityMode: default, enableMaterializedViews: default, keysMetadata: keysMetadata, enablePartitionMerge: enablePartitionMerge, enableBurstCapacity: enableBurstCapacity, minimalTlsVersion: minimalTlsVersion, customerManagedKeyStatus: customerManagedKeyStatus, enablePriorityBasedExecution: enablePriorityBasedExecution, defaultPriorityLevel: defaultPriorityLevel, enablePerRegionPerPartitionAutoscale: enablePerRegionPerPartitionAutoscale, enableAllVersionsAndDeletesChangeFeed: default, apiServerVersion: apiServerVersion, analyticalStorageSchemaType: analyticalStorageSchemaType, diagnosticLogEnableFullTextQuery: default, capacityTotalThroughputLimit: capacityTotalThroughputLimit, databaseAccountOfferType: databaseAccountOfferType);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlDatabaseData"/>. </summary>

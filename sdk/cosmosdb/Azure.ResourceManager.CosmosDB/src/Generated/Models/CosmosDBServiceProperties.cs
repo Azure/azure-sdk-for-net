@@ -18,6 +18,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBServiceProperties"/>. </summary>
+        /// <param name="serviceType"> ServiceType for the service. </param>
+        public CosmosDBServiceProperties(CosmosDBServiceType serviceType)
+        {
+            ServiceType = serviceType;
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBServiceProperties"/>. </summary>
         /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>

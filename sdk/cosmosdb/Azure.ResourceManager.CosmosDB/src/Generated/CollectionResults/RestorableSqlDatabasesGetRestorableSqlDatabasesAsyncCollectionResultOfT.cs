@@ -15,7 +15,7 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal partial class RestorableSqlDatabasesGetAllAsyncCollectionResultOfT : AsyncPageable<RestorableSqlDatabase>
+    internal partial class RestorableSqlDatabasesGetRestorableSqlDatabasesAsyncCollectionResultOfT : AsyncPageable<RestorableSqlDatabase>
     {
         private readonly RestorableSqlDatabases _client;
         private readonly Guid _subscriptionId;
@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of RestorableSqlDatabasesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of RestorableSqlDatabasesGetRestorableSqlDatabasesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The RestorableSqlDatabases client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RestorableSqlDatabasesGetAllAsyncCollectionResultOfT(RestorableSqlDatabases client, Guid subscriptionId, AzureLocation location, Guid instanceId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RestorableSqlDatabasesGetRestorableSqlDatabasesAsyncCollectionResultOfT(RestorableSqlDatabases client, Guid subscriptionId, AzureLocation location, Guid instanceId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.CosmosDB
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of RestorableSqlDatabasesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of RestorableSqlDatabasesGetRestorableSqlDatabasesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of RestorableSqlDatabasesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of RestorableSqlDatabasesGetRestorableSqlDatabasesAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<RestorableSqlDatabase>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _location, _instanceId, _context) : _client.CreateGetAllRequest(_subscriptionId, _location, _instanceId, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetRestorableSqlDatabasesRequest(nextLink, _subscriptionId, _location, _instanceId, _context) : _client.CreateGetRestorableSqlDatabasesRequest(_subscriptionId, _location, _instanceId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

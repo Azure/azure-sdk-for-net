@@ -254,19 +254,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableSqlDatabase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableSqlDatabase> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RestorableSqlDatabase> GetRestorableSqlDatabasesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableSqlDatabasesGetAllAsyncCollectionResultOfT(
+            return new RestorableSqlDatabasesGetRestorableSqlDatabasesAsyncCollectionResultOfT(
                 _restorableSqlDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Guid.Parse(Id.Name),
                 context,
-                "RestorableCosmosDBAccountResource.GetAll");
+                "RestorableCosmosDBAccountResource.GetRestorableSqlDatabases");
         }
 
         /// <summary>
@@ -292,19 +292,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableSqlDatabase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableSqlDatabase> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<RestorableSqlDatabase> GetRestorableSqlDatabases(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableSqlDatabasesGetAllCollectionResultOfT(
+            return new RestorableSqlDatabasesGetRestorableSqlDatabasesCollectionResultOfT(
                 _restorableSqlDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Guid.Parse(Id.Name),
                 context,
-                "RestorableCosmosDBAccountResource.GetAll");
+                "RestorableCosmosDBAccountResource.GetRestorableSqlDatabases");
         }
 
         /// <summary>
@@ -496,13 +496,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableGremlinResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableGremlinResourceData> GetAllRestorableGremlinResourceDataAsync(string restoreLocation = default, string restoreTimestampInUtc = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RestorableGremlinResourceData> GetRestorableGremlinResourcesAsync(AzureLocation? restoreLocation = default, string restoreTimestampInUtc = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableGremlinResourcesGetAllRestorableGremlinResourceDataAsyncCollectionResultOfT(
+            return new RestorableGremlinResourcesGetRestorableGremlinResourcesAsyncCollectionResultOfT(
                 _restorableGremlinResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.CosmosDB
                 restoreLocation,
                 restoreTimestampInUtc,
                 context,
-                "RestorableCosmosDBAccountResource.GetAllRestorableGremlinResourceData");
+                "RestorableCosmosDBAccountResource.GetRestorableGremlinResources");
         }
 
         /// <summary>
@@ -538,13 +538,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableGremlinResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableGremlinResourceData> GetAllRestorableGremlinResourceData(string restoreLocation = default, string restoreTimestampInUtc = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<RestorableGremlinResourceData> GetRestorableGremlinResources(AzureLocation? restoreLocation = default, string restoreTimestampInUtc = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableGremlinResourcesGetAllRestorableGremlinResourceDataCollectionResultOfT(
+            return new RestorableGremlinResourcesGetRestorableGremlinResourcesCollectionResultOfT(
                 _restorableGremlinResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.CosmosDB
                 restoreLocation,
                 restoreTimestampInUtc,
                 context,
-                "RestorableCosmosDBAccountResource.GetAllRestorableGremlinResourceData");
+                "RestorableCosmosDBAccountResource.GetRestorableGremlinResources");
         }
 
         /// <summary>
@@ -1000,13 +1000,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableTableResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableTableResourceData> GetAllRestorableTableResourceDataAsync(string restoreLocation = default, string restoreTimestampInUtc = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RestorableTableResourceData> GetRestorableTableResourcesAsync(AzureLocation? restoreLocation = default, string restoreTimestampInUtc = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableTableResourcesGetAllRestorableTableResourceDataAsyncCollectionResultOfT(
+            return new RestorableTableResourcesGetRestorableTableResourcesAsyncCollectionResultOfT(
                 _restorableTableResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -1014,7 +1014,7 @@ namespace Azure.ResourceManager.CosmosDB
                 restoreLocation,
                 restoreTimestampInUtc,
                 context,
-                "RestorableCosmosDBAccountResource.GetAllRestorableTableResourceData");
+                "RestorableCosmosDBAccountResource.GetRestorableTableResources");
         }
 
         /// <summary>
@@ -1042,13 +1042,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableTableResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableTableResourceData> GetAllRestorableTableResourceData(string restoreLocation = default, string restoreTimestampInUtc = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<RestorableTableResourceData> GetRestorableTableResources(AzureLocation? restoreLocation = default, string restoreTimestampInUtc = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableTableResourcesGetAllRestorableTableResourceDataCollectionResultOfT(
+            return new RestorableTableResourcesGetRestorableTableResourcesCollectionResultOfT(
                 _restorableTableResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -1056,7 +1056,7 @@ namespace Azure.ResourceManager.CosmosDB
                 restoreLocation,
                 restoreTimestampInUtc,
                 context,
-                "RestorableCosmosDBAccountResource.GetAllRestorableTableResourceData");
+                "RestorableCosmosDBAccountResource.GetRestorableTableResources");
         }
 
         /// <summary>

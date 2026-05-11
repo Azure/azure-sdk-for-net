@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,19 +14,19 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal partial class RestorableGremlinResourcesGetAllRestorableGremlinResourceDataAsyncCollectionResultOfT : AsyncPageable<RestorableGremlinResourceData>
+    internal partial class RestorableTableResourcesGetRestorableTableResourcesCollectionResultOfT : Pageable<RestorableTableResourceData>
     {
-        private readonly RestorableGremlinResources _client;
+        private readonly RestorableTableResources _client;
         private readonly Guid _subscriptionId;
         private readonly AzureLocation _location;
         private readonly Guid _instanceId;
-        private readonly string _restoreLocation;
+        private readonly AzureLocation? _restoreLocation;
         private readonly string _restoreTimestampInUtc;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of RestorableGremlinResourcesGetAllRestorableGremlinResourceDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The RestorableGremlinResources client used to send requests. </param>
+        /// <summary> Initializes a new instance of RestorableTableResourcesGetRestorableTableResourcesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The RestorableTableResources client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RestorableGremlinResourcesGetAllRestorableGremlinResourceDataAsyncCollectionResultOfT(RestorableGremlinResources client, Guid subscriptionId, AzureLocation location, Guid instanceId, string restoreLocation, string restoreTimestampInUtc, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RestorableTableResourcesGetRestorableTableResourcesCollectionResultOfT(RestorableTableResources client, Guid subscriptionId, AzureLocation location, Guid instanceId, AzureLocation? restoreLocation, string restoreTimestampInUtc, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -47,22 +46,22 @@ namespace Azure.ResourceManager.CosmosDB
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of RestorableGremlinResourcesGetAllRestorableGremlinResourceDataAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of RestorableTableResourcesGetRestorableTableResourcesCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of RestorableGremlinResourcesGetAllRestorableGremlinResourceDataAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<RestorableGremlinResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of RestorableTableResourcesGetRestorableTableResourcesCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<RestorableTableResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                RestorableGremlinResourcesListResult result = RestorableGremlinResourcesListResult.FromResponse(response);
-                yield return Page<RestorableGremlinResourceData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                RestorableTableResourcesListResult result = RestorableTableResourcesListResult.FromResponse(response);
+                yield return Page<RestorableTableResourceData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -75,14 +74,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRestorableGremlinResourceDataRequest(nextLink, _subscriptionId, _location, _instanceId, _restoreLocation, _restoreTimestampInUtc, _context) : _client.CreateGetAllRestorableGremlinResourceDataRequest(_subscriptionId, _location, _instanceId, _restoreLocation, _restoreTimestampInUtc, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetRestorableTableResourcesRequest(nextLink, _subscriptionId, _location, _instanceId, _restoreLocation, _restoreTimestampInUtc, _context) : _client.CreateGetRestorableTableResourcesRequest(_subscriptionId, _location, _instanceId, _restoreLocation, _restoreTimestampInUtc, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

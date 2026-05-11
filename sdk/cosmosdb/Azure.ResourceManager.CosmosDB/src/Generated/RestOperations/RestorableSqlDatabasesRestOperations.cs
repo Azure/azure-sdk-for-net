@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, AzureLocation location, Guid instanceId, RequestContext context)
+        internal HttpMessage CreateGetRestorableSqlDatabasesRequest(Guid subscriptionId, AzureLocation location, Guid instanceId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, Guid instanceId, RequestContext context)
+        internal HttpMessage CreateNextGetRestorableSqlDatabasesRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, Guid instanceId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -4,30 +4,25 @@
 #nullable disable
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-// MPG flattens nested `properties: DatabaseAccountCreateUpdateProperties` into get-only
-// proxies on this wrapper because DatabaseAccountCreateUpdateProperties has no
-// parameterless public constructor (its `locations` and `databaseAccountOfferType`
-// are required), so PropertyHelpers.GetFlags returns IsReadOnly=false but
-// BuildSetterForSafeFlatten cannot synthesize a lazy-create setter and the setter
-// is dropped. JsonModelWriteCore writes the inner Properties object directly
-// (writer.WriteObjectValue(Properties, options)), so re-emitting the proxies with
-// setters that mutate the always-non-null Properties leaf preserves wire shape.
+// The MPG generator emits all flattened properties on the wrapper as get-only
+// proxies onto the inner `DatabaseAccountCreateUpdateProperties` holder because
+// the holder has required ctor parameters (locations, databaseAccountOfferType)
+// and the generator cannot synthesize a lazy-create setter. The previously shipped
+// AutoRest contract exposed these properties as { get; set; }. Suppress each
+// get-only property and re-emit it with both accessors so the historical surface
+// is preserved without touching wire-serialization.
 //
-// This partial also restores three type-drifts vs the previous AutoRest contract:
-//   * IPRules (uppercase P) alias for the new IpRules
-//   * KeyVaultKeyUri exposed as System.Uri (inner is string)
-//   * NetworkAclBypassResourceIds exposed as IList<ResourceIdentifier> (inner is IList<string>)
-// And restores the Identity property dropped by `OmitProperties<..., "identity">` in
-// client.tsp. Identity is API-surface only; the wrapper spec omits it, so values set
-// here are NOT serialized to the wire. Service-side wire-serialization for Identity
-// requires a spec change (remove "identity" from OmitProperties).
+// Notes:
+//   * Identity, IPRules, KeyVaultKeyUri (Uri), NetworkAclBypassResourceIds
+//     (IList<ResourceIdentifier>) and the flattened spread of properties are now
+//     all driven by client.tsp customizations — no manual aliasing needed here.
+//   * A back-compat 2-arg public ctor is restored to match the previously shipped
+//     `(AzureLocation location, IEnumerable<CosmosDBAccountLocation> locations)`
+//     signature; the generator only emits the 3-arg required-form ctor.
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -57,7 +52,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
     [CodeGenSuppress("KeyVaultKeyUri")]
     [CodeGenSuppress("MinimalTlsVersion")]
     [CodeGenSuppress("NetworkAclBypass")]
-    [CodeGenSuppress("NetworkAclBypassResourceIds")]
     [CodeGenSuppress("PublicNetworkAccess")]
     [CodeGenSuppress("RestoreParameters")]
     public partial class CosmosDBAccountCreateOrUpdateContent
@@ -66,11 +60,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> is null. </exception>
-        public CosmosDBAccountCreateOrUpdateContent(AzureLocation location, IEnumerable<CosmosDBAccountLocation> locations) : base(location)
+        public CosmosDBAccountCreateOrUpdateContent(AzureLocation location, IEnumerable<CosmosDBAccountLocation> locations)
+            : this(location, locations, default)
         {
-            Argument.AssertNotNull(locations, nameof(locations));
-
-            Properties = new DatabaseAccountCreateUpdateProperties(locations, default);
         }
 
         /// <summary> The consistency policy for the Cosmos DB account. </summary>
@@ -97,6 +89,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             set => Properties.EnableAutomaticFailover = value;
         }
 
+        /// <summary> Enables the account to write in multiple locations. </summary>
+        [WirePath("properties.enableMultipleWriteLocations")]
+        public bool? EnableMultipleWriteLocations
+        {
+            get => Properties.EnableMultipleWriteLocations;
+            set => Properties.EnableMultipleWriteLocations = value;
+        }
+
+        /// <summary> Enables the cassandra connector on the Cosmos DB C* account. </summary>
+        [WirePath("properties.enableCassandraConnector")]
+        public bool? EnableCassandraConnector
+        {
+            get => Properties.EnableCassandraConnector;
+            set => Properties.EnableCassandraConnector = value;
+        }
+
         /// <summary> The cassandra connector offer type for the Cosmos DB database C* account. </summary>
         [WirePath("properties.connectorOffer")]
         public ConnectorOffer? ConnectorOffer
@@ -111,6 +119,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get => Properties.DisableKeyBasedMetadataWriteAccess;
             set => Properties.DisableKeyBasedMetadataWriteAccess = value;
+        }
+
+        /// <summary> The URI of the key vault. </summary>
+        [WirePath("properties.keyVaultKeyUri")]
+        public Uri KeyVaultKeyUri
+        {
+            get => Properties.KeyVaultKeyUri;
+            set => Properties.KeyVaultKeyUri = value;
         }
 
         /// <summary> The default identity for accessing key vault used in features like customer managed keys. </summary>
@@ -149,19 +165,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("properties.analyticalStorageConfiguration.schemaType")]
         public AnalyticalStorageSchemaType? AnalyticalStorageSchemaType
         {
-            get => Properties.AnalyticalStorageConfiguration?.SchemaType;
-            set
-            {
-                if (value.HasValue)
-                {
-                    Properties.AnalyticalStorageConfiguration ??= new AnalyticalStorageConfiguration();
-                    Properties.AnalyticalStorageConfiguration.SchemaType = value;
-                }
-                else if (Properties.AnalyticalStorageConfiguration is not null)
-                {
-                    Properties.AnalyticalStorageConfiguration.SchemaType = value;
-                }
-            }
+            get => Properties.AnalyticalStorageSchemaType;
+            set => Properties.AnalyticalStorageSchemaType = value;
         }
 
         /// <summary> Describes the mode of account creation. </summary>
@@ -208,27 +213,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("properties.capacity.totalThroughputLimit")]
         public int? CapacityTotalThroughputLimit
         {
-            get => Properties.Capacity?.TotalThroughputLimit;
-            set
-            {
-                if (value.HasValue)
-                {
-                    Properties.Capacity ??= new CosmosDBAccountCapacity();
-                    Properties.Capacity.TotalThroughputLimit = value.Value;
-                }
-                else if (Properties.Capacity is not null)
-                {
-                    Properties.Capacity.TotalThroughputLimit = default;
-                }
-            }
-        }
-
-        /// <summary> Flag to indicate enabling/disabling of Materialized Views on the Cosmos DB account. </summary>
-        [WirePath("properties.enableMaterializedViews")]
-        public bool? EnableMaterializedViews
-        {
-            get => Properties.EnableMaterializedViews;
-            set => Properties.EnableMaterializedViews = value;
+            get => Properties.CapacityTotalThroughputLimit;
+            set => Properties.CapacityTotalThroughputLimit = value;
         }
 
         /// <summary> Flag to indicate enabling/disabling of Partition Merge feature on the account. </summary>
@@ -287,20 +273,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             set => Properties.EnablePerRegionPerPartitionAutoscale = value;
         }
 
-        /// <summary> Enables enabling/disabling of MultipleWriteLocations on Cosmos DB. </summary>
-        [WirePath("properties.enableMultipleWriteLocations")]
-        public bool? EnableMultipleWriteLocations
+        /// <summary> Describes the ServerVersion of an a MongoDB account. </summary>
+        [WirePath("properties.apiProperties.serverVersion")]
+        public CosmosDBServerVersion? ApiServerVersion
         {
-            get => Properties.EnableMultipleWriteLocations;
-            set => Properties.EnableMultipleWriteLocations = value;
-        }
-
-        /// <summary> Enables the cassandra connector on Cosmos DB. </summary>
-        [WirePath("properties.enableCassandraConnector")]
-        public bool? EnableCassandraConnector
-        {
-            get => Properties.EnableCassandraConnector;
-            set => Properties.EnableCassandraConnector = value;
+            get => Properties.ApiServerVersion;
+            set => Properties.ApiServerVersion = value;
         }
 
         /// <summary> The offer type for the database. </summary>
@@ -309,88 +287,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get => Properties.DatabaseAccountOfferType;
             set => Properties.DatabaseAccountOfferType = value;
-        }
-
-        /// <summary> Describes the ServerVersion of an a MongoDB account. </summary>
-        [WirePath("properties.apiProperties.serverVersion")]
-        public CosmosDBServerVersion? ApiServerVersion
-        {
-            get => Properties.ApiProperties?.ServerVersion;
-            set
-            {
-                if (value.HasValue)
-                {
-                    Properties.ApiProperties ??= new ApiProperties();
-                    Properties.ApiProperties.ServerVersion = value;
-                }
-                else if (Properties.ApiProperties is not null)
-                {
-                    Properties.ApiProperties.ServerVersion = value;
-                }
-            }
-        }
-
-        // ----- Type-drift restorations (additive aliases / typed wrappers) -----
-
-        /// <summary> List of IpRules. Back-compat alias for <see cref="IpRules"/>. </summary>
-        [WirePath("properties.ipRules")]
-        public IList<CosmosDBIPAddressOrRange> IPRules => IpRules;
-
-        /// <summary> The URI of the key vault. Back-compat wrapper for the inner string. </summary>
-        [WirePath("properties.keyVaultKeyUri")]
-        public Uri KeyVaultKeyUri
-        {
-            get => Properties.KeyVaultKeyUri is null ? null : new Uri(Properties.KeyVaultKeyUri);
-            set => Properties.KeyVaultKeyUri = value?.AbsoluteUri;
-        }
-
-        /// <summary> An array of resource IDs allowed to bypass the network ACL. Back-compat <see cref="ResourceIdentifier"/> view over the inner <see cref="IList{T}"/> of strings. </summary>
-        [WirePath("properties.networkAclBypassResourceIds")]
-        public IList<ResourceIdentifier> NetworkAclBypassResourceIds
-            => Properties.NetworkAclBypassResourceIds is null ? null : new ResourceIdentifierStringListView(Properties.NetworkAclBypassResourceIds);
-
-        /// <summary>
-        /// Back-compat surface only. The TypeSpec wrapper for this body model omits "identity"
-        /// (see client.tsp <c>OmitProperties&lt;DatabaseAccountCreateUpdateParameters, "identity"&gt;</c>),
-        /// so values assigned here are NOT serialized to the wire. To restore wire-serialization,
-        /// remove "identity" from the OmitProperties list in client.tsp.
-        /// </summary>
-        [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
-
-        /// <summary> Live-view <see cref="IList{T}"/> of <see cref="ResourceIdentifier"/> over the underlying <see cref="IList{T}"/> of strings. Mutations on this view propagate to the inner string list and therefore to the wire. </summary>
-        private sealed class ResourceIdentifierStringListView : IList<ResourceIdentifier>
-        {
-            private readonly IList<string> _inner;
-            public ResourceIdentifierStringListView(IList<string> inner) => _inner = inner;
-
-            public ResourceIdentifier this[int index]
-            {
-                get => _inner[index] is null ? null : new ResourceIdentifier(_inner[index]);
-                set => _inner[index] = value?.ToString();
-            }
-
-            public int Count => _inner.Count;
-            public bool IsReadOnly => _inner.IsReadOnly;
-            public void Add(ResourceIdentifier item) => _inner.Add(item?.ToString());
-            public void Clear() => _inner.Clear();
-            public bool Contains(ResourceIdentifier item) => _inner.Contains(item?.ToString());
-            public void CopyTo(ResourceIdentifier[] array, int arrayIndex)
-            {
-                if (array is null) throw new ArgumentNullException(nameof(array));
-                for (int i = 0; i < _inner.Count; i++)
-                    array[arrayIndex + i] = _inner[i] is null ? null : new ResourceIdentifier(_inner[i]);
-            }
-            public IEnumerator<ResourceIdentifier> GetEnumerator()
-            {
-                foreach (var s in _inner)
-                    yield return s is null ? null : new ResourceIdentifier(s);
-            }
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-            public int IndexOf(ResourceIdentifier item) => _inner.IndexOf(item?.ToString());
-            public void Insert(int index, ResourceIdentifier item) => _inner.Insert(index, item?.ToString());
-            public bool Remove(ResourceIdentifier item) => _inner.Remove(item?.ToString());
-            public void RemoveAt(int index) => _inner.RemoveAt(index);
         }
     }
 }

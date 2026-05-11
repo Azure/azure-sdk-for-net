@@ -40,17 +40,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> Indicates the type of database account. This can only be set at database account creation. </param>
+        /// <param name="identity"></param>
         /// <param name="properties"> Properties to create and update Azure Cosmos DB database accounts. </param>
-        internal CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, DatabaseAccountCreateUpdateProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ManagedServiceIdentity identity, DatabaseAccountCreateUpdateProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Kind = kind;
+            Identity = identity;
             Properties = properties;
         }
 
         /// <summary> Indicates the type of database account. This can only be set at database account creation. </summary>
         [WirePath("kind")]
         public CosmosDBAccountKind? Kind { get; set; }
+
+        /// <summary> Gets or sets the Identity. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Properties to create and update Azure Cosmos DB database accounts. </summary>
         [WirePath("properties")]
@@ -68,11 +74,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> List of IpRules. </summary>
         [WirePath("properties.ipRules")]
-        public IList<CosmosDBIPAddressOrRange> IpRules
+        public IList<CosmosDBIPAddressOrRange> IPRules
         {
             get
             {
-                return Properties is null ? default : Properties.IpRules;
+                return Properties is null ? default : Properties.IPRules;
             }
         }
 
@@ -106,6 +112,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
+        /// <summary> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </summary>
+        [WirePath("properties.networkAclBypassResourceIds")]
+        public IList<ResourceIdentifier> NetworkAclBypassResourceIds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkAclBypassResourceIds;
+            }
+        }
+
         /// <summary> Indicates the capacityMode of the Cosmos DB account. </summary>
         [WirePath("properties.capacityMode")]
         public CapacityMode? CapacityMode
@@ -113,6 +129,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get
             {
                 return Properties.CapacityMode;
+            }
+        }
+
+        /// <summary> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </summary>
+        [WirePath("properties.enableMaterializedViews")]
+        public bool? EnableMaterializedViews
+        {
+            get
+            {
+                return Properties.EnableMaterializedViews;
             }
         }
 

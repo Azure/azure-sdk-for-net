@@ -6,20 +6,16 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    // The generator emits a backward-compatible CassandraClusterDataCenterNodeItem
-    // factory overload that takes Guid? hostId, but the model's hostId property is
-    // typed as string. The auto-generated body passes the Guid? straight to the
-    // string-typed constructor and fails to compile (CS1503). Suppress the broken
-    // overload via [CodeGenSuppress] and re-declare it here with an explicit
-    // hostId.ToString() conversion so the public surface preserves the historical
-    // Guid? signature.
+    // The previously shipped CassandraClusterDataCenterNodeItem factory had 17
+    // parameters; the regenerated factory adds an 18th parameter `isLatestModel`.
+    // Add a back-compat 17-parameter overload that forwards to the generated
+    // 18-parameter factory with isLatestModel set to default(bool?).
     [CodeGenSuppress(
         "CassandraClusterDataCenterNodeItem",
         typeof(string),
