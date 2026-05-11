@@ -268,7 +268,7 @@ public static class ModelReaderWriter
         }
         else if (returnObj is IPersistableModel<object> persistableModel)
         {
-            return options.ResolveProxy(persistableModel).Create(data, options);
+            return options.ReadWithChain(persistableModel, data);
         }
         else
         {

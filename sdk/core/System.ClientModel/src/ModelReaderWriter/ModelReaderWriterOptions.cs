@@ -76,7 +76,7 @@ public class ModelReaderWriterOptions
 
     /// <summary>
     /// Gets the <see cref="IPersistableModel{T}"/> proxy for the specified <typeparamref name="T"/> model type.
-    /// Returns the last registered proxy (highest priority) that matches.
+    /// Returns the last registered proxy (highest priority).
     /// </summary>
     /// <param name="proxy"> The <see cref="IPersistableModel{T}"/> proxy if one exists. </param>
     /// <returns> True if a proxy for <typeparamref name="T"/> was found; otherwise, false. </returns>
@@ -143,8 +143,9 @@ public class ModelReaderWriterOptions
     }
 
     /// <summary>
-    /// Resolves the proxy chain for the specified model type, returning the highest-priority
-    /// <see cref="IPersistableModel{T}"/> proxy. If no proxy is registered, returns the model itself.
+    /// Resolves the proxy chain for the specified model type on the write path, returning the highest-priority
+    /// <see cref="IPersistableModel{T}"/> proxy (last registered wins).
+    /// If no proxy is registered, returns the model itself.
     /// </summary>
     /// <param name="model"> The <see cref="IPersistableModel{T}"/> model to proxy. </param>
     /// <returns> The <see cref="IPersistableModel{T}"/> proxy if one was found otherwise returns <paramref name="model"/>. </returns>
@@ -155,14 +156,15 @@ public class ModelReaderWriterOptions
             return model;
         }
 
-        // Last registered = highest priority
+        // Write path: last registered = highest priority
         ProxiedModel = model;
         return (IPersistableModel<T>)chain[chain.Count - 1];
     }
 
     /// <summary>
-    /// Resolves the proxy chain for the specified model type, returning the highest-priority
-    /// <see cref="IJsonModel{T}"/> proxy. If no proxy is registered, returns the model itself.
+    /// Resolves the proxy chain for the specified model type on the write path, returning the highest-priority
+    /// <see cref="IJsonModel{T}"/> proxy (last registered wins).
+    /// If no proxy is registered, returns the model itself.
     /// </summary>
     /// <param name="model"> The <see cref="IJsonModel{T}"/> model to proxy. </param>
     /// <returns> The <see cref="IJsonModel{T}"/> proxy if one was found otherwise returns <paramref name="model"/>. </returns>
@@ -173,7 +175,7 @@ public class ModelReaderWriterOptions
             return model;
         }
 
-        // Walk chain last-to-first, return the first IJsonModel<T> match
+        // Write path: walk chain last-to-first, return the first IJsonModel<T> match
         for (int i = chain.Count - 1; i >= 0; i--)
         {
             if (chain[i] is IJsonModel<T> jsonResult)
@@ -184,5 +186,40 @@ public class ModelReaderWriterOptions
         }
 
         return model;
+    }
+
+    /// <summary>
+    /// Resolves a proxy for reading by walking the chain of responsibility. Each proxy's
+    /// <see cref="IPersistableModel{T}.Create(BinaryData, ModelReaderWriterOptions)"/> is called
+    /// from most recently registered to first. If a proxy returns <c>null</c>, it declines and
+    /// the next proxy is tried. If all proxies decline, the model itself handles the read.
+    /// </summary>
+    /// <param name="model"> The <see cref="IPersistableModel{T}"/> model instance (used as terminal fallback). </param>
+    /// <param name="data"> The data to read. </param>
+    /// <returns> The deserialized instance of <typeparamref name="T"/>. </returns>
+    internal T? ReadWithChain<T>(IPersistableModel<T> model, BinaryData data)
+    {
+        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<object>? chain) || chain.Count == 0)
+        {
+            return model.Create(data, this);
+        }
+
+        // Walk chain last-to-first, call Create on each proxy. null = decline.
+        for (int i = chain.Count - 1; i >= 0; i--)
+        {
+            if (chain[i] is IPersistableModel<T> proxy)
+            {
+                ProxiedModel = model;
+                T? result = proxy.Create(data, this);
+                if (result is not null)
+                {
+                    return result;
+                }
+            }
+        }
+
+        // All proxies declined — model handles it
+        ProxiedModel = null;
+        return model.Create(data, this);
     }
 }

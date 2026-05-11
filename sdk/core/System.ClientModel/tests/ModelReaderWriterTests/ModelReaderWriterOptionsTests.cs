@@ -351,5 +351,242 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 }
             }
         }
+
+        #region Chain of responsibility read tests
+
+        [Test]
+        public void ReadWithChain_SingleProxy_ReturnsProxyResult()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy = new ChainProxy(handleRead: true);
+            options.AddProxy<SimpleModel>(proxy);
+
+            var model = new SimpleModel();
+            var data = BinaryData.FromString("{}");
+            var result = options.ReadWithChain<SimpleModel>((IPersistableModel<SimpleModel>)model, data);
+            Assert.IsNotNull(result);
+            Assert.IsTrue(proxy.CreateWasCalled);
+        }
+
+        [Test]
+        public void ReadWithChain_ProxyDeclinesWithNull_FallsToModel()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy = new ChainProxy(handleRead: false); // returns null = decline
+            options.AddProxy<SimpleModel>(proxy);
+
+            var model = new SimpleModel();
+            var data = BinaryData.FromString("{}");
+            var result = options.ReadWithChain<SimpleModel>((IPersistableModel<SimpleModel>)model, data);
+            Assert.IsNotNull(result);
+            Assert.IsTrue(proxy.CreateWasCalled);
+            // Model handled it since proxy declined
+            Assert.IsNull(options.ProxiedModel);
+        }
+
+        [Test]
+        public void ReadWithChain_SecondProxyHandlesAfterFirstDeclines()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy1 = new ChainProxy(handleRead: true);   // will handle
+            var proxy2 = new ChainProxy(handleRead: false);  // will decline
+
+            options.AddProxy<SimpleModel>(proxy1);
+            options.AddProxy<SimpleModel>(proxy2);
+
+            var model = new SimpleModel();
+            var data = BinaryData.FromString("{}");
+            var result = options.ReadWithChain<SimpleModel>((IPersistableModel<SimpleModel>)model, data);
+
+            Assert.IsNotNull(result);
+            // proxy2 was tried first (last added), declined
+            Assert.IsTrue(proxy2.CreateWasCalled);
+            // proxy1 was tried next, handled it
+            Assert.IsTrue(proxy1.CreateWasCalled);
+        }
+
+        [Test]
+        public void ReadWithChain_AllProxiesDecline_ModelHandlesIt()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy1 = new ChainProxy(handleRead: false);
+            var proxy2 = new ChainProxy(handleRead: false);
+
+            options.AddProxy<SimpleModel>(proxy1);
+            options.AddProxy<SimpleModel>(proxy2);
+
+            var model = new SimpleModel();
+            var data = BinaryData.FromString("{}");
+            var result = options.ReadWithChain<SimpleModel>((IPersistableModel<SimpleModel>)model, data);
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(proxy1.CreateWasCalled);
+            Assert.IsTrue(proxy2.CreateWasCalled);
+            // ProxiedModel cleared since model handled it
+            Assert.IsNull(options.ProxiedModel);
+        }
+
+        [Test]
+        public void ReadWithChain_NoProxies_ModelHandlesIt()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var model = new SimpleModel();
+            var data = BinaryData.FromString("{}");
+
+            var result = options.ReadWithChain<SimpleModel>((IPersistableModel<SimpleModel>)model, data);
+            Assert.IsNotNull(result);
+        }
+
+        [Test]
+        public void ReadWithChain_DiscriminatorPattern()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            // Default proxy handles everything
+            var defaultProxy = new ChainProxy(handleRead: true);
+            // Discriminator proxy only handles data containing "special"
+            var discriminatorProxy = new DiscriminatorProxy("special");
+
+            options.AddProxy<SimpleModel>(defaultProxy);
+            options.AddProxy<SimpleModel>(discriminatorProxy);
+
+            var model = new SimpleModel();
+
+            // Data with discriminator — discriminatorProxy handles
+            var specialData = BinaryData.FromString("{\"type\":\"special\"}");
+            var result = options.ReadWithChain<SimpleModel>((IPersistableModel<SimpleModel>)model, specialData);
+            Assert.IsNotNull(result);
+            Assert.IsTrue(discriminatorProxy.CreateWasCalled);
+            Assert.IsFalse(defaultProxy.CreateWasCalled);
+
+            // Reset
+            discriminatorProxy.Reset();
+            defaultProxy.Reset();
+
+            // Data without discriminator — discriminatorProxy declines, defaultProxy handles
+            var normalData = BinaryData.FromString("{\"type\":\"standard\"}");
+            result = options.ReadWithChain<SimpleModel>((IPersistableModel<SimpleModel>)model, normalData);
+            Assert.IsNotNull(result);
+            Assert.IsTrue(discriminatorProxy.CreateWasCalled); // was called, returned null
+            Assert.IsTrue(defaultProxy.CreateWasCalled); // handled it
+        }
+
+        [Test]
+        public void ResolveProxy_Write_StillLastWins()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy1 = new ChainProxy(handleRead: false);
+            var proxy2 = new ChainProxy(handleRead: false);
+
+            options.AddProxy<SimpleModel>(proxy1);
+            options.AddProxy<SimpleModel>(proxy2);
+
+            // Write always uses last added regardless of read behavior
+            var model = new SimpleModel();
+            var resolved = options.ResolveProxy<SimpleModel>((IPersistableModel<SimpleModel>)model);
+            Assert.AreSame(proxy2, resolved);
+        }
+
+        /// <summary>
+        /// Simple model without AssertOptions logic, used for chain tests.
+        /// </summary>
+        private class SimpleModel : IJsonModel<SimpleModel>
+        {
+            SimpleModel IJsonModel<SimpleModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+                => new SimpleModel();
+
+            SimpleModel IPersistableModel<SimpleModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+                => new SimpleModel();
+
+            string IPersistableModel<SimpleModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+            void IJsonModel<SimpleModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                writer.WriteStartObject();
+                writer.WriteEndObject();
+            }
+
+            BinaryData IPersistableModel<SimpleModel>.Write(ModelReaderWriterOptions options)
+                => ModelReaderWriter.Write(this, options);
+        }
+
+        /// <summary>
+        /// A proxy that can be configured to handle or decline reads.
+        /// Returning null from Create signals "I can't handle this, try the next proxy."
+        /// </summary>
+        private class ChainProxy : IJsonModel<SimpleModel>
+        {
+            private readonly bool _handleRead;
+            public bool CreateWasCalled { get; private set; }
+
+            public ChainProxy(bool handleRead)
+            {
+                _handleRead = handleRead;
+            }
+
+            public void Reset() => CreateWasCalled = false;
+
+            SimpleModel? IPersistableModel<SimpleModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            {
+                CreateWasCalled = true;
+                return _handleRead ? new SimpleModel() : null;
+            }
+
+            SimpleModel IJsonModel<SimpleModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+                => new SimpleModel();
+
+            void IJsonModel<SimpleModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                writer.WriteStartObject();
+                writer.WriteEndObject();
+            }
+
+            BinaryData IPersistableModel<SimpleModel>.Write(ModelReaderWriterOptions options)
+                => ModelReaderWriter.Write(this, options);
+
+            string IPersistableModel<SimpleModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        }
+
+        /// <summary>
+        /// A proxy that peeks at the data to check for a discriminator value.
+        /// Returns null (declines) if the discriminator doesn't match.
+        /// </summary>
+        private class DiscriminatorProxy : IJsonModel<SimpleModel>
+        {
+            private readonly string _discriminatorValue;
+            public bool CreateWasCalled { get; private set; }
+
+            public DiscriminatorProxy(string discriminatorValue)
+            {
+                _discriminatorValue = discriminatorValue;
+            }
+
+            public void Reset() => CreateWasCalled = false;
+
+            SimpleModel? IPersistableModel<SimpleModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            {
+                CreateWasCalled = true;
+                if (data.ToString().Contains($"\"type\":\"{_discriminatorValue}\""))
+                {
+                    return new SimpleModel();
+                }
+                return null; // decline
+            }
+
+            SimpleModel IJsonModel<SimpleModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+                => new SimpleModel();
+
+            void IJsonModel<SimpleModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                writer.WriteStartObject();
+                writer.WriteEndObject();
+            }
+
+            BinaryData IPersistableModel<SimpleModel>.Write(ModelReaderWriterOptions options)
+                => ModelReaderWriter.Write(this, options);
+
+            string IPersistableModel<SimpleModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        }
+
+        #endregion
     }
 }

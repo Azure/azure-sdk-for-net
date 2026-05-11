@@ -102,8 +102,16 @@ BinaryData data = ModelReaderWriter.Write(model, options);
 ### Proxy Chain of Responsibility
 
 Multiple proxies can be registered for the same model type to form a chain of responsibility.
-When multiple proxies are registered, the most recently registered proxy has the highest priority and is consulted first.
-If a library registers a base proxy and a consumer registers a more specific one, the consumer's proxy takes precedence.
+The chain resolution differs for reading and writing:
+
+**Write path:** The most recently registered proxy wins unconditionally (last-added-wins).
+
+**Read path:** Proxies are consulted from most recently registered to first. Each proxy's
+`Create` method is called — if it returns `null`, it declines and the next proxy is tried.
+If all proxies decline, the model itself handles the read as a terminal fallback.
+
+This enables advanced scenarios such as discriminator-based routing, where a proxy can
+inspect the incoming data and decide whether it can handle the deserialization.
 
 ```C# Snippet:Readme_Proxy_Chain
 string json = @"{
