@@ -27,6 +27,7 @@ $testProjects = @(
         Folder     = "AzureSql"
         EntryTsp   = "main.tsp"
         Csproj     = "Azure.TypeSpec.Generator.AspNetServer.AzureSql.csproj"
+        TestCsproj = "Azure.TypeSpec.Generator.AspNetServer.AzureSql.Tests.csproj"
     }
 )
 
@@ -68,6 +69,15 @@ foreach ($project in $testProjects) {
         & dotnet build $csproj
         if ($LASTEXITCODE -ne 0) {
             throw "dotnet build failed for $($project.FilterName) (exit $LASTEXITCODE)."
+        }
+    }
+
+    $testCsproj = Join-Path $projectDir 'tests' $project.TestCsproj
+    if (Test-Path $testCsproj) {
+        Write-Host "Testing $testCsproj..." -ForegroundColor Cyan
+        & dotnet test $testCsproj --no-restore
+        if ($LASTEXITCODE -ne 0) {
+            throw "dotnet test failed for $($project.FilterName) (exit $LASTEXITCODE)."
         }
     }
 }

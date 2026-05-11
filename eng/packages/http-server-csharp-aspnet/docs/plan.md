@@ -19,6 +19,9 @@ priority, but priorities will shift as we onboard pilot services.
 - End-to-end test scenario that generates contracts into an existing ASP.NET
   Core project (`generator/TestProjects/Local/AzureSql/src`) while preserving
   user-owned concrete controllers outside `src/Generated/`
+- ASP.NET Core integration tests for the AzureSql scenario using
+  `WebApplicationFactory<Program>` and real HTTP requests against generated
+  routes
 
 ## 🔜 Planned
 
