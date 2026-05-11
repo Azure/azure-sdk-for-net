@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -37,14 +38,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties?.Options;
             set
             {
-                if (Properties == null && value != null)
+                if (Properties == null)
                 {
-                    return;
+                    throw new InvalidOperationException("Options cannot be set before Resource is initialized; set Resource first to establish the inner Properties holder.");
                 }
-                if (Properties != null)
-                {
-                    Properties.Options = value;
-                }
+                Properties.Options = value;
             }
         }
     }

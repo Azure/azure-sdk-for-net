@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     // CosmosDBServiceCreateOrUpdateContent is generated as a wrapper around a
@@ -13,10 +15,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     // with required ctor args, so @@flattenProperty / BuildSetterForSafeFlatten
     // cannot synthesize lazy-create setters). Re-emit the historical top-level
     // accessors as proxies onto Properties to preserve back-compat without a spec
-    // change.
+    // change. The [WirePath] attributes mirror the wire-format paths the legacy
+    // AutoRest SDK exposed on the flattened surface.
     public partial class CosmosDBServiceCreateOrUpdateContent
     {
         /// <summary> Instance type for the service. </summary>
+        [WirePath("properties.instanceSize")]
         public CosmosDBServiceSize? InstanceSize
         {
             get
@@ -30,6 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Instance count for the service. </summary>
+        [WirePath("properties.instanceCount")]
         public int? InstanceCount
         {
             get
@@ -43,6 +48,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> ServiceType for the service. </summary>
+        [WirePath("properties.serviceType")]
         public CosmosDBServiceType? ServiceType
         {
             get
