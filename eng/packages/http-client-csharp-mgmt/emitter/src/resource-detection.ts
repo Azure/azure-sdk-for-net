@@ -527,7 +527,8 @@ export function buildArmProviderSchema(
   // move it into that resource as an Action (longest prefix wins).
   assignNonResourceMethodsToResources(
     filteredResources,
-    nonResourceMethodsArray
+    nonResourceMethodsArray,
+    methodResponseModelIdMap
   );
 
   // Compute per-resource API versions after all post-processing is complete,
