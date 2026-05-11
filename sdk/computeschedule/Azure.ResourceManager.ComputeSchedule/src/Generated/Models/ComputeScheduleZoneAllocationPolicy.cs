@@ -21,11 +21,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="distributionStrategy"> The distribution strategy for zone allocation. </param>
         public ComputeScheduleZoneAllocationPolicy(ComputeScheduleDistributionStrategy distributionStrategy)
         {
-            if (string.IsNullOrEmpty(distributionStrategy.ToString()))
-            {
-                throw new ArgumentException("Value cannot be null or empty.", nameof(distributionStrategy));
-            }
-
             DistributionStrategy = distributionStrategy;
             ZonePreferences = new ChangeTrackingList<ComputeScheduleZonePreference>();
         }

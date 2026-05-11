@@ -79,13 +79,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 throw new FormatException($"The model {nameof(ComputeScheduleZoneAllocationPolicy)} does not support writing '{format}' format.");
             }
-            string distributionStrategy = DistributionStrategy.ToString();
-            if (distributionStrategy is null)
-            {
-                throw new InvalidOperationException($"{nameof(DistributionStrategy)} must be defined before serializing {nameof(ComputeScheduleZoneAllocationPolicy)}.");
-            }
             writer.WritePropertyName("distributionStrategy"u8);
-            writer.WriteStringValue(distributionStrategy);
+            writer.WriteStringValue(DistributionStrategy.ToString());
             if (Optional.IsCollectionDefined(ZonePreferences))
             {
                 writer.WritePropertyName("zonePreferences"u8);
@@ -139,19 +134,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 return null;
             }
             ComputeScheduleDistributionStrategy distributionStrategy = default;
-            bool hasDistributionStrategy = false;
             IList<ComputeScheduleZonePreference> zonePreferences = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("distributionStrategy"u8))
                 {
-                    hasDistributionStrategy = true;
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        throw new FormatException($"Required property 'distributionStrategy' was null when deserializing {nameof(ComputeScheduleZoneAllocationPolicy)}.");
-                    }
-
                     distributionStrategy = new ComputeScheduleDistributionStrategy(prop.Value.GetString());
                     continue;
                 }
@@ -173,10 +161,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
-            }
-            if (!hasDistributionStrategy)
-            {
-                throw new FormatException($"Required property 'distributionStrategy' was missing when deserializing {nameof(ComputeScheduleZoneAllocationPolicy)}.");
             }
             return new ComputeScheduleZoneAllocationPolicy(distributionStrategy, zonePreferences ?? new ChangeTrackingList<ComputeScheduleZonePreference>(), additionalBinaryDataProperties);
         }
