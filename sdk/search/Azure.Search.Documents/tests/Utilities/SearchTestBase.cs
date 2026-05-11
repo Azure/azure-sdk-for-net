@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Tests
         /// The current API version under test. Change this single constant
         /// when a new version ships — all tests update automatically.
         /// </summary>
-        protected const SearchClientOptions.ServiceVersion LatestVersion = V2026_04_01;
+        protected const SearchClientOptions.ServiceVersion LatestVersion = V2026_05_01_Preview;
 
         /// <summary>
         /// Shared HTTP client instance with a longer timeout.  It's

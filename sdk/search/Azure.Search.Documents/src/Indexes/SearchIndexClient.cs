@@ -423,7 +423,7 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             return new PageableWrapper<BinaryData, SearchIndex>(
-                GetIndexes(cancellationToken.ToRequestContext()),
+                GetIndexes(top: null, skip: null, count: null, cancellationToken.ToRequestContext()),
                 data => SearchIndex.DeserializeSearchIndex(JsonElement.Parse(data), ModelSerializationExtensions.WireOptions),
                 supportsContinuationToken: false,
                 ClientDiagnostics,
@@ -441,7 +441,7 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             return new AsyncPageableWrapper<BinaryData, SearchIndex>(
-                GetIndexesAsync(cancellationToken.ToRequestContext()),
+                GetIndexesAsync(top: null, skip: null, count: null, cancellationToken.ToRequestContext()),
                 data => SearchIndex.DeserializeSearchIndex(JsonElement.Parse(data), ModelSerializationExtensions.WireOptions),
                 supportsContinuationToken: false,
                 ClientDiagnostics,

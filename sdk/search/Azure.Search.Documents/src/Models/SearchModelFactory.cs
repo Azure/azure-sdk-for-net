@@ -114,7 +114,7 @@ namespace Azure.Search.Documents.Models
             errors ??= new List<SearchIndexerError>();
             warnings ??= new List<SearchIndexerWarning>();
 
-            return new IndexerExecutionResult(status, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState, additionalBinaryDataProperties: null);
+            return new IndexerExecutionResult(status, statusDetail: null, mode: null, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of LexicalAnalyzer. </summary>

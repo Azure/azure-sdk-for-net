@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -22,17 +23,22 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentUnderstandingSkillChunkingProperties"/>. </summary>
+        /// <param name="method"> The chunking strategy. 'fixedSize' (default) or 'semantic'. </param>
         /// <param name="unit"> The unit of the chunk. </param>
         /// <param name="maximumLength"> The maximum chunk length in characters. Default is 500. </param>
         /// <param name="overlapLength"> The length of overlap provided between two text chunks. Default is 0. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentUnderstandingSkillChunkingProperties(ContentUnderstandingSkillChunkingUnit? unit, int? maximumLength, int? overlapLength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentUnderstandingSkillChunkingProperties(ContentUnderstandingSkillChunkingMethod? @method, ContentUnderstandingSkillChunkingUnit? unit, int? maximumLength, int? overlapLength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Method = @method;
             Unit = unit;
             MaximumLength = maximumLength;
             OverlapLength = overlapLength;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The chunking strategy. 'fixedSize' (default) or 'semantic'. </summary>
+        public ContentUnderstandingSkillChunkingMethod? Method { get; set; }
 
         /// <summary> The unit of the chunk. </summary>
         public ContentUnderstandingSkillChunkingUnit? Unit { get; set; }

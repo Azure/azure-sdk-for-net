@@ -244,6 +244,12 @@ namespace Azure.Search.Documents.Models
                         {
                             Dictionary<string, object> facetValues = new Dictionary<string, object>();
                             long? facetCount = null;
+                            double? facetAvg = null;
+                            double? facetMin = null;
+                            double? facetMax = null;
+                            double? facetSum = null;
+                            long? facetCardinality = null;
+                            IReadOnlyDictionary<string, IList<FacetResult>> nestedFacets = null;
                             foreach (JsonProperty facetProperty in facetValue.EnumerateObject())
                             {
                                 if (facetProperty.NameEquals(Constants.CountKeyJson.EncodedUtf8Bytes))
@@ -253,13 +259,65 @@ namespace Azure.Search.Documents.Models
                                         facetCount = facetProperty.Value.GetInt64();
                                     }
                                 }
+                                else if (facetProperty.NameEquals("avg"u8))
+                                {
+                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
+                                    {
+                                        facetAvg = facetProperty.Value.GetDouble();
+                                    }
+                                }
+                                else if (facetProperty.NameEquals("min"u8))
+                                {
+                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
+                                    {
+                                        facetMin = facetProperty.Value.GetDouble();
+                                    }
+                                }
+                                else if (facetProperty.NameEquals("max"u8))
+                                {
+                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
+                                    {
+                                        facetMax = facetProperty.Value.GetDouble();
+                                    }
+                                }
+                                else if (facetProperty.NameEquals("sum"u8))
+                                {
+                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
+                                    {
+                                        facetSum = facetProperty.Value.GetDouble();
+                                    }
+                                }
+                                else if (facetProperty.NameEquals("cardinality"u8))
+                                {
+                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
+                                    {
+                                        facetCardinality = facetProperty.Value.GetInt64();
+                                    }
+                                }
+                                else if (facetProperty.NameEquals("@search.facets"u8))
+                                {
+                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
+                                    {
+                                        Dictionary<string, IList<FacetResult>> nested = new Dictionary<string, IList<FacetResult>>();
+                                        foreach (JsonProperty nestedProp in facetProperty.Value.EnumerateObject())
+                                        {
+                                            List<FacetResult> nestedList = new List<FacetResult>();
+                                            foreach (JsonElement nestedItem in nestedProp.Value.EnumerateArray())
+                                            {
+                                                nestedList.Add(FacetResult.DeserializeFacetResult(nestedItem, ModelSerializationExtensions.WireOptions));
+                                            }
+                                            nested.Add(nestedProp.Name, nestedList);
+                                        }
+                                        nestedFacets = nested;
+                                    }
+                                }
                                 else
                                 {
                                     object value = facetProperty.Value.GetSearchObject();
                                     facetValues[facetProperty.Name] = value;
                                 }
                             }
-                            facets.Add(new FacetResult(facetCount, facetValues.ToBinaryDataDictionary()));
+                            facets.Add(new FacetResult(facetCount, facetAvg, facetMin, facetMax, facetSum, facetCardinality, nestedFacets, facetValues.ToBinaryDataDictionary()));
                         }
                         // Add the facet to the results
                         results.Facets[facetObject.Name] = facets;
