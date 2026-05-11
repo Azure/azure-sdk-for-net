@@ -70,7 +70,7 @@ namespace Azure.Provisioning.Cdn
     public partial class CacheKeyQueryStringActionProperties : Azure.Provisioning.Cdn.DeliveryRuleActionProperties
     {
         public CacheKeyQueryStringActionProperties() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.BicepValue<string>> QueryParameters { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> QueryParameters { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.QueryStringBehavior> QueryStringBehavior { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }

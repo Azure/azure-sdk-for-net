@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Cdn
     public partial class CacheKeyQueryStringActionProperties : DeliveryRuleActionProperties
     {
         private BicepValue<QueryStringBehavior> _queryStringBehavior;
-        private BicepValue<BicepValue<string>> _queryParameters;
+        private BicepValue<string> _queryParameters;
 
         /// <summary> Creates a new CacheKeyQueryStringActionProperties. </summary>
         public CacheKeyQueryStringActionProperties()
@@ -36,7 +36,7 @@ namespace Azure.Provisioning.Cdn
         }
 
         /// <summary> Gets or sets the QueryParameters. </summary>
-        public BicepValue<BicepValue<string>> QueryParameters
+        public BicepValue<string> QueryParameters
         {
             get
             {
@@ -56,7 +56,7 @@ namespace Azure.Provisioning.Cdn
             base.DefineProvisionableProperties();
             DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleCacheKeyQueryStringBehaviorActionParameters");
             _queryStringBehavior = DefineProperty<QueryStringBehavior>(nameof(QueryStringBehavior), new string[] { "queryStringBehavior" }, isRequired: true);
-            _queryParameters = DefineProperty<BicepValue<string>>(nameof(QueryParameters), new string[] { "queryParameters" });
+            _queryParameters = DefineProperty<string>(nameof(QueryParameters), new string[] { "queryParameters" });
         }
     }
 }
