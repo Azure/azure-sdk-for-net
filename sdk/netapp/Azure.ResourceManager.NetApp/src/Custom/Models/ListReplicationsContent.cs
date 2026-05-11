@@ -3,12 +3,16 @@
 
 #nullable disable
 
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
-    // `Exclude` and `ExcludeReplicationsFilter` are aliases for the same underlying property.
     public partial class ListReplicationsContent
     {
+        // Backward-compat: Exclude shipped in GA as an alias for the generated
+        // ExcludeReplicationsFilter property. Keep it hidden from IntelliSense.
         /// <summary> Exclude Replications filter. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ExcludeReplicationsFilter? Exclude
         {
             get => ExcludeReplicationsFilter;
