@@ -4,6 +4,20 @@
 
 ### Features Added
 
+- Added support for `2026-05-01-preview` service version.
+- Added `QueryLanguage`, `QuerySpeller`, `QueryRewrites`, and `SemanticFields` properties to `SearchOptions` for enhanced semantic search configuration.
+- Added `HybridSearch` property to `SearchOptions` for hybrid search query configuration.
+- Added `SemanticDebugInfo` and `InnerHits` properties to `DocumentDebugInfo` for richer debugging insights.
+- Added `Avg`, `Min`, `Max`, `Sum`, `Cardinality`, and `Facets` properties to `FacetResult` for enhanced facet analytics.
+- Added `querySourceAuthorization` and `enableElevatedRead` parameters to search and document operations.
+- Added `skipIndexerResetRequirementForCache` and `disableCacheReprocessingChangeDetection` parameters to indexer, data source, and skillset create/update operations.
+- Added `top`, `skip`, and `count` parameters to `GetIndexes` and `GetIndexesWithSelectedProperties` operations on `SearchIndexClient`.
+- Added `Runtime` property to `SearchIndexerStatus` for indexer runtime tracking.
+- Added `IndexersRuntime` property to `SearchServiceStatistics` for service-level indexer runtime statistics.
+- Added `KnowledgeBaseCounter` and `KnowledgeSourceCounter` properties to `SearchServiceCounters`.
+- Added `PurviewEnabled` and `SharePointConnectorAppRegistration` properties to `SearchIndex`.
+- Added `Cache` property to `SearchIndexer`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
