@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
+        internal HttpMessage CreateGetNetAppResourceUsagesRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetApp
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
+        internal HttpMessage CreateNextGetNetAppResourceUsagesRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetApp
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, AzureLocation location, string usageType, RequestContext context)
+        internal HttpMessage CreateGetNetAppResourceUsageRequest(Guid subscriptionId, AzureLocation location, string usageType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

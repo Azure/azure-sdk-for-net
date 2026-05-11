@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.NetApp.Models
         internal VolumePatchProperties Properties { get; set; }
 
         /// <summary> Specifies whether Cool Access(tiering) is enabled for the volume. </summary>
-        public bool? CoolAccess
+        public bool? IsCoolAccessEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.CoolAccess;
+                return Properties is null ? default : Properties.IsCoolAccessEnabled;
             }
             set
             {
@@ -55,16 +55,16 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumePatchProperties();
                 }
-                Properties.CoolAccess = value;
+                Properties.IsCoolAccessEnabled = value;
             }
         }
 
         /// <summary> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </summary>
-        public bool? SnapshotDirectoryVisible
+        public bool? IsSnapshotDirectoryVisible
         {
             get
             {
-                return Properties is null ? default : Properties.SnapshotDirectoryVisible;
+                return Properties is null ? default : Properties.IsSnapshotDirectoryVisible;
             }
             set
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumePatchProperties();
                 }
-                Properties.SnapshotDirectoryVisible = value;
+                Properties.IsSnapshotDirectoryVisible = value;
             }
         }
     }

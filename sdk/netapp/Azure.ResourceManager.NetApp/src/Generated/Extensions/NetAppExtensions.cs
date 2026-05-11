@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.NetApp
         /// Get current subscription usages
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetAllAsync(AzureLocation, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppResourceUsagesAsync(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -830,18 +830,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NetAppUsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetAppUsageResult> GetAllAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NetAppUsageResult> GetNetAppResourceUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetAllAsync(location, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppResourceUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
         /// Get current subscription usages
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetAll(AzureLocation, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppResourceUsages(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -849,18 +849,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NetAppUsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetAppUsageResult> GetAll(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Pageable<NetAppUsageResult> GetNetAppResourceUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetAll(location, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppResourceUsages(location, cancellationToken);
         }
 
         /// <summary>
         /// Get current subscription usage of the specific type
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppResourceUsageAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -868,18 +868,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="usageType"> The type of usage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<NetAppUsageResult>> GetAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string usageType, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetAppUsageResult>> GetNetAppResourceUsageAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string usageType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableNetAppSubscriptionResource(subscriptionResource).GetAsync(location, usageType, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppResourceUsageAsync(location, usageType, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get current subscription usage of the specific type
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.Get(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppResourceUsage(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -887,11 +887,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="usageType"> The type of usage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<NetAppUsageResult> Get(this SubscriptionResource subscriptionResource, AzureLocation location, string usageType, CancellationToken cancellationToken = default)
+        public static Response<NetAppUsageResult> GetNetAppResourceUsage(this SubscriptionResource subscriptionResource, AzureLocation location, string usageType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).Get(location, usageType, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppResourceUsage(location, usageType, cancellationToken);
         }
     }
 }

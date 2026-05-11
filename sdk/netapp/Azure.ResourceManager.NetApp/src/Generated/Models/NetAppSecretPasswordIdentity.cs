@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Identity used to authenticate with key vault. </summary>
-    public partial class SecretPasswordIdentity
+    public partial class NetAppSecretPasswordIdentity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SecretPasswordIdentity"/>. </summary>
-        public SecretPasswordIdentity()
+        /// <summary> Initializes a new instance of <see cref="NetAppSecretPasswordIdentity"/>. </summary>
+        public NetAppSecretPasswordIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecretPasswordIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppSecretPasswordIdentity"/>. </summary>
         /// <param name="principalId"> The principal ID (object ID) of the identity used to authenticate with key vault. Read-only. </param>
         /// <param name="userAssignedIdentity"> The Azure resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has 'UserAssigned'. It should match key of identity.userAssignedIdentities. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecretPasswordIdentity(string principalId, string userAssignedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppSecretPasswordIdentity(string principalId, string userAssignedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             UserAssignedIdentity = userAssignedIdentity;

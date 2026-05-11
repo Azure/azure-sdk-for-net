@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Access password from Azure KeyVault Secrets to connect Active Directory. </summary>
-    public partial class SecretPassword
+    public partial class NetAppSecretPassword
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SecretPassword"/>. </summary>
-        public SecretPassword()
+        /// <summary> Initializes a new instance of <see cref="NetAppSecretPassword"/>. </summary>
+        public NetAppSecretPassword()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecretPassword"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppSecretPassword"/>. </summary>
         /// <param name="keyVaultProperties"> Properties provided by KeyVault. </param>
         /// <param name="identity"> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecretPassword(NetAppSecretPasswordKeyVaultPatchProperties keyVaultProperties, SecretPasswordIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppSecretPassword(NetAppSecretPasswordKeyVaultPatchProperties keyVaultProperties, NetAppSecretPasswordIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyVaultProperties = keyVaultProperties;
             Identity = identity;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public NetAppSecretPasswordKeyVaultPatchProperties KeyVaultProperties { get; set; }
 
         /// <summary> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </summary>
-        public SecretPasswordIdentity Identity { get; set; }
+        public NetAppSecretPasswordIdentity Identity { get; set; }
     }
 }

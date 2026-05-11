@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("unixPermissions"u8);
                 writer.WriteStringValue(UnixPermissions);
             }
-            if (Optional.IsDefined(CoolAccess))
+            if (Optional.IsDefined(IsCoolAccessEnabled))
             {
                 writer.WritePropertyName("coolAccess"u8);
-                writer.WriteBooleanValue(CoolAccess.Value);
+                writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
             if (Optional.IsDefined(CoolnessPeriod))
             {
@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("coolAccessTieringPolicy"u8);
                 writer.WriteStringValue(CoolAccessTieringPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(SnapshotDirectoryVisible))
+            if (Optional.IsDefined(IsSnapshotDirectoryVisible))
             {
                 writer.WritePropertyName("snapshotDirectoryVisible"u8);
-                writer.WriteBooleanValue(SnapshotDirectoryVisible.Value);
+                writer.WriteBooleanValue(IsSnapshotDirectoryVisible.Value);
             }
             if (Optional.IsDefined(SmbAccessBasedEnumeration))
             {
@@ -221,11 +221,11 @@ namespace Azure.ResourceManager.NetApp.Models
             long? defaultUserQuotaInKiBs = default;
             long? defaultGroupQuotaInKiBs = default;
             string unixPermissions = default;
-            bool? coolAccess = default;
+            bool? isCoolAccessEnabled = default;
             int? coolnessPeriod = default;
             CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default;
             CoolAccessTieringPolicy? coolAccessTieringPolicy = default;
-            bool? snapshotDirectoryVisible = default;
+            bool? isSnapshotDirectoryVisible = default;
             SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default;
             SmbNonBrowsable? smbNonBrowsable = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    coolAccess = prop.Value.GetBoolean();
+                    isCoolAccessEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("coolnessPeriod"u8))
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    snapshotDirectoryVisible = prop.Value.GetBoolean();
+                    isSnapshotDirectoryVisible = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("smbAccessBasedEnumeration"u8))
@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 defaultUserQuotaInKiBs,
                 defaultGroupQuotaInKiBs,
                 unixPermissions,
-                coolAccess,
+                isCoolAccessEnabled,
                 coolnessPeriod,
                 coolAccessRetrievalPolicy,
                 coolAccessTieringPolicy,
-                snapshotDirectoryVisible,
+                isSnapshotDirectoryVisible,
                 smbAccessBasedEnumeration,
                 smbNonBrowsable,
                 additionalBinaryDataProperties);

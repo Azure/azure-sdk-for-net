@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NetApp.Models
             ElasticSnapshotPolicyDailySchedule dailySchedule = default;
             ElasticSnapshotPolicyWeeklySchedule weeklySchedule = default;
             ElasticSnapshotPolicyMonthlySchedule monthlySchedule = default;
-            PolicyStatus? policyStatus = default;
+            ElasticSnapshotPolicyStatus? policyStatus = default;
             NetAppProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    policyStatus = new PolicyStatus(prop.Value.GetString());
+                    policyStatus = new ElasticSnapshotPolicyStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

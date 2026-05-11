@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="defaultUserQuotaInKiBs"> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </param>
         /// <param name="defaultGroupQuotaInKiBs"> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </param>
         /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
-        /// <param name="coolAccess"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
+        /// <param name="isCoolAccessEnabled"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
         /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
         /// <param name="coolAccessRetrievalPolicy">
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// Never - No client-driven data is pulled from cool tier to standard storage.
         /// </param>
         /// <param name="coolAccessTieringPolicy"> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </param>
-        /// <param name="snapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </param>
+        /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </param>
         /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumePatchProperties(NetAppFileServiceLevel? serviceLevel, long? usageThreshold, VolumePatchPropertiesExportPolicy exportPolicy, IList<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? coolAccess, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, bool? snapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumePatchProperties(NetAppFileServiceLevel? serviceLevel, long? usageThreshold, VolumePatchPropertiesExportPolicy exportPolicy, IList<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceLevel = serviceLevel;
             UsageThreshold = usageThreshold;
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.NetApp.Models
             DefaultUserQuotaInKiBs = defaultUserQuotaInKiBs;
             DefaultGroupQuotaInKiBs = defaultGroupQuotaInKiBs;
             UnixPermissions = unixPermissions;
-            CoolAccess = coolAccess;
+            IsCoolAccessEnabled = isCoolAccessEnabled;
             CoolnessPeriod = coolnessPeriod;
             CoolAccessRetrievalPolicy = coolAccessRetrievalPolicy;
             CoolAccessTieringPolicy = coolAccessTieringPolicy;
-            SnapshotDirectoryVisible = snapshotDirectoryVisible;
+            IsSnapshotDirectoryVisible = isSnapshotDirectoryVisible;
             SmbAccessBasedEnumeration = smbAccessBasedEnumeration;
             SmbNonBrowsable = smbNonBrowsable;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public string UnixPermissions { get; set; }
 
         /// <summary> Specifies whether Cool Access(tiering) is enabled for the volume. </summary>
-        public bool? CoolAccess { get; set; }
+        public bool? IsCoolAccessEnabled { get; set; }
 
         /// <summary> Specifies the number of days after which data that is not accessed by clients will be tiered. </summary>
         public int? CoolnessPeriod { get; set; }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public CoolAccessTieringPolicy? CoolAccessTieringPolicy { get; set; }
 
         /// <summary> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </summary>
-        public bool? SnapshotDirectoryVisible { get; set; }
+        public bool? IsSnapshotDirectoryVisible { get; set; }
 
         /// <summary> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
         public SmbAccessBasedEnumeration? SmbAccessBasedEnumeration { get; set; }

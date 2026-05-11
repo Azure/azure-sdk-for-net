@@ -12,7 +12,7 @@ using Azure.ResourceManager.NetApp;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Policy status. </summary>
-    public readonly partial struct PolicyStatus : IEquatable<PolicyStatus>
+    public readonly partial struct ElasticSnapshotPolicyStatus : IEquatable<ElasticSnapshotPolicyStatus>
     {
         private readonly string _value;
         /// <summary> Value indicating the policy is enabled. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Value indicating the policy is disabled. </summary>
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Initializes a new instance of <see cref="PolicyStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSnapshotPolicyStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PolicyStatus(string value)
+        public ElasticSnapshotPolicyStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Value indicating the policy is enabled. </summary>
-        public static PolicyStatus Enabled { get; } = new PolicyStatus(EnabledValue);
+        public static ElasticSnapshotPolicyStatus Enabled { get; } = new ElasticSnapshotPolicyStatus(EnabledValue);
 
         /// <summary> Value indicating the policy is disabled. </summary>
-        public static PolicyStatus Disabled { get; } = new PolicyStatus(DisabledValue);
+        public static ElasticSnapshotPolicyStatus Disabled { get; } = new ElasticSnapshotPolicyStatus(DisabledValue);
 
-        /// <summary> Determines if two <see cref="PolicyStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ElasticSnapshotPolicyStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(PolicyStatus left, PolicyStatus right) => left.Equals(right);
+        public static bool operator ==(ElasticSnapshotPolicyStatus left, ElasticSnapshotPolicyStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PolicyStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ElasticSnapshotPolicyStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(PolicyStatus left, PolicyStatus right) => !left.Equals(right);
+        public static bool operator !=(ElasticSnapshotPolicyStatus left, ElasticSnapshotPolicyStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PolicyStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ElasticSnapshotPolicyStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyStatus(string value) => new PolicyStatus(value);
+        public static implicit operator ElasticSnapshotPolicyStatus(string value) => new ElasticSnapshotPolicyStatus(value);
 
-        /// <summary> Converts a string to a <see cref="PolicyStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ElasticSnapshotPolicyStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyStatus?(string value) => value == null ? null : new PolicyStatus(value);
+        public static implicit operator ElasticSnapshotPolicyStatus?(string value) => value == null ? null : new ElasticSnapshotPolicyStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PolicyStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is ElasticSnapshotPolicyStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(PolicyStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ElasticSnapshotPolicyStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

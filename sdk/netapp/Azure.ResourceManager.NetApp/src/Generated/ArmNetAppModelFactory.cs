@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="defaultUserQuotaInKiBs"> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </param>
         /// <param name="defaultGroupQuotaInKiBs"> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </param>
         /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
-        /// <param name="coolAccess"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
+        /// <param name="isCoolAccessEnabled"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
         /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
         /// <param name="coolAccessRetrievalPolicy">
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
@@ -484,12 +484,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// Never - No client-driven data is pulled from cool tier to standard storage.
         /// </param>
         /// <param name="coolAccessTieringPolicy"> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </param>
-        /// <param name="snapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </param>
+        /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </param>
         /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <param name="exportRules"> Export policy rule. </param>
         /// <returns> A new <see cref="Models.NetAppVolumePatch"/> instance for mocking. </returns>
-        public static NetAppVolumePatch NetAppVolumePatch(ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ResourceIdentifier id = default, string name = default, IDictionary<string, string> tags = default, NetAppFileServiceLevel? serviceLevel = default, long? usageThreshold = default, IEnumerable<string> protocolTypes = default, float? throughputMibps = default, NetAppVolumePatchDataProtection dataProtection = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, string unixPermissions = default, bool? coolAccess = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, bool? snapshotDirectoryVisible = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default)
+        public static NetAppVolumePatch NetAppVolumePatch(ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ResourceIdentifier id = default, string name = default, IDictionary<string, string> tags = default, NetAppFileServiceLevel? serviceLevel = default, long? usageThreshold = default, IEnumerable<string> protocolTypes = default, float? throughputMibps = default, NetAppVolumePatchDataProtection dataProtection = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, string unixPermissions = default, bool? isCoolAccessEnabled = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, bool? isSnapshotDirectoryVisible = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 id,
                 name,
                 tags,
-                serviceLevel is null && usageThreshold is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && coolAccess is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && snapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && exportRules is null ? default : new VolumePatchProperties(
+                serviceLevel is null && usageThreshold is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && isSnapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && exportRules is null ? default : new VolumePatchProperties(
                     serviceLevel,
                     usageThreshold,
                     new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), null),
@@ -512,11 +512,11 @@ namespace Azure.ResourceManager.NetApp.Models
                     defaultUserQuotaInKiBs,
                     defaultGroupQuotaInKiBs,
                     unixPermissions,
-                    coolAccess,
+                    isCoolAccessEnabled,
                     coolnessPeriod,
                     coolAccessRetrievalPolicy,
                     coolAccessTieringPolicy,
-                    snapshotDirectoryVisible,
+                    isSnapshotDirectoryVisible,
                     smbAccessBasedEnumeration,
                     smbNonBrowsable,
                     null));
@@ -1157,7 +1157,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="NetApp.NetAppElasticAccountData"/> instance for mocking. </returns>
-        public static NetAppElasticAccountData NetAppElasticAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticAccountProperties properties = default, string eTag = default, ManagedServiceIdentity identity = default)
+        public static NetAppElasticAccountData NetAppElasticAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticAccountProperties properties = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1226,7 +1226,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <returns> A new <see cref="NetApp.NetAppElasticCapacityPoolData"/> instance for mocking. </returns>
-        public static NetAppElasticCapacityPoolData NetAppElasticCapacityPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticCapacityPoolProperties properties = default, string eTag = default, IEnumerable<string> zones = default)
+        public static NetAppElasticCapacityPoolData NetAppElasticCapacityPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticCapacityPoolProperties properties = default, ETag? eTag = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -1318,7 +1318,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <returns> A new <see cref="NetApp.NetAppElasticVolumeData"/> instance for mocking. </returns>
-        public static NetAppElasticVolumeData NetAppElasticVolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticVolumeProperties properties = default, string eTag = default, IEnumerable<string> zones = default)
+        public static NetAppElasticVolumeData NetAppElasticVolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticVolumeProperties properties = default, ETag? eTag = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -1441,7 +1441,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="NetApp.NetAppElasticSnapshotPolicyData"/> instance for mocking. </returns>
-        public static NetAppElasticSnapshotPolicyData NetAppElasticSnapshotPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticSnapshotPolicyProperties properties = default, string eTag = default)
+        public static NetAppElasticSnapshotPolicyData NetAppElasticSnapshotPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticSnapshotPolicyProperties properties = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1465,7 +1465,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="policyStatus"> Configures if the snapshot policy is enabled on the volumes connected to the policy. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <returns> A new <see cref="Models.ElasticSnapshotPolicyProperties"/> instance for mocking. </returns>
-        public static ElasticSnapshotPolicyProperties ElasticSnapshotPolicyProperties(ElasticSnapshotPolicyHourlySchedule hourlySchedule = default, ElasticSnapshotPolicyDailySchedule dailySchedule = default, ElasticSnapshotPolicyWeeklySchedule weeklySchedule = default, ElasticSnapshotPolicyMonthlySchedule monthlySchedule = default, PolicyStatus? policyStatus = default, NetAppProvisioningState? provisioningState = default)
+        public static ElasticSnapshotPolicyProperties ElasticSnapshotPolicyProperties(ElasticSnapshotPolicyHourlySchedule hourlySchedule = default, ElasticSnapshotPolicyDailySchedule dailySchedule = default, ElasticSnapshotPolicyWeeklySchedule weeklySchedule = default, ElasticSnapshotPolicyMonthlySchedule monthlySchedule = default, ElasticSnapshotPolicyStatus? policyStatus = default, NetAppProvisioningState? provisioningState = default)
         {
             return new ElasticSnapshotPolicyProperties(
                 hourlySchedule,
@@ -1523,7 +1523,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="elasticBackupVaultProvisioningState"> Azure lifecycle management. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="NetApp.NetAppElasticBackupVaultData"/> instance for mocking. </returns>
-        public static NetAppElasticBackupVaultData NetAppElasticBackupVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetAppProvisioningState? elasticBackupVaultProvisioningState = default, string eTag = default)
+        public static NetAppElasticBackupVaultData NetAppElasticBackupVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetAppProvisioningState? elasticBackupVaultProvisioningState = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1559,7 +1559,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="NetApp.NetAppElasticBackupPolicyData"/> instance for mocking. </returns>
-        public static NetAppElasticBackupPolicyData NetAppElasticBackupPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticBackupPolicyProperties properties = default, string eTag = default)
+        public static NetAppElasticBackupPolicyData NetAppElasticBackupPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticBackupPolicyProperties properties = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1639,7 +1639,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="elasticBackupPolicyResourceId"> ResourceId used to identify the elastic backup policy. </param>
         /// <param name="volumeSize"> Specifies if the backup is for a large volume. </param>
         /// <returns> A new <see cref="Models.ElasticBackupProperties"/> instance for mocking. </returns>
-        public static ElasticBackupProperties ElasticBackupProperties(DateTimeOffset? createdOn = default, DateTimeOffset? snapshotCreationOn = default, DateTimeOffset? completionOn = default, NetAppProvisioningState? provisioningState = default, long? size = default, string label = default, ElasticBackupType? backupType = default, string failureReason = default, ResourceIdentifier elasticVolumeResourceId = default, SnapshotUsage? snapshotUsage = default, ResourceIdentifier elasticSnapshotResourceId = default, ResourceIdentifier elasticBackupPolicyResourceId = default, VolumeSize? volumeSize = default)
+        public static ElasticBackupProperties ElasticBackupProperties(DateTimeOffset? createdOn = default, DateTimeOffset? snapshotCreationOn = default, DateTimeOffset? completionOn = default, NetAppProvisioningState? provisioningState = default, long? size = default, string label = default, ElasticBackupType? backupType = default, string failureReason = default, ResourceIdentifier elasticVolumeResourceId = default, ElasticBackupSnapshotUsage? snapshotUsage = default, ResourceIdentifier elasticSnapshotResourceId = default, ResourceIdentifier elasticBackupPolicyResourceId = default, ElasticBackupVolumeSize? volumeSize = default)
         {
             return new ElasticBackupProperties(
                 createdOn,
@@ -1669,7 +1669,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="NetApp.NetAppActiveDirectoryConfigData"/> instance for mocking. </returns>
-        public static NetAppActiveDirectoryConfigData NetAppActiveDirectoryConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ActiveDirectoryConfigProperties properties = default, string eTag = default, ManagedServiceIdentity identity = default)
+        public static NetAppActiveDirectoryConfigData NetAppActiveDirectoryConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ActiveDirectoryConfigProperties properties = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1700,7 +1700,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="domain"> Name of the Active Directory domain. </param>
         /// <param name="secretPassword"> Access password from Azure KeyVault Secrets to connect Active Directory. </param>
         /// <returns> A new <see cref="Models.ActiveDirectoryConfigProperties"/> instance for mocking. </returns>
-        public static ActiveDirectoryConfigProperties ActiveDirectoryConfigProperties(string userName = default, IEnumerable<IPAddress> dns = default, string smbServerName = default, string organizationalUnit = default, string site = default, IEnumerable<string> backupOperators = default, IEnumerable<string> administrators = default, IEnumerable<string> securityOperators = default, NetAppAccountActiveDirectoryStatus? activeDirectoryStatus = default, NetAppProvisioningState? provisioningState = default, string domain = default, SecretPassword secretPassword = default)
+        public static ActiveDirectoryConfigProperties ActiveDirectoryConfigProperties(string userName = default, IEnumerable<IPAddress> dns = default, string smbServerName = default, string organizationalUnit = default, string site = default, IEnumerable<string> backupOperators = default, IEnumerable<string> administrators = default, IEnumerable<string> securityOperators = default, NetAppAccountActiveDirectoryStatus? activeDirectoryStatus = default, NetAppProvisioningState? provisioningState = default, string domain = default, NetAppSecretPassword secretPassword = default)
         {
             dns ??= new ChangeTrackingList<IPAddress>();
             backupOperators ??= new ChangeTrackingList<string>();
@@ -1726,10 +1726,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Identity used to authenticate with key vault. </summary>
         /// <param name="principalId"> The principal ID (object ID) of the identity used to authenticate with key vault. Read-only. </param>
         /// <param name="userAssignedIdentity"> The Azure resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has 'UserAssigned'. It should match key of identity.userAssignedIdentities. </param>
-        /// <returns> A new <see cref="Models.SecretPasswordIdentity"/> instance for mocking. </returns>
-        public static SecretPasswordIdentity SecretPasswordIdentity(string principalId = default, string userAssignedIdentity = default)
+        /// <returns> A new <see cref="Models.NetAppSecretPasswordIdentity"/> instance for mocking. </returns>
+        public static NetAppSecretPasswordIdentity NetAppSecretPasswordIdentity(string principalId = default, string userAssignedIdentity = default)
         {
-            return new SecretPasswordIdentity(principalId, userAssignedIdentity, additionalBinaryDataProperties: null);
+            return new NetAppSecretPasswordIdentity(principalId, userAssignedIdentity, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The type used for update operations of the ActiveDirectoryConfig. </summary>
@@ -1756,7 +1756,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="domain"> Name of the Active Directory domain. </param>
         /// <param name="secretPassword"> Access password from Azure KeyVault Secrets to connect Active Directory. </param>
         /// <returns> A new <see cref="Models.NetAppActiveDirectoryConfigPatchProperties"/> instance for mocking. </returns>
-        public static NetAppActiveDirectoryConfigPatchProperties NetAppActiveDirectoryConfigPatchProperties(string userName = default, IEnumerable<IPAddress> dns = default, string smbServerName = default, string organizationalUnit = default, string site = default, IEnumerable<string> backupOperators = default, IEnumerable<string> administrators = default, IEnumerable<string> securityOperators = default, string domain = default, SecretPassword secretPassword = default)
+        public static NetAppActiveDirectoryConfigPatchProperties NetAppActiveDirectoryConfigPatchProperties(string userName = default, IEnumerable<IPAddress> dns = default, string smbServerName = default, string organizationalUnit = default, string site = default, IEnumerable<string> backupOperators = default, IEnumerable<string> administrators = default, IEnumerable<string> securityOperators = default, string domain = default, NetAppSecretPassword secretPassword = default)
         {
             dns ??= new ChangeTrackingList<IPAddress>();
             backupOperators ??= new ChangeTrackingList<string>();

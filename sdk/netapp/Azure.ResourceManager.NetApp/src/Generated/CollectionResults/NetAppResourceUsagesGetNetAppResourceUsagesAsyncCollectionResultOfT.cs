@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,7 +15,7 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal partial class NetAppResourceUsagesGetAllCollectionResultOfT : Pageable<NetAppUsageResult>
+    internal partial class NetAppResourceUsagesGetNetAppResourceUsagesAsyncCollectionResultOfT : AsyncPageable<NetAppUsageResult>
     {
         private readonly NetAppResourceUsages _client;
         private readonly Guid _subscriptionId;
@@ -22,13 +23,13 @@ namespace Azure.ResourceManager.NetApp
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of NetAppResourceUsagesGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of NetAppResourceUsagesGetNetAppResourceUsagesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The NetAppResourceUsages client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public NetAppResourceUsagesGetAllCollectionResultOfT(NetAppResourceUsages client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public NetAppResourceUsagesGetNetAppResourceUsagesAsyncCollectionResultOfT(NetAppResourceUsages client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,16 +38,16 @@ namespace Azure.ResourceManager.NetApp
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of NetAppResourceUsagesGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of NetAppResourceUsagesGetNetAppResourceUsagesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of NetAppResourceUsagesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<NetAppUsageResult>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of NetAppResourceUsagesGetNetAppResourceUsagesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<NetAppUsageResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -64,14 +65,14 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetAllRequest(_subscriptionId, _location, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetNetAppResourceUsagesRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetNetAppResourceUsagesRequest(_subscriptionId, _location, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

@@ -347,13 +347,13 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetAppUsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetAppUsageResult> GetAllAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetAppUsageResult> GetNetAppResourceUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new NetAppResourceUsagesGetAllAsyncCollectionResultOfT(NetAppResourceUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetAppSubscriptionResource.GetAll");
+            return new NetAppResourceUsagesGetNetAppResourceUsagesAsyncCollectionResultOfT(NetAppResourceUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetAppSubscriptionResource.GetNetAppResourceUsages");
         }
 
         /// <summary>
@@ -376,13 +376,13 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetAppUsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetAppUsageResult> GetAll(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Pageable<NetAppUsageResult> GetNetAppResourceUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new NetAppResourceUsagesGetAllCollectionResultOfT(NetAppResourceUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetAppSubscriptionResource.GetAll");
+            return new NetAppResourceUsagesGetNetAppResourceUsagesCollectionResultOfT(NetAppResourceUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetAppSubscriptionResource.GetNetAppResourceUsages");
         }
 
         /// <summary>
@@ -407,11 +407,11 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="usageType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="usageType"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<NetAppUsageResult>> GetAsync(AzureLocation location, string usageType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppUsageResult>> GetNetAppResourceUsageAsync(AzureLocation location, string usageType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(usageType, nameof(usageType));
 
-            using DiagnosticScope scope = NetAppResourceUsagesClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.Get");
+            using DiagnosticScope scope = NetAppResourceUsagesClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.GetNetAppResourceUsage");
             scope.Start();
             try
             {
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceUsagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, usageType, context);
+                HttpMessage message = NetAppResourceUsagesRestClient.CreateGetNetAppResourceUsageRequest(Guid.Parse(Id.SubscriptionId), location, usageType, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetAppUsageResult> response = Response.FromValue(NetAppUsageResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -457,11 +457,11 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="usageType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="usageType"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<NetAppUsageResult> Get(AzureLocation location, string usageType, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppUsageResult> GetNetAppResourceUsage(AzureLocation location, string usageType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(usageType, nameof(usageType));
 
-            using DiagnosticScope scope = NetAppResourceUsagesClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.Get");
+            using DiagnosticScope scope = NetAppResourceUsagesClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.GetNetAppResourceUsage");
             scope.Start();
             try
             {
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceUsagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, usageType, context);
+                HttpMessage message = NetAppResourceUsagesRestClient.CreateGetNetAppResourceUsageRequest(Guid.Parse(Id.SubscriptionId), location, usageType, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetAppUsageResult> response = Response.FromValue(NetAppUsageResult.FromResponse(result), result);
                 if (response.Value == null)

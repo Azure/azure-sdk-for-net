@@ -12,7 +12,7 @@ using Azure.ResourceManager.NetApp;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Volume size for backup. </summary>
-    public readonly partial struct VolumeSize : IEquatable<VolumeSize>
+    public readonly partial struct ElasticBackupVolumeSize : IEquatable<ElasticBackupVolumeSize>
     {
         private readonly string _value;
         /// <summary> Value indicating backup is for a large volume. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Value indicating backup is not for a large volume. </summary>
         private const string RegularValue = "Regular";
 
-        /// <summary> Initializes a new instance of <see cref="VolumeSize"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticBackupVolumeSize"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VolumeSize(string value)
+        public ElasticBackupVolumeSize(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Value indicating backup is for a large volume. </summary>
-        public static VolumeSize Large { get; } = new VolumeSize(LargeValue);
+        public static ElasticBackupVolumeSize Large { get; } = new ElasticBackupVolumeSize(LargeValue);
 
         /// <summary> Value indicating backup is not for a large volume. </summary>
-        public static VolumeSize Regular { get; } = new VolumeSize(RegularValue);
+        public static ElasticBackupVolumeSize Regular { get; } = new ElasticBackupVolumeSize(RegularValue);
 
-        /// <summary> Determines if two <see cref="VolumeSize"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ElasticBackupVolumeSize"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(VolumeSize left, VolumeSize right) => left.Equals(right);
+        public static bool operator ==(ElasticBackupVolumeSize left, ElasticBackupVolumeSize right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VolumeSize"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ElasticBackupVolumeSize"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(VolumeSize left, VolumeSize right) => !left.Equals(right);
+        public static bool operator !=(ElasticBackupVolumeSize left, ElasticBackupVolumeSize right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VolumeSize"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ElasticBackupVolumeSize"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VolumeSize(string value) => new VolumeSize(value);
+        public static implicit operator ElasticBackupVolumeSize(string value) => new ElasticBackupVolumeSize(value);
 
-        /// <summary> Converts a string to a <see cref="VolumeSize"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ElasticBackupVolumeSize"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VolumeSize?(string value) => value == null ? null : new VolumeSize(value);
+        public static implicit operator ElasticBackupVolumeSize?(string value) => value == null ? null : new ElasticBackupVolumeSize(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VolumeSize other && Equals(other);
+        public override bool Equals(object obj) => obj is ElasticBackupVolumeSize other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(VolumeSize other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ElasticBackupVolumeSize other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

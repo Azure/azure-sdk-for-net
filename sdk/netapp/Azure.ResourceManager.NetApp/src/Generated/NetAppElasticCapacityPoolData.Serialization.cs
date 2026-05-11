@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NetApp
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NetApp
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ElasticCapacityPoolProperties properties = default;
-            string eTag = default;
+            ETag? eTag = default;
             IList<string> zones = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -234,7 +234,11 @@ namespace Azure.ResourceManager.NetApp
                 }
                 if (prop.NameEquals("eTag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("zones"u8))

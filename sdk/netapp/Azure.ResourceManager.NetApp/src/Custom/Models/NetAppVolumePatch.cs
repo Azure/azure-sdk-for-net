@@ -104,13 +104,6 @@ namespace Azure.ResourceManager.NetApp.Models
             set => WritableProperties.UnixPermissions = value;
         }
 
-        /// <summary> Specifies whether Cool Access(tiering) is enabled for the volume. </summary>
-        public bool? IsCoolAccessEnabled
-        {
-            get => CoolAccess;
-            set => CoolAccess = value;
-        }
-
         /// <summary> Specifies the number of days after which data that is not accessed by clients will be tiered. </summary>
         public int? CoolnessPeriod
         {
@@ -130,13 +123,6 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get => Properties?.CoolAccessTieringPolicy;
             set => WritableProperties.CoolAccessTieringPolicy = value;
-        }
-
-        /// <summary> If enabled (true) the volume will contain a read-only snapshot directory. </summary>
-        public bool? IsSnapshotDirectoryVisible
-        {
-            get => SnapshotDirectoryVisible;
-            set => SnapshotDirectoryVisible = value;
         }
 
         /// <summary> Enables access-based enumeration share property for SMB Shares. </summary>
