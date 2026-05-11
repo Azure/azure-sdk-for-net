@@ -130,7 +130,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="doubleValue"> double value. </param>
         /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="prop2"> Gets the Prop2. </param>
-        /// <param name="etag"> ETag property for testing etag parameter name generation. </param>
+        /// <param name="eTag"> ETag property for testing etag parameter name generation. </param>
         /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
         /// <param name="flattenedProperty"> Gets the FlattenedProperty. </param>
@@ -139,9 +139,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="extendedLocation"></param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Tests.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, IEnumerable<string> vmGalleryApplications = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? eTag = default, WritableSubResource writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, IEnumerable<string> vmGalleryApplications = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -152,7 +151,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 tags,
                 location,
-                serviceUri is null && something is null && boolValue is null && floatValue is null && doubleValue is null && prop1 is null && prop2 is null && etag is null && writableSubResourceProp is null && nestedPropertyProperties is null && flattenedProperty is null && vmGalleryApplications is null && computeFleetVmCapacityReservationGroupId is null ? default : new FooProperties(
+                new FooProperties(
                     serviceUri,
                     something,
                     boolValue,
@@ -163,7 +162,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     new NestedFooModel(nestedPropertyProperties, null),
                     new SafeFlattenModel((flattenedProperty ?? new ChangeTrackingList<string>()).ToList(), null),
                     new VmProfile(new ApplicationProfile((vmGalleryApplications ?? new ChangeTrackingList<string>()).ToList(), null), null),
-                    etag,
+                    eTag,
                     writableSubResourceProp,
                     new ComputeFleetVmProfile(new CapacityReservationProfile(new TestSubResource(computeFleetVmCapacityReservationGroupId, null), null), null),
                     null),
@@ -183,12 +182,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
         /// <param name="flattenedProperty"> Gets the FlattenedProperty. </param>
         /// <param name="vmGalleryApplications"> Specifies the gallery applications that should be made available. </param>
-        /// <param name="etag"> ETag property for testing etag parameter name generation. </param>
+        /// <param name="eTag"> ETag property for testing etag parameter name generation. </param>
         /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
         /// <param name="computeFleetVmCapacityReservationGroupId"> Gets or sets the Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
-        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, IEnumerable<string> vmGalleryApplications = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default)
+        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, IEnumerable<string> vmGalleryApplications = default, ETag? eTag = default, WritableSubResource writableSubResourceProp = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default)
         {
             prop1 ??= new ChangeTrackingList<string>();
             prop2 ??= new ChangeTrackingList<int>();
@@ -201,10 +199,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 doubleValue,
                 prop1.ToList(),
                 prop2.ToList(),
-                nestedPropertyProperties is null ? default : new NestedFooModel(nestedPropertyProperties, null),
+                new NestedFooModel(nestedPropertyProperties, null),
                 flattenedProperty is null ? default : new SafeFlattenModel((flattenedProperty ?? new ChangeTrackingList<string>()).ToList(), null),
                 vmGalleryApplications is null ? default : new VmProfile(new ApplicationProfile((vmGalleryApplications ?? new ChangeTrackingList<string>()).ToList(), null), null),
-                etag,
+                eTag,
                 writableSubResourceProp,
                 computeFleetVmCapacityReservationGroupId is null ? default : new ComputeFleetVmProfile(new CapacityReservationProfile(new TestSubResource(computeFleetVmCapacityReservationGroupId, null), null), null),
                 additionalBinaryDataProperties: null);
@@ -274,35 +272,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Marketplace details for an organization. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
+        /// <param name="saasResourceId"> Marketplace SaaS Resource Id. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <returns> A new <see cref="Models.MarketplaceDetails"/> instance for mocking. </returns>
-        public static MarketplaceDetails MarketplaceDetails(string subscriptionId = default, MarketplaceSubscriptionStatus? subscriptionStatus = default, OfferDetails offerDetails = default)
+        public static MarketplaceDetails MarketplaceDetails(string subscriptionId = default, MarketplaceSubscriptionStatus? subscriptionStatus = default, string saasResourceId = default, OfferDetails offerDetails = default)
         {
-            return new MarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Offer details for the marketplace that is selected by the user. </summary>
-        /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
-        /// <param name="offerId"> Offer Id for the marketplace offer. </param>
-        /// <param name="planId"> Plan Id for the marketplace offer. </param>
-        /// <param name="planName"> Plan Name for the marketplace offer. </param>
-        /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
-        /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
-        /// <param name="renewalMode"> Subscription renewal mode. </param>
-        /// <param name="endOn"> Current subscription end date and time. </param>
-        /// <returns> A new <see cref="Models.OfferDetails"/> instance for mocking. </returns>
-        public static OfferDetails OfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default, RenewalMode? renewalMode = default, DateTimeOffset? endOn = default)
-        {
-            return new OfferDetails(
-                publisherId,
-                offerId,
-                planId,
-                planName,
-                termUnit,
-                termId,
-                renewalMode,
-                endOn,
-                additionalBinaryDataProperties: null);
+            return new MarketplaceDetails(subscriptionId, subscriptionStatus, saasResourceId, offerDetails, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -346,7 +321,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="optionalFlattenPropertyRandomCollectionProp"> Gets the RandomCollectionProp. </param>
         /// <param name="discriminatorProperty"></param>
         /// <returns> A new <see cref="Tests.BarSettingsResourceData"/> instance for mocking. </returns>
-        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, string propertyLeft = default, string anotherPropertyLeft = default, int? innerProp1 = default, string innerProp2 = default, int? middleProp1 = default, IDictionary<string, string> middleProp2 = default, IEnumerable<string> prop1 = default, int? prop2 = default, IEnumerable<string> optionalFlattenPropertyRandomCollectionProp = default, LimitJsonObject discriminatorProperty = default)
+        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, string propertyLeft = default, string anotherPropertyLeft = default, int? innerProp1 = default, string innerProp2 = default, int middleProp1 = default, IDictionary<string, string> middleProp2 = default, IEnumerable<string> prop1 = default, int prop2 = default, IEnumerable<string> optionalFlattenPropertyRandomCollectionProp = default, LimitJsonObject discriminatorProperty = default)
         {
             stringArray ??= new ChangeTrackingList<string>();
 
@@ -357,16 +332,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 isEnabled is null ? default : new BarSettingsProperties(isEnabled, null),
                 stringArray.ToList(),
-                propertyLeft is null ? default : new BarQuotaProperties(propertyLeft, null),
-                anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft, null),
-                innerProp1 is null && innerProp2 is null && middleProp1 is null && middleProp2 is null && prop1 is null && prop2 is null ? default : new BarNestedQuotaProperties(
+                new BarQuotaProperties(propertyLeft, null),
+                new BarQuotaProperties(anotherPropertyLeft, null),
+                new BarNestedQuotaProperties(
                     innerProp1,
                     innerProp2,
                     null,
-                    middleProp1.Value,
+                    middleProp1,
                     middleProp2,
                     (prop1 ?? new ChangeTrackingList<string>()).ToList(),
-                    prop2.Value),
+                    prop2),
                 optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType((optionalFlattenPropertyRandomCollectionProp ?? new ChangeTrackingList<string>()).ToList(), null),
                 discriminatorProperty,
                 additionalBinaryDataProperties: null);
@@ -452,10 +427,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="zooSomething"> something. </param>
+        /// <param name="something"> something. </param>
+        /// <param name="requiredInt">
+        /// Required value-type property. Used to validate that required value types
+        ///       flattened from an optional ``properties?:`` parent (default-optional
+        ///       `properties?`) surface as Nullable&lt;T&gt; on the public property while
+        ///       remaining non-nullable T on the inner model and the model factory body.
+        /// </param>
+        /// <param name="requiredFixedEnum"> Required fixed (closed) enum. </param>
+        /// <param name="requiredExtensibleEnum"> Required extensible enum (union). </param>
+        /// <param name="requiredString">
+        /// Required reference-type property. Used to validate that required reference
+        ///       types flattened from an optional ``properties?:`` parent surface as nullable
+        ///       on the public property under the unified wrapper-optionality rule.
+        /// </param>
         /// <param name="extendedLocation"></param>
         /// <returns> A new <see cref="Tests.ZooData"/> instance for mocking. </returns>
-        public static ZooData ZooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string zooSomething = default, ExtendedLocation extendedLocation = default)
+        public static ZooData ZooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string something = default, int? requiredInt = default, ZooFixedMode? requiredFixedEnum = default, ZooProvisioningState? requiredExtensibleEnum = default, string requiredString = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -466,19 +454,26 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 tags,
                 location,
-                zooSomething is null ? default : new ZooProperties(zooSomething, null),
+                something is null && requiredInt is null && requiredFixedEnum is null && requiredExtensibleEnum is null && requiredString is null ? default : new ZooProperties(
+                    something,
+                    requiredInt.GetValueOrDefault(),
+                    requiredFixedEnum.GetValueOrDefault(),
+                    requiredExtensibleEnum.GetValueOrDefault(),
+                    requiredString,
+                    null),
                 extendedLocation,
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The type used for update operations of the Zoo. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="zooUpdateSomething"> something. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.ZooPatch"/> instance for mocking. </returns>
-        public static ZooPatch ZooPatch(IDictionary<string, string> tags = default, string zooUpdateSomething = default)
+        public static ZooPatch ZooPatch(IDictionary<string, string> tags = default, ZooUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ZooPatch(tags, zooUpdateSomething is null ? default : new ZooUpdateProperties(zooUpdateSomething, null), additionalBinaryDataProperties: null);
+            return new ZooPatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Paged collection of ZooAddress items. </summary>
@@ -644,7 +639,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 tags,
                 location,
-                jobName is null ? default : new JobProperties(jobName, null),
+                new JobProperties(jobName, null),
                 additionalBinaryDataProperties: null);
         }
 
@@ -738,31 +733,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         public static AllocatedToSubscription AllocatedToSubscription(string subscriptionId = default, long? quotaAllocated = default)
         {
             return new AllocatedToSubscription(subscriptionId, quotaAllocated, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="groupQuotaLimitListNextLink"> The URL to use for getting the next set of results. </param>
-        /// <returns> A new <see cref="Tests.GroupQuotaLimitListData"/> instance for mocking. </returns>
-        public static GroupQuotaLimitListData GroupQuotaLimitListData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupQuotaLimitListNextLink = default)
-        {
-            return new GroupQuotaLimitListData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupQuotaLimitListNextLink is null ? default : new GroupQuotaLimitListProperties(groupQuotaLimitListNextLink, null),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The GroupQuotaLimitListPatch. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="Models.GroupQuotaLimitListPatch"/> instance for mocking. </returns>
-        public static GroupQuotaLimitListPatch GroupQuotaLimitListPatch(string name = default)
-        {
-            return new GroupQuotaLimitListPatch(name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Subscription quota list. </summary>
@@ -1426,7 +1396,394 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                testCertificateThumbprint is null ? default : new TestCertificateProperties(testCertificateThumbprint, null),
+                new TestCertificateProperties(testCertificateThumbprint, null),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Shared configuration - used at both RG and Subscription scope. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.SharedConfigData"/> instance for mocking. </returns>
+        public static SharedConfigData SharedConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SharedConfigProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SharedConfigData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A shared configuration resource. </summary>
+        /// <param name="displayName"> Display name. </param>
+        /// <param name="description"> Description. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.SharedConfigProperties"/> instance for mocking. </returns>
+        public static SharedConfigProperties SharedConfigProperties(string displayName = default, string description = default, ResourceProvisioningState? provisioningState = default)
+        {
+            return new SharedConfigProperties(displayName, description, provisioningState, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Paged collection of ContainerItemLike items. </summary>
+        /// <param name="value"> The ContainerItemLike items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.ContainerItemLikeListResult"/> instance for mocking. </returns>
+        public static ContainerItemLikeListResult ContainerItemLikeListResult(IEnumerable<ContainerItemLike> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<ContainerItemLike>();
+
+            return new ContainerItemLikeListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="eTag"> Resource Etag. </param>
+        /// <param name="containerItemLikeSomething"> A simple string property. </param>
+        /// <returns> A new <see cref="Models.ContainerItemLike"/> instance for mocking. </returns>
+        public static ContainerItemLike ContainerItemLike(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string eTag = default, string containerItemLikeSomething = default)
+        {
+            return new ContainerItemLike(
+                id,
+                name,
+                resourceType,
+                systemData,
+                eTag,
+                additionalBinaryDataProperties: null,
+                containerItemLikeSomething is null ? default : new ContainerItemLikeProperties(containerItemLikeSomething, null));
+        }
+
+        /// <summary> Entity Resource Like. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="eTag"> Resource Etag. </param>
+        /// <returns> A new <see cref="Models.EntityResourceLike"/> instance for mocking. </returns>
+        public static EntityResourceLike EntityResourceLike(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string eTag = default)
+        {
+            return new EntityResourceLike(
+                id,
+                name,
+                resourceType,
+                systemData,
+                eTag,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Paged collection of DerivedPatch items. </summary>
+        /// <param name="value"> The DerivedPatch items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.SharedParamReproListResult"/> instance for mocking. </returns>
+        public static SharedParamReproListResult SharedParamReproListResult(IEnumerable<DerivedPatch> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<DerivedPatch>();
+
+            return new SharedParamReproListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A derived patch model extending the custom base — triggers FixRawDataFieldReference. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="derivedProp"> Update properties. </param>
+        /// <returns> A new <see cref="Models.DerivedPatch"/> instance for mocking. </returns>
+        public static DerivedPatch DerivedPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string derivedProp = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DerivedPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                additionalBinaryDataProperties: null,
+                derivedProp);
+        }
+
+        /// <summary> A custom patch base model extending Resource directly. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.CustomPatchBase"/> instance for mocking. </returns>
+        public static CustomPatchBase CustomPatchBase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CustomPatchBase(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Paged collection of SiblingPatch items. </summary>
+        /// <param name="value"> The SiblingPatch items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.SiblingPatchListResult"/> instance for mocking. </returns>
+        public static SiblingPatchListResult SiblingPatchListResult(IEnumerable<SiblingPatch> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<SiblingPatch>();
+
+            return new SiblingPatchListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A sibling model that also extends Resource — affected by the shared mutation. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="siblingProp"> Sibling properties. </param>
+        /// <returns> A new <see cref="Models.SiblingPatch"/> instance for mocking. </returns>
+        public static SiblingPatch SiblingPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string siblingProp = default)
+        {
+            return new SiblingPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                siblingProp,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A polymorphic extension resource that uses DiscriminatedExtensionResource with 'kind' as the discriminator.
+        /// This tests that the generator correctly handles abstract resource data types in serialization.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.TypeAPolyDevice"/>.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <returns> A new <see cref="Tests.PolyDeviceData"/> instance for mocking. </returns>
+        public static PolyDeviceData PolyDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default)
+        {
+            return new UnknownPolyDevice(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="typeAPolyDeviceDescription"> Gets or sets the Description. </param>
+        /// <returns> A new <see cref="Models.TypeAPolyDevice"/> instance for mocking. </returns>
+        public static TypeAPolyDevice TypeAPolyDevice(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string typeAPolyDeviceDescription = default)
+        {
+            return new TypeAPolyDevice(
+                id,
+                name,
+                resourceType,
+                systemData,
+                "TypeA",
+                additionalBinaryDataProperties: null,
+                new TypeAPolyDeviceProperties(typeAPolyDeviceDescription, null));
+        }
+
+        /// <summary> Paged collection of GrandparentFlattenLeaf items. </summary>
+        /// <param name="value"> The GrandparentFlattenLeaf items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.GrandparentFlattenLeafListResult"/> instance for mocking. </returns>
+        public static GrandparentFlattenLeafListResult GrandparentFlattenLeafListResult(IEnumerable<GrandparentFlattenLeaf> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<GrandparentFlattenLeaf>();
+
+            return new GrandparentFlattenLeafListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="identifierUniqueId"> Gets the UniqueId. </param>
+        /// <param name="grandparentFlattenLeafDisclaimer"> Gets the Disclaimer. </param>
+        /// <returns> A new <see cref="Models.GrandparentFlattenLeaf"/> instance for mocking. </returns>
+        public static GrandparentFlattenLeaf GrandparentFlattenLeaf(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string identifierUniqueId = default, string grandparentFlattenLeafDisclaimer = default)
+        {
+            return new GrandparentFlattenLeaf(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identifierUniqueId is null ? default : new GrandparentFlattenIdentifier(identifierUniqueId, null),
+                additionalBinaryDataProperties: null,
+                grandparentFlattenLeafDisclaimer is null ? default : new GrandparentFlattenLeafProperties(grandparentFlattenLeafDisclaimer, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="identifierUniqueId"> Gets the UniqueId. </param>
+        /// <param name="grandparentFlattenLeafDisclaimer"> Gets the Disclaimer. </param>
+        /// <returns> A new <see cref="Models.GrandparentFlattenProxyGrandparentFlattenLeafProperties"/> instance for mocking. </returns>
+        public static GrandparentFlattenProxyGrandparentFlattenLeafProperties GrandparentFlattenProxyGrandparentFlattenLeafProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string identifierUniqueId = default, string grandparentFlattenLeafDisclaimer = default)
+        {
+            return new GrandparentFlattenProxyGrandparentFlattenLeafProperties(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identifierUniqueId is null ? default : new GrandparentFlattenIdentifier(identifierUniqueId, null),
+                additionalBinaryDataProperties: null,
+                grandparentFlattenLeafDisclaimer is null ? default : new GrandparentFlattenLeafProperties(grandparentFlattenLeafDisclaimer, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="identifierUniqueId"> Gets the UniqueId. </param>
+        /// <returns> A new <see cref="Models.GrandparentFlattenBase"/> instance for mocking. </returns>
+        public static GrandparentFlattenBase GrandparentFlattenBase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string identifierUniqueId = default)
+        {
+            return new GrandparentFlattenBase(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identifierUniqueId is null ? default : new GrandparentFlattenIdentifier(identifierUniqueId, null),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.CycleTestStoreData"/> instance for mocking. </returns>
+        public static CycleTestStoreData CycleTestStoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CycleTestStoreProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CycleTestStoreData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The CycleTestStoreProperties. </summary>
+        /// <param name="endpoint"> The endpoint for the store. </param>
+        /// <param name="connections"> Related connections. </param>
+        /// <returns> A new <see cref="Models.CycleTestStoreProperties"/> instance for mocking. </returns>
+        public static CycleTestStoreProperties CycleTestStoreProperties(string endpoint = default, IEnumerable<CycleTestConnectionReference> connections = default)
+        {
+            connections ??= new ChangeTrackingList<CycleTestConnectionReference>();
+
+            return new CycleTestStoreProperties(endpoint, connections.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> The provisioning status. </param>
+        /// <param name="description"> Description of the connection. </param>
+        /// <returns> A new <see cref="Models.CycleTestConnectionReference"/> instance for mocking. </returns>
+        public static CycleTestConnectionReference CycleTestConnectionReference(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, string description = default)
+        {
+            return new CycleTestConnectionReference(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && description is null ? default : new CycleTestConnectionProperties(provisioningState, description, null),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="eventGridTopicEndpoint"> Topic endpoint. </param>
+        /// <returns> A new <see cref="Tests.EventGridTopicData"/> instance for mocking. </returns>
+        public static EventGridTopicData EventGridTopicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string eventGridTopicEndpoint = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new EventGridTopicData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                eventGridTopicEndpoint is null ? default : new EventGridTopicProperties(eventGridTopicEndpoint, null),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="eventGridDomainEndpoint"> Domain endpoint. </param>
+        /// <returns> A new <see cref="Tests.EventGridDomainData"/> instance for mocking. </returns>
+        public static EventGridDomainData EventGridDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string eventGridDomainEndpoint = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new EventGridDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                eventGridDomainEndpoint is null ? default : new EventGridDomainProperties(eventGridDomainEndpoint, null),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> EventGrid private endpoint connection model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.EventGridPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static EventGridPrivateEndpointConnectionData EventGridPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EventGridPrivateEndpointConnectionProperties properties = default)
+        {
+            return new EventGridPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 additionalBinaryDataProperties: null);
         }
 

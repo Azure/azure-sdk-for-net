@@ -8,46 +8,46 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Generator.MgmtTypeSpec.Tests.Models;
+using Azure.ResourceManager.Hci;
 using Azure.ResourceManager.Models;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class GroupQuotaLimitListData : ResourceData
+    /// <summary> Represents a kubernetes version resource. </summary>
+    public partial class HciKubernetesVersion : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GroupQuotaLimitListData"/>. </summary>
-        public GroupQuotaLimitListData()
+        /// <summary> Initializes a new instance of <see cref="HciKubernetesVersion"/>. </summary>
+        internal HciKubernetesVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GroupQuotaLimitListData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciKubernetesVersion"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotaLimitListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GroupQuotaLimitListProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal HciKubernetesVersion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, KubernetesVersionProperties properties) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        internal GroupQuotaLimitListProperties Properties { get; set; }
+        internal KubernetesVersionProperties Properties { get; }
 
-        /// <summary> The URL to use for getting the next set of results. </summary>
-        [WirePath("properties.nextLink")]
-        public string GroupQuotaLimitListNextLink
+        /// <summary> Represents kubernetes version. </summary>
+        [WirePath("properties.version")]
+        public string KubernetesVersionValue
         {
             get
             {
-                return Properties is null ? default : Properties.NextLink;
+                return Properties is null ? default : Properties.KubernetesVersionValue;
             }
         }
     }

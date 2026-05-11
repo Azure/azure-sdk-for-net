@@ -12,76 +12,74 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Policy.Models;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.ResourceManager.Resources.Policy
 {
-    /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class GroupQuotaLimitListData : ResourceData, IJsonModel<GroupQuotaLimitListData>
+    /// <summary> The policy set definition. </summary>
+    public partial class PolicySetDefinitionData : ResourceData, IJsonModel<PolicySetDefinitionData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitListData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicySetDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGroupQuotaLimitListData(document.RootElement, options);
+                        return DeserializePolicySetDefinitionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GroupQuotaLimitListData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicySetDefinitionData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitListData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicySetDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesPolicyContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GroupQuotaLimitListData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicySetDefinitionData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GroupQuotaLimitListData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PolicySetDefinitionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GroupQuotaLimitListData IPersistableModel<GroupQuotaLimitListData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GroupQuotaLimitListData)PersistableModelCreateCore(data, options);
+        PolicySetDefinitionData IPersistableModel<PolicySetDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PolicySetDefinitionData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GroupQuotaLimitListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PolicySetDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="groupQuotaLimitListData"> The <see cref="GroupQuotaLimitListData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(GroupQuotaLimitListData groupQuotaLimitListData)
+        /// <param name="policySetDefinitionData"> The <see cref="PolicySetDefinitionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PolicySetDefinitionData policySetDefinitionData)
         {
-            if (groupQuotaLimitListData == null)
+            if (policySetDefinitionData == null)
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(groupQuotaLimitListData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(policySetDefinitionData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GroupQuotaLimitListData"/> from. </param>
-        internal static GroupQuotaLimitListData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PolicySetDefinitionData"/> from. </param>
+        internal static PolicySetDefinitionData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGroupQuotaLimitListData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializePolicySetDefinitionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GroupQuotaLimitListData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PolicySetDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -92,10 +90,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitListData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicySetDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupQuotaLimitListData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicySetDefinitionData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -103,43 +101,28 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GroupQuotaLimitListData IJsonModel<GroupQuotaLimitListData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GroupQuotaLimitListData)JsonModelCreateCore(ref reader, options);
+        PolicySetDefinitionData IJsonModel<PolicySetDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PolicySetDefinitionData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitListData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicySetDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupQuotaLimitListData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicySetDefinitionData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGroupQuotaLimitListData(document.RootElement, options);
+            return DeserializePolicySetDefinitionData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GroupQuotaLimitListData DeserializeGroupQuotaLimitListData(JsonElement element, ModelReaderWriterOptions options)
+        internal static PolicySetDefinitionData DeserializePolicySetDefinitionData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -149,8 +132,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            GroupQuotaLimitListProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            PolicySetDefinitionProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -182,7 +165,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerResourcesPolicyContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -191,7 +174,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         continue;
                     }
-                    properties = GroupQuotaLimitListProperties.DeserializeGroupQuotaLimitListProperties(prop.Value, options);
+                    properties = PolicySetDefinitionProperties.DeserializePolicySetDefinitionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -199,13 +182,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GroupQuotaLimitListData(
+            return new PolicySetDefinitionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                properties);
         }
     }
 }

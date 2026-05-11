@@ -53,10 +53,10 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -77,10 +77,10 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
     }
 }
