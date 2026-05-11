@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PreviewAlertRule.Models
 {
     /// <summary> The PreviewAlertRuleRequestProperties. </summary>
-    public partial class PreviewAlertRuleRequestProperties
+    internal partial class PreviewAlertRuleRequestProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

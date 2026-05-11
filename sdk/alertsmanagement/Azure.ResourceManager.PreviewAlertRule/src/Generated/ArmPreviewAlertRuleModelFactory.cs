@@ -17,22 +17,13 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmPreviewAlertRuleModelFactory
     {
-        /// <summary> The PreviewAlertRuleRequest. </summary>
         /// <param name="location"> The location of the rule resource. </param>
-        /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.PreviewAlertRuleRequest"/> instance for mocking. </returns>
-        public static PreviewAlertRuleRequest PreviewAlertRuleRequest(AzureLocation location = default, PreviewAlertRuleRequestProperties properties = default)
-        {
-            return new PreviewAlertRuleRequest(location, properties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The PreviewAlertRuleRequestProperties. </summary>
         /// <param name="timespan"> Specifies the timespan of the preview in ISO 8601 duration format. </param>
         /// <param name="scheduledQueryRuleProperties"> The properties of the alert rule to preview. </param>
-        /// <returns> A new <see cref="Models.PreviewAlertRuleRequestProperties"/> instance for mocking. </returns>
-        public static PreviewAlertRuleRequestProperties PreviewAlertRuleRequestProperties(TimeSpan timespan = default, LogAlertRule scheduledQueryRuleProperties = default)
+        /// <returns> A new <see cref="Models.PreviewAlertRuleRequest"/> instance for mocking. </returns>
+        public static PreviewAlertRuleRequest PreviewAlertRuleRequest(AzureLocation location = default, TimeSpan timespan = default, LogAlertRule scheduledQueryRuleProperties = default)
         {
-            return new PreviewAlertRuleRequestProperties(timespan, scheduledQueryRuleProperties, additionalBinaryDataProperties: null);
+            return new PreviewAlertRuleRequest(location, new PreviewAlertRuleRequestProperties(timespan, scheduledQueryRuleProperties, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="tags"> Resource tags. </param>
