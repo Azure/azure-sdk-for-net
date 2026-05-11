@@ -135,6 +135,10 @@ namespace Azure.Generator.Management
                 // provider here under that framework key. Without this, BaseModelProvider on derived
                 // resource models would resolve to null and InheritableSystemObjectModelVisitor would
                 // skip property/ctor/serialization fix-ups, causing CS0108/CS0114 build errors.
+                // TODO: Once microsoft/typespec#9234 is resolved we should be using
+                // SystemObjectModelProvider instead of InheritableSystemObjectModelProvider, after
+                // which the SystemBase provider will be registered in CSharpTypeMap by the base
+                // generator and this explicit registration can be removed.
                 CSharpTypeMap[replacedType] = systemBase;
                 return systemBase;
             }
