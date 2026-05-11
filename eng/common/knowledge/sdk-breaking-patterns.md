@@ -4,6 +4,8 @@ This document catalogs known TypeSpec changes that cause SDK breaking changes, o
 
 ## How to Use This Document
 
+**Important:** The patterns below are **SDK breaking changes**, not API breaking changes. These TypeSpec changes may be perfectly valid from an API/wire-protocol perspective, but they cause breaking changes in the generated SDK surface (e.g., class renames, removed methods) that affect downstream SDK consumers. API breaking changes (changes to the wire contract) should be caught by TypeSpec API-level validation, not this document.
+
 When generating an authoring plan for TypeSpec changes, check if the planned changes match any pattern below. If so, include an **SDK IMPACT** warning in the plan with the recommended mitigation. The developer can then apply the `client.tsp` fix in the same session, before merge.
 
 ## Pattern Catalog
@@ -12,15 +14,17 @@ When generating an authoring plan for TypeSpec changes, check if the planned cha
 
 **Detection:** TypeSpec diff shows `enum` keyword replaced by `union` or extensible enum pattern.
 
+**Note:** This change should generally use version decorators (`@added`) to introduce the union in a new API version rather than modifying the existing enum in place. If version decorators are used correctly, the SDK will handle versioning automatically. However, if the change does occur (e.g., during TypeSpec restructuring), the SDK impact is:
+
 **Per-Language Impact:**
 - **Java:** ❌ Breaking — enum ordinal values change, deserialization breaks
-- **.NET:** ⚠️ May break — strong typing affected, but extensible enums are handled
+- **.NET:** ❌ Breaking — cannot be fully fixed by `client.tsp`; may require .NET customization code
 - **Python:** ✅ Usually safe — duck typing, string comparison
 - **Go:** ❌ Breaking — type assertion fails on new union type
 
 **Mitigation:**
 ```typespec
-// In client.tsp — Define a new enum with all original enum values, then use @@alternateType to map to the new enum type for affacted languages.
+// In client.tsp — Define a new enum with all original enum values, then use @@alternateType to map to the new enum type for affected languages.
 enum FooStatusEnum
 {
  // ... all values from original FooStatus Enum
@@ -28,6 +32,8 @@ enum FooStatusEnum
 @@alternateType(MyService.FooStatus, FooStatusEnum, "java");
 @@alternateType(MyService.FooStatus, FooStatusEnum, "go");
 ```
+
+**Note (.NET):** `@@alternateType` may not fully resolve this for .NET. .NET may need customization code (partial classes) to preserve backward compatibility.
 
 ---
 
@@ -42,6 +48,7 @@ enum FooStatusEnum
 
 **Per-Language Impact:**
 - **All languages:** ❌ Breaking — client code references the old name
+- **.NET:** .NET may keep the old model available via customization code (partial classes) rather than `client.tsp`
 
 **Note (Python):** Check legacy `readme.python.md` for Swagger rename directives that need to be preserved:
 ```md
@@ -65,7 +72,7 @@ directive:
 
 ### 5. Model Removed
 
-**Detection:** TypeSpec diff shows model definition deleted, or changelog shows model no longer available.
+**Detection:** TypeSpec diff shows model definition deleted with no replacement, or changelog shows model no longer available. If a replacement model exists, this is a rename — see Pattern 4 (Model Renamed) instead.
 
 **Per-Language Impact:**
 - **All languages:** ❌ Breaking — any code referencing the model fails to compile
@@ -101,6 +108,8 @@ If the model was intentionally removed and replacement exists, use `@@clientName
 - **.NET:** ❌ Breaking — analyzer AZC0030 flags type mismatches; use `@@alternateType` with `Azure.ResourceManager.CommonTypes.ArmResourceIdentifier` for ID properties
 - **Python:** ⚠️ May break — mypy type check fails
 - **Go:** ❌ Breaking — cannot be resolved through client customizations
+
+**Note:** Not all type changes can be mitigated by `client.tsp`. If the type change is fundamental (e.g., switching between incompatible model hierarchies), the spec change itself may need to be reconsidered.
 
 **Mitigation:**
 ```typespec
@@ -219,6 +228,8 @@ op oldOperation(): void;
 - **All languages:** ❌ Breaking — missing properties and new property added in a model
 
 **Mitigation:** This can be resolved by applying `@flattenProperty` to the new combined property in `client.tsp`.
+
+**Note:** The legacy `@flattenProperty` decorator is generally only used during TypeSpec conversion from Swagger. For new TypeSpec APIs, prefer restructuring the model hierarchy instead of relying on flatten.
 
 ---
 
