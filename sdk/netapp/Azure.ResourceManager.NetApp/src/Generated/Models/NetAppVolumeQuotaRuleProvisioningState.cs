@@ -7,63 +7,95 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Gets the status of the VolumeQuotaRule at the time the operation was called. </summary>
+    /// <summary> Compatibility alias for NetApp volume quota rule provisioning state values. </summary>
     public readonly partial struct NetAppVolumeQuotaRuleProvisioningState : IEquatable<NetAppVolumeQuotaRuleProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The request has been accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> The resource is being created. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> The resource is being patched. </summary>
+        private const string PatchingValue = "Patching";
+        /// <summary> The resource is being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The resource is being moved. </summary>
+        private const string MovingValue = "Moving";
+        /// <summary> The operation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The operation succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The resource is being updated. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaRuleProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetAppVolumeQuotaRuleProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AcceptedValue = "Accepted";
-        private const string CreatingValue = "Creating";
-        private const string PatchingValue = "Patching";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string MovingValue = "Moving";
-        private const string FailedValue = "Failed";
-        private const string SucceededValue = "Succeeded";
-
-        /// <summary> Resource has been Accepted. </summary>
+        /// <summary> The request has been accepted. </summary>
         public static NetAppVolumeQuotaRuleProvisioningState Accepted { get; } = new NetAppVolumeQuotaRuleProvisioningState(AcceptedValue);
-        /// <summary> Resource is being Created. </summary>
+
+        /// <summary> The resource is being created. </summary>
         public static NetAppVolumeQuotaRuleProvisioningState Creating { get; } = new NetAppVolumeQuotaRuleProvisioningState(CreatingValue);
-        /// <summary> Resource is being Patched. </summary>
+
+        /// <summary> The resource is being patched. </summary>
         public static NetAppVolumeQuotaRuleProvisioningState Patching { get; } = new NetAppVolumeQuotaRuleProvisioningState(PatchingValue);
-        /// <summary> Resource is updating. </summary>
-        public static NetAppVolumeQuotaRuleProvisioningState Updating { get; } = new NetAppVolumeQuotaRuleProvisioningState(UpdatingValue);
-        /// <summary> Resource is being Deleted. </summary>
+
+        /// <summary> The resource is being deleted. </summary>
         public static NetAppVolumeQuotaRuleProvisioningState Deleting { get; } = new NetAppVolumeQuotaRuleProvisioningState(DeletingValue);
-        /// <summary> Resource is being Moved. </summary>
+
+        /// <summary> The resource is being moved. </summary>
         public static NetAppVolumeQuotaRuleProvisioningState Moving { get; } = new NetAppVolumeQuotaRuleProvisioningState(MovingValue);
-        /// <summary> Resource has Failed. </summary>
+
+        /// <summary> The operation failed. </summary>
         public static NetAppVolumeQuotaRuleProvisioningState Failed { get; } = new NetAppVolumeQuotaRuleProvisioningState(FailedValue);
-        /// <summary> Resource has Succeeded. </summary>
+
+        /// <summary> The operation succeeded. </summary>
         public static NetAppVolumeQuotaRuleProvisioningState Succeeded { get; } = new NetAppVolumeQuotaRuleProvisioningState(SucceededValue);
+
+        /// <summary> The resource is being updated. </summary>
+        public static NetAppVolumeQuotaRuleProvisioningState Updating { get; } = new NetAppVolumeQuotaRuleProvisioningState(UpdatingValue);
+
         /// <summary> Determines if two <see cref="NetAppVolumeQuotaRuleProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppVolumeQuotaRuleProvisioningState left, NetAppVolumeQuotaRuleProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetAppVolumeQuotaRuleProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppVolumeQuotaRuleProvisioningState left, NetAppVolumeQuotaRuleProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppVolumeQuotaRuleProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetAppVolumeQuotaRuleProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetAppVolumeQuotaRuleProvisioningState(string value) => new NetAppVolumeQuotaRuleProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetAppVolumeQuotaRuleProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetAppVolumeQuotaRuleProvisioningState?(string value) => value == null ? null : new NetAppVolumeQuotaRuleProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppVolumeQuotaRuleProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetAppVolumeQuotaRuleProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

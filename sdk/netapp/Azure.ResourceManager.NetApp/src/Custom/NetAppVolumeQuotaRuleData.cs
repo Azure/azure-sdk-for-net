@@ -3,15 +3,19 @@
 
 #nullable disable
 
-#pragma warning disable CS1591
+using System;
+using System.ComponentModel;
+using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
     public partial class NetAppVolumeQuotaRuleData
     {
-        public Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? ProvisioningState =>
-            VolumeQuotaRuleProvisioningState.HasValue
-                ? (Azure.ResourceManager.NetApp.Models.NetAppProvisioningState?)System.Enum.Parse(typeof(Azure.ResourceManager.NetApp.Models.NetAppProvisioningState), VolumeQuotaRuleProvisioningState.Value.ToString())
+        /// <summary> Gets the provisioning state of the quota rule. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NetAppProvisioningState? ProvisioningState =>
+            VolumeQuotaRuleProvisioningState.HasValue && Enum.TryParse<NetAppProvisioningState>(VolumeQuotaRuleProvisioningState.Value.ToString(), ignoreCase: true, out var provisioningState)
+                ? provisioningState
                 : null;
     }
 }

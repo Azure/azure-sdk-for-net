@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Specifies the Azure Key Vault settings for storing the bucket credentials. </summary>
     public partial class CredentialsKeyVaultDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CredentialsKeyVaultDetails"/>. </summary>
         public CredentialsKeyVaultDetails()
@@ -54,25 +25,24 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="credentialsKeyVaultUri"> The base URI of the Azure Key Vault that is used when storing the bucket credentials. </param>
         /// <param name="secretName">
         /// The name of the secret stored in Azure Key Vault. The associated key pair has the following structure:
-        ///
         /// {
         /// "access_key_id": "&lt;REDACTED&gt;",
         /// "secret_access_key": "&lt;REDACTED&gt;"
         /// }
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CredentialsKeyVaultDetails(Uri credentialsKeyVaultUri, string secretName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CredentialsKeyVaultDetails(Uri credentialsKeyVaultUri, string secretName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CredentialsKeyVaultUri = credentialsKeyVaultUri;
             SecretName = secretName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The base URI of the Azure Key Vault that is used when storing the bucket credentials. </summary>
         public Uri CredentialsKeyVaultUri { get; set; }
+
         /// <summary>
         /// The name of the secret stored in Azure Key Vault. The associated key pair has the following structure:
-        ///
         /// {
         /// "access_key_id": "&lt;REDACTED&gt;",
         /// "secret_access_key": "&lt;REDACTED&gt;"

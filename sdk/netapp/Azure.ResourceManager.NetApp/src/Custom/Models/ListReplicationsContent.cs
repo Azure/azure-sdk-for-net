@@ -3,16 +3,16 @@
 
 #nullable disable
 
-#pragma warning disable CS1591
-
 namespace Azure.ResourceManager.NetApp.Models
 {
+    // `Exclude` and `ExcludeReplicationsFilter` are aliases for the same underlying property.
     public partial class ListReplicationsContent
     {
-        public ExcludeReplicationsFilter? ExcludeReplicationsFilter
+        /// <summary> Exclude Replications filter. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'. </summary>
+        public ExcludeReplicationsFilter? Exclude
         {
-            get => Exclude;
-            set => Exclude = value;
+            get => ExcludeReplicationsFilter;
+            set => ExcludeReplicationsFilter = value;
         }
     }
 }

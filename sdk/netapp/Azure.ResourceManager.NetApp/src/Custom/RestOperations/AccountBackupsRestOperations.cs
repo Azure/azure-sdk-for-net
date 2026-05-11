@@ -1,6 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward compatibility — hand-rolled REST client for the deprecated
+// `/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups` endpoints.
+// The legacy `AccountBackups` API was superseded by `BackupVaults/{vault}/backups` in
+// the current spec. Existing customers continue to call `accountBackups` for their
+// pre-migration backups, so we retain this hand-rolled client to satisfy the
+// `NetAppAccountBackupCollection`/`NetAppAccountBackupResource` types (also kept as
+// backward-compat shims). The TypeSpec spec no longer exposes this operation.
+
 #nullable disable
 
 using System;
@@ -77,7 +85,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         BackupsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupsList.DeserializeBackupsList(document.RootElement);
+                        value = BackupsList.DeserializeBackupsList(document.RootElement, ModelSerializationExtensions.WireOptions);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -106,7 +114,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         BackupsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupsList.DeserializeBackupsList(document.RootElement);
+                        value = BackupsList.DeserializeBackupsList(document.RootElement, ModelSerializationExtensions.WireOptions);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -159,7 +167,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         NetAppBackupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NetAppBackupData.DeserializeNetAppBackupData(document.RootElement);
+                        value = NetAppBackupData.DeserializeNetAppBackupData(document.RootElement, ModelSerializationExtensions.WireOptions);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
@@ -192,7 +200,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         NetAppBackupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NetAppBackupData.DeserializeNetAppBackupData(document.RootElement);
+                        value = NetAppBackupData.DeserializeNetAppBackupData(document.RootElement, ModelSerializationExtensions.WireOptions);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
