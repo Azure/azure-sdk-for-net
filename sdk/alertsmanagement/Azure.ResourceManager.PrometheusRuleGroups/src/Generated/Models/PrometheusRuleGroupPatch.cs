@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         internal PrometheusRuleGroupResourcePatchParametersProperties Properties { get; set; }
 
         /// <summary> the flag that indicates whether the Prometheus rule group is enabled. </summary>
-        public bool? Enabled
+        public bool? IsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.Enabled;
+                return Properties is null ? default : Properties.IsEnabled;
             }
             set
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                 {
                     Properties = new PrometheusRuleGroupResourcePatchParametersProperties();
                 }
-                Properties.Enabled = value;
+                Properties.IsEnabled = value;
             }
         }
     }

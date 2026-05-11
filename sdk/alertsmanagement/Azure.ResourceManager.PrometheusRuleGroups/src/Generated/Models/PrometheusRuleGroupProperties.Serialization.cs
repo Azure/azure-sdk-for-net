@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.PrometheusRuleGroups;
 
 namespace Azure.ResourceManager.PrometheusRuleGroups.Models
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(ClusterName))
             {
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
             }
             writer.WritePropertyName("scopes"u8);
             writer.WriteStartArray();
-            foreach (string item in Scopes)
+            foreach (ResourceIdentifier item in Scopes)
             {
                 if (item == null)
                 {
@@ -161,9 +162,9 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                 return null;
             }
             string description = default;
-            bool? enabled = default;
+            bool? isEnabled = default;
             string clusterName = default;
-            IList<string> scopes = default;
+            IList<ResourceIdentifier> scopes = default;
             TimeSpan? interval = default;
             IList<PrometheusRule> rules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -180,7 +181,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("clusterName"u8))
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                 }
                 if (prop.NameEquals("scopes"u8))
                 {
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
                     scopes = array;
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
             }
             return new PrometheusRuleGroupProperties(
                 description,
-                enabled,
+                isEnabled,
                 clusterName,
                 scopes,
                 interval,

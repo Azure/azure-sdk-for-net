@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
         /// <param name="scopes"> Target Azure Monitor workspaces resource ids. This api-version is currently limited to creating with one scope. This may change in future. </param>
         /// <param name="rules"> Defines the rules in the Prometheus rule group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> or <paramref name="rules"/> is null. </exception>
-        public PrometheusRuleGroupData(AzureLocation location, IEnumerable<string> scopes, IEnumerable<PrometheusRule> rules) : base(location)
+        public PrometheusRuleGroupData(AzureLocation location, IEnumerable<ResourceIdentifier> scopes, IEnumerable<PrometheusRule> rules) : base(location)
         {
             Argument.AssertNotNull(scopes, nameof(scopes));
             Argument.AssertNotNull(rules, nameof(rules));
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
         }
 
         /// <summary> Enable/disable rule group. </summary>
-        public bool? Enabled
+        public bool? IsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.Enabled;
+                return Properties is null ? default : Properties.IsEnabled;
             }
             set
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
                 {
                     Properties = new PrometheusRuleGroupProperties();
                 }
-                Properties.Enabled = value;
+                Properties.IsEnabled = value;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
         }
 
         /// <summary> Target Azure Monitor workspaces resource ids. This api-version is currently limited to creating with one scope. This may change in future. </summary>
-        public IList<string> Scopes
+        public IList<ResourceIdentifier> Scopes
         {
             get
             {

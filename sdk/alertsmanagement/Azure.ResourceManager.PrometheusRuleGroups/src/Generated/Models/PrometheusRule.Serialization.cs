@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                 writer.WritePropertyName("alert"u8);
                 writer.WriteStringValue(Alert);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WritePropertyName("expression"u8);
             writer.WriteStringValue(Expression);
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                 writer.WritePropertyName("severity"u8);
                 writer.WriteNumberValue(Severity.Value);
             }
-            if (Optional.IsDefined(For))
+            if (Optional.IsDefined(MinActiveDuration))
             {
                 writer.WritePropertyName("for"u8);
-                writer.WriteStringValue(For.Value, "P");
+                writer.WriteStringValue(MinActiveDuration.Value, "P");
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
@@ -197,11 +197,11 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
             }
             string @record = default;
             string alert = default;
-            bool? enabled = default;
+            bool? isEnabled = default;
             string expression = default;
             IDictionary<string, string> labels = default;
             int? severity = default;
-            TimeSpan? @for = default;
+            TimeSpan? minActiveDuration = default;
             IDictionary<string, string> annotations = default;
             IList<PrometheusRuleGroupAction> actions = default;
             PrometheusRuleResolveConfiguration resolveConfiguration = default;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("expression"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                     {
                         continue;
                     }
-                    @for = prop.Value.GetTimeSpan("P");
+                    minActiveDuration = prop.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (prop.NameEquals("annotations"u8))
@@ -323,11 +323,11 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
             return new PrometheusRule(
                 @record,
                 alert,
-                enabled,
+                isEnabled,
                 expression,
                 labels ?? new ChangeTrackingDictionary<string, string>(),
                 severity,
-                @for,
+                minActiveDuration,
                 annotations ?? new ChangeTrackingDictionary<string, string>(),
                 actions ?? new ChangeTrackingList<PrometheusRuleGroupAction>(),
                 resolveConfiguration,

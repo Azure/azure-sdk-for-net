@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PrometheusRuleGroupResourcePatchParametersProperties"/>. </summary>
-        /// <param name="enabled"> the flag that indicates whether the Prometheus rule group is enabled. </param>
+        /// <param name="isEnabled"> the flag that indicates whether the Prometheus rule group is enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrometheusRuleGroupResourcePatchParametersProperties(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrometheusRuleGroupResourcePatchParametersProperties(bool? isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> the flag that indicates whether the Prometheus rule group is enabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
 }

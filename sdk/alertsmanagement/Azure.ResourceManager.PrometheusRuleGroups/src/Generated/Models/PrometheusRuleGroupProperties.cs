@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.PrometheusRuleGroups;
 
 namespace Azure.ResourceManager.PrometheusRuleGroups.Models
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         /// <param name="scopes"> Target Azure Monitor workspaces resource ids. This api-version is currently limited to creating with one scope. This may change in future. </param>
         /// <param name="rules"> Defines the rules in the Prometheus rule group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> or <paramref name="rules"/> is null. </exception>
-        public PrometheusRuleGroupProperties(IEnumerable<string> scopes, IEnumerable<PrometheusRule> rules)
+        public PrometheusRuleGroupProperties(IEnumerable<ResourceIdentifier> scopes, IEnumerable<PrometheusRule> rules)
         {
             Argument.AssertNotNull(scopes, nameof(scopes));
             Argument.AssertNotNull(rules, nameof(rules));
@@ -33,16 +34,16 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
 
         /// <summary> Initializes a new instance of <see cref="PrometheusRuleGroupProperties"/>. </summary>
         /// <param name="description"> Rule group description. </param>
-        /// <param name="enabled"> Enable/disable rule group. </param>
+        /// <param name="isEnabled"> Enable/disable rule group. </param>
         /// <param name="clusterName"> Apply rule to data from a specific cluster. </param>
         /// <param name="scopes"> Target Azure Monitor workspaces resource ids. This api-version is currently limited to creating with one scope. This may change in future. </param>
         /// <param name="interval"> The interval in which to run the Prometheus rule group represented in ISO 8601 duration format. Should be between 1 and 15 minutes. </param>
         /// <param name="rules"> Defines the rules in the Prometheus rule group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrometheusRuleGroupProperties(string description, bool? enabled, string clusterName, IList<string> scopes, TimeSpan? interval, IList<PrometheusRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrometheusRuleGroupProperties(string description, bool? isEnabled, string clusterName, IList<ResourceIdentifier> scopes, TimeSpan? interval, IList<PrometheusRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             ClusterName = clusterName;
             Scopes = scopes;
             Interval = interval;
@@ -54,13 +55,13 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         public string Description { get; set; }
 
         /// <summary> Enable/disable rule group. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> Apply rule to data from a specific cluster. </summary>
         public string ClusterName { get; set; }
 
         /// <summary> Target Azure Monitor workspaces resource ids. This api-version is currently limited to creating with one scope. This may change in future. </summary>
-        public IList<string> Scopes { get; } = new ChangeTrackingList<string>();
+        public IList<ResourceIdentifier> Scopes { get; } = new ChangeTrackingList<ResourceIdentifier>();
 
         /// <summary> The interval in which to run the Prometheus rule group represented in ISO 8601 duration format. Should be between 1 and 15 minutes. </summary>
         public TimeSpan? Interval { get; set; }

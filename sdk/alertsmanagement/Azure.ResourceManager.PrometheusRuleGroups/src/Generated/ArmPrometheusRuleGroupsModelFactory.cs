@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="description"> Rule group description. </param>
-        /// <param name="enabled"> Enable/disable rule group. </param>
+        /// <param name="isEnabled"> Enable/disable rule group. </param>
         /// <param name="clusterName"> Apply rule to data from a specific cluster. </param>
         /// <param name="scopes"> Target Azure Monitor workspaces resource ids. This api-version is currently limited to creating with one scope. This may change in future. </param>
         /// <param name="interval"> The interval in which to run the Prometheus rule group represented in ISO 8601 duration format. Should be between 1 and 15 minutes. </param>
         /// <param name="rules"> Defines the rules in the Prometheus rule group. </param>
         /// <returns> A new <see cref="PrometheusRuleGroups.PrometheusRuleGroupData"/> instance for mocking. </returns>
-        public static PrometheusRuleGroupData PrometheusRuleGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, bool? enabled = default, string clusterName = default, IEnumerable<string> scopes = default, TimeSpan? interval = default, IEnumerable<PrometheusRule> rules = default)
+        public static PrometheusRuleGroupData PrometheusRuleGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, bool? isEnabled = default, string clusterName = default, IEnumerable<ResourceIdentifier> scopes = default, TimeSpan? interval = default, IEnumerable<PrometheusRule> rules = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                 location,
                 new PrometheusRuleGroupProperties(
                     description,
-                    enabled,
+                    isEnabled,
                     clusterName,
-                    (scopes ?? new ChangeTrackingList<string>()).ToList(),
+                    (scopes ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     interval,
                     (rules ?? new ChangeTrackingList<PrometheusRule>()).ToList(),
                     null));
@@ -56,16 +56,16 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         /// <summary> An Azure Prometheus alerting or recording rule. </summary>
         /// <param name="record"> Recorded metrics name. </param>
         /// <param name="alert"> Alert rule name. </param>
-        /// <param name="enabled"> Enable/disable rule. </param>
+        /// <param name="isEnabled"> Enable/disable rule. </param>
         /// <param name="expression"> The PromQL expression to evaluate. https://prometheus.io/docs/prometheus/latest/querying/basics/. Evaluated periodically as given by 'interval', and the result recorded as a new set of time series with the metric name as given by 'record'. </param>
         /// <param name="labels"> Labels to add or overwrite before storing the result. </param>
         /// <param name="severity"> The severity of the alerts fired by the rule. Must be between 0 and 4. </param>
-        /// <param name="for"> The amount of time alert must be active before firing. </param>
+        /// <param name="minActiveDuration"> The amount of time alert must be active before firing. </param>
         /// <param name="annotations"> The annotations clause specifies a set of informational labels that can be used to store longer additional information such as alert descriptions or runbook links. The annotation values can be templated. </param>
         /// <param name="actions"> Actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
         /// <param name="resolveConfiguration"> Defines the configuration for resolving fired alerts. Only relevant for alerts. </param>
         /// <returns> A new <see cref="Models.PrometheusRule"/> instance for mocking. </returns>
-        public static PrometheusRule PrometheusRule(string @record = default, string alert = default, bool? enabled = default, string expression = default, IDictionary<string, string> labels = default, int? severity = default, TimeSpan? @for = default, IDictionary<string, string> annotations = default, IEnumerable<PrometheusRuleGroupAction> actions = default, PrometheusRuleResolveConfiguration resolveConfiguration = default)
+        public static PrometheusRule PrometheusRule(string @record = default, string alert = default, bool? isEnabled = default, string expression = default, IDictionary<string, string> labels = default, int? severity = default, TimeSpan? minActiveDuration = default, IDictionary<string, string> annotations = default, IEnumerable<PrometheusRuleGroupAction> actions = default, PrometheusRuleResolveConfiguration resolveConfiguration = default)
         {
             labels ??= new ChangeTrackingDictionary<string, string>();
             annotations ??= new ChangeTrackingDictionary<string, string>();
@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
             return new PrometheusRule(
                 @record,
                 alert,
-                enabled,
+                isEnabled,
                 expression,
                 labels,
                 severity,
-                @for,
+                minActiveDuration,
                 annotations,
                 actions.ToList(),
                 resolveConfiguration,
@@ -97,13 +97,13 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         }
 
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="enabled"> the flag that indicates whether the Prometheus rule group is enabled. </param>
+        /// <param name="isEnabled"> the flag that indicates whether the Prometheus rule group is enabled. </param>
         /// <returns> A new <see cref="Models.PrometheusRuleGroupPatch"/> instance for mocking. </returns>
-        public static PrometheusRuleGroupPatch PrometheusRuleGroupPatch(IDictionary<string, string> tags = default, bool? enabled = default)
+        public static PrometheusRuleGroupPatch PrometheusRuleGroupPatch(IDictionary<string, string> tags = default, bool? isEnabled = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PrometheusRuleGroupPatch(tags, enabled is null ? default : new PrometheusRuleGroupResourcePatchParametersProperties(enabled, null), additionalBinaryDataProperties: null);
+            return new PrometheusRuleGroupPatch(tags, isEnabled is null ? default : new PrometheusRuleGroupResourcePatchParametersProperties(isEnabled, null), additionalBinaryDataProperties: null);
         }
     }
 }

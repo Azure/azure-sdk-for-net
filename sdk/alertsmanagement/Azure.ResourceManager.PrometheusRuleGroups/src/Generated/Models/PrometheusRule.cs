@@ -33,24 +33,24 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         /// <summary> Initializes a new instance of <see cref="PrometheusRule"/>. </summary>
         /// <param name="record"> Recorded metrics name. </param>
         /// <param name="alert"> Alert rule name. </param>
-        /// <param name="enabled"> Enable/disable rule. </param>
+        /// <param name="isEnabled"> Enable/disable rule. </param>
         /// <param name="expression"> The PromQL expression to evaluate. https://prometheus.io/docs/prometheus/latest/querying/basics/. Evaluated periodically as given by 'interval', and the result recorded as a new set of time series with the metric name as given by 'record'. </param>
         /// <param name="labels"> Labels to add or overwrite before storing the result. </param>
         /// <param name="severity"> The severity of the alerts fired by the rule. Must be between 0 and 4. </param>
-        /// <param name="for"> The amount of time alert must be active before firing. </param>
+        /// <param name="minActiveDuration"> The amount of time alert must be active before firing. </param>
         /// <param name="annotations"> The annotations clause specifies a set of informational labels that can be used to store longer additional information such as alert descriptions or runbook links. The annotation values can be templated. </param>
         /// <param name="actions"> Actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
         /// <param name="resolveConfiguration"> Defines the configuration for resolving fired alerts. Only relevant for alerts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrometheusRule(string @record, string alert, bool? enabled, string expression, IDictionary<string, string> labels, int? severity, TimeSpan? @for, IDictionary<string, string> annotations, IList<PrometheusRuleGroupAction> actions, PrometheusRuleResolveConfiguration resolveConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrometheusRule(string @record, string alert, bool? isEnabled, string expression, IDictionary<string, string> labels, int? severity, TimeSpan? minActiveDuration, IDictionary<string, string> annotations, IList<PrometheusRuleGroupAction> actions, PrometheusRuleResolveConfiguration resolveConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Record = @record;
             Alert = alert;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Expression = expression;
             Labels = labels;
             Severity = severity;
-            For = @for;
+            MinActiveDuration = minActiveDuration;
             Annotations = annotations;
             Actions = actions;
             ResolveConfiguration = resolveConfiguration;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         public string Alert { get; set; }
 
         /// <summary> Enable/disable rule. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> The PromQL expression to evaluate. https://prometheus.io/docs/prometheus/latest/querying/basics/. Evaluated periodically as given by 'interval', and the result recorded as a new set of time series with the metric name as given by 'record'. </summary>
         public string Expression { get; set; }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         public int? Severity { get; set; }
 
         /// <summary> The amount of time alert must be active before firing. </summary>
-        public TimeSpan? For { get; set; }
+        public TimeSpan? MinActiveDuration { get; set; }
 
         /// <summary> The annotations clause specifies a set of informational labels that can be used to store longer additional information such as alert descriptions or runbook links. The annotation values can be templated. </summary>
         public IDictionary<string, string> Annotations { get; }
