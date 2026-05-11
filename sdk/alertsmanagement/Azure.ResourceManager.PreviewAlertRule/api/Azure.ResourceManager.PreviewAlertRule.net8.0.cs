@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
     }
     public static partial class ArmPreviewAlertRuleModelFactory
     {
-        public static Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRule LogAlertRule(System.Collections.Generic.IDictionary<string, string> tags = null, string location = null, Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRuleKind? kind = default(Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRuleKind?), string description = null, string displayName = null, Azure.ResourceManager.PreviewAlertRule.Models.AlertSeverity? severity = default(Azure.ResourceManager.PreviewAlertRule.Models.AlertSeverity?), bool? enabled = default(bool?), System.Collections.Generic.IEnumerable<string> scopes = null, System.TimeSpan? evaluationFrequency = default(System.TimeSpan?), System.TimeSpan? windowSize = default(System.TimeSpan?), System.TimeSpan? overrideQueryTimeRange = default(System.TimeSpan?), System.Collections.Generic.IEnumerable<string> targetResourceTypes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRuleCondition> criteriaAllOf = null) { throw null; }
+        public static Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRule LogAlertRule(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRuleKind? kind = default(Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRuleKind?), string description = null, string displayName = null, Azure.ResourceManager.PreviewAlertRule.Models.AlertSeverity? severity = default(Azure.ResourceManager.PreviewAlertRule.Models.AlertSeverity?), bool? enabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> scopes = null, System.TimeSpan? evaluationFrequency = default(System.TimeSpan?), System.TimeSpan? windowSize = default(System.TimeSpan?), System.TimeSpan? overrideQueryTimeRange = default(System.TimeSpan?), System.Collections.Generic.IEnumerable<string> targetResourceTypes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRuleCondition> criteriaAllOf = null) { throw null; }
         public static Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRuleCondition LogAlertRuleCondition(Azure.ResourceManager.PreviewAlertRule.Models.CriterionType? criterionType = default(Azure.ResourceManager.PreviewAlertRule.Models.CriterionType?), string query = null, Azure.ResourceManager.PreviewAlertRule.Models.TimeAggregation? timeAggregation = default(Azure.ResourceManager.PreviewAlertRule.Models.TimeAggregation?), string metricMeasureColumn = null, string resourceIdColumn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRuleDimension> dimensions = null, Azure.ResourceManager.PreviewAlertRule.Models.ConditionOperator? @operator = default(Azure.ResourceManager.PreviewAlertRule.Models.ConditionOperator?), double? threshold = default(double?), string alertSensitivity = null, System.DateTimeOffset? ignoreDataBefore = default(System.DateTimeOffset?), Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRuleConditionFailingPeriods failingPeriods = null, string metricName = null) { throw null; }
         public static Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRuleDimension LogAlertRuleDimension(string name = null, Azure.ResourceManager.PreviewAlertRule.Models.DimensionOperator @operator = default(Azure.ResourceManager.PreviewAlertRule.Models.DimensionOperator), System.Collections.Generic.IEnumerable<string> values = null) { throw null; }
-        public static Azure.ResourceManager.PreviewAlertRule.Models.PreviewAlertRuleRequest PreviewAlertRuleRequest(string location = null, Azure.ResourceManager.PreviewAlertRule.Models.PreviewAlertRuleRequestProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.PreviewAlertRule.Models.PreviewAlertRuleRequest PreviewAlertRuleRequest(Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.PreviewAlertRule.Models.PreviewAlertRuleRequestProperties properties = null) { throw null; }
         public static Azure.ResourceManager.PreviewAlertRule.Models.PreviewAlertRuleRequestProperties PreviewAlertRuleRequestProperties(System.TimeSpan timespan = default(System.TimeSpan), Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRule scheduledQueryRuleProperties = null) { throw null; }
         public static Azure.ResourceManager.PreviewAlertRule.Models.PreviewAlertRuleResponse PreviewAlertRuleResponse(System.Collections.Generic.IEnumerable<Azure.ResourceManager.PreviewAlertRule.Models.RulePreviewResult> rulePreviewResults = null) { throw null; }
         public static Azure.ResourceManager.PreviewAlertRule.Models.RulePreviewDimensionNameAndValue RulePreviewDimensionNameAndValue(string name = null, string value = null) { throw null; }
@@ -131,20 +131,20 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
     }
     public partial class LogAlertRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRule>
     {
-        public LogAlertRule(string location) { }
+        public LogAlertRule(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRuleCondition> CriteriaAllOf { get { throw null; } }
-        public string Description { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public bool? Enabled { get { throw null; } }
-        public System.TimeSpan? EvaluationFrequency { get { throw null; } }
+        public string Description { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public bool? Enabled { get { throw null; } set { } }
+        public System.TimeSpan? EvaluationFrequency { get { throw null; } set { } }
         public Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRuleKind? Kind { get { throw null; } set { } }
-        public string Location { get { throw null; } }
-        public System.TimeSpan? OverrideQueryTimeRange { get { throw null; } }
-        public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
-        public Azure.ResourceManager.PreviewAlertRule.Models.AlertSeverity? Severity { get { throw null; } }
+        public Azure.Core.AzureLocation Location { get { throw null; } }
+        public System.TimeSpan? OverrideQueryTimeRange { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> Scopes { get { throw null; } }
+        public Azure.ResourceManager.PreviewAlertRule.Models.AlertSeverity? Severity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IList<string> TargetResourceTypes { get { throw null; } }
-        public System.TimeSpan? WindowSize { get { throw null; } }
+        public System.TimeSpan? WindowSize { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.PreviewAlertRule.Models.LogAlertRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -231,8 +231,8 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
     }
     public partial class PreviewAlertRuleRequest : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PreviewAlertRule.Models.PreviewAlertRuleRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PreviewAlertRule.Models.PreviewAlertRuleRequest>
     {
-        public PreviewAlertRuleRequest(string location, Azure.ResourceManager.PreviewAlertRule.Models.PreviewAlertRuleRequestProperties properties) { }
-        public string Location { get { throw null; } }
+        public PreviewAlertRuleRequest(Azure.Core.AzureLocation location, Azure.ResourceManager.PreviewAlertRule.Models.PreviewAlertRuleRequestProperties properties) { }
+        public Azure.Core.AzureLocation Location { get { throw null; } }
         public Azure.ResourceManager.PreviewAlertRule.Models.PreviewAlertRuleRequestProperties Properties { get { throw null; } }
         protected virtual Azure.ResourceManager.PreviewAlertRule.Models.PreviewAlertRuleRequest JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

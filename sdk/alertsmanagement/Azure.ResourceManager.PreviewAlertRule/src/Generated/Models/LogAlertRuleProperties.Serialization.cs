@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.PreviewAlertRule;
 
 namespace Azure.ResourceManager.PreviewAlertRule.Models
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
-                foreach (string item in Scopes)
+                foreach (ResourceIdentifier item in Scopes)
                 {
                     if (item == null)
                     {
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
             string displayName = default;
             AlertSeverity? severity = default;
             bool? enabled = default;
-            IList<string> scopes = default;
+            IList<ResourceIdentifier> scopes = default;
             TimeSpan? evaluationFrequency = default;
             TimeSpan? windowSize = default;
             TimeSpan? overrideQueryTimeRange = default;
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -242,7 +243,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
                     scopes = array;
@@ -315,7 +316,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                 displayName,
                 severity,
                 enabled,
-                scopes ?? new ChangeTrackingList<string>(),
+                scopes ?? new ChangeTrackingList<ResourceIdentifier>(),
                 evaluationFrequency,
                 windowSize,
                 overrideQueryTimeRange,

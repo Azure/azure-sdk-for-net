@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
             {
                 return null;
             }
-            string location = default;
+            AzureLocation location = default;
             PreviewAlertRuleRequestProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

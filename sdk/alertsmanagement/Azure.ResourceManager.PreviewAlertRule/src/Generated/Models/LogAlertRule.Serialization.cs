@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.PreviewAlertRule;
 
 namespace Azure.ResourceManager.PreviewAlertRule.Models
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            string location = default;
+            AzureLocation location = default;
             LogAlertRuleKind? kind = default;
             LogAlertRuleProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
