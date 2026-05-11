@@ -701,7 +701,6 @@ namespace Azure.ResourceManager.Marketplace.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PrivateStoreOfferData PrivateStoreOfferData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IEnumerable<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IDictionary<string, Uri> iconFileUris, IEnumerable<PrivateStorePlan> plans)
         {
-            iconFileUris ??= new ChangeTrackingDictionary<string, Uri>();
 
             return new PrivateStoreOfferData(
                 id,
@@ -709,7 +708,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                uniqueOfferId is null && offerDisplayName is null && publisherDisplayName is null && eTag is null && privateStoreId is null && createdOn is null && modifiedOn is null && specificPlanIdsLimitation is null && isUpdateSuppressedDueToIdempotence is null && plans is null ? default : new PrivateStoreOfferResult(
+                uniqueOfferId is null && offerDisplayName is null && publisherDisplayName is null && eTag is null && privateStoreId is null && createdOn is null && modifiedOn is null && specificPlanIdsLimitation is null && isUpdateSuppressedDueToIdempotence is null && iconFileUris is null && plans is null ? default : new PrivateStoreOfferResult(
                     uniqueOfferId,
                     offerDisplayName,
                     publisherDisplayName,
@@ -719,7 +718,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     modifiedOn,
                     (specificPlanIdsLimitation ?? new ChangeTrackingList<string>()).ToList(),
                     isUpdateSuppressedDueToIdempotence,
-                    default,
+                    new ChangeTrackingDictionary<string, Uri>(iconFileUris ?? new ChangeTrackingDictionary<string, Uri>()),
                     default,
                     (plans ?? new ChangeTrackingList<PrivateStorePlan>()).ToList(),
                     default));
