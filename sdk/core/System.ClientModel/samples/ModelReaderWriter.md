@@ -88,7 +88,7 @@ Using a proxy with the following definition
 public class InputModelProxy : IJsonModel<InputModel>
 ```
 
-The example below shows how to write a persitable model using a proxy to `BinaryData`
+The example below shows how to write a persistable model using a proxy to `BinaryData`
 
 ```C# Snippet:Readme_Write_Proxy
 InputModel model = new InputModel();
@@ -106,6 +106,12 @@ When multiple proxies are registered, the most recently registered proxy has the
 If a library registers a base proxy and a consumer registers a more specific one, the consumer's proxy takes precedence.
 
 ```C# Snippet:Readme_Proxy_Chain
+string json = @"{
+      ""x"": 1,
+      ""y"": 2,
+      ""z"": 3
+    }";
+
 ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
 
 // Base library registers a proxy

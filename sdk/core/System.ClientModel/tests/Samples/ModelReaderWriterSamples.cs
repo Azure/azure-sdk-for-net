@@ -89,13 +89,12 @@ internal class ModelReaderWriterSamples
 
     public void Read_Proxy_Chain()
     {
+        #region Snippet:Readme_Proxy_Chain
         string json = @"{
               ""x"": 1,
               ""y"": 2,
               ""z"": 3
             }";
-
-        #region Snippet:Readme_Proxy_Chain
         ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
 
         // Base library registers a proxy
