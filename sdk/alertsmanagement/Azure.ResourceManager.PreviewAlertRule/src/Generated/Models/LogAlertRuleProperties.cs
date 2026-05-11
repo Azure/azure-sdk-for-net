@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.PreviewAlertRule;
 
 namespace Azure.ResourceManager.PreviewAlertRule.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         /// <summary> Initializes a new instance of <see cref="LogAlertRuleProperties"/>. </summary>
         public LogAlertRuleProperties()
         {
-            Scopes = new ChangeTrackingList<string>();
+            Scopes = new ChangeTrackingList<ResourceIdentifier>();
             TargetResourceTypes = new ChangeTrackingList<string>();
         }
 
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         /// <param name="targetResourceTypes"> List of resource type of the target resource(s) on which the alert is created/updated. For example if the scope is a resource group and targetResourceTypes is Microsoft.Compute/virtualMachines, then a different alert will be fired for each virtual machine in the resource group which meet the alert criteria. Relevant only for rules of the kind LogAlert. </param>
         /// <param name="criteria"> The rule criteria that defines the conditions of the scheduled query rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogAlertRuleProperties(string description, string displayName, AlertSeverity? severity, bool? enabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, TimeSpan? overrideQueryTimeRange, IList<string> targetResourceTypes, LogAlertRuleCriteria criteria, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogAlertRuleProperties(string description, string displayName, AlertSeverity? severity, bool? enabled, IList<ResourceIdentifier> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, TimeSpan? overrideQueryTimeRange, IList<string> targetResourceTypes, LogAlertRuleCriteria criteria, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             DisplayName = displayName;
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         public bool? Enabled { get; set; }
 
         /// <summary> The list of resource id's that this scheduled query rule is scoped to. </summary>
-        public IList<string> Scopes { get; } = new ChangeTrackingList<string>();
+        public IList<ResourceIdentifier> Scopes { get; } = new ChangeTrackingList<ResourceIdentifier>();
 
         /// <summary> How often the scheduled query rule is evaluated represented in ISO 8601 duration format. Relevant and required only for rules of the kind LogAlert. </summary>
         public TimeSpan? EvaluationFrequency { get; set; }

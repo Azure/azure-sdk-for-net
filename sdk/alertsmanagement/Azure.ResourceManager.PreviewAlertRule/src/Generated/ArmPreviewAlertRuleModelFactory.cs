@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.PreviewAlertRule;
 
 namespace Azure.ResourceManager.PreviewAlertRule.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         /// <param name="location"> The location of the rule resource. </param>
         /// <param name="properties"></param>
         /// <returns> A new <see cref="Models.PreviewAlertRuleRequest"/> instance for mocking. </returns>
-        public static PreviewAlertRuleRequest PreviewAlertRuleRequest(string location = default, PreviewAlertRuleRequestProperties properties = default)
+        public static PreviewAlertRuleRequest PreviewAlertRuleRequest(AzureLocation location = default, PreviewAlertRuleRequestProperties properties = default)
         {
             return new PreviewAlertRuleRequest(location, properties, additionalBinaryDataProperties: null);
         }
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         /// <param name="targetResourceTypes"> List of resource type of the target resource(s) on which the alert is created/updated. For example if the scope is a resource group and targetResourceTypes is Microsoft.Compute/virtualMachines, then a different alert will be fired for each virtual machine in the resource group which meet the alert criteria. Relevant only for rules of the kind LogAlert. </param>
         /// <param name="criteriaAllOf"> A list of conditions to evaluate against the specified scopes. </param>
         /// <returns> A new <see cref="Models.LogAlertRule"/> instance for mocking. </returns>
-        public static LogAlertRule LogAlertRule(IDictionary<string, string> tags = default, string location = default, LogAlertRuleKind? kind = default, string description = default, string displayName = default, AlertSeverity? severity = default, bool? enabled = default, IEnumerable<string> scopes = default, TimeSpan? evaluationFrequency = default, TimeSpan? windowSize = default, TimeSpan? overrideQueryTimeRange = default, IEnumerable<string> targetResourceTypes = default, IEnumerable<LogAlertRuleCondition> criteriaAllOf = default)
+        public static LogAlertRule LogAlertRule(IDictionary<string, string> tags = default, AzureLocation location = default, LogAlertRuleKind? kind = default, string description = default, string displayName = default, AlertSeverity? severity = default, bool? enabled = default, IEnumerable<ResourceIdentifier> scopes = default, TimeSpan? evaluationFrequency = default, TimeSpan? windowSize = default, TimeSpan? overrideQueryTimeRange = default, IEnumerable<string> targetResourceTypes = default, IEnumerable<LogAlertRuleCondition> criteriaAllOf = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                 displayName,
                 severity,
                 enabled,
-                (scopes ?? new ChangeTrackingList<string>()).ToList(),
+                (scopes ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                 evaluationFrequency,
                 windowSize,
                 overrideQueryTimeRange,

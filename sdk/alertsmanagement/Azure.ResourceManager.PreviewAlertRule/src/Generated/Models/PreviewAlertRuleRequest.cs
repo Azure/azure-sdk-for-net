@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.PreviewAlertRule;
 
 namespace Azure.ResourceManager.PreviewAlertRule.Models
@@ -20,10 +21,9 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         /// <summary> Initializes a new instance of <see cref="PreviewAlertRuleRequest"/>. </summary>
         /// <param name="location"> The location of the rule resource. </param>
         /// <param name="properties"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
-        public PreviewAlertRuleRequest(string location, PreviewAlertRuleRequestProperties properties)
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public PreviewAlertRuleRequest(AzureLocation location, PreviewAlertRuleRequestProperties properties)
         {
-            Argument.AssertNotNull(location, nameof(location));
             Argument.AssertNotNull(properties, nameof(properties));
 
             Location = location;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         /// <param name="location"> The location of the rule resource. </param>
         /// <param name="properties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PreviewAlertRuleRequest(string location, PreviewAlertRuleRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PreviewAlertRuleRequest(AzureLocation location, PreviewAlertRuleRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Properties = properties;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         }
 
         /// <summary> The location of the rule resource. </summary>
-        public string Location { get; }
+        public AzureLocation Location { get; }
 
         /// <summary> Gets the Properties. </summary>
         public PreviewAlertRuleRequestProperties Properties { get; }

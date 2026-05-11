@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.PreviewAlertRule;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PreviewAlertRule.Models
 {
@@ -18,23 +18,12 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LogAlertRule"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public LogAlertRule(string location)
-        {
-            Argument.AssertNotNull(location, nameof(location));
-
-            Tags = new ChangeTrackingDictionary<string, string>();
-            Location = location;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LogAlertRule"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> Indicates the type of scheduled query rule. The default is LogAlert. </param>
         /// <param name="properties"> The rule properties of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogAlertRule(IDictionary<string, string> tags, string location, LogAlertRuleKind? kind, LogAlertRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogAlertRule(IDictionary<string, string> tags, AzureLocation location, LogAlertRuleKind? kind, LogAlertRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Location = location;
@@ -47,83 +36,21 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; }
+        public AzureLocation Location { get; }
 
         /// <summary> Indicates the type of scheduled query rule. The default is LogAlert. </summary>
         public LogAlertRuleKind? Kind { get; set; }
 
-        /// <summary> The rule properties of the resource. </summary>
-        internal LogAlertRuleProperties Properties { get; }
-
-        /// <summary> The description of the scheduled query rule. </summary>
-        public string Description
-        {
-            get
-            {
-                return Properties.Description;
-            }
-        }
-
-        /// <summary> The display name of the alert rule. </summary>
-        public string DisplayName
-        {
-            get
-            {
-                return Properties.DisplayName;
-            }
-        }
-
-        /// <summary> Severity of the alert. Should be an integer between [0-4]. Value of 0 is severest. Relevant and required only for rules of the kind LogAlert. </summary>
-        public AlertSeverity? Severity
-        {
-            get
-            {
-                return Properties.Severity;
-            }
-        }
-
-        /// <summary> The flag which indicates whether this scheduled query rule is enabled. Value should be true or false. </summary>
-        public bool? Enabled
-        {
-            get
-            {
-                return Properties.Enabled;
-            }
-        }
-
         /// <summary> The list of resource id's that this scheduled query rule is scoped to. </summary>
-        public IList<string> Scopes
+        public IList<ResourceIdentifier> Scopes
         {
             get
             {
-                return Properties is null ? default : Properties.Scopes;
-            }
-        }
-
-        /// <summary> How often the scheduled query rule is evaluated represented in ISO 8601 duration format. Relevant and required only for rules of the kind LogAlert. </summary>
-        public TimeSpan? EvaluationFrequency
-        {
-            get
-            {
-                return Properties.EvaluationFrequency;
-            }
-        }
-
-        /// <summary> The period of time (in ISO 8601 duration format) on which the Alert query will be executed (bin size). Relevant and required only for rules of the kind LogAlert. </summary>
-        public TimeSpan? WindowSize
-        {
-            get
-            {
-                return Properties.WindowSize;
-            }
-        }
-
-        /// <summary> If specified then overrides the query time range (default is WindowSize*NumberOfEvaluationPeriods). Relevant only for rules of the kind LogAlert. </summary>
-        public TimeSpan? OverrideQueryTimeRange
-        {
-            get
-            {
-                return Properties.OverrideQueryTimeRange;
+                if (Properties is null)
+                {
+                    Properties = new LogAlertRuleProperties();
+                }
+                return Properties.Scopes;
             }
         }
 
@@ -132,7 +59,11 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         {
             get
             {
-                return Properties is null ? default : Properties.TargetResourceTypes;
+                if (Properties is null)
+                {
+                    Properties = new LogAlertRuleProperties();
+                }
+                return Properties.TargetResourceTypes;
             }
         }
 
@@ -141,7 +72,11 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         {
             get
             {
-                return Properties is null ? default : Properties.CriteriaAllOf;
+                if (Properties is null)
+                {
+                    Properties = new LogAlertRuleProperties();
+                }
+                return Properties.CriteriaAllOf;
             }
         }
     }
