@@ -16,6 +16,7 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <NoWarn>
      $(NoWarn);
+     AZC0002;
      AZC0004;
     </NoWarn>
     <AotCompatOptOut>true</AotCompatOptOut>
