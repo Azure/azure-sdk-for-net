@@ -225,6 +225,7 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(StorageTaskReportSummary))]
     [ModelReaderWriterBuildable(typeof(StorageUsage))]
     [ModelReaderWriterBuildable(typeof(StorageUsageName))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TableData))]
     [ModelReaderWriterBuildable(typeof(TableProperties))]

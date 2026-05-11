@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlMigrationNameUnavailableReason : IEquatable<PostgreSqlMigrationNameUnavailableReason>
     {
         private readonly string _value;
+        /// <summary> Migration name is invalid. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> Migration name already exists. </summary>
+        private const string AlreadyExistsValue = "AlreadyExists";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlMigrationNameUnavailableReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string InvalidValue = "Invalid";
-        private const string AlreadyExistsValue = "AlreadyExists";
-
-        /// <summary> Invalid. </summary>
+        /// <summary> Migration name is invalid. </summary>
         public static PostgreSqlMigrationNameUnavailableReason Invalid { get; } = new PostgreSqlMigrationNameUnavailableReason(InvalidValue);
-        /// <summary> AlreadyExists. </summary>
+
+        /// <summary> Migration name already exists. </summary>
         public static PostgreSqlMigrationNameUnavailableReason AlreadyExists { get; } = new PostgreSqlMigrationNameUnavailableReason(AlreadyExistsValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlMigrationNameUnavailableReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlMigrationNameUnavailableReason left, PostgreSqlMigrationNameUnavailableReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlMigrationNameUnavailableReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlMigrationNameUnavailableReason left, PostgreSqlMigrationNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlMigrationNameUnavailableReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlMigrationNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlMigrationNameUnavailableReason(string value) => new PostgreSqlMigrationNameUnavailableReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlMigrationNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlMigrationNameUnavailableReason?(string value) => value == null ? null : new PostgreSqlMigrationNameUnavailableReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlMigrationNameUnavailableReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlMigrationNameUnavailableReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

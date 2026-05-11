@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates if high availability with zone redundancy is supported in this location. 'Enabled' means high availability with zone redundancy is supported. 'Disabled' stands for high availability with zone redundancy is not supported. Will be deprecated in the future. Look to Supported Features for  'ZoneRedundantHa'. </summary>
+    /// <summary> Indicates if high availability with zone redundancy is supported in this location. Will be deprecated in the future. Look to Supported Features for  'ZoneRedundantHa'. </summary>
     public readonly partial struct PostgreSqlFlexibleServerZoneRedundantHaSupported : IEquatable<PostgreSqlFlexibleServerZoneRedundantHaSupported>
     {
         private readonly string _value;
+        /// <summary> High availability with zone redundancy is supported. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> High availability with zone redundancy is not supported. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerZoneRedundantHaSupported"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlFlexibleServerZoneRedundantHaSupported(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-
-        /// <summary> Enabled. </summary>
+        /// <summary> High availability with zone redundancy is supported. </summary>
         public static PostgreSqlFlexibleServerZoneRedundantHaSupported Enabled { get; } = new PostgreSqlFlexibleServerZoneRedundantHaSupported(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> High availability with zone redundancy is not supported. </summary>
         public static PostgreSqlFlexibleServerZoneRedundantHaSupported Disabled { get; } = new PostgreSqlFlexibleServerZoneRedundantHaSupported(DisabledValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerZoneRedundantHaSupported"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerZoneRedundantHaSupported left, PostgreSqlFlexibleServerZoneRedundantHaSupported right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerZoneRedundantHaSupported"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerZoneRedundantHaSupported left, PostgreSqlFlexibleServerZoneRedundantHaSupported right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerZoneRedundantHaSupported"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerZoneRedundantHaSupported"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerZoneRedundantHaSupported(string value) => new PostgreSqlFlexibleServerZoneRedundantHaSupported(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerZoneRedundantHaSupported"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerZoneRedundantHaSupported?(string value) => value == null ? null : new PostgreSqlFlexibleServerZoneRedundantHaSupported(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerZoneRedundantHaSupported other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerZoneRedundantHaSupported other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

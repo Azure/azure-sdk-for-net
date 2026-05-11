@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Relay.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RelayNetworkRuleSetData RelayNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelayNetworkRuleSetDefaultAction? defaultAction, RelayPublicNetworkAccess? publicNetworkAccess, IEnumerable<RelayNetworkRuleSetIPRule> ipRules)
         {
-            return RelayNetworkRuleSetData(id, name, resourceType, systemData, trustedServiceAccessEnabled: default, defaultAction, publicNetworkAccess, ipRules);
+            return RelayNetworkRuleSetData(id: id, name: name, resourceType: resourceType, systemData: systemData, trustedServiceAccessEnabled: default, defaultAction: defaultAction, publicNetworkAccess: publicNetworkAccess, ipRules: ipRules);
         }
     }
 }

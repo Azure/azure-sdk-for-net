@@ -89,6 +89,8 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            writer.WritePropertyName("dependency_resolution"u8);
+            writer.WriteStringValue(DependencyResolution.ToString());
             if (options.Format != "W" && Optional.IsDefined(ContentHash))
             {
                 writer.WritePropertyName("content_hash"u8);
@@ -138,6 +140,7 @@ namespace Azure.AI.Projects.Agents
             }
             string runtime = default;
             IList<string> entryPoint = default;
+            CodeDependencyResolution dependencyResolution = default;
             string contentHash = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -164,6 +167,11 @@ namespace Azure.AI.Projects.Agents
                     entryPoint = array;
                     continue;
                 }
+                if (prop.NameEquals("dependency_resolution"u8))
+                {
+                    dependencyResolution = new CodeDependencyResolution(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("content_hash"u8))
                 {
                     contentHash = prop.Value.GetString();
@@ -174,7 +182,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CodeConfiguration(runtime, entryPoint, contentHash, additionalBinaryDataProperties);
+            return new CodeConfiguration(runtime, entryPoint, dependencyResolution, contentHash, additionalBinaryDataProperties);
         }
     }
 }
