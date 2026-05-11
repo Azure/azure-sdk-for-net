@@ -13,9 +13,8 @@ namespace Azure.ResourceManager.ResourceGraph
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(DateTimeInterval))]
     [ModelReaderWriterBuildable(typeof(Facet))]
     [ModelReaderWriterBuildable(typeof(FacetError))]
     [ModelReaderWriterBuildable(typeof(FacetErrorDetails))]
@@ -23,13 +22,14 @@ namespace Azure.ResourceManager.ResourceGraph
     [ModelReaderWriterBuildable(typeof(FacetRequestOptions))]
     [ModelReaderWriterBuildable(typeof(FacetResult))]
     [ModelReaderWriterBuildable(typeof(GraphQueryListResult))]
+    [ModelReaderWriterBuildable(typeof(GraphQueryProperties))]
+    [ModelReaderWriterBuildable(typeof(GraphQueryPropertiesUpdateParameters))]
     [ModelReaderWriterBuildable(typeof(ResourceGraphQueryData))]
     [ModelReaderWriterBuildable(typeof(ResourceGraphQueryPatch))]
     [ModelReaderWriterBuildable(typeof(ResourceGraphQueryResource))]
     [ModelReaderWriterBuildable(typeof(ResourceQueryContent))]
     [ModelReaderWriterBuildable(typeof(ResourceQueryRequestOptions))]
     [ModelReaderWriterBuildable(typeof(ResourceQueryResult))]
-    [ModelReaderWriterBuildable(typeof(ResourcesHistoryRequestOptions))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownFacet))]
     public partial class AzureResourceManagerResourceGraphContext : ModelReaderWriterContext

@@ -8,68 +8,77 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ResourceGraph;
 using Azure.ResourceManager.ResourceGraph.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ResourceGraph.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableResourceGraphTenantResource : ArmResource
     {
-        private ClientDiagnostics _defaultClientDiagnostics;
-        private ResourceGraphRestOperations _defaultRestClient;
+        private ClientDiagnostics _resourceGraphApiClientClientDiagnostics;
+        private ResourceGraphApiClient _resourceGraphApiClientRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableResourceGraphTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableResourceGraphTenantResource for mocking. </summary>
         protected MockableResourceGraphTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableResourceGraphTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableResourceGraphTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableResourceGraphTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceGraph", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ResourceGraphRestOperations DefaultRestClient => _defaultRestClient ??= new ResourceGraphRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ResourceGraphApiClientClientDiagnostics => _resourceGraphApiClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceGraph.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ResourceGraphApiClient ResourceGraphApiClientRestClient => _resourceGraphApiClientRestClient ??= new ResourceGraphApiClient(ResourceGraphApiClientClientDiagnostics, Pipeline, Endpoint, "2024-04-01");
 
         /// <summary>
         /// Queries the resources managed by Azure Resource Manager for scopes specified in the request.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceGraph/resources</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.ResourceGraph/resources. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Resources</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGraphApi_Resources. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Request specifying query and its options. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ResourceQueryResult>> GetResourcesAsync(ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DefaultClientDiagnostics.CreateScope("MockableResourceGraphTenantResource.GetResources");
+            using DiagnosticScope scope = ResourceGraphApiClientClientDiagnostics.CreateScope("MockableResourceGraphTenantResource.GetResources");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.ResourcesAsync(content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ResourceGraphApiClientRestClient.CreateGetResourcesRequest(ResourceQueryContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ResourceQueryResult> response = Response.FromValue(ResourceQueryResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -83,31 +92,41 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// Queries the resources managed by Azure Resource Manager for scopes specified in the request.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceGraph/resources</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.ResourceGraph/resources. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Resources</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGraphApi_Resources. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Request specifying query and its options. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ResourceQueryResult> GetResources(ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DefaultClientDiagnostics.CreateScope("MockableResourceGraphTenantResource.GetResources");
+            using DiagnosticScope scope = ResourceGraphApiClientClientDiagnostics.CreateScope("MockableResourceGraphTenantResource.GetResources");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.Resources(content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ResourceGraphApiClientRestClient.CreateGetResourcesRequest(ResourceQueryContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ResourceQueryResult> response = Response.FromValue(ResourceQueryResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

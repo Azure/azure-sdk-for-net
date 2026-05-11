@@ -1,0 +1,6 @@
+{
+  "apiVersions": {
+    "ResourceGraphApi": "2024-04-01",
+    "GraphQueryApi": "2024-04-01"
+  }
+}
