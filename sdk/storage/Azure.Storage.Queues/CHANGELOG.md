@@ -1,6 +1,6 @@
 # Release History
 
-## 12.26.0 (Unreleased)
+## 12.26.0 (2026-05-11)
 
 ### Features Added
 - Includes all features from 12.26.0-beta.1
