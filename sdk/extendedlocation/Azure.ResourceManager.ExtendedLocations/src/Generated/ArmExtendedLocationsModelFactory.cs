@@ -8,14 +8,137 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ExtendedLocations;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmExtendedLocationsModelFactory
     {
+
+        /// <param name="description"> The description of the operation. </param>
+        /// <param name="operation"> The display name of the compute operation. </param>
+        /// <param name="provider"> The resource provider for the operation. </param>
+        /// <param name="resource"> The display name of the resource the operation applies to. </param>
+        /// <param name="isDataAction"> Is this Operation a data plane operation. </param>
+        /// <param name="name"> The name of the compute operation. </param>
+        /// <param name="origin"> The origin of the compute operation. </param>
+        /// <returns> A new <see cref="Models.CustomLocationOperationInfo"/> instance for mocking. </returns>
+        public static CustomLocationOperationInfo CustomLocationOperationInfo(string description = default, string operation = default, string provider = default, string resource = default, bool? isDataAction = default, string name = default, string origin = default)
+        {
+            return new CustomLocationOperationInfo(description is null && operation is null && provider is null && resource is null ? default : new CustomLocationOperationValueDisplay(description, operation, provider, resource, null), isDataAction, name, origin, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <param name="authentication"> This is optional input that contains the authentication that should be used to generate the namespace. </param>
+        /// <param name="clusterExtensionIds"> Contains the reference to the add-on that contains charts to deploy CRDs and operators. </param>
+        /// <param name="displayName"> Display name for the Custom Locations location. </param>
+        /// <param name="hostResourceId"> Connected Cluster or AKS Cluster. The Custom Locations RP will perform a checkAccess API for listAdminCredentials permissions. </param>
+        /// <param name="hostType"> Type of host the Custom Locations is referencing (Kubernetes, etc...). </param>
+        /// <param name="namespace"> Kubernetes namespace that will be created on the specified cluster. </param>
+        /// <param name="provisioningState"> Provisioning State for the Custom Location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.CustomLocationPatch"/> instance for mocking. </returns>
+        public static CustomLocationPatch CustomLocationPatch(ManagedServiceIdentity identity = default, CustomLocationAuthentication authentication = default, IEnumerable<ResourceIdentifier> clusterExtensionIds = default, string displayName = default, ResourceIdentifier hostResourceId = default, CustomLocationHostType? hostType = default, string @namespace = default, string provisioningState = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CustomLocationPatch(identity, authentication is null && clusterExtensionIds is null && displayName is null && hostResourceId is null && hostType is null && @namespace is null && provisioningState is null ? default : new CustomLocationProperties(
+                authentication,
+                (clusterExtensionIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                displayName,
+                hostResourceId,
+                hostType,
+                @namespace,
+                provisioningState,
+                null), tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The Find Target Resource Group operation request. </summary>
+        /// <param name="labels"> Labels of the custom resource, this is a map of {key,value} pairs. </param>
+        /// <returns> A new <see cref="Models.CustomLocationFindTargetResourceGroupProperties"/> instance for mocking. </returns>
+        public static CustomLocationFindTargetResourceGroupProperties CustomLocationFindTargetResourceGroupProperties(IDictionary<string, string> labels = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CustomLocationFindTargetResourceGroupProperties(labels, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The Find Target Resource Group operation response. </summary>
+        /// <param name="matchedResourceSyncRule"> The matching resource sync rule is the particular resource sync rule that matched the match expressions and labels and had lowest priority. This is the rule responsible for mapping the target resource to the target resource group. </param>
+        /// <param name="targetResourceGroup"> The target resource group of matching resource sync rule. The labels from the request will be used to find out matching resource sync rule against the selector property of the resource sync rule. The one with highest priority will be returned if there are multiple matching rules. </param>
+        /// <returns> A new <see cref="Models.CustomLocationFindTargetResourceGroupResult"/> instance for mocking. </returns>
+        public static CustomLocationFindTargetResourceGroupResult CustomLocationFindTargetResourceGroupResult(string matchedResourceSyncRule = default, string targetResourceGroup = default)
+        {
+            return new CustomLocationFindTargetResourceGroupResult(matchedResourceSyncRule, targetResourceGroup, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="priority"> Priority represents a priority of the Resource Sync Rule. </param>
+        /// <param name="provisioningState"> Provisioning State for the Resource Sync Rule. </param>
+        /// <param name="selector"> A label selector is composed of two parts, matchLabels and matchExpressions. The first part, matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is 'key', the operator is 'In', and the values array contains only 'value'. The second part, matchExpressions is a list of resource selector requirements. Valid operators include In, NotIn, Exists, and DoesNotExist. The values set must be non-empty in the case of In and NotIn. The values set must be empty in the case of Exists and DoesNotExist. All of the requirements, from both matchLabels and matchExpressions must all be satisfied in order to match. </param>
+        /// <param name="targetResourceGroup"> For an unmapped custom resource, its labels will be used to find matching resource sync rules. If this resource sync rule is one of the matching rules with highest priority, then the unmapped custom resource will be projected to the target resource group associated with this resource sync rule. The user creating this resource sync rule should have write permissions on the target resource group and this write permission will be validated when creating the resource sync rule. </param>
+        /// <returns> A new <see cref="ExtendedLocations.ResourceSyncRuleData"/> instance for mocking. </returns>
+        public static ResourceSyncRuleData ResourceSyncRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? priority = default, string provisioningState = default, ResourceSyncRulePropertiesSelector selector = default, string targetResourceGroup = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ResourceSyncRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                priority is null && provisioningState is null && selector is null && targetResourceGroup is null ? default : new ResourceSyncRuleProperties(priority, provisioningState, selector, targetResourceGroup, null));
+        }
+
+        /// <summary> A label selector is composed of two parts, matchLabels and matchExpressions. The first part, matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is 'key', the operator is 'In', and the values array contains only 'value'. The second part, matchExpressions is a list of resource selector requirements. Valid operators include In, NotIn, Exists, and DoesNotExist. The values set must be non-empty in the case of In and NotIn. The values set must be empty in the case of Exists and DoesNotExist. All of the requirements, from both matchLabels and matchExpressions must all be satisfied in order to match. </summary>
+        /// <param name="matchExpressions"> MatchExpressions is a list of resource selector requirements. Valid operators include In, NotIn, Exists, and DoesNotExist. The values set must be non-empty in the case of In and NotIn. The values set must be empty in the case of Exists and DoesNotExist. </param>
+        /// <param name="matchLabels"> MatchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is 'key', the operator is 'In', and the values array contains only 'value'. </param>
+        /// <returns> A new <see cref="Models.ResourceSyncRulePropertiesSelector"/> instance for mocking. </returns>
+        public static ResourceSyncRulePropertiesSelector ResourceSyncRulePropertiesSelector(IEnumerable<ResourceSyncRuleMatchExpression> matchExpressions = default, IDictionary<string, string> matchLabels = default)
+        {
+            matchExpressions ??= new ChangeTrackingList<ResourceSyncRuleMatchExpression>();
+            matchLabels ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ResourceSyncRulePropertiesSelector(matchExpressions.ToList(), matchLabels, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Resource Sync Rules matchExpression property definition. </summary>
+        /// <param name="key"> Key is the label key that the selector applies to. </param>
+        /// <param name="operator"> The Operator field represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist. </param>
+        /// <param name="values"> The label value. </param>
+        /// <returns> A new <see cref="Models.ResourceSyncRuleMatchExpression"/> instance for mocking. </returns>
+        public static ResourceSyncRuleMatchExpression ResourceSyncRuleMatchExpression(string key = default, string @operator = default, IEnumerable<string> values = default)
+        {
+            values ??= new ChangeTrackingList<string>();
+
+            return new ResourceSyncRuleMatchExpression(key, @operator, values.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="priority"> Priority represents a priority of the Resource Sync Rule. </param>
+        /// <param name="provisioningState"> Provisioning State for the Resource Sync Rule. </param>
+        /// <param name="selector"> A label selector is composed of two parts, matchLabels and matchExpressions. The first part, matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is 'key', the operator is 'In', and the values array contains only 'value'. The second part, matchExpressions is a list of resource selector requirements. Valid operators include In, NotIn, Exists, and DoesNotExist. The values set must be non-empty in the case of In and NotIn. The values set must be empty in the case of Exists and DoesNotExist. All of the requirements, from both matchLabels and matchExpressions must all be satisfied in order to match. </param>
+        /// <param name="targetResourceGroup"> For an unmapped custom resource, its labels will be used to find matching resource sync rules. If this resource sync rule is one of the matching rules with highest priority, then the unmapped custom resource will be projected to the target resource group associated with this resource sync rule. The user creating this resource sync rule should have write permissions on the target resource group and this write permission will be validated when creating the resource sync rule. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ResourceSyncRulePatch"/> instance for mocking. </returns>
+        public static ResourceSyncRulePatch ResourceSyncRulePatch(int? priority = default, string provisioningState = default, ResourceSyncRulePropertiesSelector selector = default, string targetResourceGroup = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ResourceSyncRulePatch(priority is null && provisioningState is null && selector is null && targetResourceGroup is null ? default : new ResourceSyncRuleProperties(priority, provisioningState, selector, targetResourceGroup, null), tags, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ExtendedLocations.CustomLocationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -32,27 +155,21 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <param name="namespace"> Kubernetes namespace that will be created on the specified cluster. </param>
         /// <param name="provisioningState"> Provisioning State for the Custom Location. </param>
         /// <returns> A new <see cref="ExtendedLocations.CustomLocationData"/> instance for mocking. </returns>
-        public static CustomLocationData CustomLocationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, CustomLocationAuthentication authentication = null, IEnumerable<ResourceIdentifier> clusterExtensionIds = null, string displayName = null, ResourceIdentifier hostResourceId = null, CustomLocationHostType? hostType = null, string @namespace = null, string provisioningState = null)
+        public static CustomLocationData CustomLocationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, CustomLocationAuthentication authentication = default, IEnumerable<ResourceIdentifier> clusterExtensionIds = default, string displayName = default, ResourceIdentifier hostResourceId = default, CustomLocationHostType? hostType = default, string @namespace = default, string provisioningState = default)
         {
-            tags ??= new Dictionary<string, string>();
-            clusterExtensionIds ??= new List<ResourceIdentifier>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            clusterExtensionIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new CustomLocationData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                identity,
-                authentication,
-                clusterExtensionIds?.ToList(),
-                displayName,
-                hostResourceId,
-                hostType,
-                @namespace,
-                provisioningState,
-                serializedAdditionalRawData: null);
+                default,
+                identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CustomLocationEnabledResourceType"/>. </summary>
@@ -64,19 +181,17 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <param name="extensionType"> Cluster Extension Type. </param>
         /// <param name="typesMetadata"> Metadata of the Resource Type. </param>
         /// <returns> A new <see cref="Models.CustomLocationEnabledResourceType"/> instance for mocking. </returns>
-        public static CustomLocationEnabledResourceType CustomLocationEnabledResourceType(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier clusterExtensionId = null, string extensionType = null, IEnumerable<CustomLocationEnabledResourceTypeMetadata> typesMetadata = null)
+        public static CustomLocationEnabledResourceType CustomLocationEnabledResourceType(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier clusterExtensionId = default, string extensionType = default, IEnumerable<CustomLocationEnabledResourceTypeMetadata> typesMetadata = default)
         {
-            typesMetadata ??= new List<CustomLocationEnabledResourceTypeMetadata>();
+            typesMetadata ??= new ChangeTrackingList<CustomLocationEnabledResourceTypeMetadata>();
 
             return new CustomLocationEnabledResourceType(
                 id,
                 name,
                 resourceType,
-                systemData,
-                clusterExtensionId,
-                extensionType,
-                typesMetadata?.ToList(),
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                default,
+                systemData);
         }
     }
 }

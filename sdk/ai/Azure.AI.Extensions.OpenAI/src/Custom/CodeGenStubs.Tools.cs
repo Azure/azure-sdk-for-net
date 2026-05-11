@@ -37,7 +37,6 @@ namespace Azure.AI.Extensions.OpenAI;
 [CodeGenType("EmptyModelParam")] public partial class ResponsesEmptyModelParam { }
 [CodeGenType("FabricDataAgentToolOptions")] public partial class ResponsesFabricDataAgentToolOptions { }
 [CodeGenType("FabricIQPreviewTool")] public partial class ResponsesFabricIQPreviewTool { }
-[CodeGenType("FabricIQPreviewToolParameters")] public partial class ResponsesFabricIQPreviewToolParameters { }
 [CodeGenType("FunctionShellToolParam")] public partial class ResponsesFunctionShellToolParam { }
 [CodeGenType("FunctionShellToolParamEnvironment")] public abstract partial class ResponsesFunctionShellToolParamEnvironment { }
 [CodeGenType("FunctionShellToolParamEnvironmentContainerReferenceParam")] public partial class ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam { }
@@ -73,4 +72,3 @@ namespace Azure.AI.Extensions.OpenAI;
 [CodeGenType("WebSearchConfiguration")] public partial class ResponsesWebSearchConfiguration { }
 [CodeGenType("WebSearchTool")] public partial class ResponsesWebSearchTool { }
 [CodeGenType("WorkIQPreviewTool")] public partial class ResponsesWorkIQPreviewTool { }
-[CodeGenType("WorkIQPreviewToolParameters")] public partial class ResponsesWorkIQPreviewToolParameters { }

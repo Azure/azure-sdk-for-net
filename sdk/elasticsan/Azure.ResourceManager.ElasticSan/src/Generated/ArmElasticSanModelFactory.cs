@@ -186,8 +186,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public static ElasticSanData ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IEnumerable<string> availabilityZones, ElasticSanProvisioningState? provisioningState, long baseSizeTiB, long extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, ElasticSanPublicNetworkAccess? publicNetworkAccess)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            availabilityZones ??= new ChangeTrackingList<string>();
-            privateEndpointConnections ??= new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
 
             return new ElasticSanData(
                 id,
@@ -197,7 +195,21 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default);
+                sku is null && availabilityZones is null && provisioningState is null && totalVolumeSizeGiB is null && volumeGroupCount is null && totalIops is null && totalMbps is null && totalSizeTiB is null && privateEndpointConnections is null && publicNetworkAccess is null ? default : new ElasticSanProperties(
+                    sku,
+                    (availabilityZones ?? new ChangeTrackingList<string>()).ToList(),
+                    provisioningState,
+                    baseSizeTiB,
+                    extendedCapacitySizeTiB,
+                    totalVolumeSizeGiB,
+                    volumeGroupCount,
+                    totalIops,
+                    totalMbps,
+                    totalSizeTiB,
+                    (privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>()).ToList(),
+                    publicNetworkAccess,
+                    default,
+                    default));
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSan.ElasticSanPrivateEndpointConnectionData"/>. </summary>

@@ -2496,11 +2496,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CdnEndpointData CdnEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string originPath, IEnumerable<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IEnumerable<GeoFilter> geoFilters, ResourceIdentifier defaultOriginGroupId, IEnumerable<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, ResourceIdentifier webApplicationFirewallPolicyLinkId, string hostName, IEnumerable<DeepCreatedOrigin> origins, IEnumerable<DeepCreatedOriginGroup> originGroups, IEnumerable<CdnCustomDomainData> customDomains, EndpointResourceState? resourceState, CdnEndpointProvisioningState? provisioningState)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            contentTypesToCompress ??= new ChangeTrackingList<string>();
-            geoFilters ??= new ChangeTrackingList<GeoFilter>();
-            uriSigningKeys ??= new ChangeTrackingList<UriSigningKey>();
-            origins ??= new ChangeTrackingList<DeepCreatedOrigin>();
-            originGroups ??= new ChangeTrackingList<DeepCreatedOriginGroup>();
             customDomains ??= new ChangeTrackingList<CdnCustomDomainData>();
 
             return new CdnEndpointData(
@@ -2511,7 +2506,28 @@ namespace Azure.ResourceManager.Cdn.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default);
+                originPath is null && contentTypesToCompress is null && originHostHeader is null && isCompressionEnabled is null && isHttpAllowed is null && isHttpsAllowed is null && queryStringCachingBehavior is null && optimizationType is null && probePath is null && geoFilters is null && defaultOriginGroupId is null && uriSigningKeys is null && deliveryPolicy is null && webApplicationFirewallPolicyLinkId is null && hostName is null && origins is null && originGroups is null && resourceState is null && provisioningState is null ? default : new EndpointProperties(
+                    originPath,
+                    (contentTypesToCompress ?? new ChangeTrackingList<string>()).ToList(),
+                    originHostHeader,
+                    isCompressionEnabled,
+                    isHttpAllowed,
+                    isHttpsAllowed,
+                    queryStringCachingBehavior,
+                    optimizationType,
+                    probePath,
+                    (geoFilters ?? new ChangeTrackingList<GeoFilter>()).ToList(),
+                    new CdnResourceReference(defaultOriginGroupId, default),
+                    (uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>()).ToList(),
+                    deliveryPolicy,
+                    new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, default),
+                    default,
+                    hostName,
+                    (origins ?? new ChangeTrackingList<DeepCreatedOrigin>()).ToList(),
+                    (originGroups ?? new ChangeTrackingList<DeepCreatedOriginGroup>()).ToList(),
+                    default,
+                    resourceState,
+                    provisioningState));
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CanMigrateResult"/>. </summary>
@@ -2536,9 +2552,8 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CanMigrateResult CanMigrateResult(string id, string canMigrateResultType, bool? canMigrate, CanMigrateDefaultSku? defaultSku, IEnumerable<MigrationErrorType> errors)
         {
-            errors ??= new ChangeTrackingList<MigrationErrorType>();
 
-            return new CanMigrateResult(default, canMigrateResultType, default, additionalBinaryDataProperties: null);
+            return new CanMigrateResult(default, canMigrateResultType, canMigrate is null && defaultSku is null && errors is null ? default : new CanMigrateProperties(canMigrate, defaultSku, (errors ?? new ChangeTrackingList<MigrationErrorType>()).ToList(), default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateResult"/>. </summary>
@@ -2558,7 +2573,7 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MigrateResult MigrateResult(string id, string migrateResultType, ResourceIdentifier migratedProfileResourceIdId)
         {
-            return new MigrateResult(default, migrateResultType, default, additionalBinaryDataProperties: null);
+            return new MigrateResult(default, migrateResultType, migratedProfileResourceIdId is null ? default : new MigrateResultProperties(new CdnResourceReference(migratedProfileResourceIdId, default), default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.ProfileData"/>. </summary>
@@ -2628,7 +2643,13 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FrontDoorCustomDomainPatch FrontDoorCustomDomainPatch(string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, ResourceIdentifier dnsZoneId, ResourceIdentifier preValidatedCustomDomainResourceId)
         {
-            return new FrontDoorCustomDomainPatch(default, additionalBinaryDataProperties: null);
+            return new FrontDoorCustomDomainPatch(profileName is null && tlsSettings is null && dnsZoneId is null && preValidatedCustomDomainResourceId is null ? default : new FrontDoorCustomDomainUpdatePropertiesParameters(
+                profileName,
+                tlsSettings,
+                default,
+                new CdnResourceReference(dnsZoneId, default),
+                new CdnResourceReference(preValidatedCustomDomainResourceId, default),
+                default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorEndpointData"/>. </summary>
@@ -2673,7 +2694,14 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FrontDoorOriginGroupPatch FrontDoorOriginGroupPatch(string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, EnabledState? sessionAffinityState, OriginAuthenticationProperties authentication)
         {
-            return new FrontDoorOriginGroupPatch(default, additionalBinaryDataProperties: null);
+            return new FrontDoorOriginGroupPatch(profileName is null && loadBalancingSettings is null && healthProbeSettings is null && trafficRestorationTimeInMinutes is null && sessionAffinityState is null && authentication is null ? default : new FrontDoorOriginGroupUpdatePropertiesParameters(
+                profileName,
+                loadBalancingSettings,
+                healthProbeSettings,
+                trafficRestorationTimeInMinutes,
+                sessionAffinityState,
+                authentication,
+                default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorOriginData"/>. </summary>
@@ -2717,7 +2745,20 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FrontDoorOriginPatch FrontDoorOriginPatch(string originGroupName, ResourceIdentifier originId, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, EnabledState? enabledState, bool? enforceCertificateNameCheck)
         {
-            return new FrontDoorOriginPatch(default, additionalBinaryDataProperties: null);
+            return new FrontDoorOriginPatch(originGroupName is null && originId is null && hostName is null && httpPort is null && httpsPort is null && originHostHeader is null && priority is null && weight is null && sharedPrivateLinkResource is null && enabledState is null && enforceCertificateNameCheck is null ? default : new FrontDoorOriginUpdatePropertiesParameters(
+                originGroupName,
+                new CdnResourceReference(originId, default),
+                hostName,
+                httpPort,
+                httpsPort,
+                originHostHeader,
+                priority,
+                weight,
+                sharedPrivateLinkResource,
+                default,
+                enabledState,
+                enforceCertificateNameCheck,
+                default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorRouteData"/>. </summary>
@@ -2763,12 +2804,22 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FrontDoorRoutePatch FrontDoorRoutePatch(string endpointName, IEnumerable<FrontDoorActivatedResourceInfo> customDomains, ResourceIdentifier originGroupId, string originPath, IEnumerable<WritableSubResource> ruleSets, IEnumerable<FrontDoorEndpointProtocol> supportedProtocols, IEnumerable<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState)
         {
-            customDomains ??= new ChangeTrackingList<FrontDoorActivatedResourceInfo>();
-            ruleSets ??= new ChangeTrackingList<WritableSubResource>();
-            supportedProtocols ??= new ChangeTrackingList<FrontDoorEndpointProtocol>();
-            patternsToMatch ??= new ChangeTrackingList<string>();
 
-            return new FrontDoorRoutePatch(default, additionalBinaryDataProperties: null);
+            return new FrontDoorRoutePatch(endpointName is null && customDomains is null && originGroupId is null && originPath is null && ruleSets is null && supportedProtocols is null && patternsToMatch is null && cacheConfiguration is null && forwardingProtocol is null && linkToDefaultDomain is null && httpsRedirect is null && enabledState is null ? default : new RouteUpdatePropertiesParameters(
+                endpointName,
+                (customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>()).ToList(),
+                new CdnResourceReference(originGroupId, default),
+                originPath,
+                (ruleSets ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                (supportedProtocols ?? new ChangeTrackingList<FrontDoorEndpointProtocol>()).ToList(),
+                (patternsToMatch ?? new ChangeTrackingList<string>()).ToList(),
+                cacheConfiguration,
+                forwardingProtocol,
+                linkToDefaultDomain,
+                httpsRedirect,
+                enabledState,
+                default,
+                default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorRulePatch"/>. </summary>
@@ -2789,10 +2840,14 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FrontDoorRulePatch FrontDoorRulePatch(string ruleSetName, int? order, IEnumerable<DeliveryRuleCondition> conditions, IEnumerable<DeliveryRuleAction> actions, MatchProcessingBehavior? matchProcessingBehavior)
         {
-            conditions ??= new ChangeTrackingList<DeliveryRuleCondition>();
-            actions ??= new ChangeTrackingList<DeliveryRuleAction>();
 
-            return new FrontDoorRulePatch(default, additionalBinaryDataProperties: null);
+            return new FrontDoorRulePatch(ruleSetName is null && order is null && conditions is null && actions is null && matchProcessingBehavior is null ? default : new RuleUpdatePropertiesParameters(
+                ruleSetName,
+                order,
+                (conditions ?? new ChangeTrackingList<DeliveryRuleCondition>()).ToList(),
+                (actions ?? new ChangeTrackingList<DeliveryRuleAction>()).ToList(),
+                matchProcessingBehavior,
+                default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.CdnEndpointData"/>. </summary>
@@ -2862,7 +2917,20 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DeepCreatedOrigin DeepCreatedOrigin(string name, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, ResourceIdentifier privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, PrivateEndpointStatus? privateEndpointStatus)
         {
-            return new DeepCreatedOrigin(name, default, additionalBinaryDataProperties: null);
+            return new DeepCreatedOrigin(name, hostName is null && httpPort is null && httpsPort is null && originHostHeader is null && priority is null && weight is null && enabled is null && privateLinkAlias is null && privateLinkResourceId is null && privateLinkLocation is null && privateLinkApprovalMessage is null && privateEndpointStatus is null ? default : new DeepCreatedOriginProperties(
+                hostName,
+                httpPort,
+                httpsPort,
+                originHostHeader,
+                priority,
+                weight,
+                enabled,
+                privateLinkAlias,
+                privateLinkResourceId,
+                privateLinkLocation,
+                privateLinkApprovalMessage,
+                privateEndpointStatus,
+                default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.CdnWebApplicationFirewallPolicyData"/>. </summary>
@@ -2887,11 +2955,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, CdnSkuName? skuName, WafPolicySettings policySettings, IEnumerable<RateLimitRule> rateLimitRules, IEnumerable<CustomRule> customRules, IEnumerable<WafPolicyManagedRuleSet> managedRuleSets, IEnumerable<SubResource> endpointLinks, IDictionary<string, string> extendedProperties, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            rateLimitRules ??= new ChangeTrackingList<RateLimitRule>();
-            customRules ??= new ChangeTrackingList<CustomRule>();
-            managedRuleSets ??= new ChangeTrackingList<WafPolicyManagedRuleSet>();
-            endpointLinks ??= new ChangeTrackingList<SubResource>();
-            extendedProperties ??= new ChangeTrackingDictionary<string, string>();
 
             return new CdnWebApplicationFirewallPolicyData(
                 id,
@@ -2901,9 +2964,18 @@ namespace Azure.ResourceManager.Cdn.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
-                default);
+                policySettings is null && rateLimitRules is null && customRules is null && managedRuleSets is null && endpointLinks is null && extendedProperties is null && provisioningState is null && resourceState is null ? default : new CdnWebApplicationFirewallPolicyProperties(
+                    policySettings,
+                    new RateLimitRuleList((rateLimitRules ?? new ChangeTrackingList<RateLimitRule>()).ToList(), default),
+                    new CustomRuleList((customRules ?? new ChangeTrackingList<CustomRule>()).ToList(), default),
+                    new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<WafPolicyManagedRuleSet>()).ToList(), default),
+                    (endpointLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
+                    extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
+                    provisioningState,
+                    resourceState,
+                    default),
+                etag,
+                skuName is null ? default : new CdnSku(skuName, default));
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleSetDefinition"/>. </summary>
@@ -2993,7 +3065,14 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FrontDoorOriginGroupPatch FrontDoorOriginGroupPatch(string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, EnabledState? sessionAffinityState)
         {
-            return new FrontDoorOriginGroupPatch(default, additionalBinaryDataProperties: null);
+            return new FrontDoorOriginGroupPatch(profileName is null && loadBalancingSettings is null && healthProbeSettings is null && trafficRestorationTimeInMinutes is null && sessionAffinityState is null ? default : new FrontDoorOriginGroupUpdatePropertiesParameters(
+                profileName,
+                loadBalancingSettings,
+                healthProbeSettings,
+                trafficRestorationTimeInMinutes,
+                sessionAffinityState,
+                default,
+                default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of FrontDoorCustomDomainData. </summary>

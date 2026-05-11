@@ -832,11 +832,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static FrontDoorWebApplicationFirewallPolicyData FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, FrontDoorSkuName? skuName, FrontDoorWebApplicationFirewallPolicySettings policySettings, IEnumerable<WebApplicationCustomRule> rules, IEnumerable<ManagedRuleSet> managedRuleSets, IEnumerable<SubResource> frontendEndpointLinks, IEnumerable<SubResource> routingRuleLinks, IEnumerable<SubResource> securityPolicyLinks, string provisioningState, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            rules ??= new ChangeTrackingList<WebApplicationCustomRule>();
-            managedRuleSets ??= new ChangeTrackingList<ManagedRuleSet>();
-            frontendEndpointLinks ??= new ChangeTrackingList<SubResource>();
-            routingRuleLinks ??= new ChangeTrackingList<SubResource>();
-            securityPolicyLinks ??= new ChangeTrackingList<SubResource>();
 
             return new FrontDoorWebApplicationFirewallPolicyData(
                 id,
@@ -846,9 +841,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default,
-                default);
+                policySettings is null && rules is null && managedRuleSets is null && frontendEndpointLinks is null && routingRuleLinks is null && securityPolicyLinks is null && provisioningState is null && resourceState is null ? default : new WebApplicationFirewallPolicyProperties(
+                    policySettings,
+                    new CustomRuleList((rules ?? new ChangeTrackingList<WebApplicationCustomRule>()).ToList(), default),
+                    new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<ManagedRuleSet>()).ToList(), default, default),
+                    (frontendEndpointLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
+                    (routingRuleLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
+                    (securityPolicyLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
+                    provisioningState,
+                    resourceState,
+                    default),
+                etag,
+                skuName is null ? default : new FrontDoorSku(skuName, default));
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleDefinition"/>. </summary>
@@ -887,8 +891,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default);
+                resourceState is null && enabledState is null ? default : new ProfileProperties(resourceState, enabledState, default),
+                etag);
         }
     }
 }
