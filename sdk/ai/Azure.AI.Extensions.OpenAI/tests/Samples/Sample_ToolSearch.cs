@@ -2,15 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI;
 using OpenAI.Responses;
 
+# pragma warning disable AAIP001
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
 public class Sample_ToolSearch : ProjectsOpenAITestBase
@@ -28,23 +29,51 @@ public class Sample_ToolSearch : ProjectsOpenAITestBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AIProjectClientOptions opts = new();
+        opts.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
+        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: opts);
+        AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
+        #endregion
+        try
+        {
+            toolboxClient.DeleteToolbox(name: "myToolbox");
+        }
+        catch { }
+        #region Snippet:Sample_CreateToolbox_ToolSearch_Async
+        ProjectsAgentTool mcp = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
+            serverLabel: "api-specs",
+            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        ));
+        ProjectsAgentTool codeInterpreter = ResponseTool.CreateCodeInterpreterTool(
+            new CodeInterpreterToolContainer(
+                CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
+            )
+        ).AsAgentTool();
+        ToolboxVersion toolBox = await toolboxClient.CreateToolboxVersionAsync(
+            name: "myToolbox",
+            tools: [mcp, codeInterpreter],
+            description: "Example toolbox created by the azure-ai-projects sample.",
+            metadata: new Dictionary<string, string> {
+                {"team", "Engineers"}
+            }
+        );
         #endregion
         #region Snippet:Sample_CreateAgent_ToolSearch_Async
-        ToolSearchTool searchTool = new()
+        ToolboxSearchPreviewTool searchTool = new()
         {
-            Execution = ToolSearchExecutionType.Server
+            Name = "ToolBoxSearch",
+            Description = "Search for the toolboxes"
         };
+        //ToolSearchTool searchTool = new()
+        //{
+
+        //};
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
             Tools = {
                 searchTool,
-                ResponseTool.CreateCodeInterpreterTool(
-                    new CodeInterpreterToolContainer(
-                        CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
-                    )
-                ),
             }
         };
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
@@ -78,6 +107,7 @@ public class Sample_ToolSearch : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_ToolSearch_Async
+        await toolboxClient.DeleteToolboxAsync(name: toolBox.Name);
         await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
