@@ -14,7 +14,8 @@ using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class EkmProxyInfo : IJsonModel<EkmProxyInfo>
+    /// <summary> EKM proxy information. </summary>
+    public partial class EkmProxyInfo : IJsonModel<EkmProxyInfo>
     {
         /// <summary> Initializes a new instance of <see cref="EkmProxyInfo"/> for deserialization. </summary>
         internal EkmProxyInfo()

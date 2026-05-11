@@ -10,7 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class EkmProxyInfo
+    /// <summary> EKM proxy information. </summary>
+    public partial class EkmProxyInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

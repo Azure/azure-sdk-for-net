@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -72,6 +73,35 @@ namespace Azure.Security.KeyVault.Administration
             serverCaCertificates ??= new ChangeTrackingList<BinaryData>();
 
             return new KeyVaultEkmConnection(host, pathPrefix, serverCaCertificates.ToList(), serverSubjectCommonName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> EKM proxy client certificate information. </summary>
+        /// <param name="caCertificates"> The client root CA certificate chain to authenticate to the EKM proxy. An array of certificates in the certificate chain, each in DER format and base64 encoded. </param>
+        /// <param name="subjectCommonName"> The subject common name of the client certificate used to authenticate to the EKM proxy. </param>
+        /// <returns> A new <see cref="Models.EkmProxyClientCertificateInfo"/> instance for mocking. </returns>
+        public static EkmProxyClientCertificateInfo EkmProxyClientCertificateInfo(IEnumerable<BinaryData> caCertificates = default, string subjectCommonName = default)
+        {
+            caCertificates ??= new ChangeTrackingList<BinaryData>();
+
+            return new EkmProxyClientCertificateInfo(caCertificates.ToList(), subjectCommonName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> EKM proxy information. </summary>
+        /// <param name="apiVersion"> The highest version of proxy interface API supported by the EKM Proxy. </param>
+        /// <param name="proxyVendor"> The name of the proxy vendor. </param>
+        /// <param name="proxyName"> The name of the proxy product and its version. </param>
+        /// <param name="ekmVendor"> The name of the EKM vendor. </param>
+        /// <param name="ekmProduct"> The name of the EKM product and its version. </param>
+        /// <returns> A new <see cref="Models.EkmProxyInfo"/> instance for mocking. </returns>
+        public static EkmProxyInfo EkmProxyInfo(string apiVersion = default, string proxyVendor = default, string proxyName = default, string ekmVendor = default, string ekmProduct = default)
+        {
+            return new EkmProxyInfo(
+                apiVersion,
+                proxyVendor,
+                proxyName,
+                ekmVendor,
+                ekmProduct,
+                additionalBinaryDataProperties: null);
         }
     }
 }

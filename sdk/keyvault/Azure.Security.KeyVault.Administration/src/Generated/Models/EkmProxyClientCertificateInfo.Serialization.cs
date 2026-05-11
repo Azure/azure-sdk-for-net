@@ -14,7 +14,8 @@ using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class EkmProxyClientCertificateInfo : IJsonModel<EkmProxyClientCertificateInfo>
+    /// <summary> EKM proxy client certificate information. </summary>
+    public partial class EkmProxyClientCertificateInfo : IJsonModel<EkmProxyClientCertificateInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

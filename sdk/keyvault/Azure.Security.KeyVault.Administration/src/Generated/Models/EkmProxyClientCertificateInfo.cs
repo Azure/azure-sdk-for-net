@@ -11,7 +11,8 @@ using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class EkmProxyClientCertificateInfo
+    /// <summary> EKM proxy client certificate information. </summary>
+    public partial class EkmProxyClientCertificateInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
