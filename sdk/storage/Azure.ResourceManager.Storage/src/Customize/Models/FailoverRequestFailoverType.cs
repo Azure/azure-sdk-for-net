@@ -28,13 +28,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Planned. </summary>
         public static FailoverRequestFailoverType Planned { get; } = new FailoverRequestFailoverType(PlannedValue);
 
-        /// <summary> Determines if two <see cref="FailoverRequestFailoverType"/> values are the same. </summary>
-        public static bool operator ==(FailoverRequestFailoverType left, FailoverRequestFailoverType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="FailoverRequestFailoverType"/> values are not the same. </summary>
-        public static bool operator !=(FailoverRequestFailoverType left, FailoverRequestFailoverType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FailoverRequestFailoverType"/>. </summary>
-        public static implicit operator FailoverRequestFailoverType(string value) => new FailoverRequestFailoverType(value);
-
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FailoverRequestFailoverType other && Equals(other);

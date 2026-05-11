@@ -28,13 +28,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> kerb. </summary>
         public static ListKeysRequestExpand Kerb { get; } = new ListKeysRequestExpand(KerbValue);
 
-        /// <summary> Determines if two <see cref="ListKeysRequestExpand"/> values are the same. </summary>
-        public static bool operator ==(ListKeysRequestExpand left, ListKeysRequestExpand right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ListKeysRequestExpand"/> values are not the same. </summary>
-        public static bool operator !=(ListKeysRequestExpand left, ListKeysRequestExpand right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ListKeysRequestExpand"/>. </summary>
-        public static implicit operator ListKeysRequestExpand(string value) => new ListKeysRequestExpand(value);
-
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ListKeysRequestExpand other && Equals(other);
