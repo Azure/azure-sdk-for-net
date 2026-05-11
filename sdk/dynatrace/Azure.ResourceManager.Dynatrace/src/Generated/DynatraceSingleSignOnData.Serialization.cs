@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dynatraceSingleSignOnData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(dynatraceSingleSignOnData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DynatraceSingleSignOnData"/> from. </param>

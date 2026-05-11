@@ -1,6 +1,6 @@
 # Release History
 
-## 4.10.0-beta.1 (Unreleased)
+## 4.12.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,29 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.11.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.11.0 (2026-05-05)
+
+### Other Changes
+
+- Updated dependency on `Azure.Core` to `1.54.0`, which includes fixes for duplicate schema registration.
+
+## 4.10.0 (2026-04-13)
+
+### Features Added
+
+- Added `AddSecretClient` and `AddKeyedSecretClient` extension methods on `IHostApplicationBuilder` for registering `SecretClient` via dependency injection using configuration-based setup.
+- Added a JSON schema segment to the NuGet package that provides IntelliSense and validation for `SecretClientSettings` configuration in `appsettings.json`.
 
 ## 4.9.0 (2026-02-25)
 

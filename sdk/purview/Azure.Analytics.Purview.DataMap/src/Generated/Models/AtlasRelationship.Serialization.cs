@@ -64,9 +64,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(atlasRelationship, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(atlasRelationship, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasRelationship"/> from. </param>

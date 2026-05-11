@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         private readonly string _offerGuid;
         private readonly string _reportCreatorTenantId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SnapshotGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Snapshot client used to send requests. </param>
@@ -39,7 +40,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
         /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SnapshotGetAllAsyncCollectionResultOfT(Snapshot client, string reportName, string skipToken, int? maxCount, string @select, string filter, string @orderby, string offerGuid, string reportCreatorTenantId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SnapshotGetAllAsyncCollectionResultOfT(Snapshot client, string reportName, string skipToken, int? maxCount, string @select, string filter, string @orderby, string offerGuid, string reportCreatorTenantId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _reportName = reportName;
@@ -51,6 +53,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _offerGuid = offerGuid;
             _reportCreatorTenantId = reportCreatorTenantId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SnapshotGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -83,7 +86,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _reportName, _skipToken, _maxCount, _select, _filter, _orderby, _offerGuid, _reportCreatorTenantId, _context) : _client.CreateGetAllRequest(_reportName, _skipToken, _maxCount, _select, _filter, _orderby, _offerGuid, _reportCreatorTenantId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AppComplianceReportSnapshotCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

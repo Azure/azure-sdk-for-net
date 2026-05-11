@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="routes"> Collection of routes contained within a route table. </param>
         /// <returns> A new <see cref="Models.HciVmNetworkingRouteTable"/> instance for mocking. </returns>
-        public static HciVmNetworkingRouteTable HciVmNetworkingRouteTable(string etag = default, string name = default, string @type = default, IEnumerable<HciVmNetworkingRoute> routes = default)
+        public static HciVmNetworkingRouteTable HciVmNetworkingRouteTable(string eTag = default, string name = default, string @type = default, IEnumerable<HciVmNetworkingRoute> routes = default)
         {
-            return new HciVmNetworkingRouteTable(etag, name, @type, routes is null ? default : new RouteTableProperties((routes ?? new ChangeTrackingList<HciVmNetworkingRoute>()).ToList(), null), additionalBinaryDataProperties: null);
+            return new HciVmNetworkingRouteTable(eTag, name, @type, routes is null ? default : new RouteTableProperties((routes ?? new ChangeTrackingList<HciVmNetworkingRoute>()).ToList(), null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> IP Pool info. </summary>
@@ -421,6 +421,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             return new HciVmNetworkInterfacePatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> NetworkSecurityGroup resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -429,9 +430,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="Vm.HciVmNetworkSecurityGroupData"/> instance for mocking. </returns>
-        public static HciVmNetworkSecurityGroupData HciVmNetworkSecurityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmNetworkSecurityGroupProperties properties = default, HciVmExtendedLocation extendedLocation = default, string etag = default)
+        public static HciVmNetworkSecurityGroupData HciVmNetworkSecurityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmNetworkSecurityGroupProperties properties = default, HciVmExtendedLocation extendedLocation = default, string eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -445,7 +446,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 location,
                 properties,
                 extendedLocation,
-                etag);
+                eTag);
         }
 
         /// <summary> Network Security Group resource. </summary>
@@ -1096,7 +1097,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <returns> A new <see cref="Models.HciVmVirtualNetworkProperties"/> instance for mocking. </returns>
         public static HciVmVirtualNetworkProperties HciVmVirtualNetworkProperties(IEnumerable<string> addressPrefixes = default, IEnumerable<string> dhcpOptionsDnsServers = default, HciVmProvisioningState? provisioningState = default, HciVmVirtualNetworkStatus status = default)
         {
-            return new HciVmVirtualNetworkProperties(addressPrefixes is null ? default : new HciVmVirtualNetworkAddressSpace((addressPrefixes ?? new ChangeTrackingList<string>()).ToList(), null), dhcpOptionsDnsServers is null ? default : new HciVmVirtualNetworkDhcpOptions((dhcpOptionsDnsServers ?? new ChangeTrackingList<string>()).ToList(), null), provisioningState, status, additionalBinaryDataProperties: null);
+            return new HciVmVirtualNetworkProperties(new HciVmVirtualNetworkAddressSpace((addressPrefixes ?? new ChangeTrackingList<string>()).ToList(), null), new HciVmVirtualNetworkDhcpOptions((dhcpOptionsDnsServers ?? new ChangeTrackingList<string>()).ToList(), null), provisioningState, status, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The type used for updating tags in VirtualNetwork resources. </summary>

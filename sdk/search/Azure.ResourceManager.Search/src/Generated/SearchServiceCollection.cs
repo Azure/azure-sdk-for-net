@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Search.Models;
 
@@ -26,74 +27,97 @@ namespace Azure.ResourceManager.Search
     /// </summary>
     public partial class SearchServiceCollection : ArmCollection, IEnumerable<SearchServiceResource>, IAsyncEnumerable<SearchServiceResource>
     {
-        private readonly ClientDiagnostics _searchServiceServicesClientDiagnostics;
-        private readonly ServicesRestOperations _searchServiceServicesRestClient;
+        private readonly ClientDiagnostics _servicesClientDiagnostics;
+        private readonly Services _servicesRestClient;
+        private readonly ClientDiagnostics _adminKeysClientDiagnostics;
+        private readonly AdminKeys _adminKeysRestClient;
+        private readonly ClientDiagnostics _queryKeysClientDiagnostics;
+        private readonly QueryKeys _queryKeysRestClient;
+        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SearchServiceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SearchServiceCollection for mocking. </summary>
         protected SearchServiceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SearchServiceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SearchServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _searchServiceServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SearchServiceResource.ResourceType, out string searchServiceServicesApiVersion);
-            _searchServiceServicesRestClient = new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, searchServiceServicesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SearchServiceResource.ResourceType, out string searchServiceApiVersion);
+            _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
+            _adminKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
+            _adminKeysRestClient = new AdminKeys(_adminKeysClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
+            _queryKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
+            _queryKeysRestClient = new QueryKeys(_queryKeysClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
+            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a search service in the given resource group. If the search service already exists, all properties will be updated with the given values.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SearchServices_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SearchServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="searchServiceName"> The name of the Azure AI Search service to create or update. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. Search service names must be unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net). You cannot change the service name after the service is created. </param>
+        /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
         /// <param name="data"> The definition of the search service to create or update. </param>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SearchServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string searchServiceName, SearchServiceData data, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<SearchServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string searchServiceName, SearchServiceData data, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SearchServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _searchServiceServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, data, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
-                var operation = new SearchArmOperation<SearchServiceResource>(new SearchServiceOperationSource(Client), _searchServiceServicesClientDiagnostics, Pipeline, _searchServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, data, searchManagementRequestOptions).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, searchServiceName, SearchServiceData.ToRequestContent(data), default, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SearchArmOperation<SearchServiceResource> operation = new SearchArmOperation<SearchServiceResource>(
+                    new SearchServiceOperationSource(Client),
+                    _servicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,43 +131,52 @@ namespace Azure.ResourceManager.Search
         /// Creates or updates a search service in the given resource group. If the search service already exists, all properties will be updated with the given values.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SearchServices_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SearchServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="searchServiceName"> The name of the Azure AI Search service to create or update. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. Search service names must be unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net). You cannot change the service name after the service is created. </param>
+        /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
         /// <param name="data"> The definition of the search service to create or update. </param>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SearchServiceResource> CreateOrUpdate(WaitUntil waitUntil, string searchServiceName, SearchServiceData data, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<SearchServiceResource> CreateOrUpdate(WaitUntil waitUntil, string searchServiceName, SearchServiceData data, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SearchServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _searchServiceServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, data, searchManagementRequestOptions, cancellationToken);
-                var operation = new SearchArmOperation<SearchServiceResource>(new SearchServiceOperationSource(Client), _searchServiceServicesClientDiagnostics, Pipeline, _searchServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, data, searchManagementRequestOptions).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, searchServiceName, SearchServiceData.ToRequestContent(data), default, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SearchArmOperation<SearchServiceResource> operation = new SearchArmOperation<SearchServiceResource>(
+                    new SearchServiceOperationSource(Client),
+                    _servicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,39 +190,43 @@ namespace Azure.ResourceManager.Search
         /// Gets the search service with the given name in the given resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SearchServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SearchServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
-        public virtual async Task<Response<SearchServiceResource>> GetAsync(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SearchServiceResource>> GetAsync(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
 
-            using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.Get");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SearchServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _searchServiceServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, searchServiceName, default, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SearchServiceData> response = Response.FromValue(SearchServiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SearchServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,39 +240,43 @@ namespace Azure.ResourceManager.Search
         /// Gets the search service with the given name in the given resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SearchServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SearchServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
-        public virtual Response<SearchServiceResource> Get(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SearchServiceResource> Get(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
 
-            using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.Get");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SearchServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = _searchServiceServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, searchManagementRequestOptions, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, searchServiceName, default, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SearchServiceData> response = Response.FromValue(SearchServiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SearchServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -246,102 +287,124 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Gets a list of all Search services in the given resource group.
+        /// Gets a list of all search services in the given resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> SearchServices_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SearchServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SearchServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SearchServiceResource> GetAllAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _searchServiceServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _searchServiceServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SearchServiceResource(Client, SearchServiceData.DeserializeSearchServiceData(e)), _searchServiceServicesClientDiagnostics, Pipeline, "SearchServiceCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all Search services in the given resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SearchServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SearchServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SearchServiceResource> GetAll(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SearchServiceResource> GetAllAsync(SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _searchServiceServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _searchServiceServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SearchServiceResource(Client, SearchServiceData.DeserializeSearchServiceData(e)), _searchServiceServicesClientDiagnostics, Pipeline, "SearchServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SearchServiceData, SearchServiceResource>(new ServicesGetByResourceGroupAsyncCollectionResultOfT(
+                _servicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                default,
+                context,
+                "SearchServiceCollection.GetAll"), data => new SearchServiceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets a list of all search services in the given resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SearchServices_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="searchManagementRequestOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SearchServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SearchServiceResource> GetAll(SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SearchServiceData, SearchServiceResource>(new ServicesGetByResourceGroupCollectionResultOfT(
+                _servicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                default,
+                context,
+                "SearchServiceCollection.GetAll"), data => new SearchServiceResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SearchServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SearchServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
 
-            using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.Exists");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SearchServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _searchServiceServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, searchManagementRequestOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, searchServiceName, default, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SearchServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SearchServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SearchServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -355,37 +418,51 @@ namespace Azure.ResourceManager.Search
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SearchServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SearchServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
-        public virtual Response<bool> Exists(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
 
-            using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.Exists");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SearchServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _searchServiceServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, searchManagementRequestOptions, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, searchServiceName, default, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SearchServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SearchServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SearchServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -399,39 +476,55 @@ namespace Azure.ResourceManager.Search
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SearchServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SearchServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
-        public virtual async Task<NullableResponse<SearchServiceResource>> GetIfExistsAsync(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<SearchServiceResource>> GetIfExistsAsync(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
 
-            using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.GetIfExists");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SearchServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _searchServiceServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, searchManagementRequestOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, searchServiceName, default, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SearchServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SearchServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SearchServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SearchServiceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SearchServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -445,39 +538,55 @@ namespace Azure.ResourceManager.Search
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SearchServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SearchServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
-        public virtual NullableResponse<SearchServiceResource> GetIfExists(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<SearchServiceResource> GetIfExists(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
 
-            using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.GetIfExists");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SearchServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _searchServiceServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, searchManagementRequestOptions, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, searchServiceName, default, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SearchServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SearchServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SearchServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SearchServiceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SearchServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -497,6 +606,7 @@ namespace Azure.ResourceManager.Search
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SearchServiceResource> IAsyncEnumerable<SearchServiceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

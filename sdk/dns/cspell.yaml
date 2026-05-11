@@ -1,0 +1,7 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/dns/Azure.Provisioning.Dns/**/*.cs'
+    words:
+      - naptr
+      - tlsa

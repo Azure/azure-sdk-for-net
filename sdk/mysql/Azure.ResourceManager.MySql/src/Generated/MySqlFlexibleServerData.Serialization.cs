@@ -73,9 +73,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(mySqlFlexibleServerData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(mySqlFlexibleServerData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MySqlFlexibleServerData"/> from. </param>
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -231,7 +229,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMySqlContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerMySqlContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))

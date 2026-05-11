@@ -9,7 +9,6 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="Azure.Identity" />
   </ItemGroup>
 
   <ItemGroup>

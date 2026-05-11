@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         {
             get
             {
-                return Properties.BgpCidrs;
+                return Properties is null ? default : Properties.BgpCidrs;
             }
         }
     }

@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(computeRecommenderGenerateContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(computeRecommenderGenerateContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

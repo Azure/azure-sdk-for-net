@@ -11,17 +11,19 @@ namespace Azure.Provisioning.Generator.Specifications;
 
 #pragma warning disable CS0618 // Type or member is obsolete
 public class PostgreSqlSpecification() :
-    Specification("PostgreSql", typeof(PostgreSqlExtensions))
+    Specification("PostgreSql", typeof(PostgreSqlExtensions), serviceDirectory: "postgresql")
 {
     protected override void Customize()
     {
         // Remove misfires
         RemoveProperty<PostgreSqlServerSecurityAlertPolicyResource>("SecurityAlertPolicyName");
+        CustomizeProperty<PostgreSqlServerSecurityAlertPolicyResource>("Name", p => { p.IsReadOnly = true; p.GenerateDefaultValue = true; });
         RemoveProperty<PostgreSqlFlexibleServerResource>("StorageSizeInGB");
 
         // Patch properties
         CustomizeProperty<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
-        CustomizeProperty<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>("ObjectId", p => { p.IsReadOnly = true; p.IsRequired = false; });
+        CustomizeProperty<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>("ObjectId", p => { p.IsReadOnly = true; p.IsRequired = false; p.PropertyType = TypeRegistry.Get<string>(); });
+        CustomizeProperty<ServerThreatProtectionSettingsModelResource>("Name", p => { p.IsReadOnly = true; p.GenerateDefaultValue = true; });
         CustomizeProperty<PostgreSqlServerMetadata>("Sku", p => p.Name = "ServerSku");
         CustomizeSimpleModel<PostgreSqlServerPropertiesForDefaultCreate>(m => { m.DiscriminatorName = "createMode"; m.DiscriminatorValue = "Default"; });
         CustomizeSimpleModel<PostgreSqlServerPropertiesForGeoRestore>(m => { m.DiscriminatorName = "createMode"; m.DiscriminatorValue = "GeoRestore"; });

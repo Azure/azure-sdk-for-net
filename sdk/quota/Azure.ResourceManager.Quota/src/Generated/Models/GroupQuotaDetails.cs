@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Quota.Models
         {
             get
             {
-                return Name.Value;
+                return Name is null ? default : Name.Value;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Quota.Models
         {
             get
             {
-                return Name.LocalizedValue;
+                return Name is null ? default : Name.LocalizedValue;
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Quota.Models
         {
             get
             {
-                return AllocatedToSubscriptions.Value;
+                return AllocatedToSubscriptions is null ? default : AllocatedToSubscriptions.Value;
             }
         }
     }

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticSanData, ElasticSanResource>(new ElasticSansGetByResourceGroupAsyncCollectionResultOfT(_elasticSansRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ElasticSanResource(Client, data));
+            return new AsyncPageableWrapper<ElasticSanData, ElasticSanResource>(new ElasticSansGetByResourceGroupAsyncCollectionResultOfT(_elasticSansRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ElasticSanCollection.GetAll"), data => new ElasticSanResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticSanData, ElasticSanResource>(new ElasticSansGetByResourceGroupCollectionResultOfT(_elasticSansRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ElasticSanResource(Client, data));
+            return new PageableWrapper<ElasticSanData, ElasticSanResource>(new ElasticSansGetByResourceGroupCollectionResultOfT(_elasticSansRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ElasticSanCollection.GetAll"), data => new ElasticSanResource(Client, data));
         }
 
         /// <summary>

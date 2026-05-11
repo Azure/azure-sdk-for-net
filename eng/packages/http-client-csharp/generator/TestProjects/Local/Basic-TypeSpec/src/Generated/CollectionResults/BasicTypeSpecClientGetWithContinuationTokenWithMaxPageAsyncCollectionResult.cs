@@ -21,18 +21,21 @@ namespace BasicTypeSpec
         private readonly int _numElements;
         private readonly string _token;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of BasicTypeSpecClientGetWithContinuationTokenWithMaxPageAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
         /// <param name="numElements"></param>
         /// <param name="token"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BasicTypeSpecClientGetWithContinuationTokenWithMaxPageAsyncCollectionResult(BasicTypeSpecClient client, int numElements, string token, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public BasicTypeSpecClientGetWithContinuationTokenWithMaxPageAsyncCollectionResult(BasicTypeSpecClient client, int numElements, string token, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _numElements = numElements;
             _token = token;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of BasicTypeSpecClientGetWithContinuationTokenWithMaxPageAsyncCollectionResult as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace BasicTypeSpec
         {
             int pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _numElements;
             HttpMessage message = _client.CreateGetWithContinuationTokenWithMaxPageRequest(pageSize, continuationToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithContinuationTokenWithMaxPage");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

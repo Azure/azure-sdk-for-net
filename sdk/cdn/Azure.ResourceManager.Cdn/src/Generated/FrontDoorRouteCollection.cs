@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class FrontDoorRouteCollection : ArmCollection, IEnumerable<FrontDoorRouteResource>, IAsyncEnumerable<FrontDoorRouteResource>
     {
-        private readonly ClientDiagnostics _frontDoorRouteClientDiagnostics;
-        private readonly FrontDoorRoutesRestOperations _frontDoorRouteRestClient;
+        private readonly ClientDiagnostics _routesClientDiagnostics;
+        private readonly Routes _routesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="FrontDoorRouteCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of FrontDoorRouteCollection for mocking. </summary>
         protected FrontDoorRouteCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="FrontDoorRouteCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRouteCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FrontDoorRouteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontDoorRouteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorRouteResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(FrontDoorRouteResource.ResourceType, out string frontDoorRouteApiVersion);
-            _frontDoorRouteRestClient = new FrontDoorRoutesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorRouteApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _routesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorRouteResource.ResourceType.Namespace, Diagnostics);
+            _routesRestClient = new Routes(_routesClientDiagnostics, Pipeline, Endpoint, frontDoorRouteApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != FrontDoorEndpointResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, FrontDoorEndpointResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FrontDoorEndpointResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates a new route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Routes_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorRouteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="data"> Route properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<FrontDoorRouteResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string routeName, FrontDoorRouteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _routesClientDiagnostics.CreateScope("FrontDoorRouteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _frontDoorRouteRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<FrontDoorRouteResource>(new FrontDoorRouteOperationSource(Client), _frontDoorRouteClientDiagnostics, Pipeline, _frontDoorRouteRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, FrontDoorRouteData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CdnArmOperation<FrontDoorRouteResource> operation = new CdnArmOperation<FrontDoorRouteResource>(
+                    new FrontDoorRouteOperationSource(Client),
+                    _routesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.Cdn
         /// Creates a new route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Routes_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorRouteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="data"> Route properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<FrontDoorRouteResource> CreateOrUpdate(WaitUntil waitUntil, string routeName, FrontDoorRouteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _routesClientDiagnostics.CreateScope("FrontDoorRouteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _frontDoorRouteRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, data, cancellationToken);
-                var operation = new CdnArmOperation<FrontDoorRouteResource>(new FrontDoorRouteOperationSource(Client), _frontDoorRouteClientDiagnostics, Pipeline, _frontDoorRouteRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, FrontDoorRouteData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CdnArmOperation<FrontDoorRouteResource> operation = new CdnArmOperation<FrontDoorRouteResource>(
+                    new FrontDoorRouteOperationSource(Client),
+                    _routesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.Cdn
         /// Gets an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Routes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorRouteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<FrontDoorRouteResource>> GetAsync(string routeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.Get");
+            using DiagnosticScope scope = _routesClientDiagnostics.CreateScope("FrontDoorRouteCollection.Get");
             scope.Start();
             try
             {
-                var response = await _frontDoorRouteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FrontDoorRouteData> response = Response.FromValue(FrontDoorRouteData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new FrontDoorRouteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.Cdn
         /// Gets an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Routes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorRouteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<FrontDoorRouteResource> Get(string routeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.Get");
+            using DiagnosticScope scope = _routesClientDiagnostics.CreateScope("FrontDoorRouteCollection.Get");
             scope.Start();
             try
             {
-                var response = _frontDoorRouteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FrontDoorRouteData> response = Response.FromValue(FrontDoorRouteData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new FrontDoorRouteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,51 @@ namespace Azure.ResourceManager.Cdn
         /// Lists all of the existing origins within a profile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_ListByEndpoint</description>
+        /// <term> Operation Id. </term>
+        /// <description> Routes_ListByEndpoint. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorRouteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FrontDoorRouteResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FrontDoorRouteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorRouteResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRouteRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRouteRestClient.CreateListByEndpointNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRouteResource(Client, FrontDoorRouteData.DeserializeFrontDoorRouteData(e)), _frontDoorRouteClientDiagnostics, Pipeline, "FrontDoorRouteCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<FrontDoorRouteData, FrontDoorRouteResource>(new RoutesGetByEndpointAsyncCollectionResultOfT(
+                _routesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "FrontDoorRouteCollection.GetAll"), data => new FrontDoorRouteResource(Client, data));
         }
 
         /// <summary>
         /// Lists all of the existing origins within a profile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_ListByEndpoint</description>
+        /// <term> Operation Id. </term>
+        /// <description> Routes_ListByEndpoint. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorRouteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +324,68 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="FrontDoorRouteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorRouteResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRouteRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRouteRestClient.CreateListByEndpointNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRouteResource(Client, FrontDoorRouteData.DeserializeFrontDoorRouteData(e)), _frontDoorRouteClientDiagnostics, Pipeline, "FrontDoorRouteCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<FrontDoorRouteData, FrontDoorRouteResource>(new RoutesGetByEndpointCollectionResultOfT(
+                _routesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "FrontDoorRouteCollection.GetAll"), data => new FrontDoorRouteResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Routes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorRouteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string routeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.Exists");
+            using DiagnosticScope scope = _routesClientDiagnostics.CreateScope("FrontDoorRouteCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _frontDoorRouteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<FrontDoorRouteData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FrontDoorRouteData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FrontDoorRouteData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +399,50 @@ namespace Azure.ResourceManager.Cdn
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Routes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorRouteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string routeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.Exists");
+            using DiagnosticScope scope = _routesClientDiagnostics.CreateScope("FrontDoorRouteCollection.Exists");
             scope.Start();
             try
             {
-                var response = _frontDoorRouteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<FrontDoorRouteData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FrontDoorRouteData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FrontDoorRouteData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +456,54 @@ namespace Azure.ResourceManager.Cdn
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Routes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorRouteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<FrontDoorRouteResource>> GetIfExistsAsync(string routeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.GetIfExists");
+            using DiagnosticScope scope = _routesClientDiagnostics.CreateScope("FrontDoorRouteCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _frontDoorRouteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<FrontDoorRouteData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FrontDoorRouteData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FrontDoorRouteData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<FrontDoorRouteResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new FrontDoorRouteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +517,54 @@ namespace Azure.ResourceManager.Cdn
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Routes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorRouteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<FrontDoorRouteResource> GetIfExists(string routeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.GetIfExists");
+            using DiagnosticScope scope = _routesClientDiagnostics.CreateScope("FrontDoorRouteCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _frontDoorRouteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<FrontDoorRouteData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FrontDoorRouteData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FrontDoorRouteData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<FrontDoorRouteResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new FrontDoorRouteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +584,7 @@ namespace Azure.ResourceManager.Cdn
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<FrontDoorRouteResource> IAsyncEnumerable<FrontDoorRouteResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Formats.Cbor;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -726,6 +728,56 @@ namespace Azure.Security.CodeTransparency.Tests
             Assert.DoesNotThrow(() =>
                 CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
             Assert.AreEqual(1, mockTransport.Requests.Count);
+#endif
+        }
+
+        [Test]
+        public void VerifyTransparentStatement_ThreadSafety_ParallelCallsShouldNotFail()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+            int threadCount = 8;
+            int iterationsPerThread = 3;
+
+            var barrier = new Barrier(threadCount);
+            var exceptions = new ConcurrentBag<Exception>();
+
+            var tasks = Enumerable.Range(0, threadCount).Select(_ => Task.Run(() =>
+            {
+                barrier.SignalAndWait(); // ensure all threads start at the same time
+                for (int i = 0; i < iterationsPerThread; i++)
+                {
+                    try
+                    {
+                        var content = createValidSignedStatementPublicKeyResponse();
+                        var mockTransport = new MockTransport(content);
+                        var options = new CodeTransparencyClientOptions
+                        {
+                            Transport = mockTransport,
+                            IdentityClientEndpoint = "https://foo.bar.com"
+                        };
+                        var verificationOptions = new CodeTransparencyVerificationOptions
+                        {
+                            AuthorizedDomains = new string[] { "foo.bar.com" },
+                        };
+
+                        CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
+                    }
+                    catch (Exception ex)
+                    {
+                        exceptions.Add(ex);
+                    }
+                }
+            })).ToArray();
+
+            Task.WaitAll(tasks);
+
+            int totalCalls = threadCount * iterationsPerThread;
+            Assert.IsEmpty(exceptions,
+                $"Thread safety violation: {exceptions.Count} out of {totalCalls} parallel calls failed. " +
+                $"First error: {exceptions.FirstOrDefault()?.Message}");
 #endif
         }
     }

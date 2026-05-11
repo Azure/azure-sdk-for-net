@@ -16,7 +16,7 @@ namespace Azure.Search.Documents
     internal static class SyncAsyncEventHandlerExtensions
     {
         /// <summary>
-        /// Raise an <see cref="Azure.Core.SyncAsyncEventHandler{T}"/>
+        /// Raise an <see cref="SyncAsyncEventHandler{T}"/>
         /// event by executing each of the handlers sequentially (to avoid
         /// introducing accidental parallelism in customer code) and collecting
         /// any exceptions.

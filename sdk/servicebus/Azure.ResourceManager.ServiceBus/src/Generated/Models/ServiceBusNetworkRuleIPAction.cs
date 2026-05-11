@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.ServiceBus.Models
     public readonly partial struct ServiceBusNetworkRuleIPAction : IEquatable<ServiceBusNetworkRuleIPAction>
     {
         private readonly string _value;
+        private const string AllowValue = "Allow";
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkRuleIPAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceBusNetworkRuleIPAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AllowValue = "Allow";
-
-        /// <summary> Allow. </summary>
+        /// <summary> Gets the Allow. </summary>
         public static ServiceBusNetworkRuleIPAction Allow { get; } = new ServiceBusNetworkRuleIPAction(AllowValue);
+
         /// <summary> Determines if two <see cref="ServiceBusNetworkRuleIPAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceBusNetworkRuleIPAction left, ServiceBusNetworkRuleIPAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceBusNetworkRuleIPAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceBusNetworkRuleIPAction left, ServiceBusNetworkRuleIPAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceBusNetworkRuleIPAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceBusNetworkRuleIPAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceBusNetworkRuleIPAction(string value) => new ServiceBusNetworkRuleIPAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceBusNetworkRuleIPAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceBusNetworkRuleIPAction?(string value) => value == null ? null : new ServiceBusNetworkRuleIPAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceBusNetworkRuleIPAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceBusNetworkRuleIPAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

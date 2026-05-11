@@ -107,6 +107,70 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 isAvailable is null && availabilityStatus is null ? default : new CheckQuotaAvailabilityResponseProperties(isAvailable, availabilityStatus, null));
         }
 
+        /// <summary> LoadTest mapping resource details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="LoadTesting.LoadTestMappingData"/> instance for mocking. </returns>
+        public static LoadTestMappingData LoadTestMappingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, LoadTestMappingProperties properties = default)
+        {
+            return new LoadTestMappingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> LoadTest profile mapping resource details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="LoadTesting.LoadTestProfileMappingData"/> instance for mocking. </returns>
+        public static LoadTestProfileMappingData LoadTestProfileMappingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, LoadTestProfileMappingProperties properties = default)
+        {
+            return new LoadTestProfileMappingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Max monthly virtual usage hours resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="LoadTesting.MaxMonthlyVirtualUserHoursData"/> instance for mocking. </returns>
+        public static MaxMonthlyVirtualUserHoursData MaxMonthlyVirtualUserHoursData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MaxMonthlyVirtualUserHoursProperties properties = default)
+        {
+            return new MaxMonthlyVirtualUserHoursData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Max monthly virtual usage hours resource limit properties. </summary>
+        /// <param name="limit"> Current limit value, with -1 indicating that there is no limit. </param>
+        /// <param name="usage"> Current usage value. </param>
+        /// <param name="provisioningState"> Resource provisioning state. </param>
+        /// <returns> A new <see cref="Models.MaxMonthlyVirtualUserHoursProperties"/> instance for mocking. </returns>
+        public static MaxMonthlyVirtualUserHoursProperties MaxMonthlyVirtualUserHoursProperties(int? limit = default, int? usage = default, LoadTestingProvisioningState? provisioningState = default)
+        {
+            return new MaxMonthlyVirtualUserHoursProperties(limit, usage, provisioningState, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="LoadTesting.LoadTestingResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

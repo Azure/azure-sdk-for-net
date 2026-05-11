@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConfidentialLedger
 {
-    internal class ConfidentialLedgerOperationSource : IOperationSource<ConfidentialLedgerResource>
+    /// <summary></summary>
+    internal partial class ConfidentialLedgerOperationSource : IOperationSource<ConfidentialLedgerResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ConfidentialLedgerOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ConfidentialLedgerResource IOperationSource<ConfidentialLedgerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConfidentialLedgerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConfidentialLedgerContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ConfidentialLedgerData data = ConfidentialLedgerData.DeserializeConfidentialLedgerData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ConfidentialLedgerResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ConfidentialLedgerResource> IOperationSource<ConfidentialLedgerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConfidentialLedgerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConfidentialLedgerContext.Default);
-            return await Task.FromResult(new ConfidentialLedgerResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ConfidentialLedgerData data = ConfidentialLedgerData.DeserializeConfidentialLedgerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ConfidentialLedgerResource(_client, data);
         }
     }
 }

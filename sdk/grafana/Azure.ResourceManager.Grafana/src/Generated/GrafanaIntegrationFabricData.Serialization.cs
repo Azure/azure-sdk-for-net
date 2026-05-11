@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(grafanaIntegrationFabricData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(grafanaIntegrationFabricData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GrafanaIntegrationFabricData"/> from. </param>

@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(occurrenceDelayContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(occurrenceDelayContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -93,7 +91,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 throw new FormatException($"The model {nameof(OccurrenceDelayContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("delay"u8);
-            writer.WriteStringValue(Delay, "O");
+            writer.WriteStringValue(DelayOn, "O");
             writer.WritePropertyName("resourceIds"u8);
             writer.WriteStartArray();
             foreach (ResourceIdentifier item in ResourceIds)
@@ -148,14 +146,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            DateTimeOffset delay = default;
+            DateTimeOffset delayOn = default;
             IList<ResourceIdentifier> resourceIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("delay"u8))
                 {
-                    delay = prop.Value.GetDateTimeOffset("O");
+                    delayOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("resourceIds"u8))
@@ -180,7 +178,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OccurrenceDelayContent(delay, resourceIds, additionalBinaryDataProperties);
+            return new OccurrenceDelayContent(delayOn, resourceIds, additionalBinaryDataProperties);
         }
     }
 }

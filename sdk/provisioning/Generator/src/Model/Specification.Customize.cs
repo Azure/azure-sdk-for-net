@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace Azure.Provisioning.Generator.Model;
@@ -126,6 +127,45 @@ public abstract partial class Specification : ModelBase
             model.Values.Remove(val);
             model.Values.Insert(0, val);
         }
+    }
+
+    public EnumModel IncludeEnum<T>()
+    {
+        // If the enum already exists, just return it
+        ModelBase? existing = ModelArmTypeMapping.GetValueOrDefault(typeof(T));
+        if (existing is EnumModel existingEnum) { return existingEnum; }
+
+        Type armType = typeof(T);
+        EnumModel model = new(armType, armType.Name, Namespace, DocComments.GetSummary(armType))
+        {
+            Spec = this
+        };
+        ModelNameMapping[model.Name] = model;
+        ModelArmTypeMapping[model.ArmType!] = model;
+
+        if (armType.IsEnum)
+        {
+            foreach (FieldInfo field in armType.GetFields())
+            {
+                if (field.IsSpecialName) { continue; }
+                string? summary = DocComments.GetSummary(field);
+                string? value = summary?.TrimEnd('.');
+                model.AddValue(field.Name, value, summary);
+            }
+        }
+        else
+        {
+            foreach (PropertyInfo property in armType.GetProperties()
+                .Where(p => p.CanRead && !p.CanWrite && p.GetMethod!.IsStatic && p.PropertyType == armType))
+            {
+                string? value = null;
+                try { value = property.GetValue(null)?.ToString(); }
+                catch (Exception) { }
+                model.AddValue(property.Name, value, DocComments.GetSummary(property));
+            }
+        }
+
+        return model;
     }
 
     public void IncludeVersions<T>(params string[] apiVersions)

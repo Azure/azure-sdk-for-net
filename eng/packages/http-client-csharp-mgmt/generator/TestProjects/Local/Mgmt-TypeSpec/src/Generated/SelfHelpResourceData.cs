@@ -47,7 +47,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             get
             {
-                return Properties.SelfHelpId;
+                return Properties is null ? default : Properties.SelfHelpId;
             }
         }
     }

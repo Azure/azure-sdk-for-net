@@ -69,6 +69,8 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="sku"> SKU for the resource. </param>
         /// <param name="zones"> Availability zones for resources. This field should only contain a single element in the array. </param>
         /// <param name="storageCapacityTiB"> The size of the AML file system, in TiB. This might be rounded up. </param>
+        /// <param name="currentStorageCapacityTiB"> The current storage capacity of the AML file system, in TiB. This reflects the actual capacity including any expansions. </param>
+        /// <param name="clusterUuid"> The unique identifier of the AML file system cluster. </param>
         /// <param name="health"> Health of the AML file system. </param>
         /// <param name="provisioningState"> ARM provisioning state. </param>
         /// <param name="filesystemSubnet"> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET's address space. </param>
@@ -79,12 +81,14 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="hsm"> Hydration and archive settings and status. </param>
         /// <param name="rootSquashSettings"> Specifies root squash settings of the AML file system. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AmlFileSystemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, StorageCacheSkuName sku, IList<string> zones, float? storageCapacityTiB, AmlFileSystemHealth health, AmlFileSystemProvisioningStateType? provisioningState, string filesystemSubnet, AmlFileSystemClientInfo clientInfo, int? throughputProvisionedMBps, AmlFileSystemEncryptionSettings encryptionSettings, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow, AmlFileSystemPropertiesHsm hsm, AmlFileSystemRootSquashSettings rootSquashSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AmlFileSystemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, StorageCacheSkuName sku, IList<string> zones, float? storageCapacityTiB, float? currentStorageCapacityTiB, Guid? clusterUuid, AmlFileSystemHealth health, AmlFileSystemProvisioningStateType? provisioningState, string filesystemSubnet, AmlFileSystemClientInfo clientInfo, int? throughputProvisionedMBps, AmlFileSystemEncryptionSettings encryptionSettings, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow, AmlFileSystemPropertiesHsm hsm, AmlFileSystemRootSquashSettings rootSquashSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
             Zones = zones;
             StorageCapacityTiB = storageCapacityTiB;
+            CurrentStorageCapacityTiB = currentStorageCapacityTiB;
+            ClusterUuid = clusterUuid;
             Health = health;
             ProvisioningState = provisioningState;
             FilesystemSubnet = filesystemSubnet;
@@ -122,6 +126,10 @@ namespace Azure.ResourceManager.StorageCache
         public IList<string> Zones { get; }
         /// <summary> The size of the AML file system, in TiB. This might be rounded up. </summary>
         public float? StorageCapacityTiB { get; set; }
+        /// <summary> The current storage capacity of the AML file system, in TiB. This reflects the actual capacity including any expansions. </summary>
+        public float? CurrentStorageCapacityTiB { get; }
+        /// <summary> The unique identifier of the AML file system cluster. </summary>
+        public Guid? ClusterUuid { get; }
         /// <summary> Health of the AML file system. </summary>
         public AmlFileSystemHealth Health { get; }
         /// <summary> ARM provisioning state. </summary>

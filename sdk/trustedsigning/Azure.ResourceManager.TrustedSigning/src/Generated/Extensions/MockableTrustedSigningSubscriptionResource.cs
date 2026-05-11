@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrustedSigningAccountData, TrustedSigningAccountResource>(new CodeSigningAccountsGetBySubscriptionAsyncCollectionResultOfT(CodeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new TrustedSigningAccountResource(Client, data));
+            return new AsyncPageableWrapper<TrustedSigningAccountData, TrustedSigningAccountResource>(new CodeSigningAccountsGetBySubscriptionAsyncCollectionResultOfT(CodeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableTrustedSigningSubscriptionResource.GetTrustedSigningAccounts"), data => new TrustedSigningAccountResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrustedSigningAccountData, TrustedSigningAccountResource>(new CodeSigningAccountsGetBySubscriptionCollectionResultOfT(CodeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new TrustedSigningAccountResource(Client, data));
+            return new PageableWrapper<TrustedSigningAccountData, TrustedSigningAccountResource>(new CodeSigningAccountsGetBySubscriptionCollectionResultOfT(CodeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableTrustedSigningSubscriptionResource.GetTrustedSigningAccounts"), data => new TrustedSigningAccountResource(Client, data));
         }
 
         /// <summary>

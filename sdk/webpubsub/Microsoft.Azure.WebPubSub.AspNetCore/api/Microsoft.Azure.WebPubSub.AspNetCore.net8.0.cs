@@ -18,6 +18,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         public virtual System.Threading.Tasks.ValueTask<Microsoft.Azure.WebPubSub.Common.ConnectEventResponse> OnConnectAsync(Microsoft.Azure.WebPubSub.Common.ConnectEventRequest request, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task OnConnectedAsync(Microsoft.Azure.WebPubSub.Common.ConnectedEventRequest request) { throw null; }
         public virtual System.Threading.Tasks.Task OnDisconnectedAsync(Microsoft.Azure.WebPubSub.Common.DisconnectedEventRequest request) { throw null; }
+        public virtual System.Threading.Tasks.Task OnGroupJoinedAsync(Microsoft.Azure.WebPubSub.Common.JoinedGroupEventRequest request) { throw null; }
+        public virtual System.Threading.Tasks.Task OnGroupLeftAsync(Microsoft.Azure.WebPubSub.Common.LeftGroupEventRequest request) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Microsoft.Azure.WebPubSub.Common.UserEventResponse> OnMessageReceivedAsync(Microsoft.Azure.WebPubSub.Common.UserEventRequest request, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class WebPubSubOptions

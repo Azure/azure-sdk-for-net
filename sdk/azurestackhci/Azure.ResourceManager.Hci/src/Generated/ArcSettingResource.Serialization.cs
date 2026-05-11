@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Hci
 {
+    /// <summary></summary>
     public partial class ArcSettingResource : IJsonModel<ArcSettingData>
     {
-        private static ArcSettingData s_dataDeserializationInstance;
-        private static ArcSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ArcSettingData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ArcSettingData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ArcSettingData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ArcSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ArcSettingData>)Data).Write(writer, options);
 
-        ArcSettingData IJsonModel<ArcSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArcSettingData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ArcSettingData IJsonModel<ArcSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ArcSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ArcSettingData>(Data, options, AzureResourceManagerHciContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ArcSettingData IPersistableModel<ArcSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArcSettingData>(data, options, AzureResourceManagerHciContext.Default);
 
-        string IPersistableModel<ArcSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArcSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ArcSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

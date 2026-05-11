@@ -6,47 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
     /// <summary>
-    /// A Class representing a StorageAccountLocalUser along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageAccountLocalUserResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetStorageAccountLocalUserResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetStorageAccountLocalUser method.
+    /// A class representing a StorageAccountLocalUser along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageAccountLocalUserResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetStorageAccountLocalUsers method.
     /// </summary>
     public partial class StorageAccountLocalUserResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="StorageAccountLocalUserResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="accountName"> The accountName. </param>
-        /// <param name="username"> The username. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string username)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _storageAccountLocalUserLocalUsersClientDiagnostics;
-        private readonly LocalUsersRestOperations _storageAccountLocalUserLocalUsersRestClient;
+        private readonly ClientDiagnostics _localUsersClientDiagnostics;
+        private readonly LocalUsers _localUsersRestClient;
         private readonly StorageAccountLocalUserData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/localUsers";
 
-        /// <summary> Initializes a new instance of the <see cref="StorageAccountLocalUserResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of StorageAccountLocalUserResource for mocking. </summary>
         protected StorageAccountLocalUserResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StorageAccountLocalUserResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountLocalUserResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StorageAccountLocalUserResource(ArmClient client, StorageAccountLocalUserData data) : this(client, data.Id)
@@ -55,71 +44,93 @@ namespace Azure.ResourceManager.Storage
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StorageAccountLocalUserResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountLocalUserResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StorageAccountLocalUserResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _storageAccountLocalUserLocalUsersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string storageAccountLocalUserLocalUsersApiVersion);
-            _storageAccountLocalUserLocalUsersRestClient = new LocalUsersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageAccountLocalUserLocalUsersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string storageAccountLocalUserApiVersion);
+            _localUsersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
+            _localUsersRestClient = new LocalUsers(_localUsersClientDiagnostics, Pipeline, Endpoint, storageAccountLocalUserApiVersion ?? "2025-06-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual StorageAccountLocalUserData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="username"> The username. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string username)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get the local user of the storage account by username.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocalUsers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocalUserOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountLocalUserResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageAccountLocalUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<StorageAccountLocalUserResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _storageAccountLocalUserLocalUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.Get");
+            using DiagnosticScope scope = _localUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.Get");
             scope.Start();
             try
             {
-                var response = await _storageAccountLocalUserLocalUsersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _localUsersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StorageAccountLocalUserData> response = Response.FromValue(StorageAccountLocalUserData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StorageAccountLocalUserResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.Storage
         /// Get the local user of the storage account by username.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocalUsers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocalUserOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountLocalUserResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageAccountLocalUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StorageAccountLocalUserResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _storageAccountLocalUserLocalUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.Get");
+            using DiagnosticScope scope = _localUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.Get");
             scope.Start();
             try
             {
-                var response = _storageAccountLocalUserLocalUsersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _localUsersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StorageAccountLocalUserData> response = Response.FromValue(StorageAccountLocalUserData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StorageAccountLocalUserResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,20 +192,20 @@ namespace Azure.ResourceManager.Storage
         /// Deletes the local user associated with the specified storage account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocalUsers_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocalUserOperationGroup_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountLocalUserResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageAccountLocalUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,16 +213,23 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageAccountLocalUserLocalUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.Delete");
+            using DiagnosticScope scope = _localUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.Delete");
             scope.Start();
             try
             {
-                var response = await _storageAccountLocalUserLocalUsersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _storageAccountLocalUserLocalUsersRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new StorageArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _localUsersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                StorageArmOperation operation = new StorageArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -217,20 +243,20 @@ namespace Azure.ResourceManager.Storage
         /// Deletes the local user associated with the specified storage account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocalUsers_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocalUserOperationGroup_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountLocalUserResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageAccountLocalUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,16 +264,23 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageAccountLocalUserLocalUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.Delete");
+            using DiagnosticScope scope = _localUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.Delete");
             scope.Start();
             try
             {
-                var response = _storageAccountLocalUserLocalUsersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _storageAccountLocalUserLocalUsersRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new StorageArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _localUsersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                StorageArmOperation operation = new StorageArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -258,23 +291,215 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Create or update the properties of a local user associated with the storage account. Properties for NFSv3 enablement and extended groups cannot be set with other properties.
+        /// List SSH authorized keys and shared key of the local user.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}/listKeys. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocalUsers_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocalUserOperationGroup_ListKeys. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountLocalUserResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageAccountLocalUserResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<LocalUserKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _localUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.GetKeys");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _localUsersRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<LocalUserKeys> response = Response.FromValue(LocalUserKeys.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List SSH authorized keys and shared key of the local user.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}/listKeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalUserOperationGroup_ListKeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageAccountLocalUserResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<LocalUserKeys> GetKeys(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _localUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.GetKeys");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _localUsersRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<LocalUserKeys> response = Response.FromValue(LocalUserKeys.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerate the local user SSH password.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}/regeneratePassword. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalUserOperationGroup_RegeneratePassword. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageAccountLocalUserResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<LocalUserRegeneratePasswordResult>> RegeneratePasswordAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _localUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.RegeneratePassword");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _localUsersRestClient.CreateRegeneratePasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<LocalUserRegeneratePasswordResult> response = Response.FromValue(LocalUserRegeneratePasswordResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerate the local user SSH password.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}/regeneratePassword. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalUserOperationGroup_RegeneratePassword. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageAccountLocalUserResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<LocalUserRegeneratePasswordResult> RegeneratePassword(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _localUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.RegeneratePassword");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _localUsersRestClient.CreateRegeneratePasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<LocalUserRegeneratePasswordResult> response = Response.FromValue(LocalUserRegeneratePasswordResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a StorageAccountLocalUser.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalUserOperationGroup_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageAccountLocalUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,16 +511,24 @@ namespace Azure.ResourceManager.Storage
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _storageAccountLocalUserLocalUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.Update");
+            using DiagnosticScope scope = _localUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.Update");
             scope.Start();
             try
             {
-                var response = await _storageAccountLocalUserLocalUsersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _storageAccountLocalUserLocalUsersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new StorageArmOperation<StorageAccountLocalUserResource>(Response.FromValue(new StorageAccountLocalUserResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _localUsersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageAccountLocalUserData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StorageAccountLocalUserData> response = Response.FromValue(StorageAccountLocalUserData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                StorageArmOperation<StorageAccountLocalUserResource> operation = new StorageArmOperation<StorageAccountLocalUserResource>(Response.FromValue(new StorageAccountLocalUserResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -306,23 +539,23 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Create or update the properties of a local user associated with the storage account. Properties for NFSv3 enablement and extended groups cannot be set with other properties.
+        /// Update a StorageAccountLocalUser.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocalUsers_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocalUserOperationGroup_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountLocalUserResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageAccountLocalUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -334,169 +567,25 @@ namespace Azure.ResourceManager.Storage
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _storageAccountLocalUserLocalUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.Update");
+            using DiagnosticScope scope = _localUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.Update");
             scope.Start();
             try
             {
-                var response = _storageAccountLocalUserLocalUsersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _storageAccountLocalUserLocalUsersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new StorageArmOperation<StorageAccountLocalUserResource>(Response.FromValue(new StorageAccountLocalUserResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _localUsersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageAccountLocalUserData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StorageAccountLocalUserData> response = Response.FromValue(StorageAccountLocalUserData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                StorageArmOperation<StorageAccountLocalUserResource> operation = new StorageArmOperation<StorageAccountLocalUserResource>(Response.FromValue(new StorageAccountLocalUserResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List SSH authorized keys and shared key of the local user.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}/listKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocalUsers_ListKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountLocalUserResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LocalUserKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _storageAccountLocalUserLocalUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.GetKeys");
-            scope.Start();
-            try
-            {
-                var response = await _storageAccountLocalUserLocalUsersRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List SSH authorized keys and shared key of the local user.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}/listKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocalUsers_ListKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountLocalUserResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LocalUserKeys> GetKeys(CancellationToken cancellationToken = default)
-        {
-            using var scope = _storageAccountLocalUserLocalUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.GetKeys");
-            scope.Start();
-            try
-            {
-                var response = _storageAccountLocalUserLocalUsersRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Regenerate the local user SSH password.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}/regeneratePassword</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocalUsers_RegeneratePassword</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountLocalUserResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LocalUserRegeneratePasswordResult>> RegeneratePasswordAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _storageAccountLocalUserLocalUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.RegeneratePassword");
-            scope.Start();
-            try
-            {
-                var response = await _storageAccountLocalUserLocalUsersRestClient.RegeneratePasswordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Regenerate the local user SSH password.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}/regeneratePassword</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocalUsers_RegeneratePassword</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountLocalUserResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LocalUserRegeneratePasswordResult> RegeneratePassword(CancellationToken cancellationToken = default)
-        {
-            using var scope = _storageAccountLocalUserLocalUsersClientDiagnostics.CreateScope("StorageAccountLocalUserResource.RegeneratePassword");
-            scope.Start();
-            try
-            {
-                var response = _storageAccountLocalUserLocalUsersRestClient.RegeneratePassword(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

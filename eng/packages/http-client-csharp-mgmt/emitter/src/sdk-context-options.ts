@@ -114,6 +114,17 @@ export const armProviderSchema =
 export const flattenPropertyDecorator =
   "Azure.ResourceManager.@flattenProperty";
 
+// https://azure.github.io/typespec-azure/docs/libraries/typespec-client-generator-core/reference/decorators#@Azure.ClientGenerator.Core.clientOption
+// Propagated onto InputModelType.Decorators so the management generator can read
+// per-model opt-outs (e.g. "disable-safe-flatten") that aren't consumed during
+// resource detection in the emitter.
+const clientOptionRegex = "Azure\\.ClientGenerator\\.Core\\.@clientOption";
+
+// TypeSpec validation decorators for resource name constraints
+const patternRegex = "TypeSpec\\.@pattern";
+const minLengthRegex = "TypeSpec\\.@minLength";
+const maxLengthRegex = "TypeSpec\\.@maxLength";
+
 export const azureSDKContextOptions: CreateSdkContextOptions = {
   versioning: {
     previewStringRegex: /-preview$/
@@ -136,6 +147,10 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
     subscriptionResourceRegex,
     tenantResourceRegex,
     armResourceWithParameterRegex,
-    customAzureResourceRegex
+    customAzureResourceRegex,
+    clientOptionRegex,
+    patternRegex,
+    minLengthRegex,
+    maxLengthRegex
   ]
 };

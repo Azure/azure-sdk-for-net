@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for App Attach Package properties. </summary>
     public partial class AppAttachPackageProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppAttachPackageProperties"/>. </summary>
         public AppAttachPackageProperties()
@@ -57,31 +29,59 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="hostPoolReferences"> List of Hostpool resource Ids. </param>
         /// <param name="keyVaultUri"> URL path to certificate name located in keyVault. </param>
         /// <param name="failHealthCheckOnStagingFailure"> Parameter indicating how the health check should behave if this package fails staging. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppAttachPackageProperties(AppAttachPackageProvisioningState? provisioningState, AppAttachPackageInfoProperties image, IList<string> hostPoolReferences, Uri keyVaultUri, FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="packageOwnerName"> Specific name of package owner, is "AppAttach" for native app attach packages. </param>
+        /// <param name="packageLookbackUri"> Lookback url to third party control plane, is null for native app attach packages. </param>
+        /// <param name="customData"> Field that can be populated with custom data and filtered on in list GET calls. </param>
+        /// <param name="deploymentScope"> DeploymentScope type for AppAttachPackage. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppAttachPackageProperties(AppAttachPackageProvisioningState? provisioningState, AppAttachPackageInfoProperties image, IList<string> hostPoolReferences, Uri keyVaultUri, FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure, string packageOwnerName, Uri packageLookbackUri, string customData, DesktopVirtualizationDeploymentScope? deploymentScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Image = image;
             HostPoolReferences = hostPoolReferences;
             KeyVaultUri = keyVaultUri;
             FailHealthCheckOnStagingFailure = failHealthCheckOnStagingFailure;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            PackageOwnerName = packageOwnerName;
+            PackageLookbackUri = packageLookbackUri;
+            CustomData = customData;
+            DeploymentScope = deploymentScope;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The provisioning state of the App Attach Package. </summary>
         [WirePath("provisioningState")]
         public AppAttachPackageProvisioningState? ProvisioningState { get; }
+
         /// <summary> Detailed properties for App Attach Package. </summary>
         [WirePath("image")]
         public AppAttachPackageInfoProperties Image { get; set; }
+
         /// <summary> List of Hostpool resource Ids. </summary>
         [WirePath("hostPoolReferences")]
         public IList<string> HostPoolReferences { get; }
+
         /// <summary> URL path to certificate name located in keyVault. </summary>
         [WirePath("keyVaultURL")]
         public Uri KeyVaultUri { get; set; }
+
         /// <summary> Parameter indicating how the health check should behave if this package fails staging. </summary>
         [WirePath("failHealthCheckOnStagingFailure")]
         public FailHealthCheckOnStagingFailure? FailHealthCheckOnStagingFailure { get; set; }
+
+        /// <summary> Specific name of package owner, is "AppAttach" for native app attach packages. </summary>
+        [WirePath("packageOwnerName")]
+        public string PackageOwnerName { get; set; }
+
+        /// <summary> Lookback url to third party control plane, is null for native app attach packages. </summary>
+        [WirePath("packageLookbackUrl")]
+        public Uri PackageLookbackUri { get; set; }
+
+        /// <summary> Field that can be populated with custom data and filtered on in list GET calls. </summary>
+        [WirePath("customData")]
+        public string CustomData { get; set; }
+
+        /// <summary> DeploymentScope type for AppAttachPackage. </summary>
+        [WirePath("deploymentScope")]
+        public DesktopVirtualizationDeploymentScope? DeploymentScope { get; set; }
     }
 }

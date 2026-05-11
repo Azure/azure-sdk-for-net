@@ -22,18 +22,21 @@ namespace Azure.Developer.DevCenter
         private readonly string _projectName;
         private readonly string _catalogName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DeploymentEnvironmentsClientGetEnvironmentDefinitionsByCatalogAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DeploymentEnvironmentsClient client used to send requests. </param>
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="catalogName"> The name of the catalog. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DeploymentEnvironmentsClientGetEnvironmentDefinitionsByCatalogAsyncCollectionResult(DeploymentEnvironmentsClient client, string projectName, string catalogName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DeploymentEnvironmentsClientGetEnvironmentDefinitionsByCatalogAsyncCollectionResult(DeploymentEnvironmentsClient client, string projectName, string catalogName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _projectName = projectName;
             _catalogName = catalogName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DeploymentEnvironmentsClientGetEnvironmentDefinitionsByCatalogAsyncCollectionResult as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.Developer.DevCenter
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetEnvironmentDefinitionsByCatalogRequest(nextLink, _projectName, _catalogName, _context) : _client.CreateGetEnvironmentDefinitionsByCatalogRequest(_projectName, _catalogName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeploymentEnvironmentsClient.GetEnvironmentDefinitionsByCatalog");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

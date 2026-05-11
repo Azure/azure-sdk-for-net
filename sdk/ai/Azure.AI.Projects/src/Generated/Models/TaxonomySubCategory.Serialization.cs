@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Taxonomy sub-category definition. </summary>
     public partial class TaxonomySubCategory : IJsonModel<TaxonomySubCategory>
@@ -85,7 +86,7 @@ namespace Azure.AI.Projects
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
@@ -147,7 +148,7 @@ namespace Azure.AI.Projects
             string id = default;
             string name = default;
             string description = default;
-            bool enabled = default;
+            bool isEnabled = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -169,7 +170,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("enabled"u8))
                 {
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -202,7 +203,7 @@ namespace Azure.AI.Projects
                 id,
                 name,
                 description,
-                enabled,
+                isEnabled,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
         }

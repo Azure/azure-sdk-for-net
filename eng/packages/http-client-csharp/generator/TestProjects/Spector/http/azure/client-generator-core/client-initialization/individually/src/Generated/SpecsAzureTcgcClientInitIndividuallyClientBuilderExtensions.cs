@@ -14,70 +14,70 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class SpecsAzureTcgcClientInitIndividuallyClientBuilderExtensions
     {
-        public static IAzureClientBuilder<IndividuallyNestedWithPathClient, IndividuallyNestedWithPathClientOptions> AddIndividuallyNestedWithPathClient<TBuilder>(this TBuilder builder, string blobName)
+        public static IAzureClientBuilder<IndividuallyNestedWithPathClient, SpecsAzureTcgcClientInitIndividuallyClientOptions> AddIndividuallyNestedWithPathClient<TBuilder>(this TBuilder builder, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
-        public static IAzureClientBuilder<IndividuallyNestedWithPathClient, IndividuallyNestedWithPathClientOptions> AddIndividuallyNestedWithPathClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName)
+        public static IAzureClientBuilder<IndividuallyNestedWithPathClient, SpecsAzureTcgcClientInitIndividuallyClientOptions> AddIndividuallyNestedWithPathClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<IndividuallyNestedWithPathClient, IndividuallyNestedWithPathClientOptions> AddIndividuallyNestedWithPathClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<IndividuallyNestedWithPathClient, SpecsAzureTcgcClientInitIndividuallyClientOptions> AddIndividuallyNestedWithPathClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
 
-        public static IAzureClientBuilder<IndividuallyNestedWithQueryClient, IndividuallyNestedWithQueryClientOptions> AddIndividuallyNestedWithQueryClient<TBuilder>(this TBuilder builder, string blobName)
+        public static IAzureClientBuilder<IndividuallyNestedWithQueryClient, SpecsAzureTcgcClientInitIndividuallyClientOptions> AddIndividuallyNestedWithQueryClient<TBuilder>(this TBuilder builder, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
-        public static IAzureClientBuilder<IndividuallyNestedWithQueryClient, IndividuallyNestedWithQueryClientOptions> AddIndividuallyNestedWithQueryClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName)
+        public static IAzureClientBuilder<IndividuallyNestedWithQueryClient, SpecsAzureTcgcClientInitIndividuallyClientOptions> AddIndividuallyNestedWithQueryClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<IndividuallyNestedWithQueryClient, IndividuallyNestedWithQueryClientOptions> AddIndividuallyNestedWithQueryClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<IndividuallyNestedWithQueryClient, SpecsAzureTcgcClientInitIndividuallyClientOptions> AddIndividuallyNestedWithQueryClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
 
-        public static IAzureClientBuilder<IndividuallyNestedWithHeaderClient, IndividuallyNestedWithHeaderClientOptions> AddIndividuallyNestedWithHeaderClient<TBuilder>(this TBuilder builder, string name)
+        public static IAzureClientBuilder<IndividuallyNestedWithHeaderClient, SpecsAzureTcgcClientInitIndividuallyClientOptions> AddIndividuallyNestedWithHeaderClient<TBuilder>(this TBuilder builder, string name)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
-        public static IAzureClientBuilder<IndividuallyNestedWithHeaderClient, IndividuallyNestedWithHeaderClientOptions> AddIndividuallyNestedWithHeaderClient<TBuilder>(this TBuilder builder, Uri endpoint, string name)
+        public static IAzureClientBuilder<IndividuallyNestedWithHeaderClient, SpecsAzureTcgcClientInitIndividuallyClientOptions> AddIndividuallyNestedWithHeaderClient<TBuilder>(this TBuilder builder, Uri endpoint, string name)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<IndividuallyNestedWithHeaderClient, IndividuallyNestedWithHeaderClientOptions> AddIndividuallyNestedWithHeaderClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<IndividuallyNestedWithHeaderClient, SpecsAzureTcgcClientInitIndividuallyClientOptions> AddIndividuallyNestedWithHeaderClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
 
-        public static IAzureClientBuilder<IndividuallyNestedWithMultipleClient, IndividuallyNestedWithMultipleClientOptions> AddIndividuallyNestedWithMultipleClient<TBuilder>(this TBuilder builder, string name, string region)
+        public static IAzureClientBuilder<IndividuallyNestedWithMultipleClient, SpecsAzureTcgcClientInitIndividuallyClientOptions> AddIndividuallyNestedWithMultipleClient<TBuilder>(this TBuilder builder, string name, string region)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
-        public static IAzureClientBuilder<IndividuallyNestedWithMultipleClient, IndividuallyNestedWithMultipleClientOptions> AddIndividuallyNestedWithMultipleClient<TBuilder>(this TBuilder builder, Uri endpoint, string name, string region)
+        public static IAzureClientBuilder<IndividuallyNestedWithMultipleClient, SpecsAzureTcgcClientInitIndividuallyClientOptions> AddIndividuallyNestedWithMultipleClient<TBuilder>(this TBuilder builder, Uri endpoint, string name, string region)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<IndividuallyNestedWithMultipleClient, IndividuallyNestedWithMultipleClientOptions> AddIndividuallyNestedWithMultipleClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<IndividuallyNestedWithMultipleClient, SpecsAzureTcgcClientInitIndividuallyClientOptions> AddIndividuallyNestedWithMultipleClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
 
-        public static IAzureClientBuilder<IndividuallyNestedWithMixedClient, IndividuallyNestedWithMixedClientOptions> AddIndividuallyNestedWithMixedClient<TBuilder>(this TBuilder builder, string name)
+        public static IAzureClientBuilder<IndividuallyNestedWithMixedClient, SpecsAzureTcgcClientInitIndividuallyClientOptions> AddIndividuallyNestedWithMixedClient<TBuilder>(this TBuilder builder, string name)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
-        public static IAzureClientBuilder<IndividuallyNestedWithMixedClient, IndividuallyNestedWithMixedClientOptions> AddIndividuallyNestedWithMixedClient<TBuilder>(this TBuilder builder, Uri endpoint, string name)
+        public static IAzureClientBuilder<IndividuallyNestedWithMixedClient, SpecsAzureTcgcClientInitIndividuallyClientOptions> AddIndividuallyNestedWithMixedClient<TBuilder>(this TBuilder builder, Uri endpoint, string name)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<IndividuallyNestedWithMixedClient, IndividuallyNestedWithMixedClientOptions> AddIndividuallyNestedWithMixedClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<IndividuallyNestedWithMixedClient, SpecsAzureTcgcClientInitIndividuallyClientOptions> AddIndividuallyNestedWithMixedClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
 
-        public static IAzureClientBuilder<IndividuallyNestedWithParamAliasClient, IndividuallyNestedWithParamAliasClientOptions> AddIndividuallyNestedWithParamAliasClient<TBuilder>(this TBuilder builder, string blobName, string blob)
+        public static IAzureClientBuilder<IndividuallyNestedWithParamAliasClient, SpecsAzureTcgcClientInitIndividuallyClientOptions> AddIndividuallyNestedWithParamAliasClient<TBuilder>(this TBuilder builder, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
-        public static IAzureClientBuilder<IndividuallyNestedWithParamAliasClient, IndividuallyNestedWithParamAliasClientOptions> AddIndividuallyNestedWithParamAliasClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName, string blob)
+        public static IAzureClientBuilder<IndividuallyNestedWithParamAliasClient, SpecsAzureTcgcClientInitIndividuallyClientOptions> AddIndividuallyNestedWithParamAliasClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<IndividuallyNestedWithParamAliasClient, IndividuallyNestedWithParamAliasClientOptions> AddIndividuallyNestedWithParamAliasClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<IndividuallyNestedWithParamAliasClient, SpecsAzureTcgcClientInitIndividuallyClientOptions> AddIndividuallyNestedWithParamAliasClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> A run command request. </summary>
     public partial class ManagedClusterRunCommandContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterRunCommandContent"/>. </summary>
         /// <param name="command"> The command to run. </param>
@@ -59,26 +31,23 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="command"> The command to run. </param>
         /// <param name="context"> A base64 encoded zip file containing the files required by the command. </param>
         /// <param name="clusterToken"> AuthToken issued for AKS AAD Server App. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterRunCommandContent(string command, string context, string clusterToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterRunCommandContent(string command, string context, string clusterToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Command = command;
             Context = context;
             ClusterToken = clusterToken;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterRunCommandContent"/> for deserialization. </summary>
-        internal ManagedClusterRunCommandContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The command to run. </summary>
         [WirePath("command")]
         public string Command { get; }
+
         /// <summary> A base64 encoded zip file containing the files required by the command. </summary>
         [WirePath("context")]
         public string Context { get; set; }
+
         /// <summary> AuthToken issued for AKS AAD Server App. </summary>
         [WirePath("clusterToken")]
         public string ClusterToken { get; set; }

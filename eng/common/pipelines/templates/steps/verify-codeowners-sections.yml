@@ -1,0 +1,101 @@
+parameters:
+  SourceRootPath: '$(System.DefaultWorkingDirectory)'
+  TempDirectory: '$(Agent.TempDirectory)/codeowners-check'
+  Sections:
+    - 'Client Libraries'
+    - 'Management Top Level Owners'
+    - 'Management Libraries'
+
+steps:
+  - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+    # 1. Check if CODEOWNERS changed; if so, check whether the PR was opened by azure-sdk
+    - pwsh: |
+        $scriptPath = [System.IO.Path]::Combine("${{ parameters.SourceRootPath }}", "eng", "common", "scripts", "get-changedfiles.ps1")
+        try {
+          $changedFiles = & $scriptPath `
+            -DiffPath ".github/CODEOWNERS" `
+            -DiffFilterType ''
+
+          if ($LASTEXITCODE -gt 1) {
+            Write-Host "git diff returned exit code $LASTEXITCODE, which indicates an error. Output: $changedFiles"
+            exit 1
+          }
+        } catch {
+          Write-Host "Error running get-changedfiles.ps1: $_"
+          exit 1
+        }
+
+        if (!$changedFiles) {
+          Write-Host "CODEOWNERS file has not changed."
+          Write-Host "##vso[task.setvariable variable=ShouldCheckCodeownersEdits]false"
+          exit 0
+        }
+
+        Write-Host "CODEOWNERS file has changed."
+
+        $prNumber = "$(System.PullRequest.PullRequestNumber)"
+        $repoName = "$(Build.Repository.Name)"
+        $prUrl = "https://api.github.com/repos/$repoName/pulls/$prNumber"
+        $prData = Invoke-RestMethod -Uri $prUrl -MaximumRetryCount 10 -RetryIntervalSec 6
+        $prAuthor = $prData.user.login
+        Write-Host "PR author: $prAuthor"
+
+        if ($prAuthor -ieq "azure-sdk") {
+          Write-Host "PR opened by azure-sdk. Skipping CODEOWNERS section check."
+          Write-Host "##vso[task.setvariable variable=ShouldCheckCodeownersEdits]false"
+          exit 0
+        }
+
+        Write-Host "##vso[task.setvariable variable=ShouldCheckCodeownersEdits]true"
+      displayName: 'Check if CODEOWNERS changed'
+      workingDirectory: ${{ parameters.SourceRootPath }}
+      condition: and(succeeded(), ne(variables['Skip.VerifyCodeownersSections'], 'true'))
+
+    # 2. Install the azsdk CLI (only if CODEOWNERS changed)
+    - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
+      parameters:
+        SourceRootPath: ${{ parameters.SourceRootPath }}
+        Condition: and(succeeded(), eq(variables['ShouldCheckCodeownersEdits'], 'true'))
+
+    # 3. Prepare before/after CODEOWNERS files
+    - pwsh: |
+        $tempDir = "${{ parameters.TempDirectory }}"
+        if (Test-Path $tempDir) { Remove-Item -Recurse -Force $tempDir }
+        New-Item -ItemType Directory -Path $tempDir -Force | Out-Null
+
+        $afterFile = Join-Path $tempDir "CODEOWNERS.after"
+        $beforeFile = Join-Path $tempDir "CODEOWNERS.before"
+
+        # Copy current (PR head) version
+        Copy-Item -Path ".github/CODEOWNERS" -Destination $afterFile -Force
+        Write-Host "Copied current CODEOWNERS to $afterFile"
+
+        # Extract parent commit version
+        git show "HEAD~1:.github/CODEOWNERS" > $beforeFile
+        Write-Host "Retrieved parent commit CODEOWNERS to $beforeFile"
+
+        if ($LASTEXITCODE) {
+          Write-Host "Could not retrieve CODEOWNERS from HEAD~1. The file may be newly added. Skipping."
+          Write-Host "##vso[task.setvariable variable=ShouldCheckCodeownersEdits]false"
+          exit 0
+        }
+        Write-Host "Extracted parent CODEOWNERS to $beforeFile"
+      displayName: 'Prepare CODEOWNERS before/after files'
+      workingDirectory: ${{ parameters.SourceRootPath }}
+      condition: and(succeeded(), eq(variables['ShouldCheckCodeownersEdits'], 'true'))
+
+    # 4. Run the section comparison script
+    - task: Powershell@2
+      displayName: 'Test protected CODEOWNERS sections'
+      inputs:
+        targetType: 'filePath'
+        filePath: '${{ parameters.SourceRootPath }}/eng/common/scripts/Test-CodeownersSections.ps1'
+        arguments: >-
+          -AzsdkCliPath "$(AZSDK)"
+          -BeforeFile "${{ parameters.TempDirectory }}/CODEOWNERS.before"
+          -AfterFile "${{ parameters.TempDirectory }}/CODEOWNERS.after"
+          -Sections "${{ join('","', parameters.Sections) }}"
+          -TempDirectory "${{ parameters.TempDirectory }}"
+        pwsh: true
+        workingDirectory: ${{ parameters.SourceRootPath }}
+      condition: and(succeeded(), eq(variables['ShouldCheckCodeownersEdits'], 'true'))

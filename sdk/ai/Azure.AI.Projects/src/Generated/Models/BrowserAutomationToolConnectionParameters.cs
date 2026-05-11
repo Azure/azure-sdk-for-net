@@ -33,6 +33,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The ID of the project connection to your Azure Playwright resource. </summary>
-        public string ProjectConnectionId { get; set; }
+        public string ProjectConnectionId { get; }
     }
 }

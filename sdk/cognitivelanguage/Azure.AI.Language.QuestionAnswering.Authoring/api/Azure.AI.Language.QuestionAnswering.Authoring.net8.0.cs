@@ -66,6 +66,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType left, Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType (string value) { throw null; }
+        public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType left, Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -309,6 +310,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class QuestionAnsweringAuthoringClient
     {
         protected QuestionAnsweringAuthoringClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public QuestionAnsweringAuthoringClient(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClientSettings settings) { }
         public QuestionAnsweringAuthoringClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public QuestionAnsweringAuthoringClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClientOptions options) { }
         public QuestionAnsweringAuthoringClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -397,6 +400,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateSynonymsAsync(string projectName, Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateSynonymsAsync(string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class QuestionAnsweringAuthoringClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedQuestionAnsweringAuthoringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedQuestionAnsweringAuthoringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddQuestionAnsweringAuthoringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddQuestionAnsweringAuthoringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClientSettings> configureSettings) { throw null; }
+    }
     public partial class QuestionAnsweringAuthoringClientOptions : Azure.Core.ClientOptions
     {
         public QuestionAnsweringAuthoringClientOptions(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClientOptions.ServiceVersion version = Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClientOptions.ServiceVersion.V2025_05_15_Preview) { }
@@ -406,6 +417,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             V2023_04_01 = 1,
             V2025_05_15_Preview = 2,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class QuestionAnsweringAuthoringClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public QuestionAnsweringAuthoringClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class QuestionAnsweringAuthoringExportJobState : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringExportJobState>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringExportJobState>
     {

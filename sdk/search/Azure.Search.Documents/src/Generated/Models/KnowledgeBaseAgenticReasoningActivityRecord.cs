@@ -15,9 +15,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAgenticReasoningActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
-        internal KnowledgeBaseAgenticReasoningActivityRecord(int id) : base(id)
+        internal KnowledgeBaseAgenticReasoningActivityRecord(int id) : base(id, KnowledgeBaseActivityRecordType.AgenticReasoning)
         {
-            Type = "agenticReasoning";
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAgenticReasoningActivityRecord"/>. </summary>
@@ -25,31 +24,19 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="type"> The type of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="reasoningTokens"> The number of input tokens for agentic reasoning. </param>
-        /// <param name="retrievalReasoningEffort">
-        /// Please note <see cref="KnowledgeRetrievalReasoningEffort"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeRetrievalLowReasoningEffort"/>, <see cref="KnowledgeRetrievalMediumReasoningEffort"/> and <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>.
-        /// </param>
-        internal KnowledgeBaseAgenticReasoningActivityRecord(int id, string type, int? elapsedMs, KnowledgeBaseErrorDetail error, IDictionary<string, BinaryData> serializedAdditionalRawData, int? reasoningTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort) : base(id, type, elapsedMs, error, serializedAdditionalRawData)
+        /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
+        internal KnowledgeBaseAgenticReasoningActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? reasoningTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort) : base(id, @type, elapsedMs, error, additionalBinaryDataProperties)
         {
             ReasoningTokens = reasoningTokens;
             RetrievalReasoningEffort = retrievalReasoningEffort;
-            Type = type ?? "agenticReasoning";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAgenticReasoningActivityRecord"/> for deserialization. </summary>
-        internal KnowledgeBaseAgenticReasoningActivityRecord()
-        {
         }
 
         /// <summary> The number of input tokens for agentic reasoning. </summary>
         public int? ReasoningTokens { get; }
-        /// <summary>
-        /// Gets the retrieval reasoning effort
-        /// Please note <see cref="KnowledgeRetrievalReasoningEffort"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeRetrievalLowReasoningEffort"/>, <see cref="KnowledgeRetrievalMediumReasoningEffort"/> and <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>.
-        /// </summary>
+
+        /// <summary> The retrieval reasoning effort configuration. </summary>
         public KnowledgeRetrievalReasoningEffort RetrievalReasoningEffort { get; }
     }
 }

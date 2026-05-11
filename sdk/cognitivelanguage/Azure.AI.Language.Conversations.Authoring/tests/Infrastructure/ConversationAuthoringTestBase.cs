@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         /// <summary>
         /// Gets an instrumented client of type <typeparamref name="TClient"/>.
         /// </summary>
-        protected ConversationAnalysisAuthoringClient client { get; private set; }
+        protected ConversationAnalysisAuthoring client { get; private set; }
 
         /// <summary>
         /// Gets the service version used for this instance of the test fixture.
@@ -45,7 +45,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             await base.StartTestRecordingAsync();
 
             ConversationAnalysisAuthoringClientOptions options = new(ServiceVersion);
-            client = CreateClient<ConversationAnalysisAuthoringClient>(
+            client = CreateClient<ConversationAnalysisAuthoring>(
                 TestEnvironment.Endpoint,
                 new AzureKeyCredential(TestEnvironment.ApiKey),
                 InstrumentClientOptions(options));

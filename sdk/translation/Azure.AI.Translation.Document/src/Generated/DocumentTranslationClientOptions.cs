@@ -5,25 +5,51 @@
 
 #nullable disable
 
-using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Translation.Document
 {
-    /// <summary> Client options for Azure.AI.Translation.Document library clients. </summary>
+    /// <summary> Client options for clients in this library. </summary>
     public partial class DocumentTranslationClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_11_01_Preview;
 
+        /// <summary> Initializes a new instance of DocumentTranslationClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal DocumentTranslationClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "2024-11-01-preview";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            if (section["Audience"] is string audience)
+            {
+                Audience = new DocumentTranslationAudience(audience);
+            }
+            ConfigureLogging();
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
+
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2024-05-01". </summary>
+            /// <summary> V2024_05_01. </summary>
             V2024_05_01 = 1,
-            /// <summary> Service version "2024-11-01-preview". </summary>
-            V2024_11_01_Preview = 2,
+            /// <summary> V2024_11_01_Preview. </summary>
+            V2024_11_01_Preview = 2
         }
-
-        internal string Version { get; }
     }
 }

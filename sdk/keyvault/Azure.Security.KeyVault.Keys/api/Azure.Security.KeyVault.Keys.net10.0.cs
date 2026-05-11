@@ -260,6 +260,7 @@ namespace Azure.Security.KeyVault.Keys
         public bool? Exportable { get { throw null; } set { } }
         public string HsmPlatform { get { throw null; } }
         public System.Uri Id { get { throw null; } }
+        public int? KeySize { get { throw null; } }
         public bool Managed { get { throw null; } }
         public string Name { get { throw null; } }
         public System.DateTimeOffset? NotBefore { get { throw null; } set { } }

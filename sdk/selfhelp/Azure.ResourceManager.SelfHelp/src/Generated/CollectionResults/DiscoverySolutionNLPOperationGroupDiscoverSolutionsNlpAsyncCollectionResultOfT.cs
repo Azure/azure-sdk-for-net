@@ -20,16 +20,19 @@ namespace Azure.ResourceManager.SelfHelp
         private readonly DiscoverySolutionNLPOperationGroup _client;
         private readonly RequestContent _content;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DiscoverySolutionNLPOperationGroupDiscoverSolutionsNlpAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DiscoverySolutionNLPOperationGroup client used to send requests. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DiscoverySolutionNLPOperationGroupDiscoverSolutionsNlpAsyncCollectionResultOfT(DiscoverySolutionNLPOperationGroup client, RequestContent content, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DiscoverySolutionNLPOperationGroupDiscoverSolutionsNlpAsyncCollectionResultOfT(DiscoverySolutionNLPOperationGroup client, RequestContent content, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _content = content;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DiscoverySolutionNLPOperationGroupDiscoverSolutionsNlpAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.SelfHelp
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateDiscoverSolutionsNlpRequest(_content, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSelfHelpTenantResource.DiscoverSolutionsNlp");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The HDInsight cluster application GET response. </summary>
     public partial class HDInsightApplicationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HDInsightApplicationProperties"/>. </summary>
         public HDInsightApplicationProperties()
@@ -69,8 +42,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="createdOn"> The application create date time. </param>
         /// <param name="marketplaceIdentifier"> The marketplace identifier. </param>
         /// <param name="privateLinkConfigurations"> The private link configurations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightApplicationProperties(ComputeProfile computeProfile, IList<RuntimeScriptAction> installScriptActions, IList<RuntimeScriptAction> uninstallScriptActions, IList<HDInsightApplicationHttpsEndpoint> httpsEndpoints, IList<HDInsightApplicationEndpoint> sshEndpoints, string provisioningState, string applicationType, string applicationState, IList<ResponseError> errors, DateTimeOffset? createdOn, string marketplaceIdentifier, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightApplicationProperties(ComputeProfile computeProfile, IList<RuntimeScriptAction> installScriptActions, IList<RuntimeScriptAction> uninstallScriptActions, IList<HDInsightApplicationHttpsEndpoint> httpsEndpoints, IList<HDInsightApplicationEndpoint> sshEndpoints, string provisioningState, string applicationType, string applicationState, IList<ResponseError> errors, DateTimeOffset? createdOn, string marketplaceIdentifier, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputeProfile = computeProfile;
             InstallScriptActions = installScriptActions;
@@ -84,43 +57,56 @@ namespace Azure.ResourceManager.HDInsight.Models
             CreatedOn = createdOn;
             MarketplaceIdentifier = marketplaceIdentifier;
             PrivateLinkConfigurations = privateLinkConfigurations;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of roles in the cluster. </summary>
         internal ComputeProfile ComputeProfile { get; set; }
+
+        /// <summary> The list of install script actions. </summary>
+        public IList<RuntimeScriptAction> InstallScriptActions { get; }
+
+        /// <summary> The list of uninstall script actions. </summary>
+        public IList<RuntimeScriptAction> UninstallScriptActions { get; }
+
+        /// <summary> The list of application HTTPS endpoints. </summary>
+        public IList<HDInsightApplicationHttpsEndpoint> HttpsEndpoints { get; }
+
+        /// <summary> The list of application SSH endpoints. </summary>
+        public IList<HDInsightApplicationEndpoint> SshEndpoints { get; }
+
+        /// <summary> The provisioning state of the application. </summary>
+        public string ProvisioningState { get; }
+
+        /// <summary> The application type. </summary>
+        public string ApplicationType { get; set; }
+
+        /// <summary> The application state. </summary>
+        public string ApplicationState { get; }
+
+        /// <summary> The list of errors. </summary>
+        public IList<ResponseError> Errors { get; }
+
+        /// <summary> The application create date time. </summary>
+        public DateTimeOffset? CreatedOn { get; }
+
+        /// <summary> The marketplace identifier. </summary>
+        public string MarketplaceIdentifier { get; }
+
+        /// <summary> The private link configurations. </summary>
+        public IList<HDInsightPrivateLinkConfiguration> PrivateLinkConfigurations { get; }
+
         /// <summary> The list of roles in the cluster. </summary>
         public IList<HDInsightClusterRole> ComputeRoles
         {
             get
             {
                 if (ComputeProfile is null)
+                {
                     ComputeProfile = new ComputeProfile();
+                }
                 return ComputeProfile.Roles;
             }
         }
-
-        /// <summary> The list of install script actions. </summary>
-        public IList<RuntimeScriptAction> InstallScriptActions { get; }
-        /// <summary> The list of uninstall script actions. </summary>
-        public IList<RuntimeScriptAction> UninstallScriptActions { get; }
-        /// <summary> The list of application HTTPS endpoints. </summary>
-        public IList<HDInsightApplicationHttpsEndpoint> HttpsEndpoints { get; }
-        /// <summary> The list of application SSH endpoints. </summary>
-        public IList<HDInsightApplicationEndpoint> SshEndpoints { get; }
-        /// <summary> The provisioning state of the application. </summary>
-        public string ProvisioningState { get; }
-        /// <summary> The application type. </summary>
-        public string ApplicationType { get; set; }
-        /// <summary> The application state. </summary>
-        public string ApplicationState { get; }
-        /// <summary> The list of errors. </summary>
-        public IList<ResponseError> Errors { get; }
-        /// <summary> The application create date time. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The marketplace identifier. </summary>
-        public string MarketplaceIdentifier { get; }
-        /// <summary> The private link configurations. </summary>
-        public IList<HDInsightPrivateLinkConfiguration> PrivateLinkConfigurations { get; }
     }
 }

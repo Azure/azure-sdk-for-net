@@ -13,40 +13,11 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> The network associated with this object. </summary>
     public partial class SCClusterByokEntity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SCClusterByokEntity"/>. </summary>
-        internal SCClusterByokEntity()
+        public SCClusterByokEntity()
         {
         }
 
@@ -54,20 +25,22 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="id"> ID of the referred resource. </param>
         /// <param name="related"> API URL for accessing or modifying the referred object. </param>
         /// <param name="resourceName"> CRN reference to the referred resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SCClusterByokEntity(string id, string related, string resourceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SCClusterByokEntity(string id, string related, string resourceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Related = related;
             ResourceName = resourceName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ID of the referred resource. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
+
         /// <summary> API URL for accessing or modifying the referred object. </summary>
-        public string Related { get; }
+        public string Related { get; set; }
+
         /// <summary> CRN reference to the referred resource. </summary>
-        public string ResourceName { get; }
+        public string ResourceName { get; set; }
     }
 }

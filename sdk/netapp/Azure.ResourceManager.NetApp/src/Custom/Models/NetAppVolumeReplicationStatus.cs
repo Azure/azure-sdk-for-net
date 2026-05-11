@@ -3,19 +3,12 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+#pragma warning disable CS1591
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Replication status
-    /// </summary>
     public partial class NetAppVolumeReplicationStatus
     {
-        /// <summary> Status of the mirror relationship. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public NetAppRelationshipStatus? RelationshipStatus { get; }
+        public NetAppRelationshipStatus? RelationshipStatus => VolumeReplicationRelationshipStatus.HasValue ? new NetAppRelationshipStatus(VolumeReplicationRelationshipStatus.Value.ToString()) : (NetAppRelationshipStatus?)null;
     }
 }

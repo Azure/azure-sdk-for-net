@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dataBoxJobCancellationReason, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(dataBoxJobCancellationReason, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

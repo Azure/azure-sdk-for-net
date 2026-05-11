@@ -1869,7 +1869,8 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.ParamAliasClientOptions.blobName",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "paramAlias": "blob"
                   }
                 ]
               }

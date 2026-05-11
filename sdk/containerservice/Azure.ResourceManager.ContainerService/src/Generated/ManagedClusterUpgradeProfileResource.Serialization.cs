@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ContainerService
 {
+    /// <summary></summary>
     public partial class ManagedClusterUpgradeProfileResource : IJsonModel<ManagedClusterUpgradeProfileData>
     {
-        private static ManagedClusterUpgradeProfileData s_dataDeserializationInstance;
-        private static ManagedClusterUpgradeProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ManagedClusterUpgradeProfileData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ManagedClusterUpgradeProfileData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedClusterUpgradeProfileData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedClusterUpgradeProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedClusterUpgradeProfileData>)Data).Write(writer, options);
 
-        ManagedClusterUpgradeProfileData IJsonModel<ManagedClusterUpgradeProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedClusterUpgradeProfileData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedClusterUpgradeProfileData IJsonModel<ManagedClusterUpgradeProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ManagedClusterUpgradeProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedClusterUpgradeProfileData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ManagedClusterUpgradeProfileData IPersistableModel<ManagedClusterUpgradeProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedClusterUpgradeProfileData>(data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        string IPersistableModel<ManagedClusterUpgradeProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedClusterUpgradeProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedClusterUpgradeProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

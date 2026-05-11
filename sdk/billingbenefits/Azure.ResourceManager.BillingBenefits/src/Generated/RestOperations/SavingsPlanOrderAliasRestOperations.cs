@@ -6,189 +6,77 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
-    internal partial class SavingsPlanOrderAliasRestOperations
+    internal partial class SavingsPlanOrderAlias
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of SavingsPlanOrderAliasRestOperations. </summary>
+        /// <summary> Initializes a new instance of SavingsPlanOrderAlias for mocking. </summary>
+        protected SavingsPlanOrderAlias()
+        {
+        }
+
+        /// <summary> Initializes a new instance of SavingsPlanOrderAlias. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public SavingsPlanOrderAliasRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal SavingsPlanOrderAlias(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-11-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string savingsPlanOrderAliasName, BillingBenefitsSavingsPlanOrderAliasData data)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(string savingsPlanOrderAliasName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/", false);
             uri.AppendPath(savingsPlanOrderAliasName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateRequest(string savingsPlanOrderAliasName, BillingBenefitsSavingsPlanOrderAliasData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/", false);
-            uri.AppendPath(savingsPlanOrderAliasName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Create a savings plan. Learn more about permissions needed at https://go.microsoft.com/fwlink/?linkid=2215851. </summary>
-        /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
-        /// <param name="data"> Request body for creating a savings plan order alias. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderAliasName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string savingsPlanOrderAliasName, BillingBenefitsSavingsPlanOrderAliasData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderAliasName, nameof(savingsPlanOrderAliasName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateRequest(savingsPlanOrderAliasName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Create a savings plan. Learn more about permissions needed at https://go.microsoft.com/fwlink/?linkid=2215851. </summary>
-        /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
-        /// <param name="data"> Request body for creating a savings plan order alias. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderAliasName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string savingsPlanOrderAliasName, BillingBenefitsSavingsPlanOrderAliasData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderAliasName, nameof(savingsPlanOrderAliasName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateRequest(savingsPlanOrderAliasName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string savingsPlanOrderAliasName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/", false);
-            uri.AppendPath(savingsPlanOrderAliasName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string savingsPlanOrderAliasName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/", false);
-            uri.AppendPath(savingsPlanOrderAliasName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get a savings plan. </summary>
-        /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderAliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BillingBenefitsSavingsPlanOrderAliasData>> GetAsync(string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateRequest(string savingsPlanOrderAliasName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderAliasName, nameof(savingsPlanOrderAliasName));
-
-            using var message = CreateGetRequest(savingsPlanOrderAliasName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/", false);
+            uri.AppendPath(savingsPlanOrderAliasName, true);
+            if (_apiVersion != null)
             {
-                case 200:
-                    {
-                        BillingBenefitsSavingsPlanOrderAliasData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = BillingBenefitsSavingsPlanOrderAliasData.DeserializeBillingBenefitsSavingsPlanOrderAliasData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((BillingBenefitsSavingsPlanOrderAliasData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-        }
-
-        /// <summary> Get a savings plan. </summary>
-        /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderAliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BillingBenefitsSavingsPlanOrderAliasData> Get(string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderAliasName, nameof(savingsPlanOrderAliasName));
-
-            using var message = CreateGetRequest(savingsPlanOrderAliasName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BillingBenefitsSavingsPlanOrderAliasData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = BillingBenefitsSavingsPlanOrderAliasData.DeserializeBillingBenefitsSavingsPlanOrderAliasData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((BillingBenefitsSavingsPlanOrderAliasData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Put;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
         }
     }
 }

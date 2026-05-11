@@ -23,7 +23,7 @@ namespace Azure.Data.AppConfiguration.Tests
             };
 
             var defaultScope = options.GetDefaultScope(new Uri(url));
-            Assert.AreEqual(expectedScope, defaultScope);
+            Assert.That(defaultScope, Is.EqualTo(expectedScope));
         }
 
         // This test validates that the token audience and scope is correctly parsed from the URL
@@ -31,7 +31,7 @@ namespace Azure.Data.AppConfiguration.Tests
         public void TestGetDefaultScope(string url, string expectedScope)
         {
             var defaultScope = new ConfigurationClientOptions().GetDefaultScope(new Uri(url));
-            Assert.AreEqual(expectedScope, defaultScope);
+            Assert.That(defaultScope, Is.EqualTo(expectedScope));
         }
 
         public static IEnumerable<TestCaseData> GetDefaultScopeWithSuppliedValueTestCases

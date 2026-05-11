@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.Chaos.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsGetExperimentsAsyncCollectionResultOfT(ExperimentsRestClient, Guid.Parse(Id.SubscriptionId), running, continuationToken, context), data => new ChaosExperimentResource(Client, data));
+            return new AsyncPageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsGetExperimentsAsyncCollectionResultOfT(
+                ExperimentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                running,
+                continuationToken,
+                context,
+                "MockableChaosSubscriptionResource.GetChaosExperiments"), data => new ChaosExperimentResource(Client, data));
         }
 
         /// <summary>
@@ -164,7 +170,13 @@ namespace Azure.ResourceManager.Chaos.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsGetExperimentsCollectionResultOfT(ExperimentsRestClient, Guid.Parse(Id.SubscriptionId), running, continuationToken, context), data => new ChaosExperimentResource(Client, data));
+            return new PageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsGetExperimentsCollectionResultOfT(
+                ExperimentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                running,
+                continuationToken,
+                context,
+                "MockableChaosSubscriptionResource.GetChaosExperiments"), data => new ChaosExperimentResource(Client, data));
         }
     }
 }

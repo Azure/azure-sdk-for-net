@@ -86,11 +86,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 throw new FormatException($"The model {nameof(LoadTestingQuotaAvailabilityResult)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
-            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);

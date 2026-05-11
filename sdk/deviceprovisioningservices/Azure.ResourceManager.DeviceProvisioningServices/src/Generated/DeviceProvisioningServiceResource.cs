@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -434,7 +434,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new ProvisioningServiceDescriptionsGetKeysAsyncCollectionResultOfT(_provisioningServiceDescriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new ProvisioningServiceDescriptionsGetKeysAsyncCollectionResultOfT(
+                _provisioningServiceDescriptionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DeviceProvisioningServiceResource.GetKeys");
         }
 
         /// <summary>
@@ -466,7 +472,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new ProvisioningServiceDescriptionsGetKeysCollectionResultOfT(_provisioningServiceDescriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new ProvisioningServiceDescriptionsGetKeysCollectionResultOfT(
+                _provisioningServiceDescriptionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DeviceProvisioningServiceResource.GetKeys");
         }
 
         /// <summary>
@@ -604,7 +616,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new ProvisioningServiceDescriptionsGetValidSkusAsyncCollectionResultOfT(_provisioningServiceDescriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new ProvisioningServiceDescriptionsGetValidSkusAsyncCollectionResultOfT(
+                _provisioningServiceDescriptionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DeviceProvisioningServiceResource.GetValidSkus");
         }
 
         /// <summary>
@@ -636,7 +654,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new ProvisioningServiceDescriptionsGetValidSkusCollectionResultOfT(_provisioningServiceDescriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new ProvisioningServiceDescriptionsGetValidSkusCollectionResultOfT(
+                _provisioningServiceDescriptionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DeviceProvisioningServiceResource.GetValidSkus");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

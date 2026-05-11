@@ -127,6 +127,8 @@ namespace Azure.AI.Speech.Transcription
     public partial class TranscriptionClient
     {
         protected TranscriptionClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public TranscriptionClient(Azure.AI.Speech.Transcription.TranscriptionClientSettings settings) { }
         public TranscriptionClient(System.Uri endpoint, System.ClientModel.ApiKeyCredential credential) { }
         public TranscriptionClient(System.Uri endpoint, System.ClientModel.ApiKeyCredential credential, Azure.AI.Speech.Transcription.TranscriptionClientOptions options) { }
         public TranscriptionClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider) { }
@@ -142,6 +144,14 @@ namespace Azure.AI.Speech.Transcription
         {
             V20251015 = 1,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class TranscriptionClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public TranscriptionClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Speech.Transcription.TranscriptionClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class TranscriptionDiarizationOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions>
     {

@@ -79,7 +79,8 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabResource(Client, data));
+                context,
+                "MockableDevTestLabsSubscriptionResource.GetDevTestLabs"), data => new DevTestLabResource(Client, data));
         }
 
         /// <summary>
@@ -118,7 +119,8 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabResource(Client, data));
+                context,
+                "MockableDevTestLabsSubscriptionResource.GetDevTestLabs"), data => new DevTestLabResource(Client, data));
         }
 
         /// <summary>
@@ -157,7 +159,8 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabGlobalScheduleResource(Client, data));
+                context,
+                "MockableDevTestLabsSubscriptionResource.GetDevTestLabGlobalSchedules"), data => new DevTestLabGlobalScheduleResource(Client, data));
         }
 
         /// <summary>
@@ -196,7 +199,8 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabGlobalScheduleResource(Client, data));
+                context,
+                "MockableDevTestLabsSubscriptionResource.GetDevTestLabGlobalSchedules"), data => new DevTestLabGlobalScheduleResource(Client, data));
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,56 +15,107 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct ContainerServiceOSSku : IEquatable<ContainerServiceOSSku>
     {
         private readonly string _value;
+        /// <summary> Use Ubuntu as the OS for node images. </summary>
+        private const string UbuntuValue = "Ubuntu";
+        /// <summary> Use AzureLinux as the OS for node images. Azure Linux is a container-optimized Linux distro built by Microsoft, visit https://aka.ms/azurelinux for more information. </summary>
+        private const string AzureLinuxValue = "AzureLinux";
+        /// <summary> Use AzureLinux3 as the OS for node images. Azure Linux is a container-optimized Linux distro built by Microsoft, visit https://aka.ms/azurelinux for more information. For limitations, visit https://aka.ms/aks/node-images. For OS migration guidance, see https://aka.ms/aks/upgrade-os-version. </summary>
+        private const string AzureLinux3Value = "AzureLinux3";
+        /// <summary> Deprecated OSSKU. Microsoft recommends that new deployments choose 'AzureLinux' instead. </summary>
+        private const string MarinerValue = "Mariner";
+        /// <summary> Use Flatcar Container Linux as the OS for node images. Flatcar is a container-optimized, security-focused Linux OS, with an immutable filesystem and part of the Cloud Native Computing Foundation (CNCF). For more information about Flatcar Container Linux for AKS, see aka.ms/aks/flatcar-container-linux-for-aks. </summary>
+        private const string FlatcarValue = "Flatcar";
+        /// <summary> Deprecated OSSKU. Microsoft recommends that new deployments choose 'AzureLinux' instead. </summary>
+        private const string CblMarinerValue = "CBLMariner";
+        /// <summary> Use Windows2019 as the OS for node images. Unsupported for system node pools. Windows2019 only supports Windows2019 containers; it cannot run Windows2022 containers and vice versa. </summary>
+        private const string Windows2019Value = "Windows2019";
+        /// <summary> Use Windows2022 as the OS for node images. Unsupported for system node pools. Windows2022 only supports Windows2022 containers; it cannot run Windows2019 containers and vice versa. </summary>
+        private const string Windows2022Value = "Windows2022";
+        /// <summary> Use Ubuntu2204 as the OS for node images, however, Ubuntu 22.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions. </summary>
+        private const string Ubuntu2204Value = "Ubuntu2204";
+        /// <summary> Use Windows2025 as the OS for node images. Unsupported for system node pools. Windows2025 supports Windows2022 and Windows 2025 containers; it cannot run Windows2019 containers and vice versa. </summary>
+        private const string Windows2025Value = "Windows2025";
+        /// <summary> Use Windows Annual Channel version as the OS for node images. Unsupported for system node pools. Details about supported container images and kubernetes versions under different AKS Annual Channel versions could be seen in https://aka.ms/aks/windows-annual-channel-details. </summary>
+        private const string WindowsAnnualValue = "WindowsAnnual";
+        /// <summary> Use Ubuntu2404 as the OS for node images, however, Ubuntu 24.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see see https://aka.ms/aks/supported-ubuntu-versions. </summary>
+        private const string Ubuntu2404Value = "Ubuntu2404";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceOSSku"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceOSSku(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UbuntuValue = "Ubuntu";
-        private const string AzureLinuxValue = "AzureLinux";
-        private const string AzureLinux3Value = "AzureLinux3";
-        private const string CblMarinerValue = "CBLMariner";
-        private const string Windows2019Value = "Windows2019";
-        private const string Windows2022Value = "Windows2022";
-        private const string Ubuntu2204Value = "Ubuntu2204";
-        private const string Ubuntu2404Value = "Ubuntu2404";
+            _value = value;
+        }
 
         /// <summary> Use Ubuntu as the OS for node images. </summary>
         public static ContainerServiceOSSku Ubuntu { get; } = new ContainerServiceOSSku(UbuntuValue);
+
         /// <summary> Use AzureLinux as the OS for node images. Azure Linux is a container-optimized Linux distro built by Microsoft, visit https://aka.ms/azurelinux for more information. </summary>
         public static ContainerServiceOSSku AzureLinux { get; } = new ContainerServiceOSSku(AzureLinuxValue);
+
         /// <summary> Use AzureLinux3 as the OS for node images. Azure Linux is a container-optimized Linux distro built by Microsoft, visit https://aka.ms/azurelinux for more information. For limitations, visit https://aka.ms/aks/node-images. For OS migration guidance, see https://aka.ms/aks/upgrade-os-version. </summary>
         public static ContainerServiceOSSku AzureLinux3 { get; } = new ContainerServiceOSSku(AzureLinux3Value);
+
+        /// <summary> Deprecated OSSKU. Microsoft recommends that new deployments choose 'AzureLinux' instead. </summary>
+        public static ContainerServiceOSSku Mariner { get; } = new ContainerServiceOSSku(MarinerValue);
+
+        /// <summary> Use Flatcar Container Linux as the OS for node images. Flatcar is a container-optimized, security-focused Linux OS, with an immutable filesystem and part of the Cloud Native Computing Foundation (CNCF). For more information about Flatcar Container Linux for AKS, see aka.ms/aks/flatcar-container-linux-for-aks. </summary>
+        public static ContainerServiceOSSku Flatcar { get; } = new ContainerServiceOSSku(FlatcarValue);
+
         /// <summary> Deprecated OSSKU. Microsoft recommends that new deployments choose 'AzureLinux' instead. </summary>
         public static ContainerServiceOSSku CblMariner { get; } = new ContainerServiceOSSku(CblMarinerValue);
+
         /// <summary> Use Windows2019 as the OS for node images. Unsupported for system node pools. Windows2019 only supports Windows2019 containers; it cannot run Windows2022 containers and vice versa. </summary>
         public static ContainerServiceOSSku Windows2019 { get; } = new ContainerServiceOSSku(Windows2019Value);
+
         /// <summary> Use Windows2022 as the OS for node images. Unsupported for system node pools. Windows2022 only supports Windows2022 containers; it cannot run Windows2019 containers and vice versa. </summary>
         public static ContainerServiceOSSku Windows2022 { get; } = new ContainerServiceOSSku(Windows2022Value);
+
         /// <summary> Use Ubuntu2204 as the OS for node images, however, Ubuntu 22.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions. </summary>
         public static ContainerServiceOSSku Ubuntu2204 { get; } = new ContainerServiceOSSku(Ubuntu2204Value);
-        /// <summary> Use Ubuntu2404 as the OS for node images, however, Ubuntu 24.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions. </summary>
+
+        /// <summary> Use Windows2025 as the OS for node images. Unsupported for system node pools. Windows2025 supports Windows2022 and Windows 2025 containers; it cannot run Windows2019 containers and vice versa. </summary>
+        public static ContainerServiceOSSku Windows2025 { get; } = new ContainerServiceOSSku(Windows2025Value);
+
+        /// <summary> Use Windows Annual Channel version as the OS for node images. Unsupported for system node pools. Details about supported container images and kubernetes versions under different AKS Annual Channel versions could be seen in https://aka.ms/aks/windows-annual-channel-details. </summary>
+        public static ContainerServiceOSSku WindowsAnnual { get; } = new ContainerServiceOSSku(WindowsAnnualValue);
+
+        /// <summary> Use Ubuntu2404 as the OS for node images, however, Ubuntu 24.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see see https://aka.ms/aks/supported-ubuntu-versions. </summary>
         public static ContainerServiceOSSku Ubuntu2404 { get; } = new ContainerServiceOSSku(Ubuntu2404Value);
+
         /// <summary> Determines if two <see cref="ContainerServiceOSSku"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceOSSku left, ContainerServiceOSSku right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServiceOSSku"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceOSSku left, ContainerServiceOSSku right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceOSSku"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServiceOSSku"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServiceOSSku(string value) => new ContainerServiceOSSku(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServiceOSSku"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServiceOSSku?(string value) => value == null ? null : new ContainerServiceOSSku(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceOSSku other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServiceOSSku other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -59,7 +59,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
         [SpectorTest]
         public Task Azure_ClientGenerator_Core_ClientInitialization_DefaultClient_ParamAlias() => Test(async (host) =>
         {
-            var client = new ParamAliasClient(host, "sample-blob", "sample-blob", null);
+            var client = new ParamAliasClient(host, "sample-blob", null);
 
             await client.WithAliasedNameAsync();
 

@@ -66,7 +66,7 @@ namespace Azure.Search.Documents.Perf.Infrastructure
         /// <returns>Task representing the global cleanup work.</returns>
         public override async Task GlobalCleanupAsync()
         {
-            await _searchIndexClient.DeleteIndexAsync(_indexName);
+            await _searchIndexClient.DeleteIndexAsync(_indexName, CancellationToken.None);
         }
 
         /// <summary>

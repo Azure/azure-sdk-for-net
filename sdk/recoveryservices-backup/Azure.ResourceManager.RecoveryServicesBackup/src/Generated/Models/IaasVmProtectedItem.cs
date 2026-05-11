@@ -8,22 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// IaaS VM workload-specific backup item.
-    /// Please note <see cref="IaasVmProtectedItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="IaasClassicComputeVmProtectedItem"/> and <see cref="IaasComputeVmProtectedItem"/>.
-    /// </summary>
+    /// <summary> IaaS VM workload-specific backup item. </summary>
     public partial class IaasVmProtectedItem : BackupGenericProtectedItem
     {
         /// <summary> Initializes a new instance of <see cref="IaasVmProtectedItem"/>. </summary>
-        public IaasVmProtectedItem()
+        public IaasVmProtectedItem() : base("AzureIaaSVMProtectedItem")
         {
             HealthDetails = new ChangeTrackingList<IaasVmHealthDetails>();
             KpisHealths = new ChangeTrackingDictionary<string, KpiResourceHealthDetails>();
-            ProtectedItemType = "AzureIaaSVMProtectedItem";
         }
 
         /// <summary> Initializes a new instance of <see cref="IaasVmProtectedItem"/>. </summary>
@@ -46,7 +42,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
         /// <param name="vaultId"> ID of the vault which protects this item. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="sourceSideScanInfo"> Source side threat information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="friendlyName"> Friendly name of the VM represented by this backup item. </param>
         /// <param name="virtualMachineId"> Fully qualified ARM ID of the virtual machine represented by this item. </param>
         /// <param name="protectionStatus"> Backup status of this backup item. </param>
@@ -60,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="extendedInfo"> Additional information for this backup item. </param>
         /// <param name="extendedProperties"> Extended Properties for Azure IaasVM Backup. </param>
         /// <param name="policyType"> Type of the policy used for protection. </param>
-        internal IaasVmProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays, string vaultId, IDictionary<string, BinaryData> serializedAdditionalRawData, string friendlyName, ResourceIdentifier virtualMachineId, string protectionStatus, BackupProtectionState? protectionState, IaasVmProtectedItemHealthStatus? healthStatus, IList<IaasVmHealthDetails> healthDetails, IDictionary<string, KpiResourceHealthDetails> kpisHealths, string lastBackupStatus, DateTimeOffset? lastBackupOn, string protectedItemDataId, IaasVmProtectedItemExtendedInfo extendedInfo, IaasVmBackupExtendedProperties extendedProperties, string policyType) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData)
+        internal IaasVmProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays, string vaultId, BackupSourceSideScanInfo sourceSideScanInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string friendlyName, ResourceIdentifier virtualMachineId, string protectionStatus, BackupProtectionState? protectionState, IaasVmProtectedItemHealthStatus? healthStatus, IList<IaasVmHealthDetails> healthDetails, IDictionary<string, KpiResourceHealthDetails> kpisHealths, string lastBackupStatus, DateTimeOffset? lastBackupOn, string protectedItemDataId, IaasVmProtectedItemExtendedInfo extendedInfo, IaasVmBackupExtendedProperties extendedProperties, string policyType) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, sourceSideScanInfo, additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             VirtualMachineId = virtualMachineId;
@@ -75,33 +72,52 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ExtendedInfo = extendedInfo;
             ExtendedProperties = extendedProperties;
             PolicyType = policyType;
-            ProtectedItemType = protectedItemType ?? "AzureIaaSVMProtectedItem";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IaasVmProtectedItem"/>. </summary>
+        /// <param name="protectedItemType"> backup item type. </param>
+        private protected IaasVmProtectedItem(string protectedItemType) : base(protectedItemType)
+        {
+            HealthDetails = new ChangeTrackingList<IaasVmHealthDetails>();
+            KpisHealths = new ChangeTrackingDictionary<string, KpiResourceHealthDetails>();
         }
 
         /// <summary> Friendly name of the VM represented by this backup item. </summary>
         public string FriendlyName { get; }
+
         /// <summary> Fully qualified ARM ID of the virtual machine represented by this item. </summary>
         public ResourceIdentifier VirtualMachineId { get; }
+
         /// <summary> Backup status of this backup item. </summary>
         public string ProtectionStatus { get; set; }
+
         /// <summary> Backup state of this backup item. </summary>
         public BackupProtectionState? ProtectionState { get; set; }
+
         /// <summary> Health status of protected item. </summary>
         public IaasVmProtectedItemHealthStatus? HealthStatus { get; }
+
         /// <summary> Health details on this backup item. </summary>
         public IList<IaasVmHealthDetails> HealthDetails { get; }
+
         /// <summary> Health details of different KPIs. </summary>
         public IDictionary<string, KpiResourceHealthDetails> KpisHealths { get; }
+
         /// <summary> Last backup operation status. </summary>
         public string LastBackupStatus { get; set; }
+
         /// <summary> Timestamp of the last backup operation on this backup item. </summary>
         public DateTimeOffset? LastBackupOn { get; }
+
         /// <summary> Data ID of the protected item. </summary>
         public string ProtectedItemDataId { get; }
+
         /// <summary> Additional information for this backup item. </summary>
         public IaasVmProtectedItemExtendedInfo ExtendedInfo { get; set; }
+
         /// <summary> Extended Properties for Azure IaasVM Backup. </summary>
         public IaasVmBackupExtendedProperties ExtendedProperties { get; set; }
+
         /// <summary> Type of the policy used for protection. </summary>
         public string PolicyType { get; }
     }

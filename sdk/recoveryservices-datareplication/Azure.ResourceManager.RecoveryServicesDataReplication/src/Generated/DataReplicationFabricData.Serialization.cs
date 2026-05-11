@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dataReplicationFabricData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(dataReplicationFabricData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataReplicationFabricData"/> from. </param>

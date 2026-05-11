@@ -69,9 +69,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(queryNetworkSiblingSetRequest, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(queryNetworkSiblingSetRequest, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines a managed rule group override setting. </summary>
     public partial class ManagedRuleOverride
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleOverride"/>. </summary>
         /// <param name="ruleId"> Identifier for the managed rule. </param>
@@ -60,31 +32,35 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <param name="enabledState"> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </param>
         /// <param name="action"> Describes the override action to be applied when rule matches. </param>
+        /// <param name="sensitivity"> Describes the override sensitivity to be applied when rule matches. </param>
         /// <param name="exclusions"> Describes the exclusions that are applied to this specific rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleOverride(string ruleId, ManagedRuleEnabledState? enabledState, RuleMatchActionType? action, IList<ManagedRuleExclusion> exclusions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRuleOverride(string ruleId, ManagedRuleEnabledState? enabledState, RuleMatchActionType? action, FrontDoorSensitivityType? sensitivity, IList<ManagedRuleExclusion> exclusions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleId = ruleId;
             EnabledState = enabledState;
             Action = action;
+            Sensitivity = sensitivity;
             Exclusions = exclusions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedRuleOverride"/> for deserialization. </summary>
-        internal ManagedRuleOverride()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Identifier for the managed rule. </summary>
         [WirePath("ruleId")]
         public string RuleId { get; set; }
+
         /// <summary> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </summary>
         [WirePath("enabledState")]
         public ManagedRuleEnabledState? EnabledState { get; set; }
+
         /// <summary> Describes the override action to be applied when rule matches. </summary>
         [WirePath("action")]
         public RuleMatchActionType? Action { get; set; }
+
+        /// <summary> Describes the override sensitivity to be applied when rule matches. </summary>
+        [WirePath("sensitivity")]
+        public FrontDoorSensitivityType? Sensitivity { get; set; }
+
         /// <summary> Describes the exclusions that are applied to this specific rule. </summary>
         [WirePath("exclusions")]
         public IList<ManagedRuleExclusion> Exclusions { get; }

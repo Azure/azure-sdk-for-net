@@ -86,11 +86,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 throw new FormatException($"The model {nameof(ServiceFabricManagedClusterVersion)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);

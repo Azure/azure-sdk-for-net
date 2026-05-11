@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Batch
 {
+    /// <summary></summary>
     public partial class BatchPrivateEndpointConnectionResource : IJsonModel<BatchPrivateEndpointConnectionData>
     {
-        private static BatchPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static BatchPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<BatchPrivateEndpointConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<BatchPrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BatchPrivateEndpointConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BatchPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        BatchPrivateEndpointConnectionData IJsonModel<BatchPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BatchPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchPrivateEndpointConnectionData IJsonModel<BatchPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BatchPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BatchPrivateEndpointConnectionData>(Data, options, AzureResourceManagerBatchContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         BatchPrivateEndpointConnectionData IPersistableModel<BatchPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BatchPrivateEndpointConnectionData>(data, options, AzureResourceManagerBatchContext.Default);
 
-        string IPersistableModel<BatchPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BatchPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

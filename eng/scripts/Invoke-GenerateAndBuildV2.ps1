@@ -62,11 +62,50 @@ function Test-MgmtSdkUsingNewGenerator {
         return $false
     }
 
+    # Skip if tsp-location.yaml is untracked (i.e. newly created by tsp-client init
+    # during this CI run, not yet committed). This avoids marking SDK validation as
+    # required for migration PRs where the SDK hasn't been fully migrated yet.
+    $untrackedFiles = git -C $sdkProjectFolder ls-files --others --exclude-standard "tsp-location.yaml"
+    if ($untrackedFiles) {
+        return $false
+    }
+
     $tspConfigContent = Get-Content $tspConfigFile -Raw
     $isNewMgmtEmitter = $tspConfigContent -match '@azure-typespec/http-client-csharp-mgmt'
     $tspLocationContent = Get-Content $tspLocationFile -Raw
     $hasNewEmitterPackageJson = $tspLocationContent -match 'emitterPackageJsonPath:\s*eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json'
     return ($isNewMgmtEmitter -and $hasNewEmitterPackageJson)
+}
+
+function Test-DpgSdkUsingNewGenerator {
+    param(
+        [string]$serviceType,
+        [string]$tspConfigFile,
+        [string]$sdkProjectFolder
+    )
+
+    if ($serviceType -ne 'data-plane') {
+        return $false
+    }
+
+    $tspLocationFile = Join-Path $sdkProjectFolder "tsp-location.yaml"
+
+    if (-not (Test-Path $tspConfigFile) -or -not (Test-Path $tspLocationFile)) {
+        return $false
+    }
+
+    $tspConfigContent = Get-Content $tspConfigFile -Raw
+    $tspLocationContent = Get-Content $tspLocationFile -Raw
+
+    # Check for @azure-typespec/http-client-csharp (Azure-branded emitter)
+    $isAzureDpgEmitter = $tspConfigContent -match '@azure-typespec/http-client-csharp'
+    $hasAzureEmitterPackageJson = $tspLocationContent -match 'emitterPackageJsonPath:\s*"?eng/azure-typespec-http-client-csharp-emitter-package\.json"?'
+
+    # Check for @typespec/http-client-csharp (unbranded/core emitter)
+    $isCoreDpgEmitter = $tspConfigContent -match '@typespec/http-client-csharp'
+    $hasCoreEmitterPackageJson = $tspLocationContent -match 'emitterPackageJsonPath:\s*"?eng/http-client-csharp-emitter-package\.json"?'
+
+    return (($isAzureDpgEmitter -and $hasAzureEmitterPackageJson) -or ($isCoreDpgEmitter -and $hasCoreEmitterPackageJson))
 }
 
 function Update-PackageVersionSuffix {
@@ -250,12 +289,7 @@ if ($relatedTypeSpecProjectFolder) {
             $tspclientCommand += " --local-spec-repo $typespecFolder"
         }
         if ($apiVersion) {
-            # Validate apiVersion format to prevent command injection - allow alphanumeric, dots, and dashes
-            if ($apiVersion -match '^[a-zA-Z0-9.-]+$') {
-                $tspclientCommand += " --emitter-options `"api-version=$apiVersion`""
-            } else {
-                Write-Warning "apiVersion '$apiVersion' contains invalid characters and will be skipped. Only alphanumeric characters, dots, and dashes are allowed."
-            }
+            Write-Warning "apiVersion '$apiVersion' is not supported for .NET SDK generation. The api-version from tspconfig.yaml will be used instead."
         }
         Write-Host $tspclientCommand
         Invoke-Expression $tspclientCommand
@@ -287,7 +321,10 @@ if ($relatedTypeSpecProjectFolder) {
             -specRepoRoot $swaggerDir
         }
 
-        if ((Test-MgmtSdkUsingNewGenerator -serviceType $serviceType -tspConfigFile $tspConfigFile -sdkProjectFolder $sdkProjectFolder) -or $serviceType -eq "data-plane") {
+        $usesNewMgmtEmitter = Test-MgmtSdkUsingNewGenerator -serviceType $serviceType -tspConfigFile $tspConfigFile -sdkProjectFolder $sdkProjectFolder
+        $usesNewDpgEmitter = Test-DpgSdkUsingNewGenerator -serviceType $serviceType -tspConfigFile $tspConfigFile -sdkProjectFolder $sdkProjectFolder
+
+        if ($usesNewMgmtEmitter -or $usesNewDpgEmitter) {
             $generatedSDKPackages[$generatedSDKPackages.Count - 1]['typespecProject'] = @($typespecRelativeFolder)
         }
     }

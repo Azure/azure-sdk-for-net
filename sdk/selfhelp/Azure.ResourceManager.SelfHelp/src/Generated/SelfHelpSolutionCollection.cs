@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SelfHelpSolutionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string solutionResourceName, SelfHelpSolutionData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SelfHelpSolutionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string solutionResourceName, SelfHelpSolutionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateCreateRequest(Id, solutionResourceName, SelfHelpSolutionData.ToRequestContent(data), context);
+                HttpMessage message = _solutionResourcesRestClient.CreateCreateRequest(Id.ToString(), solutionResourceName, SelfHelpSolutionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SelfHelpArmOperation<SelfHelpSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSolutionResource>(
                     new SelfHelpSolutionOperationSource(Client),
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SelfHelpSolutionResource> CreateOrUpdate(WaitUntil waitUntil, string solutionResourceName, SelfHelpSolutionData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SelfHelpSolutionResource> CreateOrUpdate(WaitUntil waitUntil, string solutionResourceName, SelfHelpSolutionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateCreateRequest(Id, solutionResourceName, SelfHelpSolutionData.ToRequestContent(data), context);
+                HttpMessage message = _solutionResourcesRestClient.CreateCreateRequest(Id.ToString(), solutionResourceName, SelfHelpSolutionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SelfHelpArmOperation<SelfHelpSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSolutionResource>(
                     new SelfHelpSolutionOperationSource(Client),
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id, solutionResourceName, context);
+                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id.ToString(), solutionResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SelfHelpSolutionData> response = Response.FromValue(SelfHelpSolutionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id, solutionResourceName, context);
+                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id.ToString(), solutionResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SelfHelpSolutionData> response = Response.FromValue(SelfHelpSolutionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id, solutionResourceName, context);
+                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id.ToString(), solutionResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SelfHelpSolutionData> response = default;
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id, solutionResourceName, context);
+                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id.ToString(), solutionResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SelfHelpSolutionData> response = default;
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id, solutionResourceName, context);
+                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id.ToString(), solutionResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SelfHelpSolutionData> response = default;
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id, solutionResourceName, context);
+                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id.ToString(), solutionResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SelfHelpSolutionData> response = default;

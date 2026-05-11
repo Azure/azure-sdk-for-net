@@ -8,20 +8,82 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class CdnWebApplicationFirewallPolicyData : IUtf8JsonSerializable, IJsonModel<CdnWebApplicationFirewallPolicyData>
+    /// <summary> Defines web application firewall policy for Azure CDN. </summary>
+    public partial class CdnWebApplicationFirewallPolicyData : TrackedResourceData, IJsonModel<CdnWebApplicationFirewallPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnWebApplicationFirewallPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyData"/> for deserialization. </summary>
+        internal CdnWebApplicationFirewallPolicyData()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CdnWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCdnWebApplicationFirewallPolicyData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CdnWebApplicationFirewallPolicyData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CdnWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CdnWebApplicationFirewallPolicyData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CdnWebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CdnWebApplicationFirewallPolicyData IPersistableModel<CdnWebApplicationFirewallPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CdnWebApplicationFirewallPolicyData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CdnWebApplicationFirewallPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="cdnWebApplicationFirewallPolicyData"> The <see cref="CdnWebApplicationFirewallPolicyData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CdnWebApplicationFirewallPolicyData cdnWebApplicationFirewallPolicyData)
+        {
+            if (cdnWebApplicationFirewallPolicyData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(cdnWebApplicationFirewallPolicyData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CdnWebApplicationFirewallPolicyData"/> from. </param>
+        internal static CdnWebApplicationFirewallPolicyData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCdnWebApplicationFirewallPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CdnWebApplicationFirewallPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -33,13 +95,17 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CdnWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CdnWebApplicationFirewallPolicyData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -47,628 +113,142 @@ namespace Azure.ResourceManager.Cdn
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(PolicySettings))
-            {
-                writer.WritePropertyName("policySettings"u8);
-                writer.WriteObjectValue(PolicySettings, options);
-            }
-            if (Optional.IsDefined(RateLimitSettings))
-            {
-                writer.WritePropertyName("rateLimitRules"u8);
-                writer.WriteObjectValue(RateLimitSettings, options);
-            }
-            if (Optional.IsDefined(CustomSettings))
-            {
-                writer.WritePropertyName("customRules"u8);
-                writer.WriteObjectValue(CustomSettings, options);
-            }
-            if (Optional.IsDefined(ManagedRules))
-            {
-                writer.WritePropertyName("managedRules"u8);
-                writer.WriteObjectValue(ManagedRules, options);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EndpointLinks))
-            {
-                writer.WritePropertyName("endpointLinks"u8);
-                writer.WriteStartArray();
-                foreach (var item in EndpointLinks)
-                {
-                    ((IJsonModel<SubResource>)item).Write(writer, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ExtendedProperties))
-            {
-                writer.WritePropertyName("extendedProperties"u8);
-                writer.WriteStartObject();
-                foreach (var item in ExtendedProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
-            {
-                writer.WritePropertyName("resourceState"u8);
-                writer.WriteStringValue(ResourceState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        CdnWebApplicationFirewallPolicyData IJsonModel<CdnWebApplicationFirewallPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CdnWebApplicationFirewallPolicyData IJsonModel<CdnWebApplicationFirewallPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CdnWebApplicationFirewallPolicyData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CdnWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CdnWebApplicationFirewallPolicyData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCdnWebApplicationFirewallPolicyData(document.RootElement, options);
         }
 
-        internal static CdnWebApplicationFirewallPolicyData DeserializeCdnWebApplicationFirewallPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CdnWebApplicationFirewallPolicyData DeserializeCdnWebApplicationFirewallPolicyData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? etag = default;
-            CdnSku sku = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            WafPolicySettings policySettings = default;
-            RateLimitRuleList rateLimitRules = default;
-            CustomRuleList customRules = default;
-            ManagedRuleSetList managedRules = default;
-            IReadOnlyList<SubResource> endpointLinks = default;
-            IDictionary<string, string> extendedProperties = default;
-            WebApplicationFirewallPolicyProvisioningState? provisioningState = default;
-            PolicyResourceState? resourceState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            CdnWebApplicationFirewallPolicyProperties properties = default;
+            ETag? eTag = default;
+            CdnSku sku = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sku"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    sku = CdnSku.DeserializeCdnSku(property.Value, options);
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default);
+                    properties = CdnWebApplicationFirewallPolicyProperties.DeserializeCdnWebApplicationFirewallPolicyProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("etag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("policySettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            policySettings = WafPolicySettings.DeserializeWafPolicySettings(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("rateLimitRules"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            rateLimitRules = RateLimitRuleList.DeserializeRateLimitRuleList(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("customRules"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            customRules = CustomRuleList.DeserializeCustomRuleList(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("managedRules"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managedRules = ManagedRuleSetList.DeserializeManagedRuleSetList(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("endpointLinks"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<SubResource> array = new List<SubResource>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerCdnContext.Default));
-                            }
-                            endpointLinks = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("extendedProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            extendedProperties = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new WebApplicationFirewallPolicyProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceState = new PolicyResourceState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("sku"u8))
+                {
+                    sku = CdnSku.DeserializeCdnSku(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CdnWebApplicationFirewallPolicyData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
-                sku,
-                policySettings,
-                rateLimitRules,
-                customRules,
-                managedRules,
-                endpointLinks ?? new ChangeTrackingList<SubResource>(),
-                extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
-                provisioningState,
-                resourceState,
-                serializedAdditionalRawData);
+                properties,
+                eTag,
+                sku);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  location: ");
-                builder.AppendLine($"'{Location.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tags: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Tags))
-                {
-                    if (Tags.Any())
-                    {
-                        builder.Append("  tags: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Tags)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SkuName", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sku: ");
-                builder.AppendLine("{");
-                builder.Append("    name: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Sku))
-                {
-                    builder.Append("  sku: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicySettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    policySettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PolicySettings))
-                {
-                    builder.Append("    policySettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, PolicySettings, options, 4, false, "    policySettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RateLimitRules", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    rateLimitRules: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      rateLimitRules: {");
-                builder.Append("        rules: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(RateLimitSettings))
-                {
-                    builder.Append("    rateLimitRules: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, RateLimitSettings, options, 4, false, "    rateLimitRules: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("CustomRules", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    customRules: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      customRules: {");
-                builder.Append("        rules: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(CustomSettings))
-                {
-                    builder.Append("    customRules: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CustomSettings, options, 4, false, "    customRules: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ManagedRuleSets", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    managedRules: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      managedRules: {");
-                builder.Append("        managedRuleSets: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(ManagedRules))
-                {
-                    builder.Append("    managedRules: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ManagedRules, options, 4, false, "    managedRules: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointLinks), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    endpointLinks: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(EndpointLinks))
-                {
-                    if (EndpointLinks.Any())
-                    {
-                        builder.Append("    endpointLinks: ");
-                        builder.AppendLine("[");
-                        foreach (var item in EndpointLinks)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    endpointLinks: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtendedProperties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    extendedProperties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ExtendedProperties))
-                {
-                    if (ExtendedProperties.Any())
-                    {
-                        builder.Append("    extendedProperties: ");
-                        builder.AppendLine("{");
-                        foreach (var item in ExtendedProperties)
-                        {
-                            builder.Append($"        '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("    }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    resourceState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceState))
-                {
-                    builder.Append("    resourceState: ");
-                    builder.AppendLine($"'{ResourceState.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CdnWebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CdnWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CdnWebApplicationFirewallPolicyData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CdnWebApplicationFirewallPolicyData IPersistableModel<CdnWebApplicationFirewallPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CdnWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCdnWebApplicationFirewallPolicyData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CdnWebApplicationFirewallPolicyData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CdnWebApplicationFirewallPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

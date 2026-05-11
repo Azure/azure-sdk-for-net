@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerCreateMode : IEquatable<PostgreSqlFlexibleServerCreateMode>
     {
         private readonly string _value;
+        /// <summary> If the operation is triggered on a non-existing server, it's equivalent to 'Create'. If the operation is triggered on an existing server, it's equivalent to 'Update'. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> Operation creates a new server. </summary>
+        private const string CreateValue = "Create";
+        /// <summary> Operation updates an existing server. </summary>
+        private const string UpdateValue = "Update";
+        /// <summary> Operation restores an existing backup of an existing server. This operation creates a new server, and then restores on it the backup of an existing server at a specific point in time. </summary>
+        private const string PointInTimeRestoreValue = "PointInTimeRestore";
+        /// <summary> Operation restores an existing backup of an existing server, on the paired region of the existing server. This operation creates a new server on the paired region of the existing server, and then restores on it the backup of an existing server at a specific point in time, in a different region. This operation is only supported on existing servers that were created with geographically redundant backups enabled. </summary>
+        private const string GeoRestoreValue = "GeoRestore";
+        /// <summary> Operation creates a replica of an existing server. This operation creates a new server, restores a base backup of the existing server (referred to as primary), and configures physical replication to asynchronously stream all changes which are recorded in the transaction log of the primary. </summary>
+        private const string ReplicaValue = "Replica";
+        /// <summary> Operation creates a new server, initialized with the backup of a server that was recently deleted. </summary>
+        private const string ReviveDroppedValue = "ReviveDropped";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerCreateMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlFlexibleServerCreateMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DefaultValue = "Default";
-        private const string CreateValue = "Create";
-        private const string UpdateValue = "Update";
-        private const string PointInTimeRestoreValue = "PointInTimeRestore";
-        private const string GeoRestoreValue = "GeoRestore";
-        private const string ReplicaValue = "Replica";
-        private const string ReviveDroppedValue = "ReviveDropped";
-
-        /// <summary> Default. </summary>
+        /// <summary> If the operation is triggered on a non-existing server, it's equivalent to 'Create'. If the operation is triggered on an existing server, it's equivalent to 'Update'. </summary>
         public static PostgreSqlFlexibleServerCreateMode Default { get; } = new PostgreSqlFlexibleServerCreateMode(DefaultValue);
-        /// <summary> Create. </summary>
+
+        /// <summary> Operation creates a new server. </summary>
         public static PostgreSqlFlexibleServerCreateMode Create { get; } = new PostgreSqlFlexibleServerCreateMode(CreateValue);
-        /// <summary> Update. </summary>
+
+        /// <summary> Operation updates an existing server. </summary>
         public static PostgreSqlFlexibleServerCreateMode Update { get; } = new PostgreSqlFlexibleServerCreateMode(UpdateValue);
-        /// <summary> PointInTimeRestore. </summary>
+
+        /// <summary> Operation restores an existing backup of an existing server. This operation creates a new server, and then restores on it the backup of an existing server at a specific point in time. </summary>
         public static PostgreSqlFlexibleServerCreateMode PointInTimeRestore { get; } = new PostgreSqlFlexibleServerCreateMode(PointInTimeRestoreValue);
-        /// <summary> GeoRestore. </summary>
+
+        /// <summary> Operation restores an existing backup of an existing server, on the paired region of the existing server. This operation creates a new server on the paired region of the existing server, and then restores on it the backup of an existing server at a specific point in time, in a different region. This operation is only supported on existing servers that were created with geographically redundant backups enabled. </summary>
         public static PostgreSqlFlexibleServerCreateMode GeoRestore { get; } = new PostgreSqlFlexibleServerCreateMode(GeoRestoreValue);
-        /// <summary> Replica. </summary>
+
+        /// <summary> Operation creates a replica of an existing server. This operation creates a new server, restores a base backup of the existing server (referred to as primary), and configures physical replication to asynchronously stream all changes which are recorded in the transaction log of the primary. </summary>
         public static PostgreSqlFlexibleServerCreateMode Replica { get; } = new PostgreSqlFlexibleServerCreateMode(ReplicaValue);
-        /// <summary> ReviveDropped. </summary>
+
+        /// <summary> Operation creates a new server, initialized with the backup of a server that was recently deleted. </summary>
         public static PostgreSqlFlexibleServerCreateMode ReviveDropped { get; } = new PostgreSqlFlexibleServerCreateMode(ReviveDroppedValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerCreateMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerCreateMode left, PostgreSqlFlexibleServerCreateMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerCreateMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerCreateMode left, PostgreSqlFlexibleServerCreateMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerCreateMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerCreateMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerCreateMode(string value) => new PostgreSqlFlexibleServerCreateMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerCreateMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerCreateMode?(string value) => value == null ? null : new PostgreSqlFlexibleServerCreateMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerCreateMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerCreateMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

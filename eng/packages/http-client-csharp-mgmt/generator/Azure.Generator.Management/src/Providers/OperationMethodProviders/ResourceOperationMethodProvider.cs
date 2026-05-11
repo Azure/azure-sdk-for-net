@@ -30,8 +30,15 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         public bool IsLongRunningOperation { get; }
         public bool IsFakeLongRunningOperation { get; }
 
+        /// <summary>
+        /// Determines whether LRO handling should be applied in the method body.
+        /// Subclasses like Exists/GetIfExists override this to false since they should never be LROs.
+        /// </summary>
+        protected virtual bool ShouldApplyLroHandling => IsLongRunningOperation || IsFakeLongRunningOperation;
+
         protected readonly TypeProvider _enclosingType;
         protected readonly OperationContext _operationContext;
+        protected readonly ParameterProvider? _scopeParameter;
         protected readonly ClientProvider _restClient;
         protected readonly InputServiceMethod _serviceMethod;
         protected readonly MethodProvider _convenienceMethod;
@@ -60,6 +67,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <param name="methodName">Optional override for the method name. If not provided, uses the convenience method name. </param>
         /// <param name="description">Optional override for the method description. If not provided, uses the convenience method description.</param>
         /// <param name="forceLro">Generate this method in LRO signature even if it is not an actual LRO</param>
+        /// <param name="explicitResourceClient">Explicit resource client to use when multiple resources share the same model. </param>
+        /// <param name="scopeParameter">Optional scope parameter for extension-scoped non-resource methods. When provided, contextual parameters are extracted from this scope instead of Id.</param>
         public ResourceOperationMethodProvider(
             TypeProvider enclosingType,
             OperationContext operationContext,
@@ -68,10 +77,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             bool isAsync,
             string? methodName = null,
             FormattableString? description = null,
-            bool forceLro = false)
+            bool forceLro = false,
+            ResourceClientProvider? explicitResourceClient = null,
+            ParameterProvider? scopeParameter = null)
         {
             _enclosingType = enclosingType;
             _operationContext = operationContext;
+            _scopeParameter = scopeParameter;
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
             _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
@@ -93,7 +105,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _enclosingType,
                 ref _originalBodyType,
                 ref _returnBodyType,
-                ref _returnBodyResourceClient);
+                ref _returnBodyResourceClient,
+                explicitResourceClient);
             _clientDiagnosticsField = restClientInfo.Diagnostics;
             _restClientField = restClientInfo.RestClient;
             _signature = CreateSignature();
@@ -116,13 +129,23 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             TypeProvider enclosingType,
             ref CSharpType? originalBodyType,
             ref CSharpType? returnBodyType,
-            ref ResourceClientProvider? wrappedResourceClient)
+            ref ResourceClientProvider? wrappedResourceClient,
+            ResourceClientProvider? explicitResourceClient = null)
         {
             originalBodyType = serviceMethod.GetResponseBodyType();
             // see if the body type could be wrapped into a resource client
             returnBodyType = originalBodyType;
             if (originalBodyType != null)
             {
+                // If explicit resource client is provided, use it to avoid incorrect lookup
+                // when multiple resources share the same model
+                if (explicitResourceClient != null && explicitResourceClient.ResourceData.Type == originalBodyType)
+                {
+                    wrappedResourceClient = explicitResourceClient;
+                    returnBodyType = wrappedResourceClient.Type;
+                    return;
+                }
+
                 // If the enclosing type is a ResourceCollectionClientProvider, use its associated resource
                 // This ensures we get the correct resource when multiple resources share the same data type
                 if (enclosingType is ResourceCollectionClientProvider collectionProvider)
@@ -197,9 +220,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             ];
         }
 
-        protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
+        protected virtual IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
-            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMappings, _enclosingType, IsFakeLongRunningOperation);
+            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMappings, _enclosingType, shouldApplyLroHandling: ShouldApplyLroHandling, scopeParameter: _scopeParameter);
         }
 
         protected virtual MethodSignature CreateSignature()
@@ -229,13 +252,18 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             };
 
             // Populate arguments for the REST client method call
-            var arguments = _parameterMappings.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
+            // When a scope parameter is provided (extension-scoped non-resource methods on ArmClient),
+            // use the scope parameter as the source for contextual parameter extraction instead of Id.
+            var idExpression = _scopeParameter != null
+                ? _scopeParameter.As<Azure.Core.ResourceIdentifier>()
+                : This.As<ArmResource>().Id();
+            var arguments = _parameterMappings.PopulateArguments(idExpression, requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
 
             tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, requestMethod.Signature.Name, arguments, out var messageVariable));
 
             tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
-            if (IsLongRunningOperation || IsFakeLongRunningOperation)
+            if (ShouldApplyLroHandling)
             {
                 tryStatements.AddRange(
                     IsFakeLongRunningOperation ?
@@ -413,6 +441,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 responseVariable,
                 Static(typeof(OperationFinalStateVia)).Property(finalStateVia.ToString())
             ];
+
+            // TODO: Temporary workaround - pass skipApiVersionOverride: true to prevent LRO polling from
+            // overriding the api-version. Remove once the issue is properly resolved in Azure.Core.
+            if (ManagementClientGenerator.Instance.IsSkipApiVersionOverrideEnabled())
+            {
+                commonArmOperationArguments = [.. commonArmOperationArguments, Literal(true)];
+            }
 
             ValueExpression? operationSourceInstance = null;
             if (_returnBodyResourceClient != null)

@@ -56,7 +56,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             get
             {
-                return Properties.StorageSyncServiceLocation;
+                return Properties is null ? default : Properties.StorageSyncServiceLocation;
             }
         }
     }

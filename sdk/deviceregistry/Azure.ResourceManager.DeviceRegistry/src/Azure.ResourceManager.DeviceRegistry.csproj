@@ -1,10 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.1.0-beta.3</Version>
+    <Version>1.1.0-beta.4</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.DeviceRegistry</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider DeviceRegistry.</Description>
     <PackageTags>azure;management;arm;resource manager;deviceregistry</PackageTags>
+    <NoWarn>$(NoWarn);AZC0030</NoWarn>
   </PropertyGroup>
+  <!-- Exclude generated serialization for CertificateConfiguration so we can provide a
+       custom version that makes certificateAuthorityConfiguration conditional (null-safe).
+       This allows PATCH operations to omit certificateAuthorityConfiguration entirely
+       (using the int-only constructor), preventing keyType and bringYourOwnRoot from being
+       sent. The 2026-03-01-preview API rejects these immutable properties on PATCH.
+       The .NET SDK generator does not honor @visibility(Lifecycle.Create, Lifecycle.Read).
+       The generated file remains on disk for CodeChecks validation; the custom replacement
+       in Custom/Models/ is what actually gets compiled. -->
+  <ItemGroup>
+    <Compile Remove="Generated\Models\CertificateConfiguration.Serialization.cs" />
+    <Compile Remove="Generated\Models\CertificateAuthorityConfiguration.Serialization.cs" />
+  </ItemGroup>
 </Project>

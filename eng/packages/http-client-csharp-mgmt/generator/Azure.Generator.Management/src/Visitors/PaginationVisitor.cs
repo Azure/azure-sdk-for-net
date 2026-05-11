@@ -38,8 +38,6 @@ internal class PaginationVisitor : ScmLibraryVisitor
     }
 
     private static bool IsAsPagesMethod(MethodProvider method) => method.Signature.Name.Equals("AsPages");
-    private static bool IsGetNextResponseMethod(MethodProvider method)
-        => method.Signature.Name.Equals("GetNextResponseAsync") || method.Signature.Name.Equals("GetNextResponse");
 
     private void DoVisitAsPagesMethodStatements(MethodBodyStatements statements, MethodProvider method)
     {
@@ -103,15 +101,6 @@ internal class PaginationVisitor : ScmLibraryVisitor
             }
         }
 
-        if (_isCollectionResultType && IsGetNextResponseMethod(method))
-        {
-            var newExpression = DoVisitAssignmentExpressionForGetNextResponseMethod(expression, method);
-            if (newExpression is not null)
-            {
-                // we have updated the expression, so we return it.
-                return newExpression;
-            }
-        }
         return base.VisitAssignmentExpression(expression, method);
     }
 
@@ -130,30 +119,6 @@ internal class PaginationVisitor : ScmLibraryVisitor
     private static ValueExpression ConvertCastToMethodCall(CastExpression castExpression)
     {
         return Static(castExpression.Type!).Invoke(SerializationVisitor.FromResponseMethodName, [castExpression.Inner!]);
-    }
-
-    private ValueExpression? DoVisitAssignmentExpressionForGetNextResponseMethod(AssignmentExpression expression, MethodProvider method)
-    {
-        if (expression is
-            {
-                Variable: DeclarationExpression { Variable: { } variable, IsUsing: true } declaration,
-                Value: InvokeMethodExpression invokeMethodExpression
-            }
-            && variable.Declaration.RequestedName == "scope")
-        {
-            // first we fetch the diagnostics scope from outputlibrary
-            if (ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.TryGetValue(method.EnclosingType.Name, out var diagnosticsScopeValue))
-            {
-                // change its first argument to be the new diagnostics scope value.
-                invokeMethodExpression.Update(
-                    arguments: [Literal(diagnosticsScopeValue)]);
-
-                return expression;
-            }
-            return null;
-        }
-        // do nothing if nothing is changed.
-        return null;
     }
 
     private static bool IsResponseToModelCastExpression(CastExpression castExpression)

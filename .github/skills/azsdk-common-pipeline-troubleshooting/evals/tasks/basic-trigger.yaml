@@ -1,0 +1,13 @@
+id: basic-trigger
+name: basic-trigger
+description: Should trigger on pipeline troubleshooting requests
+inputs:
+  prompt: "My Azure SDK CI pipeline is failing. Can you help me debug it?"
+expected:
+  skill_activated: true
+graders:
+  - type: text
+    name: mentions-pipeline
+    config:
+      contains:
+        - "pipeline"

@@ -7,17 +7,12 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Serialization;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Search.Documents.Models
 {
-    // Hide the untyped IndexAction
-    [CodeGenModel("IndexAction")]
-    internal partial class IndexAction { }
-
     /// <summary>
     /// Represents an index action that operates on a document.
     /// </summary>

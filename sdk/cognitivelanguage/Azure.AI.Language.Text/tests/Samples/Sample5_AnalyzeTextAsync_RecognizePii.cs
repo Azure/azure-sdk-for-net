@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -55,7 +55,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
             AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
 
-            foreach (PiiActionResult piiResult in piiTaskResult.Results.Documents)
+            foreach (PiiResultWithDetectedLanguage piiResult in piiTaskResult.Results.Documents)
             {
                 Console.WriteLine($"Result for document with Id = \"{piiResult.Id}\":");
                 Console.WriteLine($"  Redacted Text: \"{piiResult.RedactedText}\":");
@@ -128,7 +128,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 {
                     // defaultPolicy: use entity mask for everything unless overridden
                     PolicyName = "defaultPolicy",
-                    IsDefault = true,
+                    IsDefaultPolicy = true,
                 }
                 }
                 }
@@ -137,7 +137,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
             AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
 
-            foreach (PiiActionResult piiResult in piiTaskResult.Results.Documents)
+            foreach (PiiResultWithDetectedLanguage piiResult in piiTaskResult.Results.Documents)
             {
                 Console.WriteLine($"Result for document with Id = \"{piiResult.Id}\":");
                 Console.WriteLine($"  Redacted Text: \"{piiResult.RedactedText}\":");
@@ -199,7 +199,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 {
                     // defaultPolicy: use entity mask for everything unless overridden
                     PolicyName = "defaultPolicy",
-                    IsDefault = true,
+                    IsDefaultPolicy = true,
                 },
                 new CharacterMaskPolicyType
                 {
@@ -229,7 +229,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
             AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
 
-            foreach (PiiActionResult piiResult in piiTaskResult.Results.Documents)
+            foreach (PiiResultWithDetectedLanguage piiResult in piiTaskResult.Results.Documents)
             {
                 Console.WriteLine($"Result for document with Id = \"{piiResult.Id}\":");
                 Console.WriteLine($"  Redacted Text: \"{piiResult.RedactedText}\"");
@@ -295,7 +295,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
             AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
 
-            foreach (PiiActionResult result in piiTaskResult.Results.Documents)
+            foreach (PiiResultWithDetectedLanguage result in piiTaskResult.Results.Documents)
             {
                 Console.WriteLine($"Document Id: {result.Id}");
                 Console.WriteLine($"  Redacted Text: {result.RedactedText}");
@@ -334,9 +334,9 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             #region Snippet:Sample5_AnalyzeTextAsync_RecognizePii_WithSynonyms
-            PiiActionContent actionContent = new PiiActionContent();
-            actionContent.ExcludePiiCategories.Add(PiiCategoriesExclude.PhoneNumber);
-            actionContent.EntitySynonyms.Add(
+            PiiActionContent ActionContent = new PiiActionContent();
+            ActionContent.ExcludePiiCategories.Add(PiiCategoriesExclude.PhoneNumber);
+            ActionContent.EntitySynonyms.Add(
                 new EntitySynonyms(
                     new EntityCategory("USBankAccountNumber"),
                     new List<EntitySynonym>
@@ -359,14 +359,14 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                         new MultiLanguageInput("3", "My FAN is 281314478878 and Tom's RAN is 281314478879.") { Language = "en" },
                     }
                 },
-                ActionContent = actionContent
+                ActionContent = ActionContent
             };
 
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(input);
             AnalyzeTextPiiResult piiResult = (AnalyzeTextPiiResult)response.Value;
 
             Console.WriteLine("Recognized PII entities and redacted texts:\n");
-            foreach (PiiActionResult doc in piiResult.Results.Documents)
+            foreach (PiiResultWithDetectedLanguage doc in piiResult.Results.Documents)
             {
                 Console.WriteLine($"Document ID: {doc.Id}");
                 Console.WriteLine($"  Redacted Text: {doc.RedactedText}");
@@ -438,7 +438,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             Console.WriteLine($"Model Version: {result.Results.ModelVersion}");
             Console.WriteLine();
 
-            foreach (PiiActionResult doc in result.Results.Documents)
+            foreach (PiiResultWithDetectedLanguage doc in result.Results.Documents)
             {
                 Console.WriteLine($"Document ID: {doc.Id}");
                 Console.WriteLine($"  Redacted Text: {doc.RedactedText}");
@@ -497,15 +497,17 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             confidenceThreshold.Overrides.Add(
                 new ConfidenceScoreThresholdOverride(
                     value: 0.9f,
-                    entity: PiiCategory.UsSocialSecurityNumber.ToString()
+                    entity: PiiCategory.UsSocialSecurityNumber.ToString(),
+                    language: "en"
                 ));
             confidenceThreshold.Overrides.Add(
                 new ConfidenceScoreThresholdOverride(
                     value: 0.9f,
-                    entity: PiiCategory.Email.ToString()
+                    entity: PiiCategory.Email.ToString(),
+                    language: "en"
                 ));
 
-            PiiActionContent actionContent = new PiiActionContent
+            PiiActionContent ActionContent = new PiiActionContent
             {
                 PiiCategories = { PiiCategory.All },
                 DisableEntityValidation = true,
@@ -515,13 +517,13 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput
             {
                 TextInput = textInput,
-                ActionContent = actionContent
+                ActionContent = ActionContent
             };
 
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
             AnalyzeTextPiiResult piiResult = (AnalyzeTextPiiResult)response.Value;
 
-            PiiActionResult doc = piiResult.Results.Documents[0];
+            PiiResultWithDetectedLanguage doc = piiResult.Results.Documents[0];
 
             Console.WriteLine($"Redacted text: \"{doc.RedactedText}\"");
             Console.WriteLine("Recognized entities (after confidence score filtering):");

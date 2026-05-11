@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 extern alias BaseBlobs;
@@ -32,6 +32,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private const string DefaultContentLanguage = "en-US";
         private const string DefaultContentDisposition = "inline";
         private const string DefaultCacheControl = "no-cache";
+        private static readonly Uri _mockSourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+        private static readonly Uri _mockDestinationUri = new Uri("https://storageaccount.blob.core.windows.net/container/destination");
 
         public PageBlobStorageResourceTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
@@ -251,8 +253,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             // Arrange
             Mock<PageBlobClient> mock = new(
-                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                _mockDestinationUri,
                 new BlobClientOptions());
+            mock.Setup(b => b.Uri).Returns(_mockDestinationUri);
 
             int length = 1024;
             var data = GetRandomBuffer(length);
@@ -337,6 +340,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<PageBlobUploadPagesOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mock.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mock.VerifyNoOtherCalls();
         }
 
@@ -345,8 +349,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             // Arrange
             Mock<PageBlobClient> mock = new(
-                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                _mockDestinationUri,
                 new BlobClientOptions());
+            mock.Setup(b => b.Uri).Returns(_mockDestinationUri);
 
             int length = 1024;
             var data = GetRandomBuffer(length);
@@ -432,6 +437,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<PageBlobUploadPagesOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mock.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mock.VerifyNoOtherCalls();
         }
 
@@ -440,8 +446,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             // Arrange
             Mock<PageBlobClient> mock = new(
-                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                _mockDestinationUri,
                 new BlobClientOptions());
+            mock.Setup(b => b.Uri).Returns(_mockDestinationUri);
 
             int length = 1024;
             var data = GetRandomBuffer(length);
@@ -478,6 +485,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             PageBlobStorageResourceOptions resourceOptions = new()
             {
+                AccessTier = default,
                 CacheControl = default,
                 ContentDisposition = default,
                 ContentLanguage = default,
@@ -530,6 +538,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<PageBlobUploadPagesOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mock.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mock.VerifyNoOtherCalls();
         }
 
@@ -557,9 +566,17 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             PageBlobStorageResource sourceResource = new PageBlobStorageResource(sourceClient);
             PageBlobStorageResource destinationResource = new PageBlobStorageResource(destinationClient);
+            StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
+            {
+                SourceUri = sourceClient.Uri
+            };
 
             // Act
-            await destinationResource.CopyFromUriAsync(sourceResource, false, length);
+            await destinationResource.CopyFromUriAsync(
+                sourceResource,
+                false,
+                length,
+                options);
 
             // Assert
             await destinationClient.ExistsAsync();
@@ -598,7 +615,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 SourceAuthentication = new HttpAuthorization(
                     scheme: "Bearer",
-                    parameter: sourceBearerToken)
+                    parameter: sourceBearerToken),
+                SourceUri = sourceClient.Uri
             };
 
             // Act
@@ -643,7 +661,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             HttpAuthorization authorizationHeader = await sourceResource.GetCopyAuthorizationHeaderAsync();
             StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
             {
-                SourceAuthentication = authorizationHeader
+                SourceAuthentication = authorizationHeader,
+                SourceUri = sourceClient.Uri
             };
 
             // Act
@@ -664,14 +683,15 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyFromUriAsync_PropertiesDefault()
         {
             // Arrange
-            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
             Mock<StorageResourceItem> sourceResource = new();
             sourceResource.Setup(b => b.Uri)
-                .Returns(sourceUri);
+                .Returns(_mockSourceUri);
 
             Mock<PageBlobClient> mockDestination = new(
-                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                _mockDestinationUri,
                 new BlobClientOptions());
+            mockDestination.Setup(b => b.Uri).Returns(_mockDestinationUri);
+
             int length = 1024;
             var data = GetRandomBuffer(length);
             using var stream = new MemoryStream(data);
@@ -727,7 +747,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ETag = new("ETag"),
                     LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
                     RawProperties = sourceProperties
-                }
+                },
+                SourceUri = _mockSourceUri
             };
             await destinationResource.CopyFromUriInternalAsync(
                 sourceResource.Object,
@@ -750,7 +771,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.UploadPagesFromUriAsync(
-                sourceUri,
+                _mockSourceUri,
                 It.Is<HttpRange>(range =>
                     range.Offset == 0 &&
                     range.Length == length),
@@ -766,14 +787,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyFromUriAsync_PropertiesPreserve()
         {
             // Arrange
-            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
             Mock<StorageResourceItem> sourceResource = new();
             sourceResource.Setup(b => b.Uri)
-                .Returns(sourceUri);
+                .Returns(_mockSourceUri);
 
             Mock<PageBlobClient> mockDestination = new(
-                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                _mockDestinationUri,
                 new BlobClientOptions());
+            mockDestination.Setup(b => b.Uri).Returns(_mockDestinationUri);
 
             int length = 1024;
             var data = GetRandomBuffer(length);
@@ -831,7 +852,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ETag = new("ETag"),
                     LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
                     RawProperties = sourceProperties
-                }
+                },
+                SourceUri = _mockSourceUri
             };
             await destinationResource.CopyFromUriInternalAsync(
                 sourceResource.Object,
@@ -854,7 +876,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.UploadPagesFromUriAsync(
-                sourceUri,
+                _mockSourceUri,
                 It.Is<HttpRange>(range =>
                     range.Offset == 0 &&
                     range.Length == length),
@@ -864,6 +886,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<PageBlobUploadPagesFromUriOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mockDestination.Verify(b => b.Uri, Times.Once());
             mockDestination.VerifyNoOtherCalls();
         }
 
@@ -871,14 +894,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyFromUriAsync_PropertiesNoPreserve()
         {
             // Arrange
-            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
             Mock<StorageResourceItem> sourceResource = new();
             sourceResource.Setup(b => b.Uri)
-                .Returns(sourceUri);
+                .Returns(_mockSourceUri);
 
             Mock<PageBlobClient> mockDestination = new(
-                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                _mockDestinationUri,
                 new BlobClientOptions());
+            mockDestination.Setup(b => b.Uri).Returns(_mockDestinationUri);
 
             int length = 1024;
             var data = GetRandomBuffer(length);
@@ -945,7 +968,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ETag = new("ETag"),
                     LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
                     RawProperties = sourceProperties
-                }
+                },
+                SourceUri = _mockSourceUri
             };
             await destinationResource.CopyFromUriInternalAsync(
                 sourceResource.Object,
@@ -956,7 +980,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(data, Is.EqualTo(fileContentStream.AsBytes().ToArray()));
             mockDestination.Verify(b => b.CreateAsync(
                 length,
-            It.Is<PageBlobCreateOptions>(
+                It.Is<PageBlobCreateOptions>(
                     options =>
                         options.Metadata == default &&
                         options.PremiumPageBlobAccessTier == default &&
@@ -968,7 +992,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.UploadPagesFromUriAsync(
-                sourceUri,
+                _mockSourceUri,
                 It.Is<HttpRange>(range =>
                     range.Offset == 0 &&
                     range.Length == length),
@@ -978,6 +1002,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<PageBlobUploadPagesFromUriOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mockDestination.Verify(b => b.Uri, Times.Once());
             mockDestination.VerifyNoOtherCalls();
         }
 
@@ -992,10 +1017,18 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             PageBlobStorageResource sourceResource = new PageBlobStorageResource(sourceClient);
             PageBlobStorageResource destinationResource = new PageBlobStorageResource(destinationClient);
+            StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
+            {
+                SourceUri = sourceClient.Uri
+            };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destinationResource.CopyFromUriAsync(sourceResource: sourceResource, overwrite: false, completeLength: length),
+                destinationResource.CopyFromUriAsync(
+                    sourceResource: sourceResource,
+                    overwrite: false,
+                    completeLength: length,
+                    options: options),
                 e =>
                 {
                     Assert.IsTrue(e.Status == (int)HttpStatusCode.Unauthorized);
@@ -1027,13 +1060,18 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             PageBlobStorageResource sourceResource = new PageBlobStorageResource(sourceClient);
             PageBlobStorageResource destinationResource = new PageBlobStorageResource(destinationClient);
+            StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
+            {
+                SourceUri = sourceClient.Uri
+            };
 
             // Act
             await destinationResource.CopyBlockFromUriAsync(
                 sourceResource: sourceResource,
                 overwrite: false,
                 range: new HttpRange(0, blockLength),
-                completeLength: blockLength);
+                completeLength: blockLength,
+                options: options);
 
             // Commit the block
             await destinationResource.CompleteTransferAsync(false);
@@ -1072,7 +1110,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 SourceAuthentication = new HttpAuthorization(
                     scheme: "Bearer",
-                    parameter: sourceBearerToken)
+                    parameter: sourceBearerToken),
+                SourceUri = sourceClient.Uri
             };
 
             // Act
@@ -1123,7 +1162,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 SourceAuthentication = new HttpAuthorization(
                     scheme: "Bearer",
-                    parameter: accessToken.Token)
+                    parameter: accessToken.Token),
+                SourceUri = sourceClient.Uri
             };
 
             // Act
@@ -1173,7 +1213,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             HttpAuthorization authorizationHeader = await sourceResource.GetCopyAuthorizationHeaderAsync();
             StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
             {
-                SourceAuthentication = authorizationHeader
+                SourceAuthentication = authorizationHeader,
+                SourceUri = sourceClient.Uri
             };
 
             // Act
@@ -1198,30 +1239,30 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyBlockFromUriAsync_PropertiesDefault()
         {
             // Arrange
-            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
             Mock<StorageResourceItem> sourceResource = new();
             sourceResource.Setup(b => b.Uri)
-                .Returns(sourceUri);
+                .Returns(_mockSourceUri);
 
             Mock<PageBlobClient> mockDestination = new(
-                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                _mockDestinationUri,
                 new BlobClientOptions());
+            mockDestination.Setup(b => b.Uri).Returns(_mockDestinationUri);
 
             int length = 1024;
             var data = GetRandomBuffer(length);
             using var stream = new MemoryStream(data);
             using var fileContentStream = new MemoryStream();
             mockDestination.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<PageBlobCreateOptions>(), It.IsAny<CancellationToken>()))
-            .Returns(Task.FromResult(Response.FromValue(
-                BlobsModelFactory.BlobContentInfo(
-                    eTag: new ETag("eTag"),
-                    lastModified: DateTimeOffset.UtcNow,
-                    contentHash: default,
-                    versionId: "version",
-                    encryptionKeySha256: default,
-                    encryptionScope: default,
-                    blobSequenceNumber: default),
-                new MockResponse(201))));
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.BlobContentInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        contentHash: default,
+                        versionId: "version",
+                        encryptionKeySha256: default,
+                        encryptionScope: default,
+                        blobSequenceNumber: default),
+                    new MockResponse(201))));
             mockDestination.Setup(b => b.UploadPagesFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<PageBlobUploadPagesFromUriOptions>(), It.IsAny<CancellationToken>()))
                 .Callback<Uri, HttpRange, HttpRange, PageBlobUploadPagesFromUriOptions, CancellationToken>(
                 async (uri, sourceRange, destinationRange, options, token) =>
@@ -1246,6 +1287,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             Dictionary<string, object> sourceProperties = new()
             {
+                { DataMovementConstants.ResourceProperties.AccessTier, DefaultAccessTier },
                 { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
                 { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
                 { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
@@ -1261,7 +1303,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ETag = new("ETag"),
                     LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
                     RawProperties = sourceProperties
-                }
+                },
+                SourceUri = _mockSourceUri
             };
             await destinationResource.CopyBlockFromUriInternalAsync(
                 sourceResource.Object,
@@ -1284,7 +1327,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.UploadPagesFromUriAsync(
-                sourceUri,
+                _mockSourceUri,
                 It.Is<HttpRange>(range =>
                     range.Offset == 0 &&
                     range.Length == length),
@@ -1294,37 +1337,36 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<PageBlobUploadPagesFromUriOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
-            mockDestination.VerifyNoOtherCalls();
         }
 
         [Test]
         public async Task CopyBlockFromUriAsync_PropertiesPreserve()
         {
             // Arrange
-            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
             Mock<StorageResourceItem> sourceResource = new();
             sourceResource.Setup(b => b.Uri)
-                .Returns(sourceUri);
+                .Returns(_mockSourceUri);
 
             Mock<PageBlobClient> mockDestination = new(
-                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                _mockDestinationUri,
                 new BlobClientOptions());
+            mockDestination.Setup(b => b.Uri).Returns(_mockDestinationUri);
 
             int length = 1024;
             var data = GetRandomBuffer(length);
             using var stream = new MemoryStream(data);
             using var fileContentStream = new MemoryStream();
             mockDestination.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<PageBlobCreateOptions>(), It.IsAny<CancellationToken>()))
-            .Returns(Task.FromResult(Response.FromValue(
-                BlobsModelFactory.BlobContentInfo(
-                    eTag: new ETag("eTag"),
-                    lastModified: DateTimeOffset.UtcNow,
-                    contentHash: default,
-                    versionId: "version",
-                    encryptionKeySha256: default,
-                    encryptionScope: default,
-                    blobSequenceNumber: default),
-                new MockResponse(201))));
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.BlobContentInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        contentHash: default,
+                        versionId: "version",
+                        encryptionKeySha256: default,
+                        encryptionScope: default,
+                        blobSequenceNumber: default),
+                    new MockResponse(201))));
             mockDestination.Setup(b => b.UploadPagesFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<PageBlobUploadPagesFromUriOptions>(), It.IsAny<CancellationToken>()))
                 .Callback<Uri, HttpRange, HttpRange, PageBlobUploadPagesFromUriOptions, CancellationToken>(
                 async (uri, sourceRange, destinationRange, options, token) =>
@@ -1366,7 +1408,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ETag = new("ETag"),
                     LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
                     RawProperties = sourceProperties
-                }
+                },
+                SourceUri = _mockSourceUri
             };
             await destinationResource.CopyBlockFromUriInternalAsync(
                 sourceResource.Object,
@@ -1390,7 +1433,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.UploadPagesFromUriAsync(
-                sourceUri,
+                _mockSourceUri,
                 It.Is<HttpRange>(range =>
                     range.Offset == 0 &&
                     range.Length == length),
@@ -1400,6 +1443,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<PageBlobUploadPagesFromUriOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mockDestination.Verify(b => b.Uri, Times.Once());
             mockDestination.VerifyNoOtherCalls();
         }
 
@@ -1407,30 +1451,30 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyBlockFromUriAsync_PropertiesNoPreserve()
         {
             // Arrange
-            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
             Mock<StorageResourceItem> sourceResource = new();
             sourceResource.Setup(b => b.Uri)
-                .Returns(sourceUri);
+                .Returns(_mockSourceUri);
 
             Mock<PageBlobClient> mockDestination = new(
-                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                _mockDestinationUri,
                 new BlobClientOptions());
+            mockDestination.Setup(b => b.Uri).Returns(_mockDestinationUri);
 
             int length = 1024;
             var data = GetRandomBuffer(length);
             using var stream = new MemoryStream(data);
             using var fileContentStream = new MemoryStream();
             mockDestination.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<PageBlobCreateOptions>(), It.IsAny<CancellationToken>()))
-            .Returns(Task.FromResult(Response.FromValue(
-                BlobsModelFactory.BlobContentInfo(
-                    eTag: new ETag("eTag"),
-                    lastModified: DateTimeOffset.UtcNow,
-                    contentHash: default,
-                    versionId: "version",
-                    encryptionKeySha256: default,
-                    encryptionScope: default,
-                    blobSequenceNumber: default),
-                new MockResponse(201))));
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.BlobContentInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        contentHash: default,
+                        versionId: "version",
+                        encryptionKeySha256: default,
+                        encryptionScope: default,
+                        blobSequenceNumber: default),
+                    new MockResponse(201))));
             mockDestination.Setup(b => b.UploadPagesFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<PageBlobUploadPagesFromUriOptions>(), It.IsAny<CancellationToken>()))
                 .Callback<Uri, HttpRange, HttpRange, PageBlobUploadPagesFromUriOptions, CancellationToken>(
                 async (uri, sourceRange, destinationRange, options, token) =>
@@ -1481,7 +1525,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ETag = new("ETag"),
                     LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
                     RawProperties = sourceProperties
-                }
+                },
+                SourceUri = _mockSourceUri
             };
             await destinationResource.CopyBlockFromUriInternalAsync(
                 sourceResource.Object,
@@ -1505,7 +1550,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.UploadPagesFromUriAsync(
-                sourceUri,
+                _mockSourceUri,
                 It.Is<HttpRange>(range =>
                     range.Offset == 0 &&
                     range.Length == length),
@@ -1515,6 +1560,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<PageBlobUploadPagesFromUriOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mockDestination.Verify(b => b.Uri, Times.Once());
             mockDestination.VerifyNoOtherCalls();
         }
 
@@ -1528,10 +1574,19 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             PageBlobStorageResource sourceResource = new PageBlobStorageResource(sourceClient);
             PageBlobStorageResource destinationResource = new PageBlobStorageResource(destinationClient);
+            StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
+            {
+                SourceUri = sourceClient.Uri
+            };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destinationResource.CopyBlockFromUriAsync(sourceResource, new HttpRange(0, Constants.KB), false, 0),
+                destinationResource.CopyBlockFromUriAsync(
+                    sourceResource,
+                    new HttpRange(0, Constants.KB),
+                    false,
+                    0,
+                    options),
                 e =>
                 {
                     Assert.AreEqual(e.ErrorCode, "CannotVerifyCopySource");
@@ -1596,6 +1651,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             ETag eTag = new ETag("etag");
             string source = "https://storageaccount.file.core.windows.net/container/file2";
             Metadata metadata = DataProvider.BuildMetadata();
+            mock.Setup(b => b.Uri).Returns(_mockDestinationUri);
             mock.Setup(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(Response.FromValue(
                     BlobsModelFactory.BlobProperties(
@@ -1639,6 +1695,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(metadata, Is.EqualTo(metadataResult));
             mock.Verify(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()),
                 Times.Once());
+            mock.Verify(b => b.Uri, Times.Once());
             mock.VerifyNoOtherCalls();
         }
 
@@ -1649,6 +1706,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Mock<BlockBlobClient> mock = new(
                 new Uri("https://storageaccount.file.core.windows.net/container/file"),
                 new BlobClientOptions());
+            mock.Setup(b => b.Uri).Returns(_mockDestinationUri);
 
             long length = 1024;
             ETag eTag = new ETag("etag");
@@ -1681,6 +1739,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(rawProperties, Is.EqualTo(result.RawProperties));
             mock.Verify(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()),
                 Times.Never());
+            mock.Verify(b => b.Uri, Times.Once());
             mock.VerifyNoOtherCalls();
         }
 
@@ -1768,5 +1827,68 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.NotNull(authorization.Scheme);
             Assert.NotNull(authorization.Parameter);
         }
+
+        [Test]
+        public void Uri_StripsSas()
+        {
+            // Arrange
+            string baseUrl = "https://storageaccount.blob.core.windows.net/container/blob";
+            string sasToken = "sv=2023-01-03&ss=b&srt=o&sp=r&se=2024-12-31T23:59:59Z&st=2024-01-01T00:00:00Z&spr=https&sig=fakesignature";
+            Uri uriWithSas = new Uri($"{baseUrl}?{sasToken}");
+
+            // Create client with SAS
+            BlockBlobClient blobClient = new BlockBlobClient(uriWithSas);
+            BlockBlobStorageResource storageResource = new(blobClient);
+
+            // Assert - Uri property should return base URI without SAS
+            Assert.AreEqual(baseUrl, storageResource.Uri.AbsoluteUri);
+            Assert.IsFalse(storageResource.Uri.Query.Contains("sig"));
+            Assert.IsFalse(storageResource.Uri.Query.Contains("sv"));
+        }
+
+        #region Snapshot and Version Option Tests
+
+        /// <summary>
+        /// Tests that when options specify a snapshot, the constructor updates the internal client
+        /// to include the snapshot parameter in its URI.
+        /// </summary>
+        [Test]
+        public void Ctor_WithSnapshotInOptions_UpdatesClientUri()
+        {
+            // Arrange
+            Uri baseUri = new Uri("https://storageaccount.blob.core.windows.net/container/blob");
+            string snapshotId = "2024-01-01T00:00:00.0000000Z";
+            PageBlobClient blobClient = new PageBlobClient(baseUri);
+
+            // Act: Pass client without snapshot but options with snapshot
+            var options = new PageBlobStorageResourceOptions { Snapshot = snapshotId };
+            var resource = new PageBlobStorageResource(blobClient, options);
+
+            // Assert: Internal client should now have snapshot in URI
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(resource.BlobClient.Uri);
+            Assert.AreEqual(snapshotId, uriBuilder.Snapshot);
+        }
+
+        /// <summary>
+        /// Tests that when options specify a version, the constructor updates the internal client
+        /// to include the version parameter in its URI.
+        /// </summary>
+        [Test]
+        public void Ctor_WithVersionInOptions_UpdatesClientUri()
+        {
+            // Arrange
+            Uri baseUri = new Uri("https://storageaccount.blob.core.windows.net/container/blob");
+            string versionId = "2024-01-02T00:00:00.0000000Z";
+            PageBlobClient blobClient = new PageBlobClient(baseUri);
+
+            // Act: Pass client without version but options with version
+            var options = new PageBlobStorageResourceOptions { VersionId = versionId };
+            var resource = new PageBlobStorageResource(blobClient, options);
+
+            // Assert: Internal client should now have version in URI
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(resource.BlobClient.Uri);
+            Assert.AreEqual(versionId, uriBuilder.VersionId);
+        }
+        #endregion
     }
 }

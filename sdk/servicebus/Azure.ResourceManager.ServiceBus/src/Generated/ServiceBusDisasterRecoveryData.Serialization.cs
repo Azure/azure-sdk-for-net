@@ -10,16 +10,75 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    public partial class ServiceBusDisasterRecoveryData : IUtf8JsonSerializable, IJsonModel<ServiceBusDisasterRecoveryData>
+    /// <summary> Single item in List or Get Alias(Disaster Recovery configuration) operation. </summary>
+    public partial class ServiceBusDisasterRecoveryData : ResourceData, IJsonModel<ServiceBusDisasterRecoveryData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusDisasterRecoveryData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceBusDisasterRecoveryData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServiceBusDisasterRecoveryData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceBusDisasterRecoveryData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceBusDisasterRecoveryData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceBusContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceBusDisasterRecoveryData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServiceBusDisasterRecoveryData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceBusDisasterRecoveryData IPersistableModel<ServiceBusDisasterRecoveryData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceBusDisasterRecoveryData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceBusDisasterRecoveryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="serviceBusDisasterRecoveryData"> The <see cref="ServiceBusDisasterRecoveryData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ServiceBusDisasterRecoveryData serviceBusDisasterRecoveryData)
+        {
+            if (serviceBusDisasterRecoveryData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(serviceBusDisasterRecoveryData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServiceBusDisasterRecoveryData"/> from. </param>
+        internal static ServiceBusDisasterRecoveryData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeServiceBusDisasterRecoveryData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceBusDisasterRecoveryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,392 +90,121 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusDisasterRecoveryData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceBusDisasterRecoveryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceBusDisasterRecoveryData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(PendingReplicationOperationsCount))
-            {
-                writer.WritePropertyName("pendingReplicationOperationsCount"u8);
-                writer.WriteNumberValue(PendingReplicationOperationsCount.Value);
-            }
-            if (Optional.IsDefined(PartnerNamespace))
-            {
-                writer.WritePropertyName("partnerNamespace"u8);
-                writer.WriteStringValue(PartnerNamespace);
-            }
-            if (Optional.IsDefined(AlternateName))
-            {
-                writer.WritePropertyName("alternateName"u8);
-                writer.WriteStringValue(AlternateName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Role))
-            {
-                writer.WritePropertyName("role"u8);
-                writer.WriteStringValue(Role.Value.ToSerialString());
-            }
-            writer.WriteEndObject();
         }
 
-        ServiceBusDisasterRecoveryData IJsonModel<ServiceBusDisasterRecoveryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceBusDisasterRecoveryData IJsonModel<ServiceBusDisasterRecoveryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServiceBusDisasterRecoveryData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusDisasterRecoveryData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceBusDisasterRecoveryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceBusDisasterRecoveryData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeServiceBusDisasterRecoveryData(document.RootElement, options);
         }
 
-        internal static ServiceBusDisasterRecoveryData DeserializeServiceBusDisasterRecoveryData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ServiceBusDisasterRecoveryData DeserializeServiceBusDisasterRecoveryData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            ServiceBusDisasterRecoveryProvisioningState? provisioningState = default;
-            long? pendingReplicationOperationsCount = default;
-            string partnerNamespace = default;
-            string alternateName = default;
-            ServiceBusDisasterRecoveryRole? role = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ArmDisasterRecoveryProperties properties = default;
+            AzureLocation? location = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    location = new AzureLocation(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceBusContext.Default);
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceBusContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = property0.Value.GetString().ToServiceBusDisasterRecoveryProvisioningState();
-                            continue;
-                        }
-                        if (property0.NameEquals("pendingReplicationOperationsCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            pendingReplicationOperationsCount = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("partnerNamespace"u8))
-                        {
-                            partnerNamespace = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("alternateName"u8))
-                        {
-                            alternateName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("role"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            role = property0.Value.GetString().ToServiceBusDisasterRecoveryRole();
-                            continue;
-                        }
+                        continue;
                     }
+                    properties = ArmDisasterRecoveryProperties.DeserializeArmDisasterRecoveryProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceBusDisasterRecoveryData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                location,
-                provisioningState,
-                pendingReplicationOperationsCount,
-                partnerNamespace,
-                alternateName,
-                role,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties,
+                location);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Location))
-                {
-                    builder.Append("  location: ");
-                    builder.AppendLine($"'{Location.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PendingReplicationOperationsCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    pendingReplicationOperationsCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PendingReplicationOperationsCount))
-                {
-                    builder.Append("    pendingReplicationOperationsCount: ");
-                    builder.AppendLine($"'{PendingReplicationOperationsCount.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerNamespace), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    partnerNamespace: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PartnerNamespace))
-                {
-                    builder.Append("    partnerNamespace: ");
-                    if (PartnerNamespace.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PartnerNamespace}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PartnerNamespace}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlternateName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    alternateName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AlternateName))
-                {
-                    builder.Append("    alternateName: ");
-                    if (AlternateName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AlternateName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AlternateName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Role), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    role: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Role))
-                {
-                    builder.Append("    role: ");
-                    builder.AppendLine($"'{Role.Value.ToSerialString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ServiceBusDisasterRecoveryData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusDisasterRecoveryData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceBusContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ServiceBusDisasterRecoveryData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ServiceBusDisasterRecoveryData IPersistableModel<ServiceBusDisasterRecoveryData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusDisasterRecoveryData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeServiceBusDisasterRecoveryData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServiceBusDisasterRecoveryData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ServiceBusDisasterRecoveryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

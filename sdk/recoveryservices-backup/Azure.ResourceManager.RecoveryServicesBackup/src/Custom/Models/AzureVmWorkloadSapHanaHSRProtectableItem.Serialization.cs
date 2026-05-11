@@ -7,296 +7,237 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
+// The class name is not following the standard naming convention.
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class AzureVmWorkloadSapHanaHSRProtectableItem : IUtf8JsonSerializable, IJsonModel<AzureVmWorkloadSapHanaHSRProtectableItem>
+    /// <summary> Azure VM workload-specific protectable item representing HANA HSR. </summary>
+    public partial class AzureVmWorkloadSapHanaHSRProtectableItem : VmWorkloadProtectableItem, IJsonModel<AzureVmWorkloadSapHanaHSRProtectableItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureVmWorkloadSapHanaHSRProtectableItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override WorkloadProtectableItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAzureVmWorkloadSapHanaHSRProtectableItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureVmWorkloadSapHanaHSRProtectableItem)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureVmWorkloadSapHanaHSRProtectableItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureVmWorkloadSapHanaHSRProtectableItem IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureVmWorkloadSapHanaHSRProtectableItem)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureVmWorkloadSapHanaHSRProtectableItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AzureVmWorkloadSapHanaHSRProtectableItem)} does not support '{format}' format.");
-            }
-
             writer.WriteStartObject();
-            if (Optional.IsDefined(ParentName))
-            {
-                writer.WritePropertyName("parentName"u8);
-                writer.WriteStringValue(ParentName);
-            }
-            if (Optional.IsDefined(ParentUniqueName))
-            {
-                writer.WritePropertyName("parentUniqueName"u8);
-                writer.WriteStringValue(ParentUniqueName);
-            }
-            if (Optional.IsDefined(ServerName))
-            {
-                writer.WritePropertyName("serverName"u8);
-                writer.WriteStringValue(ServerName);
-            }
-            if (Optional.IsDefined(IsAutoProtectable))
-            {
-                writer.WritePropertyName("isAutoProtectable"u8);
-                writer.WriteBooleanValue(IsAutoProtectable.Value);
-            }
-            if (Optional.IsDefined(IsAutoProtected))
-            {
-                writer.WritePropertyName("isAutoProtected"u8);
-                writer.WriteBooleanValue(IsAutoProtected.Value);
-            }
-            if (Optional.IsDefined(SubInquiredItemCount))
-            {
-                writer.WritePropertyName("subinquireditemcount"u8);
-                writer.WriteNumberValue(SubInquiredItemCount.Value);
-            }
-            if (Optional.IsDefined(SubProtectableItemCount))
-            {
-                writer.WritePropertyName("subprotectableitemcount"u8);
-                writer.WriteNumberValue(SubProtectableItemCount.Value);
-            }
-            if (Optional.IsDefined(PreBackupValidation))
-            {
-                writer.WritePropertyName("prebackupvalidation"u8);
-                writer.WriteObjectValue(PreBackupValidation);
-            }
-            if (Optional.IsDefined(IsProtectable))
-            {
-                writer.WritePropertyName("isProtectable"u8);
-                writer.WriteBooleanValue(IsProtectable.Value);
-            }
-            if (Optional.IsDefined(BackupManagementType))
-            {
-                writer.WritePropertyName("backupManagementType"u8);
-                writer.WriteStringValue(BackupManagementType);
-            }
-            if (Optional.IsDefined(WorkloadType))
-            {
-                writer.WritePropertyName("workloadType"u8);
-                writer.WriteStringValue(WorkloadType);
-            }
-            writer.WritePropertyName("protectableItemType"u8);
-            writer.WriteStringValue(ProtectableItemType);
-            if (Optional.IsDefined(FriendlyName))
-            {
-                writer.WritePropertyName("friendlyName"u8);
-                writer.WriteStringValue(FriendlyName);
-            }
-            if (Optional.IsDefined(ProtectionState))
-            {
-                writer.WritePropertyName("protectionState"u8);
-                writer.WriteStringValue(ProtectionState.Value.ToString());
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        AzureVmWorkloadSapHanaHSRProtectableItem IJsonModel<AzureVmWorkloadSapHanaHSRProtectableItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureVmWorkloadSapHanaHSRProtectableItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureVmWorkloadSapHanaHSRProtectableItem)} does not support writing '{format}' format.");
             }
+            base.JsonModelWriteCore(writer, options);
+        }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureVmWorkloadSapHanaHSRProtectableItem IJsonModel<AzureVmWorkloadSapHanaHSRProtectableItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureVmWorkloadSapHanaHSRProtectableItem)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override WorkloadProtectableItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureVmWorkloadSapHanaHSRProtectableItem)} does not support reading '{format}' format.");
+            }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureVmWorkloadSapHanaHSRProtectableItem(document.RootElement, options);
         }
 
-        internal static AzureVmWorkloadSapHanaHSRProtectableItem DeserializeAzureVmWorkloadSapHanaHSRProtectableItem(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AzureVmWorkloadSapHanaHSRProtectableItem DeserializeAzureVmWorkloadSapHanaHSRProtectableItem(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= new ModelReaderWriterOptions("W");
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string backupManagementType = default;
+            string workloadType = default;
+            string protectableItemType = "HanaHSRContainer";
+            string friendlyName = default;
+            BackupProtectionStatus? protectionState = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string parentName = default;
             string parentUniqueName = default;
             string serverName = default;
             bool? isAutoProtectable = default;
             bool? isAutoProtected = default;
-            int subinquireditemcount = default;
-            int subprotectableitemcount = default;
-            PreBackupValidation prebackupvalidation = default;
+            int? subInquiredItemCount = default;
+            int? subProtectableItemCount = default;
+            PreBackupValidation preBackupValidation = default;
             bool? isProtectable = default;
-            string backupManagementType = default;
-            string workloadType = default;
-            string protectableItemType = default;
-            string friendlyName = default;
-            BackupProtectionStatus? protectionState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("parentName"u8))
+                if (prop.NameEquals("backupManagementType"u8))
                 {
-                    parentName = property.Value.GetString();
+                    backupManagementType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parentUniqueName"u8))
+                if (prop.NameEquals("workloadType"u8))
                 {
-                    parentUniqueName = property.Value.GetString();
+                    workloadType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverName"u8))
+                if (prop.NameEquals("protectableItemType"u8))
                 {
-                    serverName = property.Value.GetString();
+                    protectableItemType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isAutoProtectable"u8))
+                if (prop.NameEquals("friendlyName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    friendlyName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("protectionState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isAutoProtectable = property.Value.GetBoolean();
+                    protectionState = new BackupProtectionStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("isAutoProtected"u8))
+                if (prop.NameEquals("parentName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    parentName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("parentUniqueName"u8))
+                {
+                    parentUniqueName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("serverName"u8))
+                {
+                    serverName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("isAutoProtectable"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isAutoProtected = property.Value.GetBoolean();
+                    isAutoProtectable = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("subinquireditemcount"u8))
+                if (prop.NameEquals("isAutoProtected"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    subinquireditemcount = property.Value.GetInt32();
+                    isAutoProtected = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("subprotectableitemcount"u8))
+                if (prop.NameEquals("subinquireditemcount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    subprotectableitemcount = property.Value.GetInt32();
+                    subInquiredItemCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("prebackupvalidation"u8))
+                if (prop.NameEquals("subprotectableitemcount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    prebackupvalidation = PreBackupValidation.DeserializePreBackupValidation(property.Value);
+                    subProtectableItemCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isProtectable"u8))
+                if (prop.NameEquals("prebackupvalidation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isProtectable = property.Value.GetBoolean();
+                    preBackupValidation = PreBackupValidation.DeserializePreBackupValidation(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("backupManagementType"u8))
+                if (prop.NameEquals("isProtectable"u8))
                 {
-                    backupManagementType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("workloadType"u8))
-                {
-                    workloadType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("protectableItemType"u8))
-                {
-                    protectableItemType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("friendlyName"u8))
-                {
-                    friendlyName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("protectionState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    protectionState = new BackupProtectionStatus(property.Value.GetString());
+                    isProtectable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AzureVmWorkloadSapHanaHSRProtectableItem(
                 backupManagementType,
                 workloadType,
                 protectableItemType,
                 friendlyName,
                 protectionState,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 parentName,
                 parentUniqueName,
                 serverName,
                 isAutoProtectable,
                 isAutoProtected,
-                subinquireditemcount,
-                subprotectableitemcount,
-                prebackupvalidation,
+                subInquiredItemCount,
+                subProtectableItemCount,
+                preBackupValidation,
                 isProtectable);
         }
-        BinaryData IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AzureVmWorkloadSapHanaHSRProtectableItem)} does not support '{options.Format}' format.");
-            }
-        }
-
-        AzureVmWorkloadSapHanaHSRProtectableItem IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAzureVmWorkloadSapHanaHSRProtectableItem(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureVmWorkloadSapHanaHSRProtectableItem)} does not support '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> Initializes a new instance of <see cref="CommunicationServiceNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
         /// <param name="resourceType"> The resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommunicationServiceNameAvailabilityContent(string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationServiceNameAvailabilityContent(string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, resourceType, additionalBinaryDataProperties)
         {
         }
     }

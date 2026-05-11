@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -16,6 +17,8 @@ namespace Documentation._Lists
     public partial class Lists
     {
         protected Lists() => throw null;
+
+        internal Lists(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

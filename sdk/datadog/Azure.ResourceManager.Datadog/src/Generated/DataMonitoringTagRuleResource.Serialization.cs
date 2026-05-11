@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Datadog
 {
+    /// <summary></summary>
     public partial class DataMonitoringTagRuleResource : IJsonModel<DataMonitoringTagRuleData>
     {
-        private static DataMonitoringTagRuleData s_dataDeserializationInstance;
-        private static DataMonitoringTagRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DataMonitoringTagRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DataMonitoringTagRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataMonitoringTagRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataMonitoringTagRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataMonitoringTagRuleData>)Data).Write(writer, options);
 
-        DataMonitoringTagRuleData IJsonModel<DataMonitoringTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataMonitoringTagRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataMonitoringTagRuleData IJsonModel<DataMonitoringTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DataMonitoringTagRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataMonitoringTagRuleData>(Data, options, AzureResourceManagerDatadogContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DataMonitoringTagRuleData IPersistableModel<DataMonitoringTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataMonitoringTagRuleData>(data, options, AzureResourceManagerDatadogContext.Default);
 
-        string IPersistableModel<DataMonitoringTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataMonitoringTagRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataMonitoringTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

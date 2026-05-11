@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NetApp.Models
             RemotePath remotePath = default;
             string remoteVolumeRegion = default;
             IReadOnlyList<NetAppDestinationReplication> destinationReplications = default;
-            ExternalReplicationSetupStatus? externalReplicationSetupStatus = default;
+            NetAppExternalReplicationSetupStatus? externalReplicationSetupStatus = default;
             string externalReplicationSetupInfo = default;
             NetAppMirrorState? mirrorState = default;
             VolumeReplicationRelationshipStatus? relationshipStatus = default;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    externalReplicationSetupStatus = new ExternalReplicationSetupStatus(property.Value.GetString());
+                    externalReplicationSetupStatus = new NetAppExternalReplicationSetupStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("externalReplicationSetupInfo"u8))

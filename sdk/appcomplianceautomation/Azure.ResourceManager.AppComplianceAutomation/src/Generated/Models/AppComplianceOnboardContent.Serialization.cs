@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appComplianceOnboardContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(appComplianceOnboardContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

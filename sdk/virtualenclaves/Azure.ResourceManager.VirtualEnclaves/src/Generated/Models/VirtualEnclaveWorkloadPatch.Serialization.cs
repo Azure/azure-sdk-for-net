@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(virtualEnclaveWorkloadPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(virtualEnclaveWorkloadPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

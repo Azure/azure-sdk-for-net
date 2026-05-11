@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class TriggerDataMoveContent : IUtf8JsonSerializable, IJsonModel<TriggerDataMoveContent>
+    /// <summary> Trigger DataMove Request. </summary>
+    public partial class TriggerDataMoveContent : IJsonModel<TriggerDataMoveContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriggerDataMoveContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="TriggerDataMoveContent"/> for deserialization. </summary>
+        internal TriggerDataMoveContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TriggerDataMoveContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TriggerDataMoveContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTriggerDataMoveContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TriggerDataMoveContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TriggerDataMoveContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TriggerDataMoveContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TriggerDataMoveContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TriggerDataMoveContent IPersistableModel<TriggerDataMoveContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TriggerDataMoveContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="triggerDataMoveContent"> The <see cref="TriggerDataMoveContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(TriggerDataMoveContent triggerDataMoveContent)
+        {
+            if (triggerDataMoveContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(triggerDataMoveContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TriggerDataMoveContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +85,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TriggerDataMoveContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TriggerDataMoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TriggerDataMoveContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("sourceResourceId"u8);
             writer.WriteStringValue(SourceResourceId);
             writer.WritePropertyName("sourceRegion"u8);
@@ -46,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("sourceContainerArmIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in SourceContainerArmIds)
+                foreach (ResourceIdentifier item in SourceContainerArmIds)
                 {
                     if (item == null)
                     {
@@ -62,15 +118,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("pauseGC"u8);
                 writer.WriteBooleanValue(DoesPauseGC.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -79,22 +135,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        TriggerDataMoveContent IJsonModel<TriggerDataMoveContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TriggerDataMoveContent IJsonModel<TriggerDataMoveContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TriggerDataMoveContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TriggerDataMoveContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TriggerDataMoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TriggerDataMoveContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTriggerDataMoveContent(document.RootElement, options);
         }
 
-        internal static TriggerDataMoveContent DeserializeTriggerDataMoveContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TriggerDataMoveContent DeserializeTriggerDataMoveContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,39 +165,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             DataMoveLevel dataMoveLevel = default;
             string correlationId = default;
             IList<ResourceIdentifier> sourceContainerArmIds = default;
-            bool? pauseGC = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            bool? doesPauseGC = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceResourceId"u8))
+                if (prop.NameEquals("sourceResourceId"u8))
                 {
-                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
+                    sourceResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceRegion"u8))
+                if (prop.NameEquals("sourceRegion"u8))
                 {
-                    sourceRegion = new AzureLocation(property.Value.GetString());
+                    sourceRegion = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dataMoveLevel"u8))
+                if (prop.NameEquals("dataMoveLevel"u8))
                 {
-                    dataMoveLevel = new DataMoveLevel(property.Value.GetString());
+                    dataMoveLevel = new DataMoveLevel(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("correlationId"u8))
+                if (prop.NameEquals("correlationId"u8))
                 {
-                    correlationId = property.Value.GetString();
+                    correlationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceContainerArmIds"u8))
+                if (prop.NameEquals("sourceContainerArmIds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -150,60 +210,28 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     sourceContainerArmIds = array;
                     continue;
                 }
-                if (property.NameEquals("pauseGC"u8))
+                if (prop.NameEquals("pauseGC"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pauseGC = property.Value.GetBoolean();
+                    doesPauseGC = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new TriggerDataMoveContent(
                 sourceResourceId,
                 sourceRegion,
                 dataMoveLevel,
                 correlationId,
                 sourceContainerArmIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                pauseGC,
-                serializedAdditionalRawData);
+                doesPauseGC,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<TriggerDataMoveContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TriggerDataMoveContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TriggerDataMoveContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        TriggerDataMoveContent IPersistableModel<TriggerDataMoveContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TriggerDataMoveContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTriggerDataMoveContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TriggerDataMoveContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<TriggerDataMoveContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

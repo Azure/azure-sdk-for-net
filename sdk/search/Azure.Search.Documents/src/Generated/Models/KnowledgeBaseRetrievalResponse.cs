@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> The output contract for the retrieval response. </summary>
     public partial class KnowledgeBaseRetrievalResponse
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRetrievalResponse"/>. </summary>
         internal KnowledgeBaseRetrievalResponse()
@@ -54,39 +26,25 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRetrievalResponse"/>. </summary>
-        /// <param name="response"></param>
-        /// <param name="activity">
-        /// The activity records for tracking progress and billing implications.
-        /// Please note <see cref="KnowledgeBaseActivityRecord"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeBaseAgenticReasoningActivityRecord"/>, <see cref="KnowledgeBaseAzureBlobActivityRecord"/>, <see cref="KnowledgeBaseIndexedOneLakeActivityRecord"/>, <see cref="KnowledgeBaseIndexedSharePointActivityRecord"/>, <see cref="KnowledgeBaseRetrievalActivityRecord"/>, <see cref="KnowledgeBaseModelAnswerSynthesisActivityRecord"/>, <see cref="KnowledgeBaseModelQueryPlanningActivityRecord"/>, <see cref="KnowledgeBaseRemoteSharePointActivityRecord"/>, <see cref="KnowledgeBaseSearchIndexActivityRecord"/> and <see cref="KnowledgeBaseWebActivityRecord"/>.
-        /// </param>
-        /// <param name="references">
-        /// The references for the retrieval data used in the response.
-        /// Please note <see cref="KnowledgeBaseReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeBaseAzureBlobReference"/>, <see cref="KnowledgeBaseIndexedOneLakeReference"/>, <see cref="KnowledgeBaseIndexedSharePointReference"/>, <see cref="KnowledgeBaseRemoteSharePointReference"/>, <see cref="KnowledgeBaseSearchIndexReference"/> and <see cref="KnowledgeBaseWebReference"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseRetrievalResponse(IReadOnlyList<KnowledgeBaseMessage> response, IReadOnlyList<KnowledgeBaseActivityRecord> activity, IReadOnlyList<KnowledgeBaseReference> references, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="response"> The response messages. </param>
+        /// <param name="activity"> The activity records for tracking progress and billing implications. </param>
+        /// <param name="references"> The references for the retrieval data used in the response. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeBaseRetrievalResponse(IList<KnowledgeBaseMessage> response, IList<KnowledgeBaseActivityRecord> activity, IList<KnowledgeBaseReference> references, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Response = response;
             Activity = activity;
             References = references;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the response. </summary>
-        public IReadOnlyList<KnowledgeBaseMessage> Response { get; }
-        /// <summary>
-        /// The activity records for tracking progress and billing implications.
-        /// Please note <see cref="KnowledgeBaseActivityRecord"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeBaseAgenticReasoningActivityRecord"/>, <see cref="KnowledgeBaseAzureBlobActivityRecord"/>, <see cref="KnowledgeBaseIndexedOneLakeActivityRecord"/>, <see cref="KnowledgeBaseIndexedSharePointActivityRecord"/>, <see cref="KnowledgeBaseRetrievalActivityRecord"/>, <see cref="KnowledgeBaseModelAnswerSynthesisActivityRecord"/>, <see cref="KnowledgeBaseModelQueryPlanningActivityRecord"/>, <see cref="KnowledgeBaseRemoteSharePointActivityRecord"/>, <see cref="KnowledgeBaseSearchIndexActivityRecord"/> and <see cref="KnowledgeBaseWebActivityRecord"/>.
-        /// </summary>
-        public IReadOnlyList<KnowledgeBaseActivityRecord> Activity { get; }
-        /// <summary>
-        /// The references for the retrieval data used in the response.
-        /// Please note <see cref="KnowledgeBaseReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeBaseAzureBlobReference"/>, <see cref="KnowledgeBaseIndexedOneLakeReference"/>, <see cref="KnowledgeBaseIndexedSharePointReference"/>, <see cref="KnowledgeBaseRemoteSharePointReference"/>, <see cref="KnowledgeBaseSearchIndexReference"/> and <see cref="KnowledgeBaseWebReference"/>.
-        /// </summary>
-        public IReadOnlyList<KnowledgeBaseReference> References { get; }
+        /// <summary> The response messages. </summary>
+        public IList<KnowledgeBaseMessage> Response { get; }
+
+        /// <summary> The activity records for tracking progress and billing implications. </summary>
+        public IList<KnowledgeBaseActivityRecord> Activity { get; }
+
+        /// <summary> The references for the retrieval data used in the response. </summary>
+        public IList<KnowledgeBaseReference> References { get; }
     }
 }

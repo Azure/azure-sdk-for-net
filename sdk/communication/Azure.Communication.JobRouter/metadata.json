@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2024-01-18-preview"
+  "apiVersions": {
+    "AzureCommunicationRoutingService": "2024-01-18-preview"
+  }
 }

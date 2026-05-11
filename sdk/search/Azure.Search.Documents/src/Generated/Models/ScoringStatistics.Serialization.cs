@@ -11,6 +11,7 @@ namespace Azure.Search.Documents.Models
 {
     internal static partial class ScoringStatisticsExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ScoringStatistics value) => value switch
         {
             ScoringStatistics.Local => "local",
@@ -18,10 +19,17 @@ namespace Azure.Search.Documents.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringStatistics value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ScoringStatistics ToScoringStatistics(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "local")) return ScoringStatistics.Local;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "global")) return ScoringStatistics.Global;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "local"))
+            {
+                return ScoringStatistics.Local;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "global"))
+            {
+                return ScoringStatistics.Global;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringStatistics value.");
         }
     }

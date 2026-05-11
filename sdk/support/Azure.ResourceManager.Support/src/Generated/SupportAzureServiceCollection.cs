@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Support
@@ -25,69 +26,79 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class SupportAzureServiceCollection : ArmCollection, IEnumerable<SupportAzureServiceResource>, IAsyncEnumerable<SupportAzureServiceResource>
     {
-        private readonly ClientDiagnostics _supportAzureServiceServicesClientDiagnostics;
-        private readonly ServicesRestOperations _supportAzureServiceServicesRestClient;
+        private readonly ClientDiagnostics _servicesClientDiagnostics;
+        private readonly Services _servicesRestClient;
+        private readonly ClientDiagnostics _classifyProblemsNoSubscriptionClientDiagnostics;
+        private readonly ClassifyProblemsNoSubscription _classifyProblemsNoSubscriptionRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SupportAzureServiceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SupportAzureServiceCollection for mocking. </summary>
         protected SupportAzureServiceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SupportAzureServiceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportAzureServiceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SupportAzureServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _supportAzureServiceServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SupportAzureServiceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SupportAzureServiceResource.ResourceType, out string supportAzureServiceServicesApiVersion);
-            _supportAzureServiceServicesRestClient = new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, supportAzureServiceServicesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SupportAzureServiceResource.ResourceType, out string supportAzureServiceApiVersion);
+            _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SupportAzureServiceResource.ResourceType.Namespace, Diagnostics);
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, supportAzureServiceApiVersion ?? "2025-06-01-preview");
+            _classifyProblemsNoSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SupportAzureServiceResource.ResourceType.Namespace, Diagnostics);
+            _classifyProblemsNoSubscriptionRestClient = new ClassifyProblemsNoSubscription(_classifyProblemsNoSubscriptionClientDiagnostics, Pipeline, Endpoint, supportAzureServiceApiVersion ?? "2025-06-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != TenantResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a specific Azure service for support ticket creation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportAzureServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Name of the Azure service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SupportAzureServiceResource>> GetAsync(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _supportAzureServiceServicesClientDiagnostics.CreateScope("SupportAzureServiceCollection.Get");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SupportAzureServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _supportAzureServiceServicesRestClient.GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(serviceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SupportAzureServiceData> response = Response.FromValue(SupportAzureServiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SupportAzureServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -101,38 +112,42 @@ namespace Azure.ResourceManager.Support
         /// Gets a specific Azure service for support ticket creation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportAzureServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Name of the Azure service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SupportAzureServiceResource> Get(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _supportAzureServiceServicesClientDiagnostics.CreateScope("SupportAzureServiceCollection.Get");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SupportAzureServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = _supportAzureServiceServicesRestClient.Get(serviceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(serviceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SupportAzureServiceData> response = Response.FromValue(SupportAzureServiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SupportAzureServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,53 +158,47 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary>
-        /// Lists all the Azure services available for support ticket creation. For **Technical** issues, select the Service Id that maps to the Azure service/product as displayed in the **Services** drop-down list on the Azure portal's [New support request](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/overview) page. Always use the service and its corresponding problem classification(s) obtained programmatically for support ticket creation. This practice ensures that you always have the most recent set of service and problem classification Ids.
+        /// Lists all the Azure services available for support ticket creation. For <b>Technical</b> issues, select the Service Id that maps to the Azure service/product as displayed in the <b>Services</b> drop-down list on the Azure portal's [New support request](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/overview) page. Always use the service and its corresponding problem classification(s) obtained programmatically for support ticket creation. This practice ensures that you always have the most recent set of service and problem classification Ids.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/services</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/services. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportAzureServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SupportAzureServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SupportAzureServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SupportAzureServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _supportAzureServiceServicesRestClient.CreateListRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportAzureServiceServicesRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportAzureServiceResource(Client, SupportAzureServiceData.DeserializeSupportAzureServiceData(e)), _supportAzureServiceServicesClientDiagnostics, Pipeline, "SupportAzureServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SupportAzureServiceData, SupportAzureServiceResource>(new ServicesGetAllAsyncCollectionResultOfT(_servicesRestClient, context, "SupportAzureServiceCollection.GetAll"), data => new SupportAzureServiceResource(Client, data));
         }
 
         /// <summary>
-        /// Lists all the Azure services available for support ticket creation. For **Technical** issues, select the Service Id that maps to the Azure service/product as displayed in the **Services** drop-down list on the Azure portal's [New support request](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/overview) page. Always use the service and its corresponding problem classification(s) obtained programmatically for support ticket creation. This practice ensures that you always have the most recent set of service and problem classification Ids.
+        /// Lists all the Azure services available for support ticket creation. For <b>Technical</b> issues, select the Service Id that maps to the Azure service/product as displayed in the <b>Services</b> drop-down list on the Azure portal's [New support request](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/overview) page. Always use the service and its corresponding problem classification(s) obtained programmatically for support ticket creation. This practice ensures that you always have the most recent set of service and problem classification Ids.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/services</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/services. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportAzureServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,45 +206,61 @@ namespace Azure.ResourceManager.Support
         /// <returns> A collection of <see cref="SupportAzureServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SupportAzureServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _supportAzureServiceServicesRestClient.CreateListRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportAzureServiceServicesRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportAzureServiceResource(Client, SupportAzureServiceData.DeserializeSupportAzureServiceData(e)), _supportAzureServiceServicesClientDiagnostics, Pipeline, "SupportAzureServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SupportAzureServiceData, SupportAzureServiceResource>(new ServicesGetAllCollectionResultOfT(_servicesRestClient, context, "SupportAzureServiceCollection.GetAll"), data => new SupportAzureServiceResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportAzureServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Name of the Azure service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _supportAzureServiceServicesClientDiagnostics.CreateScope("SupportAzureServiceCollection.Exists");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SupportAzureServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _supportAzureServiceServicesRestClient.GetAsync(serviceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(serviceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SupportAzureServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SupportAzureServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SupportAzureServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,36 +274,50 @@ namespace Azure.ResourceManager.Support
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportAzureServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Name of the Azure service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _supportAzureServiceServicesClientDiagnostics.CreateScope("SupportAzureServiceCollection.Exists");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SupportAzureServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _supportAzureServiceServicesRestClient.Get(serviceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(serviceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SupportAzureServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SupportAzureServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SupportAzureServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -292,38 +331,54 @@ namespace Azure.ResourceManager.Support
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportAzureServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Name of the Azure service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SupportAzureServiceResource>> GetIfExistsAsync(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _supportAzureServiceServicesClientDiagnostics.CreateScope("SupportAzureServiceCollection.GetIfExists");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SupportAzureServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _supportAzureServiceServicesRestClient.GetAsync(serviceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(serviceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SupportAzureServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SupportAzureServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SupportAzureServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SupportAzureServiceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SupportAzureServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -337,38 +392,54 @@ namespace Azure.ResourceManager.Support
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportAzureServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Name of the Azure service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SupportAzureServiceResource> GetIfExists(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _supportAzureServiceServicesClientDiagnostics.CreateScope("SupportAzureServiceCollection.GetIfExists");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SupportAzureServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _supportAzureServiceServicesRestClient.Get(serviceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(serviceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SupportAzureServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SupportAzureServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SupportAzureServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SupportAzureServiceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SupportAzureServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -388,6 +459,7 @@ namespace Azure.ResourceManager.Support
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SupportAzureServiceResource> IAsyncEnumerable<SupportAzureServiceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

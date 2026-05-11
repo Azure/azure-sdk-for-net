@@ -5,23 +5,30 @@ import { EmitContext } from "@typespec/compiler";
 
 import { CodeModel, CSharpEmitterContext } from "@typespec/http-client-csharp";
 
-import { $onEmit as $onAzureEmit } from "@azure-typespec/http-client-csharp";
+import { emitAzureCodeModel } from "@azure-typespec/http-client-csharp";
 import {
   azureSDKContextOptions,
   flattenPropertyDecorator
 } from "./sdk-context-options.js";
 import { updateClients } from "./resource-detection.js";
 import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
-import { AzureMgmtEmitterOptions } from "./options.js";
+import {
+  AzureMgmtEmitterOptions,
+  filterSuppressedDiagnostics
+} from "./options.js";
 import { transformSubscriptionIdParameters } from "./subscription-id-transformer.js";
+import {
+  deduplicateApiVersionEnums,
+  fixClientApiVersions
+} from "./api-version-fixer.js";
 
 export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
   context.options["generator-name"] ??= "ManagementClientGenerator";
-  context.options["update-code-model"] = updateCodeModel;
   context.options["emitter-extension-path"] ??= import.meta.url;
   context.options["sdk-context-options"] ??= azureSDKContextOptions;
   context.options["model-namespace"] ??= true;
-  await $onAzureEmit(context);
+  const [, diagnostics] = await emitAzureCodeModel(context, updateCodeModel);
+  context.program.reportDiagnostics(filterSuppressedDiagnostics(diagnostics));
 
   function updateCodeModel(
     codeModel: CodeModel,
@@ -30,6 +37,16 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
     // Transform subscriptionId parameters from client scope to method scope
     // This must happen before other transformations that may depend on method parameters
     transformSubscriptionIdParameters(codeModel);
+
+    // Deduplicate ApiVersionEnum enums to work around base generator crash
+    // when multiple services share the same namespace.
+    // https://github.com/microsoft/typespec/issues/10055
+    deduplicateApiVersionEnums(codeModel);
+
+    // Fix clients with empty apiVersions by inferring from their methods.
+    // In TCGC's hierarchical client model, parent clients don't carry apiVersions — child clients
+    // inherit from parents. In mgmt SDK we flatten the hierarchy, so we infer from methods instead.
+    fixClientApiVersions(codeModel, sdkContext);
 
     updateClients(codeModel, sdkContext, context.options);
     setFlattenProperty(codeModel, sdkContext);

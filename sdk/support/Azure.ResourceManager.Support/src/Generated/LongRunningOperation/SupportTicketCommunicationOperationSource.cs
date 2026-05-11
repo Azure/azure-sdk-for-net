@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Support
 {
-    internal class SupportTicketCommunicationOperationSource : IOperationSource<SupportTicketCommunicationResource>
+    /// <summary></summary>
+    internal partial class SupportTicketCommunicationOperationSource : IOperationSource<SupportTicketCommunicationResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SupportTicketCommunicationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SupportTicketCommunicationResource IOperationSource<SupportTicketCommunicationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SupportTicketCommunicationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSupportContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SupportTicketCommunicationData data = SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SupportTicketCommunicationResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SupportTicketCommunicationResource> IOperationSource<SupportTicketCommunicationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SupportTicketCommunicationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSupportContext.Default);
-            return await Task.FromResult(new SupportTicketCommunicationResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SupportTicketCommunicationData data = SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SupportTicketCommunicationResource(_client, data);
         }
     }
 }

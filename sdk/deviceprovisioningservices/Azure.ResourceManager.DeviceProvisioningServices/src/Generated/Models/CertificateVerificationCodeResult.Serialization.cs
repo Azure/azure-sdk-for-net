@@ -86,11 +86,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);

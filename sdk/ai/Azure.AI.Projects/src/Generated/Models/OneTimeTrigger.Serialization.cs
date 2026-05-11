@@ -6,11 +6,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> One-time trigger. </summary>
-    public partial class OneTimeTrigger : Trigger, IJsonModel<OneTimeTrigger>
+    public partial class OneTimeTrigger : ScheduleTrigger, IJsonModel<OneTimeTrigger>
     {
         /// <summary> Initializes a new instance of <see cref="OneTimeTrigger"/> for deserialization. </summary>
         internal OneTimeTrigger()
@@ -19,7 +20,7 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Trigger PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ScheduleTrigger PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OneTimeTrigger>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -77,7 +78,7 @@ namespace Azure.AI.Projects
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("triggerAt"u8);
-            writer.WriteStringValue(TriggerAt);
+            writer.WriteStringValue(TriggerAt, "O");
             if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
@@ -91,7 +92,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Trigger JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ScheduleTrigger JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OneTimeTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -112,7 +113,7 @@ namespace Azure.AI.Projects
             }
             TriggerType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string triggerAt = default;
+            DateTimeOffset triggerAt = default;
             string timeZone = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -123,7 +124,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("triggerAt"u8))
                 {
-                    triggerAt = prop.Value.GetString();
+                    triggerAt = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("timeZone"u8))

@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("secretKey"u8);
                 writer.WriteStringValue(SecretKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(KeyPairExpiry))
+            if (options.Format != "W" && Optional.IsDefined(KeyPairExpiresOn))
             {
                 writer.WritePropertyName("keyPairExpiry"u8);
-                writer.WriteStringValue(KeyPairExpiry.Value, "O");
+                writer.WriteStringValue(KeyPairExpiresOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

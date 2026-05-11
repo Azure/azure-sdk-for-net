@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PeeringPassphrases>> GetPeeringPassphrasesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppPeeringPassphrases>> GetPeeringPassphrasesAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _netAppCacheCachesClientDiagnostics.CreateScope("NetAppCacheResource.GetPeeringPassphrases");
             scope.Start();
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PeeringPassphrases> GetPeeringPassphrases(CancellationToken cancellationToken = default)
+        public virtual Response<NetAppPeeringPassphrases> GetPeeringPassphrases(CancellationToken cancellationToken = default)
         {
             using var scope = _netAppCacheCachesClientDiagnostics.CreateScope("NetAppCacheResource.GetPeeringPassphrases");
             scope.Start();
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -516,6 +516,90 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
+        /// Resets the SMB password for the cache
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/caches/{cacheName}/resetSmbPassword</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Caches_ResetSmbPassword</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppCacheResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<NetAppCacheResource>> ResetSmbPasswordAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _netAppCacheCachesClientDiagnostics.CreateScope("NetAppCacheResource.ResetSmbPassword");
+            scope.Start();
+            try
+            {
+                var response = await _netAppCacheCachesRestClient.ResetSmbPasswordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NetAppArmOperation<NetAppCacheResource>(new NetAppCacheOperationSource(Client), _netAppCacheCachesClientDiagnostics, Pipeline, _netAppCacheCachesRestClient.CreateResetSmbPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Resets the SMB password for the cache
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/caches/{cacheName}/resetSmbPassword</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Caches_ResetSmbPassword</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppCacheResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<NetAppCacheResource> ResetSmbPassword(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _netAppCacheCachesClientDiagnostics.CreateScope("NetAppCacheResource.ResetSmbPassword");
+            scope.Start();
+            try
+            {
+                var response = _netAppCacheCachesRestClient.ResetSmbPassword(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new NetAppArmOperation<NetAppCacheResource>(new NetAppCacheOperationSource(Client), _netAppCacheCachesClientDiagnostics, Pipeline, _netAppCacheCachesRestClient.CreateResetSmbPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -528,7 +612,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -590,7 +674,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -652,7 +736,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -709,7 +793,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -766,7 +850,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -826,7 +910,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

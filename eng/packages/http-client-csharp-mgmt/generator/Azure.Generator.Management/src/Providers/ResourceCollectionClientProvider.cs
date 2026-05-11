@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Core;
@@ -29,7 +29,7 @@ namespace Azure.Generator.Management.Providers
 {
     internal sealed class ResourceCollectionClientProvider : TypeProvider
     {
-        private readonly ResourceMetadata _resourceMetadata;
+        private readonly ArmResourceMetadata _resourceMetadata;
         private readonly IReadOnlyList<ParameterProvider> _extraCtorParameters;
         private readonly IReadOnlyList<FieldProvider> _extraFields;
         private readonly ResourceClientProvider _resource;
@@ -50,7 +50,7 @@ namespace Azure.Generator.Management.Providers
 
         private readonly OperationContext _operationContext;
 
-        internal ResourceCollectionClientProvider(ResourceClientProvider resource, InputModelType model, IReadOnlyList<ResourceMethod> resourceMethods, ResourceMetadata resourceMetadata)
+        internal ResourceCollectionClientProvider(ResourceClientProvider resource, InputModelType model, IReadOnlyList<ResourceMethod> resourceMethods, ArmResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
             _resource = resource;
@@ -67,12 +67,12 @@ namespace Azure.Generator.Management.Providers
             (_extraCtorParameters, _extraFields) = BuildExtraConstructorParametersAndFields();
         }
 
-        private static OperationContext InitializeContext(ResourceCollectionClientProvider enclosingType, ResourceMetadata resourceMetadata, ResourceMethod? getAll)
+        private static OperationContext InitializeContext(ResourceCollectionClientProvider enclosingType, ArmResourceMetadata resourceMetadata, ResourceMethod? getAll)
         {
             var contextualPath = GetContextualPath(resourceMetadata);
             if (getAll is not null)
             {
-                var secondaryContextualPath = new RequestPathPattern(getAll.OperationPath);
+                var secondaryContextualPath = getAll.OperationPath;
                 // validate the contextualPath should be an ancestor of the secondaryContextualPath, otherwise report diagnostic.
                 if (!contextualPath.IsAncestorOf(secondaryContextualPath))
                 {
@@ -108,30 +108,14 @@ namespace Azure.Generator.Management.Providers
         /// <param name="resourceMetadata"></param>
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
-        private static RequestPathPattern GetContextualPath(ResourceMetadata resourceMetadata)
+        private static RequestPathPattern GetContextualPath(ArmResourceMetadata resourceMetadata)
         {
             if (resourceMetadata.ParentResourceId is not null)
             {
-                return new RequestPathPattern(resourceMetadata.ParentResourceId);
+                return resourceMetadata.ParentResourceId;
             }
 
-            if (resourceMetadata.ResourceScope == ResourceScope.Extension)
-            {
-                if (string.IsNullOrEmpty(resourceMetadata.ResourceIdPattern))
-                {
-                    throw new InvalidOperationException("Extension resource's IdPattern can't be empty or null.");
-                }
-                // For extension resources, the contextual path is the parent of the resource ID pattern.
-                // This represents the scope that the extension resource is applied to.
-                // For example, for path /providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}
-                // the contextual path is /providers/Microsoft.Management/serviceGroups/{servicegroupName}
-                // This ensures that servicegroupName is derived from the scope Id (id.Name) rather than being an extra constructor parameter.
-                // For specific extension resources (those targeting a known parent type like Microsoft.Compute/virtualMachines),
-                // the ParentResourceType property contains the explicit parent type for method name disambiguation.
-                return new RequestPathPattern(resourceMetadata.ResourceIdPattern).GetParent();
-            }
-
-            return RequestPathPattern.GetFromScope(resourceMetadata.ResourceScope);
+            return resourceMetadata.Scope.ScopeIdPattern;
         }
 
         private (IReadOnlyList<ParameterProvider> ExtraParameters, IReadOnlyList<FieldProvider> ExtraFields) BuildExtraConstructorParametersAndFields()
@@ -199,7 +183,7 @@ namespace Azure.Generator.Management.Providers
 
         protected override FormattableString BuildDescription()
         {
-            var parentResourceType = GetParentResourceType(_resourceMetadata, _resource);
+            var parentResourceType = GetParentResourceType(_resourceMetadata, _resource) ?? typeof(ArmResource); // TODO: will update this with actual external resource type
             return $"A class representing a collection of {_resource.Type:C} and their operations.\nEach {_resource.Type:C} in the collection will belong to the same instance of {parentResourceType:C}.\nTo get a {Type:C} instance call the Get{ResourceName.Pluralize()} method from an instance of {parentResourceType:C}.";
         }
 
@@ -288,12 +272,12 @@ namespace Azure.Generator.Management.Providers
             foreach (var (inputClient, clientInfo) in _clientInfos)
             {
                 bodyStatements.Add(clientInfo.DiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeExpression.Namespace(), thisCollection.Diagnostics())).Terminate());
-                var effectiveApiVersion = apiVersion.NullCoalesce(Literal(ManagementClientGenerator.Instance.InputLibrary.DefaultApiVersion));
+                var effectiveApiVersion = apiVersion.NullCoalesce(Literal(inputClient.CurrentApiVersion));
                 bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisCollection.Pipeline(), thisCollection.Endpoint(), effectiveApiVersion)).Terminate());
             }
 
-            // Do not call ValidateResourceId for Extension resources
-            if (_resourceMetadata.ResourceScope != ResourceScope.Extension)
+            // skip resource Id validation for extension resource without parent resource type, since we don't have enough information to validate the resource Id. For example, for an extension resource with resource scope of extension and no parent resource type specified, the resource Id pattern could be something like /{scope}/providers/Microsoft.ABC/def/{defName}, in this case we don't know what the {scope} is, it could be subscription, resource group, or even a management group, so we can't validate the resource Id.
+            if (_resourceMetadata.Scope.Kind != ResourceScope.Extension || _resourceMetadata.Scope.ScopeResourceType is not null)
             {
                 bodyStatements.Add(Static(Type).As<ArmCollection>().ValidateResourceId(idParameter).Terminate());
             }
@@ -301,7 +285,7 @@ namespace Azure.Generator.Management.Providers
             return new ConstructorProvider(signature, bodyStatements, this);
         }
 
-        private static CSharpType GetParentResourceType(ResourceMetadata resourceMetadata, ResourceClientProvider resource)
+        private static CSharpType? GetParentResourceType(ArmResourceMetadata resourceMetadata, ResourceClientProvider resource)
         {
             // First check if the resource has a parent resource
             if (resourceMetadata.ParentResourceId is not null)
@@ -310,7 +294,7 @@ namespace Azure.Generator.Management.Providers
             }
 
             // Fallback to scope-based resource type
-            switch (resourceMetadata.ResourceScope)
+            switch (resourceMetadata.Scope.Kind)
             {
                 case ResourceScope.ResourceGroup:
                     return typeof(ResourceGroupResource);
@@ -318,10 +302,12 @@ namespace Azure.Generator.Management.Providers
                     return typeof(SubscriptionResource);
                 case ResourceScope.Tenant:
                     return typeof(TenantResource);
-                case ResourceScope.Extension:
-                    return typeof(ArmResource);
                 case ResourceScope.ManagementGroup:
                     return typeof(ManagementGroupResource);
+                case ResourceScope.Extension:
+                    // Generic-scope extension resources (e.g., /{scope}/providers/...) have no
+                    // specific parent type. Return null so callers fall back to ArmResource.
+                    return null;
                 default:
                     // TODO -- this is incorrect, but we put it here as a placeholder.
                     return resource.Type;
@@ -331,11 +317,15 @@ namespace Azure.Generator.Management.Providers
         protected override MethodProvider[] BuildMethods()
         {
             var methods = new List<MethodProvider>();
-
-            // Do not build ValidateResourceIdMethod for Extension resources
-            if (_resourceMetadata.ResourceScope != ResourceScope.Extension)
+            var parentResourceCsharpType = GetParentResourceType(_resourceMetadata, _resource);
+            if (_resourceMetadata.Scope.Kind != ResourceScope.Extension)
             {
-                methods.Add(ResourceMethodSnippets.BuildValidateResourceIdMethod(this, Static(GetParentResourceType(_resourceMetadata, _resource)).As<ArmResource>().ResourceType()));
+                methods.Add(ResourceMethodSnippets.BuildValidateResourceIdMethod(this,Static(parentResourceCsharpType!).As<ArmResource>().ResourceType()));
+            }
+            // For extension resource with known parent resource type, we can also generate a ValidateResourceId method
+            else if (_resourceMetadata.Scope.ScopeResourceType is { } parentResourceType)
+            {
+                methods.Add(ResourceMethodSnippets.BuildValidateResourceIdMethod(this, Literal(parentResourceType)));
             }
 
             methods.AddRange(BuildCreateOrUpdateMethods());

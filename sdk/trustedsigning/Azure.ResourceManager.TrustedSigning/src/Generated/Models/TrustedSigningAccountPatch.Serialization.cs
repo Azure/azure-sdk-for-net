@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(trustedSigningAccountPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(trustedSigningAccountPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

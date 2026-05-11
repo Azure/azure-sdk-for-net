@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Support
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class SupportTicketNoSubChatTranscriptCollection : ArmCollection, IEnumerable<SupportTicketNoSubChatTranscriptResource>, IAsyncEnumerable<SupportTicketNoSubChatTranscriptResource>
     {
-        private readonly ClientDiagnostics _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionClientDiagnostics;
-        private readonly ChatTranscriptsNoSubscriptionRestOperations _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionRestClient;
+        private readonly ClientDiagnostics _supportTicketNoSubChatTranscriptClientDiagnostics;
+        private readonly SupportTicketNoSubChatTranscript _supportTicketNoSubChatTranscriptRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SupportTicketNoSubChatTranscriptCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SupportTicketNoSubChatTranscriptCollection for mocking. </summary>
         protected SupportTicketNoSubChatTranscriptCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SupportTicketNoSubChatTranscriptCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTicketNoSubChatTranscriptCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SupportTicketNoSubChatTranscriptCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SupportTicketNoSubChatTranscriptResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SupportTicketNoSubChatTranscriptResource.ResourceType, out string supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionApiVersion);
-            _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionRestClient = new ChatTranscriptsNoSubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SupportTicketNoSubChatTranscriptResource.ResourceType, out string supportTicketNoSubChatTranscriptApiVersion);
+            _supportTicketNoSubChatTranscriptClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SupportTicketNoSubChatTranscriptResource.ResourceType.Namespace, Diagnostics);
+            _supportTicketNoSubChatTranscriptRestClient = new SupportTicketNoSubChatTranscript(_supportTicketNoSubChatTranscriptClientDiagnostics, Pipeline, Endpoint, supportTicketNoSubChatTranscriptApiVersion ?? "2025-06-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != "Microsoft.Support/supportTickets")
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Support/supportTickets"), nameof(id));
+            if (id.ResourceType != TenantSupportTicketResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantSupportTicketResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Returns chatTranscript details for a no subscription support ticket.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ChatTranscriptsNoSubscription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ChatTranscriptsNoSubscription_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubChatTranscriptResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="chatTranscriptName"> The name of the ChatTranscriptDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SupportTicketNoSubChatTranscriptResource>> GetAsync(string chatTranscriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(chatTranscriptName, nameof(chatTranscriptName));
 
-            using var scope = _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubChatTranscriptCollection.Get");
+            using DiagnosticScope scope = _supportTicketNoSubChatTranscriptClientDiagnostics.CreateScope("SupportTicketNoSubChatTranscriptCollection.Get");
             scope.Start();
             try
             {
-                var response = await _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionRestClient.GetAsync(Id.Name, chatTranscriptName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportTicketNoSubChatTranscriptRestClient.CreateGetRequest(Id.Name, chatTranscriptName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ChatTranscriptDetailData> response = Response.FromValue(ChatTranscriptDetailData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SupportTicketNoSubChatTranscriptResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.Support
         /// Returns chatTranscript details for a no subscription support ticket.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ChatTranscriptsNoSubscription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ChatTranscriptsNoSubscription_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubChatTranscriptResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="chatTranscriptName"> The name of the ChatTranscriptDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SupportTicketNoSubChatTranscriptResource> Get(string chatTranscriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(chatTranscriptName, nameof(chatTranscriptName));
 
-            using var scope = _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubChatTranscriptCollection.Get");
+            using DiagnosticScope scope = _supportTicketNoSubChatTranscriptClientDiagnostics.CreateScope("SupportTicketNoSubChatTranscriptCollection.Get");
             scope.Start();
             try
             {
-                var response = _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionRestClient.Get(Id.Name, chatTranscriptName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportTicketNoSubChatTranscriptRestClient.CreateGetRequest(Id.Name, chatTranscriptName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ChatTranscriptDetailData> response = Response.FromValue(ChatTranscriptDetailData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SupportTicketNoSubChatTranscriptResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +156,44 @@ namespace Azure.ResourceManager.Support
         /// Lists all chat transcripts for a support ticket
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ChatTranscriptsNoSubscription_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ChatTranscriptsNoSubscription_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubChatTranscriptResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SupportTicketNoSubChatTranscriptResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SupportTicketNoSubChatTranscriptResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SupportTicketNoSubChatTranscriptResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionRestClient.CreateListRequest(Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportTicketNoSubChatTranscriptResource(Client, ChatTranscriptDetailData.DeserializeChatTranscriptDetailData(e)), _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionClientDiagnostics, Pipeline, "SupportTicketNoSubChatTranscriptCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ChatTranscriptDetailData, SupportTicketNoSubChatTranscriptResource>(new SupportTicketNoSubChatTranscriptGetAllAsyncCollectionResultOfT(_supportTicketNoSubChatTranscriptRestClient, Id.Name, context, "SupportTicketNoSubChatTranscriptCollection.GetAll"), data => new SupportTicketNoSubChatTranscriptResource(Client, data));
         }
 
         /// <summary>
         /// Lists all chat transcripts for a support ticket
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ChatTranscriptsNoSubscription_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ChatTranscriptsNoSubscription_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubChatTranscriptResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +201,61 @@ namespace Azure.ResourceManager.Support
         /// <returns> A collection of <see cref="SupportTicketNoSubChatTranscriptResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SupportTicketNoSubChatTranscriptResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionRestClient.CreateListRequest(Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportTicketNoSubChatTranscriptResource(Client, ChatTranscriptDetailData.DeserializeChatTranscriptDetailData(e)), _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionClientDiagnostics, Pipeline, "SupportTicketNoSubChatTranscriptCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ChatTranscriptDetailData, SupportTicketNoSubChatTranscriptResource>(new SupportTicketNoSubChatTranscriptGetAllCollectionResultOfT(_supportTicketNoSubChatTranscriptRestClient, Id.Name, context, "SupportTicketNoSubChatTranscriptCollection.GetAll"), data => new SupportTicketNoSubChatTranscriptResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ChatTranscriptsNoSubscription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ChatTranscriptsNoSubscription_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubChatTranscriptResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="chatTranscriptName"> The name of the ChatTranscriptDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string chatTranscriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(chatTranscriptName, nameof(chatTranscriptName));
 
-            using var scope = _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubChatTranscriptCollection.Exists");
+            using DiagnosticScope scope = _supportTicketNoSubChatTranscriptClientDiagnostics.CreateScope("SupportTicketNoSubChatTranscriptCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionRestClient.GetAsync(Id.Name, chatTranscriptName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportTicketNoSubChatTranscriptRestClient.CreateGetRequest(Id.Name, chatTranscriptName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ChatTranscriptDetailData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ChatTranscriptDetailData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ChatTranscriptDetailData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +269,50 @@ namespace Azure.ResourceManager.Support
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ChatTranscriptsNoSubscription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ChatTranscriptsNoSubscription_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubChatTranscriptResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="chatTranscriptName"> The name of the ChatTranscriptDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string chatTranscriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(chatTranscriptName, nameof(chatTranscriptName));
 
-            using var scope = _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubChatTranscriptCollection.Exists");
+            using DiagnosticScope scope = _supportTicketNoSubChatTranscriptClientDiagnostics.CreateScope("SupportTicketNoSubChatTranscriptCollection.Exists");
             scope.Start();
             try
             {
-                var response = _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionRestClient.Get(Id.Name, chatTranscriptName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportTicketNoSubChatTranscriptRestClient.CreateGetRequest(Id.Name, chatTranscriptName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ChatTranscriptDetailData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ChatTranscriptDetailData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ChatTranscriptDetailData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +326,54 @@ namespace Azure.ResourceManager.Support
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ChatTranscriptsNoSubscription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ChatTranscriptsNoSubscription_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubChatTranscriptResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="chatTranscriptName"> The name of the ChatTranscriptDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SupportTicketNoSubChatTranscriptResource>> GetIfExistsAsync(string chatTranscriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(chatTranscriptName, nameof(chatTranscriptName));
 
-            using var scope = _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubChatTranscriptCollection.GetIfExists");
+            using DiagnosticScope scope = _supportTicketNoSubChatTranscriptClientDiagnostics.CreateScope("SupportTicketNoSubChatTranscriptCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionRestClient.GetAsync(Id.Name, chatTranscriptName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportTicketNoSubChatTranscriptRestClient.CreateGetRequest(Id.Name, chatTranscriptName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ChatTranscriptDetailData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ChatTranscriptDetailData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ChatTranscriptDetailData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SupportTicketNoSubChatTranscriptResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SupportTicketNoSubChatTranscriptResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +387,54 @@ namespace Azure.ResourceManager.Support
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ChatTranscriptsNoSubscription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ChatTranscriptsNoSubscription_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubChatTranscriptResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="chatTranscriptName"> The name of the ChatTranscriptDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SupportTicketNoSubChatTranscriptResource> GetIfExists(string chatTranscriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(chatTranscriptName, nameof(chatTranscriptName));
 
-            using var scope = _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubChatTranscriptCollection.GetIfExists");
+            using DiagnosticScope scope = _supportTicketNoSubChatTranscriptClientDiagnostics.CreateScope("SupportTicketNoSubChatTranscriptCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionRestClient.Get(Id.Name, chatTranscriptName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportTicketNoSubChatTranscriptRestClient.CreateGetRequest(Id.Name, chatTranscriptName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ChatTranscriptDetailData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ChatTranscriptDetailData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ChatTranscriptDetailData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SupportTicketNoSubChatTranscriptResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SupportTicketNoSubChatTranscriptResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +454,7 @@ namespace Azure.ResourceManager.Support
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SupportTicketNoSubChatTranscriptResource> IAsyncEnumerable<SupportTicketNoSubChatTranscriptResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

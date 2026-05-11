@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public Azure.Core.TokenCredential Credential { get { throw null; } set { } }
         public bool DisableOfflineStorage { get { throw null; } set { } }
         public bool EnableLiveMetrics { get { throw null; } set { } }
-        public bool EnablePerfCounters { get { throw null; } set { } }
+        public bool EnablePerformanceCounters { get { throw null; } set { } }
         public bool EnableStandardMetrics { get { throw null; } set { } }
         public bool EnableTraceBasedLogsSampler { get { throw null; } set { } }
         public float SamplingRatio { get { throw null; } set { } }
@@ -41,8 +41,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     }
     public partial class AzureMonitorOpenTelemetryExporterContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        public AzureMonitorOpenTelemetryExporterContext() { }
-        public Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorOpenTelemetryExporterContext Default { get { throw null; } }
+        internal AzureMonitorOpenTelemetryExporterContext() { }
+        public static Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorOpenTelemetryExporterContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
     public sealed partial class AzureMonitorTraceExporter : OpenTelemetry.BaseExporter<System.Diagnostics.Activity>
     {

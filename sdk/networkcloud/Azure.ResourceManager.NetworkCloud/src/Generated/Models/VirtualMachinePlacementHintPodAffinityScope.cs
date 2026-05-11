@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct VirtualMachinePlacementHintPodAffinityScope : IEquatable<VirtualMachinePlacementHintPodAffinityScope>
     {
         private readonly string _value;
+        /// <summary> The virtual machine placement hint is scoped to the bare metal machine. </summary>
+        private const string MachineValue = "Machine";
+        /// <summary> The virtual machine placement hint is scoped to the rack. </summary>
+        private const string RackValue = "Rack";
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachinePlacementHintPodAffinityScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualMachinePlacementHintPodAffinityScope(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string RackValue = "Rack";
-        private const string MachineValue = "Machine";
-
-        /// <summary> Rack. </summary>
-        public static VirtualMachinePlacementHintPodAffinityScope Rack { get; } = new VirtualMachinePlacementHintPodAffinityScope(RackValue);
-        /// <summary> Machine. </summary>
+        /// <summary> The virtual machine placement hint is scoped to the bare metal machine. </summary>
         public static VirtualMachinePlacementHintPodAffinityScope Machine { get; } = new VirtualMachinePlacementHintPodAffinityScope(MachineValue);
+
+        /// <summary> The virtual machine placement hint is scoped to the rack. </summary>
+        public static VirtualMachinePlacementHintPodAffinityScope Rack { get; } = new VirtualMachinePlacementHintPodAffinityScope(RackValue);
+
         /// <summary> Determines if two <see cref="VirtualMachinePlacementHintPodAffinityScope"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualMachinePlacementHintPodAffinityScope left, VirtualMachinePlacementHintPodAffinityScope right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualMachinePlacementHintPodAffinityScope"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualMachinePlacementHintPodAffinityScope left, VirtualMachinePlacementHintPodAffinityScope right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachinePlacementHintPodAffinityScope"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualMachinePlacementHintPodAffinityScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualMachinePlacementHintPodAffinityScope(string value) => new VirtualMachinePlacementHintPodAffinityScope(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualMachinePlacementHintPodAffinityScope"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualMachinePlacementHintPodAffinityScope?(string value) => value == null ? null : new VirtualMachinePlacementHintPodAffinityScope(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualMachinePlacementHintPodAffinityScope other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualMachinePlacementHintPodAffinityScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

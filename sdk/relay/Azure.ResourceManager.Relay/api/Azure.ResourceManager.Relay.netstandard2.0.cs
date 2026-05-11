@@ -11,7 +11,10 @@ namespace Azure.ResourceManager.Relay
         public RelayAuthorizationRuleData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Relay.Models.RelayAccessRight> Rights { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Relay.RelayAuthorizationRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.RelayAuthorizationRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -103,7 +106,10 @@ namespace Azure.ResourceManager.Relay
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public string UserMetadata { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Relay.RelayHybridConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayHybridConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayHybridConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.RelayHybridConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayHybridConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -201,7 +207,10 @@ namespace Azure.ResourceManager.Relay
         public Azure.ResourceManager.Relay.Models.RelaySku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Relay.RelayNamespaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayNamespaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayNamespaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.RelayNamespaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayNamespaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -255,7 +264,11 @@ namespace Azure.ResourceManager.Relay
         public Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetIPRule> IPRules { get { throw null; } }
         public Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public bool? TrustedServiceAccessEnabled { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Relay.RelayNetworkRuleSetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayNetworkRuleSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayNetworkRuleSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.RelayNetworkRuleSetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayNetworkRuleSetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -303,7 +316,10 @@ namespace Azure.ResourceManager.Relay
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.Relay.Models.RelayPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -365,7 +381,10 @@ namespace Azure.ResourceManager.Relay
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Relay.RelayPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.RelayPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -441,7 +460,10 @@ namespace Azure.ResourceManager.Relay
         public Azure.ResourceManager.Relay.Models.RelayType? RelayType { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public string UserMetadata { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Relay.WcfRelayData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.WcfRelayData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.WcfRelayData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.WcfRelayData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.WcfRelayData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -509,10 +531,12 @@ namespace Azure.ResourceManager.Relay.Models
         public static Azure.ResourceManager.Relay.Models.RelayAccessKeys RelayAccessKeys(string primaryConnectionString = null, string secondaryConnectionString = null, string primaryKey = null, string secondaryKey = null, string keyName = null) { throw null; }
         public static Azure.ResourceManager.Relay.RelayAuthorizationRuleData RelayAuthorizationRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.Models.RelayAccessRight> rights = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.Relay.RelayHybridConnectionData RelayHybridConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), int? listenerCount = default(int?), bool? isClientAuthorizationRequired = default(bool?), string userMetadata = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent RelayNameAvailabilityContent(string name = null) { throw null; }
         public static Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult RelayNameAvailabilityResult(string message = null, bool? isNameAvailable = default(bool?), Azure.ResourceManager.Relay.Models.RelayNameUnavailableReason? reason = default(Azure.ResourceManager.Relay.Models.RelayNameUnavailableReason?)) { throw null; }
         public static Azure.ResourceManager.Relay.RelayNamespaceData RelayNamespaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Relay.Models.RelaySku sku = null, string provisioningState = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string serviceBusEndpoint = null, string metricId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess?)) { throw null; }
         public static Azure.ResourceManager.Relay.Models.RelayNamespacePatch RelayNamespacePatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Relay.Models.RelaySku sku = null, string provisioningState = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string serviceBusEndpoint = null, string metricId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.Relay.RelayNetworkRuleSetData RelayNetworkRuleSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction? defaultAction = default(Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction?), Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetIPRule> ipRules = null) { throw null; }
+        public static Azure.ResourceManager.Relay.RelayNetworkRuleSetData RelayNetworkRuleSetData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction? defaultAction, Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess? publicNetworkAccess, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetIPRule> ipRules) { throw null; }
+        public static Azure.ResourceManager.Relay.RelayNetworkRuleSetData RelayNetworkRuleSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? trustedServiceAccessEnabled = default(bool?), Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction? defaultAction = default(Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction?), Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetIPRule> ipRules = null) { throw null; }
         public static Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData RelayPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.Relay.Models.RelayPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.Relay.Models.RelayPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.Relay.Models.RelayPrivateEndpointConnectionProvisioningState?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.Relay.RelayPrivateLinkResourceData RelayPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent RelayRegenerateAccessKeyContent(Azure.ResourceManager.Relay.Models.RelayAccessKeyType keyType = default(Azure.ResourceManager.Relay.Models.RelayAccessKeyType), string key = null) { throw null; }
@@ -526,7 +550,10 @@ namespace Azure.ResourceManager.Relay.Models
         public string PrimaryKey { get { throw null; } }
         public string SecondaryConnectionString { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
+        protected virtual Azure.ResourceManager.Relay.Models.RelayAccessKeys JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Relay.Models.RelayAccessKeys PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Relay.Models.RelayAccessKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayAccessKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayAccessKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayAccessKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.Models.RelayAccessKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -546,6 +573,7 @@ namespace Azure.ResourceManager.Relay.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelayAccessKeyType left, Azure.ResourceManager.Relay.Models.RelayAccessKeyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelayAccessKeyType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Relay.Models.RelayAccessKeyType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Relay.Models.RelayAccessKeyType left, Azure.ResourceManager.Relay.Models.RelayAccessKeyType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -563,6 +591,7 @@ namespace Azure.ResourceManager.Relay.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelayAccessRight left, Azure.ResourceManager.Relay.Models.RelayAccessRight right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelayAccessRight (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Relay.Models.RelayAccessRight? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Relay.Models.RelayAccessRight left, Azure.ResourceManager.Relay.Models.RelayAccessRight right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -570,7 +599,10 @@ namespace Azure.ResourceManager.Relay.Models
     {
         public RelayNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -583,7 +615,10 @@ namespace Azure.ResourceManager.Relay.Models
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.Relay.Models.RelayNameUnavailableReason? Reason { get { throw null; } }
+        protected virtual Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -603,7 +638,10 @@ namespace Azure.ResourceManager.Relay.Models
         public string Status { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Relay.Models.RelayNamespacePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayNamespacePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayNamespacePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayNamespacePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.Models.RelayNamespacePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -627,6 +665,7 @@ namespace Azure.ResourceManager.Relay.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelayNameUnavailableReason left, Azure.ResourceManager.Relay.Models.RelayNameUnavailableReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelayNameUnavailableReason (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Relay.Models.RelayNameUnavailableReason? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Relay.Models.RelayNameUnavailableReason left, Azure.ResourceManager.Relay.Models.RelayNameUnavailableReason right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -642,6 +681,7 @@ namespace Azure.ResourceManager.Relay.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelayNetworkRuleIPAction left, Azure.ResourceManager.Relay.Models.RelayNetworkRuleIPAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelayNetworkRuleIPAction (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Relay.Models.RelayNetworkRuleIPAction? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Relay.Models.RelayNetworkRuleIPAction left, Azure.ResourceManager.Relay.Models.RelayNetworkRuleIPAction right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -658,6 +698,7 @@ namespace Azure.ResourceManager.Relay.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction left, Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction left, Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -666,7 +707,10 @@ namespace Azure.ResourceManager.Relay.Models
         public RelayNetworkRuleSetIPRule() { }
         public Azure.ResourceManager.Relay.Models.RelayNetworkRuleIPAction? Action { get { throw null; } set { } }
         public string IPMask { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetIPRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetIPRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetIPRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetIPRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetIPRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetIPRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetIPRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -690,6 +734,7 @@ namespace Azure.ResourceManager.Relay.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelayPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.Relay.Models.RelayPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelayPrivateEndpointConnectionProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Relay.Models.RelayPrivateEndpointConnectionProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Relay.Models.RelayPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.Relay.Models.RelayPrivateEndpointConnectionProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -708,6 +753,7 @@ namespace Azure.ResourceManager.Relay.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelayPrivateLinkConnectionStatus left, Azure.ResourceManager.Relay.Models.RelayPrivateLinkConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelayPrivateLinkConnectionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Relay.Models.RelayPrivateLinkConnectionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Relay.Models.RelayPrivateLinkConnectionStatus left, Azure.ResourceManager.Relay.Models.RelayPrivateLinkConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -716,7 +762,10 @@ namespace Azure.ResourceManager.Relay.Models
         public RelayPrivateLinkServiceConnectionState() { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.Relay.Models.RelayPrivateLinkConnectionStatus? Status { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Relay.Models.RelayPrivateLinkServiceConnectionState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Relay.Models.RelayPrivateLinkServiceConnectionState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Relay.Models.RelayPrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayPrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.Models.RelayPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -737,6 +786,7 @@ namespace Azure.ResourceManager.Relay.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess left, Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess left, Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -745,7 +795,10 @@ namespace Azure.ResourceManager.Relay.Models
         public RelayRegenerateAccessKeyContent(Azure.ResourceManager.Relay.Models.RelayAccessKeyType keyType) { }
         public string Key { get { throw null; } set { } }
         public Azure.ResourceManager.Relay.Models.RelayAccessKeyType KeyType { get { throw null; } }
+        protected virtual Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -757,7 +810,10 @@ namespace Azure.ResourceManager.Relay.Models
         public RelaySku(Azure.ResourceManager.Relay.Models.RelaySkuName name) { }
         public Azure.ResourceManager.Relay.Models.RelaySkuName Name { get { throw null; } set { } }
         public Azure.ResourceManager.Relay.Models.RelaySkuTier? Tier { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Relay.Models.RelaySku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Relay.Models.RelaySku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Relay.Models.RelaySku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelaySku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.Models.RelaySku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Relay.Models.RelaySku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.Models.RelaySku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -776,6 +832,7 @@ namespace Azure.ResourceManager.Relay.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelaySkuName left, Azure.ResourceManager.Relay.Models.RelaySkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelaySkuName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Relay.Models.RelaySkuName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Relay.Models.RelaySkuName left, Azure.ResourceManager.Relay.Models.RelaySkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -791,6 +848,7 @@ namespace Azure.ResourceManager.Relay.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Relay.Models.RelaySkuTier left, Azure.ResourceManager.Relay.Models.RelaySkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Relay.Models.RelaySkuTier (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Relay.Models.RelaySkuTier? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Relay.Models.RelaySkuTier left, Azure.ResourceManager.Relay.Models.RelaySkuTier right) { throw null; }
         public override string ToString() { throw null; }
     }

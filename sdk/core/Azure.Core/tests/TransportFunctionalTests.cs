@@ -169,6 +169,27 @@ namespace Azure.Core.Tests
             Assert.AreEqual("example.org", host.ToString());
         }
 
+        [Test]
+        public async Task SettingHostHeaderWithSetValueIsReflectedOnServer()
+        {
+            HostString? host = null;
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    host = context.Request.GetTypedHeaders().Host;
+                });
+
+            var transport = GetTransport();
+            Request request = transport.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(testServer.Address);
+            request.Headers.SetValue("Host", "custom.example.com");
+
+            await ExecuteRequest(request, transport);
+
+            Assert.AreEqual("custom.example.com", host.ToString());
+        }
+
         [Theory]
         [TestCase(200)]
         [TestCase(300)]

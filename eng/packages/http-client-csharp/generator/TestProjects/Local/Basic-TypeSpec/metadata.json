@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2024-08-16-preview"
+  "apiVersions": {
+    "BasicTypeSpec": "2024-08-16-preview"
+  }
 }

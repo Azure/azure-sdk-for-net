@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerService
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class ContainerServiceMaintenanceConfigurationCollection : ArmCollection, IEnumerable<ContainerServiceMaintenanceConfigurationResource>, IAsyncEnumerable<ContainerServiceMaintenanceConfigurationResource>
     {
-        private readonly ClientDiagnostics _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics;
-        private readonly MaintenanceConfigurationsRestOperations _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient;
+        private readonly ClientDiagnostics _maintenanceConfigurationsClientDiagnostics;
+        private readonly MaintenanceConfigurations _maintenanceConfigurationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerServiceMaintenanceConfigurationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ContainerServiceMaintenanceConfigurationCollection for mocking. </summary>
         protected ContainerServiceMaintenanceConfigurationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerServiceMaintenanceConfigurationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceConfigurationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerServiceMaintenanceConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ContainerServiceMaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ContainerServiceMaintenanceConfigurationResource.ResourceType, out string containerServiceMaintenanceConfigurationMaintenanceConfigurationsApiVersion);
-            _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient = new MaintenanceConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceMaintenanceConfigurationMaintenanceConfigurationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ContainerServiceMaintenanceConfigurationResource.ResourceType, out string containerServiceMaintenanceConfigurationApiVersion);
+            _maintenanceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ContainerServiceMaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
+            _maintenanceConfigurationsRestClient = new MaintenanceConfigurations(_maintenanceConfigurationsClientDiagnostics, Pipeline, Endpoint, containerServiceMaintenanceConfigurationApiVersion ?? "2026-01-02-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ContainerServiceManagedClusterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceManagedClusterResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceManagedClusterResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a maintenance configuration in the specified managed cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceConfigurations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceConfigurations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="configName"> The name of the maintenance configuration. Supported values are 'default', 'aksManagedAutoUpgradeSchedule', or 'aksManagedNodeOSUpgradeSchedule'. </param>
         /// <param name="data"> The maintenance configuration to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ContainerServiceMaintenanceConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configName, ContainerServiceMaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configName, nameof(configName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ContainerServiceArmOperation<ContainerServiceMaintenanceConfigurationResource>(Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _maintenanceConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configName, ContainerServiceMaintenanceConfigurationData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerServiceMaintenanceConfigurationData> response = Response.FromValue(ContainerServiceMaintenanceConfigurationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ContainerServiceArmOperation<ContainerServiceMaintenanceConfigurationResource> operation = new ContainerServiceArmOperation<ContainerServiceMaintenanceConfigurationResource>(Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.ContainerService
         /// Creates or updates a maintenance configuration in the specified managed cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceConfigurations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceConfigurations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="configName"> The name of the maintenance configuration. Supported values are 'default', 'aksManagedAutoUpgradeSchedule', or 'aksManagedNodeOSUpgradeSchedule'. </param>
         /// <param name="data"> The maintenance configuration to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ContainerServiceMaintenanceConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string configName, ContainerServiceMaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configName, nameof(configName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, data, cancellationToken);
-                var uri = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ContainerServiceArmOperation<ContainerServiceMaintenanceConfigurationResource>(Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _maintenanceConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configName, ContainerServiceMaintenanceConfigurationData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerServiceMaintenanceConfigurationData> response = Response.FromValue(ContainerServiceMaintenanceConfigurationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ContainerServiceArmOperation<ContainerServiceMaintenanceConfigurationResource> operation = new ContainerServiceArmOperation<ContainerServiceMaintenanceConfigurationResource>(Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.ContainerService
         /// Gets the specified maintenance configuration of a managed cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configName"> The name of the maintenance configuration. Supported values are 'default', 'aksManagedAutoUpgradeSchedule', or 'aksManagedNodeOSUpgradeSchedule'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ContainerServiceMaintenanceConfigurationResource>> GetAsync(string configName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configName, nameof(configName));
 
-            using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.Get");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerServiceMaintenanceConfigurationData> response = Response.FromValue(ContainerServiceMaintenanceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.ContainerService
         /// Gets the specified maintenance configuration of a managed cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configName"> The name of the maintenance configuration. Supported values are 'default', 'aksManagedAutoUpgradeSchedule', or 'aksManagedNodeOSUpgradeSchedule'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ContainerServiceMaintenanceConfigurationResource> Get(string configName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configName, nameof(configName));
 
-            using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.Get");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerServiceMaintenanceConfigurationData> response = Response.FromValue(ContainerServiceMaintenanceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,50 +266,50 @@ namespace Azure.ResourceManager.ContainerService
         /// Gets a list of maintenance configurations in the specified managed cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceConfigurations_ListByManagedCluster</description>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceConfigurations_ListByManagedCluster. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerServiceMaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerServiceMaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerServiceMaintenanceConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceMaintenanceConfigurationResource(Client, ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(e)), _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics, Pipeline, "ContainerServiceMaintenanceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ContainerServiceMaintenanceConfigurationData, ContainerServiceMaintenanceConfigurationResource>(new MaintenanceConfigurationsGetByManagedClusterAsyncCollectionResultOfT(
+                _maintenanceConfigurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerServiceMaintenanceConfigurationCollection.GetAll"), data => new ContainerServiceMaintenanceConfigurationResource(Client, data));
         }
 
         /// <summary>
         /// Gets a list of maintenance configurations in the specified managed cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceConfigurations_ListByManagedCluster</description>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceConfigurations_ListByManagedCluster. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,45 +317,67 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="ContainerServiceMaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerServiceMaintenanceConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceMaintenanceConfigurationResource(Client, ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(e)), _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics, Pipeline, "ContainerServiceMaintenanceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ContainerServiceMaintenanceConfigurationData, ContainerServiceMaintenanceConfigurationResource>(new MaintenanceConfigurationsGetByManagedClusterCollectionResultOfT(
+                _maintenanceConfigurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerServiceMaintenanceConfigurationCollection.GetAll"), data => new ContainerServiceMaintenanceConfigurationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configName"> The name of the maintenance configuration. Supported values are 'default', 'aksManagedAutoUpgradeSchedule', or 'aksManagedNodeOSUpgradeSchedule'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string configName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configName, nameof(configName));
 
-            using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.Exists");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerServiceMaintenanceConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerServiceMaintenanceConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerServiceMaintenanceConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +391,50 @@ namespace Azure.ResourceManager.ContainerService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configName"> The name of the maintenance configuration. Supported values are 'default', 'aksManagedAutoUpgradeSchedule', or 'aksManagedNodeOSUpgradeSchedule'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string configName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configName, nameof(configName));
 
-            using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.Exists");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerServiceMaintenanceConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerServiceMaintenanceConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerServiceMaintenanceConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +448,54 @@ namespace Azure.ResourceManager.ContainerService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configName"> The name of the maintenance configuration. Supported values are 'default', 'aksManagedAutoUpgradeSchedule', or 'aksManagedNodeOSUpgradeSchedule'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ContainerServiceMaintenanceConfigurationResource>> GetIfExistsAsync(string configName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configName, nameof(configName));
 
-            using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerServiceMaintenanceConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerServiceMaintenanceConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerServiceMaintenanceConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerServiceMaintenanceConfigurationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +509,54 @@ namespace Azure.ResourceManager.ContainerService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configName"> The name of the maintenance configuration. Supported values are 'default', 'aksManagedAutoUpgradeSchedule', or 'aksManagedNodeOSUpgradeSchedule'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ContainerServiceMaintenanceConfigurationResource> GetIfExists(string configName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configName, nameof(configName));
 
-            using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerServiceMaintenanceConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerServiceMaintenanceConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerServiceMaintenanceConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerServiceMaintenanceConfigurationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +576,7 @@ namespace Azure.ResourceManager.ContainerService
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ContainerServiceMaintenanceConfigurationResource> IAsyncEnumerable<ContainerServiceMaintenanceConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

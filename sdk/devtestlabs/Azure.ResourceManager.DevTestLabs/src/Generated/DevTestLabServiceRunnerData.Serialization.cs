@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(devTestLabServiceRunnerData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(devTestLabServiceRunnerData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DevTestLabServiceRunnerData"/> from. </param>
@@ -103,22 +101,6 @@ namespace Azure.ResourceManager.DevTestLabs
                 throw new FormatException($"The model {nameof(DevTestLabServiceRunnerData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);

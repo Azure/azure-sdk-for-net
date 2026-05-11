@@ -8,22 +8,23 @@ for trace analysis and monitors the evaluation run until it completes.
 ## Prerequisites
 1. Create the Application Insights and add it as a connection to Azure Foundry.
 2. Assign the "Log Analytics Reader" role for AI Foundry and the projects managed identity (this operation may take up to an hour).
-3. In this example it is expected that the Application Insights contains traces for the Agent. To make sure that the traces were logged, we recommend running [telemetry sample](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/ai/azure-ai-projects/samples/agents/telemetry/sample_agent_basic_with_azure_monitor_tracing.py) and saving the agent ID to be used as an environment variable. Please set the environment variable `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` to be `true` to save messages to traces. Agent ID has a form of `$"{agent.Name}:{agent.Version}"`. It may be also useful to change the Agent's name, so that it can be separated from Agents, which may not have traces.
-
+3. In this example it is expected that the Application Insights contains traces for the Agent. To make sure that the traces were logged, we recommend running [telemetry sample](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/ai/azure-ai-projects/samples/agents/telemetry/sample_agent_basic_with_azure_monitor_tracing.py) and saving the agent ID to be used as an environment variable. Please set the environment variables `AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING` and `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` to be `true` to save messages to traces. Agent ID has a form of `$"{agent.Name}:{agent.Version}"`. It may be also useful to change the Agent's name, so that it can be separated from Agents, which may not have traces.
 
 ## Run the sample
 
 1. First, we need to create project client and read the environment variables which will be used in the next steps. We will also create an `EvaluationClient` for creating and running evaluations.
+**Note:** The resource ID, provided in `APPLICATIONINSIGHTS_RESOURCE_ID` environment variable is not the same as connection ID in Microsoft foundry. It should have a form of
+`/subscriptions/<your_subscription_id>/resourceGroups/<your_resource_group_id>/providers/microsoft.insights/components/<your_application_insights_name>`. If the ID is incorrect the error will be as follows: "Failed to resolve table or column expression named 'dependencies'".
 
 ```C# Snippet:Sample_CreateClients_EvaluationsMonitor
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var applicationInsightsResourceId = System.Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_RESOURCE_ID");
-var agentId = System.Environment.GetEnvironmentVariable("AGENT_ID");
+var agentId = System.Environment.GetEnvironmentVariable("FOUNDRY_AGENT_ID");
 var lookbackHours = int.Parse(System.Environment.GetEnvironmentVariable("TRACE_LOOKBACK_HOURS"));
 DateTimeOffset endTime = DateTimeOffset.Now;
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
 ```
 
 2. To get the traces IDs for the Agent we will create and run the query our Application Insights.
@@ -153,12 +154,12 @@ private static BinaryData GetEvaluationCriteria(string[] names, string modelDepl
 
 5. The `EvaluationClient` uses protocol methods i.e. they take in JSON in the form of `BinaryData` and return `ClientResult`, containing binary encoded JSON response, which can be retrieved using `GetRawResponse()` method. To simplify parsing JSON we will create helper methods. One of the methods is named `ParseClientResult`. It gets string values of the top-level JSON properties. In the next section we will use this method to get evaluation name and ID.
 
-```C# Snippet:Sample_GetStringValues_EvaluationsMonitor
-private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
+```C# Snippet:Sample_ParseClientResult_EvaluationSampleBase
+protected static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
 {
     Dictionary<string, string> results = [];
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-    JsonDocument document = JsonDocument.ParseValue(ref reader);
+    using JsonDocument document = JsonDocument.ParseValue(ref reader);
     foreach (JsonProperty prop in document.RootElement.EnumerateObject())
     {
         foreach (string key in expectedProperties)
@@ -169,7 +170,7 @@ private static Dictionary<string, string> ParseClientResult(ClientResult result,
             }
         }
     }
-    List<string> notFoundItems = expectedProperties.Where((key) => !results.ContainsKey(key)).ToList();
+    List<string> notFoundItems = [.. expectedProperties.Where((key) => !results.ContainsKey(key))];
     if (notFoundItems.Count > 0)
     {
         StringBuilder sbNotFound = new();
@@ -258,12 +259,12 @@ Console.WriteLine($"Evaluation run created (id: {runId})");
 
 9. Define the method to get the error message and code from the response if any.
 
-```C# Snippet:Sample_GetError_EvaluationsMonitor
-private static string GetErrorMessageOrEmpty(ClientResult result)
+```C# Snippet:Sample_GetErrorMessageOrEmpty_EvaluationSampleBase
+protected static string GetErrorMessageOrEmpty(ClientResult result)
 {
     string error = "";
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-    JsonDocument document = JsonDocument.ParseValue(ref reader);
+    using JsonDocument document = JsonDocument.ParseValue(ref reader);
     string code = default;
     string message = default;
     foreach (JsonProperty prop in document.RootElement.EnumerateObject())
@@ -328,11 +329,11 @@ if (runStatus == "failed")
 
 11. Like the `ParseClientResult` we will define the method, getting the result counts `GetResultsCounts`, which formats the `result_counts` property of the output JSON.
 
-```C# Snippet:Sample_GetResultCounts_EvaluationsMonitor
-private static string GetResultsCounts(ClientResult result)
+```C# Snippet:Sample_GetResultCounts_EvaluationSampleBase
+protected static string GetResultsCounts(ClientResult result)
 {
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-    JsonDocument document = JsonDocument.ParseValue(ref reader);
+    using JsonDocument document = JsonDocument.ParseValue(ref reader);
     StringBuilder sbFormattedCounts = new("{\n");
     foreach (JsonProperty prop in document.RootElement.EnumerateObject())
     {
@@ -359,17 +360,17 @@ private static string GetResultsCounts(ClientResult result)
 12. To get the results JSON we will define two methods `GetResultsList` and `GetResultsListAsync`, which are iterating over the pages containing results.
 
 Synchronous sample:
-```C# Snippet:Sample_GetResultsList_EvaluationsMonitor_Sync
-private static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
+```C# Snippet:Sample_GetResultsList_EvaluationSampleBase
+protected static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
 {
     List<string> resultJsons = [];
     bool hasMore = false;
+    string after = default;
     do
     {
-        ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+        ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
         Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
-        List<string> data = [];
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
         foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
         {
@@ -386,6 +387,10 @@ private static List<string> GetResultsList(EvaluationClient client, string evalu
                         resultJsons.Add(dataElement.ToString());
                     }
                 }
+            }
+            else if (topProperty.NameEquals("last_id"u8))
+            {
+                after = topProperty.Value.GetString();
             }
         }
     } while (hasMore);
@@ -394,16 +399,17 @@ private static List<string> GetResultsList(EvaluationClient client, string evalu
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_GetResultsList_EvaluationsMonitor_Async
-private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
+```C# Snippet:Sample_GetResultsListAsync_EvaluationSampleBase
+protected static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
 {
     List<string> resultJsons = [];
     bool hasMore = false;
+    string after = default;
     do
     {
-        ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+        ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
         Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
         foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
         {
@@ -420,6 +426,10 @@ private static async Task<List<string>> GetResultsListAsync(EvaluationClient cli
                         resultJsons.Add(dataElement.ToString());
                     }
                 }
+            }
+            else if (topProperty.NameEquals("last_id"u8))
+            {
+                after = topProperty.Value.GetString();
             }
         }
     } while (hasMore);

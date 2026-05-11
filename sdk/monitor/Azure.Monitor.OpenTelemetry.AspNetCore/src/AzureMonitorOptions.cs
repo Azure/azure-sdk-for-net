@@ -58,7 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// Gets or sets a value indicating whether performance counters should be collected.
         /// Default is true.
         /// </summary>
-        public bool EnablePerfCounters { get; set; } = true;
+        public bool EnablePerformanceCounters { get; set; } = true;
 
         /// <summary>
         /// Enables or disables filtering logs based on trace sampling decisions.
@@ -108,7 +108,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             exporterOptions.StorageDirectory = StorageDirectory;
             exporterOptions.EnableLiveMetrics = EnableLiveMetrics;
             exporterOptions.EnableStandardMetrics = EnableStandardMetrics;
-            exporterOptions.EnablePerfCounters = EnablePerfCounters;
+            exporterOptions.EnablePerformanceCounters = EnablePerformanceCounters;
             exporterOptions.EnableTraceBasedLogsSampler = EnableTraceBasedLogsSampler;
             if (Transport != null)
             {

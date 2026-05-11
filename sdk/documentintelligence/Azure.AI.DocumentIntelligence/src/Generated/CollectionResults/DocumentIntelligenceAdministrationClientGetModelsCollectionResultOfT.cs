@@ -17,14 +17,17 @@ namespace Azure.AI.DocumentIntelligence
     {
         private readonly DocumentIntelligenceAdministrationClient _client;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DocumentIntelligenceAdministrationClientGetModelsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DocumentIntelligenceAdministrationClient client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DocumentIntelligenceAdministrationClientGetModelsCollectionResultOfT(DocumentIntelligenceAdministrationClient client, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DocumentIntelligenceAdministrationClientGetModelsCollectionResultOfT(DocumentIntelligenceAdministrationClient client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DocumentIntelligenceAdministrationClientGetModelsCollectionResultOfT as an enumerable collection. </summary>
@@ -57,7 +60,7 @@ namespace Azure.AI.DocumentIntelligence
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetModelsRequest(nextLink, _context) : _client.CreateGetModelsRequest(_context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetModels");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class DeploymentSettingQosPolicyOverrides : IUtf8JsonSerializable, IJsonModel<DeploymentSettingQosPolicyOverrides>
+    /// <summary> The QoSPolicyOverrides of a cluster. </summary>
+    public partial class DeploymentSettingQosPolicyOverrides : IJsonModel<DeploymentSettingQosPolicyOverrides>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentSettingQosPolicyOverrides>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeploymentSettingQosPolicyOverrides PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingQosPolicyOverrides>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDeploymentSettingQosPolicyOverrides(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeploymentSettingQosPolicyOverrides)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingQosPolicyOverrides>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DeploymentSettingQosPolicyOverrides)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeploymentSettingQosPolicyOverrides>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeploymentSettingQosPolicyOverrides IPersistableModel<DeploymentSettingQosPolicyOverrides>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeploymentSettingQosPolicyOverrides>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeploymentSettingQosPolicyOverrides>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingQosPolicyOverrides>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingQosPolicyOverrides>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeploymentSettingQosPolicyOverrides)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(PriorityValue8021ActionCluster))
             {
                 writer.WritePropertyName("priorityValue8021Action_Cluster"u8);
@@ -50,15 +89,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("bandwidthPercentage_SMB"u8);
                 writer.WriteStringValue(BandwidthPercentageSmb);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -67,22 +106,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        DeploymentSettingQosPolicyOverrides IJsonModel<DeploymentSettingQosPolicyOverrides>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeploymentSettingQosPolicyOverrides IJsonModel<DeploymentSettingQosPolicyOverrides>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeploymentSettingQosPolicyOverrides JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingQosPolicyOverrides>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingQosPolicyOverrides>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeploymentSettingQosPolicyOverrides)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDeploymentSettingQosPolicyOverrides(document.RootElement, options);
         }
 
-        internal static DeploymentSettingQosPolicyOverrides DeserializeDeploymentSettingQosPolicyOverrides(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DeploymentSettingQosPolicyOverrides DeserializeDeploymentSettingQosPolicyOverrides(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -90,149 +134,30 @@ namespace Azure.ResourceManager.Hci.Models
             string priorityValue8021ActionCluster = default;
             string priorityValue8021ActionSmb = default;
             string bandwidthPercentageSmb = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("priorityValue8021Action_Cluster"u8))
+                if (prop.NameEquals("priorityValue8021Action_Cluster"u8))
                 {
-                    priorityValue8021ActionCluster = property.Value.GetString();
+                    priorityValue8021ActionCluster = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("priorityValue8021Action_SMB"u8))
+                if (prop.NameEquals("priorityValue8021Action_SMB"u8))
                 {
-                    priorityValue8021ActionSmb = property.Value.GetString();
+                    priorityValue8021ActionSmb = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bandwidthPercentage_SMB"u8))
+                if (prop.NameEquals("bandwidthPercentage_SMB"u8))
                 {
-                    bandwidthPercentageSmb = property.Value.GetString();
+                    bandwidthPercentageSmb = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DeploymentSettingQosPolicyOverrides(priorityValue8021ActionCluster, priorityValue8021ActionSmb, bandwidthPercentageSmb, serializedAdditionalRawData);
+            return new DeploymentSettingQosPolicyOverrides(priorityValue8021ActionCluster, priorityValue8021ActionSmb, bandwidthPercentageSmb, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PriorityValue8021ActionCluster), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  priorityValue8021Action_Cluster: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PriorityValue8021ActionCluster))
-                {
-                    builder.Append("  priorityValue8021Action_Cluster: ");
-                    if (PriorityValue8021ActionCluster.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PriorityValue8021ActionCluster}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PriorityValue8021ActionCluster}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PriorityValue8021ActionSmb), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  priorityValue8021Action_SMB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PriorityValue8021ActionSmb))
-                {
-                    builder.Append("  priorityValue8021Action_SMB: ");
-                    if (PriorityValue8021ActionSmb.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PriorityValue8021ActionSmb}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PriorityValue8021ActionSmb}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BandwidthPercentageSmb), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  bandwidthPercentage_SMB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BandwidthPercentageSmb))
-                {
-                    builder.Append("  bandwidthPercentage_SMB: ");
-                    if (BandwidthPercentageSmb.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{BandwidthPercentageSmb}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{BandwidthPercentageSmb}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<DeploymentSettingQosPolicyOverrides>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingQosPolicyOverrides>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(DeploymentSettingQosPolicyOverrides)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DeploymentSettingQosPolicyOverrides IPersistableModel<DeploymentSettingQosPolicyOverrides>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingQosPolicyOverrides>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDeploymentSettingQosPolicyOverrides(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DeploymentSettingQosPolicyOverrides)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DeploymentSettingQosPolicyOverrides>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

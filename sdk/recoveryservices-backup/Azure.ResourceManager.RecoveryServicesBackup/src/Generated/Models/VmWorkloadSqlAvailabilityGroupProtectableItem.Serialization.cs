@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmWorkloadSqlAvailabilityGroupProtectableItem : IUtf8JsonSerializable, IJsonModel<VmWorkloadSqlAvailabilityGroupProtectableItem>
+    /// <summary> Azure VM workload-specific protectable item representing SQL Availability Group. </summary>
+    public partial class VmWorkloadSqlAvailabilityGroupProtectableItem : VmWorkloadProtectableItem, IJsonModel<VmWorkloadSqlAvailabilityGroupProtectableItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadSqlAvailabilityGroupProtectableItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override WorkloadProtectableItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlAvailabilityGroupProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVmWorkloadSqlAvailabilityGroupProtectableItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VmWorkloadSqlAvailabilityGroupProtectableItem)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlAvailabilityGroupProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VmWorkloadSqlAvailabilityGroupProtectableItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VmWorkloadSqlAvailabilityGroupProtectableItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VmWorkloadSqlAvailabilityGroupProtectableItem IPersistableModel<VmWorkloadSqlAvailabilityGroupProtectableItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (VmWorkloadSqlAvailabilityGroupProtectableItem)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VmWorkloadSqlAvailabilityGroupProtectableItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VmWorkloadSqlAvailabilityGroupProtectableItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,18 +69,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlAvailabilityGroupProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlAvailabilityGroupProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VmWorkloadSqlAvailabilityGroupProtectableItem)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(NodesList))
             {
                 writer.WritePropertyName("nodesList"u8);
                 writer.WriteStartArray();
-                foreach (var item in NodesList)
+                foreach (DistributedNodesInfo item in NodesList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -47,211 +87,183 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        VmWorkloadSqlAvailabilityGroupProtectableItem IJsonModel<VmWorkloadSqlAvailabilityGroupProtectableItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VmWorkloadSqlAvailabilityGroupProtectableItem IJsonModel<VmWorkloadSqlAvailabilityGroupProtectableItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VmWorkloadSqlAvailabilityGroupProtectableItem)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override WorkloadProtectableItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlAvailabilityGroupProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlAvailabilityGroupProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VmWorkloadSqlAvailabilityGroupProtectableItem)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVmWorkloadSqlAvailabilityGroupProtectableItem(document.RootElement, options);
         }
 
-        internal static VmWorkloadSqlAvailabilityGroupProtectableItem DeserializeVmWorkloadSqlAvailabilityGroupProtectableItem(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VmWorkloadSqlAvailabilityGroupProtectableItem DeserializeVmWorkloadSqlAvailabilityGroupProtectableItem(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<DistributedNodesInfo> nodesList = default;
+            string backupManagementType = default;
+            string workloadType = default;
+            string protectableItemType = "SQLAvailabilityGroupContainer";
+            string friendlyName = default;
+            BackupProtectionStatus? protectionState = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string parentName = default;
             string parentUniqueName = default;
             string serverName = default;
             bool? isAutoProtectable = default;
             bool? isAutoProtected = default;
-            int? subinquireditemcount = default;
-            int? subprotectableitemcount = default;
-            PreBackupValidation prebackupvalidation = default;
+            int? subInquiredItemCount = default;
+            int? subProtectableItemCount = default;
+            PreBackupValidation preBackupValidation = default;
             bool? isProtectable = default;
-            string backupManagementType = default;
-            string workloadType = default;
-            string protectableItemType = default;
-            string friendlyName = default;
-            BackupProtectionStatus? protectionState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<DistributedNodesInfo> nodesList = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("nodesList"u8))
+                if (prop.NameEquals("backupManagementType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    backupManagementType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("workloadType"u8))
+                {
+                    workloadType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("protectableItemType"u8))
+                {
+                    protectableItemType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("friendlyName"u8))
+                {
+                    friendlyName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("protectionState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protectionState = new BackupProtectionStatus(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("parentName"u8))
+                {
+                    parentName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("parentUniqueName"u8))
+                {
+                    parentUniqueName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("serverName"u8))
+                {
+                    serverName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("isAutoProtectable"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAutoProtectable = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("isAutoProtected"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAutoProtected = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("subinquireditemcount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subInquiredItemCount = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("subprotectableitemcount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subProtectableItemCount = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("prebackupvalidation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    preBackupValidation = PreBackupValidation.DeserializePreBackupValidation(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("isProtectable"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isProtectable = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("nodesList"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DistributedNodesInfo> array = new List<DistributedNodesInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DistributedNodesInfo.DeserializeDistributedNodesInfo(item, options));
                     }
                     nodesList = array;
                     continue;
                 }
-                if (property.NameEquals("parentName"u8))
-                {
-                    parentName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("parentUniqueName"u8))
-                {
-                    parentUniqueName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serverName"u8))
-                {
-                    serverName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("isAutoProtectable"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isAutoProtectable = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("isAutoProtected"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isAutoProtected = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("subinquireditemcount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    subinquireditemcount = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("subprotectableitemcount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    subprotectableitemcount = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("prebackupvalidation"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    prebackupvalidation = PreBackupValidation.DeserializePreBackupValidation(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("isProtectable"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isProtectable = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("backupManagementType"u8))
-                {
-                    backupManagementType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("workloadType"u8))
-                {
-                    workloadType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("protectableItemType"u8))
-                {
-                    protectableItemType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("friendlyName"u8))
-                {
-                    friendlyName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("protectionState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    protectionState = new BackupProtectionStatus(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VmWorkloadSqlAvailabilityGroupProtectableItem(
                 backupManagementType,
                 workloadType,
                 protectableItemType,
                 friendlyName,
                 protectionState,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 parentName,
                 parentUniqueName,
                 serverName,
                 isAutoProtectable,
                 isAutoProtected,
-                subinquireditemcount,
-                subprotectableitemcount,
-                prebackupvalidation,
+                subInquiredItemCount,
+                subProtectableItemCount,
+                preBackupValidation,
                 isProtectable,
                 nodesList ?? new ChangeTrackingList<DistributedNodesInfo>());
         }
-
-        BinaryData IPersistableModel<VmWorkloadSqlAvailabilityGroupProtectableItem>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlAvailabilityGroupProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VmWorkloadSqlAvailabilityGroupProtectableItem)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VmWorkloadSqlAvailabilityGroupProtectableItem IPersistableModel<VmWorkloadSqlAvailabilityGroupProtectableItem>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlAvailabilityGroupProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVmWorkloadSqlAvailabilityGroupProtectableItem(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VmWorkloadSqlAvailabilityGroupProtectableItem)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VmWorkloadSqlAvailabilityGroupProtectableItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

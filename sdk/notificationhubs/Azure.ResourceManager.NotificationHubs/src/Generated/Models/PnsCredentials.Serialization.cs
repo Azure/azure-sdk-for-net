@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class PnsCredentials : IUtf8JsonSerializable, IJsonModel<PnsCredentials>
+    /// <summary> Collection of Notification Hub or Notification Hub Namespace PNS credentials. </summary>
+    public partial class PnsCredentials : IJsonModel<PnsCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PnsCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PnsCredentials PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PnsCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePnsCredentials(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PnsCredentials)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PnsCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNotificationHubsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PnsCredentials)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PnsCredentials>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PnsCredentials IPersistableModel<PnsCredentials>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PnsCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PnsCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PnsCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PnsCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PnsCredentials)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(AdmCredential))
             {
                 writer.WritePropertyName("admCredential"u8);
@@ -79,15 +119,15 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WritePropertyName("fcmV1Credential"u8);
                 writer.WriteObjectValue(FcmV1Credential, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -96,22 +136,27 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
         }
 
-        PnsCredentials IJsonModel<PnsCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PnsCredentials IJsonModel<PnsCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PnsCredentials JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PnsCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PnsCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PnsCredentials)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePnsCredentials(document.RootElement, options);
         }
 
-        internal static PnsCredentials DeserializePnsCredentials(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PnsCredentials DeserializePnsCredentials(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -125,97 +170,95 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             NotificationHubWnsCredential wnsCredential = default;
             XiaomiCredential xiaomiCredential = default;
             FcmV1Credential fcmV1Credential = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("admCredential"u8))
+                if (prop.NameEquals("admCredential"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    admCredential = NotificationHubAdmCredential.DeserializeNotificationHubAdmCredential(property.Value, options);
+                    admCredential = NotificationHubAdmCredential.DeserializeNotificationHubAdmCredential(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("apnsCredential"u8))
+                if (prop.NameEquals("apnsCredential"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    apnsCredential = NotificationHubApnsCredential.DeserializeNotificationHubApnsCredential(property.Value, options);
+                    apnsCredential = NotificationHubApnsCredential.DeserializeNotificationHubApnsCredential(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("baiduCredential"u8))
+                if (prop.NameEquals("baiduCredential"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    baiduCredential = NotificationHubBaiduCredential.DeserializeNotificationHubBaiduCredential(property.Value, options);
+                    baiduCredential = NotificationHubBaiduCredential.DeserializeNotificationHubBaiduCredential(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("browserCredential"u8))
+                if (prop.NameEquals("browserCredential"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    browserCredential = BrowserCredential.DeserializeBrowserCredential(property.Value, options);
+                    browserCredential = BrowserCredential.DeserializeBrowserCredential(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("gcmCredential"u8))
+                if (prop.NameEquals("gcmCredential"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    gcmCredential = NotificationHubGcmCredential.DeserializeNotificationHubGcmCredential(property.Value, options);
+                    gcmCredential = NotificationHubGcmCredential.DeserializeNotificationHubGcmCredential(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("mpnsCredential"u8))
+                if (prop.NameEquals("mpnsCredential"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mpnsCredential = NotificationHubMpnsCredential.DeserializeNotificationHubMpnsCredential(property.Value, options);
+                    mpnsCredential = NotificationHubMpnsCredential.DeserializeNotificationHubMpnsCredential(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("wnsCredential"u8))
+                if (prop.NameEquals("wnsCredential"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    wnsCredential = NotificationHubWnsCredential.DeserializeNotificationHubWnsCredential(property.Value, options);
+                    wnsCredential = NotificationHubWnsCredential.DeserializeNotificationHubWnsCredential(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("xiaomiCredential"u8))
+                if (prop.NameEquals("xiaomiCredential"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    xiaomiCredential = XiaomiCredential.DeserializeXiaomiCredential(property.Value, options);
+                    xiaomiCredential = XiaomiCredential.DeserializeXiaomiCredential(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("fcmV1Credential"u8))
+                if (prop.NameEquals("fcmV1Credential"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fcmV1Credential = FcmV1Credential.DeserializeFcmV1Credential(property.Value, options);
+                    fcmV1Credential = FcmV1Credential.DeserializeFcmV1Credential(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new PnsCredentials(
                 admCredential,
                 apnsCredential,
@@ -226,38 +269,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 wnsCredential,
                 xiaomiCredential,
                 fcmV1Credential,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<PnsCredentials>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PnsCredentials>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNotificationHubsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PnsCredentials)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        PnsCredentials IPersistableModel<PnsCredentials>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PnsCredentials>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePnsCredentials(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PnsCredentials)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<PnsCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

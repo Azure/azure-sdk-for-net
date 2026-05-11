@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2025-07-28-preview"
+  "apiVersions": {
+    "Microsoft.ManagedOps": "2025-07-28-preview"
+  }
 }

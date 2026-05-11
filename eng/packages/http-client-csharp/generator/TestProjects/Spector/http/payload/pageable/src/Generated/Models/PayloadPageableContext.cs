@@ -8,10 +8,12 @@
 using System.ClientModel.Primitives;
 using Payload.Pageable._PageSize;
 using Payload.Pageable._ServerDrivenPagination;
+using Payload.Pageable._ServerDrivenPagination.AlternateInitialVerb;
 using Payload.Pageable._ServerDrivenPagination.ContinuationToken;
 
 namespace Payload.Pageable
 {
+    [ModelReaderWriterBuildable(typeof(Filter))]
     [ModelReaderWriterBuildable(typeof(Pet))]
     [ModelReaderWriterBuildable(typeof(XmlPet))]
     public partial class PayloadPageableContext : ModelReaderWriterContext

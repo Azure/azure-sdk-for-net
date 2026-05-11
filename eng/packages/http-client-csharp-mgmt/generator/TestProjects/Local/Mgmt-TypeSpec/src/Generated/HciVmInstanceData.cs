@@ -47,7 +47,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             get
             {
-                return Properties.Sku;
+                return Properties is null ? default : Properties.Sku;
             }
         }
     }

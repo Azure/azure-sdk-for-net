@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    internal class DevCenterNetworkConnectionOperationSource : IOperationSource<DevCenterNetworkConnectionResource>
+    /// <summary></summary>
+    internal partial class DevCenterNetworkConnectionOperationSource : IOperationSource<DevCenterNetworkConnectionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DevCenterNetworkConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DevCenterNetworkConnectionResource IOperationSource<DevCenterNetworkConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevCenterNetworkConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevCenterContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DevCenterNetworkConnectionData data = DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DevCenterNetworkConnectionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DevCenterNetworkConnectionResource> IOperationSource<DevCenterNetworkConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevCenterNetworkConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevCenterContext.Default);
-            return await Task.FromResult(new DevCenterNetworkConnectionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DevCenterNetworkConnectionData data = DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DevCenterNetworkConnectionResource(_client, data);
         }
     }
 }

@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             TryGetApiVersion(ResourceType, out string autoUpgradeProfileApiVersion);
             _autoUpgradeProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ResourceType.Namespace, Diagnostics);
-            _autoUpgradeProfilesRestClient = new AutoUpgradeProfiles(_autoUpgradeProfilesClientDiagnostics, Pipeline, Endpoint, autoUpgradeProfileApiVersion ?? "2025-08-01-preview");
+            _autoUpgradeProfilesRestClient = new AutoUpgradeProfiles(_autoUpgradeProfilesClientDiagnostics, Pipeline, Endpoint, autoUpgradeProfileApiVersion ?? "2026-02-01-preview");
             _autoUpgradeProfileOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ResourceType.Namespace, Diagnostics);
-            _autoUpgradeProfileOperationsRestClient = new AutoUpgradeProfileOperations(_autoUpgradeProfileOperationsClientDiagnostics, Pipeline, Endpoint, autoUpgradeProfileApiVersion ?? "2025-08-01-preview");
+            _autoUpgradeProfileOperationsRestClient = new AutoUpgradeProfileOperations(_autoUpgradeProfileOperationsClientDiagnostics, Pipeline, Endpoint, autoUpgradeProfileApiVersion ?? "2026-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -228,7 +228,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 };
                 HttpMessage message = _autoUpgradeProfilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerServiceFleetArmOperation operation = new ContainerServiceFleetArmOperation(_autoUpgradeProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ContainerServiceFleetArmOperation operation = new ContainerServiceFleetArmOperation(
+                    _autoUpgradeProfilesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -255,7 +261,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -278,7 +284,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 };
                 HttpMessage message = _autoUpgradeProfilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ContainerServiceFleetArmOperation operation = new ContainerServiceFleetArmOperation(_autoUpgradeProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ContainerServiceFleetArmOperation operation = new ContainerServiceFleetArmOperation(
+                    _autoUpgradeProfilesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -305,7 +317,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -333,7 +345,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -360,7 +373,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -388,7 +401,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -415,7 +429,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -448,7 +462,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -475,7 +490,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -508,7 +523,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -17,8 +18,6 @@ namespace Azure.Monitor.Ingestion
     public partial class LogsIngestionClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://monitor.azure.com/.default" };
         private readonly string _apiVersion;
 
@@ -27,6 +26,36 @@ namespace Azure.Monitor.Ingestion
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public LogsIngestionClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new LogsIngestionClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of LogsIngestionClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal LogsIngestionClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, LogsIngestionClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new LogsIngestionClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of LogsIngestionClient from a <see cref="LogsIngestionClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for LogsIngestionClient. </param>
+        [Experimental("SCME0002")]
+        public LogsIngestionClient(LogsIngestionClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
         {
         }
 

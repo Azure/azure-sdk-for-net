@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary> Represents a single memory operation (create, update, or delete) performed on a memory item. </summary>
     public partial class MemoryOperation

@@ -255,6 +255,22 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             return await SourceClientBuilder.GetTestContainerAsync(oauthService, containerName);
         }
 
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAzureSasCredentialAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default)
+        {
+            BlobServiceClient sasService = DestinationClientBuilder.GetServiceClientFromAzureSasCredentialConfig(Tenants.TestConfigDefault, default);
+            return await DestinationClientBuilder.GetTestContainerAsync(sasService, containerName);
+        }
+
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceDisposingContainerAzureSasCredentialAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default)
+        {
+            BlobServiceClient sasService = SourceClientBuilder.GetServiceClientFromAzureSasCredentialConfig(Tenants.TestConfigDefault, default);
+            return await SourceClientBuilder.GetTestContainerAsync(sasService, containerName);
+        }
+
         protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceDisposingContainerAsync(BlobServiceClient service = null, string containerName = null, CancellationToken cancellationToken = default)
         {
             DisposingBlobContainer disposingContainer = await SourceClientBuilder.GetTestContainerAsync(service, containerName);

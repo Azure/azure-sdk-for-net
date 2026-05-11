@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appServiceCertificatePatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(appServiceCertificatePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

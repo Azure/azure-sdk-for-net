@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CognitiveServices
@@ -25,51 +26,53 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class CognitiveServicesAccountCollection : ArmCollection, IEnumerable<CognitiveServicesAccountResource>, IAsyncEnumerable<CognitiveServicesAccountResource>
     {
-        private readonly ClientDiagnostics _cognitiveServicesAccountAccountsClientDiagnostics;
-        private readonly AccountsRestOperations _cognitiveServicesAccountAccountsRestClient;
+        private readonly ClientDiagnostics _accountsClientDiagnostics;
+        private readonly Accounts _accountsRestClient;
+        private readonly ClientDiagnostics _deletedAccountsClientDiagnostics;
+        private readonly DeletedAccounts _deletedAccountsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CognitiveServicesAccountCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of CognitiveServicesAccountCollection for mocking. </summary>
         protected CognitiveServicesAccountCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CognitiveServicesAccountCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CognitiveServicesAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cognitiveServicesAccountAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesAccountResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CognitiveServicesAccountResource.ResourceType, out string cognitiveServicesAccountAccountsApiVersion);
-            _cognitiveServicesAccountAccountsRestClient = new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesAccountAccountsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(CognitiveServicesAccountResource.ResourceType, out string cognitiveServicesAccountApiVersion);
+            _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesAccountResource.ResourceType.Namespace, Diagnostics);
+            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesAccountApiVersion ?? "2026-01-15-preview");
+            _deletedAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesAccountResource.ResourceType.Namespace, Diagnostics);
+            _deletedAccountsRestClient = new DeletedAccounts(_deletedAccountsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesAccountApiVersion ?? "2026-01-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create Cognitive Services Account. Accounts is a resource group wide resource type. It holds the keys for developer to access intelligent APIs. It's also the resource type for billing.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +80,34 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="data"> The parameters to provide for the created account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<CognitiveServicesAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string accountName, CognitiveServicesAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("CognitiveServicesAccountCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesAccountAccountsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CognitiveServicesArmOperation<CognitiveServicesAccountResource>(new CognitiveServicesAccountOperationSource(Client), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, _cognitiveServicesAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _accountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, CognitiveServicesAccountData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CognitiveServicesArmOperation<CognitiveServicesAccountResource> operation = new CognitiveServicesArmOperation<CognitiveServicesAccountResource>(
+                    new CognitiveServicesAccountOperationSource(Client),
+                    _accountsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +121,16 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Create Cognitive Services Account. Accounts is a resource group wide resource type. It holds the keys for developer to access intelligent APIs. It's also the resource type for billing.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +138,34 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="data"> The parameters to provide for the created account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<CognitiveServicesAccountResource> CreateOrUpdate(WaitUntil waitUntil, string accountName, CognitiveServicesAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("CognitiveServicesAccountCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _cognitiveServicesAccountAccountsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken);
-                var operation = new CognitiveServicesArmOperation<CognitiveServicesAccountResource>(new CognitiveServicesAccountOperationSource(Client), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, _cognitiveServicesAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _accountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, CognitiveServicesAccountData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CognitiveServicesArmOperation<CognitiveServicesAccountResource> operation = new CognitiveServicesArmOperation<CognitiveServicesAccountResource>(
+                    new CognitiveServicesAccountOperationSource(Client),
+                    _accountsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +179,42 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Returns a Cognitive Services account specified by the parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<CognitiveServicesAccountResource>> GetAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountCollection.Get");
+            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("CognitiveServicesAccountCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CognitiveServicesAccountData> response = Response.FromValue(CognitiveServicesAccountData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CognitiveServicesAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +228,42 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Returns a Cognitive Services account specified by the parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<CognitiveServicesAccountResource> Get(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountCollection.Get");
+            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("CognitiveServicesAccountCollection.Get");
             scope.Start();
             try
             {
-                var response = _cognitiveServicesAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CognitiveServicesAccountData> response = Response.FromValue(CognitiveServicesAccountData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CognitiveServicesAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +277,44 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Returns all the resources of a particular type belonging to a resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CognitiveServicesAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CognitiveServicesAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CognitiveServicesAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesAccountResource(Client, CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(e)), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new AccountsGetByResourceGroupAsyncCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CognitiveServicesAccountCollection.GetAll"), data => new CognitiveServicesAccountResource(Client, data));
         }
 
         /// <summary>
         /// Returns all the resources of a particular type belonging to a resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +322,61 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CognitiveServicesAccountResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesAccountResource(Client, CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(e)), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new AccountsGetByResourceGroupCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CognitiveServicesAccountCollection.GetAll"), data => new CognitiveServicesAccountResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountCollection.Exists");
+            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("CognitiveServicesAccountCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CognitiveServicesAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CognitiveServicesAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CognitiveServicesAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +390,50 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountCollection.Exists");
+            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("CognitiveServicesAccountCollection.Exists");
             scope.Start();
             try
             {
-                var response = _cognitiveServicesAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CognitiveServicesAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CognitiveServicesAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CognitiveServicesAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +447,54 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<CognitiveServicesAccountResource>> GetIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountCollection.GetIfExists");
+            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("CognitiveServicesAccountCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CognitiveServicesAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CognitiveServicesAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CognitiveServicesAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CognitiveServicesAccountResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CognitiveServicesAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +508,54 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<CognitiveServicesAccountResource> GetIfExists(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountCollection.GetIfExists");
+            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("CognitiveServicesAccountCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cognitiveServicesAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CognitiveServicesAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CognitiveServicesAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CognitiveServicesAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CognitiveServicesAccountResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CognitiveServicesAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +575,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<CognitiveServicesAccountResource> IAsyncEnumerable<CognitiveServicesAccountResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

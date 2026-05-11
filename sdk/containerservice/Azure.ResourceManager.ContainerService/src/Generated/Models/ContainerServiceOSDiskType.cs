@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct ContainerServiceOSDiskType : IEquatable<ContainerServiceOSDiskType>
     {
         private readonly string _value;
+        /// <summary> Azure replicates the operating system disk for a virtual machine to Azure storage to avoid data loss should the VM need to be relocated to another host. Since containers aren't designed to have local state persisted, this behavior offers limited value while providing some drawbacks, including slower node provisioning and higher read/write latency. </summary>
+        private const string ManagedValue = "Managed";
+        /// <summary> Ephemeral OS disks are stored only on the host machine, just like a temporary disk. This provides lower read/write latency, along with faster node scaling and cluster upgrades. </summary>
+        private const string EphemeralValue = "Ephemeral";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceOSDiskType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceOSDiskType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ManagedValue = "Managed";
-        private const string EphemeralValue = "Ephemeral";
+            _value = value;
+        }
 
         /// <summary> Azure replicates the operating system disk for a virtual machine to Azure storage to avoid data loss should the VM need to be relocated to another host. Since containers aren't designed to have local state persisted, this behavior offers limited value while providing some drawbacks, including slower node provisioning and higher read/write latency. </summary>
         public static ContainerServiceOSDiskType Managed { get; } = new ContainerServiceOSDiskType(ManagedValue);
+
         /// <summary> Ephemeral OS disks are stored only on the host machine, just like a temporary disk. This provides lower read/write latency, along with faster node scaling and cluster upgrades. </summary>
         public static ContainerServiceOSDiskType Ephemeral { get; } = new ContainerServiceOSDiskType(EphemeralValue);
+
         /// <summary> Determines if two <see cref="ContainerServiceOSDiskType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceOSDiskType left, ContainerServiceOSDiskType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServiceOSDiskType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceOSDiskType left, ContainerServiceOSDiskType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceOSDiskType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServiceOSDiskType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServiceOSDiskType(string value) => new ContainerServiceOSDiskType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServiceOSDiskType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServiceOSDiskType?(string value) => value == null ? null : new ContainerServiceOSDiskType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceOSDiskType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServiceOSDiskType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

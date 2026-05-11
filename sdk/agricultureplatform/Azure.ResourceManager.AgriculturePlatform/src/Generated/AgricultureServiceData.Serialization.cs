@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(agricultureServiceData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(agricultureServiceData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AgricultureServiceData"/> from. </param>
@@ -111,7 +109,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -230,7 +228,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAgriculturePlatformContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerAgriculturePlatformContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))

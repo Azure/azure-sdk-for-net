@@ -33,6 +33,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Project connection id for Project Connection auth type. </summary>
-        public string ProjectConnectionId { get; set; }
+        public string ProjectConnectionId { get; }
     }
 }

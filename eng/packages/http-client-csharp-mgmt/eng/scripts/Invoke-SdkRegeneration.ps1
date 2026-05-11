@@ -50,10 +50,8 @@ $result = @{
 
 try {
     # Load tsp-location.yaml
-    if (-not (Get-Module -ListAvailable -Name powershell-yaml -ErrorAction SilentlyContinue)) {
-        Install-Module -Name powershell-yaml -Force -Scope CurrentUser 2>&1 | Out-Null
-    }
-    Import-Module powershell-yaml -ErrorAction SilentlyContinue
+    . (Join-Path $PSScriptRoot ".." ".." ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
     $tspConfig = Get-Content (Join-Path $ProjectPath "tsp-location.yaml") -Raw | ConvertFrom-Yaml
     
     $repo = $tspConfig["repo"]
@@ -163,10 +161,19 @@ try {
         Rename-Item $sdkNodeModules $sdkNodeModulesBackup -Force
     }
     
-    # Create junction from TempTypeSpecFiles/node_modules to mgmt package's node_modules
+    # Create a link from TempTypeSpecFiles/node_modules to mgmt package's node_modules
+    # Use Junction on Windows (works without elevation) and SymbolicLink on Linux/macOS
     $linkPath = Join-Path $tempTypeSpecDir "node_modules"
     if (Test-Path $linkPath) { Remove-Item $linkPath -Recurse -Force }
-    New-Item -ItemType Junction -Path $linkPath -Target (Join-Path $MgmtPackageRoot "node_modules") | Out-Null
+    $linkTarget = Join-Path $MgmtPackageRoot "node_modules"
+    if ($IsWindows) {
+        New-Item -ItemType Junction -Path $linkPath -Target $linkTarget -ErrorAction Stop | Out-Null
+    } else {
+        New-Item -ItemType SymbolicLink -Path $linkPath -Target $linkTarget -ErrorAction Stop | Out-Null
+    }
+    if (-not (Test-Path $linkPath)) {
+        throw "Failed to create link from '$linkPath' to '$linkTarget'"
+    }
     
     try {
         # Run tsp compile using local emitter path

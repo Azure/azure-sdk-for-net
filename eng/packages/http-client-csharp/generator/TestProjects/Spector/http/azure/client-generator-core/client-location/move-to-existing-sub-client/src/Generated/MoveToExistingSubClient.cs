@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToExistingSubClient
@@ -14,7 +15,12 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToExistingSubClie
     {
         public MoveToExistingSubClient() : this(new Uri("http://localhost:3000"), new MoveToExistingSubClientOptions()) => throw null;
 
-        public MoveToExistingSubClient(Uri endpoint, MoveToExistingSubClientOptions options) => throw null;
+        internal MoveToExistingSubClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, MoveToExistingSubClientOptions options) => throw null;
+
+        public MoveToExistingSubClient(Uri endpoint, MoveToExistingSubClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public MoveToExistingSubClient(MoveToExistingSubClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

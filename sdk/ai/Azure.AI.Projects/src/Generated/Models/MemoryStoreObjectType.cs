@@ -6,7 +6,7 @@ using System;
 using System.ComponentModel;
 using Azure.AI.Projects;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Memory
 {
     /// <summary></summary>
     public readonly partial struct MemoryStoreObjectType : IEquatable<MemoryStoreObjectType>

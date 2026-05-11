@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Fabric
         private readonly string _resourceGroupName;
         private readonly string _capacityName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of FabricCapacitiesGetSkusForCapacityAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The FabricCapacities client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="capacityName"> The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public FabricCapacitiesGetSkusForCapacityAsyncCollectionResultOfT(FabricCapacities client, Guid subscriptionId, string resourceGroupName, string capacityName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public FabricCapacitiesGetSkusForCapacityAsyncCollectionResultOfT(FabricCapacities client, Guid subscriptionId, string resourceGroupName, string capacityName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _capacityName = capacityName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of FabricCapacitiesGetSkusForCapacityAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -69,7 +72,7 @@ namespace Azure.ResourceManager.Fabric
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetSkusForCapacityRequest(nextLink, _subscriptionId, _resourceGroupName, _capacityName, _context) : _client.CreateGetSkusForCapacityRequest(_subscriptionId, _resourceGroupName, _capacityName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("FabricCapacityResource.GetSkusForCapacity");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
