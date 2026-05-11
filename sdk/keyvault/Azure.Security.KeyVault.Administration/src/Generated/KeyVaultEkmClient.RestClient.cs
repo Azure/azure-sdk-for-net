@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary></summary>
-    public partial class KeyVaultEkmRestClient
+    public partial class KeyVaultEkmClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 

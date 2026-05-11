@@ -21,9 +21,9 @@
             }
           }
         },
-        "KeyVaultEkmRestClient": {
+        "KeyVaultEkmClient": {
           "type": "object",
-          "description": "Configuration for KeyVaultEkmRestClient.",
+          "description": "Configuration for KeyVaultEkmClient.",
           "properties": {
             "VaultBaseUrl": {
               "type": "string",

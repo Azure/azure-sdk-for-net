@@ -11,77 +11,77 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.Security.KeyVault.Administration;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
-    internal partial class EkmConnection : IJsonModel<EkmConnection>
+    /// <summary> A EkmConnection model object. </summary>
+    public partial class KeyVaultEkmConnection : IJsonModel<KeyVaultEkmConnection>
     {
-        /// <summary> Initializes a new instance of <see cref="EkmConnection"/> for deserialization. </summary>
-        internal EkmConnection()
+        /// <summary> Initializes a new instance of <see cref="KeyVaultEkmConnection"/> for deserialization. </summary>
+        internal KeyVaultEkmConnection()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EkmConnection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual KeyVaultEkmConnection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EkmConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultEkmConnection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEkmConnection(document.RootElement, options);
+                        return DeserializeKeyVaultEkmConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EkmConnection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultEkmConnection)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EkmConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultEkmConnection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EkmConnection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultEkmConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EkmConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KeyVaultEkmConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EkmConnection IPersistableModel<EkmConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KeyVaultEkmConnection IPersistableModel<KeyVaultEkmConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EkmConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KeyVaultEkmConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="ekmConnection"> The <see cref="EkmConnection"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(EkmConnection ekmConnection)
+        /// <param name="keyVaultEkmConnection"> The <see cref="KeyVaultEkmConnection"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(KeyVaultEkmConnection keyVaultEkmConnection)
         {
-            if (ekmConnection == null)
+            if (keyVaultEkmConnection == null)
             {
                 return null;
             }
-            return RequestContent.Create(ekmConnection, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(keyVaultEkmConnection, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EkmConnection"/> from. </param>
-        public static explicit operator EkmConnection(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KeyVaultEkmConnection"/> from. </param>
+        public static explicit operator KeyVaultEkmConnection(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEkmConnection(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeKeyVaultEkmConnection(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EkmConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KeyVaultEkmConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -92,10 +92,10 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EkmConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultEkmConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EkmConnection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultEkmConnection)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("host"u8);
             writer.WriteStringValue(Host);
@@ -140,24 +140,24 @@ namespace Azure.Security.KeyVault.Administration.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EkmConnection IJsonModel<EkmConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KeyVaultEkmConnection IJsonModel<KeyVaultEkmConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EkmConnection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual KeyVaultEkmConnection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EkmConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultEkmConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EkmConnection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultEkmConnection)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEkmConnection(document.RootElement, options);
+            return DeserializeKeyVaultEkmConnection(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EkmConnection DeserializeEkmConnection(JsonElement element, ModelReaderWriterOptions options)
+        internal static KeyVaultEkmConnection DeserializeKeyVaultEkmConnection(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -207,7 +207,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EkmConnection(host, pathPrefix, serverCaCertificates, serverSubjectCommonName, additionalBinaryDataProperties);
+            return new KeyVaultEkmConnection(host, pathPrefix, serverCaCertificates, serverSubjectCommonName, additionalBinaryDataProperties);
         }
     }
 }

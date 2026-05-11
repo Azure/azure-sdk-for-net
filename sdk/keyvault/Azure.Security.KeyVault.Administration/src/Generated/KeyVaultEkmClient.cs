@@ -7,71 +7,29 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <summary> The KeyVaultEkmRestClient. </summary>
-    public partial class KeyVaultEkmRestClient
+    /// <summary> The KeyVaultEkmClient. </summary>
+    public partial class KeyVaultEkmClient
     {
         private readonly Uri _endpoint;
         private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of KeyVaultEkmRestClient for mocking. </summary>
-        protected KeyVaultEkmRestClient()
+        /// <summary> Initializes a new instance of KeyVaultEkmClient for mocking. </summary>
+        protected KeyVaultEkmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultEkmRestClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public KeyVaultEkmRestClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new KeyVaultAdministrationClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of KeyVaultEkmRestClient. </summary>
-        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        internal KeyVaultEkmRestClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, KeyVaultAdministrationClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-
-            options ??= new KeyVaultAdministrationClientOptions();
-
-            _endpoint = endpoint;
-            if (authenticationPolicy != null)
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
-            }
-            else
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            }
-            _apiVersion = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary> Initializes a new instance of KeyVaultEkmRestClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public KeyVaultEkmRestClient(Uri endpoint, TokenCredential credential, KeyVaultAdministrationClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
-        {
-        }
-
-        /// <summary> Initializes a new instance of KeyVaultEkmRestClient from a <see cref="KeyVaultEkmRestClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for KeyVaultEkmRestClient. </param>
+        /// <summary> Initializes a new instance of KeyVaultEkmClient from a <see cref="KeyVaultEkmClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for KeyVaultEkmClient. </param>
         [Experimental("SCME0002")]
-        public KeyVaultEkmRestClient(KeyVaultEkmRestClientSettings settings) : this(settings?.VaultBaseUrl, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        public KeyVaultEkmClient(KeyVaultEkmClientSettings settings) : this(null, settings?.VaultBaseUrl, settings?.Options)
         {
         }
 
@@ -94,7 +52,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetEkmConnection(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmRestClient.GetEkmConnection");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.GetEkmConnection");
             scope.Start();
             try
             {
@@ -121,7 +79,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetEkmConnectionAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmRestClient.GetEkmConnection");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.GetEkmConnection");
             scope.Start();
             try
             {
@@ -133,24 +91,6 @@ namespace Azure.Security.KeyVault.Administration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> The External Key Manager (EKM) Get operation returns EKM connection. This operation requires ekm/read permission. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<EkmConnection> GetEkmConnection(CancellationToken cancellationToken = default)
-        {
-            Response result = GetEkmConnection(cancellationToken.ToRequestContext());
-            return Response.FromValue((EkmConnection)result, result);
-        }
-
-        /// <summary> The External Key Manager (EKM) Get operation returns EKM connection. This operation requires ekm/read permission. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<EkmConnection>> GetEkmConnectionAsync(CancellationToken cancellationToken = default)
-        {
-            Response result = await GetEkmConnectionAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EkmConnection)result, result);
         }
 
         /// <summary>
@@ -166,7 +106,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetEkmCertificate(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmRestClient.GetEkmCertificate");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.GetEkmCertificate");
             scope.Start();
             try
             {
@@ -193,7 +133,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetEkmCertificateAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmRestClient.GetEkmCertificate");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.GetEkmCertificate");
             scope.Start();
             try
             {
@@ -205,24 +145,6 @@ namespace Azure.Security.KeyVault.Administration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> The External Key Manager (EKM) Certificate Get operation returns Proxy client certificate. This operation requires ekm/read permission. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<EkmProxyClientCertificateInfo> GetEkmCertificate(CancellationToken cancellationToken = default)
-        {
-            Response result = GetEkmCertificate(cancellationToken.ToRequestContext());
-            return Response.FromValue((EkmProxyClientCertificateInfo)result, result);
-        }
-
-        /// <summary> The External Key Manager (EKM) Certificate Get operation returns Proxy client certificate. This operation requires ekm/read permission. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<EkmProxyClientCertificateInfo>> GetEkmCertificateAsync(CancellationToken cancellationToken = default)
-        {
-            Response result = await GetEkmCertificateAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EkmProxyClientCertificateInfo)result, result);
         }
 
         /// <summary>
@@ -238,7 +160,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CheckEkmConnection(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmRestClient.CheckEkmConnection");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.CheckEkmConnection");
             scope.Start();
             try
             {
@@ -265,7 +187,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> CheckEkmConnectionAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmRestClient.CheckEkmConnection");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.CheckEkmConnection");
             scope.Start();
             try
             {
@@ -277,24 +199,6 @@ namespace Azure.Security.KeyVault.Administration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> The External Key Manager (EKM) Check operation checks the connectivity and authentication with the EKM proxy. This operation requires ekm/read permission. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<EkmProxyInfo> CheckEkmConnection(CancellationToken cancellationToken = default)
-        {
-            Response result = CheckEkmConnection(cancellationToken.ToRequestContext());
-            return Response.FromValue((EkmProxyInfo)result, result);
-        }
-
-        /// <summary> The External Key Manager (EKM) Check operation checks the connectivity and authentication with the EKM proxy. This operation requires ekm/read permission. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<EkmProxyInfo>> CheckEkmConnectionAsync(CancellationToken cancellationToken = default)
-        {
-            Response result = await CheckEkmConnectionAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EkmProxyInfo)result, result);
         }
 
         /// <summary>
@@ -311,7 +215,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateEkmConnection(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmRestClient.CreateEkmConnection");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.CreateEkmConnection");
             scope.Start();
             try
             {
@@ -339,7 +243,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> CreateEkmConnectionAsync(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmRestClient.CreateEkmConnection");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.CreateEkmConnection");
             scope.Start();
             try
             {
@@ -351,26 +255,6 @@ namespace Azure.Security.KeyVault.Administration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> The External Key Manager (EKM) sets up the EKM connection. If the EKM connection already exists, this operation fails. This operation requires ekm/write permission. </summary>
-        /// <param name="ekmConnection"> The ekmConnection to create. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<EkmConnection> CreateEkmConnection(EkmConnection ekmConnection, CancellationToken cancellationToken = default)
-        {
-            Response result = CreateEkmConnection(ekmConnection, cancellationToken.ToRequestContext());
-            return Response.FromValue((EkmConnection)result, result);
-        }
-
-        /// <summary> The External Key Manager (EKM) sets up the EKM connection. If the EKM connection already exists, this operation fails. This operation requires ekm/write permission. </summary>
-        /// <param name="ekmConnection"> The ekmConnection to create. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<EkmConnection>> CreateEkmConnectionAsync(EkmConnection ekmConnection, CancellationToken cancellationToken = default)
-        {
-            Response result = await CreateEkmConnectionAsync(ekmConnection, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EkmConnection)result, result);
         }
 
         /// <summary>
@@ -387,7 +271,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UpdateEkmConnection(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmRestClient.UpdateEkmConnection");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.UpdateEkmConnection");
             scope.Start();
             try
             {
@@ -415,7 +299,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> UpdateEkmConnectionAsync(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmRestClient.UpdateEkmConnection");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.UpdateEkmConnection");
             scope.Start();
             try
             {
@@ -442,7 +326,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> The response returned from the service. </returns>
         internal virtual Response DeleteEkmConnection(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmRestClient.DeleteEkmConnection");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.DeleteEkmConnection");
             scope.Start();
             try
             {
@@ -469,7 +353,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> DeleteEkmConnectionAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmRestClient.DeleteEkmConnection");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.DeleteEkmConnection");
             scope.Start();
             try
             {
@@ -481,24 +365,6 @@ namespace Azure.Security.KeyVault.Administration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> The External Key Manager (EKM) deletes the existing EKM connection. If the EKM connection does not already exists, this operation fails. This operation requires ekm/delete permission. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<EkmConnection> DeleteEkmConnection(CancellationToken cancellationToken = default)
-        {
-            Response result = DeleteEkmConnection(cancellationToken.ToRequestContext());
-            return Response.FromValue((EkmConnection)result, result);
-        }
-
-        /// <summary> The External Key Manager (EKM) deletes the existing EKM connection. If the EKM connection does not already exists, this operation fails. This operation requires ekm/delete permission. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<EkmConnection>> DeleteEkmConnectionAsync(CancellationToken cancellationToken = default)
-        {
-            Response result = await DeleteEkmConnectionAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EkmConnection)result, result);
         }
     }
 }

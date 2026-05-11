@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -58,6 +59,19 @@ namespace Azure.Security.KeyVault.Administration
             settings ??= new ChangeTrackingList<KeyVaultSetting>();
 
             return new GetSettingsResult(settings.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A EkmConnection model object. </summary>
+        /// <param name="host"> EKM proxy FQDN (Fully Qualified Domain Name). Only allowed characters are a-z, A-Z, 0-9, hyphen (-), dot (.), and colon (:). </param>
+        /// <param name="pathPrefix"> Optional path prefix for the EKM proxy (if any). </param>
+        /// <param name="serverCaCertificates"> The root CA certificate chain that issued the proxy server's certificate. An array of certificates in the certificate chain, each in DER format and base64 encoded. </param>
+        /// <param name="serverSubjectCommonName"> The subject common name of the server certificate of EKM Proxy. </param>
+        /// <returns> A new <see cref="Administration.KeyVaultEkmConnection"/> instance for mocking. </returns>
+        public static KeyVaultEkmConnection KeyVaultEkmConnection(string host = default, string pathPrefix = default, IEnumerable<BinaryData> serverCaCertificates = default, string serverSubjectCommonName = default)
+        {
+            serverCaCertificates ??= new ChangeTrackingList<BinaryData>();
+
+            return new KeyVaultEkmConnection(host, pathPrefix, serverCaCertificates.ToList(), serverSubjectCommonName, additionalBinaryDataProperties: null);
         }
     }
 }

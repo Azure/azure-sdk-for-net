@@ -35,27 +35,24 @@ namespace Microsoft.Extensions.Azure
             return builder.RegisterClientFactory<KeyVaultAccessControlClient, KeyVaultAdministrationClientOptions>(configuration);
         }
 
-        /// <summary> Registers a <see cref="KeyVaultEkmRestClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="KeyVaultEkmClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static IAzureClientBuilder<KeyVaultEkmRestClient, KeyVaultAdministrationClientOptions> AddKeyVaultEkmRestClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        /// <param name="vaultUri"></param>
+        public static IAzureClientBuilder<KeyVaultEkmClient, KeyVaultAdministrationClientOptions> AddKeyVaultEkmClient<TBuilder>(this TBuilder builder, Uri vaultUri)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-
-            return builder.RegisterClientFactory<KeyVaultEkmRestClient, KeyVaultAdministrationClientOptions>((options, credential) => new KeyVaultEkmRestClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<KeyVaultEkmClient, KeyVaultAdministrationClientOptions>((options, credential) => new KeyVaultEkmClient(vaultUri, credential, options));
         }
 
-        /// <summary> Registers a <see cref="KeyVaultEkmRestClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="KeyVaultEkmClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<KeyVaultEkmRestClient, KeyVaultAdministrationClientOptions> AddKeyVaultEkmRestClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<KeyVaultEkmClient, KeyVaultAdministrationClientOptions> AddKeyVaultEkmClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<KeyVaultEkmRestClient, KeyVaultAdministrationClientOptions>(configuration);
+            return builder.RegisterClientFactory<KeyVaultEkmClient, KeyVaultAdministrationClientOptions>(configuration);
         }
     }
 }

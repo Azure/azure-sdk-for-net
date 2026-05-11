@@ -12,9 +12,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <summary> Represents the settings used to configure a <see cref="KeyVaultEkmRestClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
+    /// <summary> Represents the settings used to configure a <see cref="KeyVaultEkmClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
     [Experimental("SCME0002")]
-    public partial class KeyVaultEkmRestClientSettings : ClientSettings
+    public partial class KeyVaultEkmClientSettings : ClientSettings
     {
         /// <summary> Gets or sets the VaultBaseUrl. </summary>
         public Uri VaultBaseUrl { get; set; }

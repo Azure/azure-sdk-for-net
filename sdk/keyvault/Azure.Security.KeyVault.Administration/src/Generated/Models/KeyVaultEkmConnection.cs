@@ -7,31 +7,22 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
-    internal partial class EkmConnection
+    /// <summary> A EkmConnection model object. </summary>
+    public partial class KeyVaultEkmConnection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EkmConnection"/>. </summary>
-        /// <param name="host"> EKM proxy FQDN (Fully Qualified Domain Name). Only allowed characters are a-z, A-Z, 0-9, hyphen (-), dot (.), and colon (:). </param>
-        /// <param name="serverCaCertificates"> The root CA certificate chain that issued the proxy server's certificate. An array of certificates in the certificate chain, each in DER format and base64 encoded. </param>
-        public EkmConnection(string host, IEnumerable<BinaryData> serverCaCertificates)
-        {
-            Host = host;
-            ServerCaCertificates = serverCaCertificates.ToList();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EkmConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultEkmConnection"/>. </summary>
         /// <param name="host"> EKM proxy FQDN (Fully Qualified Domain Name). Only allowed characters are a-z, A-Z, 0-9, hyphen (-), dot (.), and colon (:). </param>
         /// <param name="pathPrefix"> Optional path prefix for the EKM proxy (if any). </param>
         /// <param name="serverCaCertificates"> The root CA certificate chain that issued the proxy server's certificate. An array of certificates in the certificate chain, each in DER format and base64 encoded. </param>
         /// <param name="serverSubjectCommonName"> The subject common name of the server certificate of EKM Proxy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EkmConnection(string host, string pathPrefix, IList<BinaryData> serverCaCertificates, string serverSubjectCommonName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultEkmConnection(string host, string pathPrefix, IList<BinaryData> serverCaCertificates, string serverSubjectCommonName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
             PathPrefix = pathPrefix;
