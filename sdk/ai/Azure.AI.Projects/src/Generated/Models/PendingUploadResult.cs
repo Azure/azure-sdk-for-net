@@ -26,7 +26,7 @@ namespace Azure.AI.Projects
         /// <param name="blobReference"> Container-level read, write, list SAS. </param>
         /// <param name="pendingUploadId"> ID for this upload request. </param>
         /// <param name="version"> Version of asset to be created if user did not specify version when initially creating upload. </param>
-        /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
+        /// <param name="pendingUploadType"> TemporaryBlobReference is the only supported type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal PendingUploadResult(AIProjectBlobReference blobReference, string pendingUploadId, string version, PendingUploadType pendingUploadType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -46,7 +46,7 @@ namespace Azure.AI.Projects
         /// <summary> Version of asset to be created if user did not specify version when initially creating upload. </summary>
         public string Version { get; }
 
-        /// <summary> BlobReference is the only supported type. </summary>
-        public PendingUploadType PendingUploadType { get; } = "BlobReference";
+        /// <summary> TemporaryBlobReference is the only supported type. </summary>
+        public PendingUploadType PendingUploadType { get; } = "TemporaryBlobReference";
     }
 }
