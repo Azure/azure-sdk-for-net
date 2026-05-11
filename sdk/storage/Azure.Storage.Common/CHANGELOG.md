@@ -1,6 +1,6 @@
 # Release History
 
-## 12.27.0 (Unreleased)
+## 12.27.0 (2026-05-11)
 
 ### Bugs Fixed
 - Fixed issue where the `TokenRequestContext.Scopes` contained a double slash (e.g. `https://storage.azure.com//.default`) when using `TokenCredential` authentication. (#58295)

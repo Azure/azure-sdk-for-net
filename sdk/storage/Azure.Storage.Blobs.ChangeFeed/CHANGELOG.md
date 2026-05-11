@@ -1,9 +1,14 @@
 # Release History
 
-## 12.0.0-preview.61 (Unreleased)
+## 12.0.0-preview.62 (2026-05-11)
 
 ### Features Added
 - This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.61 (2026-03-24)
+
+### Features Added
+- Added support for service version 2026-06-06.
 
 ## 12.0.0-preview.60 (2026-01-20)
 
