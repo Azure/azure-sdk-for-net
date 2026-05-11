@@ -117,7 +117,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// A tool that can be used to generate a response.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, <see cref="Agents.WorkIQPreviewTool"/>, <see cref="Agents.FabricIQPreviewTool"/>, <see cref="Agents.MemorySearchPreviewTool"/>, and <see cref="Agents.ToolboxSearchPreviewTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, <see cref="Agents.WorkIQPreviewTool"/>, <see cref="Agents.FabricIQPreviewTool"/>, <see cref="Agents.MemorySearchPreviewTool"/>, <see cref="Agents.ToolboxSearchPreviewTool"/>, and <see cref="Agents.ToolSearchTool"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.ProjectsAgentTool"/> instance for mocking. </returns>
@@ -521,40 +521,34 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> A WorkIQ server-side tool. </summary>
+        /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="workIqPreview"> The WorkIQ tool parameters. </param>
         /// <returns> A new <see cref="Agents.WorkIQPreviewTool"/> instance for mocking. </returns>
-        public static WorkIQPreviewTool WorkIQPreviewTool(string name = default, string description = default, WorkIQPreviewToolParameters workIqPreview = default)
+        public static WorkIQPreviewTool WorkIQPreviewTool(string projectConnectionId = default, string name = default, string description = default)
         {
-            return new WorkIQPreviewTool(ToolType.WorkIqPreview, additionalBinaryDataProperties: null, name, description, workIqPreview);
+            return new WorkIQPreviewTool(ToolType.WorkIqPreview, additionalBinaryDataProperties: null, projectConnectionId, name, description);
         }
 
-        /// <summary> The WorkIQ tool parameters. </summary>
-        /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
-        /// <returns> A new <see cref="Agents.WorkIQPreviewToolParameters"/> instance for mocking. </returns>
-        public static WorkIQPreviewToolParameters WorkIQPreviewToolParameters(string projectConnectionId = default)
-        {
-            return new WorkIQPreviewToolParameters(projectConnectionId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The FabricIQPreviewTool. </summary>
-        /// <param name="fabricIqPreview"> The FabricIQ tool parameters. </param>
-        /// <returns> A new <see cref="Agents.FabricIQPreviewTool"/> instance for mocking. </returns>
-        public static FabricIQPreviewTool FabricIQPreviewTool(FabricIQPreviewToolParameters fabricIqPreview = default)
-        {
-            return new FabricIQPreviewTool(ToolType.FabricIqPreview, additionalBinaryDataProperties: null, fabricIqPreview);
-        }
-
-        /// <summary> The FabricIQPreviewToolParameters. </summary>
+        /// <summary> A FabricIQ server-side tool. </summary>
         /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
         /// <param name="serverLabel"> (Optional) The label of the FabricIQ MCP server to connect to. </param>
         /// <param name="serverUrl"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
         /// <param name="requireApproval"> (Optional) Whether the agent requires approval before executing actions. Default is always. </param>
-        /// <returns> A new <see cref="Agents.FabricIQPreviewToolParameters"/> instance for mocking. </returns>
-        public static FabricIQPreviewToolParameters FabricIQPreviewToolParameters(string projectConnectionId = default, string serverLabel = default, Uri serverUrl = default, BinaryData requireApproval = default)
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <returns> A new <see cref="Agents.FabricIQPreviewTool"/> instance for mocking. </returns>
+        public static FabricIQPreviewTool FabricIQPreviewTool(string projectConnectionId = default, string serverLabel = default, Uri serverUrl = default, BinaryData requireApproval = default, string name = default, string description = default)
         {
-            return new FabricIQPreviewToolParameters(projectConnectionId, serverLabel, serverUrl, requireApproval, additionalBinaryDataProperties: null);
+            return new FabricIQPreviewTool(
+                ToolType.FabricIqPreview,
+                additionalBinaryDataProperties: null,
+                projectConnectionId,
+                serverLabel,
+                serverUrl,
+                requireApproval,
+                name,
+                description);
         }
 
         /// <summary> A tool for integrating memories into the agent. </summary>
@@ -610,6 +604,23 @@ namespace Azure.AI.Projects.Agents
         public static ProjectWebSearchConfiguration ProjectWebSearchConfiguration(string projectConnectionId = default, string instanceName = default)
         {
             return new ProjectWebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The EmptyModelParam. </summary>
+        /// <returns> A new <see cref="OpenAI.EmptyModelParam"/> instance for mocking. </returns>
+        public static EmptyModelParam EmptyModelParam()
+        {
+            return new EmptyModelParam(additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Tool search tool. </summary>
+        /// <param name="execution"> Whether tool search is executed by the server or by the client. </param>
+        /// <param name="description"></param>
+        /// <param name="parameters"></param>
+        /// <returns> A new <see cref="Agents.ToolSearchTool"/> instance for mocking. </returns>
+        public static ToolSearchTool ToolSearchTool(ToolSearchExecutionType? execution = default, string description = default, EmptyModelParam parameters = default)
+        {
+            return new ToolSearchTool(ToolType.ToolSearch, additionalBinaryDataProperties: null, execution, description, parameters);
         }
 
         /// <summary> A record mapping for a single protocol and its version. </summary>

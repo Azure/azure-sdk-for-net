@@ -8,20 +8,21 @@ using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal partial class InternalToolSearchToolParam : ProjectsAgentTool
+    /// <summary> Tool search tool. </summary>
+    public partial class ToolSearchTool : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="InternalToolSearchToolParam"/>. </summary>
-        public InternalToolSearchToolParam() : base(ToolType.ToolSearch)
+        /// <summary> Initializes a new instance of <see cref="ToolSearchTool"/>. </summary>
+        public ToolSearchTool() : base(ToolType.ToolSearch)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalToolSearchToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ToolSearchTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="execution"> Whether tool search is executed by the server or by the client. </param>
         /// <param name="description"></param>
         /// <param name="parameters"></param>
-        internal InternalToolSearchToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalToolSearchExecutionType? execution, string description, InternalEmptyModelParam parameters) : base(@type, additionalBinaryDataProperties)
+        internal ToolSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ToolSearchExecutionType? execution, string description, EmptyModelParam parameters) : base(@type, additionalBinaryDataProperties)
         {
             Execution = execution;
             Description = description;
@@ -29,12 +30,12 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Whether tool search is executed by the server or by the client. </summary>
-        public InternalToolSearchExecutionType? Execution { get; set; }
+        public ToolSearchExecutionType? Execution { get; set; }
 
         /// <summary> Gets or sets the Description. </summary>
         public string Description { get; set; }
 
         /// <summary> Gets or sets the Parameters. </summary>
-        public InternalEmptyModelParam Parameters { get; set; }
+        public EmptyModelParam Parameters { get; set; }
     }
 }
