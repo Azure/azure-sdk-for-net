@@ -82,15 +82,15 @@ namespace Azure.AI.Projects.Agents
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("data"u8);
             writer.WriteStartArray();
-            foreach (TelemetryDataKind item in Data)
+            foreach (ExportedDataTypes item in ExportedDataTypes)
             {
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Auth))
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("auth"u8);
-                writer.WriteObjectValue(Auth, options);
+                writer.WriteObjectValue(Authentication, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

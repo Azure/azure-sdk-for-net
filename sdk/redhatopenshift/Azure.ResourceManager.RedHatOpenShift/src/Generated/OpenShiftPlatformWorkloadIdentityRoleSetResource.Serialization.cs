@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RedHatOpenShift
 {
-    public partial class OpenShiftPlatformWorkloadIdentityRoleSetResource : IJsonModel<PlatformWorkloadIdentityRoleSetData>
+    /// <summary></summary>
+    public partial class OpenShiftPlatformWorkloadIdentityRoleSetResource : IJsonModel<OpenShiftPlatformWorkloadIdentityRoleSetData>
     {
-        private static PlatformWorkloadIdentityRoleSetData s_dataDeserializationInstance;
-        private static PlatformWorkloadIdentityRoleSetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<OpenShiftPlatformWorkloadIdentityRoleSetData> s_dataDeserializationInstance;
 
-        void IJsonModel<PlatformWorkloadIdentityRoleSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PlatformWorkloadIdentityRoleSetData>)Data).Write(writer, options);
+        private static IJsonModel<OpenShiftPlatformWorkloadIdentityRoleSetData> DataDeserializationInstance => s_dataDeserializationInstance ??= new OpenShiftPlatformWorkloadIdentityRoleSetData();
 
-        PlatformWorkloadIdentityRoleSetData IJsonModel<PlatformWorkloadIdentityRoleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PlatformWorkloadIdentityRoleSetData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<OpenShiftPlatformWorkloadIdentityRoleSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OpenShiftPlatformWorkloadIdentityRoleSetData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<PlatformWorkloadIdentityRoleSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PlatformWorkloadIdentityRoleSetData>(Data, options, AzureResourceManagerRedHatOpenShiftContext.Default);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OpenShiftPlatformWorkloadIdentityRoleSetData IJsonModel<OpenShiftPlatformWorkloadIdentityRoleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        PlatformWorkloadIdentityRoleSetData IPersistableModel<PlatformWorkloadIdentityRoleSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PlatformWorkloadIdentityRoleSetData>(data, options, AzureResourceManagerRedHatOpenShiftContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OpenShiftPlatformWorkloadIdentityRoleSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OpenShiftPlatformWorkloadIdentityRoleSetData>(Data, options, AzureResourceManagerRedHatOpenShiftContext.Default);
 
-        string IPersistableModel<PlatformWorkloadIdentityRoleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PlatformWorkloadIdentityRoleSetData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OpenShiftPlatformWorkloadIdentityRoleSetData IPersistableModel<OpenShiftPlatformWorkloadIdentityRoleSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OpenShiftPlatformWorkloadIdentityRoleSetData>(data, options, AzureResourceManagerRedHatOpenShiftContext.Default);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OpenShiftPlatformWorkloadIdentityRoleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

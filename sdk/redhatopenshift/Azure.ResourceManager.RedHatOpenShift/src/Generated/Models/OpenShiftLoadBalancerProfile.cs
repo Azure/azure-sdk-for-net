@@ -7,77 +7,54 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.RedHatOpenShift;
 
 namespace Azure.ResourceManager.RedHatOpenShift.Models
 {
     /// <summary> LoadBalancerProfile represents the profile of the cluster public load balancer. </summary>
     public partial class OpenShiftLoadBalancerProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftLoadBalancerProfile"/>. </summary>
         public OpenShiftLoadBalancerProfile()
         {
-            EffectiveOutboundIps = new ChangeTrackingList<SubResource>();
+            EffectiveOutboundIps = new ChangeTrackingList<EffectiveOutboundIP>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftLoadBalancerProfile"/>. </summary>
-        /// <param name="managedOutboundIPs"> The desired managed outbound IPs for the cluster public load balancer. </param>
-        /// <param name="effectiveOutboundIPs"> The list of effective outbound IP addresses of the public load balancer. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenShiftLoadBalancerProfile(OpenShiftManagedOutboundIPs managedOutboundIPs, IReadOnlyList<SubResource> effectiveOutboundIPs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="managedOutboundIps"> The desired managed outbound IPs for the cluster public load balancer. </param>
+        /// <param name="effectiveOutboundIps"> The list of effective outbound IP addresses of the public load balancer. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OpenShiftLoadBalancerProfile(OpenShiftManagedOutboundIPs managedOutboundIps, IReadOnlyList<EffectiveOutboundIP> effectiveOutboundIps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ManagedOutboundIps = managedOutboundIPs;
-            EffectiveOutboundIps = effectiveOutboundIPs;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ManagedOutboundIps = managedOutboundIps;
+            EffectiveOutboundIps = effectiveOutboundIps;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The desired managed outbound IPs for the cluster public load balancer. </summary>
         internal OpenShiftManagedOutboundIPs ManagedOutboundIps { get; set; }
+
+        /// <summary> The list of effective outbound IP addresses of the public load balancer. </summary>
+        public IReadOnlyList<EffectiveOutboundIP> EffectiveOutboundIps { get; }
+
         /// <summary> Count represents the desired number of IPv4 outbound IPs created and managed by Azure for the cluster public load balancer.  Allowed values are in the range of 1 - 20.  The default value is 1. </summary>
         public int? ManagedOutboundIpsCount
         {
-            get => ManagedOutboundIps is null ? default : ManagedOutboundIps.Count;
+            get
+            {
+                return ManagedOutboundIps is null ? default : ManagedOutboundIps.Count;
+            }
             set
             {
                 if (ManagedOutboundIps is null)
+                {
                     ManagedOutboundIps = new OpenShiftManagedOutboundIPs();
+                }
                 ManagedOutboundIps.Count = value;
             }
         }
-
-        /// <summary> The list of effective outbound IP addresses of the public load balancer. </summary>
-        public IReadOnlyList<SubResource> EffectiveOutboundIps { get; }
     }
 }

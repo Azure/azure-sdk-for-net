@@ -22,6 +22,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
     {
         private ClientDiagnostics _scheduledEventClientDiagnostics;
         private ScheduledEvent _scheduledEventRestClient;
+        private ClientDiagnostics _maintenanceApplyUpdateClientDiagnostics;
+        private MaintenanceApplyUpdate _maintenanceApplyUpdateRestClient;
         private ClientDiagnostics _updatesClientDiagnostics;
         private Updates _updatesRestClient;
 
@@ -40,6 +42,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         private ClientDiagnostics ScheduledEventClientDiagnostics => _scheduledEventClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private ScheduledEvent ScheduledEventRestClient => _scheduledEventRestClient ??= new ScheduledEvent(ScheduledEventClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
+
+        private ClientDiagnostics MaintenanceApplyUpdateClientDiagnostics => _maintenanceApplyUpdateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private MaintenanceApplyUpdate MaintenanceApplyUpdateRestClient => _maintenanceApplyUpdateRestClient ??= new MaintenanceApplyUpdate(MaintenanceApplyUpdateClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
 
         private ClientDiagnostics UpdatesClientDiagnostics => _updatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -350,6 +356,198 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 HttpMessage message = ScheduledEventRestClient.CreateAcknowledgeRequest(Guid.Parse(scope.SubscriptionId), scope.Parent.Name, scope.ResourceType.Type, scope.Name, scheduledEventId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceScheduledEventApproveResult> response = Response.FromValue(MaintenanceScheduledEventApproveResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Apply maintenance updates to resource with parent
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApplyUpdatesOperationGroup_CreateOrUpdateParent. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual async Task<Response<MaintenanceApplyUpdateData>> CreateOrUpdateApplyUpdateByParentAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = MaintenanceApplyUpdateClientDiagnostics.CreateScope("MockableMaintenanceArmClient.CreateOrUpdateApplyUpdateByParent");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateApplyUpdateByParentRequest(Guid.Parse(scope.SubscriptionId), scope.Parent.Parent.Name, scope.Parent.ResourceType.Namespace, scope.Parent.ResourceType.Type, scope.Parent.Name, scope.ResourceType.Type, scope.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Apply maintenance updates to resource with parent
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApplyUpdatesOperationGroup_CreateOrUpdateParent. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual Response<MaintenanceApplyUpdateData> CreateOrUpdateApplyUpdateByParent(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = MaintenanceApplyUpdateClientDiagnostics.CreateScope("MockableMaintenanceArmClient.CreateOrUpdateApplyUpdateByParent");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateApplyUpdateByParentRequest(Guid.Parse(scope.SubscriptionId), scope.Parent.Parent.Name, scope.Parent.ResourceType.Namespace, scope.Parent.ResourceType.Type, scope.Parent.Name, scope.ResourceType.Type, scope.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Apply maintenance updates to resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApplyUpdatesOperationGroup_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual async Task<Response<MaintenanceApplyUpdateData>> CreateOrUpdateAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = MaintenanceApplyUpdateClientDiagnostics.CreateScope("MockableMaintenanceArmClient.CreateOrUpdate");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(scope.SubscriptionId), scope.Parent.Name, scope.ResourceType.Namespace, scope.ResourceType.Type, scope.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Apply maintenance updates to resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApplyUpdatesOperationGroup_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual Response<MaintenanceApplyUpdateData> CreateOrUpdate(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = MaintenanceApplyUpdateClientDiagnostics.CreateScope("MockableMaintenanceArmClient.CreateOrUpdate");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(scope.SubscriptionId), scope.Parent.Name, scope.ResourceType.Namespace, scope.ResourceType.Type, scope.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

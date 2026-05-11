@@ -7,19 +7,26 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
+using System.IO.Compression;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
+using Microsoft.Extensions.Options;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents;
 
-[CodeGenSuppress("CreateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpointConfig), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
-[CodeGenSuppress("CreateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpointConfig), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpointConfiguration), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpointConfiguration), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentVersionFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentVersionFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentFromCode", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("CreateAgentFromCodeAsync", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("UpdateAgentFromCode", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("UpdateAgentFromCodeAsync", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgents", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgentsAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgentVersions", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
@@ -37,6 +44,14 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetSessionsAsync", typeof(string), typeof(AgentDefinitionOptInKeys), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetSessions", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetSessionsAsync", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("CreateSession", typeof(string), typeof(VersionIndicator), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
+[CodeGenSuppress("CreateSessionAsync", typeof(string), typeof(VersionIndicator), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
+[CodeGenSuppress("GetSession", typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
+[CodeGenSuppress("GetSessionAsync", typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
+[CodeGenSuppress("DeleteSession", typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
+[CodeGenSuppress("DeleteSessionAsync", typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
+[CodeGenSuppress("GetSessionLogStream", typeof(string), typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
+[CodeGenSuppress("GetSessionLogStreamAsync", typeof(string), typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
 public partial class AgentAdministrationClient
 {
     private AgentToolboxes _cachedAgentsToolboxes;
@@ -406,22 +421,19 @@ public partial class AgentAdministrationClient
     /// enforces session ownership using the provided isolation key for session-mutating operations.
     /// </summary>
     /// <param name="agentName"> The name of the agent to create a session for. </param>
-    /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
     /// <param name="versionIndicator"> Determines which agent version backs the session. </param>
     /// <param name="agentSessionId"> Optional caller-provided session ID. If specified, it must be unique within the agent endpoint. Auto-generated if omitted. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="isolationKey"/> or <paramref name="versionIndicator"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="versionIndicator"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<ProjectAgentSession> CreateSession(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectAgentSession> CreateSession(string agentName, VersionIndicator versionIndicator, string agentSessionId = default, CancellationToken cancellationToken = default)
     {
-        return CreateSession(
-            agentName: agentName,
-            isolationKey: isolationKey,
-            versionIndicator:versionIndicator,
-            agentSessionId: agentSessionId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken);
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+        CreateSessionRequest spreadModel = new CreateSessionRequest(agentSessionId, versionIndicator, default);
+        ClientResult result = CreateSession(agentName, spreadModel, default, cancellationToken.ToRequestOptions());
+        return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
     }
 
     /// <summary>
@@ -430,22 +442,19 @@ public partial class AgentAdministrationClient
     /// enforces session ownership using the provided isolation key for session-mutating operations.
     /// </summary>
     /// <param name="agentName"> The name of the agent to create a session for. </param>
-    /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
     /// <param name="versionIndicator"> Determines which agent version backs the session. </param>
     /// <param name="agentSessionId"> Optional caller-provided session ID. If specified, it must be unique within the agent endpoint. Auto-generated if omitted. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="isolationKey"/> or <paramref name="versionIndicator"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="versionIndicator"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<ProjectAgentSession>> CreateSessionAsync(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectAgentSession>> CreateSessionAsync(string agentName, VersionIndicator versionIndicator, string agentSessionId = default, CancellationToken cancellationToken = default)
     {
-        return await CreateSessionAsync(
-            agentName: agentName,
-            isolationKey: isolationKey,
-            versionIndicator: versionIndicator,
-            agentSessionId: agentSessionId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken).ConfigureAwait(false);
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+        CreateSessionRequest spreadModel = new CreateSessionRequest(agentSessionId, versionIndicator, default);
+        ClientResult result = await CreateSessionAsync(agentName, spreadModel, default, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
     }
 
     /// <summary> Returns a list of sessions for the specified agent. </summary>
@@ -538,19 +547,18 @@ public partial class AgentAdministrationClient
     /// </summary>
     /// <param name="agentName"> The name of the agent. </param>
     /// <param name="sessionId"> The session identifier. </param>
-    /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/>/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/>/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult DeleteSession(string agentName, string sessionId, string isolationKey, CancellationToken cancellationToken = default)
+    public virtual ClientResult DeleteSession(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
-        return DeleteSession(
-            agentName: agentName,
-            sessionId: sessionId,
-            isolationKey: isolationKey,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken);
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
+
+        RequestOptions options = cancellationToken.ToRequestOptions();
+        using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, default, options);
+        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
     }
 
     /// <summary>
@@ -559,19 +567,18 @@ public partial class AgentAdministrationClient
     /// </summary>
     /// <param name="agentName"> The name of the agent. </param>
     /// <param name="sessionId"> The session identifier. </param>
-    /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, string isolationKey, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
-        return await DeleteSessionAsync(
-            agentName: agentName,
-            sessionId: sessionId,
-            isolationKey: isolationKey,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken).ConfigureAwait(false);
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
+
+        RequestOptions options = cancellationToken.ToRequestOptions();
+        using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, default, options);
+        return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
     }
 
     /// <summary> Retrieves a session by ID. </summary>
@@ -583,12 +590,11 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<ProjectAgentSession> GetSession(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
-        return GetSession(
-            agentName: agentName,
-            sessionId: sessionId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        );
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
+
+        ClientResult result = GetSession(agentName, sessionId, default, cancellationToken.ToRequestOptions());
+        return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
     }
 
     /// <summary>
@@ -656,12 +662,11 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<ProjectAgentSession>> GetSessionAsync(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
-        return await GetSessionAsync(
-            agentName: agentName,
-            sessionId: sessionId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
+
+        ClientResult result = await GetSessionAsync(agentName, sessionId, default, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
     }
 
     /// <summary>
@@ -698,12 +703,8 @@ public partial class AgentAdministrationClient
         Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
         Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
 
-        return GetSessionLogStream(
-            agentName: agentName,
-            agentVersion: agentVersion,
-            sessionId: sessionId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken);
+        ClientResult result = GetSessionLogStream(agentName, agentVersion, sessionId, default, cancellationToken.ToRequestOptions());
+        return ClientResult.FromValue((SessionLogEvent)result, result.GetRawResponse());
     }
 
     /// <summary>
@@ -740,13 +741,192 @@ public partial class AgentAdministrationClient
         Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
         Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
 
-        return await GetSessionLogStreamAsync(
+        ClientResult result = await GetSessionLogStreamAsync(agentName, agentVersion, sessionId, default, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ClientResult.FromValue((SessionLogEvent)result, result.GetRawResponse());
+    }
+
+    /// <summary>
+    /// CreateAgentVersionFromCode
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName">
+    /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+    /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+    /// </param>
+    /// <param name="filePath"> The path to the entry point file. </param>
+    /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+    /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="filePath"/> or is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    public virtual ClientResult<ProjectsAgentVersion> CreateAgentVersionFromCode(string agentName, string filePath, string contentType, string foundryFeatures = default, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
+
+        (BinaryData data, string codeZipSha256) = FileHelper.CreateAndReadZipFile(filePath);
+        using BinaryContent content = BinaryContent.Create(data);
+        ClientResult result = CreateAgentVersionFromCode(
             agentName: agentName,
-            agentVersion: agentVersion,
-            sessionId: sessionId,
+            codeZipSha256: codeZipSha256,
+            content: content,
+            contentType: contentType,
+            foundryFeatures: default,
+            options: cancellationToken.ToRequestOptions());
+        return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
+    }
+
+    /// <summary>
+    /// CreateAgentVersionFromCode
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName">
+    /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+    /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+    /// </param>
+    /// <param name="filePath"> The path to the entry point file. </param>
+    /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+    /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="filePath"/> or is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    public virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionFromCodeAsync(string agentName, string filePath, string contentType, string foundryFeatures = default, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
+
+        (BinaryData data, string codeZipSha256) = FileHelper.CreateAndReadZipFile(filePath);
+        using BinaryContent content = BinaryContent.Create(data);
+        ClientResult result = await CreateAgentVersionFromCodeAsync(
+            agentName: agentName,
+            codeZipSha256: codeZipSha256,
+            content: content,
+            contentType: contentType,
+            foundryFeatures: default,
+            options: cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
+    }
+
+    /// <summary>
+    /// Download the code zip for the latest version of a code-based hosted agent. And unpacks ut to the user directory; returns the zip content as a binary data.
+    /// Returns the previously-uploaded zip (`application/zip`).
+    /// The SHA-256 digest of the returned bytes matches the `content_hash` on the latest version's `code_configuration`.
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName"> The name of the agent whose latest-version code zip should be downloaded. </param>
+    /// <param name="path"> The path to save the agent code. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="path"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    public virtual BinaryData DownloadAgentCode(string agentName, string path, CancellationToken cancellationToken=default)
+    {
+        Argument.AssertNotNullOrEmpty(path, nameof(path));
+
+        BinaryData result = DownloadAgentCode(
+            agentName: agentName,
+            foundryFeatures: default,
+            cancellationToken: cancellationToken
+        );
+        FileHelper.SaveAndUnzipData(path, result);
+        return result;
+    }
+
+    /// <summary>
+    /// Download the code zip for the latest version of a code-based hosted agent and unpacks it to the user directory; returns the zip content as a binary data.
+    /// Returns the previously-uploaded zip (`application/zip`).
+    /// The SHA-256 digest of the returned bytes matches the `content_hash` on the latest version's `code_configuration`.
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName"> The name of the agent whose latest-version code zip should be downloaded. </param>
+    /// <param name="path"> The path to save the agent code. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="path"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    public virtual async Task<BinaryData> DownloadAgentCodeAsync(string agentName, string path, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(path, nameof(path));
+
+        BinaryData result = await DownloadAgentCodeAsync(
+            agentName: agentName,
             foundryFeatures: default,
             cancellationToken: cancellationToken
         ).ConfigureAwait(false);
+        FileHelper.SaveAndUnzipData(path, result);
+        return result;
+    }
+
+    /// <summary>
+    /// Download the code zip for a specific version of a code-based hosted agent and unpacks it to the user directory; returns the zip content as a binary data.
+    /// Returns the previously-uploaded zip (`application/zip`).
+    /// The SHA-256 digest of the returned bytes matches the `content_hash` on the agent version's `code_configuration`.
+    /// </summary>
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="agentVersion"> The version of the agent whose code zip should be downloaded. </param>
+    /// <param name="path"> The path to save the agent code. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="path"/>  is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual BinaryData DownloadAgentVersionCode(string agentName, string agentVersion, string path, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(path, nameof(path));
+
+        BinaryData result = DownloadAgentVersionCode(
+            agentName: agentName,
+            agentVersion: agentVersion,
+            foundryFeatures: default,
+            cancellationToken: cancellationToken);
+        FileHelper.SaveAndUnzipData(path, result);
+        return result;
+    }
+
+    /// <summary>
+    /// Download the code zip for a specific version of a code-based hosted agent and unpacks it to the user directory; returns the zip content as a binary data.
+    /// Returns the previously-uploaded zip (`application/zip`).
+    /// The SHA-256 digest of the returned bytes matches the `content_hash` on the agent version's `code_configuration`.
+    /// </summary>
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="agentVersion"> The version of the agent whose code zip should be downloaded. </param>
+    /// <param name="path"> The path to save the agent code. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="path"/>  is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task<BinaryData> DownloadAgentVersionCodeAsync(string agentName, string agentVersion, string path, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(path, nameof(path));
+
+        BinaryData result = await DownloadAgentVersionCodeAsync(
+            agentName: agentName,
+            agentVersion: agentVersion,
+            foundryFeatures: default,
+            cancellationToken: cancellationToken).ConfigureAwait(false);
+        FileHelper.SaveAndUnzipData(path, result);
+        return result;
     }
 
     public virtual AgentToolboxes GetAgentToolboxes()

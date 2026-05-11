@@ -33,6 +33,7 @@ namespace Azure.AI.Projects
         private EvaluationRules _cachedEvaluationRules;
         private EvaluationTaxonomies _cachedEvaluationTaxonomies;
         private ProjectEvaluators _cachedProjectEvaluators;
+        private EvaluatorGenerationJobs _cachedEvaluatorGenerationJobs;
         private ProjectInsights _cachedProjectInsights;
         private ProjectSchedules _cachedProjectSchedules;
         private AIProjectMemoryStores _cachedAIProjectMemoryStores;
@@ -45,12 +46,6 @@ namespace Azure.AI.Projects
         public virtual AIProjectMemoryStores GetAIProjectMemoryStoresClient()
         {
             return Volatile.Read(ref _cachedAIProjectMemoryStores) ?? Interlocked.CompareExchange(ref _cachedAIProjectMemoryStores, new AIProjectMemoryStores(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStores;
-        }
-
-        /// <summary> Initializes a new instance of DataGenerationJobs. </summary>
-        public virtual DataGenerationJobs GetDataGenerationJobsClient()
-        {
-            return Volatile.Read(ref _cachedDataGenerationJobs) ?? Interlocked.CompareExchange(ref _cachedDataGenerationJobs, new DataGenerationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataGenerationJobs;
         }
     }
 }
