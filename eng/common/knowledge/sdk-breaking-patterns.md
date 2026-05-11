@@ -31,80 +31,6 @@ enum FooStatusEnum
 
 ---
 
-### 2. Enum Split Into Multiple Enums
-
-**Detection:** SDK changelog shows enum type lost members that moved to a new enum type (e.g., `ProvisioningState` split into `ProvisioningState` + `StorageTaskAssignmentProvisioningState`).
-
-**Per-Language Impact:**
-- **Java:** ❌ Breaking — return type change + missing enum members
-- **.NET:** ❌ Breaking — type mismatch in client code
-- **Python:** ⚠️ May break — type hint changes
-- **Go:** ❌ Breaking — type assertion and switch cases fail
-
-**Mitigation:**
-
-This is a complex multi-step case. The mitigation combines `@@alternateType` and `@@clientName` with a critical "make room" step:
-
-```typespec
-// In client.tsp
-// Step 1: CRITICAL — Rename the ORIGINAL enum out of the way first
-// Without this, you get "duplicate-client-name" errors
-@@clientName(MyService.ProvisioningState, "StorageProvisioningState", "java");
-
-// Step 2: Create merged enum with ALL values from both enums
-enum ProvisioningStateEnum {
-  Creating,
-  ResolvingDNS,
-  Succeeded,
-  // ... all values from original ProvisioningState
-  Canceled,
-  Failed,
-  // ... plus values from StorageTaskAssignmentProvisioningState
-}
-
-// Step 3: Give the merged enum the original name
-@@clientName(MyService.ProvisioningStateEnum, "ProvisioningState", "java");
-
-// Step 4: Point properties at the merged enum
-@@alternateType(
-  MyService.StorageAccountProperties.provisioningState,
-  MyService.ProvisioningStateEnum,
-  "java"
-);
-@@alternateType(
-  MyService.StorageTaskAssignmentProperties.provisioningState,
-  MyService.ProvisioningStateEnum,
-  "java"
-);
-```
-
-**Key learning from Storage dogfood:** Step 1 (the "make room" step) is critical. Without renaming the original enum first, creating a new enum with `@@clientName` to the same name causes `duplicate-client-name` errors. This multi-step interaction is the most common failure point.
-
----
-
-### 3. Enum Value Name Changed (Numeric Names)
-
-**Detection:** SDK changelog shows enum member renamed — typically numbers converted to words (Swagger) being replaced by original numeric names (TypeSpec).
-
-**Per-Language Changelog Pattern:**
-- **Python:** `Enum 'Minute' deleted or renamed its member 'ZERO'` / `Enum 'Minute' added member 'ENUM_0'`
-- **Go:** `'ZERO' from enum 'Minute' has been removed` / `New value 'ENUM_0' added to enum type 'Minute'`
-- **Java/.NET:** Similar rename patterns in changelog
-
-**Per-Language Impact:**
-- **All languages:** ❌ Breaking — existing code references old enum member names
-
-**Mitigation:**
-```typespec
-// In client.tsp — restore original member names per language
-@@clientName(MyService.Minute.`0`, "ZERO", "python");
-@@clientName(MyService.Minute.`30`, "THIRTY", "python");
-@@clientName(MyService.Minute.`0`, "ZERO", "go");
-@@clientName(MyService.Minute.`30`, "THIRTY", "go");
-```
-
----
-
 ### 4. Model Renamed
 
 **Detection:** TypeSpec diff or changelog shows model name changed between versions.
@@ -214,26 +140,7 @@ If the model was intentionally removed and replacement exists, use `@@clientName
 
 ---
 
-### 8. Property or Model Made Read-Only (Setters Removed)
-
-**Detection:** SDK changelog shows setter methods (`withXyz`) removed from models, or constructors changed to private.
-
-**Per-Language Impact:**
-- **Java:** ❌ Breaking — immutable models, no setters
-- **.NET:** ✅ Safe — partial classes can add setters via `[CodeGenType]`
-- **Python:** ✅ Safe — `_patch.py` can override
-- **Go:** ❌ Breaking — exported fields become unexported
-
-**Mitigation:**
-```typespec
-// In client.tsp — restore input usage for affected languages
-@@usage(MyService.MyModel, Usage.input, "java");
-@@usage(MyService.MyModel, Usage.input, "go");
-```
-
----
-
-### 9. Operation Renamed
+### 8. Operation Renamed
 
 **Detection:** TypeSpec diff shows operation name changed, or changelog shows method renamed.
 
@@ -254,7 +161,7 @@ If the model was intentionally removed and replacement exists, use `@@clientName
 
 ---
 
-### 10. Operation Signature Changed (Parameters Added/Removed/Reordered)
+### 9. Operation Signature Changed (Parameters Added/Removed/Reordered)
 
 **Detection:** TypeSpec diff shows operation parameters added/removed/retyped, or changelog shows parameter changes.
 
@@ -287,7 +194,7 @@ op MyCustomOp(
 
 ---
 
-### 11. Operation Removed or Hidden
+### 10. Operation Removed or Hidden
 
 **Detection:** TypeSpec diff shows operation deleted or `@removed` decorator added.
 
@@ -304,7 +211,7 @@ op oldOperation(): void;
 
 ---
 
-### 12. Combine multiple model properties into one
+### 11. Combine multiple model properties into one
 
 **Detection:** TypeSpec diff shows that one or more properties in a model are combined into a new model, and a new property of that model is added.
 
@@ -315,7 +222,7 @@ op oldOperation(): void;
 
 ---
 
-### 13. Interface Renamed (DataPlane only)
+### 12. Interface Renamed (DataPlane only)
 
 **Detection:** TypeSpec diff shows interface name changed.
 
@@ -330,210 +237,8 @@ op oldOperation(): void;
 
 ---
 
-### 14. List/Page Wrapper Models Removed
-
-**Detection:** SDK changelog shows list wrapper models removed (e.g., `ListQueueResource`, `StorageAccountListResult`, `FileShareItems`).
-
-**Per-Language Changelog Pattern:**
-- **Python:** `Deleted or renamed model 'ElasticSanList'`, `Deleted or renamed model 'SnapshotList'`
-- **Go:** Paged response type changes
-- **Java/.NET:** Pagination model types changed
-
-**Per-Language Impact:**
-- **Java:** ❌ Breaking — pagination model types changed
-- **.NET:** ⚠️ May break — use `@@markAsPageable` to preserve `Pageable<T>` return type
-- **Python:** ✅ Accept — Python does not expose pageable models for list APIs (low impact)
-- **Go:** ❌ Breaking — response type assertion fails; paging operation changes cannot be resolved through client customizations
-
-**Mitigation (.NET — markAsPageable):**
-```typespec
-// In client.tsp — make non-pageable list operation return Pageable<T>
-// Requires: using Azure.ClientGenerator.Core.Legacy;
-#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "migration"
-@@markAsPageable(MyService.MyInterface.listOperation, "csharp");
-```
-
-**Note:** Do NOT use `@@markAsPageable` if the operation is already marked with `@list` — the `@list` decorator already makes it pageable.
-
-**Mitigation (Java — clientName):**
-```typespec
-@@clientName(MyService.NewPagedResponse, "OldListResult", "java");
-```
-
----
-
-### 15. Client Name Changed
-
-**Detection:** SDK changelog shows client class renamed.
-
-**Per-Language Changelog Pattern:**
-- **Python:** `Deleted or renamed client 'IotDpsClient'`
-- **Java/.NET:** Client class name changes
-
-**Per-Language Impact:**
-- **All languages:** ❌ Breaking — client instantiation code breaks
-
-**Root Cause:** TypeSpec generates client names from the `namespace` rather than the `@service` `title` annotation.
-
-**Mitigation:**
-```typespec
-// In client.tsp — restore the original client name
-@@clientName(Microsoft.Devices, "IotDpsClient", "python");
-@@clientName(Microsoft.Devices, "IotDpsClient", "java");
-```
-
----
-
-### 16. Resource Base Type Changed (.NET-specific)
-
-**Detection:** .NET ApiCompat shows `CannotRemoveBaseTypeOrInterface` error (e.g., `Type 'X' does not inherit from base type 'Azure.ResourceManager.Models.ResourceData'`).
-
-**Per-Language Impact:**
-- **.NET:** ❌ Breaking — resource model no longer inherits expected base class
-- **Other languages:** Usually unaffected
-
-**Mitigation (.NET — hierarchyBuilding):**
-```typespec
-// In client.tsp — restore the correct base type
-// Requires: using Azure.ClientGenerator.Core.Legacy;
-#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Change base type back for backward compatibility"
-@@Azure.ClientGenerator.Core.Legacy.hierarchyBuilding(
-  MyService.MyResource,
-  Azure.ResourceManager.Foundations.TrackedResource,
-  "csharp"
-);
-```
-
-**Common target base types:**
-- `Azure.ResourceManager.Foundations.TrackedResource` → generates `TrackedResourceData`
-- `Azure.ResourceManager.Foundations.ProxyResource` → generates `ResourceData`
-
----
-
-### 17. WirePathAttribute Missing (.NET MPG-specific)
-
-**Detection:** .NET ApiCompat shows `CannotRemoveAttribute` errors referencing `WirePathAttribute` on model properties.
-
-**Per-Language Impact:**
-- **.NET:** ❌ Breaking — Azure.Provisioning libraries depend on `WirePathAttribute`
-- **Other languages:** Not affected
-
-**Mitigation:**
-
-Add to `tspconfig.yaml` (not `client.tsp`):
-```yaml
-options:
-  "@azure-typespec/http-client-csharp-mgmt":
-    enable-wire-path-attribute: true
-```
-
-**Note:** Do NOT use `ApiCompatBaseline.txt` to suppress these — the emitter option is the correct fix.
-
----
-
-### 18. Common Types Upgrade (Accept)
-
-**Detection:** SDK changelog shows changes to common infrastructure types like `SystemData`, `IdentityType`, `ManagedServiceIdentity`.
-
-**Per-Language Impact:**
-- **All languages:** ⚠️ Low impact — these are common infrastructure types rarely used directly
-
-**Mitigation:** Accept these breaking changes. Common types are upgraded to latest versions during TypeSpec migration and are not user-facing.
-
----
-
-### 19. Unreferenced Models Removed (Accept)
-
-**Detection:** SDK changelog shows removal of models not referenced by any operation (e.g., `ProxyResourceWithoutSystemData`, `Resource`).
-
-**Per-Language Impact:**
-- **All languages:** ⚠️ Low impact — typically not used directly by users
-
-**Mitigation:** Accept these breaking changes.
-
----
-
-### 20. Multi-Level Flattened Properties Unflattened (Python-specific)
-
-**Detection:** Python SDK changelog shows property removed and `properties` added (e.g., `Model 'VaultExtendedInfoResource' deleted instance variable 'integrity_key'` / `Model 'VaultExtendedInfoResource' added property 'properties'`).
-
-**Per-Language Impact:**
-- **Python:** ❌ Breaking — previously flattened properties now require accessing via `.properties.xxx`
-- **Other languages:** May vary
-
-**Root Cause:** TypeSpec does not support multi-level flattening and preserves the actual REST API hierarchy.
-
-**Mitigation:** Accept these breaking changes. Users access properties following the actual model structure matching the REST API documentation.
-
----
-
-### 21. Property Name Conflicts with Base Methods (Python-specific)
-
-**Detection:** Python SDK changelog shows property renamed with `_property` suffix (e.g., `Model 'ExceptionEntry' deleted instance variable 'values'` / `Model 'ExceptionEntry' added property 'values_property'`).
-
-**Per-Language Impact:**
-- **Python:** ❌ Breaking — property access changes from `.values` to `.values_property`
-- **Other languages:** Not affected
-
-**Root Cause:** Python base model class reserves names: `keys`, `items`, `values`, `popitem`, `clear`, `update`, `setdefault`, `pop`, `get`, `copy`. Properties using these names get `_property` suffix automatically.
-
-**Mitigation:** Accept these breaking changes. The renaming is required to avoid conflicts with base model methods.
-
----
-
-### 22. LRO/Paging Operation Type Changed (Go-specific)
-
-**Detection:** Go SDK changelog shows operation changed between LRO and non-LRO, or between paged and non-paged.
-
-**Per-Language Changelog Pattern:**
-- **Go:** `Operation '*xxx.A' has been changed to LRO, use '*xxx.BeginA' instead` or `Function '*xxx.NewListAPager' has been removed` / `New function '*xxx.A(xxx) (xxx, error)'`
-
-**Per-Language Impact:**
-- **Go:** ❌ Breaking — method names and return types change (direct result ↔ poller/pager)
-- **Other languages:** Usually handled automatically
-
-**Mitigation:** Cannot be resolved through `client.tsp` customizations in Go. The spec change must be reconsidered if backward compatibility is required.
-
----
-
 ## Detection Sources
 
 | Source | What It Detects | When Available |
 |--------|----------------|----------------|
 | **TypeSpec diff** | Structural changes: renames, type changes, removals, enum→union | During authoring (inner loop) |
-| **SDK changelog** | Language-specific breaks: setter removal, constructor access, pagination changes | After SDK generation (requires build) |
-| **Both combined** | Most comprehensive detection | When SDK repo is available locally |
-
-## Language-Specific Breaking Change Policies
-
-### Java
-- **Detection:** RevApi checks, changelog-based detection
-- **Customization:** `*Customization.java` classes, `partial-update` mode in tspconfig.yaml
-- **Strict:** Most changes are breaking. Uses RevApi suppression in `revapi.json` for accepted breaks.
-- **Reference:** [Java TypeSpec Quickstart](https://github.com/Azure/azure-sdk-for-java/blob/main/docs/contributor/typespec-quickstart.md)
-
-### .NET
-- **Detection:** ApiCompat rules, analyzer rules (AZC0030 naming, AZC0012 generic types)
-- **Customization:** Partial classes (`Custom/*.cs`), `[CodeGenType]`, `[CodeGenSuppress]`, `[CodeGenMember]`
-- **Special decorators:** `@@markAsPageable`, `@@hierarchyBuilding`, `@@alternateType` with CommonTypes
-- **Some changes safe** due to partial class override capability
-- **Reference:** [.NET Breaking Changes Skill](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mitigate-breaking-changes/SKILL.md)
-
-### Python
-- **Detection:** Changelog diff, mypy/flake8 type checks
-- **Customization:** `_patch.py` files for customization, `client.tsp` decorators
-- **Duck typing** makes many changes safe. Key patterns: numeric name changes, directive renames, parameter reordering via `@@override`
-- **Accept patterns:** Common types upgrade, pageable model removal, multi-level unflattening, base method name conflicts
-- **Reference:** [Python Breaking Changes Guide](https://github.com/Azure/azure-sdk-for-python/blob/main/doc/dev/mgmt/sdk-breaking-changes-guide.md)
-
-### Go
-- **Detection:** Changelog pattern detection, exported symbol changes
-- **Customization:** `client.tsp` decorators only — Go has NO SDK-side customization mechanism
-- **Strict:** Most changes are breaking. Many breaking change types (property type changes, LRO/paging changes, parameter additions, property/operation deletions) **cannot be resolved through client customizations** — the spec change itself must be reconsidered.
-- **Reference:** [Go Breaking Changes Guide](https://github.com/Azure/azure-sdk-for-go/blob/main/documentation/development/breaking-changes/sdk-breaking-changes-guide.md)
-
-### JavaScript
-- **Detection:** Changelog diff
-- **Customization:** Three-way merge workflow via `dev-tool customization apply` (edits in `src/` merged against regenerated `generated/`)
-- **TypeSpec-first:** JS recommends TypeSpec customizations (`client.tsp`) over SDK-side customizations
-- **Reference:** [JS Customization Guide](https://aka.ms/azsdk/js/customization)
