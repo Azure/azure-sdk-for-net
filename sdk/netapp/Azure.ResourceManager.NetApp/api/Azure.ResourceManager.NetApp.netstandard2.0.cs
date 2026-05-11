@@ -3338,7 +3338,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public string ActiveDirectoryId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Administrators { get { throw null; } }
         public string AdName { get { throw null; } set { } }
-        public bool? AesEncryption { get { throw null; } set { } }
         public bool? AllowLocalNfsUsersWithLdap { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> BackupOperators { get { throw null; } }
         public string Dns { get { throw null; } set { } }
@@ -3348,9 +3347,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? IsLdapOverTlsEnabled { get { throw null; } set { } }
         public bool? IsLdapSigningEnabled { get { throw null; } set { } }
         public System.Net.IPAddress KdcIP { get { throw null; } set { } }
-        public bool? LdapOverTLS { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppLdapSearchScopeConfiguration LdapSearchScope { get { throw null; } set { } }
-        public bool? LdapSigning { get { throw null; } set { } }
         public string OrganizationalUnit { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public string PreferredServersForLdapClient { get { throw null; } set { } }
@@ -5002,7 +4999,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public Azure.Core.ResourceIdentifier BackupVaultId { get { throw null; } set { } }
         public bool? IsBackupEnabled { get { throw null; } set { } }
         public bool? IsPolicyEnforced { get { throw null; } set { } }
-        public bool? PolicyEnforced { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VaultId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

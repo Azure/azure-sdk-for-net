@@ -130,9 +130,9 @@ Dns = "10.10.10.3",
 SmbServerName = "SMBServer",
 OrganizationalUnit = "OU=Engineering",
 Site = "SiteName",
-AesEncryption = true,
-LdapSigning = false,
-LdapOverTLS = false,
+IsAesEncryptionEnabled = true,
+IsLdapSigningEnabled = false,
+IsLdapOverTlsEnabled = false,
 }},
             };
             ArmOperation<NetAppAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, data);

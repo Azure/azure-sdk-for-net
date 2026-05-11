@@ -16,14 +16,5 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Backup Enabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsBackupEnabled { get; set; }
-
-        // Formerly PolicyEnforced; renamed to IsPolicyEnforced.
-        /// <summary> Compatibility alias for <see cref="IsPolicyEnforced"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? PolicyEnforced
-        {
-            get => IsPolicyEnforced;
-            set => IsPolicyEnforced = value;
-        }
     }
 }
