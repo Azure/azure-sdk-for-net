@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.Compute.Tests
         }
 
         [RecordedTest]
+        [Ignore("Stale recordings from old AutoRest change-tracking bug. Old SDK sent empty PATCH bodies, so recorded responses don't reflect BootDiagnostics being enabled. Needs live re-record. See #59134.")]
         public async Task BootDiagnostic()
         {
             string vmName = Recording.GenerateAssetName("testVM-");
