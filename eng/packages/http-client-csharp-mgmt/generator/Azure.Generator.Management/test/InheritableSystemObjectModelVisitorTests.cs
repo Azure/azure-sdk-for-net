@@ -8,6 +8,7 @@ using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -25,8 +26,8 @@ namespace Azure.Generator.Mgmt.Tests
         public void TryGetInheritableSystemTypeByName_MatchesKnownFrameworkType(System.Type expectedType)
         {
             var csharpType = new CSharpType(expectedType);
-            Assert.IsTrue(KnownManagementTypes.TryGetInheritableSystemTypeByName(csharpType, out var clrType));
-            Assert.AreEqual(expectedType, clrType);
+            Assert.That(KnownManagementTypes.TryGetInheritableSystemTypeByName(csharpType, out var clrType), Is.True);
+            Assert.That(clrType, Is.EqualTo(expectedType));
         }
 
         [Test]
@@ -34,7 +35,7 @@ namespace Azure.Generator.Mgmt.Tests
         {
             // Use a framework type that is NOT a known inheritable system type
             var csharpType = new CSharpType(typeof(string));
-            Assert.IsFalse(KnownManagementTypes.TryGetInheritableSystemTypeByName(csharpType, out _));
+            Assert.That(KnownManagementTypes.TryGetInheritableSystemTypeByName(csharpType, out _), Is.False);
         }
 
         [Test]
@@ -60,15 +61,15 @@ namespace Azure.Generator.Mgmt.Tests
 
             // Force creation of the model which triggers the visitor
             var modelProvider = plugin.Object.TypeFactory.CreateModel(proxyResourceModel);
-            Assert.IsNotNull(modelProvider);
-            Assert.IsInstanceOf<SystemObjectModelProvider>(modelProvider);
+            Assert.That(modelProvider, Is.Not.Null);
+            Assert.That(modelProvider, Is.InstanceOf<SystemObjectModelProvider>());
 
             // The CSharpTypeMap should now have both framework and non-framework entries
             var typeMap = plugin.Object.TypeFactory.CSharpTypeMap;
 
             // Check that a framework CSharpType for ResourceData can be found
             var frameworkResourceData = new CSharpType(typeof(ResourceData));
-            Assert.IsTrue(typeMap.ContainsKey(frameworkResourceData),
+            Assert.That(typeMap.ContainsKey(frameworkResourceData), Is.True,
                 "CSharpTypeMap should contain a framework CSharpType entry for ResourceData after EnsureFrameworkTypeRegistered");
         }
 
@@ -106,16 +107,16 @@ namespace Azure.Generator.Mgmt.Tests
                 inputModels: () => [proxyResourceModel, childModel]);
 
             var childProvider = plugin.Object.TypeFactory.CreateModel(childModel);
-            Assert.IsNotNull(childProvider);
+            Assert.That(childProvider, Is.Not.Null);
 
             // The base type properties (id, name, type, systemData) should be filtered out
             // Only customProp should remain
             var propertyNames = childProvider!.Properties.Select(p => p.Name).ToList();
-            Assert.IsFalse(propertyNames.Contains("Id"), "Id should be filtered (from base ResourceData)");
-            Assert.IsFalse(propertyNames.Contains("Name"), "Name should be filtered (from base ResourceData)");
-            Assert.IsFalse(propertyNames.Contains("ResourceType"), "ResourceType should be filtered (from base ResourceData)");
-            Assert.IsFalse(propertyNames.Contains("SystemData"), "SystemData should be filtered (from base ResourceData)");
-            Assert.IsTrue(propertyNames.Contains("CustomProp"), "CustomProp should remain as model-specific property");
+            Assert.That(propertyNames.Contains("Id"), Is.False, "Id should be filtered (from base ResourceData)");
+            Assert.That(propertyNames.Contains("Name"), Is.False, "Name should be filtered (from base ResourceData)");
+            Assert.That(propertyNames.Contains("ResourceType"), Is.False, "ResourceType should be filtered (from base ResourceData)");
+            Assert.That(propertyNames.Contains("SystemData"), Is.False, "SystemData should be filtered (from base ResourceData)");
+            Assert.That(propertyNames.Contains("CustomProp"), Is.True, "CustomProp should remain as model-specific property");
         }
 
         /// <summary>
@@ -211,12 +212,12 @@ namespace Azure.Generator.Mgmt.Tests
             var usageDetailType = plugin.Object.TypeFactory.CreateModel(usageDetailModel);
 
             // Assert the model was created successfully
-            Assert.IsNotNull(usageDetailType);
-            Assert.IsNotNull(usageDetailType!.BaseModelProvider);
+            Assert.That(usageDetailType, Is.Not.Null);
+            Assert.That(usageDetailType!.BaseModelProvider, Is.Not.Null);
 
             // Also verify derived models can be created without issues
             var legacyType = plugin.Object.TypeFactory.CreateModel(legacyModel);
-            Assert.IsNotNull(legacyType);
+            Assert.That(legacyType, Is.Not.Null);
         }
 
         /// <summary>
@@ -275,19 +276,19 @@ namespace Azure.Generator.Mgmt.Tests
             var visitor = new TestableInheritableSystemObjectModelVisitor();
             var result = visitor.InvokePreVisitModel(inputModel, model);
 
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             // Properties from TrackedResourceData (Id, Name, ResourceType, SystemData, Tags, Location)
             // should be filtered out by the base generator's native property dedup.
             // Only CustomProp should remain.
             var propertyNames = result!.Properties.Select(p => p.Name).ToList();
-            Assert.IsFalse(propertyNames.Contains("Id"), "Id should be filtered (from TrackedResourceData base)");
-            Assert.IsFalse(propertyNames.Contains("Name"), "Name should be filtered (from TrackedResourceData base)");
-            Assert.IsFalse(propertyNames.Contains("ResourceType"), "ResourceType should be filtered (from TrackedResourceData base)");
-            Assert.IsFalse(propertyNames.Contains("SystemData"), "SystemData should be filtered (from TrackedResourceData base)");
-            Assert.IsFalse(propertyNames.Contains("Tags"), "Tags should be filtered (from TrackedResourceData base)");
-            Assert.IsFalse(propertyNames.Contains("Location"), "Location should be filtered (from TrackedResourceData base)");
-            Assert.IsTrue(propertyNames.Contains("CustomProp"), "CustomProp should remain as model-specific property");
+            Assert.That(propertyNames.Contains("Id"), Is.False, "Id should be filtered (from TrackedResourceData base)");
+            Assert.That(propertyNames.Contains("Name"), Is.False, "Name should be filtered (from TrackedResourceData base)");
+            Assert.That(propertyNames.Contains("ResourceType"), Is.False, "ResourceType should be filtered (from TrackedResourceData base)");
+            Assert.That(propertyNames.Contains("SystemData"), Is.False, "SystemData should be filtered (from TrackedResourceData base)");
+            Assert.That(propertyNames.Contains("Tags"), Is.False, "Tags should be filtered (from TrackedResourceData base)");
+            Assert.That(propertyNames.Contains("Location"), Is.False, "Location should be filtered (from TrackedResourceData base)");
+            Assert.That(propertyNames.Contains("CustomProp"), Is.True, "CustomProp should remain as model-specific property");
         }
 
         private static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)
