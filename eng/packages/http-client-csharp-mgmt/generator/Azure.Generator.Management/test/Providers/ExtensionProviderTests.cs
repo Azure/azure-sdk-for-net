@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Azure.ResourceManager;
 using Humanizer;
 using NUnit.Framework;
 
@@ -69,6 +71,45 @@ namespace Azure.Generator.Management.Tests.Providers
             var getMethod = extension!.Methods.FirstOrDefault(m => m.Signature.Name == $"Get{resource?.Name}");
             Assert.That(getMethod, Is.Not.Null);
             Assert.That(getMethod!.Signature.ReturnType, Is.EqualTo(resource!.Type));
+        }
+
+        [TestCase]
+        public void Verify_GetResourceByIdMethods_GeneratedForNestedChildResources()
+        {
+            var (parentClient, childClient, models) = InputResourceData.ClientWithNestedChildResource();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models,
+                clients: () => [parentClient, childClient]);
+
+            var childResource = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .FirstOrDefault(p => p.ResourceName == "ChildType");
+            Assert.That(childResource, Is.Not.Null);
+
+            var mockableArmClient = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<MockableArmClientProvider>()
+                .FirstOrDefault();
+            Assert.That(mockableArmClient, Is.Not.Null);
+
+            var mockableGetMethod = mockableArmClient!.Methods
+                .FirstOrDefault(m => m.Signature.Name == "GetChildTypeResource");
+            Assert.That(mockableGetMethod, Is.Not.Null);
+            Assert.That(mockableGetMethod!.Signature.ReturnType, Is.EqualTo(childResource!.Type));
+            Assert.That(mockableGetMethod.Signature.Parameters.Count, Is.EqualTo(1));
+            Assert.That(mockableGetMethod.Signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(ResourceIdentifier)));
+
+            var extension = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ExtensionProvider>()
+                .FirstOrDefault();
+            Assert.That(extension, Is.Not.Null);
+
+            var extensionGetMethod = extension!.Methods
+                .FirstOrDefault(m => m.Signature.Name == "GetChildTypeResource"
+                    && m.Signature.Parameters.Count == 2
+                    && m.Signature.Parameters[0].Type.FrameworkType == typeof(ArmClient));
+            Assert.That(extensionGetMethod, Is.Not.Null);
+            Assert.That(extensionGetMethod!.Signature.ReturnType, Is.EqualTo(childResource.Type));
+            Assert.That(extensionGetMethod.Signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(ResourceIdentifier)));
         }
 
         [TestCase]
