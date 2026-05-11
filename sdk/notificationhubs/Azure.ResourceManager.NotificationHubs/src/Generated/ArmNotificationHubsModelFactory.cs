@@ -630,7 +630,28 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
+                namespaceName is null && isEnabled is null && isCritical is null && subscriptionId is null && region is null && metricId is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && scaleUnit is null && dataCenter is null ? default : new NotificationHubNamespaceProperties(
+                    namespaceName,
+                    default,
+                    default,
+                    isEnabled,
+                    isCritical,
+                    subscriptionId,
+                    region,
+                    metricId,
+                    createdOn,
+                    updatedOn,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    serviceBusEndpoint,
+                    default,
+                    scaleUnit,
+                    dataCenter,
+                    default,
+                    default),
                 sku);
         }
 
@@ -694,7 +715,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 location,
-                default,
+                primaryKey is null && secondaryKey is null && keyName is null && modifiedOn is null && createdOn is null && claimType is null && claimValue is null && revision is null ? default : new SharedAccessAuthorizationRuleProperties(
+                    default,
+                    primaryKey,
+                    secondaryKey,
+                    keyName,
+                    modifiedOn,
+                    createdOn,
+                    claimType,
+                    claimValue,
+                    revision,
+                    default),
                 tags);
         }
 
@@ -801,7 +832,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 location,
-                default,
+                admCredential is null && apnsCredential is null && baiduCredential is null && gcmCredential is null && mpnsCredential is null && wnsCredential is null ? default : new PnsCredentials(
+                    admCredential,
+                    apnsCredential,
+                    baiduCredential,
+                    default,
+                    gcmCredential,
+                    mpnsCredential,
+                    wnsCredential,
+                    default,
+                    default,
+                    default),
                 tags);
         }
     }

@@ -2694,7 +2694,40 @@ namespace Azure.ResourceManager.Hci.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
+                provisioningState is null && status is null && connectivityStatus is null && cloudId is null && cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && aadApplicationObjectId is null && aadServicePrincipalObjectId is null && softwareAssuranceProperties is null && logCollectionProperties is null && remoteSupportProperties is null && desiredProperties is null && reportedProperties is null && isolatedVmAttestationConfiguration is null && trialDaysRemaining is null && billingModel is null && billingModel is null && trialDaysRemaining is null && registrationTimestamp is null && lastSyncTimestamp is null && lastBillingTimestamp is null && serviceEndpoint is null && resourceProviderObjectId is null ? default : new ClusterProperties(
+                    provisioningState,
+                    status,
+                    connectivityStatus,
+                    cloudId,
+                    default,
+                    cloudManagementEndpoint,
+                    aadClientId,
+                    aadTenantId,
+                    aadApplicationObjectId,
+                    aadServicePrincipalObjectId,
+                    softwareAssuranceProperties,
+                    default,
+                    logCollectionProperties,
+                    remoteSupportProperties,
+                    desiredProperties,
+                    reportedProperties,
+                    isolatedVmAttestationConfiguration,
+                    trialDaysRemaining,
+                    billingModel,
+                    new ClusterBillingProperties(new NextBillingModel(billingModel, default, trialDaysRemaining, default), default),
+                    registrationTimestamp,
+                    lastSyncTimestamp,
+                    lastBillingTimestamp,
+                    serviceEndpoint,
+                    resourceProviderObjectId,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default),
                 default,
                 default);
         }
@@ -2798,7 +2831,7 @@ namespace Azure.ResourceManager.Hci.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
             userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
 
-            return new HciClusterPatch(tags, default, default, additionalBinaryDataProperties: null);
+            return new HciClusterPatch(tags, default, cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && desiredProperties is null ? default : new ClusterPatchProperties(cloudManagementEndpoint, aadClientId, aadTenantId, desiredProperties, default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PerNodeExtensionState"/>. </summary>
@@ -2844,7 +2877,6 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HciClusterUpdateRunData HciClusterUpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? timeStarted, DateTimeOffset? lastUpdatedOn, string duration, UpdateRunPropertiesState? state, string namePropertiesProgressName, string description, string errorMessage, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastCompletedOn, string expectedExecutionTime, IEnumerable<HciUpdateStep> steps)
         {
-            steps ??= new ChangeTrackingList<HciUpdateStep>();
 
             return new HciClusterUpdateRunData(
                 id,
@@ -2852,7 +2884,24 @@ namespace Azure.ResourceManager.Hci.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
+                provisioningState is null && timeStarted is null && lastCompletedOn is null && duration is null && state is null && name is null && description is null && errorMessage is null && status is null && startOn is null && endOn is null && lastUpdatedOn is null && expectedExecutionTime is null && steps is null ? default : new UpdateRunProperties(
+                    provisioningState,
+                    timeStarted,
+                    lastCompletedOn,
+                    duration,
+                    state,
+                    new HciUpdateStep(
+                        name,
+                        description,
+                        errorMessage,
+                        status,
+                        startOn,
+                        endOn,
+                        lastUpdatedOn,
+                        expectedExecutionTime,
+                        (steps ?? new ChangeTrackingList<HciUpdateStep>()).ToList(),
+                        default),
+                    default),
                 default,
                 location);
         }
@@ -2988,7 +3037,7 @@ namespace Azure.ResourceManager.Hci.Models
                 interfaceDescription,
                 componentId,
                 driverVersion,
-                default,
+                ipv4Address,
                 subnetMask,
                 defaultGateway,
                 dnsServers.ToList(),
@@ -3031,7 +3080,6 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ArcSettingData ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IEnumerable<PerNodeArcState> perNodeDetails, BinaryData connectivityProperties)
         {
-            perNodeDetails ??= new ChangeTrackingList<PerNodeArcState>();
 
             return new ArcSettingData(
                 id,
@@ -3039,7 +3087,18 @@ namespace Azure.ResourceManager.Hci.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default);
+                provisioningState is null && arcInstanceResourceGroup is null && arcApplicationClientId is null && arcApplicationTenantId is null && arcServicePrincipalObjectId is null && arcApplicationObjectId is null && aggregateState is null && perNodeDetails is null && connectivityProperties is null ? default : new ArcSettingProperties(
+                    provisioningState,
+                    arcInstanceResourceGroup,
+                    arcApplicationClientId,
+                    arcApplicationTenantId,
+                    arcServicePrincipalObjectId,
+                    arcApplicationObjectId,
+                    aggregateState,
+                    (perNodeDetails ?? new ChangeTrackingList<PerNodeArcState>()).ToList(),
+                    connectivityProperties,
+                    default,
+                    default));
         }
 
         /// <summary> Initializes a new instance of PerNodeArcState. </summary>
@@ -3097,7 +3156,40 @@ namespace Azure.ResourceManager.Hci.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
+                provisioningState is null && status is null && cloudId is null && cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && aadApplicationObjectId is null && aadServicePrincipalObjectId is null && softwareAssuranceProperties is null && desiredProperties is null && reportedProperties is null && trialDaysRemaining is null && billingModel is null && billingModel is null && trialDaysRemaining is null && registrationTimestamp is null && lastSyncTimestamp is null && lastBillingTimestamp is null && serviceEndpoint is null && resourceProviderObjectId is null ? default : new ClusterProperties(
+                    provisioningState,
+                    status,
+                    default,
+                    cloudId,
+                    default,
+                    cloudManagementEndpoint,
+                    aadClientId,
+                    aadTenantId,
+                    aadApplicationObjectId,
+                    aadServicePrincipalObjectId,
+                    softwareAssuranceProperties,
+                    default,
+                    default,
+                    default,
+                    desiredProperties,
+                    reportedProperties,
+                    default,
+                    trialDaysRemaining,
+                    billingModel,
+                    new ClusterBillingProperties(new NextBillingModel(billingModel, default, trialDaysRemaining, default), default),
+                    registrationTimestamp,
+                    lastSyncTimestamp,
+                    lastBillingTimestamp,
+                    serviceEndpoint,
+                    resourceProviderObjectId,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default),
                 default,
                 default);
         }

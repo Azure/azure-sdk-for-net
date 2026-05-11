@@ -263,21 +263,17 @@ Sessions allow multiple users to use the same hosted Agent within their own sand
 sessions for the same agent version.
 
 ```C# Snippet:Sample_CreateSessions_SessionsCRUD_Async
-string sessionKey1 = Guid.NewGuid().ToString();
-string sessionKey2 = Guid.NewGuid().ToString();
 string sessionId1 = Guid.NewGuid().ToString();
 string sessionId2 = Guid.NewGuid().ToString();
 ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
     agentSessionId: sessionId1,
-    isolationKey: sessionKey1,
     versionIndicator: new VersionRefIndicator(agentVersion.Version)
 );
 Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
 ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
     agentSessionId: sessionId2,
-    isolationKey: sessionKey2,
     versionIndicator: new VersionRefIndicator(agentVersion.Version)
 );
 Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
@@ -392,7 +388,7 @@ AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill
 make it aware of the skill we have created.
 
 ```C# Snippet:Sample_CreateEndpoint_AgentsEndpoint_Async
-AgentEndpointConfig config = new()
+AgentEndpointConfiguration config = new()
 {
     VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
     Protocols = {AgentEndpointProtocol.Responses}
@@ -418,7 +414,6 @@ and `GetSessionLogStreamAsync`.
 ```C# Snippet:Sample_Agents_StreamLogs_HostedAgentLogStreaming
 ProjectAgentSession session = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
-    isolationKey: "key_1",
     versionIndicator: new VersionRefIndicator(agentVersion.Version)
 );
 SessionLogEvent logEvent = await agentsClient.GetSessionLogStreamAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session.AgentSessionId);

@@ -929,13 +929,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ServiceFabricClusterData ServiceFabricClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<ClusterAddOnFeature> addOnFeatures, IEnumerable<ClusterVersionDetails> availableClusterVersions, ClusterAadSetting azureActiveDirectory, ClusterCertificateDescription certificate, ClusterServerCertificateCommonNames certificateCommonNames, IEnumerable<ClusterClientCertificateCommonName> clientCertificateCommonNames, IEnumerable<ClusterClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, Uri clusterEndpoint, Guid? clusterId, ServiceFabricClusterState? clusterState, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig, bool? isEventStoreServiceEnabled, IEnumerable<SettingsSectionDescription> fabricSettings, Uri managementEndpoint, IEnumerable<ClusterNodeTypeDescription> nodeTypes, ServiceFabricProvisioningState? provisioningState, ClusterReliabilityLevel? reliabilityLevel, ClusterCertificateDescription reverseProxyCertificate, ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames, ClusterUpgradePolicy upgradeDescription, ClusterUpgradeMode? upgradeMode, long? maxUnusedVersionsToKeep, string vmImage, SfZonalUpgradeMode? serviceFabricZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? isInfrastructureServiceManagerEnabled, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartOn, DateTimeOffset? upgradePauseEndOn, bool? isWaveUpgradePaused, IEnumerable<ClusterNotification> notifications, ETag? etag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            addOnFeatures ??= new ChangeTrackingList<ClusterAddOnFeature>();
-            availableClusterVersions ??= new ChangeTrackingList<ClusterVersionDetails>();
-            clientCertificateCommonNames ??= new ChangeTrackingList<ClusterClientCertificateCommonName>();
-            clientCertificateThumbprints ??= new ChangeTrackingList<ClusterClientCertificateThumbprint>();
-            fabricSettings ??= new ChangeTrackingList<SettingsSectionDescription>();
-            nodeTypes ??= new ChangeTrackingList<ClusterNodeTypeDescription>();
-            notifications ??= new ChangeTrackingList<ClusterNotification>();
 
             return new ServiceFabricClusterData(
                 id,
@@ -945,8 +938,42 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default);
+                addOnFeatures is null && availableClusterVersions is null && azureActiveDirectory is null && certificate is null && certificateCommonNames is null && clientCertificateCommonNames is null && clientCertificateThumbprints is null && clusterCodeVersion is null && clusterEndpoint is null && clusterId is null && clusterState is null && diagnosticsStorageAccountConfig is null && isEventStoreServiceEnabled is null && fabricSettings is null && managementEndpoint is null && nodeTypes is null && provisioningState is null && reliabilityLevel is null && reverseProxyCertificate is null && reverseProxyCertificateCommonNames is null && upgradeDescription is null && upgradeMode is null && maxUnusedVersionsToKeep is null && vmImage is null && serviceFabricZonalUpgradeMode is null && vmssZonalUpgradeMode is null && isInfrastructureServiceManagerEnabled is null && upgradeWave is null && upgradePauseStartOn is null && upgradePauseEndOn is null && isWaveUpgradePaused is null && notifications is null ? default : new ClusterProperties(
+                    (addOnFeatures ?? new ChangeTrackingList<ClusterAddOnFeature>()).ToList(),
+                    (availableClusterVersions ?? new ChangeTrackingList<ClusterVersionDetails>()).ToList(),
+                    azureActiveDirectory,
+                    certificate,
+                    certificateCommonNames,
+                    (clientCertificateCommonNames ?? new ChangeTrackingList<ClusterClientCertificateCommonName>()).ToList(),
+                    (clientCertificateThumbprints ?? new ChangeTrackingList<ClusterClientCertificateThumbprint>()).ToList(),
+                    clusterCodeVersion,
+                    clusterEndpoint,
+                    clusterId,
+                    clusterState,
+                    diagnosticsStorageAccountConfig,
+                    isEventStoreServiceEnabled,
+                    (fabricSettings ?? new ChangeTrackingList<SettingsSectionDescription>()).ToList(),
+                    managementEndpoint,
+                    (nodeTypes ?? new ChangeTrackingList<ClusterNodeTypeDescription>()).ToList(),
+                    provisioningState,
+                    reliabilityLevel,
+                    reverseProxyCertificate,
+                    reverseProxyCertificateCommonNames,
+                    upgradeDescription,
+                    upgradeMode,
+                    new ApplicationTypeVersionsCleanupPolicy(maxUnusedVersionsToKeep.GetValueOrDefault(), default),
+                    vmImage,
+                    serviceFabricZonalUpgradeMode,
+                    vmssZonalUpgradeMode,
+                    isInfrastructureServiceManagerEnabled,
+                    upgradeWave,
+                    upgradePauseStartOn,
+                    upgradePauseEndOn,
+                    isWaveUpgradePaused,
+                    (notifications ?? new ChangeTrackingList<ClusterNotification>()).ToList(),
+                    default,
+                    default),
+                etag);
         }
 
         /// <summary> Initializes a new instance of ServiceFabricApplicationTypeData. </summary>
@@ -971,9 +998,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 location,
-                default,
+                provisioningState is null ? default : new ApplicationTypeResourceProperties(provisioningState, default),
                 tags,
-                default);
+                etag);
         }
 
         /// <summary> Initializes a new instance of ServiceFabricApplicationTypeVersionData. </summary>
@@ -992,7 +1019,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ServiceFabricApplicationTypeVersionData ServiceFabricApplicationTypeVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, Uri appPackageUri, IReadOnlyDictionary<string, string> defaultParameterList, ETag? etag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            defaultParameterList ??= new ChangeTrackingDictionary<string, string>();
 
             return new ServiceFabricApplicationTypeVersionData(
                 id,
@@ -1001,9 +1027,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 location,
-                default,
+                provisioningState is null && appPackageUri is null && defaultParameterList is null ? default : new ApplicationTypeVersionResourceProperties(provisioningState, appPackageUri, defaultParameterList, default),
                 tags,
-                default);
+                etag);
         }
 
         /// <summary> Initializes a new instance of ServiceFabricApplicationData. </summary>
@@ -1030,9 +1056,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ServiceFabricApplicationData ServiceFabricApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string typeVersion, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, long? minimumNodes, long? maximumNodes, bool? removeApplicationCapacity, IEnumerable<ApplicationMetricDescription> metrics, IEnumerable<ApplicationUserAssignedIdentity> managedIdentities, string provisioningState, string typeName, ETag? etag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            parameters ??= new ChangeTrackingDictionary<string, string>();
-            metrics ??= new ChangeTrackingList<ApplicationMetricDescription>();
-            managedIdentities ??= new ChangeTrackingList<ApplicationUserAssignedIdentity>();
 
             return new ServiceFabricApplicationData(
                 id,
@@ -1041,9 +1064,20 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 location,
-                default,
+                typeVersion is null && parameters is null && upgradePolicy is null && minimumNodes is null && maximumNodes is null && removeApplicationCapacity is null && metrics is null && managedIdentities is null && provisioningState is null && typeName is null ? default : new ApplicationResourceProperties(
+                    typeVersion,
+                    parameters,
+                    upgradePolicy,
+                    minimumNodes,
+                    maximumNodes,
+                    removeApplicationCapacity,
+                    (metrics ?? new ChangeTrackingList<ApplicationMetricDescription>()).ToList(),
+                    (managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentity>()).ToList(),
+                    default,
+                    provisioningState,
+                    typeName),
                 tags,
-                default,
+                etag,
                 identity);
         }
 
@@ -1068,9 +1102,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ServiceFabricApplicationPatch ServiceFabricApplicationPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string typeVersion, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, long? minimumNodes, long? maximumNodes, bool? removeApplicationCapacity, IEnumerable<ApplicationMetricDescription> metrics, IEnumerable<ApplicationUserAssignedIdentity> managedIdentities, ETag? etag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            parameters ??= new ChangeTrackingDictionary<string, string>();
-            metrics ??= new ChangeTrackingList<ApplicationMetricDescription>();
-            managedIdentities ??= new ChangeTrackingList<ApplicationUserAssignedIdentity>();
 
             return new ServiceFabricApplicationPatch(
                 id,
@@ -1080,7 +1111,16 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default);
+                typeVersion is null && parameters is null && upgradePolicy is null && minimumNodes is null && maximumNodes is null && removeApplicationCapacity is null && metrics is null && managedIdentities is null ? default : new ApplicationResourceUpdateProperties(
+                    typeVersion,
+                    parameters,
+                    upgradePolicy,
+                    minimumNodes,
+                    maximumNodes,
+                    removeApplicationCapacity,
+                    (metrics ?? new ChangeTrackingList<ApplicationMetricDescription>()).ToList(),
+                    (managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentity>()).ToList(),
+                    default));
         }
     }
 }
