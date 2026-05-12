@@ -163,7 +163,7 @@ function detectResourcesByPath(
       operationPath: RequestPath;
     }>;
   };
-  const entriesByKey = new Map<string, ResourceEntry>(); // key = `${modelId}|${path}`
+  const entriesByPath = new Map<string, ResourceEntry>();
   const consumedMethodIds = new Set<string>();
 
   for (const { client, method } of allEntries) {
@@ -176,28 +176,13 @@ function detectResourcesByPath(
     const path = new RequestPath(method.operation.path);
     validateInstancePath(sdkContext, path, respModelId);
 
-    const key = `${respModelId}|${path.path}`;
-    let entry = entriesByKey.get(key);
-    if (!entry) {
-      entry = {
-        modelId: respModelId,
-        instancePath: path,
-        client,
-        methods: []
-      };
-      entriesByKey.set(key, entry);
-    }
-    // Multiple Reads on the same instance path: diagnostic and pick the first
-    // one that matches (the others will still attach as Read which is fine for
-    // legacy parity; but flag).
-    if (entry.methods.some((m) => m.kind === ResourceOperationKind.Read)) {
-      sdkContext.program.reportDiagnostic({
-        code: "general-warning",
-        severity: "warning",
-        message: `Multiple Read operations detected on path ${path.path} for resource model ${respModelId}.`,
-        target: NoTarget
-      });
-    }
+    const entry: ResourceEntry = {
+      modelId: respModelId,
+      instancePath: path,
+      client,
+      methods: []
+    };
+    entriesByPath.set(path.path, entry);
     entry.methods.push({
       methodId: method.crossLanguageDefinitionId,
       kind: ResourceOperationKind.Read,
@@ -221,9 +206,8 @@ function detectResourcesByPath(
     if (!respModelId || !resourceModelIds.has(respModelId)) continue;
 
     const path = new RequestPath(method.operation.path);
-    const key = `${respModelId}|${path.path}`;
-    if (entriesByKey.has(key)) continue;
-    entriesByKey.set(key, {
+    if (entriesByPath.has(path.path)) continue;
+    entriesByPath.set(path.path, {
       modelId: respModelId,
       instancePath: path,
       client,
@@ -257,7 +241,7 @@ function detectResourcesByPath(
     // multiple models share a path (rare), prefer the one whose model is the
     // request body or response.
     let matched: ResourceEntry | undefined;
-    for (const entry of entriesByKey.values()) {
+    for (const entry of entriesByPath.values()) {
       if (!entry.instancePath.equals(opPath)) continue;
       if (!matched) {
         matched = entry;
@@ -296,7 +280,7 @@ function detectResourcesByPath(
 
     const opPath = new RequestPath(method.operation.path);
     let best: ResourceEntry | undefined;
-    for (const entry of entriesByKey.values()) {
+    for (const entry of entriesByPath.values()) {
       if (entry.modelId !== itemModelId) continue;
       if (!opPath.isPrefixOf(entry.instancePath)) continue;
       if (!best || entry.instancePath.length < best.instancePath.length) {
@@ -327,7 +311,7 @@ function detectResourcesByPath(
 
     const opPath = new RequestPath(method.operation.path);
     let best: ResourceEntry | undefined;
-    for (const entry of entriesByKey.values()) {
+    for (const entry of entriesByPath.values()) {
       if (!entry.instancePath.isPrefixOf(opPath)) continue;
       if (entry.instancePath.equals(opPath)) continue;
       if (
@@ -349,9 +333,9 @@ function detectResourcesByPath(
   // Build the ArmResourceSchema list from collected entries.
   const resources: ArmResourceSchema[] = [];
   const resourcePathToClientName = new Map<string, string>();
-  for (const [key, entry] of entriesByKey) {
+  for (const [path, entry] of entriesByPath) {
     const model = resourceModelMap.get(entry.modelId);
-    resourcePathToClientName.set(key, entry.client.name);
+    resourcePathToClientName.set(path, entry.client.name);
 
     const methods: ResourceMethod[] = entry.methods.map((m) => ({
       methodId: m.methodId,
@@ -449,10 +433,9 @@ function detectResourcesByPath(
   for (const [, list] of modelIdToResources) {
     if (list.length > 1) {
       for (const resource of list) {
-        const metadataKey = `${resource.resourceModelId}|${
-          resource.metadata.resourceIdPattern?.path ?? ""
-        }`;
-        const clientName = resourcePathToClientName.get(metadataKey);
+        const clientName = resourcePathToClientName.get(
+          resource.metadata.resourceIdPattern.path
+        );
         if (clientName) {
           resource.metadata.resourceName = pluralize.singular(clientName);
         }
