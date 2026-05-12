@@ -40,7 +40,9 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AIProjectClientOptions options = new();
+        options.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
+        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
         string toolboxName = "mcp";
         #endregion

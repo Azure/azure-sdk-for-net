@@ -1,15 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Memory;
+using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI;
@@ -42,6 +45,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         BingGroundingCustom,
         MCP,
         MCPConnection,
+        MCPToolbox,
         OpenAPI,
         OpenAPIConnection,
         A2A,
@@ -88,6 +92,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.CodeInterpreterGen, "Please create PDF file showing the rendering of Mandelbrot set"},
         {ToolType.MCP, "Please summarize the Azure REST API specifications Readme"},
         {ToolType.MCPConnection, "How many follower on github do I have?"},
+        {ToolType.MCPToolbox, "What tools are available?"},
         {ToolType.A2A, "What can the secondary agent do?"},
         {ToolType.A2ASpecialConnection, "What can the secondary agent do?"},
         {ToolType.AzureFunctionTool, "What is the most prevalent element in the universe? What would foo say?"},
@@ -121,6 +126,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.CodeInterpreterGen, "You are a personal math tutor. When asked a math question, generate the appropriate PDF, save it and return its file ID." },
         {ToolType.MCP, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
         {ToolType.MCPConnection, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
+        {ToolType.MCPConnection, "You are a helpful assistant." },
         {ToolType.A2A, "You are a helpful assistant."},
         {ToolType.A2ASpecialConnection, "You are a helpful assistant."},
     };
@@ -203,6 +209,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     private ProjectConversationsClient _conversations = null;
     private AIProjectMemoryStores _stores = null;
     protected readonly string MEMORY_STORE_SCOPE = "user_123";
+    protected readonly string TOOLBOX_NAME = "ToolBoxForTest";
 
     public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
@@ -434,6 +441,59 @@ public class AgentsTestBase : ProjectsClientTestBase
         return webSearchTool;
     }
 
+    private async Task RemoveToolBoxMayBe(AIProjectClient projectClient)
+    {
+        try
+        {
+            await projectClient.AgentAdministrationClient.GetAgentToolboxes().DeleteToolboxAsync(name: TOOLBOX_NAME);
+        }
+        catch
+        {
+            // Nothing here
+        }
+    }
+    private async Task<McpTool> GetToolBoxAsync(AIProjectClient projectClient)
+    {
+        await RemoveToolBoxMayBe(projectClient);
+        ProjectsAgentTool mcp = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
+            serverLabel: "api-specs",
+            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        ));
+        ProjectsAgentTool codeInterpreter = ResponseTool.CreateCodeInterpreterTool(
+            new CodeInterpreterToolContainer(
+                CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
+            )
+        ).AsAgentTool();
+        ToolboxSearchPreviewTool searchTool = new()
+        {
+            Name = "ToolBoxSearch",
+            Description = "Search for the toolboxes"
+        };
+        ToolboxVersion toolBox = await projectClient.AgentAdministrationClient.GetAgentToolboxes().CreateToolboxVersionAsync(
+            name: TOOLBOX_NAME,
+            tools: [mcp, codeInterpreter, searchTool],
+            description: "Toolbox for the unit test."
+        );
+        string authToken;
+        if (Mode == RecordedTestMode.Playback)
+        {
+            authToken = TestEnvironment.Credential.GetToken(new(new Dictionary<string, object>()), new()).TokenValue;
+        }
+        else
+        {
+            authToken = ((DefaultAzureCredential)TestEnvironment.Credential).GetToken(new(scopes: ["https://ai.azure.com/.default"]), cancellationToken: default).Token;
+        }
+        return ResponseTool.CreateMcpTool(
+            serverLabel: "search-tool",
+            serverUri: new Uri($"{TestEnvironment.FOUNDRY_PROJECT_ENDPOINT}/toolboxes/{toolBox.Name}/versions/{toolBox.Version}/mcp?api-version=v1"),
+            authorizationToken: authToken,
+            headers: new Dictionary<string, string>() {
+                { "Foundry-Features", "Toolboxes=V1Preview" }
+            }
+        );
+    }
+
     /// <summary>
     /// Get the AgentDefinition, containing tool of a certain type.
     /// </summary>
@@ -523,6 +583,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.A2A => GetA2ATool(false),
             ToolType.A2ASpecialConnection => GetA2ATool(true),
             ToolType.AzureFunction => GetFunctionTool(),
+            ToolType.MCPToolbox => await GetToolBoxAsync(projectClient),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         string instructions;
@@ -608,6 +669,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             projectClient.AgentAdministrationClient.DeleteAgent(HOSTED_AGENT);
         }
         catch { }
+        await RemoveToolBoxMayBe(projectClient);
     }
     #endregion
 }
