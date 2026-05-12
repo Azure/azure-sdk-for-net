@@ -4972,15 +4972,15 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             foreach (DataLocalityTrackingPolicy.RequestInfo req in rewrittenRequests)
             {
-                // The URI host and port should have been rewritten to the ideal endpoint
+                // The URI host and port should have been rewritten to the layout endpoint
                 Assert.AreNotEqual(originalHost, req.RequestHost,
-                    $"Request URI host should be rewritten to ideal endpoint, not '{originalHost}'");
+                    $"Request URI host should be rewritten to layout endpoint, not '{originalHost}'");
                 Assert.Greater(req.RequestPort, 0,
                     "Request URI port should be set by DataLocalityPolicy");
 
                 // The Host header must preserve the original host
                 Assert.AreEqual(originalHost, req.HostHeaderValue,
-                    $"Host header should be the original host '{originalHost}', not the ideal endpoint");
+                    $"Host header should be the original host '{originalHost}', not the layout endpoint");
                 Assert.AreNotEqual(req.RequestHost, req.HostHeaderValue,
                     "Host header should differ from the rewritten URI host");
             }

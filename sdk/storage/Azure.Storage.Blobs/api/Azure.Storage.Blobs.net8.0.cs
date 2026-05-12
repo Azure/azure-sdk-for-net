@@ -560,6 +560,7 @@ namespace Azure.Storage.Blobs.Models
     {
         public BlobDownloadOptions() { }
         public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
+        public string LayoutEndpoint { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
         public Azure.HttpRange Range { get { throw null; } set { } }
         public Azure.Storage.DownloadTransferValidationOptions TransferValidation { get { throw null; } set { } }

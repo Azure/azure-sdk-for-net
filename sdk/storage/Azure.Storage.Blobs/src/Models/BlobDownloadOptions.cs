@@ -40,5 +40,23 @@ namespace Azure.Storage.Blobs.Models
         /// REST documentation</a> for range limitation details.
         /// </summary>
         public DownloadTransferValidationOptions TransferValidation { get; set; }
+
+        /// <summary>
+        /// Optional. The layout endpoint for this download.
+        /// When set, the SDK rewrites the outgoing request URI's
+        /// host/port to the specified endpoint while preserving the original Host
+        /// header for authentication.
+        /// <para>
+        /// Enumerate the pages returned by
+        /// <see cref="Specialized.BlobBaseClient.GetLayout(Azure.HttpRange, BlobRequestConditions, System.Threading.CancellationToken)"/>
+        /// and select the endpoint whose layout range covers the offset of the
+        /// requested <see cref="Range"/>; pass that value here.
+        /// </para>
+        /// <para>
+        /// When null (the default), the request is sent to the client's
+        /// configured endpoint with no rewriting.
+        /// </para>
+        /// </summary>
+        public string LayoutEndpoint { get; set; }
     }
 }

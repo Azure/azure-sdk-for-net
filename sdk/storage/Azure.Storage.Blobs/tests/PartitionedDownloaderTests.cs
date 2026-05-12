@@ -192,7 +192,9 @@ namespace Azure.Storage.Blobs.Test
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 _async,
-                s_cancellationToken)).ThrowsAsync(e);
+                s_cancellationToken,
+                It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
+                It.IsAny<string>())).ThrowsAsync(e);
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
@@ -205,7 +207,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task DataLocality_FetchesLayoutAndRoutesChunksToIdealEndpoints()
+        public async Task DataLocality_FetchesLayoutAndRoutesChunksToLayoutEndpoints()
         {
             // Arrange - 100 byte blob with data locality enabled and download hint present
             MemoryStream stream = new MemoryStream();
@@ -253,10 +255,9 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNull(capturedCalls[0].LayoutCache);
             Assert.AreEqual(new HttpRange(0, 20), capturedCalls[0].Range);
 
-            // Verify every subsequent chunk resolves to the correct ideal endpoint.
+            // Verify every subsequent chunk resolves to the correct layout endpoint.
             // Resolving the cache here triggers the underlying GetLayout/GetLayoutAsync
             // mock since DownloadStreamingInternal itself is mocked.
-            BlobBaseClient endpointResolver = new BlobBaseClient(new Uri("https://account.blob.core.windows.net/c/b"));
             AutoRefreshingCache<BlobLayoutSegmentCacheValue> sharedCache = capturedCalls[1].LayoutCache;
             int hostACount = 0;
             int hostBCount = 0;
@@ -273,24 +274,24 @@ namespace Azure.Storage.Blobs.Test
                 BlobLayoutSegment[] segments = cached.Segments;
                 Assert.IsNotNull(segments, $"Chunk {i} at range [{range.Offset}] should have layout segments");
 
-                string idealEndpoint = endpointResolver.GetIdealEndpoint(range, segments);
-                Assert.IsNotNull(idealEndpoint, $"Chunk at range [{range.Offset}] should resolve to an ideal endpoint");
+                string LayoutEndpoint = BlobExtensions.GetLayoutEndpoint(range, segments);
+                Assert.IsNotNull(LayoutEndpoint, $"Chunk at range [{range.Offset}] should resolve to a layout endpoint");
 
                 if (range.Offset < 46)
                 {
-                    Assert.AreEqual("https://host-a:443", idealEndpoint,
+                    Assert.AreEqual("https://host-a:443", LayoutEndpoint,
                         $"Chunk at offset {range.Offset} should route to host-a");
                     hostACount++;
                 }
                 else if (range.Offset < 83)
                 {
-                    Assert.AreEqual("https://host-b:443", idealEndpoint,
+                    Assert.AreEqual("https://host-b:443", LayoutEndpoint,
                         $"Chunk at offset {range.Offset} should route to host-b");
                     hostBCount++;
                 }
                 else
                 {
-                    Assert.AreEqual("https://host-c:443", idealEndpoint,
+                    Assert.AreEqual("https://host-c:443", LayoutEndpoint,
                         $"Chunk at offset {range.Offset} should route to host-c");
                     hostCCount++;
                 }
@@ -578,9 +579,10 @@ namespace Azure.Storage.Blobs.Test
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 _async,
                 s_cancellationToken,
-                It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>())
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(
-                async (range, conditions, validation, progress, operationName, async, cancellation, layoutCache) =>
+                It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
+                It.IsAny<string>())
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, string>(
+                async (range, conditions, validation, progress, operationName, async, cancellation, layoutCache, LayoutEndpoint) =>
                 {
                     if (layoutCache != null)
                     {
@@ -672,24 +674,23 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert - chunks in each page route to the correct endpoint, proving
             // the aggregated array is usable end-to-end (not just stored).
-            BlobBaseClient endpointResolver = new BlobBaseClient(new Uri("https://account.blob.core.windows.net/c/b"));
             int hostACount = 0;
             int hostBCount = 0;
             for (int i = 1; i < capturedCalls.Count; i++)
             {
                 var (range, layoutCache) = capturedCalls[i];
                 BlobLayoutSegmentCacheValue resolved = await layoutCache.GetAsync(async: _async, CancellationToken.None);
-                string idealEndpoint = endpointResolver.GetIdealEndpoint(range, resolved.Segments);
+                string LayoutEndpoint = BlobExtensions.GetLayoutEndpoint(range, resolved.Segments);
 
                 if (range.Offset < 50)
                 {
-                    Assert.AreEqual("https://host-a:443", idealEndpoint,
+                    Assert.AreEqual("https://host-a:443", LayoutEndpoint,
                         $"Chunk at offset {range.Offset} (page-1 range) should route to host-a");
                     hostACount++;
                 }
                 else
                 {
-                    Assert.AreEqual("https://host-b:443", idealEndpoint,
+                    Assert.AreEqual("https://host-b:443", LayoutEndpoint,
                         $"Chunk at offset {range.Offset} (page-2 range) should route to host-b");
                     hostBCount++;
                 }
@@ -863,9 +864,10 @@ namespace Azure.Storage.Blobs.Test
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 _async,
                 s_cancellationToken,
-                It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>())
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(
-                (range, conditions, validation, progress, operationName, async, cancellation, layoutCache) =>
+                It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
+                It.IsAny<string>())
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, string>(
+                (range, conditions, validation, progress, operationName, async, cancellation, layoutCache, LayoutEndpoint) =>
                 {
                     lock (capturedCalls)
                     {
@@ -969,9 +971,11 @@ namespace Azure.Storage.Blobs.Test
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 _async,
-                s_cancellationToken)
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(
-                (range, conditions, validation, progress, operationName, async, cancellation, layoutCache) => async
+                s_cancellationToken,
+                It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
+                It.IsAny<string>())
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, string>(
+                (range, conditions, validation, progress, operationName, async, cancellation, layoutCache, LayoutEndpoint) => async
                     ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
                     : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation)));
         }
@@ -988,7 +992,9 @@ namespace Azure.Storage.Blobs.Test
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 _async,
-                s_cancellationToken)
+                s_cancellationToken,
+                It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
+                It.IsAny<string>())
             ).ThrowsAsync(new RequestFailedException(
                 status: 416,
                 errorCode: BlobErrorCode.InvalidRange.ToString(),
@@ -1004,9 +1010,11 @@ namespace Azure.Storage.Blobs.Test
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 _async,
-                s_cancellationToken)
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(
-                (range, conditions, validation, progress, operationName, async, cancellation, layoutCache) => async
+                s_cancellationToken,
+                It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
+                It.IsAny<string>())
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, string>(
+                (range, conditions, validation, progress, operationName, async, cancellation, layoutCache, LayoutEndpoint) => async
                     ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
                     : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation)));
         }

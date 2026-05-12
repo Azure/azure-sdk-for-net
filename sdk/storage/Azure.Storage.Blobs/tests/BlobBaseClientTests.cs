@@ -1837,18 +1837,261 @@ namespace Azure.Storage.Blobs.Test
 
             foreach (DataLocalityTrackingPolicy.RequestInfo req in rewrittenRequests)
             {
-                // The URI host and port should have been rewritten to the ideal endpoint
+                // The URI host and port should have been rewritten to the layout endpoint
                 Assert.AreNotEqual(originalHost, req.RequestHost,
-                    $"Request URI host should be rewritten to ideal endpoint, not '{originalHost}'");
+                    $"Request URI host should be rewritten to layout endpoint, not '{originalHost}'");
                 Assert.Greater(req.RequestPort, 0,
                     "Request URI port should be set by DataLocalityPolicy");
 
                 // The Host header must preserve the original host
                 Assert.AreEqual(originalHost, req.HostHeaderValue,
-                    $"Host header should be the original host '{originalHost}', not the ideal endpoint");
+                    $"Host header should be the original host '{originalHost}', not the layout endpoint");
                 Assert.AreNotEqual(req.RequestHost, req.HostHeaderValue,
                     "Host header should differ from the rewritten URI host");
             }
+        }
+
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task DownloadStreamingAsync_LayoutEndpoint_FromGetLayout()
+        {
+            // This is the customer-facing feature for Data Locality:
+            //   1. Calls GetLayoutAsync,
+            //   2. Picks the endpoint whose layout range covers the offset they
+            //      want from the returned BlobLayoutInfo pages,
+            //   3. Passes it through BlobDownloadOptions.LayoutEndpoint to
+            //      DownloadStreamingAsync.
+            // We verify the same on-the-wire effect: DataLocalityPolicy
+            // rewrites the URI host/port while preserving the original Host
+            // header for authentication.
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange - upload a blob large enough that the service is willing
+            // to return locality information.
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            // Build a tracking-instrumented client so we can observe what
+            // DataLocalityPolicy did to the outgoing request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            BlobClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            BlockBlobClient downloadBlob = InstrumentClient(new BlockBlobClient(blob.Uri, credential, options));
+
+            string originalHost = blob.Uri.Host;
+            int downloadOffset = 0;
+            int downloadLength = 4 * Constants.MB;
+
+            // Act - customer code: enumerate layout pages and pick the endpoint
+            // whose range covers downloadOffset, then route a single-shot
+            // download through it.
+            string LayoutEndpoint = null;
+            await foreach (BlobLayoutInfo page in downloadBlob.GetLayoutAsync())
+            {
+                BlobLayoutRangesRangeItem coveringRange = page.Ranges?.Range
+                    ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
+                if (coveringRange == null)
+                {
+                    continue;
+                }
+
+                LayoutEndpoint = page.Endpoints?.Endpoint
+                    ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
+                if (LayoutEndpoint != null)
+                {
+                    break;
+                }
+            }
+
+            Assert.IsNotNull(
+                LayoutEndpoint,
+                "Service should return a layout entry covering offset 0 for a 20 MB blob.");
+
+            BlobDownloadOptions downloadOptions = new()
+            {
+                Range = new HttpRange(downloadOffset, downloadLength),
+                LayoutEndpoint = LayoutEndpoint,
+            };
+
+            int rewrittenBefore = trackingPolicy.TrackedRequests.Count(r => r.HasHostHeader);
+            Response<BlobDownloadStreamingResult> response =
+                await downloadBlob.DownloadStreamingAsync(downloadOptions);
+
+            // Drain so we exercise the response body too.
+            using (var resultStream = new MemoryStream())
+            {
+                await response.Value.Content.CopyToAsync(resultStream);
+                Assert.AreEqual(downloadLength, resultStream.Length);
+                TestHelper.AssertSequenceEqual(
+                    new ArraySegment<byte>(data, downloadOffset, downloadLength).ToArray(),
+                    resultStream.ToArray());
+            }
+
+            // Assert - exactly one new request was rewritten by DataLocalityPolicy
+            // (the single-shot download issued above), and that rewrite matches
+            // the endpoint the customer supplied.
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests = trackingPolicy.TrackedRequests
+                .Where(r => r.HasHostHeader)
+                .Skip(rewrittenBefore)
+                .ToList();
+
+            Assert.AreEqual(
+                1,
+                rewrittenRequests.Count,
+                "Expected exactly one DownloadStreaming request to be rewritten by DataLocalityPolicy.");
+
+            DataLocalityTrackingPolicy.RequestInfo rewritten = rewrittenRequests[0];
+
+            string expectedHost = LayoutEndpoint.Split(':')[0];
+
+            Assert.Greater(
+                rewritten.RequestPort,
+                0,
+                "Request URI port should be set by DataLocalityPolicy.");
+            Assert.AreEqual(
+                originalHost,
+                rewritten.HostHeaderValue,
+                "Host header should preserve the original host for authentication.");
+            Assert.AreNotEqual(
+                rewritten.RequestHost,
+                rewritten.HostHeaderValue,
+                "Host header should differ from the rewritten URI host.");
+        }
+
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task DownloadContentAsync_LayoutEndpoint_FromGetLayout()
+        {
+            // This is the customer-facing feature for Data Locality:
+            //   1. Calls GetLayoutAsync,
+            //   2. Picks the endpoint whose layout range covers the offset they
+            //      want from the returned BlobLayoutInfo pages,
+            //   3. Passes it through BlobDownloadOptions.LayoutEndpoint to
+            //      DownloadContentAsync.
+            // We verify the same on-the-wire effect: DataLocalityPolicy
+            // rewrites the URI host/port while preserving the original Host
+            // header for authentication.
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange - upload a blob large enough that the service is willing
+            // to return locality information.
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            // Build a tracking-instrumented client so we can observe what
+            // DataLocalityPolicy did to the outgoing request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            BlobClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            BlockBlobClient downloadBlob = InstrumentClient(new BlockBlobClient(blob.Uri, credential, options));
+
+            string originalHost = blob.Uri.Host;
+            int downloadOffset = 0;
+            int downloadLength = 4 * Constants.MB;
+
+            // Act - customer code: enumerate layout pages and pick the endpoint
+            // whose range covers downloadOffset, then route a single-shot
+            // download through it.
+            string LayoutEndpoint = null;
+            await foreach (BlobLayoutInfo page in downloadBlob.GetLayoutAsync())
+            {
+                BlobLayoutRangesRangeItem coveringRange = page.Ranges?.Range
+                    ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
+                if (coveringRange == null)
+                {
+                    continue;
+                }
+
+                LayoutEndpoint = page.Endpoints?.Endpoint
+                    ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
+                if (LayoutEndpoint != null)
+                {
+                    break;
+                }
+            }
+
+            Assert.IsNotNull(
+                LayoutEndpoint,
+                "Service should return a layout entry covering offset 0 for a 20 MB blob.");
+
+            BlobDownloadOptions downloadOptions = new()
+            {
+                Range = new HttpRange(downloadOffset, downloadLength),
+                LayoutEndpoint = LayoutEndpoint,
+            };
+
+            int rewrittenBefore = trackingPolicy.TrackedRequests.Count(r => r.HasHostHeader);
+            Response<BlobDownloadResult> response =
+                await downloadBlob.DownloadContentAsync(downloadOptions);
+
+            // Verify the response body matches the requested range.
+            byte[] responseBytes = response.Value.Content.ToArray();
+            Assert.AreEqual(downloadLength, responseBytes.Length);
+            TestHelper.AssertSequenceEqual(
+                new ArraySegment<byte>(data, downloadOffset, downloadLength).ToArray(),
+                responseBytes);
+
+            // Assert - exactly one new request was rewritten by DataLocalityPolicy
+            // (the single-shot download issued above), and that rewrite matches
+            // the endpoint the customer supplied.
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests = trackingPolicy.TrackedRequests
+                .Where(r => r.HasHostHeader)
+                .Skip(rewrittenBefore)
+                .ToList();
+
+            Assert.AreEqual(
+                1,
+                rewrittenRequests.Count,
+                "Expected exactly one DownloadContent request to be rewritten by DataLocalityPolicy.");
+
+            DataLocalityTrackingPolicy.RequestInfo rewritten = rewrittenRequests[0];
+
+            string expectedHost = LayoutEndpoint.Split(':')[0];
+
+            Assert.Greater(
+                rewritten.RequestPort,
+                0,
+                "Request URI port should be set by DataLocalityPolicy.");
+            Assert.AreEqual(
+                originalHost,
+                rewritten.HostHeaderValue,
+                "Host header should preserve the original host for authentication.");
+            Assert.AreNotEqual(
+                rewritten.RequestHost,
+                rewritten.HostHeaderValue,
+                "Host header should differ from the rewritten URI host.");
         }
 
         [RecordedTest]
@@ -9625,9 +9868,9 @@ namespace Azure.Storage.Blobs.Test
                 }),
                 Endpoints = BlobsModelFactory.BlobLayoutEndpoints(new[]
                 {
-                    BlobsModelFactory.BlobLayoutEndpointsEndpointItem(index: 2, value: "host-c:443"),
-                    BlobsModelFactory.BlobLayoutEndpointsEndpointItem(index: 0, value: "host-a:443"),
-                    BlobsModelFactory.BlobLayoutEndpointsEndpointItem(index: 1, value: "host-b:443")
+                    BlobsModelFactory.BlobLayoutEndpointsEndpointItem(index: 2, value: "https://host-c:443"),
+                    BlobsModelFactory.BlobLayoutEndpointsEndpointItem(index: 0, value: "https://host-a:443"),
+                    BlobsModelFactory.BlobLayoutEndpointsEndpointItem(index: 1, value: "https://host-b:443")
                 }),
             };
 
@@ -9637,15 +9880,15 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(0, result[0].Start);
             Assert.AreEqual(299, result[0].End);
-            Assert.AreEqual("host-a:443", result[0].Endpoint);
+            Assert.AreEqual("https://host-a:443", result[0].Endpoint);
 
             Assert.AreEqual(300, result[1].Start);
             Assert.AreEqual(499, result[1].End);
-            Assert.AreEqual("host-b:443", result[1].Endpoint);
+            Assert.AreEqual("https://host-b:443", result[1].Endpoint);
 
             Assert.AreEqual(500, result[2].Start);
             Assert.AreEqual(799, result[2].End);
-            Assert.AreEqual("host-c:443", result[2].Endpoint);
+            Assert.AreEqual("https://host-c:443", result[2].Endpoint);
         }
 
         [Test]
@@ -9661,8 +9904,8 @@ namespace Azure.Storage.Blobs.Test
                 }),
                 Endpoints = BlobsModelFactory.BlobLayoutEndpoints(new[]
                 {
-                    BlobsModelFactory.BlobLayoutEndpointsEndpointItem(index: 0, value: "host-a:443"),
-                    BlobsModelFactory.BlobLayoutEndpointsEndpointItem(index: 1, value: "host-b:443"),
+                    BlobsModelFactory.BlobLayoutEndpointsEndpointItem(index: 0, value: "https://host-a:443"),
+                    BlobsModelFactory.BlobLayoutEndpointsEndpointItem(index: 1, value: "https://host-b:443"),
                 }),
             };
 
@@ -9672,26 +9915,23 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(0, result[0].Start);
             Assert.AreEqual(999, result[0].End);
-            Assert.AreEqual("host-a:443", result[0].Endpoint);
+            Assert.AreEqual("https://host-a:443", result[0].Endpoint);
 
             Assert.AreEqual(1000, result[1].Start);
             Assert.AreEqual(1999, result[1].End);
-            Assert.AreEqual("host-b:443", result[1].Endpoint);
+            Assert.AreEqual("https://host-b:443", result[1].Endpoint);
 
             Assert.AreEqual(2000, result[2].Start);
             Assert.AreEqual(2999, result[2].End);
-            Assert.AreEqual("host-a:443", result[2].Endpoint);
+            Assert.AreEqual("https://host-a:443", result[2].Endpoint);
         }
 
         [Test]
-        public void GetIdealEndpoint_ReturnsNull()
+        public void GetLayoutEndpoint_ReturnsNull()
         {
-            // Arrange
-            BlobBaseClient client = new BlobBaseClient(new Uri("https://account.blob.core.windows.net/container/blob"));
-
             // Act
-            string result1 = client.GetIdealEndpoint(new HttpRange(0, 100), layoutSegments: null);
-            string result2 = client.GetIdealEndpoint(new HttpRange(0, 100), layoutSegments: Array.Empty<BlobLayoutSegment>());
+            string result1 = BlobExtensions.GetLayoutEndpoint(new HttpRange(0, 100), layoutSegments: null);
+            string result2 = BlobExtensions.GetLayoutEndpoint(new HttpRange(0, 100), layoutSegments: Array.Empty<BlobLayoutSegment>());
 
             // Assert
             Assert.IsNull(result1);
@@ -9699,67 +9939,64 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public void GetIdealEndpoint_ChunkAlignWithSegment()
+        public void GetLayoutEndpoint_ChunkAlignWithSegment()
         {
             // Arrange
-            BlobBaseClient client = new BlobBaseClient(new Uri("https://account.blob.core.windows.net/container/blob"));
             var segments = new[]
             {
-                new BlobLayoutSegment { Start = 0, End = 999, Endpoint = "host-a:443" },
-                new BlobLayoutSegment { Start = 1000, End = 1999, Endpoint = "host-b:443" },
-                new BlobLayoutSegment { Start = 2000, End = 2999, Endpoint = "host-c:443" }
+                new BlobLayoutSegment { Start = 0, End = 999, Endpoint = "https://host-a:443" },
+                new BlobLayoutSegment { Start = 1000, End = 1999, Endpoint = "https://host-b:443" },
+                new BlobLayoutSegment { Start = 2000, End = 2999, Endpoint = "https://host-c:443" }
             };
 
             // Act
-            string result1 = client.GetIdealEndpoint(new HttpRange(2000, 1000), segments);
-            string result2 = client.GetIdealEndpoint(new HttpRange(0, 1000), segments);
+            string result1 = BlobExtensions.GetLayoutEndpoint(new HttpRange(2000, 1000), segments);
+            string result2 = BlobExtensions.GetLayoutEndpoint(new HttpRange(0, 1000), segments);
 
             // Assert
-            Assert.AreEqual("host-c:443", result1);
-            Assert.AreEqual("host-a:443", result2);
+            Assert.AreEqual("https://host-c:443", result1);
+            Assert.AreEqual("https://host-a:443", result2);
         }
 
         [Test]
-        public void GetIdealEndpoint_ChunkStartMidSegment()
+        public void GetLayoutEndpoint_ChunkStartMidSegment()
         {
             // Arrange
-            BlobBaseClient client = new BlobBaseClient(new Uri("https://account.blob.core.windows.net/container/blob"));
             var segments = new[]
             {
-                new BlobLayoutSegment { Start = 0, End = 999, Endpoint = "host-a:443" },
-                new BlobLayoutSegment { Start = 1000, End = 1999, Endpoint = "host-b:443" }
+                new BlobLayoutSegment { Start = 0, End = 999, Endpoint = "https://host-a:443" },
+                new BlobLayoutSegment { Start = 1000, End = 1999, Endpoint = "https://host-b:443" }
             };
 
             // Act
-            string result1 = client.GetIdealEndpoint(new HttpRange(500, 200), segments);
-            string result2 = client.GetIdealEndpoint(new HttpRange(1200, 300), segments);
+            string result1 = BlobExtensions.GetLayoutEndpoint(new HttpRange(500, 200), segments);
+            string result2 = BlobExtensions.GetLayoutEndpoint(new HttpRange(1200, 300), segments);
 
             // Assert
-            Assert.AreEqual("host-a:443", result1);
-            Assert.AreEqual("host-b:443", result2);
+            Assert.AreEqual("https://host-a:443", result1);
+            Assert.AreEqual("https://host-b:443", result2);
         }
 
         [Test]
-        public void GetIdealEndpoint_ChunkSpansMultipleSegments()
+        public void GetLayoutEndpoint_ChunkSpansMultipleSegments()
         {
             // Arrange
-            BlobBaseClient client = new BlobBaseClient(new Uri("https://account.blob.core.windows.net/container/blob"));
             var segments = new[]
             {
-                new BlobLayoutSegment { Start = 0, End = 999, Endpoint = "host-a:443" },
-                new BlobLayoutSegment { Start = 1000, End = 1999, Endpoint = "host-b:443" },
-                new BlobLayoutSegment { Start = 2000, End = 2999, Endpoint = "host-c:443" }
+                new BlobLayoutSegment { Start = 0, End = 999, Endpoint = "https://host-a:443" },
+                new BlobLayoutSegment { Start = 1000, End = 1999, Endpoint = "https://host-b:443" },
+                new BlobLayoutSegment { Start = 2000, End = 2999, Endpoint = "https://host-c:443" }
             };
 
             // Act
-            string result1 = client.GetIdealEndpoint(new HttpRange(1500, 1000), segments);
-            string result2 = client.GetIdealEndpoint(new HttpRange(500, 2000), segments);
-            string result3 = client.GetIdealEndpoint(new HttpRange(1999, 200), segments);
+            string result1 = BlobExtensions.GetLayoutEndpoint(new HttpRange(1500, 1000), segments);
+            string result2 = BlobExtensions.GetLayoutEndpoint(new HttpRange(500, 2000), segments);
+            string result3 = BlobExtensions.GetLayoutEndpoint(new HttpRange(1999, 200), segments);
 
             // Assert
-            Assert.AreEqual("host-b:443", result1);
-            Assert.AreEqual("host-a:443", result2);
-            Assert.AreEqual("host-b:443", result3);
+            Assert.AreEqual("https://host-b:443", result1);
+            Assert.AreEqual("https://host-a:443", result2);
+            Assert.AreEqual("https://host-b:443", result3);
         }
 
         [Test]
@@ -9769,14 +10006,14 @@ namespace Azure.Storage.Blobs.Test
             var transport = new MockTransport(new MockResponse(200));
             var pipeline = new HttpPipeline(transport, new HttpPipelinePolicy[] { DataLocalityPolicy.Shared });
 
-            // Set HttpMessage property with IdealEndpoint
-            string idealEndpoint = "https://ideal-host.blob.core.windows.net:443";
+            // Set HttpMessage property with LayoutEndpoint
+            string LayoutEndpoint = "https://layout-host.blob.core.windows.net:443";
             using DisposableBucket disposableBucket = new();
             disposableBucket.Add(
                 HttpPipeline.CreateHttpMessagePropertiesScope(
                     new Dictionary<string, object>
                     {
-                        { DataLocalityPolicy.IdealEndpointKey, idealEndpoint }
+                        { DataLocalityPolicy.LayoutEndpointKey, LayoutEndpoint }
                     }));
 
             HttpMessage message = pipeline.CreateMessage();
@@ -9787,7 +10024,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert - inspect the request that MockTransport received
             MockRequest request = transport.Requests[0];
-            Assert.AreEqual("ideal-host.blob.core.windows.net", request.Uri.Host);
+            Assert.AreEqual("layout-host.blob.core.windows.net", request.Uri.Host);
             Assert.AreEqual(443, request.Uri.Port);
             Assert.IsTrue(request.Headers.TryGetValue("Host", out string hostHeader));
             // Host header should still be original
@@ -9804,7 +10041,7 @@ namespace Azure.Storage.Blobs.Test
             HttpMessage message = pipeline.CreateMessage();
             message.Request.Uri.Reset(new Uri("https://original-host.blob.core.windows.net/container/blob"));
 
-            // Act - no IdealEndpoint property set
+            // Act - no LayoutEndpoint property set
             pipeline.Send(message, CancellationToken.None);
 
             // Assert - inspect the request that MockTransport received

@@ -919,6 +919,54 @@ namespace Azure.Storage.Blobs
 
             return segments;
         }
+
+        /// <summary>
+        /// Gets the endpoint of the first range within the blob layout that overlaps with the
+        /// download chunk range. Utilizes binary search.
+        /// </summary>
+        /// <param name="chunkRange">
+        /// The download chunk range to intersect. Must have <see cref="HttpRange.Length"/> set.
+        /// </param>
+        /// <param name="layoutSegments">
+        /// Non-overlapping sorted layout segments produced by <see cref="ToBlobLayoutSegments"/>.
+        /// May be null or empty when no layout is available; in that case, returns null.
+        /// </param>
+        /// <returns>
+        /// The optimal endpoint for this chunk based on the blob layout, or null if no
+        /// segment covers the chunk's start offset.
+        /// </returns>
+        internal static string GetLayoutEndpoint(
+            HttpRange chunkRange,
+            IReadOnlyList<BlobLayoutSegment> layoutSegments)
+        {
+            if (layoutSegments == null || layoutSegments.Count == 0)
+            {
+                return null;
+            }
+
+            long chunkRangeStart = chunkRange.Offset;
+
+            // Binary search: find the first range layout segment with End >= chunkRangeStart.
+            int lo = 0, hi = layoutSegments.Count - 1;
+            int overlapIndex = layoutSegments.Count;
+            while (lo <= hi)
+            {
+                int mid = lo + (hi - lo) / 2;
+                if (layoutSegments[mid].End >= chunkRangeStart)
+                {
+                    overlapIndex = mid;
+                    hi = mid - 1;
+                }
+                else
+                {
+                    lo = mid + 1;
+                }
+            }
+
+            return overlapIndex == layoutSegments.Count
+                ? null
+                : layoutSegments[overlapIndex].Endpoint;
+        }
         #endregion
 
         #region ToBlobCopyInfo

@@ -1455,7 +1455,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 async: false,
-                cancellationToken).EnsureCompleted();
+                cancellationToken,
+                layoutEndpoint: options?.LayoutEndpoint).EnsureCompleted();
         }
 
         /// <summary>
@@ -1504,7 +1505,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 async: true,
-                cancellationToken).ConfigureAwait(false);
+                cancellationToken,
+                layoutEndpoint: options?.LayoutEndpoint).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1519,6 +1521,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="operationName"></param>
         /// <param name="async"></param>
         /// <param name="cancellationToken"></param>
+        /// <param name="layoutEndpoint">
+        /// Optional ideal endpoint for this download. When non-null, the request
+        /// is routed to this endpoint via <see cref="DataLocalityPolicy"/>.
+        /// </param>
         /// <returns></returns>
         private async ValueTask<Response<BlobDownloadStreamingResult>> DownloadStreamingDirect(
             HttpRange range,
@@ -1527,7 +1533,8 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler,
             string operationName,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string layoutEndpoint = null)
         {
             HttpRange requestedRange = range;
             if (UsingClientSideEncryption)
@@ -1538,7 +1545,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
 
-            var response = await DownloadStreamingInternal(range, conditions, transferValidationOverride, progressHandler, operationName, async, cancellationToken).ConfigureAwait(false);
+            var response = await DownloadStreamingInternal(range, conditions, transferValidationOverride, progressHandler, operationName, async, cancellationToken, layoutEndpoint: layoutEndpoint).ConfigureAwait(false);
 
             // if using clientside encryption, wrap the auto-retry stream in a decryptor
             // we already return a nonseekable stream; returning a crypto stream is fine
@@ -1588,6 +1595,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// current segments and the download chunk is intersected with them to
         /// determine the optimal endpoint.
         /// </param>
+        /// <param name="layoutEndpoint">
+        /// Optional. Caller-supplied ideal endpoint string ("host" or "host:port").
+        /// Wins over <paramref name="layoutCache"/> when both are provided. When set,
+        /// the request is routed to this endpoint via <see cref="DataLocalityPolicy"/>.
+        /// </param>
         /// <returns></returns>
         internal virtual async ValueTask<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
             HttpRange range,
@@ -1597,7 +1609,8 @@ namespace Azure.Storage.Blobs.Specialized
             string operationName,
             bool async,
             CancellationToken cancellationToken,
-            AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache = null)
+            AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache = null,
+            string layoutEndpoint = null)
         {
             DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
@@ -1623,25 +1636,26 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName: nameof(BlobBaseClient.DownloadStreaming),
                         parameterName: nameof(conditions));
 
-                    // The ideal endpoint from the layout segment that overlaps with the download chunk
-                    string idealEndpoint = null;
-                    if (layoutCache != null)
+                    // Resolve the ideal endpoint either from the caller-supplied value
+                    // (single-shot download path) or from the auto-refreshing cache
+                    // (parallel DownloadTo path).
+                    if (layoutEndpoint == null && layoutCache != null)
                     {
                         BlobLayoutSegmentCacheValue cachedValue = await layoutCache
                             .GetAsync(async, cancellationToken)
                             .ConfigureAwait(false);
-                        idealEndpoint = GetIdealEndpoint(range, cachedValue.Segments);
+                        layoutEndpoint = BlobExtensions.GetLayoutEndpoint(range, cachedValue.Segments);
+                    }
 
-                        // Add the ideal endpoint to the Http message properties so DataLocalityPolicy can route the request
-                        if (idealEndpoint != null)
-                        {
-                            disposableBucket.Add(
-                                HttpPipeline.CreateHttpMessagePropertiesScope(
-                                    new Dictionary<string, object>
-                                    {
-                                        { DataLocalityPolicy.IdealEndpointKey, idealEndpoint }
-                                    }));
-                        }
+                    // Add the layout endpoint to the Http message properties so DataLocalityPolicy can route the request
+                    if (layoutEndpoint != null)
+                    {
+                        disposableBucket.Add(
+                            HttpPipeline.CreateHttpMessagePropertiesScope(
+                                new Dictionary<string, object>
+                                {
+                                    { DataLocalityPolicy.LayoutEndpointKey, layoutEndpoint }
+                                }));
                     }
 
                     // Start downloading the blob
@@ -1671,13 +1685,13 @@ namespace Azure.Storage.Blobs.Specialized
                         // since the original scope from disposableBucket will have
                         // been disposed by the time retries occur.
                         using DisposableBucket retryBucket = new();
-                        if (idealEndpoint != null)
+                        if (layoutEndpoint != null)
                         {
                             retryBucket.Add(
                                 HttpPipeline.CreateHttpMessagePropertiesScope(
                                     new Dictionary<string, object>
                                     {
-                                        { DataLocalityPolicy.IdealEndpointKey, idealEndpoint }
+                                        { DataLocalityPolicy.LayoutEndpointKey, layoutEndpoint }
                                     }));
                         }
 
@@ -1779,54 +1793,6 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Dispose();
                 }
             }
-        }
-
-        /// <summary>
-        /// Gets the endpoint of the first range within the blob layout that overlaps with the download chunk range.
-        /// Utilizes binary search to speed things up.
-        /// </summary>
-        /// <param name="chunkRange">
-        /// The download chunk range to intersect. Must have <see cref="HttpRange.Length"/> set.
-        /// </param>
-        /// <param name="layoutSegments">
-        /// Non-overlapping sorted layout segments from <see cref="GetLayout"/>. May be null or empty
-        /// when data locality is not in use. If not empty, will always cover chunkRange.
-        /// </param>
-        /// <returns>
-        /// The optimal endpoint for this chunk based on the blob layout.
-        /// </returns>
-        internal string GetIdealEndpoint(
-            HttpRange chunkRange,
-            IReadOnlyList<BlobLayoutSegment> layoutSegments)
-        {
-            if (layoutSegments == null || layoutSegments.Count == 0)
-            {
-                return null;
-            }
-
-            long chunkRangeStart = chunkRange.Offset;
-
-            // Binary search: find the first range layout segment with End >= chunkRangeStart.
-            int lo = 0, hi = layoutSegments.Count - 1;
-            int overlapIndex = layoutSegments.Count;
-            while (lo <= hi)
-            {
-                int mid = lo + (hi - lo) / 2;
-                if (layoutSegments[mid].End >= chunkRangeStart)
-                {
-                    overlapIndex = mid;
-                    hi = mid - 1;
-                }
-                else
-                {
-                    lo = mid + 1;
-                }
-            }
-
-            // Range is guaranteed to exist, return its endpoint
-            return overlapIndex == layoutSegments.Count
-                ? null // should theoretically never return null
-                : layoutSegments[overlapIndex].Endpoint;
         }
 
         /// <summary>
@@ -2431,7 +2397,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Range ?? default,
                 options?.TransferValidation,
                 async: false,
-                cancellationToken).EnsureCompleted();
+                cancellationToken,
+                layoutEndpoint: options?.LayoutEndpoint).EnsureCompleted();
 
         /// <summary>
         /// The <see cref="DownloadContentAsync(BlobDownloadOptions, CancellationToken)"/>
@@ -2484,7 +2451,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Range ?? default,
                 options?.TransferValidation,
                 async: true,
-                cancellationToken).ConfigureAwait(false);
+                cancellationToken,
+                layoutEndpoint: options?.LayoutEndpoint).ConfigureAwait(false);
 
         private async Task<Response<BlobDownloadResult>> DownloadContentInternal(
             BlobRequestConditions conditions,
@@ -2492,7 +2460,8 @@ namespace Azure.Storage.Blobs.Specialized
             HttpRange range,
             DownloadTransferValidationOptions transferValidationOverride,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string layoutEndpoint = null)
         {
             conditions.ValidateConditionsNotPresent(
                 invalidConditions:
@@ -2508,7 +2477,8 @@ namespace Azure.Storage.Blobs.Specialized
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadContent)}",
                 async: async,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
+                cancellationToken: cancellationToken,
+                layoutEndpoint: layoutEndpoint).ConfigureAwait(false);
 
             // Return an exploding Response on 304
             if (response.IsUnavailable())

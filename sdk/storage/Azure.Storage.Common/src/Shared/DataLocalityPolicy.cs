@@ -9,18 +9,18 @@ namespace Azure.Storage
 {
     /// <summary>
     /// Pipeline policy that, when an ideal endpoint has been set on the
-    /// <see cref="HttpMessage"/> properties under <see cref="IdealEndpointKey"/>,
+    /// <see cref="HttpMessage"/> properties under <see cref="LayoutEndpointKey"/>,
     /// rewrites the outgoing request URI to that endpoint while preserving the
     /// original host on the <c>Host</c> header.
     /// </summary>
     /// <remarks>
     /// This policy is currently used only by the Blob and Data Lake parallel
     /// download paths. It is a no-op for any request that does not opt in by
-    /// setting the <see cref="IdealEndpointKey"/> property on the message.
+    /// setting the <see cref="LayoutEndpointKey"/> property on the message.
     /// </remarks>
     internal class DataLocalityPolicy : HttpPipelineSynchronousPolicy
     {
-        internal const string IdealEndpointKey = "IdealEndpoint";
+        internal const string LayoutEndpointKey = "LayoutEndpoint";
 
         public static DataLocalityPolicy Shared { get; } = new DataLocalityPolicy();
 
@@ -30,7 +30,7 @@ namespace Azure.Storage
 
         public override void OnSendingRequest(HttpMessage message)
         {
-            if (message.TryGetProperty(IdealEndpointKey, out var value)
+            if (message.TryGetProperty(LayoutEndpointKey, out var value)
                 && value is string endpoint
                 && !string.IsNullOrEmpty(endpoint))
             {
