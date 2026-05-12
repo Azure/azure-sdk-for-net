@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-preview.62 (2026-05-11)
+## 12.0.0-preview.62 (2026-05-12)
 
 ### Features Added
 - This release contains bug fixes to improve quality.
