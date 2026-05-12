@@ -181,7 +181,7 @@ namespace Azure.Generator.Provisioning.Tests
         // https://github.com/microsoft/typespec/issues/10626
 
         [Test]
-        [Ignore("Blocked by MTG ModelProvider constructor virtual-dispatch issue; enable after the generator dependency contains the fix.")]
+        [Ignore("Blocked by MTG ModelProvider constructor virtual-dispatch issue; enable after the generator dependency contains the fix: https://github.com/microsoft/typespec/issues/10626")]
         public void RegularModelTypeIsNotWrappedInBicepValue()
         {
             var input = CreateRegularModel();
@@ -221,7 +221,7 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        [Ignore("Blocked by MTG ModelProvider constructor virtual-dispatch issue; enable after the generator dependency contains the fix.")]
+        [Ignore("Blocked by MTG ModelProvider constructor virtual-dispatch issue; enable after the generator dependency contains the fix: https://github.com/microsoft/typespec/issues/10626")]
         public void ArrayOfRegularModelTypeIsConvertedToBicepListOfModel()
         {
             var input = new InputArrayType("list", "list", CreateRegularModel());
@@ -237,7 +237,7 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        [Ignore("Blocked by MTG ModelProvider constructor virtual-dispatch issue; enable after the generator dependency contains the fix.")]
+        [Ignore("Blocked by MTG ModelProvider constructor virtual-dispatch issue; enable after the generator dependency contains the fix: https://github.com/microsoft/typespec/issues/10626")]
         public void DictionaryOfRegularModelTypeIsConvertedToBicepDictionaryOfModel()
         {
             var input = new InputDictionaryType("dictionary", InputPrimitiveType.String, CreateRegularModel());
@@ -253,7 +253,7 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        [Ignore("Blocked by MTG ModelProvider constructor virtual-dispatch issue; enable after the generator dependency contains the fix.")]
+        [Ignore("Blocked by MTG ModelProvider constructor virtual-dispatch issue; enable after the generator dependency contains the fix: https://github.com/microsoft/typespec/issues/10626")]
         public void ArrayOfDictionaryOfRegularModelTypePreservesNestedProvisioningType()
         {
             var input = new InputArrayType(
