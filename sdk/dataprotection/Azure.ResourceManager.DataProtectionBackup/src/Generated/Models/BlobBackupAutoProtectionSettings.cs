@@ -11,31 +11,38 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
-    /// Parameters for Backup Datasource
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KubernetesClusterBackupDataSourceSettings"/>, <see cref="BlobBackupDataSourceSettings"/>, <see cref="BlobBackupDatasourceParametersForAutoProtection"/>, <see cref="AdlsBlobBackupDataSourceSettings"/>, and <see cref="AdlsBlobBackupDatasourceParametersForAutoProtection"/>.
+    /// The settings for Blob Backup Auto Protection.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BlobBackupRuleBasedAutoProtectionSettings"/>.
     /// </summary>
-    public abstract partial class BackupDataSourceSettings
+    public abstract partial class BlobBackupAutoProtectionSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BackupDataSourceSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobBackupAutoProtectionSettings"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        private protected BackupDataSourceSettings(string objectType)
+        /// <param name="enabled"> Flag to enable whether auto protection. </param>
+        private protected BlobBackupAutoProtectionSettings(string objectType, bool enabled)
         {
             ObjectType = objectType;
+            Enabled = enabled;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackupDataSourceSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobBackupAutoProtectionSettings"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="enabled"> Flag to enable whether auto protection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupDataSourceSettings(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobBackupAutoProtectionSettings(string objectType, bool enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectType = objectType;
+            Enabled = enabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of the specific object - used for deserializing. </summary>
         internal string ObjectType { get; set; }
+
+        /// <summary> Flag to enable whether auto protection. </summary>
+        public bool Enabled { get; set; }
     }
 }
