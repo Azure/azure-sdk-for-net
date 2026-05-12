@@ -75,7 +75,7 @@ foreach ($project in $testProjects) {
     $testCsproj = Join-Path $projectDir 'tests' $project.TestCsproj
     if (Test-Path $testCsproj) {
         Write-Host "Testing $testCsproj..." -ForegroundColor Cyan
-        & dotnet test $testCsproj --no-restore
+        & dotnet test $testCsproj
         if ($LASTEXITCODE -ne 0) {
             throw "dotnet test failed for $($project.FilterName) (exit $LASTEXITCODE)."
         }
