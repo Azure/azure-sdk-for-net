@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         {
             get
             {
-                return PrivateEndpoint.Id;
+                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
             }
         }
     }

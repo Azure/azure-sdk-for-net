@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             if (id.ResourceType != HorizonDBClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HorizonDBClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HorizonDBClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDBPrivateLinkResourceData, HorizonDBPrivateLinkResource>(new HorizonDBPrivateLinkResourcesGetAllAsyncCollectionResultOfT(_horizonDBPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HorizonDBPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<HorizonDBPrivateLinkResourceData, HorizonDBPrivateLinkResource>(new HorizonDBPrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+                _horizonDBPrivateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HorizonDBPrivateLinkResourceCollection.GetAll"), data => new HorizonDBPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDBPrivateLinkResourceData, HorizonDBPrivateLinkResource>(new HorizonDBPrivateLinkResourcesGetAllCollectionResultOfT(_horizonDBPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HorizonDBPrivateLinkResource(Client, data));
+            return new PageableWrapper<HorizonDBPrivateLinkResourceData, HorizonDBPrivateLinkResource>(new HorizonDBPrivateLinkResourcesGetAllCollectionResultOfT(
+                _horizonDBPrivateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HorizonDBPrivateLinkResourceCollection.GetAll"), data => new HorizonDBPrivateLinkResource(Client, data));
         }
 
         /// <summary>

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClustersGetBySubscriptionAsyncCollectionResultOfT(HorizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HorizonDBClusterResource(Client, data));
+            return new AsyncPageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClustersGetBySubscriptionAsyncCollectionResultOfT(HorizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHorizonDBSubscriptionResource.GetHorizonDBClusters"), data => new HorizonDBClusterResource(Client, data));
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClustersGetBySubscriptionCollectionResultOfT(HorizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HorizonDBClusterResource(Client, data));
+            return new PageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClustersGetBySubscriptionCollectionResultOfT(HorizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHorizonDBSubscriptionResource.GetHorizonDBClusters"), data => new HorizonDBClusterResource(Client, data));
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupsGetBySubscriptionAsyncCollectionResultOfT(HorizonDBParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HorizonDBParameterGroupResource(Client, data));
+            return new AsyncPageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupsGetBySubscriptionAsyncCollectionResultOfT(HorizonDBParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHorizonDBSubscriptionResource.GetHorizonDBParameterGroups"), data => new HorizonDBParameterGroupResource(Client, data));
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupsGetBySubscriptionCollectionResultOfT(HorizonDBParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HorizonDBParameterGroupResource(Client, data));
+            return new PageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupsGetBySubscriptionCollectionResultOfT(HorizonDBParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHorizonDBSubscriptionResource.GetHorizonDBParameterGroups"), data => new HorizonDBParameterGroupResource(Client, data));
         }
     }
 }

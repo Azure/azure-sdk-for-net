@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.HorizonDB
         private readonly string _clusterName;
         private readonly string _poolName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of HorizonDBFirewallRulesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The HorizonDBFirewallRules client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="clusterName"> The name of the HorizonDb cluster. </param>
         /// <param name="poolName"> The name of the HorizonDb pool. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public HorizonDBFirewallRulesGetAllAsyncCollectionResultOfT(HorizonDBFirewallRules client, Guid subscriptionId, string resourceGroupName, string clusterName, string poolName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public HorizonDBFirewallRulesGetAllAsyncCollectionResultOfT(HorizonDBFirewallRules client, Guid subscriptionId, string resourceGroupName, string clusterName, string poolName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.HorizonDB
             _clusterName = clusterName;
             _poolName = poolName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of HorizonDBFirewallRulesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.HorizonDB
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _poolName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _clusterName, _poolName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HorizonDBFirewallRuleCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

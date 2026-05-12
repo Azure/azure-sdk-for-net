@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -441,7 +441,8 @@ namespace Azure.ResourceManager.HorizonDB
                 Id.ResourceGroupName,
                 Id.Name,
                 version,
-                context), data => new HorizonDBParameterGroupResource(Client, data));
+                context,
+                "HorizonDBParameterGroupResource.GetVersions"), data => new HorizonDBParameterGroupResource(Client, data));
         }
 
         /// <summary>
@@ -480,7 +481,8 @@ namespace Azure.ResourceManager.HorizonDB
                 Id.ResourceGroupName,
                 Id.Name,
                 version,
-                context), data => new HorizonDBParameterGroupResource(Client, data));
+                context,
+                "HorizonDBParameterGroupResource.GetVersions"), data => new HorizonDBParameterGroupResource(Client, data));
         }
 
         /// <summary>
@@ -512,7 +514,13 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new HorizonDBParameterGroupsGetConnectionsAsyncCollectionResultOfT(_horizonDBParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new HorizonDBParameterGroupsGetConnectionsAsyncCollectionResultOfT(
+                _horizonDBParameterGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HorizonDBParameterGroupResource.GetConnections");
         }
 
         /// <summary>
@@ -544,7 +552,13 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new HorizonDBParameterGroupsGetConnectionsCollectionResultOfT(_horizonDBParameterGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new HorizonDBParameterGroupsGetConnectionsCollectionResultOfT(
+                _horizonDBParameterGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HorizonDBParameterGroupResource.GetConnections");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

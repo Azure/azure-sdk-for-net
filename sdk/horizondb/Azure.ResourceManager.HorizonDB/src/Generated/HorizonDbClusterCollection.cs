@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClustersGetByResourceGroupAsyncCollectionResultOfT(_horizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HorizonDBClusterResource(Client, data));
+            return new AsyncPageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClustersGetByResourceGroupAsyncCollectionResultOfT(_horizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HorizonDBClusterCollection.GetAll"), data => new HorizonDBClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClustersGetByResourceGroupCollectionResultOfT(_horizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HorizonDBClusterResource(Client, data));
+            return new PageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClustersGetByResourceGroupCollectionResultOfT(_horizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HorizonDBClusterCollection.GetAll"), data => new HorizonDBClusterResource(Client, data));
         }
 
         /// <summary>

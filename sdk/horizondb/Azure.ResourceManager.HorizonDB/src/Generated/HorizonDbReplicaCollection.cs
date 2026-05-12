@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             if (id.ResourceType != HorizonDBPoolResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HorizonDBPoolResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HorizonDBPoolResource.ResourceType), nameof(id));
             }
         }
 
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.HorizonDB
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new HorizonDBReplicaResource(Client, data));
+                context,
+                "HorizonDBReplicaCollection.GetAll"), data => new HorizonDBReplicaResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.HorizonDB
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new HorizonDBReplicaResource(Client, data));
+                context,
+                "HorizonDBReplicaCollection.GetAll"), data => new HorizonDBReplicaResource(Client, data));
         }
 
         /// <summary>

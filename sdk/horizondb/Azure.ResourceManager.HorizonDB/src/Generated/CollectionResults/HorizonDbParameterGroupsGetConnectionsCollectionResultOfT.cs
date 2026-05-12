@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.HorizonDB
         private readonly string _resourceGroupName;
         private readonly string _parameterGroupName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of HorizonDBParameterGroupsGetConnectionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The HorizonDBParameterGroups client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="parameterGroupName"> The name of the HorizonDb parameter group. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public HorizonDBParameterGroupsGetConnectionsCollectionResultOfT(HorizonDBParameterGroups client, Guid subscriptionId, string resourceGroupName, string parameterGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public HorizonDBParameterGroupsGetConnectionsCollectionResultOfT(HorizonDBParameterGroups client, Guid subscriptionId, string resourceGroupName, string parameterGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _parameterGroupName = parameterGroupName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of HorizonDBParameterGroupsGetConnectionsCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.HorizonDB
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetConnectionsRequest(nextLink, _subscriptionId, _resourceGroupName, _parameterGroupName, _context) : _client.CreateGetConnectionsRequest(_subscriptionId, _resourceGroupName, _parameterGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HorizonDBParameterGroupResource.GetConnections");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

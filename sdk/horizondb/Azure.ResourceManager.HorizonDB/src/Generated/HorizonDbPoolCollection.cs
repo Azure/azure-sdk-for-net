@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             if (id.ResourceType != HorizonDBClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HorizonDBClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HorizonDBClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDBPoolData, HorizonDBPoolResource>(new HorizonDBPoolsGetAllAsyncCollectionResultOfT(_horizonDBPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HorizonDBPoolResource(Client, data));
+            return new AsyncPageableWrapper<HorizonDBPoolData, HorizonDBPoolResource>(new HorizonDBPoolsGetAllAsyncCollectionResultOfT(
+                _horizonDBPoolsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HorizonDBPoolCollection.GetAll"), data => new HorizonDBPoolResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDBPoolData, HorizonDBPoolResource>(new HorizonDBPoolsGetAllCollectionResultOfT(_horizonDBPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HorizonDBPoolResource(Client, data));
+            return new PageableWrapper<HorizonDBPoolData, HorizonDBPoolResource>(new HorizonDBPoolsGetAllCollectionResultOfT(
+                _horizonDBPoolsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HorizonDBPoolCollection.GetAll"), data => new HorizonDBPoolResource(Client, data));
         }
 
         /// <summary>
