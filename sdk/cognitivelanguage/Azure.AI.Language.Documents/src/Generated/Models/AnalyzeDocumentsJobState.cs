@@ -21,7 +21,7 @@ namespace Azure.AI.Language.Documents
         /// <param name="lastUpdatedAt"> last updated date and time. </param>
         /// <param name="status"> status. </param>
         /// <param name="tasks"> List of tasks. </param>
-        internal AnalyzeDocumentsJobState(DateTimeOffset createdAt, DateTimeOffset lastUpdatedAt, DocumentActionState status, DocumentTasksState tasks)
+        internal AnalyzeDocumentsJobState(DateTimeOffset createdAt, DateTimeOffset lastUpdatedAt, DocumentActionStatus status, DocumentTasksState tasks)
         {
             CreatedAt = createdAt;
             LastUpdatedAt = lastUpdatedAt;
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Documents
         /// <param name="tasks"> List of tasks. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeDocumentsJobState(string displayName, DateTimeOffset createdAt, DateTimeOffset? expiresOn, Guid jobId, DateTimeOffset lastUpdatedAt, DocumentActionState status, IList<AnalyzeDocumentsError> errors, string nextLink, DocumentTasksState tasks, DocumentRequestStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeDocumentsJobState(string displayName, DateTimeOffset createdAt, DateTimeOffset? expiresOn, Guid jobId, DateTimeOffset lastUpdatedAt, DocumentActionStatus status, IList<AnalyzeDocumentsError> errors, string nextLink, DocumentTasksState tasks, DocumentRequestStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             CreatedAt = createdAt;
@@ -73,7 +73,7 @@ namespace Azure.AI.Language.Documents
         public DateTimeOffset LastUpdatedAt { get; }
 
         /// <summary> status. </summary>
-        public DocumentActionState Status { get; }
+        public DocumentActionStatus Status { get; }
 
         /// <summary> errors. </summary>
         public IList<AnalyzeDocumentsError> Errors { get; }

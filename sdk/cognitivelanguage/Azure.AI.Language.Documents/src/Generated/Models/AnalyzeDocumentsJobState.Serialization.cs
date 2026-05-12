@@ -176,7 +176,7 @@ namespace Azure.AI.Language.Documents
             DateTimeOffset? expiresOn = default;
             Guid jobId = default;
             DateTimeOffset lastUpdatedAt = default;
-            DocumentActionState status = default;
+            DocumentActionStatus status = default;
             IList<AnalyzeDocumentsError> errors = default;
             string nextLink = default;
             DocumentTasksState tasks = default;
@@ -215,7 +215,7 @@ namespace Azure.AI.Language.Documents
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new DocumentActionState(prop.Value.GetString());
+                    status = new DocumentActionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errors"u8))

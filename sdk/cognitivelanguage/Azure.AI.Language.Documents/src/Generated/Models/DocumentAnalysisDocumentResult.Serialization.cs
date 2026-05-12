@@ -96,7 +96,7 @@ namespace Azure.AI.Language.Documents
             writer.WriteObjectValue(Source, options);
             writer.WritePropertyName("target"u8);
             writer.WriteStartArray();
-            foreach (DocumentLocation item in Target)
+            foreach (DocumentLocation item in Targets)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -147,7 +147,7 @@ namespace Azure.AI.Language.Documents
             IList<DocumentWarning> warnings = default;
             DocumentStatistics statistics = default;
             DocumentLocation source = default;
-            IList<DocumentLocation> target = default;
+            IList<DocumentLocation> targets = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,7 +187,7 @@ namespace Azure.AI.Language.Documents
                     {
                         array.Add(DocumentLocation.DeserializeDocumentLocation(item, options));
                     }
-                    target = array;
+                    targets = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -200,7 +200,7 @@ namespace Azure.AI.Language.Documents
                 warnings,
                 statistics,
                 source,
-                target,
+                targets,
                 additionalBinaryDataProperties);
         }
     }

@@ -13,12 +13,12 @@ namespace Azure.AI.Language.Documents
     internal partial class UnknownAnalyzeDocumentsOperationResult : AnalyzeDocumentsOperationResult
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeDocumentsOperationResult"/>. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdatedAt"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAnalyzeDocumentsOperationResult(DateTimeOffset lastUpdateDateTime, DocumentActionState status, string taskName, AnalyzeDocumentsOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(lastUpdateDateTime, status, taskName, kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownAnalyzeDocumentsOperationResult(DateTimeOffset lastUpdatedAt, DocumentActionStatus status, string taskName, AnalyzeDocumentsOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(lastUpdatedAt, status, taskName, kind != default ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

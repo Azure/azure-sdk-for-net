@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> The sorting criteria to use for the results of Extractive Summarization. </summary>
-    public readonly partial struct ExtractiveSummarizationSortingCriteria : IEquatable<ExtractiveSummarizationSortingCriteria>
+    public readonly partial struct ExtractiveSummarizationOrder : IEquatable<ExtractiveSummarizationOrder>
     {
         private readonly string _value;
         /// <summary> Indicates that results should be sorted in order of appearance in the text. </summary>
@@ -19,10 +19,10 @@ namespace Azure.AI.Language.Documents
         /// <summary> Indicates that results should be sorted in order of importance (i.e. rank score) according to the model. </summary>
         private const string RankValue = "Rank";
 
-        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationSortingCriteria"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationOrder"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ExtractiveSummarizationSortingCriteria(string value)
+        public ExtractiveSummarizationOrder(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -30,35 +30,35 @@ namespace Azure.AI.Language.Documents
         }
 
         /// <summary> Indicates that results should be sorted in order of appearance in the text. </summary>
-        public static ExtractiveSummarizationSortingCriteria Offset { get; } = new ExtractiveSummarizationSortingCriteria(OffsetValue);
+        public static ExtractiveSummarizationOrder Offset { get; } = new ExtractiveSummarizationOrder(OffsetValue);
 
         /// <summary> Indicates that results should be sorted in order of importance (i.e. rank score) according to the model. </summary>
-        public static ExtractiveSummarizationSortingCriteria Rank { get; } = new ExtractiveSummarizationSortingCriteria(RankValue);
+        public static ExtractiveSummarizationOrder Rank { get; } = new ExtractiveSummarizationOrder(RankValue);
 
-        /// <summary> Determines if two <see cref="ExtractiveSummarizationSortingCriteria"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ExtractiveSummarizationOrder"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ExtractiveSummarizationSortingCriteria left, ExtractiveSummarizationSortingCriteria right) => left.Equals(right);
+        public static bool operator ==(ExtractiveSummarizationOrder left, ExtractiveSummarizationOrder right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ExtractiveSummarizationSortingCriteria"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ExtractiveSummarizationOrder"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ExtractiveSummarizationSortingCriteria left, ExtractiveSummarizationSortingCriteria right) => !left.Equals(right);
+        public static bool operator !=(ExtractiveSummarizationOrder left, ExtractiveSummarizationOrder right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ExtractiveSummarizationSortingCriteria"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ExtractiveSummarizationOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExtractiveSummarizationSortingCriteria(string value) => new ExtractiveSummarizationSortingCriteria(value);
+        public static implicit operator ExtractiveSummarizationOrder(string value) => new ExtractiveSummarizationOrder(value);
 
-        /// <summary> Converts a string to a <see cref="ExtractiveSummarizationSortingCriteria"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ExtractiveSummarizationOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExtractiveSummarizationSortingCriteria?(string value) => value == null ? null : new ExtractiveSummarizationSortingCriteria(value);
+        public static implicit operator ExtractiveSummarizationOrder?(string value) => value == null ? null : new ExtractiveSummarizationOrder(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ExtractiveSummarizationSortingCriteria other && Equals(other);
+        public override bool Equals(object obj) => obj is ExtractiveSummarizationOrder other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ExtractiveSummarizationSortingCriteria other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ExtractiveSummarizationOrder other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

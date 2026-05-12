@@ -20,16 +20,16 @@ namespace Azure.AI.Language.Documents
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="sentenceCount"> Specifies the number of sentences in the extracted summary. </param>
-        /// <param name="sortBy"> Specifies how to sort the extracted summaries. </param>
+        /// <param name="orderBy"> Specifies how to sort the extracted summaries. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. </param>
         /// <param name="query"> (Optional) If provided, the query will be used to extract most relevant sentences from the document. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtractiveSummarizationActionContent(bool? loggingOptOut, string modelVersion, long? sentenceCount, ExtractiveSummarizationSortingCriteria? sortBy, StringIndexType? stringIndexType, string query, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExtractiveSummarizationActionContent(bool? loggingOptOut, string modelVersion, long? sentenceCount, ExtractiveSummarizationOrder? orderBy, StringIndexType? stringIndexType, string query, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;
             SentenceCount = sentenceCount;
-            SortBy = sortBy;
+            OrderBy = orderBy;
             StringIndexType = stringIndexType;
             Query = query;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -45,7 +45,7 @@ namespace Azure.AI.Language.Documents
         public long? SentenceCount { get; set; }
 
         /// <summary> Specifies how to sort the extracted summaries. </summary>
-        public ExtractiveSummarizationSortingCriteria? SortBy { get; set; }
+        public ExtractiveSummarizationOrder? OrderBy { get; set; }
 
         /// <summary> (Optional) If provided, the query will be used to extract most relevant sentences from the document. </summary>
         public string Query { get; set; }

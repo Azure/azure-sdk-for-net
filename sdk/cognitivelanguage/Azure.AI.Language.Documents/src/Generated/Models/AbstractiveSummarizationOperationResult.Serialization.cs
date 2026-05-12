@@ -108,8 +108,8 @@ namespace Azure.AI.Language.Documents
             {
                 return null;
             }
-            DateTimeOffset lastUpdateDateTime = default;
-            DocumentActionState status = default;
+            DateTimeOffset lastUpdatedAt = default;
+            DocumentActionStatus status = default;
             string taskName = default;
             AnalyzeDocumentsOperationResultsKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -118,12 +118,12 @@ namespace Azure.AI.Language.Documents
             {
                 if (prop.NameEquals("lastUpdateDateTime"u8))
                 {
-                    lastUpdateDateTime = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedAt = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new DocumentActionState(prop.Value.GetString());
+                    status = new DocumentActionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("taskName"u8))
@@ -147,7 +147,7 @@ namespace Azure.AI.Language.Documents
                 }
             }
             return new AbstractiveSummarizationOperationResult(
-                lastUpdateDateTime,
+                lastUpdatedAt,
                 status,
                 taskName,
                 kind,

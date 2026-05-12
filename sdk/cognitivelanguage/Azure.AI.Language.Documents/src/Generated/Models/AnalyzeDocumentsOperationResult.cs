@@ -20,25 +20,25 @@ namespace Azure.AI.Language.Documents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeDocumentsOperationResult"/>. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdatedAt"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="kind"> Kind of the task. </param>
-        private protected AnalyzeDocumentsOperationResult(DateTimeOffset lastUpdateDateTime, DocumentActionState status, AnalyzeDocumentsOperationResultsKind kind)
+        private protected AnalyzeDocumentsOperationResult(DateTimeOffset lastUpdatedAt, DocumentActionStatus status, AnalyzeDocumentsOperationResultsKind kind)
         {
-            LastUpdateDateTime = lastUpdateDateTime;
+            LastUpdatedAt = lastUpdatedAt;
             Status = status;
             Kind = kind;
         }
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeDocumentsOperationResult"/>. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdatedAt"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeDocumentsOperationResult(DateTimeOffset lastUpdateDateTime, DocumentActionState status, string taskName, AnalyzeDocumentsOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeDocumentsOperationResult(DateTimeOffset lastUpdatedAt, DocumentActionStatus status, string taskName, AnalyzeDocumentsOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LastUpdateDateTime = lastUpdateDateTime;
+            LastUpdatedAt = lastUpdatedAt;
             Status = status;
             TaskName = taskName;
             Kind = kind;
@@ -46,10 +46,10 @@ namespace Azure.AI.Language.Documents
         }
 
         /// <summary> The last updated time in UTC for the task. </summary>
-        public DateTimeOffset LastUpdateDateTime { get; }
+        public DateTimeOffset LastUpdatedAt { get; }
 
         /// <summary> The status of the task at the mentioned last update time. </summary>
-        public DocumentActionState Status { get; }
+        public DocumentActionStatus Status { get; }
 
         /// <summary> task name. </summary>
         public string TaskName { get; }

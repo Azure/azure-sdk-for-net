@@ -43,7 +43,7 @@ namespace Azure.AI.Language.Documents
     [ModelReaderWriterBuildable(typeof(ExtractiveSummarizationOperationResult))]
     [ModelReaderWriterBuildable(typeof(InnerErrorModel))]
     [ModelReaderWriterBuildable(typeof(MarkerMaskPolicy))]
-    [ModelReaderWriterBuildable(typeof(MultiLanguageDocumentInput))]
+    [ModelReaderWriterBuildable(typeof(MultiLanguageDocumentCollection))]
     [ModelReaderWriterBuildable(typeof(MultiLanguageInput))]
     [ModelReaderWriterBuildable(typeof(NoMaskRedactionPolicy))]
     [ModelReaderWriterBuildable(typeof(PiiActionContent))]

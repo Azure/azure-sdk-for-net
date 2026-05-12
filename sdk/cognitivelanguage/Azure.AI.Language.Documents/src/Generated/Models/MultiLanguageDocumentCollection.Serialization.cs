@@ -13,51 +13,51 @@ using System.Text.Json;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> Collection of input documents to be analyzed by the service. </summary>
-    public partial class MultiLanguageDocumentInput : IJsonModel<MultiLanguageDocumentInput>
+    public partial class MultiLanguageDocumentCollection : IJsonModel<MultiLanguageDocumentCollection>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MultiLanguageDocumentInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MultiLanguageDocumentCollection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultiLanguageDocumentInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MultiLanguageDocumentCollection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMultiLanguageDocumentInput(document.RootElement, options);
+                        return DeserializeMultiLanguageDocumentCollection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MultiLanguageDocumentInput)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultiLanguageDocumentCollection)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultiLanguageDocumentInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MultiLanguageDocumentCollection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MultiLanguageDocumentInput)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultiLanguageDocumentCollection)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MultiLanguageDocumentInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MultiLanguageDocumentCollection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MultiLanguageDocumentInput IPersistableModel<MultiLanguageDocumentInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MultiLanguageDocumentCollection IPersistableModel<MultiLanguageDocumentCollection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MultiLanguageDocumentInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MultiLanguageDocumentCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MultiLanguageDocumentInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MultiLanguageDocumentCollection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,10 +68,10 @@ namespace Azure.AI.Language.Documents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultiLanguageDocumentInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MultiLanguageDocumentCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultiLanguageDocumentInput)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MultiLanguageDocumentCollection)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Documents))
             {
@@ -102,24 +102,24 @@ namespace Azure.AI.Language.Documents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MultiLanguageDocumentInput IJsonModel<MultiLanguageDocumentInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MultiLanguageDocumentCollection IJsonModel<MultiLanguageDocumentCollection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MultiLanguageDocumentInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MultiLanguageDocumentCollection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultiLanguageDocumentInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MultiLanguageDocumentCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultiLanguageDocumentInput)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MultiLanguageDocumentCollection)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMultiLanguageDocumentInput(document.RootElement, options);
+            return DeserializeMultiLanguageDocumentCollection(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MultiLanguageDocumentInput DeserializeMultiLanguageDocumentInput(JsonElement element, ModelReaderWriterOptions options)
+        internal static MultiLanguageDocumentCollection DeserializeMultiLanguageDocumentCollection(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -148,7 +148,7 @@ namespace Azure.AI.Language.Documents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MultiLanguageDocumentInput(documents ?? new ChangeTrackingList<MultiLanguageInput>(), additionalBinaryDataProperties);
+            return new MultiLanguageDocumentCollection(documents ?? new ChangeTrackingList<MultiLanguageInput>(), additionalBinaryDataProperties);
         }
     }
 }

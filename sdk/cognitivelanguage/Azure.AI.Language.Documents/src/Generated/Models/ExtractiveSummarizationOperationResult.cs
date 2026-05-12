@@ -14,22 +14,22 @@ namespace Azure.AI.Language.Documents
     public partial class ExtractiveSummarizationOperationResult : AnalyzeDocumentsOperationResult
     {
         /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationOperationResult"/>. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdatedAt"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="results"> Results of the document task. </param>
-        internal ExtractiveSummarizationOperationResult(DateTimeOffset lastUpdateDateTime, DocumentActionState status, AnalyzeDocumentsResult results) : base(lastUpdateDateTime, status, AnalyzeDocumentsOperationResultsKind.ExtractiveSummarizationOperationResults)
+        internal ExtractiveSummarizationOperationResult(DateTimeOffset lastUpdatedAt, DocumentActionStatus status, AnalyzeDocumentsResult results) : base(lastUpdatedAt, status, AnalyzeDocumentsOperationResultsKind.ExtractiveSummarizationOperationResults)
         {
             Results = results;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationOperationResult"/>. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdatedAt"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"> Results of the document task. </param>
-        internal ExtractiveSummarizationOperationResult(DateTimeOffset lastUpdateDateTime, DocumentActionState status, string taskName, AnalyzeDocumentsOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AnalyzeDocumentsResult results) : base(lastUpdateDateTime, status, taskName, kind, additionalBinaryDataProperties)
+        internal ExtractiveSummarizationOperationResult(DateTimeOffset lastUpdatedAt, DocumentActionStatus status, string taskName, AnalyzeDocumentsOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AnalyzeDocumentsResult results) : base(lastUpdatedAt, status, taskName, kind, additionalBinaryDataProperties)
         {
             Results = results;
         }

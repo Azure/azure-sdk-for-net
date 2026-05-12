@@ -21,13 +21,13 @@ namespace Azure.AI.Language.Documents
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="source"> Location of the input document. </param>
-        /// <param name="target"> Array of document results generated after the analysis. </param>
-        internal DocumentAnalysisDocumentResult(string id, IEnumerable<DocumentWarning> warnings, DocumentLocation source, IEnumerable<DocumentLocation> target)
+        /// <param name="targets"> Array of document results generated after the analysis. </param>
+        internal DocumentAnalysisDocumentResult(string id, IEnumerable<DocumentWarning> warnings, DocumentLocation source, IEnumerable<DocumentLocation> targets)
         {
             Id = id;
             Warnings = warnings.ToList();
             Source = source;
-            Target = target.ToList();
+            Targets = targets.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentAnalysisDocumentResult"/>. </summary>
@@ -35,15 +35,15 @@ namespace Azure.AI.Language.Documents
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="source"> Location of the input document. </param>
-        /// <param name="target"> Array of document results generated after the analysis. </param>
+        /// <param name="targets"> Array of document results generated after the analysis. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentAnalysisDocumentResult(string id, IList<DocumentWarning> warnings, DocumentStatistics statistics, DocumentLocation source, IList<DocumentLocation> target, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentAnalysisDocumentResult(string id, IList<DocumentWarning> warnings, DocumentStatistics statistics, DocumentLocation source, IList<DocumentLocation> targets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Warnings = warnings;
             Statistics = statistics;
             Source = source;
-            Target = target;
+            Targets = targets;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,6 +60,6 @@ namespace Azure.AI.Language.Documents
         public DocumentLocation Source { get; }
 
         /// <summary> Array of document results generated after the analysis. </summary>
-        public IList<DocumentLocation> Target { get; }
+        public IList<DocumentLocation> Targets { get; }
     }
 }

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> The status of the task at the mentioned last update time. </summary>
-    public readonly partial struct DocumentActionState : IEquatable<DocumentActionState>
+    public readonly partial struct DocumentActionStatus : IEquatable<DocumentActionStatus>
     {
         private readonly string _value;
         /// <summary> Not started status. </summary>
@@ -25,14 +25,14 @@ namespace Azure.AI.Language.Documents
         /// <summary> Failed status. </summary>
         private const string FailedValue = "failed";
         /// <summary> Cancelled status. </summary>
-        private const string CancelledValue = "cancelled";
+        private const string CanceledValue = "cancelled";
         /// <summary> Cancelling status. </summary>
         private const string CancellingValue = "cancelling";
 
-        /// <summary> Initializes a new instance of <see cref="DocumentActionState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentActionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DocumentActionState(string value)
+        public DocumentActionStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -40,50 +40,50 @@ namespace Azure.AI.Language.Documents
         }
 
         /// <summary> Not started status. </summary>
-        public static DocumentActionState NotStarted { get; } = new DocumentActionState(NotStartedValue);
+        public static DocumentActionStatus NotStarted { get; } = new DocumentActionStatus(NotStartedValue);
 
         /// <summary> Running status. </summary>
-        public static DocumentActionState Running { get; } = new DocumentActionState(RunningValue);
+        public static DocumentActionStatus Running { get; } = new DocumentActionStatus(RunningValue);
 
         /// <summary> Succeeded status. </summary>
-        public static DocumentActionState Succeeded { get; } = new DocumentActionState(SucceededValue);
+        public static DocumentActionStatus Succeeded { get; } = new DocumentActionStatus(SucceededValue);
 
         /// <summary> Partially completed status. </summary>
-        public static DocumentActionState PartiallyCompleted { get; } = new DocumentActionState(PartiallyCompletedValue);
+        public static DocumentActionStatus PartiallyCompleted { get; } = new DocumentActionStatus(PartiallyCompletedValue);
 
         /// <summary> Failed status. </summary>
-        public static DocumentActionState Failed { get; } = new DocumentActionState(FailedValue);
+        public static DocumentActionStatus Failed { get; } = new DocumentActionStatus(FailedValue);
 
         /// <summary> Cancelled status. </summary>
-        public static DocumentActionState Cancelled { get; } = new DocumentActionState(CancelledValue);
+        public static DocumentActionStatus Canceled { get; } = new DocumentActionStatus(CanceledValue);
 
         /// <summary> Cancelling status. </summary>
-        public static DocumentActionState Cancelling { get; } = new DocumentActionState(CancellingValue);
+        public static DocumentActionStatus Cancelling { get; } = new DocumentActionStatus(CancellingValue);
 
-        /// <summary> Determines if two <see cref="DocumentActionState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DocumentActionStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DocumentActionState left, DocumentActionState right) => left.Equals(right);
+        public static bool operator ==(DocumentActionStatus left, DocumentActionStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DocumentActionState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="DocumentActionStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DocumentActionState left, DocumentActionState right) => !left.Equals(right);
+        public static bool operator !=(DocumentActionStatus left, DocumentActionStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DocumentActionState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DocumentActionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentActionState(string value) => new DocumentActionState(value);
+        public static implicit operator DocumentActionStatus(string value) => new DocumentActionStatus(value);
 
-        /// <summary> Converts a string to a <see cref="DocumentActionState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DocumentActionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentActionState?(string value) => value == null ? null : new DocumentActionState(value);
+        public static implicit operator DocumentActionStatus?(string value) => value == null ? null : new DocumentActionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DocumentActionState other && Equals(other);
+        public override bool Equals(object obj) => obj is DocumentActionStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DocumentActionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DocumentActionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

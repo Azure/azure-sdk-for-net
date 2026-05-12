@@ -88,10 +88,10 @@ namespace Azure.AI.Language.Documents
                 writer.WritePropertyName("sentenceCount"u8);
                 writer.WriteNumberValue(SentenceCount.Value);
             }
-            if (Optional.IsDefined(SortBy))
+            if (Optional.IsDefined(OrderBy))
             {
                 writer.WritePropertyName("sortBy"u8);
-                writer.WriteStringValue(SortBy.Value.ToString());
+                writer.WriteStringValue(OrderBy.Value.ToString());
             }
             if (Optional.IsDefined(StringIndexType))
             {
@@ -148,7 +148,7 @@ namespace Azure.AI.Language.Documents
             bool? loggingOptOut = default;
             string modelVersion = default;
             long? sentenceCount = default;
-            ExtractiveSummarizationSortingCriteria? sortBy = default;
+            ExtractiveSummarizationOrder? orderBy = default;
             StringIndexType? stringIndexType = default;
             string query = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -183,7 +183,7 @@ namespace Azure.AI.Language.Documents
                     {
                         continue;
                     }
-                    sortBy = new ExtractiveSummarizationSortingCriteria(prop.Value.GetString());
+                    orderBy = new ExtractiveSummarizationOrder(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("stringIndexType"u8))
@@ -209,7 +209,7 @@ namespace Azure.AI.Language.Documents
                 loggingOptOut,
                 modelVersion,
                 sentenceCount,
-                sortBy,
+                orderBy,
                 stringIndexType,
                 query,
                 additionalBinaryDataProperties);

@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> Collection of input documents to be analyzed by the service. </summary>
-    public partial class MultiLanguageDocumentInput
+    public partial class MultiLanguageDocumentCollection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MultiLanguageDocumentInput"/>. </summary>
-        public MultiLanguageDocumentInput()
+        /// <summary> Initializes a new instance of <see cref="MultiLanguageDocumentCollection"/>. </summary>
+        public MultiLanguageDocumentCollection()
         {
             Documents = new ChangeTrackingList<MultiLanguageInput>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MultiLanguageDocumentInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiLanguageDocumentCollection"/>. </summary>
         /// <param name="documents"> The input documents to be analyzed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultiLanguageDocumentInput(IList<MultiLanguageInput> documents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MultiLanguageDocumentCollection(IList<MultiLanguageInput> documents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Documents = documents;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

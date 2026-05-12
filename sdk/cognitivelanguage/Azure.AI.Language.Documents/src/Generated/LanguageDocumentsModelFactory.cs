@@ -26,7 +26,7 @@ namespace Azure.AI.Language.Documents
         /// <param name="tasks"> List of tasks. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <returns> A new <see cref="Documents.AnalyzeDocumentsJobState"/> instance for mocking. </returns>
-        public static AnalyzeDocumentsJobState AnalyzeDocumentsJobState(string displayName = default, DateTimeOffset createdAt = default, DateTimeOffset? expiresOn = default, Guid jobId = default, DateTimeOffset lastUpdatedAt = default, DocumentActionState status = default, IEnumerable<AnalyzeDocumentsError> errors = default, string nextLink = default, DocumentTasksState tasks = default, DocumentRequestStatistics statistics = default)
+        public static AnalyzeDocumentsJobState AnalyzeDocumentsJobState(string displayName = default, DateTimeOffset createdAt = default, DateTimeOffset? expiresOn = default, Guid jobId = default, DateTimeOffset lastUpdatedAt = default, DocumentActionStatus status = default, IEnumerable<AnalyzeDocumentsError> errors = default, string nextLink = default, DocumentTasksState tasks = default, DocumentRequestStatistics statistics = default)
         {
             errors ??= new ChangeTrackingList<AnalyzeDocumentsError>();
 
@@ -108,26 +108,26 @@ namespace Azure.AI.Language.Documents
         /// Contains the AnalyzeDocuments long running operation result object.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Documents.PiiEntityRecognitionOperationResult"/>, <see cref="Documents.ExtractiveSummarizationOperationResult"/>, and <see cref="Documents.AbstractiveSummarizationOperationResult"/>.
         /// </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdatedAt"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
         /// <returns> A new <see cref="Documents.AnalyzeDocumentsOperationResult"/> instance for mocking. </returns>
-        public static AnalyzeDocumentsOperationResult AnalyzeDocumentsOperationResult(DateTimeOffset lastUpdateDateTime = default, DocumentActionState status = default, string taskName = default, string kind = default)
+        public static AnalyzeDocumentsOperationResult AnalyzeDocumentsOperationResult(DateTimeOffset lastUpdatedAt = default, DocumentActionStatus status = default, string taskName = default, string kind = default)
         {
-            return new UnknownAnalyzeDocumentsOperationResult(lastUpdateDateTime, status, taskName, new AnalyzeDocumentsOperationResultsKind(kind), additionalBinaryDataProperties: null);
+            return new UnknownAnalyzeDocumentsOperationResult(lastUpdatedAt, status, taskName, new AnalyzeDocumentsOperationResultsKind(kind), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Contains the PII LRO results. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdatedAt"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> The list of pii document results. </param>
         /// <returns> A new <see cref="Documents.PiiEntityRecognitionOperationResult"/> instance for mocking. </returns>
-        public static PiiEntityRecognitionOperationResult PiiEntityRecognitionOperationResult(DateTimeOffset lastUpdateDateTime = default, DocumentActionState status = default, string taskName = default, AnalyzeDocumentsResult results = default)
+        public static PiiEntityRecognitionOperationResult PiiEntityRecognitionOperationResult(DateTimeOffset lastUpdatedAt = default, DocumentActionStatus status = default, string taskName = default, AnalyzeDocumentsResult results = default)
         {
             return new PiiEntityRecognitionOperationResult(
-                lastUpdateDateTime,
+                lastUpdatedAt,
                 status,
                 taskName,
                 AnalyzeDocumentsOperationResultsKind.PiiEntityRecognitionOperationResults,
@@ -174,19 +174,19 @@ namespace Azure.AI.Language.Documents
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="source"> Location of the input document. </param>
-        /// <param name="target"> Array of document results generated after the analysis. </param>
+        /// <param name="targets"> Array of document results generated after the analysis. </param>
         /// <returns> A new <see cref="Documents.DocumentAnalysisDocumentResult"/> instance for mocking. </returns>
-        public static DocumentAnalysisDocumentResult DocumentAnalysisDocumentResult(string id = default, IEnumerable<DocumentWarning> warnings = default, DocumentStatistics statistics = default, DocumentLocation source = default, IEnumerable<DocumentLocation> target = default)
+        public static DocumentAnalysisDocumentResult DocumentAnalysisDocumentResult(string id = default, IEnumerable<DocumentWarning> warnings = default, DocumentStatistics statistics = default, DocumentLocation source = default, IEnumerable<DocumentLocation> targets = default)
         {
             warnings ??= new ChangeTrackingList<DocumentWarning>();
-            target ??= new ChangeTrackingList<DocumentLocation>();
+            targets ??= new ChangeTrackingList<DocumentLocation>();
 
             return new DocumentAnalysisDocumentResult(
                 id,
                 warnings.ToList(),
                 statistics,
                 source,
-                target.ToList(),
+                targets.ToList(),
                 additionalBinaryDataProperties: null);
         }
 
@@ -249,15 +249,15 @@ namespace Azure.AI.Language.Documents
         }
 
         /// <summary> An object representing the results for an Extractive Summarization task. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdatedAt"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> Results of the document task. </param>
         /// <returns> A new <see cref="Documents.ExtractiveSummarizationOperationResult"/> instance for mocking. </returns>
-        public static ExtractiveSummarizationOperationResult ExtractiveSummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, DocumentActionState status = default, string taskName = default, AnalyzeDocumentsResult results = default)
+        public static ExtractiveSummarizationOperationResult ExtractiveSummarizationOperationResult(DateTimeOffset lastUpdatedAt = default, DocumentActionStatus status = default, string taskName = default, AnalyzeDocumentsResult results = default)
         {
             return new ExtractiveSummarizationOperationResult(
-                lastUpdateDateTime,
+                lastUpdatedAt,
                 status,
                 taskName,
                 AnalyzeDocumentsOperationResultsKind.ExtractiveSummarizationOperationResults,
@@ -266,15 +266,15 @@ namespace Azure.AI.Language.Documents
         }
 
         /// <summary> An object representing the results for an Abstractive Summarization task. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdatedAt"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> Results of the task. </param>
         /// <returns> A new <see cref="Documents.AbstractiveSummarizationOperationResult"/> instance for mocking. </returns>
-        public static AbstractiveSummarizationOperationResult AbstractiveSummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, DocumentActionState status = default, string taskName = default, AnalyzeDocumentsResult results = default)
+        public static AbstractiveSummarizationOperationResult AbstractiveSummarizationOperationResult(DateTimeOffset lastUpdatedAt = default, DocumentActionStatus status = default, string taskName = default, AnalyzeDocumentsResult results = default)
         {
             return new AbstractiveSummarizationOperationResult(
-                lastUpdateDateTime,
+                lastUpdatedAt,
                 status,
                 taskName,
                 AnalyzeDocumentsOperationResultsKind.AbstractiveSummarizationOperationResults,
@@ -284,25 +284,25 @@ namespace Azure.AI.Language.Documents
 
         /// <summary> The input object for the analyze documents LRO. </summary>
         /// <param name="displayName"> Name for the task. </param>
-        /// <param name="documentsInput"> Contains the input to be analyzed. </param>
+        /// <param name="documentInput"> Contains the input to be analyzed. </param>
         /// <param name="actions"> List of tasks to be performed as part of the LRO. </param>
         /// <param name="defaultLanguage"> Default language to use for records. </param>
         /// <returns> A new <see cref="Documents.AnalyzeDocumentsOperationInput"/> instance for mocking. </returns>
-        public static AnalyzeDocumentsOperationInput AnalyzeDocumentsOperationInput(string displayName = default, MultiLanguageDocumentInput documentsInput = default, IEnumerable<AnalyzeDocumentsOperationAction> actions = default, string defaultLanguage = default)
+        public static AnalyzeDocumentsOperationInput AnalyzeDocumentsOperationInput(string displayName = default, MultiLanguageDocumentCollection documentInput = default, IEnumerable<AnalyzeDocumentsOperationAction> actions = default, string defaultLanguage = default)
         {
             actions ??= new ChangeTrackingList<AnalyzeDocumentsOperationAction>();
 
-            return new AnalyzeDocumentsOperationInput(displayName, documentsInput, actions.ToList(), defaultLanguage, additionalBinaryDataProperties: null);
+            return new AnalyzeDocumentsOperationInput(displayName, documentInput, actions.ToList(), defaultLanguage, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Collection of input documents to be analyzed by the service. </summary>
         /// <param name="documents"> The input documents to be analyzed. </param>
-        /// <returns> A new <see cref="Documents.MultiLanguageDocumentInput"/> instance for mocking. </returns>
-        public static MultiLanguageDocumentInput MultiLanguageDocumentInput(IEnumerable<MultiLanguageInput> documents = default)
+        /// <returns> A new <see cref="Documents.MultiLanguageDocumentCollection"/> instance for mocking. </returns>
+        public static MultiLanguageDocumentCollection MultiLanguageDocumentCollection(IEnumerable<MultiLanguageInput> documents = default)
         {
             documents ??= new ChangeTrackingList<MultiLanguageInput>();
 
-            return new MultiLanguageDocumentInput(documents.ToList(), additionalBinaryDataProperties: null);
+            return new MultiLanguageDocumentCollection(documents.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Contains an input document to be analyzed by the service. </summary>
@@ -527,17 +527,17 @@ namespace Azure.AI.Language.Documents
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="sentenceCount"> Specifies the number of sentences in the extracted summary. </param>
-        /// <param name="sortBy"> Specifies how to sort the extracted summaries. </param>
+        /// <param name="orderBy"> Specifies how to sort the extracted summaries. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. </param>
         /// <param name="query"> (Optional) If provided, the query will be used to extract most relevant sentences from the document. </param>
         /// <returns> A new <see cref="Documents.ExtractiveSummarizationActionContent"/> instance for mocking. </returns>
-        public static ExtractiveSummarizationActionContent ExtractiveSummarizationActionContent(bool? loggingOptOut = default, string modelVersion = default, long? sentenceCount = default, ExtractiveSummarizationSortingCriteria? sortBy = default, StringIndexType? stringIndexType = default, string query = default)
+        public static ExtractiveSummarizationActionContent ExtractiveSummarizationActionContent(bool? loggingOptOut = default, string modelVersion = default, long? sentenceCount = default, ExtractiveSummarizationOrder? orderBy = default, StringIndexType? stringIndexType = default, string query = default)
         {
             return new ExtractiveSummarizationActionContent(
                 loggingOptOut,
                 modelVersion,
                 sentenceCount,
-                sortBy,
+                orderBy,
                 stringIndexType,
                 query,
                 additionalBinaryDataProperties: null);

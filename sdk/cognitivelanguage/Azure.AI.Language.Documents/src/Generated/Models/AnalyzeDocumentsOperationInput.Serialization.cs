@@ -95,7 +95,7 @@ namespace Azure.AI.Language.Documents
                 writer.WriteStringValue(DisplayName);
             }
             writer.WritePropertyName("analysisInput"u8);
-            writer.WriteObjectValue(DocumentsInput, options);
+            writer.WriteObjectValue(DocumentInput, options);
             writer.WritePropertyName("tasks"u8);
             writer.WriteStartArray();
             foreach (AnalyzeDocumentsOperationAction item in Actions)
@@ -151,7 +151,7 @@ namespace Azure.AI.Language.Documents
                 return null;
             }
             string displayName = default;
-            MultiLanguageDocumentInput documentsInput = default;
+            MultiLanguageDocumentCollection documentInput = default;
             IList<AnalyzeDocumentsOperationAction> actions = default;
             string defaultLanguage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -164,7 +164,7 @@ namespace Azure.AI.Language.Documents
                 }
                 if (prop.NameEquals("analysisInput"u8))
                 {
-                    documentsInput = MultiLanguageDocumentInput.DeserializeMultiLanguageDocumentInput(prop.Value, options);
+                    documentInput = MultiLanguageDocumentCollection.DeserializeMultiLanguageDocumentCollection(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tasks"u8))
@@ -187,7 +187,7 @@ namespace Azure.AI.Language.Documents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AnalyzeDocumentsOperationInput(displayName, documentsInput, actions, defaultLanguage, additionalBinaryDataProperties);
+            return new AnalyzeDocumentsOperationInput(displayName, documentInput, actions, defaultLanguage, additionalBinaryDataProperties);
         }
     }
 }
