@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerGroupProfileResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerGroupProfileResource> GetContainerGroupProfilesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CGProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CGProfileResource> GetCGProfilesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new CGProfilesGetBySubscriptionAsyncCollectionResultOfT(CGProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroupProfiles"), data => new ContainerGroupProfileResource(Client, data));
+            return new AsyncPageableWrapper<ContainerGroupProfileData, CGProfileResource>(new CGProfilesGetBySubscriptionAsyncCollectionResultOfT(CGProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetCGProfiles"), data => new CGProfileResource(Client, data));
         }
 
         /// <summary>
@@ -215,14 +215,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerGroupProfileResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerGroupProfileResource> GetContainerGroupProfiles(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CGProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CGProfileResource> GetCGProfiles(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new CGProfilesGetBySubscriptionCollectionResultOfT(CGProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroupProfiles"), data => new ContainerGroupProfileResource(Client, data));
+            return new PageableWrapper<ContainerGroupProfileData, CGProfileResource>(new CGProfilesGetBySubscriptionCollectionResultOfT(CGProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetCGProfiles"), data => new CGProfileResource(Client, data));
         }
 
         /// <summary>

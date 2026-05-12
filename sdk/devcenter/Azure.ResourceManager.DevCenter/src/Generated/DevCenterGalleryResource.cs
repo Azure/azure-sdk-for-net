@@ -403,11 +403,11 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        /// <summary> Gets a collection of DevCenterImages in the <see cref="DevCenterGalleryResource"/>. </summary>
-        /// <returns> An object representing collection of DevCenterImages and their operations over a DevCenterImageResource. </returns>
-        public virtual DevCenterImageCollection GetDevCenterImages()
+        /// <summary> Gets a collection of Images in the <see cref="DevCenterGalleryResource"/>. </summary>
+        /// <returns> An object representing collection of Images and their operations over a ImageResource. </returns>
+        public virtual ImageCollection GetImages()
         {
-            return GetCachedClient(client => new DevCenterImageCollection(client, Id));
+            return GetCachedClient(client => new ImageCollection(client, Id));
         }
 
         /// <summary> Gets a gallery image. </summary>
@@ -416,11 +416,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevCenterImageResource>> GetDevCenterImageAsync(string imageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ImageResource>> GetImageAsync(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            return await GetDevCenterImages().GetAsync(imageName, cancellationToken).ConfigureAwait(false);
+            return await GetImages().GetAsync(imageName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a gallery image. </summary>
@@ -429,11 +429,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevCenterImageResource> GetDevCenterImage(string imageName, CancellationToken cancellationToken = default)
+        public virtual Response<ImageResource> GetImage(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            return GetDevCenterImages().Get(imageName, cancellationToken);
+            return GetImages().Get(imageName, cancellationToken);
         }
     }
 }

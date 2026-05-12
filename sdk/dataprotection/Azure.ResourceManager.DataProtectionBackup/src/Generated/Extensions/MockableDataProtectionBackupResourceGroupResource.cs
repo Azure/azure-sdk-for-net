@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDataProtectionBackupResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _fetchSecondaryRecoveryPointsOperationGroupClientDiagnostics;
+        private FetchSecondaryRecoveryPointsOperationGroup _fetchSecondaryRecoveryPointsOperationGroupRestClient;
+        private ClientDiagnostics _fetchCrossRegionRestoreJobsOperationGroupClientDiagnostics;
+        private FetchCrossRegionRestoreJobsOperationGroup _fetchCrossRegionRestoreJobsOperationGroupRestClient;
         private ClientDiagnostics _backupVaultsOperationGroupClientDiagnostics;
         private BackupVaultsOperationGroup _backupVaultsOperationGroupRestClient;
         private ClientDiagnostics _backupInstancesOperationGroupClientDiagnostics;
         private BackupInstancesOperationGroup _backupInstancesOperationGroupRestClient;
-        private ClientDiagnostics _fetchSecondaryRecoveryPointsOperationGroupClientDiagnostics;
-        private FetchSecondaryRecoveryPointsOperationGroup _fetchSecondaryRecoveryPointsOperationGroupRestClient;
         private ClientDiagnostics _fetchCrossRegionRestoreJobOperationGroupClientDiagnostics;
         private FetchCrossRegionRestoreJobOperationGroup _fetchCrossRegionRestoreJobOperationGroupRestClient;
-        private ClientDiagnostics _fetchCrossRegionRestoreJobsOperationGroupClientDiagnostics;
-        private FetchCrossRegionRestoreJobsOperationGroup _fetchCrossRegionRestoreJobsOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of MockableDataProtectionBackupResourceGroupResource for mocking. </summary>
         protected MockableDataProtectionBackupResourceGroupResource()
@@ -44,6 +44,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         {
         }
 
+        private ClientDiagnostics FetchSecondaryRecoveryPointsOperationGroupClientDiagnostics => _fetchSecondaryRecoveryPointsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private FetchSecondaryRecoveryPointsOperationGroup FetchSecondaryRecoveryPointsOperationGroupRestClient => _fetchSecondaryRecoveryPointsOperationGroupRestClient ??= new FetchSecondaryRecoveryPointsOperationGroup(FetchSecondaryRecoveryPointsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics FetchCrossRegionRestoreJobsOperationGroupClientDiagnostics => _fetchCrossRegionRestoreJobsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private FetchCrossRegionRestoreJobsOperationGroup FetchCrossRegionRestoreJobsOperationGroupRestClient => _fetchCrossRegionRestoreJobsOperationGroupRestClient ??= new FetchCrossRegionRestoreJobsOperationGroup(FetchCrossRegionRestoreJobsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
         private ClientDiagnostics BackupVaultsOperationGroupClientDiagnostics => _backupVaultsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private BackupVaultsOperationGroup BackupVaultsOperationGroupRestClient => _backupVaultsOperationGroupRestClient ??= new BackupVaultsOperationGroup(BackupVaultsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
@@ -52,17 +60,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
 
         private BackupInstancesOperationGroup BackupInstancesOperationGroupRestClient => _backupInstancesOperationGroupRestClient ??= new BackupInstancesOperationGroup(BackupInstancesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
-        private ClientDiagnostics FetchSecondaryRecoveryPointsOperationGroupClientDiagnostics => _fetchSecondaryRecoveryPointsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private FetchSecondaryRecoveryPointsOperationGroup FetchSecondaryRecoveryPointsOperationGroupRestClient => _fetchSecondaryRecoveryPointsOperationGroupRestClient ??= new FetchSecondaryRecoveryPointsOperationGroup(FetchSecondaryRecoveryPointsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
-
         private ClientDiagnostics FetchCrossRegionRestoreJobOperationGroupClientDiagnostics => _fetchCrossRegionRestoreJobOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private FetchCrossRegionRestoreJobOperationGroup FetchCrossRegionRestoreJobOperationGroupRestClient => _fetchCrossRegionRestoreJobOperationGroupRestClient ??= new FetchCrossRegionRestoreJobOperationGroup(FetchCrossRegionRestoreJobOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
-
-        private ClientDiagnostics FetchCrossRegionRestoreJobsOperationGroupClientDiagnostics => _fetchCrossRegionRestoreJobsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private FetchCrossRegionRestoreJobsOperationGroup FetchCrossRegionRestoreJobsOperationGroupRestClient => _fetchCrossRegionRestoreJobsOperationGroupRestClient ??= new FetchCrossRegionRestoreJobsOperationGroup(FetchCrossRegionRestoreJobsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
         /// <summary> Gets a collection of DataProtectionBackupVaults in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of DataProtectionBackupVaults and their operations over a DataProtectionBackupVaultResource. </returns>
@@ -192,6 +192,178 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
             return GetResourceGuards().Get(resourceGuardsName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a list of Secondary Recovery Points for a DataSource in a vault, that can be used for Cross Region Restore.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchSecondaryRecoveryPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FetchSecondaryRecoveryPointsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> Request body for operation. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="skipToken"> skipToken Filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataProtectionBackupRecoveryPointResource> GetSecondaryRecoveryPointsAsync(AzureLocation location, FetchSecondaryRPsRequestContent content, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataProtectionBackupRecoveryPointData, DataProtectionBackupRecoveryPointResource>(new FetchSecondaryRecoveryPointsOperationGroupGetSecondaryRecoveryPointsAsyncCollectionResultOfT(
+                FetchSecondaryRecoveryPointsOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                location,
+                FetchSecondaryRPsRequestContent.ToRequestContent(content),
+                filter,
+                skipToken,
+                context,
+                "MockableDataProtectionBackupResourceGroupResource.GetSecondaryRecoveryPoints"), data => new DataProtectionBackupRecoveryPointResource(Client, data));
+        }
+
+        /// <summary>
+        /// Returns a list of Secondary Recovery Points for a DataSource in a vault, that can be used for Cross Region Restore.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchSecondaryRecoveryPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FetchSecondaryRecoveryPointsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> Request body for operation. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="skipToken"> skipToken Filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataProtectionBackupRecoveryPointResource> GetSecondaryRecoveryPoints(AzureLocation location, FetchSecondaryRPsRequestContent content, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataProtectionBackupRecoveryPointData, DataProtectionBackupRecoveryPointResource>(new FetchSecondaryRecoveryPointsOperationGroupGetSecondaryRecoveryPointsCollectionResultOfT(
+                FetchSecondaryRecoveryPointsOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                location,
+                FetchSecondaryRPsRequestContent.ToRequestContent(content),
+                filter,
+                skipToken,
+                context,
+                "MockableDataProtectionBackupResourceGroupResource.GetSecondaryRecoveryPoints"), data => new DataProtectionBackupRecoveryPointResource(Client, data));
+        }
+
+        /// <summary>
+        /// Fetches list of Cross Region Restore job belonging to the vault
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchCrossRegionRestoreJobs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FetchCrossRegionRestoreJobsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> Request body for operation. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="DataProtectionBackupJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataProtectionBackupJobResource> GetCrossRegionRestoreJobsAsync(AzureLocation location, CrossRegionRestoreJobsContent content, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new FetchCrossRegionRestoreJobsOperationGroupGetCrossRegionRestoreJobsAsyncCollectionResultOfT(
+                FetchCrossRegionRestoreJobsOperationGroupRestClient,
+                Id.ResourceGroupName,
+                Guid.Parse(Id.SubscriptionId),
+                location,
+                CrossRegionRestoreJobsContent.ToRequestContent(content),
+                filter,
+                context,
+                "MockableDataProtectionBackupResourceGroupResource.GetCrossRegionRestoreJobs"), data => new DataProtectionBackupJobResource(Client, data));
+        }
+
+        /// <summary>
+        /// Fetches list of Cross Region Restore job belonging to the vault
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchCrossRegionRestoreJobs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FetchCrossRegionRestoreJobsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> Request body for operation. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="DataProtectionBackupJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataProtectionBackupJobResource> GetCrossRegionRestoreJobs(AzureLocation location, CrossRegionRestoreJobsContent content, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new FetchCrossRegionRestoreJobsOperationGroupGetCrossRegionRestoreJobsCollectionResultOfT(
+                FetchCrossRegionRestoreJobsOperationGroupRestClient,
+                Id.ResourceGroupName,
+                Guid.Parse(Id.SubscriptionId),
+                location,
+                CrossRegionRestoreJobsContent.ToRequestContent(content),
+                filter,
+                context,
+                "MockableDataProtectionBackupResourceGroupResource.GetCrossRegionRestoreJobs"), data => new DataProtectionBackupJobResource(Client, data));
         }
 
         /// <summary>
@@ -517,94 +689,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         }
 
         /// <summary>
-        /// Returns a list of Secondary Recovery Points for a DataSource in a vault, that can be used for Cross Region Restore.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchSecondaryRecoveryPoints. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FetchSecondaryRecoveryPointsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> Request body for operation. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="skipToken"> skipToken Filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataProtectionBackupRecoveryPointResource> GetSecondaryRecoveryPointsAsync(AzureLocation location, FetchSecondaryRPsRequestContent content, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DataProtectionBackupRecoveryPointData, DataProtectionBackupRecoveryPointResource>(new FetchSecondaryRecoveryPointsOperationGroupGetSecondaryRecoveryPointsAsyncCollectionResultOfT(
-                FetchSecondaryRecoveryPointsOperationGroupRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                location,
-                FetchSecondaryRPsRequestContent.ToRequestContent(content),
-                filter,
-                skipToken,
-                context,
-                "MockableDataProtectionBackupResourceGroupResource.GetSecondaryRecoveryPoints"), data => new DataProtectionBackupRecoveryPointResource(Client, data));
-        }
-
-        /// <summary>
-        /// Returns a list of Secondary Recovery Points for a DataSource in a vault, that can be used for Cross Region Restore.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchSecondaryRecoveryPoints. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FetchSecondaryRecoveryPointsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> Request body for operation. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="skipToken"> skipToken Filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataProtectionBackupRecoveryPointResource> GetSecondaryRecoveryPoints(AzureLocation location, FetchSecondaryRPsRequestContent content, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DataProtectionBackupRecoveryPointData, DataProtectionBackupRecoveryPointResource>(new FetchSecondaryRecoveryPointsOperationGroupGetSecondaryRecoveryPointsCollectionResultOfT(
-                FetchSecondaryRecoveryPointsOperationGroupRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                location,
-                FetchSecondaryRPsRequestContent.ToRequestContent(content),
-                filter,
-                skipToken,
-                context,
-                "MockableDataProtectionBackupResourceGroupResource.GetSecondaryRecoveryPoints"), data => new DataProtectionBackupRecoveryPointResource(Client, data));
-        }
-
-        /// <summary>
         /// Fetches the Cross Region Restore Job
         /// <list type="bullet">
         /// <item>
@@ -700,90 +784,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Fetches list of Cross Region Restore job belonging to the vault
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchCrossRegionRestoreJobs. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FetchCrossRegionRestoreJobsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> Request body for operation. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataProtectionBackupJobResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataProtectionBackupJobResource> GetCrossRegionRestoreJobsAsync(AzureLocation location, CrossRegionRestoreJobsContent content, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new FetchCrossRegionRestoreJobsOperationGroupGetCrossRegionRestoreJobsAsyncCollectionResultOfT(
-                FetchCrossRegionRestoreJobsOperationGroupRestClient,
-                Id.ResourceGroupName,
-                Guid.Parse(Id.SubscriptionId),
-                location,
-                CrossRegionRestoreJobsContent.ToRequestContent(content),
-                filter,
-                context,
-                "MockableDataProtectionBackupResourceGroupResource.GetCrossRegionRestoreJobs"), data => new DataProtectionBackupJobResource(Client, data));
-        }
-
-        /// <summary>
-        /// Fetches list of Cross Region Restore job belonging to the vault
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchCrossRegionRestoreJobs. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FetchCrossRegionRestoreJobsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> Request body for operation. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataProtectionBackupJobResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataProtectionBackupJobResource> GetCrossRegionRestoreJobs(AzureLocation location, CrossRegionRestoreJobsContent content, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new FetchCrossRegionRestoreJobsOperationGroupGetCrossRegionRestoreJobsCollectionResultOfT(
-                FetchCrossRegionRestoreJobsOperationGroupRestClient,
-                Id.ResourceGroupName,
-                Guid.Parse(Id.SubscriptionId),
-                location,
-                CrossRegionRestoreJobsContent.ToRequestContent(content),
-                filter,
-                context,
-                "MockableDataProtectionBackupResourceGroupResource.GetCrossRegionRestoreJobs"), data => new DataProtectionBackupJobResource(Client, data));
         }
     }
 }

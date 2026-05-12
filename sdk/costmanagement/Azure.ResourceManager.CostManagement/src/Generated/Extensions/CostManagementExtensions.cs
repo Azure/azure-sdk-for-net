@@ -341,64 +341,64 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TenantsCostManagementViewsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ViewResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetTenantsCostManagementViewsResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetViewResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TenantsCostManagementViewsResource"/> object. </returns>
-        public static TenantsCostManagementViewsResource GetTenantsCostManagementViewsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ViewResource"/> object. </returns>
+        public static ViewResource GetViewResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GetTenantsCostManagementViewsResource(id);
+            return GetMockableCostManagementArmClient(client).GetViewResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CostManagementViewsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ViewOperationGroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementViewsResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetViewOperationGroupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CostManagementViewsResource"/> object. </returns>
-        public static CostManagementViewsResource GetCostManagementViewsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ViewOperationGroupResource"/> object. </returns>
+        public static ViewOperationGroupResource GetViewOperationGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GetCostManagementViewsResource(id);
+            return GetMockableCostManagementArmClient(client).GetViewOperationGroupResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="CostManagementViewsCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="ViewOperationGroupCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetAllCostManagementViews(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetViewOperationGroups(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="CostManagementViewsResource"/> objects. </returns>
-        public static CostManagementViewsCollection GetAllCostManagementViews(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="ViewOperationGroupResource"/> objects. </returns>
+        public static ViewOperationGroupCollection GetViewOperationGroups(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GetAllCostManagementViews(scope);
+            return GetMockableCostManagementArmClient(client).GetViewOperationGroups(scope);
         }
 
         /// <summary>
         /// Gets the view for the defined scope by view name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementViews(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetViewOperationGroup(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -407,18 +407,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<CostManagementViewsResource> GetCostManagementViews(this ArmClient client, ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
+        public static Response<ViewOperationGroupResource> GetViewOperationGroup(this ArmClient client, ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GetCostManagementViews(scope, viewName, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GetViewOperationGroup(scope, viewName, cancellationToken);
         }
 
         /// <summary>
         /// Gets the view for the defined scope by view name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementViewsAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetViewOperationGroupAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -427,11 +427,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<CostManagementViewsResource>> GetCostManagementViewsAsync(this ArmClient client, ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ViewOperationGroupResource>> GetViewOperationGroupAsync(this ArmClient client, ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableCostManagementArmClient(client).GetCostManagementViewsAsync(scope, viewName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).GetViewOperationGroupAsync(scope, viewName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -511,24 +511,6 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TenantScheduledActionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetTenantScheduledActionResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TenantScheduledActionResource"/> object. </returns>
-        public static TenantScheduledActionResource GetTenantScheduledActionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableCostManagementArmClient(client).GetTenantScheduledActionResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ScheduledActionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -547,28 +529,46 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="ScheduledActionCollection"/> objects within the specified scope.
+        /// Gets an object representing a <see cref="ScheduledActionOperationGroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetScheduledActions(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetScheduledActionOperationGroupResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ScheduledActionOperationGroupResource"/> object. </returns>
+        public static ScheduledActionOperationGroupResource GetScheduledActionOperationGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetScheduledActionOperationGroupResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="ScheduledActionOperationGroupCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetScheduledActionOperationGroups(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="ScheduledActionResource"/> objects. </returns>
-        public static ScheduledActionCollection GetScheduledActions(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="ScheduledActionOperationGroupResource"/> objects. </returns>
+        public static ScheduledActionOperationGroupCollection GetScheduledActionOperationGroups(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GetScheduledActions(scope);
+            return GetMockableCostManagementArmClient(client).GetScheduledActionOperationGroups(scope);
         }
 
         /// <summary>
         /// Get the shared scheduled action from the given scope by name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetScheduledAction(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetScheduledActionOperationGroup(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -577,18 +577,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ScheduledActionResource> GetScheduledAction(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        public static Response<ScheduledActionOperationGroupResource> GetScheduledActionOperationGroup(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GetScheduledAction(scope, name, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GetScheduledActionOperationGroup(scope, name, cancellationToken);
         }
 
         /// <summary>
         /// Get the shared scheduled action from the given scope by name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetScheduledActionAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetScheduledActionOperationGroupAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -597,11 +597,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ScheduledActionResource>> GetScheduledActionAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<ScheduledActionOperationGroupResource>> GetScheduledActionOperationGroupAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableCostManagementArmClient(client).GetScheduledActionAsync(scope, name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).GetScheduledActionOperationGroupAsync(scope, name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1745,27 +1745,27 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Gets a collection of TenantsCostManagementViews in the <see cref="TenantResource"/>
+        /// Gets a collection of Views in the <see cref="TenantResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetAllTenantsCostManagementViews()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetViews()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of TenantsCostManagementViews and their operations over a TenantsCostManagementViewsResource. </returns>
-        public static TenantsCostManagementViewsCollection GetAllTenantsCostManagementViews(this TenantResource tenantResource)
+        /// <returns> An object representing collection of Views and their operations over a ViewResource. </returns>
+        public static ViewCollection GetViews(this TenantResource tenantResource)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableCostManagementTenantResource(tenantResource).GetAllTenantsCostManagementViews();
+            return GetMockableCostManagementTenantResource(tenantResource).GetViews();
         }
 
         /// <summary>
         /// Gets the view by view name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetTenantsCostManagementViewsAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetViewAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -1773,18 +1773,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<TenantsCostManagementViewsResource>> GetTenantsCostManagementViewsAsync(this TenantResource tenantResource, string viewName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ViewResource>> GetViewAsync(this TenantResource tenantResource, string viewName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableCostManagementTenantResource(tenantResource).GetTenantsCostManagementViewsAsync(viewName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).GetViewAsync(viewName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the view by view name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetTenantsCostManagementViews(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetView(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -1792,35 +1792,35 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<TenantsCostManagementViewsResource> GetTenantsCostManagementViews(this TenantResource tenantResource, string viewName, CancellationToken cancellationToken = default)
+        public static Response<ViewResource> GetView(this TenantResource tenantResource, string viewName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableCostManagementTenantResource(tenantResource).GetTenantsCostManagementViews(viewName, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetView(viewName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of TenantScheduledActions in the <see cref="TenantResource"/>
+        /// Gets a collection of ScheduledActions in the <see cref="TenantResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetTenantScheduledActions()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetScheduledActions()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of TenantScheduledActions and their operations over a TenantScheduledActionResource. </returns>
-        public static TenantScheduledActionCollection GetTenantScheduledActions(this TenantResource tenantResource)
+        /// <returns> An object representing collection of ScheduledActions and their operations over a ScheduledActionResource. </returns>
+        public static ScheduledActionCollection GetScheduledActions(this TenantResource tenantResource)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableCostManagementTenantResource(tenantResource).GetTenantScheduledActions();
+            return GetMockableCostManagementTenantResource(tenantResource).GetScheduledActions();
         }
 
         /// <summary>
         /// Get the private scheduled action by name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetTenantScheduledActionAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetScheduledActionAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -1828,18 +1828,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<TenantScheduledActionResource>> GetTenantScheduledActionAsync(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<ScheduledActionResource>> GetScheduledActionAsync(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableCostManagementTenantResource(tenantResource).GetTenantScheduledActionAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).GetScheduledActionAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the private scheduled action by name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetTenantScheduledAction(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetScheduledAction(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -1847,11 +1847,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<TenantScheduledActionResource> GetTenantScheduledAction(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
+        public static Response<ScheduledActionResource> GetScheduledAction(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableCostManagementTenantResource(tenantResource).GetTenantScheduledAction(name, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetScheduledAction(name, cancellationToken);
         }
 
         /// <summary>

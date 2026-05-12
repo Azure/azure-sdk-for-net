@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.EdgeOrder
     {
         private readonly ClientDiagnostics _orderResourcesClientDiagnostics;
         private readonly OrderResources _orderResourcesRestClient;
+        private readonly ClientDiagnostics _ordersOperationGroupClientDiagnostics;
+        private readonly OrdersOperationGroup _ordersOperationGroupRestClient;
+        private readonly ClientDiagnostics _ordersOperationGroup2ClientDiagnostics;
+        private readonly OrdersOperationGroup2 _ordersOperationGroup2RestClient;
         private readonly EdgeOrderData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.EdgeOrder/locations/orders";
@@ -52,6 +56,10 @@ namespace Azure.ResourceManager.EdgeOrder
             TryGetApiVersion(ResourceType, out string edgeOrderApiVersion);
             _orderResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ResourceType.Namespace, Diagnostics);
             _orderResourcesRestClient = new OrderResources(_orderResourcesClientDiagnostics, Pipeline, Endpoint, edgeOrderApiVersion ?? "2024-02-01");
+            _ordersOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ResourceType.Namespace, Diagnostics);
+            _ordersOperationGroupRestClient = new OrdersOperationGroup(_ordersOperationGroupClientDiagnostics, Pipeline, Endpoint, edgeOrderApiVersion ?? "2024-02-01");
+            _ordersOperationGroup2ClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ResourceType.Namespace, Diagnostics);
+            _ordersOperationGroup2RestClient = new OrdersOperationGroup2(_ordersOperationGroup2ClientDiagnostics, Pipeline, Endpoint, edgeOrderApiVersion ?? "2024-02-01");
             ValidateResourceId(id);
         }
 

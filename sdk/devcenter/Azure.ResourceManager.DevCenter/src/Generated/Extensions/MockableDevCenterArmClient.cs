@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="DevCenterImageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ImageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterImageResource"/> object. </returns>
-        public virtual DevCenterImageResource GetDevCenterImageResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ImageResource"/> object. </returns>
+        public virtual ImageResource GetImageResource(ResourceIdentifier id)
         {
-            DevCenterImageResource.ValidateResourceId(id);
-            return new DevCenterImageResource(Client, id);
+            ImageResource.ValidateResourceId(id);
+            return new ImageResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DevCenterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -62,6 +62,15 @@ namespace Azure.ResourceManager.DevCenter.Mocking
             return new DevCenterProjectResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="AttachedNetworkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AttachedNetworkResource"/> object. </returns>
+        public virtual AttachedNetworkResource GetAttachedNetworkResource(ResourceIdentifier id)
+        {
+            AttachedNetworkResource.ValidateResourceId(id);
+            return new AttachedNetworkResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="AttachedNetworkConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AttachedNetworkConnectionResource"/> object. </returns>
@@ -71,40 +80,31 @@ namespace Azure.ResourceManager.DevCenter.Mocking
             return new AttachedNetworkConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ProjectAttachedNetworkConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CatalogResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectAttachedNetworkConnectionResource"/> object. </returns>
-        public virtual ProjectAttachedNetworkConnectionResource GetProjectAttachedNetworkConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CatalogResource"/> object. </returns>
+        public virtual CatalogResource GetCatalogResource(ResourceIdentifier id)
         {
-            ProjectAttachedNetworkConnectionResource.ValidateResourceId(id);
-            return new ProjectAttachedNetworkConnectionResource(Client, id);
+            CatalogResource.ValidateResourceId(id);
+            return new CatalogResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DevCenterCatalogResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="EnvironmentDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterCatalogResource"/> object. </returns>
-        public virtual DevCenterCatalogResource GetDevCenterCatalogResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EnvironmentDefinitionResource"/> object. </returns>
+        public virtual EnvironmentDefinitionResource GetEnvironmentDefinitionResource(ResourceIdentifier id)
         {
-            DevCenterCatalogResource.ValidateResourceId(id);
-            return new DevCenterCatalogResource(Client, id);
+            EnvironmentDefinitionResource.ValidateResourceId(id);
+            return new EnvironmentDefinitionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ProjectCatalogEnvironmentDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="EnvironmentDefinitionOperationGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectCatalogEnvironmentDefinitionResource"/> object. </returns>
-        public virtual ProjectCatalogEnvironmentDefinitionResource GetProjectCatalogEnvironmentDefinitionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EnvironmentDefinitionOperationGroupResource"/> object. </returns>
+        public virtual EnvironmentDefinitionOperationGroupResource GetEnvironmentDefinitionOperationGroupResource(ResourceIdentifier id)
         {
-            ProjectCatalogEnvironmentDefinitionResource.ValidateResourceId(id);
-            return new ProjectCatalogEnvironmentDefinitionResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="DevCenterCatalogEnvironmentDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterCatalogEnvironmentDefinitionResource"/> object. </returns>
-        public virtual DevCenterCatalogEnvironmentDefinitionResource GetDevCenterCatalogEnvironmentDefinitionResource(ResourceIdentifier id)
-        {
-            DevCenterCatalogEnvironmentDefinitionResource.ValidateResourceId(id);
-            return new DevCenterCatalogEnvironmentDefinitionResource(Client, id);
+            EnvironmentDefinitionOperationGroupResource.ValidateResourceId(id);
+            return new EnvironmentDefinitionOperationGroupResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DevCenterGalleryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -116,13 +116,13 @@ namespace Azure.ResourceManager.DevCenter.Mocking
             return new DevCenterGalleryResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ProjectImageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ImageOperationGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectImageResource"/> object. </returns>
-        public virtual ProjectImageResource GetProjectImageResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ImageOperationGroupResource"/> object. </returns>
+        public virtual ImageOperationGroupResource GetImageOperationGroupResource(ResourceIdentifier id)
         {
-            ProjectImageResource.ValidateResourceId(id);
-            return new ProjectImageResource(Client, id);
+            ImageOperationGroupResource.ValidateResourceId(id);
+            return new ImageOperationGroupResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ImageVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.DevCenter.Mocking
             return new ImageVersionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ProjectImageVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ImageVersionOperationGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectImageVersionResource"/> object. </returns>
-        public virtual ProjectImageVersionResource GetProjectImageVersionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ImageVersionOperationGroupResource"/> object. </returns>
+        public virtual ImageVersionOperationGroupResource GetImageVersionOperationGroupResource(ResourceIdentifier id)
         {
-            ProjectImageVersionResource.ValidateResourceId(id);
-            return new ProjectImageVersionResource(Client, id);
+            ImageVersionOperationGroupResource.ValidateResourceId(id);
+            return new ImageVersionOperationGroupResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DevCenterEnvironmentTypeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -170,13 +170,13 @@ namespace Azure.ResourceManager.DevCenter.Mocking
             return new DevBoxDefinitionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ProjectDevBoxDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DevBoxDefinitionOperationGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectDevBoxDefinitionResource"/> object. </returns>
-        public virtual ProjectDevBoxDefinitionResource GetProjectDevBoxDefinitionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevBoxDefinitionOperationGroupResource"/> object. </returns>
+        public virtual DevBoxDefinitionOperationGroupResource GetDevBoxDefinitionOperationGroupResource(ResourceIdentifier id)
         {
-            ProjectDevBoxDefinitionResource.ValidateResourceId(id);
-            return new ProjectDevBoxDefinitionResource(Client, id);
+            DevBoxDefinitionOperationGroupResource.ValidateResourceId(id);
+            return new DevBoxDefinitionOperationGroupResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DevCenterCatalogTaskResource"/> along with the instance operations that can be performed on it but with no data. </summary>

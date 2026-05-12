@@ -289,30 +289,30 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             return await GetGenerateDetailedCostReportOperationResults(scope).GetAsync(waitUntil, operationId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="TenantsCostManagementViewsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ViewResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantsCostManagementViewsResource"/> object. </returns>
-        public virtual TenantsCostManagementViewsResource GetTenantsCostManagementViewsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ViewResource"/> object. </returns>
+        public virtual ViewResource GetViewResource(ResourceIdentifier id)
         {
-            TenantsCostManagementViewsResource.ValidateResourceId(id);
-            return new TenantsCostManagementViewsResource(Client, id);
+            ViewResource.ValidateResourceId(id);
+            return new ViewResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CostManagementViewsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ViewOperationGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CostManagementViewsResource"/> object. </returns>
-        public virtual CostManagementViewsResource GetCostManagementViewsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ViewOperationGroupResource"/> object. </returns>
+        public virtual ViewOperationGroupResource GetViewOperationGroupResource(ResourceIdentifier id)
         {
-            CostManagementViewsResource.ValidateResourceId(id);
-            return new CostManagementViewsResource(Client, id);
+            ViewOperationGroupResource.ValidateResourceId(id);
+            return new ViewOperationGroupResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="CostManagementViewsCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="ViewOperationGroupCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="CostManagementViewsResource"/> objects. </returns>
-        public virtual CostManagementViewsCollection GetAllCostManagementViews(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="ViewOperationGroupResource"/> objects. </returns>
+        public virtual ViewOperationGroupCollection GetViewOperationGroups(ResourceIdentifier scope)
         {
-            return new CostManagementViewsCollection(Client, scope);
+            return new ViewOperationGroupCollection(Client, scope);
         }
 
         /// <summary> Gets the view for the defined scope by view name. </summary>
@@ -322,11 +322,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CostManagementViewsResource> GetCostManagementViews(ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
+        public virtual Response<ViewOperationGroupResource> GetViewOperationGroup(ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
-            return GetAllCostManagementViews(scope).Get(viewName, cancellationToken);
+            return GetViewOperationGroups(scope).Get(viewName, cancellationToken);
         }
 
         /// <summary> Gets the view for the defined scope by view name. </summary>
@@ -336,11 +336,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CostManagementViewsResource>> GetCostManagementViewsAsync(ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ViewOperationGroupResource>> GetViewOperationGroupAsync(ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
-            return await GetAllCostManagementViews(scope).GetAsync(viewName, cancellationToken).ConfigureAwait(false);
+            return await GetViewOperationGroups(scope).GetAsync(viewName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="CostManagementAlertResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -388,15 +388,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             return await GetCostManagementAlerts(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="TenantScheduledActionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantScheduledActionResource"/> object. </returns>
-        public virtual TenantScheduledActionResource GetTenantScheduledActionResource(ResourceIdentifier id)
-        {
-            TenantScheduledActionResource.ValidateResourceId(id);
-            return new TenantScheduledActionResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="ScheduledActionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ScheduledActionResource"/> object. </returns>
@@ -406,12 +397,21 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             return new ScheduledActionResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="ScheduledActionCollection"/> objects within the specified scope. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="ScheduledActionResource"/> objects. </returns>
-        public virtual ScheduledActionCollection GetScheduledActions(ResourceIdentifier scope)
+        /// <summary> Gets an object representing a <see cref="ScheduledActionOperationGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScheduledActionOperationGroupResource"/> object. </returns>
+        public virtual ScheduledActionOperationGroupResource GetScheduledActionOperationGroupResource(ResourceIdentifier id)
         {
-            return new ScheduledActionCollection(Client, scope);
+            ScheduledActionOperationGroupResource.ValidateResourceId(id);
+            return new ScheduledActionOperationGroupResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ScheduledActionOperationGroupCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ScheduledActionOperationGroupResource"/> objects. </returns>
+        public virtual ScheduledActionOperationGroupCollection GetScheduledActionOperationGroups(ResourceIdentifier scope)
+        {
+            return new ScheduledActionOperationGroupCollection(Client, scope);
         }
 
         /// <summary> Get the shared scheduled action from the given scope by name. </summary>
@@ -421,11 +421,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ScheduledActionResource> GetScheduledAction(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        public virtual Response<ScheduledActionOperationGroupResource> GetScheduledActionOperationGroup(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetScheduledActions(scope).Get(name, cancellationToken);
+            return GetScheduledActionOperationGroups(scope).Get(name, cancellationToken);
         }
 
         /// <summary> Get the shared scheduled action from the given scope by name. </summary>
@@ -435,11 +435,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ScheduledActionResource>> GetScheduledActionAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScheduledActionOperationGroupResource>> GetScheduledActionOperationGroupAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await GetScheduledActions(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetScheduledActionOperationGroups(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="CostManagementSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevCenter
     /// <summary>
     /// A class representing a DevCenterCatalogImageDefinition along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevCenterCatalogImageDefinitionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterCatalogResource"/> using the GetDevCenterCatalogImageDefinitions method.
+    /// Otherwise you can get one from its parent resource <see cref="CatalogResource"/> using the GetDevCenterCatalogImageDefinitions method.
     /// </summary>
     public partial class DevCenterCatalogImageDefinitionResource : ArmResource
     {

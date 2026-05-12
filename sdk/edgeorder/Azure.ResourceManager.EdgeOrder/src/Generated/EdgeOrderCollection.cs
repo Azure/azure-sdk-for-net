@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,10 +24,14 @@ namespace Azure.ResourceManager.EdgeOrder
     /// Each <see cref="EdgeOrderResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
     /// To get a <see cref="EdgeOrderCollection"/> instance call the GetEdgeOrders method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class EdgeOrderCollection : ArmCollection
+    public partial class EdgeOrderCollection : ArmCollection, IEnumerable<EdgeOrderResource>, IAsyncEnumerable<EdgeOrderResource>
     {
         private readonly ClientDiagnostics _orderResourcesClientDiagnostics;
         private readonly OrderResources _orderResourcesRestClient;
+        private readonly ClientDiagnostics _ordersOperationGroupClientDiagnostics;
+        private readonly OrdersOperationGroup _ordersOperationGroupRestClient;
+        private readonly ClientDiagnostics _ordersOperationGroup2ClientDiagnostics;
+        private readonly OrdersOperationGroup2 _ordersOperationGroup2RestClient;
 
         /// <summary> Initializes a new instance of EdgeOrderCollection for mocking. </summary>
         protected EdgeOrderCollection()
@@ -40,6 +46,10 @@ namespace Azure.ResourceManager.EdgeOrder
             TryGetApiVersion(EdgeOrderResource.ResourceType, out string edgeOrderApiVersion);
             _orderResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", EdgeOrderResource.ResourceType.Namespace, Diagnostics);
             _orderResourcesRestClient = new OrderResources(_orderResourcesClientDiagnostics, Pipeline, Endpoint, edgeOrderApiVersion ?? "2024-02-01");
+            _ordersOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", EdgeOrderResource.ResourceType.Namespace, Diagnostics);
+            _ordersOperationGroupRestClient = new OrdersOperationGroup(_ordersOperationGroupClientDiagnostics, Pipeline, Endpoint, edgeOrderApiVersion ?? "2024-02-01");
+            _ordersOperationGroup2ClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", EdgeOrderResource.ResourceType.Namespace, Diagnostics);
+            _ordersOperationGroup2RestClient = new OrdersOperationGroup2(_ordersOperationGroup2ClientDiagnostics, Pipeline, Endpoint, edgeOrderApiVersion ?? "2024-02-01");
             ValidateResourceId(id);
         }
 
@@ -151,6 +161,80 @@ namespace Azure.ResourceManager.EdgeOrder
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// List orders at resource group level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrdersOperationGroup_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
+        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EdgeOrderResource> GetAllAsync(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EdgeOrderData, EdgeOrderResource>(new OrdersOperationGroupGetEdgeOrdersAsyncCollectionResultOfT(
+                _ordersOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                skipToken,
+                top,
+                context,
+                "EdgeOrderCollection.GetAll"), data => new EdgeOrderResource(Client, data));
+        }
+
+        /// <summary>
+        /// List orders at resource group level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrdersOperationGroup_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
+        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EdgeOrderResource> GetAll(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EdgeOrderData, EdgeOrderResource>(new OrdersOperationGroupGetEdgeOrdersCollectionResultOfT(
+                _ordersOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                skipToken,
+                top,
+                context,
+                "EdgeOrderCollection.GetAll"), data => new EdgeOrderResource(Client, data));
         }
 
         /// <summary>
@@ -391,6 +475,22 @@ namespace Azure.ResourceManager.EdgeOrder
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<EdgeOrderResource> IEnumerable<EdgeOrderResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<EdgeOrderResource> IAsyncEnumerable<EdgeOrderResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

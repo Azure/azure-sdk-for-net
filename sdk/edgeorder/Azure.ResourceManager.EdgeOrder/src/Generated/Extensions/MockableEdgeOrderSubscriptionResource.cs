@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         private AddressResources _addressResourcesRestClient;
         private ClientDiagnostics _orderItemResourcesClientDiagnostics;
         private OrderItemResources _orderItemResourcesRestClient;
-        private ClientDiagnostics _productsAndConfigurationsOperationGroupClientDiagnostics;
-        private ProductsAndConfigurationsOperationGroup _productsAndConfigurationsOperationGroupRestClient;
         private ClientDiagnostics _ordersOperationGroup2ClientDiagnostics;
         private OrdersOperationGroup2 _ordersOperationGroup2RestClient;
+        private ClientDiagnostics _productsAndConfigurationsOperationGroupClientDiagnostics;
+        private ProductsAndConfigurationsOperationGroup _productsAndConfigurationsOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of MockableEdgeOrderSubscriptionResource for mocking. </summary>
         protected MockableEdgeOrderSubscriptionResource()
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
 
         private OrderItemResources OrderItemResourcesRestClient => _orderItemResourcesRestClient ??= new OrderItemResources(OrderItemResourcesClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
 
-        private ClientDiagnostics ProductsAndConfigurationsOperationGroupClientDiagnostics => _productsAndConfigurationsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ProductsAndConfigurationsOperationGroup ProductsAndConfigurationsOperationGroupRestClient => _productsAndConfigurationsOperationGroupRestClient ??= new ProductsAndConfigurationsOperationGroup(ProductsAndConfigurationsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
-
         private ClientDiagnostics OrdersOperationGroup2ClientDiagnostics => _ordersOperationGroup2ClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private OrdersOperationGroup2 OrdersOperationGroup2RestClient => _ordersOperationGroup2RestClient ??= new OrdersOperationGroup2(OrdersOperationGroup2ClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
+
+        private ClientDiagnostics ProductsAndConfigurationsOperationGroupClientDiagnostics => _productsAndConfigurationsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ProductsAndConfigurationsOperationGroup ProductsAndConfigurationsOperationGroupRestClient => _productsAndConfigurationsOperationGroupRestClient ??= new ProductsAndConfigurationsOperationGroup(ProductsAndConfigurationsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
 
         /// <summary>
         /// List all the addresses available under the subscription.
@@ -211,6 +211,78 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
                 top,
                 context,
                 "MockableEdgeOrderSubscriptionResource.GetEdgeOrderItems"), data => new EdgeOrderItemResource(Client, data));
+        }
+
+        /// <summary>
+        /// List orders at subscription level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrdersOperationGroup_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
+        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EdgeOrderData, EdgeOrderResource>(new OrdersOperationGroup2GetEdgeOrdersAsyncCollectionResultOfT(
+                OrdersOperationGroup2RestClient,
+                Guid.Parse(Id.SubscriptionId),
+                skipToken,
+                top,
+                context,
+                "MockableEdgeOrderSubscriptionResource.GetEdgeOrders"), data => new EdgeOrderResource(Client, data));
+        }
+
+        /// <summary>
+        /// List orders at subscription level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrdersOperationGroup_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
+        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EdgeOrderResource> GetEdgeOrders(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EdgeOrderData, EdgeOrderResource>(new OrdersOperationGroup2GetEdgeOrdersCollectionResultOfT(
+                OrdersOperationGroup2RestClient,
+                Guid.Parse(Id.SubscriptionId),
+                skipToken,
+                top,
+                context,
+                "MockableEdgeOrderSubscriptionResource.GetEdgeOrders"), data => new EdgeOrderResource(Client, data));
         }
 
         /// <summary>
@@ -429,78 +501,6 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
                 CancellationToken = cancellationToken
             };
             return new ProductsAndConfigurationsOperationGroupGetProductFamiliesMetadataCollectionResultOfT(ProductsAndConfigurationsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadata");
-        }
-
-        /// <summary>
-        /// List orders at subscription level.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orders. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OrdersOperationGroup_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-02-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
-        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<EdgeOrderData, EdgeOrderResource>(new OrdersOperationGroup2GetEdgeOrdersAsyncCollectionResultOfT(
-                OrdersOperationGroup2RestClient,
-                Guid.Parse(Id.SubscriptionId),
-                skipToken,
-                top,
-                context,
-                "MockableEdgeOrderSubscriptionResource.GetEdgeOrders"), data => new EdgeOrderResource(Client, data));
-        }
-
-        /// <summary>
-        /// List orders at subscription level.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orders. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OrdersOperationGroup_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-02-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
-        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EdgeOrderResource> GetEdgeOrders(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<EdgeOrderData, EdgeOrderResource>(new OrdersOperationGroup2GetEdgeOrdersCollectionResultOfT(
-                OrdersOperationGroup2RestClient,
-                Guid.Parse(Id.SubscriptionId),
-                skipToken,
-                top,
-                context,
-                "MockableEdgeOrderSubscriptionResource.GetEdgeOrders"), data => new EdgeOrderResource(Client, data));
         }
     }
 }

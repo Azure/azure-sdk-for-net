@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
     {
         private readonly ClientDiagnostics _hostPoolsClientDiagnostics;
         private readonly HostPools _hostPoolsRestClient;
-        private readonly ClientDiagnostics _activeSessionHostConfigurationsClientDiagnostics;
-        private readonly ActiveSessionHostConfigurations _activeSessionHostConfigurationsRestClient;
         private readonly ClientDiagnostics _appAttachPackageInfoClientDiagnostics;
         private readonly AppAttachPackageInfo _appAttachPackageInfoRestClient;
         private readonly ClientDiagnostics _scalingPlansClientDiagnostics;
@@ -66,8 +64,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
             TryGetApiVersion(ResourceType, out string hostPoolApiVersion);
             _hostPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _hostPoolsRestClient = new HostPools(_hostPoolsClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
-            _activeSessionHostConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _activeSessionHostConfigurationsRestClient = new ActiveSessionHostConfigurations(_activeSessionHostConfigurationsClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
             _appAttachPackageInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _appAttachPackageInfoRestClient = new AppAttachPackageInfo(_appAttachPackageInfoClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
             _scalingPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
@@ -413,82 +409,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Operation to list the ActiveSessionHostConfigurations associated with the HostPool
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/activeSessionHostConfigurations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ActiveSessionHostConfigurations_ListByHostPool. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HostPoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ActiveSessionHostConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ActiveSessionHostConfigurationResource> GetByHostPoolAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ActiveSessionHostConfigurationData, ActiveSessionHostConfigurationResource>(new ActiveSessionHostConfigurationsGetByHostPoolAsyncCollectionResultOfT(
-                _activeSessionHostConfigurationsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "HostPoolResource.GetByHostPool"), data => new ActiveSessionHostConfigurationResource(Client, data));
-        }
-
-        /// <summary>
-        /// Operation to list the ActiveSessionHostConfigurations associated with the HostPool
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/activeSessionHostConfigurations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ActiveSessionHostConfigurations_ListByHostPool. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HostPoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ActiveSessionHostConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ActiveSessionHostConfigurationResource> GetByHostPool(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ActiveSessionHostConfigurationData, ActiveSessionHostConfigurationResource>(new ActiveSessionHostConfigurationsGetByHostPoolCollectionResultOfT(
-                _activeSessionHostConfigurationsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "HostPoolResource.GetByHostPool"), data => new ActiveSessionHostConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -1379,11 +1299,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        /// <summary> Gets a collection of HostPoolPrivateEndpointConnections in the <see cref="HostPoolResource"/>. </summary>
-        /// <returns> An object representing collection of HostPoolPrivateEndpointConnections and their operations over a HostPoolPrivateEndpointConnectionResource. </returns>
-        public virtual HostPoolPrivateEndpointConnectionCollection GetHostPoolPrivateEndpointConnections()
+        /// <summary> Gets a collection of PrivateEndpointConnections in the <see cref="HostPoolResource"/>. </summary>
+        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnectionResource. </returns>
+        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
-            return GetCachedClient(client => new HostPoolPrivateEndpointConnectionCollection(client, Id));
+            return this.GetCachedClient(client => new PrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary> Get a PrivateEndpointConnectionWithSystemData. </summary>
@@ -1392,11 +1312,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HostPoolPrivateEndpointConnectionResource>> GetHostPoolPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return await GetHostPoolPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a PrivateEndpointConnectionWithSystemData. </summary>
@@ -1405,11 +1325,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HostPoolPrivateEndpointConnectionResource> GetHostPoolPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return GetHostPoolPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SessionHosts in the <see cref="HostPoolResource"/>. </summary>

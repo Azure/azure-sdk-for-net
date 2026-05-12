@@ -855,11 +855,11 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        /// <summary> Gets a collection of ProjectAttachedNetworkConnections in the <see cref="DevCenterProjectResource"/>. </summary>
-        /// <returns> An object representing collection of ProjectAttachedNetworkConnections and their operations over a ProjectAttachedNetworkConnectionResource. </returns>
-        public virtual ProjectAttachedNetworkConnectionCollection GetProjectAttachedNetworkConnections()
+        /// <summary> Gets a collection of AttachedNetworkConnections in the <see cref="DevCenterProjectResource"/>. </summary>
+        /// <returns> An object representing collection of AttachedNetworkConnections and their operations over a AttachedNetworkConnectionResource. </returns>
+        public virtual AttachedNetworkConnectionCollection GetAttachedNetworkConnections()
         {
-            return GetCachedClient(client => new ProjectAttachedNetworkConnectionCollection(client, Id));
+            return GetCachedClient(client => new AttachedNetworkConnectionCollection(client, Id));
         }
 
         /// <summary> Gets an attached NetworkConnection. </summary>
@@ -868,11 +868,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProjectAttachedNetworkConnectionResource>> GetProjectAttachedNetworkConnectionAsync(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AttachedNetworkConnectionResource>> GetAttachedNetworkConnectionAsync(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
 
-            return await GetProjectAttachedNetworkConnections().GetAsync(attachedNetworkConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetAttachedNetworkConnections().GetAsync(attachedNetworkConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an attached NetworkConnection. </summary>
@@ -881,31 +881,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProjectAttachedNetworkConnectionResource> GetProjectAttachedNetworkConnection(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<AttachedNetworkConnectionResource> GetAttachedNetworkConnection(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
 
-            return GetProjectAttachedNetworkConnections().Get(attachedNetworkConnectionName, cancellationToken);
+            return GetAttachedNetworkConnections().Get(attachedNetworkConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ProjectImages in the <see cref="DevCenterProjectResource"/>. </summary>
-        /// <returns> An object representing collection of ProjectImages and their operations over a ProjectImageResource. </returns>
-        public virtual ProjectImageCollection GetProjectImages()
+        /// <summary> Gets a collection of ImageOperationGroups in the <see cref="DevCenterProjectResource"/>. </summary>
+        /// <returns> An object representing collection of ImageOperationGroups and their operations over a ImageOperationGroupResource. </returns>
+        public virtual ImageOperationGroupCollection GetImageOperationGroups()
         {
-            return GetCachedClient(client => new ProjectImageCollection(client, Id));
-        }
-
-        /// <summary> Gets an image. </summary>
-        /// <param name="imageName"> The name of the image. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ProjectImageResource>> GetProjectImageAsync(string imageName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
-
-            return await GetProjectImages().GetAsync(imageName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ImageOperationGroupCollection(client, Id));
         }
 
         /// <summary> Gets an image. </summary>
@@ -914,11 +901,24 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProjectImageResource> GetProjectImage(string imageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ImageOperationGroupResource>> GetImageOperationGroupAsync(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            return GetProjectImages().Get(imageName, cancellationToken);
+            return await GetImageOperationGroups().GetAsync(imageName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an image. </summary>
+        /// <param name="imageName"> The name of the image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ImageOperationGroupResource> GetImageOperationGroup(string imageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+
+            return GetImageOperationGroups().Get(imageName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DevCenterProjectEnvironments in the <see cref="DevCenterProjectResource"/>. </summary>
@@ -954,11 +954,11 @@ namespace Azure.ResourceManager.DevCenter
             return GetDevCenterProjectEnvironments().Get(environmentTypeName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ProjectDevBoxDefinitions in the <see cref="DevCenterProjectResource"/>. </summary>
-        /// <returns> An object representing collection of ProjectDevBoxDefinitions and their operations over a ProjectDevBoxDefinitionResource. </returns>
-        public virtual ProjectDevBoxDefinitionCollection GetProjectDevBoxDefinitions()
+        /// <summary> Gets a collection of DevBoxDefinitionOperationGroups in the <see cref="DevCenterProjectResource"/>. </summary>
+        /// <returns> An object representing collection of DevBoxDefinitionOperationGroups and their operations over a DevBoxDefinitionOperationGroupResource. </returns>
+        public virtual DevBoxDefinitionOperationGroupCollection GetDevBoxDefinitionOperationGroups()
         {
-            return GetCachedClient(client => new ProjectDevBoxDefinitionCollection(client, Id));
+            return GetCachedClient(client => new DevBoxDefinitionOperationGroupCollection(client, Id));
         }
 
         /// <summary> Gets a Dev Box definition configured for a project. </summary>
@@ -967,11 +967,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProjectDevBoxDefinitionResource>> GetProjectDevBoxDefinitionAsync(string devBoxDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevBoxDefinitionOperationGroupResource>> GetDevBoxDefinitionOperationGroupAsync(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devBoxDefinitionName, nameof(devBoxDefinitionName));
 
-            return await GetProjectDevBoxDefinitions().GetAsync(devBoxDefinitionName, cancellationToken).ConfigureAwait(false);
+            return await GetDevBoxDefinitionOperationGroups().GetAsync(devBoxDefinitionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a Dev Box definition configured for a project. </summary>
@@ -980,11 +980,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProjectDevBoxDefinitionResource> GetProjectDevBoxDefinition(string devBoxDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<DevBoxDefinitionOperationGroupResource> GetDevBoxDefinitionOperationGroup(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devBoxDefinitionName, nameof(devBoxDefinitionName));
 
-            return GetProjectDevBoxDefinitions().Get(devBoxDefinitionName, cancellationToken);
+            return GetDevBoxDefinitionOperationGroups().Get(devBoxDefinitionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DevCenterPools in the <see cref="DevCenterProjectResource"/>. </summary>

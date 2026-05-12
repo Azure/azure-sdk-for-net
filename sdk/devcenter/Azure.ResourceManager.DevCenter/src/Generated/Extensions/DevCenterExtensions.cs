@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevCenterImageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ImageResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterImageResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevCenterArmClient.GetImageResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DevCenterImageResource"/> object. </returns>
-        public static DevCenterImageResource GetDevCenterImageResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ImageResource"/> object. </returns>
+        public static ImageResource GetImageResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevCenterArmClient(client).GetDevCenterImageResource(id);
+            return GetMockableDevCenterArmClient(client).GetImageResource(id);
         }
 
         /// <summary>
@@ -111,6 +111,24 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="AttachedNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDevCenterArmClient.GetAttachedNetworkResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AttachedNetworkResource"/> object. </returns>
+        public static AttachedNetworkResource GetAttachedNetworkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDevCenterArmClient(client).GetAttachedNetworkResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="AttachedNetworkConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -129,75 +147,57 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectAttachedNetworkConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="CatalogResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevCenterArmClient.GetProjectAttachedNetworkConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevCenterArmClient.GetCatalogResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProjectAttachedNetworkConnectionResource"/> object. </returns>
-        public static ProjectAttachedNetworkConnectionResource GetProjectAttachedNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CatalogResource"/> object. </returns>
+        public static CatalogResource GetCatalogResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevCenterArmClient(client).GetProjectAttachedNetworkConnectionResource(id);
+            return GetMockableDevCenterArmClient(client).GetCatalogResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevCenterCatalogResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="EnvironmentDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterCatalogResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevCenterArmClient.GetEnvironmentDefinitionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DevCenterCatalogResource"/> object. </returns>
-        public static DevCenterCatalogResource GetDevCenterCatalogResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EnvironmentDefinitionResource"/> object. </returns>
+        public static EnvironmentDefinitionResource GetEnvironmentDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevCenterArmClient(client).GetDevCenterCatalogResource(id);
+            return GetMockableDevCenterArmClient(client).GetEnvironmentDefinitionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectCatalogEnvironmentDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="EnvironmentDefinitionOperationGroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevCenterArmClient.GetProjectCatalogEnvironmentDefinitionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevCenterArmClient.GetEnvironmentDefinitionOperationGroupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProjectCatalogEnvironmentDefinitionResource"/> object. </returns>
-        public static ProjectCatalogEnvironmentDefinitionResource GetProjectCatalogEnvironmentDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EnvironmentDefinitionOperationGroupResource"/> object. </returns>
+        public static EnvironmentDefinitionOperationGroupResource GetEnvironmentDefinitionOperationGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevCenterArmClient(client).GetProjectCatalogEnvironmentDefinitionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DevCenterCatalogEnvironmentDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterCatalogEnvironmentDefinitionResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DevCenterCatalogEnvironmentDefinitionResource"/> object. </returns>
-        public static DevCenterCatalogEnvironmentDefinitionResource GetDevCenterCatalogEnvironmentDefinitionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableDevCenterArmClient(client).GetDevCenterCatalogEnvironmentDefinitionResource(id);
+            return GetMockableDevCenterArmClient(client).GetEnvironmentDefinitionOperationGroupResource(id);
         }
 
         /// <summary>
@@ -219,21 +219,21 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectImageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ImageOperationGroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevCenterArmClient.GetProjectImageResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevCenterArmClient.GetImageOperationGroupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProjectImageResource"/> object. </returns>
-        public static ProjectImageResource GetProjectImageResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ImageOperationGroupResource"/> object. </returns>
+        public static ImageOperationGroupResource GetImageOperationGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevCenterArmClient(client).GetProjectImageResource(id);
+            return GetMockableDevCenterArmClient(client).GetImageOperationGroupResource(id);
         }
 
         /// <summary>
@@ -255,21 +255,21 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectImageVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ImageVersionOperationGroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevCenterArmClient.GetProjectImageVersionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevCenterArmClient.GetImageVersionOperationGroupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProjectImageVersionResource"/> object. </returns>
-        public static ProjectImageVersionResource GetProjectImageVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ImageVersionOperationGroupResource"/> object. </returns>
+        public static ImageVersionOperationGroupResource GetImageVersionOperationGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevCenterArmClient(client).GetProjectImageVersionResource(id);
+            return GetMockableDevCenterArmClient(client).GetImageVersionOperationGroupResource(id);
         }
 
         /// <summary>
@@ -327,21 +327,21 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectDevBoxDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DevBoxDefinitionOperationGroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevCenterArmClient.GetProjectDevBoxDefinitionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevBoxDefinitionOperationGroupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProjectDevBoxDefinitionResource"/> object. </returns>
-        public static ProjectDevBoxDefinitionResource GetProjectDevBoxDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevBoxDefinitionOperationGroupResource"/> object. </returns>
+        public static DevBoxDefinitionOperationGroupResource GetDevBoxDefinitionOperationGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevCenterArmClient(client).GetProjectDevBoxDefinitionResource(id);
+            return GetMockableDevCenterArmClient(client).GetDevBoxDefinitionOperationGroupResource(id);
         }
 
         /// <summary>

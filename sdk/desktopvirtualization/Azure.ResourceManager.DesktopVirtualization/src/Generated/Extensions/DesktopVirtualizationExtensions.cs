@@ -164,39 +164,39 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HostPoolPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetHostPoolPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HostPoolPrivateEndpointConnectionResource"/> object. </returns>
-        public static HostPoolPrivateEndpointConnectionResource GetHostPoolPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
+        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDesktopVirtualizationArmClient(client).GetHostPoolPrivateEndpointConnectionResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspacePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetWorkspacePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WorkspacePrivateEndpointConnectionResource"/> object. </returns>
-        public static WorkspacePrivateEndpointConnectionResource GetWorkspacePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
+        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDesktopVirtualizationArmClient(client).GetWorkspacePrivateEndpointConnectionResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>

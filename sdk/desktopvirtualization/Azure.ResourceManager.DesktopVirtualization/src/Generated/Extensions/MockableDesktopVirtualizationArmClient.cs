@@ -89,22 +89,22 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             return new VirtualDesktopResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="HostPoolPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HostPoolPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual HostPoolPrivateEndpointConnectionResource GetHostPoolPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
+        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            HostPoolPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new HostPoolPrivateEndpointConnectionResource(Client, id);
+            PrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new PrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WorkspacePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspacePrivateEndpointConnectionResource"/> object. </returns>
-        public virtual WorkspacePrivateEndpointConnectionResource GetWorkspacePrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
+        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            WorkspacePrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new WorkspacePrivateEndpointConnectionResource(Client, id);
+            PrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new PrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SessionHostResource"/> along with the instance operations that can be performed on it but with no data. </summary>

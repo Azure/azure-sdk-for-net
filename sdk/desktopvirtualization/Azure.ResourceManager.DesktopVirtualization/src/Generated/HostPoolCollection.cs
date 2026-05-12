@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
     {
         private readonly ClientDiagnostics _hostPoolsClientDiagnostics;
         private readonly HostPools _hostPoolsRestClient;
-        private readonly ClientDiagnostics _activeSessionHostConfigurationsClientDiagnostics;
-        private readonly ActiveSessionHostConfigurations _activeSessionHostConfigurationsRestClient;
         private readonly ClientDiagnostics _appAttachPackageInfoClientDiagnostics;
         private readonly AppAttachPackageInfo _appAttachPackageInfoRestClient;
         private readonly ClientDiagnostics _scalingPlansClientDiagnostics;
@@ -54,8 +52,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
             TryGetApiVersion(HostPoolResource.ResourceType, out string hostPoolApiVersion);
             _hostPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPoolResource.ResourceType.Namespace, Diagnostics);
             _hostPoolsRestClient = new HostPools(_hostPoolsClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
-            _activeSessionHostConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPoolResource.ResourceType.Namespace, Diagnostics);
-            _activeSessionHostConfigurationsRestClient = new ActiveSessionHostConfigurations(_activeSessionHostConfigurationsClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
             _appAttachPackageInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPoolResource.ResourceType.Namespace, Diagnostics);
             _appAttachPackageInfoRestClient = new AppAttachPackageInfo(_appAttachPackageInfoClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
             _scalingPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPoolResource.ResourceType.Namespace, Diagnostics);

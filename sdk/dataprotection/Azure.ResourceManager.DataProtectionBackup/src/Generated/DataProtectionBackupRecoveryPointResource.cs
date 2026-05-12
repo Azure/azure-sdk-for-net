@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
     {
         private readonly ClientDiagnostics _azureBackupRecoveryPointResourcesClientDiagnostics;
         private readonly AzureBackupRecoveryPointResources _azureBackupRecoveryPointResourcesRestClient;
+        private readonly ClientDiagnostics _fetchSecondaryRecoveryPointsOperationGroupClientDiagnostics;
+        private readonly FetchSecondaryRecoveryPointsOperationGroup _fetchSecondaryRecoveryPointsOperationGroupRestClient;
         private readonly DataProtectionBackupRecoveryPointData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/backupInstances/recoveryPoints";
@@ -51,6 +53,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
             TryGetApiVersion(ResourceType, out string dataProtectionBackupRecoveryPointApiVersion);
             _azureBackupRecoveryPointResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
             _azureBackupRecoveryPointResourcesRestClient = new AzureBackupRecoveryPointResources(_azureBackupRecoveryPointResourcesClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupRecoveryPointApiVersion ?? "2025-09-01");
+            _fetchSecondaryRecoveryPointsOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
+            _fetchSecondaryRecoveryPointsOperationGroupRestClient = new FetchSecondaryRecoveryPointsOperationGroup(_fetchSecondaryRecoveryPointsOperationGroupClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupRecoveryPointApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

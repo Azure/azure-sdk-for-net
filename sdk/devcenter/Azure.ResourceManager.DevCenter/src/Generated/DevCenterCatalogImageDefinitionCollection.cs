@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="DevCenterCatalogImageDefinitionResource"/> and their operations.
-    /// Each <see cref="DevCenterCatalogImageDefinitionResource"/> in the collection will belong to the same instance of <see cref="DevCenterCatalogResource"/>.
-    /// To get a <see cref="DevCenterCatalogImageDefinitionCollection"/> instance call the GetDevCenterCatalogImageDefinitions method from an instance of <see cref="DevCenterCatalogResource"/>.
+    /// Each <see cref="DevCenterCatalogImageDefinitionResource"/> in the collection will belong to the same instance of <see cref="CatalogResource"/>.
+    /// To get a <see cref="DevCenterCatalogImageDefinitionCollection"/> instance call the GetDevCenterCatalogImageDefinitions method from an instance of <see cref="CatalogResource"/>.
     /// </summary>
     public partial class DevCenterCatalogImageDefinitionCollection : ArmCollection, IEnumerable<DevCenterCatalogImageDefinitionResource>, IAsyncEnumerable<DevCenterCatalogImageDefinitionResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.DevCenter
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DevCenterCatalogResource.ResourceType)
+            if (id.ResourceType != CatalogResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevCenterCatalogResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CatalogResource.ResourceType), nameof(id));
             }
         }
 

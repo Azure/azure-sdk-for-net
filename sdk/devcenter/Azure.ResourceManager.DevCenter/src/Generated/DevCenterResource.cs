@@ -716,11 +716,11 @@ namespace Azure.ResourceManager.DevCenter
             return GetDevCenterProjectPolicies().Get(projectPolicyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AttachedNetworkConnections in the <see cref="DevCenterResource"/>. </summary>
-        /// <returns> An object representing collection of AttachedNetworkConnections and their operations over a AttachedNetworkConnectionResource. </returns>
-        public virtual AttachedNetworkConnectionCollection GetAttachedNetworkConnections()
+        /// <summary> Gets a collection of AttachedNetworks in the <see cref="DevCenterResource"/>. </summary>
+        /// <returns> An object representing collection of AttachedNetworks and their operations over a AttachedNetworkResource. </returns>
+        public virtual AttachedNetworkCollection GetAttachedNetworks()
         {
-            return GetCachedClient(client => new AttachedNetworkConnectionCollection(client, Id));
+            return GetCachedClient(client => new AttachedNetworkCollection(client, Id));
         }
 
         /// <summary> Gets an attached NetworkConnection. </summary>
@@ -729,11 +729,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AttachedNetworkConnectionResource>> GetAttachedNetworkConnectionAsync(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AttachedNetworkResource>> GetAttachedNetworkAsync(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
 
-            return await GetAttachedNetworkConnections().GetAsync(attachedNetworkConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetAttachedNetworks().GetAsync(attachedNetworkConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an attached NetworkConnection. </summary>
@@ -742,31 +742,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AttachedNetworkConnectionResource> GetAttachedNetworkConnection(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<AttachedNetworkResource> GetAttachedNetwork(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
 
-            return GetAttachedNetworkConnections().Get(attachedNetworkConnectionName, cancellationToken);
+            return GetAttachedNetworks().Get(attachedNetworkConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DevCenterCatalogs in the <see cref="DevCenterResource"/>. </summary>
-        /// <returns> An object representing collection of DevCenterCatalogs and their operations over a DevCenterCatalogResource. </returns>
-        public virtual DevCenterCatalogCollection GetDevCenterCatalogs()
+        /// <summary> Gets a collection of Catalogs in the <see cref="DevCenterResource"/>. </summary>
+        /// <returns> An object representing collection of Catalogs and their operations over a CatalogResource. </returns>
+        public virtual CatalogCollection GetCatalogs()
         {
-            return GetCachedClient(client => new DevCenterCatalogCollection(client, Id));
-        }
-
-        /// <summary> Gets a catalog. </summary>
-        /// <param name="catalogName"> The name of the Catalog. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DevCenterCatalogResource>> GetDevCenterCatalogAsync(string catalogName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-
-            return await GetDevCenterCatalogs().GetAsync(catalogName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new CatalogCollection(client, Id));
         }
 
         /// <summary> Gets a catalog. </summary>
@@ -775,11 +762,24 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevCenterCatalogResource> GetDevCenterCatalog(string catalogName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CatalogResource>> GetCatalogAsync(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            return GetDevCenterCatalogs().Get(catalogName, cancellationToken);
+            return await GetCatalogs().GetAsync(catalogName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a catalog. </summary>
+        /// <param name="catalogName"> The name of the Catalog. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CatalogResource> GetCatalog(string catalogName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+
+            return GetCatalogs().Get(catalogName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DevCenterGalleries in the <see cref="DevCenterResource"/>. </summary>

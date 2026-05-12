@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
         private Query QueryRestClient => _queryRestClient ??= new Query(QueryClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
 
-        /// <summary> Gets a collection of TenantsCostManagementViews in the <see cref="TenantResource"/>. </summary>
-        /// <returns> An object representing collection of TenantsCostManagementViews and their operations over a TenantsCostManagementViewsResource. </returns>
-        public virtual TenantsCostManagementViewsCollection GetAllTenantsCostManagementViews()
+        /// <summary> Gets a collection of Views in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of Views and their operations over a ViewResource. </returns>
+        public virtual ViewCollection GetViews()
         {
-            return GetCachedClient(client => new TenantsCostManagementViewsCollection(client, Id));
+            return GetCachedClient(client => new ViewCollection(client, Id));
         }
 
         /// <summary>
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TenantsCostManagementViewsResource>> GetTenantsCostManagementViewsAsync(string viewName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ViewResource>> GetViewAsync(string viewName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
-            return await GetAllTenantsCostManagementViews().GetAsync(viewName, cancellationToken).ConfigureAwait(false);
+            return await GetViews().GetAsync(viewName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -122,47 +122,18 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TenantsCostManagementViewsResource> GetTenantsCostManagementViews(string viewName, CancellationToken cancellationToken = default)
+        public virtual Response<ViewResource> GetView(string viewName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
-            return GetAllTenantsCostManagementViews().Get(viewName, cancellationToken);
+            return GetViews().Get(viewName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TenantScheduledActions in the <see cref="TenantResource"/>. </summary>
-        /// <returns> An object representing collection of TenantScheduledActions and their operations over a TenantScheduledActionResource. </returns>
-        public virtual TenantScheduledActionCollection GetTenantScheduledActions()
+        /// <summary> Gets a collection of ScheduledActions in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of ScheduledActions and their operations over a ScheduledActionResource. </returns>
+        public virtual ScheduledActionCollection GetScheduledActions()
         {
-            return GetCachedClient(client => new TenantScheduledActionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the private scheduled action by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<TenantScheduledActionResource>> GetTenantScheduledActionAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return await GetTenantScheduledActions().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ScheduledActionCollection(client, Id));
         }
 
         /// <summary>
@@ -187,11 +158,40 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TenantScheduledActionResource> GetTenantScheduledAction(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScheduledActionResource>> GetScheduledActionAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetTenantScheduledActions().Get(name, cancellationToken);
+            return await GetScheduledActions().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the private scheduled action by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Scheduled action name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ScheduledActionResource> GetScheduledAction(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetScheduledActions().Get(name, cancellationToken);
         }
 
         /// <summary>

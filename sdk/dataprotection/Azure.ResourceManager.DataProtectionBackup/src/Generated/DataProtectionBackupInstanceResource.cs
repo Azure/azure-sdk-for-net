@@ -30,6 +30,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private readonly BackupInstanceResources _backupInstanceResourcesRestClient;
         private readonly ClientDiagnostics _backupInstancesClientDiagnostics;
         private readonly BackupInstances _backupInstancesRestClient;
+        private readonly ClientDiagnostics _backupInstancesExtensionRoutingOperationGroupClientDiagnostics;
+        private readonly BackupInstancesExtensionRoutingOperationGroup _backupInstancesExtensionRoutingOperationGroupRestClient;
         private readonly DataProtectionBackupInstanceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/backupInstances";
@@ -58,6 +60,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
             _backupInstanceResourcesRestClient = new BackupInstanceResources(_backupInstanceResourcesClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupInstanceApiVersion ?? "2025-09-01");
             _backupInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
             _backupInstancesRestClient = new BackupInstances(_backupInstancesClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupInstanceApiVersion ?? "2025-09-01");
+            _backupInstancesExtensionRoutingOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
+            _backupInstancesExtensionRoutingOperationGroupRestClient = new BackupInstancesExtensionRoutingOperationGroup(_backupInstancesExtensionRoutingOperationGroupClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupInstanceApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

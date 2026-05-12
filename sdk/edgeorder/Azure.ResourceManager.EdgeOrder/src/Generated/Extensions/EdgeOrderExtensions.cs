@@ -262,46 +262,6 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary>
-        /// List orders at resource group level.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.GetEdgeOrdersAsync(string, int?, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
-        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(this ResourceGroupResource resourceGroupResource, string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetEdgeOrdersAsync(skipToken, top, cancellationToken);
-        }
-
-        /// <summary>
-        /// List orders at resource group level.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.GetEdgeOrders(string, int?, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
-        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EdgeOrderResource> GetEdgeOrders(this ResourceGroupResource resourceGroupResource, string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetEdgeOrders(skipToken, top, cancellationToken);
-        }
-
-        /// <summary>
         /// List all the addresses available under the subscription.
         /// <item>
         /// <term> Mocking. </term>
@@ -385,6 +345,46 @@ namespace Azure.ResourceManager.EdgeOrder
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrderItems(filter, expand, skipToken, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List orders at subscription level.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetEdgeOrdersAsync(string, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
+        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(this SubscriptionResource subscriptionResource, string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrdersAsync(skipToken, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List orders at subscription level.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetEdgeOrders(string, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
+        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EdgeOrderResource> GetEdgeOrders(this SubscriptionResource subscriptionResource, string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrders(skipToken, top, cancellationToken);
         }
 
         /// <summary>
@@ -505,46 +505,6 @@ namespace Azure.ResourceManager.EdgeOrder
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetProductFamiliesMetadata(skipToken, cancellationToken);
-        }
-
-        /// <summary>
-        /// List orders at subscription level.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetEdgeOrdersAsync(string, int?, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
-        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(this SubscriptionResource subscriptionResource, string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrdersAsync(skipToken, top, cancellationToken);
-        }
-
-        /// <summary>
-        /// List orders at subscription level.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetEdgeOrders(string, int?, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
-        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EdgeOrderResource> GetEdgeOrders(this SubscriptionResource subscriptionResource, string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrders(skipToken, top, cancellationToken);
         }
     }
 }

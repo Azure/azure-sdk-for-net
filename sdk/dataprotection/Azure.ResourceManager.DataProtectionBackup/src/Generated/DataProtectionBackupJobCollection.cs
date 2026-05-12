@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
     {
         private readonly ClientDiagnostics _azureBackupJobResourcesClientDiagnostics;
         private readonly AzureBackupJobResources _azureBackupJobResourcesRestClient;
+        private readonly ClientDiagnostics _fetchCrossRegionRestoreJobsOperationGroupClientDiagnostics;
+        private readonly FetchCrossRegionRestoreJobsOperationGroup _fetchCrossRegionRestoreJobsOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of DataProtectionBackupJobCollection for mocking. </summary>
         protected DataProtectionBackupJobCollection()
@@ -41,6 +43,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
             TryGetApiVersion(DataProtectionBackupJobResource.ResourceType, out string dataProtectionBackupJobApiVersion);
             _azureBackupJobResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupJobResource.ResourceType.Namespace, Diagnostics);
             _azureBackupJobResourcesRestClient = new AzureBackupJobResources(_azureBackupJobResourcesClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupJobApiVersion ?? "2025-09-01");
+            _fetchCrossRegionRestoreJobsOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupJobResource.ResourceType.Namespace, Diagnostics);
+            _fetchCrossRegionRestoreJobsOperationGroupRestClient = new FetchCrossRegionRestoreJobsOperationGroup(_fetchCrossRegionRestoreJobsOperationGroupClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupJobApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

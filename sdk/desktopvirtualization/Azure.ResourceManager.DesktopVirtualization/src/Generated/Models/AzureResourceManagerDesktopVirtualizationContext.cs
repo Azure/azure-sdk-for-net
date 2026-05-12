@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ActiveDirectoryInfoPatchProperties))]
     [ModelReaderWriterBuildable(typeof(ActiveSessionHostConfigurationData))]
-    [ModelReaderWriterBuildable(typeof(ActiveSessionHostConfigurationList))]
     [ModelReaderWriterBuildable(typeof(ActiveSessionHostConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(ActiveSessionHostConfigurationResource))]
     [ModelReaderWriterBuildable(typeof(AppAttachPackageData))]
@@ -77,7 +76,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
     [ModelReaderWriterBuildable(typeof(HostPoolList))]
     [ModelReaderWriterBuildable(typeof(HostPoolPatch))]
     [ModelReaderWriterBuildable(typeof(HostPoolPatchProperties))]
-    [ModelReaderWriterBuildable(typeof(HostPoolPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(HostPoolProperties))]
     [ModelReaderWriterBuildable(typeof(HostPoolProvisioningControlContent))]
     [ModelReaderWriterBuildable(typeof(HostPoolRegistrationInfo))]
@@ -102,6 +100,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionListResultWithSystemData))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScalingActionTime))]
     [ModelReaderWriterBuildable(typeof(ScalingHostPoolReference))]
@@ -177,7 +176,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
     [ModelReaderWriterBuildable(typeof(VirtualWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(WorkspaceList))]
     [ModelReaderWriterBuildable(typeof(WorkspacePatchProperties))]
-    [ModelReaderWriterBuildable(typeof(WorkspacePrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(WorkspaceProperties))]
     public partial class AzureResourceManagerDesktopVirtualizationContext : ModelReaderWriterContext
     {

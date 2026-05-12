@@ -8,24 +8,26 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="ScheduledActionResource"/> and their operations.
-    /// Each <see cref="ScheduledActionResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="ScheduledActionCollection"/> instance call the GetScheduledActions method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="ScheduledActionResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="ScheduledActionCollection"/> instance call the GetScheduledActions method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class ScheduledActionCollection : ArmCollection, IEnumerable<ScheduledActionResource>, IAsyncEnumerable<ScheduledActionResource>
     {
-        private readonly ClientDiagnostics _scheduledActionOperationGroupClientDiagnostics;
-        private readonly ScheduledActionOperationGroup _scheduledActionOperationGroupRestClient;
+        private readonly ClientDiagnostics _scheduledActionsClientDiagnostics;
+        private readonly ScheduledActions _scheduledActionsRestClient;
 
         /// <summary> Initializes a new instance of ScheduledActionCollection for mocking. </summary>
         protected ScheduledActionCollection()
@@ -38,20 +40,31 @@ namespace Azure.ResourceManager.CostManagement
         internal ScheduledActionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ScheduledActionResource.ResourceType, out string scheduledActionApiVersion);
-            _scheduledActionOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", ScheduledActionResource.ResourceType.Namespace, Diagnostics);
-            _scheduledActionOperationGroupRestClient = new ScheduledActionOperationGroup(_scheduledActionOperationGroupClientDiagnostics, Pipeline, Endpoint, scheduledActionApiVersion ?? "2025-03-01");
+            _scheduledActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", ScheduledActionResource.ResourceType.Namespace, Diagnostics);
+            _scheduledActionsRestClient = new ScheduledActions(_scheduledActionsClientDiagnostics, Pipeline, Endpoint, scheduledActionApiVersion ?? "2025-03-01");
+            ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != TenantResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
-        /// Create or update a shared scheduled action within the given scope.
+        /// Create or update a private scheduled action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
+        /// <description> /providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationGroup_CreateOrUpdateByScope. </description>
+        /// <description> ScheduledActions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -71,7 +84,7 @@ namespace Azure.ResourceManager.CostManagement
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -79,7 +92,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateCreateOrUpdateByScopeRequest(Id.ToString(), name, ScheduledActionData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _scheduledActionsRestClient.CreateCreateOrUpdateRequest(name, ScheduledActionData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -99,15 +112,15 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Create or update a shared scheduled action within the given scope.
+        /// Create or update a private scheduled action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
+        /// <description> /providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationGroup_CreateOrUpdateByScope. </description>
+        /// <description> ScheduledActions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -127,7 +140,7 @@ namespace Azure.ResourceManager.CostManagement
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -135,7 +148,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateCreateOrUpdateByScopeRequest(Id.ToString(), name, ScheduledActionData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _scheduledActionsRestClient.CreateCreateOrUpdateRequest(name, ScheduledActionData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -155,15 +168,15 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Get the shared scheduled action from the given scope by name.
+        /// Get the private scheduled action by name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
+        /// <description> /providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationGroup_GetByScope. </description>
+        /// <description> ScheduledActions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -179,7 +192,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionCollection.Get");
+            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionCollection.Get");
             scope.Start();
             try
             {
@@ -187,7 +200,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id.ToString(), name, context);
+                HttpMessage message = _scheduledActionsRestClient.CreateGetRequest(name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -204,15 +217,15 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Get the shared scheduled action from the given scope by name.
+        /// Get the private scheduled action by name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
+        /// <description> /providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationGroup_GetByScope. </description>
+        /// <description> ScheduledActions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -228,7 +241,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionCollection.Get");
+            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionCollection.Get");
             scope.Start();
             try
             {
@@ -236,7 +249,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id.ToString(), name, context);
+                HttpMessage message = _scheduledActionsRestClient.CreateGetRequest(name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,15 +266,15 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// List all shared scheduled actions within the given scope.
+        /// List all private scheduled actions.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions. </description>
+        /// <description> /providers/Microsoft.CostManagement/scheduledActions. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationGroup_ListByScope. </description>
+        /// <description> ScheduledActions_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -278,19 +291,19 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionOperationGroupGetAllByScopeAsyncCollectionResultOfT(_scheduledActionOperationGroupRestClient, Id.ToString(), filter, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
+            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionsGetAllAsyncCollectionResultOfT(_scheduledActionsRestClient, filter, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
         }
 
         /// <summary>
-        /// List all shared scheduled actions within the given scope.
+        /// List all private scheduled actions.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions. </description>
+        /// <description> /providers/Microsoft.CostManagement/scheduledActions. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationGroup_ListByScope. </description>
+        /// <description> ScheduledActions_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -307,7 +320,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionOperationGroupGetAllByScopeCollectionResultOfT(_scheduledActionOperationGroupRestClient, Id.ToString(), filter, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
+            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionsGetAllCollectionResultOfT(_scheduledActionsRestClient, filter, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
         }
 
         /// <summary>
@@ -315,11 +328,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
+        /// <description> /providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationGroup_GetByScope. </description>
+        /// <description> ScheduledActions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -335,7 +348,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionCollection.Exists");
+            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionCollection.Exists");
             scope.Start();
             try
             {
@@ -343,7 +356,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id.ToString(), name, context);
+                HttpMessage message = _scheduledActionsRestClient.CreateGetRequest(name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ScheduledActionData> response = default;
@@ -372,11 +385,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
+        /// <description> /providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationGroup_GetByScope. </description>
+        /// <description> ScheduledActions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -392,7 +405,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionCollection.Exists");
+            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionCollection.Exists");
             scope.Start();
             try
             {
@@ -400,7 +413,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id.ToString(), name, context);
+                HttpMessage message = _scheduledActionsRestClient.CreateGetRequest(name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ScheduledActionData> response = default;
@@ -429,11 +442,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
+        /// <description> /providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationGroup_GetByScope. </description>
+        /// <description> ScheduledActions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -449,7 +462,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionCollection.GetIfExists");
+            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -457,7 +470,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id.ToString(), name, context);
+                HttpMessage message = _scheduledActionsRestClient.CreateGetRequest(name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ScheduledActionData> response = default;
@@ -490,11 +503,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
+        /// <description> /providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationGroup_GetByScope. </description>
+        /// <description> ScheduledActions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -510,7 +523,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionCollection.GetIfExists");
+            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -518,7 +531,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id.ToString(), name, context);
+                HttpMessage message = _scheduledActionsRestClient.CreateGetRequest(name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ScheduledActionData> response = default;
