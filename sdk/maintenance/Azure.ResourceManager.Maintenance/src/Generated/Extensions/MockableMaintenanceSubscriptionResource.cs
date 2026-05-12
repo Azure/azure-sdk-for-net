@@ -194,13 +194,13 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceConfigurationResource> GetMaintenanceConfigurationsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MaintenanceConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationsGetAllAsyncCollectionResultOfT(MaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetMaintenanceConfigurations"), data => new MaintenanceConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationsGetAllAsyncCollectionResultOfT(MaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetAll"), data => new MaintenanceConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -222,13 +222,13 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceConfigurationResource> GetMaintenanceConfigurations(CancellationToken cancellationToken = default)
+        public virtual Pageable<MaintenanceConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationsGetAllCollectionResultOfT(MaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetMaintenanceConfigurations"), data => new MaintenanceConfigurationResource(Client, data));
+            return new PageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationsGetAllCollectionResultOfT(MaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetAll"), data => new MaintenanceConfigurationResource(Client, data));
         }
 
         /// <summary>

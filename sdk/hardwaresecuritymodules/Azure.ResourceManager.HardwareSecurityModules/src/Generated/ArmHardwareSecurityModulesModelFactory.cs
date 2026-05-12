@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <summary> Patchable properties of the Cloud HSM Cluster. </summary>
         /// <param name="tags"> The Cloud HSM Cluster's tags. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <returns> A new <see cref="Models.CloudHsmClusterPatch"/> instance for mocking. </returns>
-        public static CloudHsmClusterPatch CloudHsmClusterPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="Models.DedicatedHsmPatch"/> instance for mocking. </returns>
+        public static DedicatedHsmPatch DedicatedHsmPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CloudHsmClusterPatch(tags, identity, additionalBinaryDataProperties: null);
+            return new DedicatedHsmPatch(tags, identity, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Backup properties. </summary>
