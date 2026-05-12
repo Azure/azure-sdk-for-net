@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="redisEnterpriseClusterUpdate"> Parameters supplied to the Update Redis Enterprise operation. </param>
+        /// <param name="patch"> Parameters supplied to the Update Redis Enterprise operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="redisEnterpriseClusterUpdate"/> is null. </exception>
-        public virtual async Task<ArmOperation<RedisEnterpriseClusterResource>> UpdateAsync(WaitUntil waitUntil, RedisEnterpriseClusterUpdate redisEnterpriseClusterUpdate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<RedisEnterpriseClusterResource>> UpdateAsync(WaitUntil waitUntil, RedisEnterpriseClusterPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(redisEnterpriseClusterUpdate, nameof(redisEnterpriseClusterUpdate));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _redisEnterpriseClusterClientDiagnostics.CreateScope("RedisEnterpriseClusterResource.Update");
             scope.Start();
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisEnterpriseClusterRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisEnterpriseClusterUpdate.ToRequestContent(redisEnterpriseClusterUpdate), context);
+                HttpMessage message = _redisEnterpriseClusterRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisEnterpriseClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation<RedisEnterpriseClusterResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseClusterResource>(
                     new RedisEnterpriseClusterOperationSource(Client),
@@ -274,12 +274,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="redisEnterpriseClusterUpdate"> Parameters supplied to the Update Redis Enterprise operation. </param>
+        /// <param name="patch"> Parameters supplied to the Update Redis Enterprise operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="redisEnterpriseClusterUpdate"/> is null. </exception>
-        public virtual ArmOperation<RedisEnterpriseClusterResource> Update(WaitUntil waitUntil, RedisEnterpriseClusterUpdate redisEnterpriseClusterUpdate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<RedisEnterpriseClusterResource> Update(WaitUntil waitUntil, RedisEnterpriseClusterPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(redisEnterpriseClusterUpdate, nameof(redisEnterpriseClusterUpdate));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _redisEnterpriseClusterClientDiagnostics.CreateScope("RedisEnterpriseClusterResource.Update");
             scope.Start();
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisEnterpriseClusterRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisEnterpriseClusterUpdate.ToRequestContent(redisEnterpriseClusterUpdate), context);
+                HttpMessage message = _redisEnterpriseClusterRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisEnterpriseClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation<RedisEnterpriseClusterResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseClusterResource>(
                     new RedisEnterpriseClusterOperationSource(Client),
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 else
                 {
                     RedisEnterpriseClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    RedisEnterpriseClusterUpdate patch = new RedisEnterpriseClusterUpdate();
+                    RedisEnterpriseClusterPatch patch = new RedisEnterpriseClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 else
                 {
                     RedisEnterpriseClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    RedisEnterpriseClusterUpdate patch = new RedisEnterpriseClusterUpdate();
+                    RedisEnterpriseClusterPatch patch = new RedisEnterpriseClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 else
                 {
                     RedisEnterpriseClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    RedisEnterpriseClusterUpdate patch = new RedisEnterpriseClusterUpdate();
+                    RedisEnterpriseClusterPatch patch = new RedisEnterpriseClusterPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<RedisEnterpriseClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 else
                 {
                     RedisEnterpriseClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    RedisEnterpriseClusterUpdate patch = new RedisEnterpriseClusterUpdate();
+                    RedisEnterpriseClusterPatch patch = new RedisEnterpriseClusterPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<RedisEnterpriseClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 else
                 {
                     RedisEnterpriseClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    RedisEnterpriseClusterUpdate patch = new RedisEnterpriseClusterUpdate();
+                    RedisEnterpriseClusterPatch patch = new RedisEnterpriseClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 else
                 {
                     RedisEnterpriseClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    RedisEnterpriseClusterUpdate patch = new RedisEnterpriseClusterUpdate();
+                    RedisEnterpriseClusterPatch patch = new RedisEnterpriseClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

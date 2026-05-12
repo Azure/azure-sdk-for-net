@@ -13,24 +13,24 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> A partial update to the Redis Enterprise cluster. </summary>
-    public partial class RedisEnterpriseClusterUpdate
+    public partial class RedisEnterpriseClusterPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseClusterUpdate"/>. </summary>
-        public RedisEnterpriseClusterUpdate()
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseClusterPatch"/>. </summary>
+        public RedisEnterpriseClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseClusterUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseClusterPatch"/>. </summary>
         /// <param name="sku"> The SKU to create, which affects price, performance, and features. </param>
         /// <param name="properties"> Other properties of the cluster. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseClusterUpdate(RedisEnterpriseSku sku, ClusterUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedisEnterpriseClusterPatch(RedisEnterpriseSku sku, ClusterUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Properties = properties;

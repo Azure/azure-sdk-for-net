@@ -12,22 +12,22 @@ using Azure.ResourceManager.BillingBenefits;
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> Discounts patch request. </summary>
-    public partial class DiscountPatchContent
+    public partial class DiscountPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DiscountPatchContent"/>. </summary>
-        public DiscountPatchContent()
+        /// <summary> Initializes a new instance of <see cref="DiscountPatch"/>. </summary>
+        public DiscountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiscountPatchContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscountPatch"/>. </summary>
         /// <param name="properties"> Discounts patch request properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiscountPatchContent(DiscountPatchRequestProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiscountPatch(DiscountPatchRequestProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Tags = tags;

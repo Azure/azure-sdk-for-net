@@ -1067,12 +1067,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <param name="displayName"> Display name. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.DiscountPatchContent"/> instance for mocking. </returns>
-        public static DiscountPatchContent DiscountPatchContent(string displayName = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.DiscountPatch"/> instance for mocking. </returns>
+        public static DiscountPatch DiscountPatch(string displayName = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DiscountPatchContent(displayName is null ? default : new DiscountPatchRequestProperties(displayName, null), tags, additionalBinaryDataProperties: null);
+            return new DiscountPatch(displayName is null ? default : new DiscountPatchRequestProperties(displayName, null), tags, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request to validate any benefit. </summary>
