@@ -1,9 +1,4 @@
 <Solution>
-  <Configurations>
-    <Platform Name="Any CPU" />
-    <Platform Name="x64" />
-    <Platform Name="x86" />
-  </Configurations>
   <Project Path="src/Azure.ResourceManager.Template.csproj" />
   <Project Path="tests/Azure.ResourceManager.Template.Tests.csproj" />
 </Solution>
