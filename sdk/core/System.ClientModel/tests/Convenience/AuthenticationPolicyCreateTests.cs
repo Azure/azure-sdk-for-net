@@ -304,10 +304,9 @@ public class AuthenticationPolicyCreateTests
     [Test]
     public void Create_WithTokenCredentialSource_AndScopeAtRoot_ReadsScope()
     {
-        // Forward-compatibility: when Scope is written at the root of the
-        // credential section (the post-Phase-5a shape), Create must still find
-        // it. This guards the migration path before Azure.Core's AddDefaultScope
-        // moves Scope writes from AdditionalProperties to the root.
+        // Verifies that Create reads Scope from the root of the credential
+        // section, supporting writers that store Scope directly on the
+        // credential section rather than under AdditionalProperties.
         TestClientSettings settings = new();
         IConfigurationRoot config = new ConfigurationBuilder()
             .AddInMemoryCollection(new Dictionary<string, string?>
@@ -329,8 +328,7 @@ public class AuthenticationPolicyCreateTests
     [Test]
     public void Create_WithTokenCredentialSource_AndScopeAtBothLocations_PrefersRoot()
     {
-        // Forward-compatibility: if a configuration carries Scope at both the
-        // root and under AdditionalProperties (transient state during migration),
+        // When Scope appears at both the root and under AdditionalProperties,
         // the root value wins.
         TestClientSettings settings = new();
         IConfigurationRoot config = new ConfigurationBuilder()
