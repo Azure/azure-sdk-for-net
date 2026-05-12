@@ -17,9 +17,13 @@ using Microsoft.TypeSpec.Generator.Customizations;
 // is preserved without touching wire-serialization.
 //
 // Notes:
-//   * Identity, IPRules, KeyVaultKeyUri (Uri), NetworkAclBypassResourceIds
-//     (IList<ResourceIdentifier>) and the flattened spread of properties are now
-//     all driven by client.tsp customizations — no manual aliasing needed here.
+//   * The element TYPES (Uri for KeyVaultKeyUri, IList<ResourceIdentifier> for
+//     NetworkAclBypassResourceIds, ManagedServiceIdentity for Identity) come from
+//     @@alternateType in client.tsp; the get+set re-emission below is still required
+//     because the inner holder is flattened-with-required-ctor-params and the
+//     generator can't synthesize lazy-create setters for spread members.
+//   * Identity is the only property NOT aliased here — it is inherited from the
+//     TrackedResource base via the wrapper model in client.tsp.
 //   * A back-compat 2-arg public ctor is restored to match the previously shipped
 //     `(AzureLocation location, IEnumerable<CosmosDBAccountLocation> locations)`
 //     signature; the generator only emits the 3-arg required-form ctor.
