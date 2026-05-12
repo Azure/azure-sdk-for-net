@@ -132,36 +132,36 @@ namespace Azure.ResourceManager.NetworkFunction
         /// Return list of Azure Traffic Collectors in a subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkFunctionSubscriptionResource.GetAllAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkFunctionSubscriptionResource.GetAzureTrafficCollectorsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="AzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AzureTrafficCollectorResource> GetAllAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AzureTrafficCollectorResource> GetAzureTrafficCollectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkFunctionSubscriptionResource(subscriptionResource).GetAllAsync(cancellationToken);
+            return GetMockableNetworkFunctionSubscriptionResource(subscriptionResource).GetAzureTrafficCollectorsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Return list of Azure Traffic Collectors in a subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkFunctionSubscriptionResource.GetAll(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkFunctionSubscriptionResource.GetAzureTrafficCollectors(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="AzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AzureTrafficCollectorResource> GetAll(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<AzureTrafficCollectorResource> GetAzureTrafficCollectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkFunctionSubscriptionResource(subscriptionResource).GetAll(cancellationToken);
+            return GetMockableNetworkFunctionSubscriptionResource(subscriptionResource).GetAzureTrafficCollectors(cancellationToken);
         }
     }
 }
