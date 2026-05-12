@@ -38,7 +38,7 @@ public sealed class CredentialSettings
     /// them via extension methods that read through this indexer, without
     /// exposing the underlying <see cref="IConfigurationSection"/>. Supports
     /// the standard configuration <c>:</c> delimiter for nested paths. Returns
-    /// <see langword="null"/> when no section was bound.
+    /// <see langword="null"/> when no section was bound or if the specified value does not exist.
     /// </summary>
     /// <param name="key">The configuration key to read, relative to the credential section.</param>
     public string? this[string key] => _section?[key];
