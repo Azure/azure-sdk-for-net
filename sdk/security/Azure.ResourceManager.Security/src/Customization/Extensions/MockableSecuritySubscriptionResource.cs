@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Security.Mocking
 {
+    // Suppress malformed generated JIT policy forwarding helpers; the collection-level APIs remain generated.
     [CodeGenSuppress("GetJitNetworkAccessPoliciesAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetJitNetworkAccessPolicies", typeof(CancellationToken))]
     public partial class MockableSecuritySubscriptionResource

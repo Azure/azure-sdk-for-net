@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Security.Models
 {
+    // Suppress a duplicate public constructor and bridge OnPremiseSqlResourceDetails' discriminator constructor order.
     [CodeGenSuppress("OnPremiseResourceDetails", typeof(string), typeof(string), typeof(string), typeof(string))]
     public partial class OnPremiseResourceDetails
     {

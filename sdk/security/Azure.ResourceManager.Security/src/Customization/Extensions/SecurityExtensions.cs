@@ -4,11 +4,11 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager.Security.Mocking;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Security
 {
+    // Suppress duplicate generated extension factories for resource types that appear through multiple Security APIs.
     [CodeGenSuppress("GetAlertResource", typeof(ArmClient), typeof(ResourceIdentifier))]
     [CodeGenSuppress("GetAssessmentsMetadatumResource", typeof(ArmClient), typeof(ResourceIdentifier))]
     [CodeGenSuppress("GetTaskResource", typeof(ArmClient), typeof(ResourceIdentifier))]

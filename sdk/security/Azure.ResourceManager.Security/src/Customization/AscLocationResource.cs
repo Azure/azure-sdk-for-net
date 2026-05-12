@@ -8,6 +8,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Security
 {
+    // Suppress generated operation-status helpers that use reflection-based deserialization,
+    // which fails the AOT/trimming analyzer checks.
     [CodeGenSuppress("GetOperationStatusAsync", typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetOperationStatus", typeof(string), typeof(CancellationToken))]
     public partial class AscLocationResource

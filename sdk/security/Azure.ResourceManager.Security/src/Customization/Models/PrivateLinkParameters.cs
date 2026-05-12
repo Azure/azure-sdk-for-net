@@ -5,6 +5,7 @@
 
 namespace Azure.ResourceManager.Security.Models
 {
+    // Generated private-link forwarding helpers pass this modeled parameter to protocol methods expecting the raw name.
     public partial class PrivateLinkParameters
     {
         public static implicit operator string(PrivateLinkParameters value) => value?.PrivateLinkName;
