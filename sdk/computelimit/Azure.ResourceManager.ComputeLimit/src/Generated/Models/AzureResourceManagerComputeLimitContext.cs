@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.ComputeLimit
     [ModelReaderWriterBuildable(typeof(FeatureListResult))]
     [ModelReaderWriterBuildable(typeof(GuestSubscriptionListResult))]
     [ModelReaderWriterBuildable(typeof(GuestSubscriptionProperties))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SharedLimitListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

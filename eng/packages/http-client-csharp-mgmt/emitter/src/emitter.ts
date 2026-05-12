@@ -8,10 +8,13 @@ import { CodeModel, CSharpEmitterContext } from "@typespec/http-client-csharp";
 import { emitAzureCodeModel } from "@azure-typespec/http-client-csharp";
 import {
   azureSDKContextOptions,
-  flattenPropertyDecorator
+  flattenPropertyDecorator,
+  setHasClientNameOverride
 } from "./sdk-context-options.js";
 import { updateClients } from "./resource-detection.js";
-import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
+import {
+  DecoratorInfo
+} from "@azure-tools/typespec-client-generator-core";
 import {
   AzureMgmtEmitterOptions,
   filterSuppressedDiagnostics
@@ -50,6 +53,7 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
 
     updateClients(codeModel, sdkContext, context.options);
     setFlattenProperty(codeModel, sdkContext);
+    setHasClientNameOverride(codeModel, sdkContext);
     return codeModel;
   }
 }

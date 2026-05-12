@@ -348,10 +348,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="rules"> List of rules. </param>
         /// <param name="managedRuleSets"> List of rule sets. </param>
         /// <param name="exceptions"> List of exceptions. </param>
-        /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="skuName"> Name of the pricing tier. </param>
         /// <returns> A new <see cref="FrontDoor.FrontDoorWebApplicationFirewallPolicyData"/> instance for mocking. </returns>
-        public static FrontDoorWebApplicationFirewallPolicyData FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FrontDoorWebApplicationFirewallPolicySettings policySettings = default, IEnumerable<SubResource> frontendEndpointLinks = default, IEnumerable<SubResource> routingRuleLinks = default, IEnumerable<SubResource> securityPolicyLinks = default, string provisioningState = default, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState = default, IEnumerable<WebApplicationCustomRule> rules = default, IEnumerable<ManagedRuleSet> managedRuleSets = default, IEnumerable<FrontDoorManagedRuleSetException> exceptions = default, ETag? etag = default, FrontDoorSkuName? skuName = default)
+        public static FrontDoorWebApplicationFirewallPolicyData FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FrontDoorWebApplicationFirewallPolicySettings policySettings = default, IEnumerable<SubResource> frontendEndpointLinks = default, IEnumerable<SubResource> routingRuleLinks = default, IEnumerable<SubResource> securityPolicyLinks = default, string provisioningState = default, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState = default, IEnumerable<WebApplicationCustomRule> rules = default, IEnumerable<ManagedRuleSet> managedRuleSets = default, IEnumerable<FrontDoorManagedRuleSetException> exceptions = default, ETag? eTag = default, FrontDoorSkuName? skuName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     provisioningState,
                     resourceState,
                     null),
-                etag,
+                eTag,
                 skuName is null ? default : new FrontDoorSku(skuName, null));
         }
 
@@ -558,6 +558,32 @@ namespace Azure.ResourceManager.FrontDoor.Models
             contentPaths ??= new ChangeTrackingList<string>();
 
             return new FrontDoorEndpointPurgeContent(contentPaths.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="resourceState"> Resource status. </param>
+        /// <param name="enabledState"> The state of the Experiment. </param>
+        /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="FrontDoor.FrontDoorNetworkExperimentProfileData"/> instance for mocking. </returns>
+        public static FrontDoorNetworkExperimentProfileData FrontDoorNetworkExperimentProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkExperimentResourceState? resourceState = default, FrontDoorExperimentState? enabledState = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FrontDoorNetworkExperimentProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                resourceState is null && enabledState is null ? default : new ProfileProperties(resourceState, enabledState, null),
+                eTag);
         }
 
         /// <param name="enabledState"> The enabled state of the Profile. </param>
@@ -805,7 +831,28 @@ namespace Azure.ResourceManager.FrontDoor.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FrontDoorWebApplicationFirewallPolicyData FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, FrontDoorSkuName? skuName, FrontDoorWebApplicationFirewallPolicySettings policySettings, IEnumerable<WebApplicationCustomRule> rules, IEnumerable<ManagedRuleSet> managedRuleSets, IEnumerable<SubResource> frontendEndpointLinks, IEnumerable<SubResource> routingRuleLinks, IEnumerable<SubResource> securityPolicyLinks, string provisioningState, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState)
         {
-            return FrontDoorWebApplicationFirewallPolicyData(id, name, resourceType, systemData, tags, location, policySettings, frontendEndpointLinks, routingRuleLinks, securityPolicyLinks, provisioningState, resourceState, rules, managedRuleSets, exceptions: default, etag, skuName);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FrontDoorWebApplicationFirewallPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                policySettings is null && rules is null && managedRuleSets is null && frontendEndpointLinks is null && routingRuleLinks is null && securityPolicyLinks is null && provisioningState is null && resourceState is null ? default : new WebApplicationFirewallPolicyProperties(
+                    policySettings,
+                    new CustomRuleList((rules ?? new ChangeTrackingList<WebApplicationCustomRule>()).ToList(), default),
+                    new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<ManagedRuleSet>()).ToList(), default, default),
+                    (frontendEndpointLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
+                    (routingRuleLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
+                    (securityPolicyLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
+                    provisioningState,
+                    resourceState,
+                    default),
+                etag,
+                skuName is null ? default : new FrontDoorSku(skuName, default));
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleDefinition"/>. </summary>
@@ -817,7 +864,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedRuleDefinition ManagedRuleDefinition(string ruleId, ManagedRuleEnabledState? defaultState, RuleMatchActionType? defaultAction, string description)
         {
-            return ManagedRuleDefinition(ruleId, defaultState, defaultAction, defaultSensitivity: default, description);
+            return ManagedRuleDefinition(ruleId: ruleId, defaultState: defaultState, defaultAction: defaultAction, defaultSensitivity: default, description: description);
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontDoorNetworkExperimentProfileData"/>. </summary>
@@ -831,7 +878,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="resourceState"> Resource status. </param>
         /// <param name="enabledState"> The state of the Experiment. </param>
         /// <returns> A new <see cref="FrontDoor.FrontDoorNetworkExperimentProfileData"/> instance for mocking. </returns>
-        public static FrontDoorNetworkExperimentProfileData FrontDoorNetworkExperimentProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, NetworkExperimentResourceState? resourceState = default, FrontDoorExperimentState? enabledState = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorNetworkExperimentProfileData FrontDoorNetworkExperimentProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, NetworkExperimentResourceState? resourceState, FrontDoorExperimentState? enabledState)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -843,8 +891,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                default);
+                resourceState is null && enabledState is null ? default : new ProfileProperties(resourceState, enabledState, default),
+                etag);
         }
     }
 }

@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Peering.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PeeringData PeeringData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PeeringSku sku, PeeringKind kind, DirectPeeringProperties direct, ExchangePeeringProperties exchange, string peeringLocation, PeeringProvisioningState? provisioningState)
         {
-            return PeeringData(id, name, resourceType, systemData, tags, location, direct, exchange, connectivityProbes: default, peeringLocation, provisioningState, sku, kind);
+            return PeeringData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, direct: direct, exchange: exchange, connectivityProbes: default, peeringLocation: peeringLocation, provisioningState: provisioningState, sku: sku, kind: kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeeringLocation"/>. </summary>

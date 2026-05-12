@@ -24,13 +24,15 @@ namespace Azure.AI.Projects
         /// <param name="type"> The type of source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="agentId"> The unique agent ID used to filter traces. Optional — when omitted, traces are filtered by `agent_name` (and `agent_version` if specified). </param>
         /// <param name="agentName"> The agent name to fetch traces for. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
         /// <param name="startTime"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
         /// <param name="endTime"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
         /// <param name="maxTraces"> Maximum number of traces to retrieve. </param>
-        internal TracesDataGenerationJobSource(DataGenerationJobSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, string agentName, string agentVersion, DateTimeOffset? startTime, DateTimeOffset? endTime, int? maxTraces) : base(@type, description, additionalBinaryDataProperties)
+        internal TracesDataGenerationJobSource(DataGenerationJobSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, string agentId, string agentName, string agentVersion, DateTimeOffset? startTime, DateTimeOffset? endTime, int? maxTraces) : base(@type, description, additionalBinaryDataProperties)
         {
+            AgentId = agentId;
             AgentName = agentName;
             AgentVersion = agentVersion;
             StartTime = startTime;
@@ -40,6 +42,9 @@ namespace Azure.AI.Projects
 
         /// <summary> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </summary>
         public override string Description { get; set; }
+
+        /// <summary> The unique agent ID used to filter traces. Optional — when omitted, traces are filtered by `agent_name` (and `agent_version` if specified). </summary>
+        public string AgentId { get; set; }
 
         /// <summary> The agent name to fetch traces for. </summary>
         public string AgentName { get; set; }

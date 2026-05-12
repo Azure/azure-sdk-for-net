@@ -1033,7 +1033,13 @@ export function assignNonResourceMethodsToResources(
           ) {
             return false;
           }
-          return r.metadata.resourceType === operationType;
+          return (
+            r.metadata.resourceType === operationType &&
+            operationPathEndsWithResourceType(
+              method.operationPath,
+              operationType
+            )
+          );
         });
         if (match) {
           match.metadata.methods.push({
@@ -1061,6 +1067,17 @@ export function assignNonResourceMethodsToResources(
       sortResourceMethods(resource.metadata.methods);
     }
   }
+}
+
+function operationPathEndsWithResourceType(
+  operationPath: RequestPath,
+  resourceType: string
+): boolean {
+  const lastTypeSegment = resourceType.split("/").at(-1);
+  return (
+    lastTypeSegment !== undefined &&
+    operationPath.segments[operationPath.length - 1] === lastTypeSegment
+  );
 }
 
 /**
@@ -1209,7 +1226,9 @@ const preferredExpansionMethodKinds = [
   ResourceOperationKind.Delete
 ];
 
-function getExpansionPath(resource: ArmResourceSchema): RequestPath | undefined {
+function getExpansionPath(
+  resource: ArmResourceSchema
+): RequestPath | undefined {
   return (
     resource.metadata.resourceIdPattern ??
     resource.metadata.methods.find((m) =>
@@ -1242,10 +1261,7 @@ export function expandDynamicParentResourcesInSchema(
   resources: ArmResourceSchema[],
   serviceMethods: Map<string, SdkMethod<SdkHttpOperation>>,
   diagnosticReporter?: (message: string) => void,
-  onExpand?: (
-    expanded: ArmResourceSchema,
-    original: ArmResourceSchema
-  ) => void
+  onExpand?: (expanded: ArmResourceSchema, original: ArmResourceSchema) => void
 ): ArmResourceSchema[] {
   const resourcesToRemove: Set<ArmResourceSchema> = new Set();
   const resourcesToAdd: ArmResourceSchema[] = [];

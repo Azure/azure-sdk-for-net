@@ -76,7 +76,7 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(ResponsesAzureFunctionBinding)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Kind);
             writer.WritePropertyName("storage_queue"u8);
             writer.WriteObjectValue(StorageQueue, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -121,14 +121,14 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            string @type = default;
+            string kind = default;
             ResponsesAzureFunctionStorageQueue storageQueue = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    kind = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("storage_queue"u8))
@@ -141,7 +141,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesAzureFunctionBinding(@type, storageQueue, additionalBinaryDataProperties);
+            return new ResponsesAzureFunctionBinding(kind, storageQueue, additionalBinaryDataProperties);
         }
     }
 }
