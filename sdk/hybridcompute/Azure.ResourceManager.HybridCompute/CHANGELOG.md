@@ -6,6 +6,24 @@
 
 ### Breaking Changes
 
+- `HybridComputeLicenseResource.Update` and `UpdateAsync` now accept `HybridComputeLicensePatch` instead of `HybridComputeLicenseData`. Backward-compatible overloads accepting `HybridComputeLicenseData` are provided but hidden (`[EditorBrowsable(Never)]`).
+- `HybridComputeExtensionValueResource.CreateResourceIdentifier` now accepts `string location` instead of `AzureLocation`. A backward-compatible `AzureLocation` overload is provided but hidden.
+- `HybridComputeLicenseProfileResource.CreateResourceIdentifier` now requires four parameters (added `licenseProfileName`). A backward-compatible three-parameter overload is provided but hidden; it defaults to `"default"` for the profile name.
+- `GetValidationDetailsPrivateLinkScope[Async]` on `SubscriptionResource` was renamed to `GetValidationDetails[Async]`. The old name is provided as a hidden backward-compatible overload.
+- `ValidateLicenseLicense[Async]` on `SubscriptionResource` was renamed to `ValidateLicense[Async]`. The old name is provided as a hidden backward-compatible overload.
+- `GetValidationDetailsForMachinePrivateLinkScope[Async]` on `HybridComputeMachineResource` was renamed to `GetValidationDetailsForMachine[Async]`. The old name is provided as a hidden backward-compatible overload.
+- `HybridComputeExtensions.GetHybridComputeExtensionValues`, `GetHybridComputeExtensionValue[Async]` now accept `string location` instead of `AzureLocation`. Hidden backward-compatible overloads are provided.
+- `HybridComputeExtensions.GetHybridComputeMachine[Async]` and `HybridComputeMachineCollection` methods now accept `InstanceViewTypes?` instead of `string` for the `expand` parameter. Hidden backward-compatible `string` overloads are provided.
+- `MachineInstallPatchesParameters` was renamed to `MachineInstallPatchesContent`.
+- `MachineExtensionProperties.Type` was renamed to `MachineExtensionPropertiesType`.
+- `HybridComputeMachineExtensionPatch.Type` was renamed to `MachineExtensionUpdatePropertiesType`.
+- `PrivateEndpointConnectionProperties.PrivateLinkServiceConnectionState` was renamed to `ConnectionState`.
+- `HybridComputePrivateEndpointConnectionProperties.PrivateEndpointId` type changed from `ResourceIdentifier` to `string`. A backward-compatible `ResourceIdentifier`-accepting factory method overload is provided in `ArmHybridComputeModelFactory`.
+- `HybridComputePrivateLinkResourceData` and `HybridComputePrivateLinkResourceProperties` no longer have public parameterless constructors; they are now effectively sealed types.
+- `HybridComputeLicenseProfileData` and `HybridComputeLicenseProfilePatch` properties now serialize to their correct JSON wire paths (e.g. `properties.esuProfile.assignedLicense` instead of `properties.assignedLicense`). This corrects a serialization bug from the AutoRest-generated SDK.
+- `LicenseProfileMachineInstanceView.IsSoftwareAssuranceCustomer`, `ProductType`, and `SubscriptionStatus` are now read-only (setters removed); they represent response-only values.
+- `HybridComputeMachineData.LocationData` and `HybridComputeMachinePatch.LocationData` type changed from `HybridComputeLocation` to the common `LocationData` base type. The `HybridComputeLocation` subclass is still available as a hidden backward-compatible type.
+
 ### Bugs Fixed
 
 ### Other Changes

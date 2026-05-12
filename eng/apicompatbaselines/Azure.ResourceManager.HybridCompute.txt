@@ -1,3 +1,21 @@
+# -----------------------------------------------------------------------
+# Migration from AutoRest to TypeSpec: Azure.ResourceManager.HybridCompute
+# -----------------------------------------------------------------------
+#
+# [1] WirePathAttribute changes on LicenseProfile properties (20 entries)
+#
+# The AutoRest-generated SDK (1.0.0) incorrectly flattened LicenseProfile
+# sub-object properties directly under "properties.*". The TypeSpec spec
+# correctly models these under sub-envelopes:
+#   - esuProfile.*   (ESU-related properties)
+#   - productProfile.* (product/subscription properties)
+#   - softwareAssurance.* (software assurance properties)
+#
+# The C# SDK still exposes these as flat properties on the model class
+# (via @flattenProperty in TypeSpec), so the public API surface is unchanged.
+# Only the JSON wire path annotations differ. There is no mechanism in the
+# C# SDK or TypeSpec to restore the old (incorrect) wire paths.
+#
 CannotChangeAttribute : Attribute 'Azure.ResourceManager.HybridCompute.WirePathAttribute' on 'Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileData.AssignedLicense' changed from '[WirePathAttribute("properties.assignedLicense")]' in the contract to '[WirePathAttribute("properties.esuProfile.assignedLicense")]' in the implementation.
 CannotChangeAttribute : Attribute 'Azure.ResourceManager.HybridCompute.WirePathAttribute' on 'Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileData.AssignedLicenseImmutableId' changed from '[WirePathAttribute("properties.assignedLicenseImmutableId")]' in the contract to '[WirePathAttribute("properties.esuProfile.assignedLicenseImmutableId")]' in the implementation.
 CannotChangeAttribute : Attribute 'Azure.ResourceManager.HybridCompute.WirePathAttribute' on 'Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileData.BillingEndOn' changed from '[WirePathAttribute("properties.billingEndDate")]' in the contract to '[WirePathAttribute("properties.productProfile.billingEndDate")]' in the implementation.
@@ -18,12 +36,69 @@ CannotChangeAttribute : Attribute 'Azure.ResourceManager.HybridCompute.WirePathA
 CannotChangeAttribute : Attribute 'Azure.ResourceManager.HybridCompute.WirePathAttribute' on 'Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseProfilePatch.ProductType' changed from '[WirePathAttribute("properties.productType")]' in the contract to '[WirePathAttribute("properties.productProfile.productType")]' in the implementation.
 CannotChangeAttribute : Attribute 'Azure.ResourceManager.HybridCompute.WirePathAttribute' on 'Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseProfilePatch.SoftwareAssuranceCustomer' changed from '[WirePathAttribute("properties.softwareAssuranceCustomer")]' in the contract to '[WirePathAttribute("properties.softwareAssurance.softwareAssuranceCustomer")]' in the implementation.
 CannotChangeAttribute : Attribute 'Azure.ResourceManager.HybridCompute.WirePathAttribute' on 'Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseProfilePatch.SubscriptionStatus' changed from '[WirePathAttribute("properties.subscriptionStatus")]' in the contract to '[WirePathAttribute("properties.productProfile.subscriptionStatus")]' in the implementation.
+# -----------------------------------------------------------------------
+# [2] CannotMakeMemberNonVirtual: JsonModelWriteCore (2 entries)
+#
+# The new TypeSpec generator seals JsonModelWriteCore in classes that have
+# internal constructors (effectively sealed types). This is a generator
+# behavior change; there is no customization mechanism to restore virtual
+# on a generated method in a partial class.
+#
 CannotMakeMemberNonVirtual : Member 'protected void Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResourceData.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter, System.ClientModel.Primitives.ModelReaderWriterOptions)' is non-virtual in the implementation but is virtual in the contract.
 CannotMakeMemberNonVirtual : Member 'protected void Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkResourceProperties.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter, System.ClientModel.Primitives.ModelReaderWriterOptions)' is non-virtual in the implementation but is virtual in the contract.
+# -----------------------------------------------------------------------
+# [3] CannotRemoveBaseTypeOrInterface (2 entries)
+#
+# a) HybridComputeLocation: The old AutoRest-generated class implemented
+#    IJsonModel<HybridComputeLocation>. The migration replaces it with a
+#    custom backward-compat alias class (subclassing LocationData) that
+#    cannot implement the full IJsonModel<T> interface without a fragile
+#    hand-written serialization implementation.
+#
+# b) PrivateEndpointConnectionDataModel: The TypeSpec spec models this as
+#    a plain model (not a tracked/proxy resource), so it no longer inherits
+#    ResourceData. Making it inherit ResourceData in TypeSpec would require
+#    misrepresenting the spec and is not feasible without a spec restructure.
+#
 CannotRemoveBaseTypeOrInterface : Type 'Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation' does not implement interface 'System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation>' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel' does not inherit from base type 'Azure.ResourceManager.Models.ResourceData' in the implementation but it does in the contract.
+# -----------------------------------------------------------------------
+# [4] CannotSealType: HybridComputePrivateLinkResourceData/Properties (2 entries)
+#
+# Both types now have only internal constructors (effectively sealed) in the
+# TypeSpec-generated code. Adding a public parameterless constructor in a
+# partial class causes CS0111 (duplicate member) because the generated partial
+# already defines an internal one with the same signature. See also [5] below.
+#
 CannotSealType : Type 'Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResourceData' is effectively (has a private constructor) sealed in the implementation but not sealed in the contract.
 CannotSealType : Type 'Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkResourceProperties' is effectively (has a private constructor) sealed in the implementation but not sealed in the contract.
+# -----------------------------------------------------------------------
+# [5] MembersMustExist — missing members (10 entries)
+#
+# a) PrivateEndpointId (ResourceIdentifier getter/setter): The property type
+#    changed from ResourceIdentifier to string in TypeSpec (the ARM CommonTypes
+#    PrivateEndpoint.id is a plain string). The ArmHybridComputeModelFactory
+#    has a backward-compat overload for mocking scenarios. A full property
+#    shim cannot be added because the generated string property has the same
+#    name. Potential future fix: @@alternateType on the spec property.
+#
+# b) LocationData (HybridComputeLocation getter/setter on MachineData/Patch):
+#    The property type changed from the service-specific HybridComputeLocation
+#    subtype to the common LocationData base type. A shadow property typed as
+#    HybridComputeLocation cannot be added because the name conflicts with the
+#    generated LocationData property (CS0102 duplicate member in partial class).
+#
+# c) HybridComputePrivateLinkResourceData.ctor() and Properties.set:
+#    The constructor is now internal and the Properties setter was removed by
+#    the generator. See [4] above for the constructor; the setter cannot be
+#    added to a get-only auto-property in a partial class.
+#    Same applies to HybridComputePrivateLinkResourceProperties.ctor().
+#
+# d) LicenseProfileMachineInstanceView setters (IsSoftwareAssuranceCustomer,
+#    ProductType, SubscriptionStatus): These properties are response-only in
+#    TypeSpec and are modeled as read-only. Adding setters via partial class
+#    is not supported for auto-generated get-only properties.
+#
 MembersMustExist : Member 'public Azure.Core.ResourceIdentifier Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties.PrivateEndpointId.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'public Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation Azure.ResourceManager.HybridCompute.HybridComputeMachineData.LocationData.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'public Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation Azure.ResourceManager.HybridCompute.Models.HybridComputeMachinePatch.LocationData.get()' does not exist in the implementation but it does exist in the contract.
