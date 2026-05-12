@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -17,15 +19,25 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackupsMigrationContent"/>. </summary>
-        /// <param name="backupVaultId"> The ResourceId of the Backup Vault. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupsMigrationContent(string backupVaultId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="backupVaultResourceId"> The ResourceId of the Backup Vault. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupVaultResourceId"/> is null. </exception>
+        public BackupsMigrationContent(ResourceIdentifier backupVaultResourceId)
         {
-            BackupVaultId = backupVaultId;
+            Argument.AssertNotNull(backupVaultResourceId, nameof(backupVaultResourceId));
+
+            BackupVaultResourceId = backupVaultResourceId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupsMigrationContent"/>. </summary>
+        /// <param name="backupVaultResourceId"> The ResourceId of the Backup Vault. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BackupsMigrationContent(ResourceIdentifier backupVaultResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            BackupVaultResourceId = backupVaultResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ResourceId of the Backup Vault. </summary>
-        public string BackupVaultId { get; }
+        public ResourceIdentifier BackupVaultResourceId { get; }
     }
 }

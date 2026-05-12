@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 throw new FormatException($"The model {nameof(BackupsMigrationContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("backupVaultId"u8);
-            writer.WriteStringValue(BackupVaultId);
+            writer.WriteStringValue(BackupVaultResourceId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string backupVaultId = default;
+            ResourceIdentifier backupVaultResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("backupVaultId"u8))
                 {
-                    backupVaultId = prop.Value.GetString();
+                    backupVaultResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BackupsMigrationContent(backupVaultId, additionalBinaryDataProperties);
+            return new BackupsMigrationContent(backupVaultResourceId, additionalBinaryDataProperties);
         }
     }
 }

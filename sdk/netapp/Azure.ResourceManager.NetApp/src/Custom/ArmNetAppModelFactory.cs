@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.NetApp.Models
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CapacityPoolData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(ETag?), typeof(Guid?), typeof(long), typeof(NetAppFileServiceLevel), typeof(string), typeof(float?), typeof(float?), typeof(CapacityPoolQosType?), typeof(bool?), typeof(CapacityPoolEncryptionType?))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("NetAppVolumeQuotaRuleData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(NetAppProvisioningState?), typeof(long?), typeof(NetAppVolumeQuotaType?), typeof(string))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("NetAppVolumeQuotaRulePatch", typeof(IDictionary<string, string>), typeof(NetAppProvisioningState?), typeof(long?), typeof(NetAppVolumeQuotaType?), typeof(string))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("BackupsMigrationContent", typeof(ResourceIdentifier))]
     public static partial class ArmNetAppModelFactory
     {
         /// <summary> Source Cluster properties for a cluster peer request. </summary>
@@ -33,6 +34,17 @@ namespace Azure.ResourceManager.NetApp.Models
             peerIPAddresses ??= new ChangeTrackingList<string>();
 
             return new PeerClusterForVolumeMigrationContent(peerIPAddresses.ToList());
+        }
+
+        /// <summary> Migrate Backups Request. </summary>
+        /// <param name="backupVaultId"> The ResourceId of the Backup Vault. </param>
+        /// <returns> A new <see cref="Models.BackupsMigrationContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BackupsMigrationContent BackupsMigrationContent(string backupVaultId = default)
+        {
+            return new BackupsMigrationContent(
+                backupVaultId is null ? null : new ResourceIdentifier(backupVaultId),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of NetAppBackupData. </summary>

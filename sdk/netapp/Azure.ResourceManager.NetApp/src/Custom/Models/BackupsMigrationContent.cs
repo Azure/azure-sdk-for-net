@@ -3,12 +3,13 @@
 
 #nullable disable
 
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    // The generated model has only an internal constructor because BackupVaultId is read-only.
-    // v1.15 exposed this public string constructor, so keep it for source compatibility.
+    // v1.15 exposed BackupVaultId as string. The generated model now uses
+    // ResourceIdentifier, so keep the old string constructor/property as aliases.
     public partial class BackupsMigrationContent
     {
         /// <summary> Initializes a new instance of <see cref="BackupsMigrationContent"/>. </summary>
@@ -16,7 +17,11 @@ namespace Azure.ResourceManager.NetApp.Models
         public BackupsMigrationContent(string backupVaultId)
         {
             Argument.AssertNotNull(backupVaultId, nameof(backupVaultId));
-            BackupVaultId = backupVaultId;
+            BackupVaultResourceId = new ResourceIdentifier(backupVaultId);
         }
+
+        /// <summary> The ResourceId of the Backup Vault. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string BackupVaultId => BackupVaultResourceId?.ToString();
     }
 }

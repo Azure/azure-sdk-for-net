@@ -2182,8 +2182,10 @@ namespace Azure.ResourceManager.NetApp.Models
     }
     public partial class BackupsMigrationContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BackupsMigrationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BackupsMigrationContent>
     {
+        public BackupsMigrationContent(Azure.Core.ResourceIdentifier backupVaultResourceId) { }
         public BackupsMigrationContent(string backupVaultId) { }
         public string BackupVaultId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier BackupVaultResourceId { get { throw null; } }
         protected virtual Azure.ResourceManager.NetApp.Models.BackupsMigrationContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.NetApp.Models.BackupsMigrationContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

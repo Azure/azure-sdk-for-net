@@ -2022,14 +2022,6 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppChangeKeyVault(keyVaultUri, keyName, keyVaultResourceId, keyVaultPrivateEndpoints.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Migrate Backups Request. </summary>
-        /// <param name="backupVaultId"> The ResourceId of the Backup Vault. </param>
-        /// <returns> A new <see cref="Models.BackupsMigrationContent"/> instance for mocking. </returns>
-        public static BackupsMigrationContent BackupsMigrationContent(string backupVaultId = default)
-        {
-            return new BackupsMigrationContent(backupVaultId, additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
