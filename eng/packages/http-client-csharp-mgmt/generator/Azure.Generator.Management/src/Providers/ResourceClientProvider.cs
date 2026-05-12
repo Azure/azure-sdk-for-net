@@ -484,13 +484,7 @@ namespace Azure.Generator.Management.Providers
 
         private static bool OperationReturnsContent(InputServiceMethod method)
         {
-            if (method is InputLongRunningServiceMethod lroMethod)
-            {
-                return lroMethod.LongRunningServiceMetadata.ReturnType is not null;
-            }
-
-            var response = method.Operation.Responses.FirstOrDefault(r => !r.IsErrorResponse);
-            return response?.BodyType is not null;
+            return method.GetResponseBodyType() is not null;
         }
 
         private List<MethodProvider> BuildGetChildResourceMethods()
