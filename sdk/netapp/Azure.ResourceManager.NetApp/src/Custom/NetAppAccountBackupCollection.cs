@@ -10,10 +10,8 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
@@ -26,8 +24,7 @@ namespace Azure.ResourceManager.NetApp
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class NetAppAccountBackupCollection : ArmCollection, IEnumerable<NetAppAccountBackupResource>, IAsyncEnumerable<NetAppAccountBackupResource>
     {
-        private readonly ClientDiagnostics _netAppAccountBackupAccountBackupsClientDiagnostics;
-        private readonly AccountBackupsRestOperations _netAppAccountBackupAccountBackupsRestClient;
+        private const string NotSupportedMessage = "Account-scoped backups are no longer supported. Use backup vault-scoped backup APIs instead.";
 
         /// <summary> Initializes a new instance of the <see cref="NetAppAccountBackupCollection"/> class for mocking. </summary>
         protected NetAppAccountBackupCollection()
@@ -39,9 +36,6 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal NetAppAccountBackupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _netAppAccountBackupAccountBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppAccountBackupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NetAppAccountBackupResource.ResourceType, out string netAppAccountBackupAccountBackupsApiVersion);
-            _netAppAccountBackupAccountBackupsRestClient = new AccountBackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppAccountBackupAccountBackupsApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -70,25 +64,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        public virtual async Task<Response<NetAppAccountBackupResource>> GetAsync(string backupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
-
-            using var scope = _netAppAccountBackupAccountBackupsClientDiagnostics.CreateScope("NetAppAccountBackupCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = await _netAppAccountBackupAccountBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetAppAccountBackupResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response<NetAppAccountBackupResource>> GetAsync(string backupName, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException(NotSupportedMessage);
 
         /// <summary>
         /// Gets the specified backup for a Netapp Account
@@ -108,24 +85,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual Response<NetAppAccountBackupResource> Get(string backupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
-
-            using var scope = _netAppAccountBackupAccountBackupsClientDiagnostics.CreateScope("NetAppAccountBackupCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _netAppAccountBackupAccountBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetAppAccountBackupResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+            => throw new NotSupportedException(NotSupportedMessage);
 
         /// <summary>
         /// List all Backups for a Netapp Account
@@ -144,8 +104,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An async collection of <see cref="NetAppAccountBackupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppAccountBackupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppAccountBackupAccountBackupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NetAppAccountBackupResource(Client, NetAppBackupData.DeserializeNetAppBackupData(e)), _netAppAccountBackupAccountBackupsClientDiagnostics, Pipeline, "NetAppAccountBackupCollection.GetAll", "value", null, cancellationToken);
+            throw new NotSupportedException(NotSupportedMessage);
         }
 
         /// <summary>
@@ -165,8 +124,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> A collection of <see cref="NetAppAccountBackupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppAccountBackupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppAccountBackupAccountBackupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new NetAppAccountBackupResource(Client, NetAppBackupData.DeserializeNetAppBackupData(e)), _netAppAccountBackupAccountBackupsClientDiagnostics, Pipeline, "NetAppAccountBackupCollection.GetAll", "value", null, cancellationToken);
+            throw new NotSupportedException(NotSupportedMessage);
         }
 
         /// <summary>
@@ -186,23 +144,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string backupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
-
-            using var scope = _netAppAccountBackupAccountBackupsClientDiagnostics.CreateScope("NetAppAccountBackupCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await _netAppAccountBackupAccountBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response<bool>> ExistsAsync(string backupName, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException(NotSupportedMessage);
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
@@ -222,22 +165,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual Response<bool> Exists(string backupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
-
-            using var scope = _netAppAccountBackupAccountBackupsClientDiagnostics.CreateScope("NetAppAccountBackupCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = _netAppAccountBackupAccountBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+            => throw new NotSupportedException(NotSupportedMessage);
 
         /// <summary>
         /// Tries to get details for this resource from the service.
@@ -256,25 +184,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        public virtual async Task<NullableResponse<NetAppAccountBackupResource>> GetIfExistsAsync(string backupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
-
-            using var scope = _netAppAccountBackupAccountBackupsClientDiagnostics.CreateScope("NetAppAccountBackupCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _netAppAccountBackupAccountBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return new NoValueResponse<NetAppAccountBackupResource>(response.GetRawResponse());
-                return Response.FromValue(new NetAppAccountBackupResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<NullableResponse<NetAppAccountBackupResource>> GetIfExistsAsync(string backupName, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException(NotSupportedMessage);
 
         /// <summary>
         /// Tries to get details for this resource from the service.
@@ -294,24 +205,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual NullableResponse<NetAppAccountBackupResource> GetIfExists(string backupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
-
-            using var scope = _netAppAccountBackupAccountBackupsClientDiagnostics.CreateScope("NetAppAccountBackupCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _netAppAccountBackupAccountBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return new NoValueResponse<NetAppAccountBackupResource>(response.GetRawResponse());
-                return Response.FromValue(new NetAppAccountBackupResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+            => throw new NotSupportedException(NotSupportedMessage);
 
         IEnumerator<NetAppAccountBackupResource> IEnumerable<NetAppAccountBackupResource>.GetEnumerator()
         {
