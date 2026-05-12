@@ -801,75 +801,110 @@ namespace Azure.Storage.Files.Shares.Tests
                 break;
             }
 
-            // Assert — 1 Directory + 2 Files + 1 SymLink + 1 BlockDevice + 1 CharDevice + 1 Fifo + 1 Socket = 8.
-            Assert.AreEqual(8, items.Count);
+            // Assert — 1 Directory + 4 Files + 1 SymLink + 1 BlockDevice + 1 CharDevice + 1 Fifo + 1 Socket = 10.
+            Assert.AreEqual(10, items.Count);
 
             // Directory
             ShareFileItem dir = items.Single(i => i.FileType == NfsFileType.Directory);
             Assert.IsTrue(dir.IsDirectory);
-            Assert.AreEqual("Directoryb1eab17c31824548b7f246f9e8600999", dir.Name);
+            Assert.AreEqual("subdir", dir.Name);
             Assert.AreEqual("12682206919419625485", dir.Id);
             Assert.AreEqual(2, dir.LinkCount);
             Assert.IsNull(dir.FileSize);
-            Assert.AreEqual("0", dir.Properties.Owner);
-            Assert.AreEqual("0", dir.Properties.Group);
+            Assert.AreEqual("1000", dir.Properties.Owner);
+            Assert.AreEqual("1000", dir.Properties.Group);
             Assert.AreEqual("0755", dir.Properties.FileMode.ToOctalFileMode());
-            Assert.AreEqual(new ETag("\"0x8DE115C0FF22C86\""), dir.Properties.ETag);
+            Assert.AreEqual(new ETag("\"0x8DEAF1479E1C087\""), dir.Properties.ETag);
 
-            // Files (two entries — same Id/Mode/Owner/Group, different Names)
+            // Files (four entries — all Uid/Gid/Mode the same, different Names/Ids/Sizes/LinkCounts).
+            // Regular <File> entries don't carry a <FileType> element, so FileType stays null.
             List<ShareFileItem> files = items
-                .Where(i => i.FileType == NfsFileType.Regular)
+                .Where(i => !i.IsDirectory && i.FileType == null)
                 .OrderBy(i => i.Name)
                 .ToList();
-            Assert.AreEqual(2, files.Count);
+            Assert.AreEqual(4, files.Count);
             foreach (ShareFileItem file in files)
             {
                 Assert.IsFalse(file.IsDirectory);
-                Assert.AreEqual(128, file.FileSize);
-                Assert.AreEqual(2, file.LinkCount);
-                Assert.AreEqual("555", file.Properties.Owner);
-                Assert.AreEqual("666", file.Properties.Group);
-                Assert.AreEqual("0420", file.Properties.FileMode.ToOctalFileMode());
+                Assert.AreEqual("1000", file.Properties.Owner);
+                Assert.AreEqual("1000", file.Properties.Group);
+                Assert.AreEqual("0644", file.Properties.FileMode.ToOctalFileMode());
             }
-            Assert.AreEqual("File1788c17d9ce143369a341d5ce93db99a", files[0].Name);
-            Assert.AreEqual("Filee15274d5820f4bcf8978a9edf497ebf7", files[1].Name);
+
+            Assert.AreEqual("hardlink.txt", files[0].Name);
+            Assert.AreEqual("13835128424026472451", files[0].Id);
+            Assert.AreEqual(80, files[0].FileSize);
+            Assert.AreEqual(2, files[0].LinkCount);
+
+            Assert.AreEqual("regular.txt", files[1].Name);
+            Assert.AreEqual("13835128424026472451", files[1].Id);
+            Assert.AreEqual(80, files[1].FileSize);
+            Assert.AreEqual(2, files[1].LinkCount);
+
+            Assert.AreEqual("regularClose.txt", files[2].Name);
+            Assert.AreEqual("9799903157902508049", files[2].Id);
+            Assert.AreEqual(14, files[2].FileSize);
+            Assert.AreEqual(1, files[2].LinkCount);
+
+            Assert.AreEqual("regularOpen.txt", files[3].Name);
+            Assert.AreEqual("17293892937847013391", files[3].Id);
+            Assert.AreEqual(14, files[3].FileSize);
+            Assert.AreEqual(1, files[3].LinkCount);
 
             // SymLink
             ShareFileItem symlink = items.Single(i => i.FileType == NfsFileType.SymLink);
             Assert.IsFalse(symlink.IsDirectory);
-            Assert.AreEqual("Filee3467eb54e4444679d1af59a849f8e49_symlink", symlink.Name);
-            Assert.AreEqual("16140971433240166407", symlink.Id);
+            Assert.AreEqual("symlink.txt", symlink.Name);
+            Assert.AreEqual("10376363910205931529", symlink.Id);
             Assert.AreEqual(1, symlink.LinkCount);
-            Assert.AreEqual(
-                "/accounts8de115c011836f2/share41a04289fb194908849dd37660cc2f38/File1788c17d9ce143369a341d5ce93db99a",
-                symlink.LinkText);
+            Assert.AreEqual("/mnt/s2/dir2/regular.txt", symlink.LinkText);
             Assert.AreEqual("0777", symlink.Properties.FileMode.ToOctalFileMode());
 
             // BlockDevice
             ShareFileItem block = items.Single(i => i.FileType == NfsFileType.BlockDevice);
-            Assert.AreEqual("File5924b48ddbbb496daca7733a187ca235_blockdev", block.Name);
+            Assert.AreEqual("block_device", block.Name);
+            Assert.AreEqual("10952824662509355033", block.Id);
+            Assert.AreEqual(1, block.LinkCount);
             Assert.AreEqual(8, block.DeviceMajor);
             Assert.AreEqual(0, block.DeviceMinor);
-            Assert.AreEqual("0666", block.Properties.FileMode.ToOctalFileMode());
+            Assert.AreEqual("0", block.Properties.Owner);
+            Assert.AreEqual("0", block.Properties.Group);
+            Assert.AreEqual("0640", block.Properties.FileMode.ToOctalFileMode());
 
             // CharDevice
             ShareFileItem charDev = items.Single(i => i.FileType == NfsFileType.CharacterDevice);
-            Assert.AreEqual("Filed66b188ea28c4d87b5271e3f54ad4395_chardev", charDev.Name);
-            Assert.AreEqual(5, charDev.DeviceMajor);
-            Assert.AreEqual(0, charDev.DeviceMinor);
+            Assert.AreEqual("char_device", charDev.Name);
+            Assert.AreEqual("16717432185543589911", charDev.Id);
+            Assert.AreEqual(1, charDev.LinkCount);
+            Assert.AreEqual(1, charDev.DeviceMajor);
+            Assert.AreEqual(7, charDev.DeviceMinor);
+            Assert.AreEqual("0", charDev.Properties.Owner);
+            Assert.AreEqual("0", charDev.Properties.Group);
+            Assert.AreEqual("0644", charDev.Properties.FileMode.ToOctalFileMode());
 
             // Fifo
             ShareFileItem fifo = items.Single(i => i.FileType == NfsFileType.Fifo);
-            Assert.AreEqual("File445fca4d216e4c9b90e6fca074f8d90e_fifo", fifo.Name);
+            Assert.AreEqual("fifo_pipe", fifo.Name);
+            Assert.AreEqual("14988049928633319435", fifo.Id);
+            Assert.AreEqual(1, fifo.LinkCount);
             Assert.IsNull(fifo.DeviceMajor);
             Assert.IsNull(fifo.DeviceMinor);
             Assert.IsNull(fifo.LinkText);
+            Assert.AreEqual("1000", fifo.Properties.Owner);
+            Assert.AreEqual("1000", fifo.Properties.Group);
+            Assert.AreEqual("0644", fifo.Properties.FileMode.ToOctalFileMode());
 
             // Socket
             ShareFileItem socket = items.Single(i => i.FileType == NfsFileType.Socket);
-            Assert.AreEqual("File026b2738ce0f42bdbb678b1fec09f5d6_socket", socket.Name);
+            Assert.AreEqual("unix_socket", socket.Name);
+            Assert.AreEqual("16429201809391878183", socket.Id);
+            Assert.AreEqual(1, socket.LinkCount);
             Assert.IsNull(socket.DeviceMajor);
+            Assert.IsNull(socket.DeviceMinor);
             Assert.IsNull(socket.LinkText);
+            Assert.AreEqual("0", socket.Properties.Owner);
+            Assert.AreEqual("0", socket.Properties.Group);
+            Assert.AreEqual("0755", socket.Properties.FileMode.ToOctalFileMode());
         }
 
         [RecordedTest]
