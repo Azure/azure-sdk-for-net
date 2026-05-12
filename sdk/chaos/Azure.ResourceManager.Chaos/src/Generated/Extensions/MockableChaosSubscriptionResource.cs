@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ChaosExperimentResource> GetChaosExperimentsAsync(bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ChaosExperimentResource> GetExperimentsAsync(bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
                 running,
                 continuationToken,
                 context,
-                "MockableChaosSubscriptionResource.GetChaosExperiments"), data => new ChaosExperimentResource(Client, data));
+                "MockableChaosSubscriptionResource.GetExperiments"), data => new ChaosExperimentResource(Client, data));
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ChaosExperimentResource> GetChaosExperiments(bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ChaosExperimentResource> GetExperiments(bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
                 running,
                 continuationToken,
                 context,
-                "MockableChaosSubscriptionResource.GetChaosExperiments"), data => new ChaosExperimentResource(Client, data));
+                "MockableChaosSubscriptionResource.GetExperiments"), data => new ChaosExperimentResource(Client, data));
         }
     }
 }

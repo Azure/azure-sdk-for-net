@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Chaos
         /// Get a list of Experiment resources in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetChaosExperimentsAsync(bool?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetExperimentsAsync(bool?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -387,18 +387,18 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ChaosExperimentResource> GetChaosExperimentsAsync(this SubscriptionResource subscriptionResource, bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ChaosExperimentResource> GetExperimentsAsync(this SubscriptionResource subscriptionResource, bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosExperimentsAsync(running, continuationToken, cancellationToken);
+            return GetMockableChaosSubscriptionResource(subscriptionResource).GetExperimentsAsync(running, continuationToken, cancellationToken);
         }
 
         /// <summary>
         /// Get a list of Experiment resources in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetChaosExperiments(bool?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetExperiments(bool?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -407,11 +407,11 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ChaosExperimentResource> GetChaosExperiments(this SubscriptionResource subscriptionResource, bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public static Pageable<ChaosExperimentResource> GetExperiments(this SubscriptionResource subscriptionResource, bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosExperiments(running, continuationToken, cancellationToken);
+            return GetMockableChaosSubscriptionResource(subscriptionResource).GetExperiments(running, continuationToken, cancellationToken);
         }
     }
 }

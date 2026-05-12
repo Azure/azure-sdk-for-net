@@ -10,66 +10,66 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Cdn;
+using Azure.ResourceManager.BillingBenefits;
 
-namespace Azure.ResourceManager.Cdn.Models
+namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    /// <summary> Properties required to create or update an endpoint. </summary>
-    public partial class FrontDoorEndpointPatch : IJsonModel<FrontDoorEndpointPatch>
+    /// <summary> Discounts patch request. </summary>
+    public partial class DiscountPatchContent : IJsonModel<DiscountPatchContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FrontDoorEndpointPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DiscountPatchContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscountPatchContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFrontDoorEndpointPatch(document.RootElement, options);
+                        return DeserializeDiscountPatchContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorEndpointPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscountPatchContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscountPatchContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingBenefitsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorEndpointPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscountPatchContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FrontDoorEndpointPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DiscountPatchContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FrontDoorEndpointPatch IPersistableModel<FrontDoorEndpointPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DiscountPatchContent IPersistableModel<DiscountPatchContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FrontDoorEndpointPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DiscountPatchContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="frontDoorEndpointPatch"> The <see cref="FrontDoorEndpointPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(FrontDoorEndpointPatch frontDoorEndpointPatch)
+        /// <param name="discountPatchContent"> The <see cref="DiscountPatchContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DiscountPatchContent discountPatchContent)
         {
-            if (frontDoorEndpointPatch == null)
+            if (discountPatchContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(frontDoorEndpointPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(discountPatchContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FrontDoorEndpointPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DiscountPatchContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,15 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscountPatchContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorEndpointPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscountPatchContent)} does not support writing '{format}' format.");
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -100,11 +105,6 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -125,34 +125,43 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FrontDoorEndpointPatch IJsonModel<FrontDoorEndpointPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DiscountPatchContent IJsonModel<DiscountPatchContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FrontDoorEndpointPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DiscountPatchContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscountPatchContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorEndpointPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscountPatchContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFrontDoorEndpointPatch(document.RootElement, options);
+            return DeserializeDiscountPatchContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FrontDoorEndpointPatch DeserializeFrontDoorEndpointPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static DiscountPatchContent DeserializeDiscountPatchContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            DiscountPatchRequestProperties properties = default;
             IDictionary<string, string> tags = default;
-            FrontDoorEndpointPropertiesUpdateParameters properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = DiscountPatchRequestProperties.DeserializeDiscountPatchRequestProperties(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -174,21 +183,12 @@ namespace Azure.ResourceManager.Cdn.Models
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = FrontDoorEndpointPropertiesUpdateParameters.DeserializeFrontDoorEndpointPropertiesUpdateParameters(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FrontDoorEndpointPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
+            return new DiscountPatchContent(properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }
