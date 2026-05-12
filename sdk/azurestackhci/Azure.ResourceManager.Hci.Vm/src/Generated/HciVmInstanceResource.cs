@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateCreateOrUpdateRequest(Id.Parent, HciVmInstanceData.ToRequestContent(data), context);
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), HciVmInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmInstanceResource> operation = new VmArmOperation<HciVmInstanceResource>(
                     new HciVmInstanceOperationSource(Client),
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateCreateOrUpdateRequest(Id.Parent, HciVmInstanceData.ToRequestContent(data), context);
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), HciVmInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmInstanceResource> operation = new VmArmOperation<HciVmInstanceResource>(
                     new HciVmInstanceOperationSource(Client),
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateGetRequest(Id.Parent, context);
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciVmInstanceData> response = Response.FromValue(HciVmInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateGetRequest(Id.Parent, context);
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciVmInstanceData> response = Response.FromValue(HciVmInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateUpdateRequest(Id.Parent, HciVmInstancePatch.ToRequestContent(patch), context);
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateUpdateRequest(Id.Parent.ToString(), HciVmInstancePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmInstanceResource> operation = new VmArmOperation<HciVmInstanceResource>(
                     new HciVmInstanceOperationSource(Client),
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateUpdateRequest(Id.Parent, HciVmInstancePatch.ToRequestContent(patch), context);
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateUpdateRequest(Id.Parent.ToString(), HciVmInstancePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmInstanceResource> operation = new VmArmOperation<HciVmInstanceResource>(
                     new HciVmInstanceOperationSource(Client),
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateDeleteRequest(Id.Parent, context);
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateDeleteRequest(Id.Parent.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateDeleteRequest(Id.Parent, context);
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateDeleteRequest(Id.Parent.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreatePauseRequest(Id.Parent, context);
+                HttpMessage message = _virtualMachineInstancesRestClient.CreatePauseRequest(Id.Parent.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreatePauseRequest(Id.Parent, context);
+                HttpMessage message = _virtualMachineInstancesRestClient.CreatePauseRequest(Id.Parent.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateRestartRequest(Id.Parent, context);
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateRestartRequest(Id.Parent.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateRestartRequest(Id.Parent, context);
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateRestartRequest(Id.Parent.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateSaveRequest(Id.Parent, context);
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateSaveRequest(Id.Parent.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateSaveRequest(Id.Parent, context);
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateSaveRequest(Id.Parent.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateStartRequest(Id.Parent, context);
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateStartRequest(Id.Parent.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -895,7 +895,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateStartRequest(Id.Parent, context);
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateStartRequest(Id.Parent.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateStopRequest(Id.Parent, context);
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateStopRequest(Id.Parent.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateStopRequest(Id.Parent, context);
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateStopRequest(Id.Parent.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1009,21 +1009,21 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary> Gets an object representing a <see cref="HciVmHybridIdentityMetadataResource"/> along with the instance operations that can be performed on it in the <see cref="ArmResource"/>. </summary>
+        /// <summary> Gets an object representing a <see cref="HciVmHybridIdentityMetadataResource"/> along with the instance operations that can be performed on it in the <see cref="HciVmInstanceResource"/>. </summary>
         /// <returns> Returns a <see cref="HciVmHybridIdentityMetadataResource"/> object. </returns>
         public virtual HciVmHybridIdentityMetadataResource GetHciVmHybridIdentityMetadata()
         {
             return new HciVmHybridIdentityMetadataResource(Client, Id.AppendChildResource("hybridIdentityMetadata", "default"));
         }
 
-        /// <summary> Gets an object representing a <see cref="HciVmAttestationStatusResource"/> along with the instance operations that can be performed on it in the <see cref="ArmResource"/>. </summary>
+        /// <summary> Gets an object representing a <see cref="HciVmAttestationStatusResource"/> along with the instance operations that can be performed on it in the <see cref="HciVmInstanceResource"/>. </summary>
         /// <returns> Returns a <see cref="HciVmAttestationStatusResource"/> object. </returns>
         public virtual HciVmAttestationStatusResource GetHciVmAttestationStatus()
         {
             return new HciVmAttestationStatusResource(Client, Id.AppendChildResource("attestationStatus", "default"));
         }
 
-        /// <summary> Gets an object representing a <see cref="HciVmGuestAgentResource"/> along with the instance operations that can be performed on it in the <see cref="ArmResource"/>. </summary>
+        /// <summary> Gets an object representing a <see cref="HciVmGuestAgentResource"/> along with the instance operations that can be performed on it in the <see cref="HciVmInstanceResource"/>. </summary>
         /// <returns> Returns a <see cref="HciVmGuestAgentResource"/> object. </returns>
         public virtual HciVmGuestAgentResource GetHciVmGuestAgent()
         {

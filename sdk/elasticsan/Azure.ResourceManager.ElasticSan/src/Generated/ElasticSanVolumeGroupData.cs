@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     Properties = new VolumeGroupProperties();
                 }
-                Properties.ProtocolType = value.Value;
+                Properties.ProtocolType = value;
             }
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     Properties = new VolumeGroupProperties();
                 }
-                Properties.Encryption = value.Value;
+                Properties.Encryption = value;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     Properties = new VolumeGroupProperties();
                 }
-                Properties.EnforceDataIntegrityCheckForIscsi = value.Value;
+                Properties.EnforceDataIntegrityCheckForIscsi = value;
             }
         }
 

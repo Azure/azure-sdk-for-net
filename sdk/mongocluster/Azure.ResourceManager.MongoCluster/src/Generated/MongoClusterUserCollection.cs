@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MongoCluster
         {
             if (id.ResourceType != MongoClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MongoClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MongoClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoClusterUserData, MongoClusterUserResource>(new UsersGetByMongoClusterAsyncCollectionResultOfT(_usersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MongoClusterUserResource(Client, data));
+            return new AsyncPageableWrapper<MongoClusterUserData, MongoClusterUserResource>(new UsersGetByMongoClusterAsyncCollectionResultOfT(
+                _usersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MongoClusterUserCollection.GetAll"), data => new MongoClusterUserResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoClusterUserData, MongoClusterUserResource>(new UsersGetByMongoClusterCollectionResultOfT(_usersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MongoClusterUserResource(Client, data));
+            return new PageableWrapper<MongoClusterUserData, MongoClusterUserResource>(new UsersGetByMongoClusterCollectionResultOfT(
+                _usersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MongoClusterUserCollection.GetAll"), data => new MongoClusterUserResource(Client, data));
         }
 
         /// <summary>

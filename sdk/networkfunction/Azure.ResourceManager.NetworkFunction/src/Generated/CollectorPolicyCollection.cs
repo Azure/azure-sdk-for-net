@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             if (id.ResourceType != AzureTrafficCollectorResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AzureTrafficCollectorResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AzureTrafficCollectorResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CollectorPolicyData, CollectorPolicyResource>(new CollectorPoliciesGetAllAsyncCollectionResultOfT(_collectorPoliciesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new CollectorPolicyResource(Client, data));
+            return new AsyncPageableWrapper<CollectorPolicyData, CollectorPolicyResource>(new CollectorPoliciesGetAllAsyncCollectionResultOfT(
+                _collectorPoliciesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CollectorPolicyCollection.GetAll"), data => new CollectorPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CollectorPolicyData, CollectorPolicyResource>(new CollectorPoliciesGetAllCollectionResultOfT(_collectorPoliciesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new CollectorPolicyResource(Client, data));
+            return new PageableWrapper<CollectorPolicyData, CollectorPolicyResource>(new CollectorPoliciesGetAllCollectionResultOfT(
+                _collectorPoliciesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CollectorPolicyCollection.GetAll"), data => new CollectorPolicyResource(Client, data));
         }
 
         /// <summary>

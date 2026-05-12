@@ -4,13 +4,10 @@
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Agents;
 using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -19,169 +16,8 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
-public class Sample_EvaluationsAgent : SamplesBase
+public class Sample_EvaluationsAgent : EvaluationSampleBase
 {
-    #region Snippet:Sample_GetError_EvaluationsAgent
-    private static string GetErrorMessageOrEmpty(ClientResult result)
-    {
-        string error = "";
-        Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
-        string code = default;
-        string message = default;
-        foreach (JsonProperty prop in document.RootElement.EnumerateObject())
-        {
-            if (prop.NameEquals("error"u8) && prop.Value.ValueKind != JsonValueKind.Null && prop.Value is JsonElement countsElement)
-            {
-                foreach (JsonProperty errorNode in countsElement.EnumerateObject())
-                {
-                    if (errorNode.Value.ValueKind == JsonValueKind.String)
-                    {
-                        if (errorNode.NameEquals("code"u8))
-                        {
-                            code = errorNode.Value.GetString();
-                        }
-                        else if (errorNode.NameEquals("message"u8))
-                        {
-                            message = errorNode.Value.GetString();
-                        }
-                    }
-                }
-            }
-        }
-        if (!string.IsNullOrEmpty(message))
-        {
-            error = $"Message: {message}, Code: {code ?? "<None>"}";
-        }
-        return error;
-    }
-    #endregion
-    #region Snippet:Sample_GetResultCounts_EvaluationsAgent
-    private static string GetResultsCounts(ClientResult result)
-    {
-        Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
-        StringBuilder sbFormattedCounts = new("{\n");
-        foreach (JsonProperty prop in document.RootElement.EnumerateObject())
-        {
-            if (prop.NameEquals("result_counts"u8) && prop.Value is JsonElement countsElement)
-            {
-                foreach (JsonProperty count in countsElement.EnumerateObject())
-                {
-                    if (count.Value.ValueKind == JsonValueKind.Number)
-                    {
-                        sbFormattedCounts.Append($"    {count.Name}: {count.Value.GetInt32()}\n");
-                    }
-                }
-            }
-        }
-        sbFormattedCounts.Append('}');
-        if (sbFormattedCounts.Length == 3)
-        {
-            throw new InvalidOperationException("The result does not contain the \"result_counts\" field.");
-        }
-        return sbFormattedCounts.ToString();
-    }
-    #endregion
-    #region Snippet:Sample_GetStringValues_EvaluationsAgent
-    private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
-    {
-        Dictionary<string, string> results = [];
-        Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
-        foreach (JsonProperty prop in document.RootElement.EnumerateObject())
-        {
-            foreach (string key in expectedProperties)
-            {
-                if (prop.NameEquals(Encoding.UTF8.GetBytes(key)) && prop.Value.ValueKind == JsonValueKind.String)
-                {
-                    results[key] = prop.Value.GetString();
-                }
-            }
-        }
-        List<string> notFoundItems = expectedProperties.Where((key) => !results.ContainsKey(key)).ToList();
-        if (notFoundItems.Count > 0)
-        {
-            StringBuilder sbNotFound = new();
-            foreach (string value in notFoundItems)
-            {
-                sbNotFound.Append($"{value}, ");
-            }
-            if (sbNotFound.Length > 2)
-            {
-                sbNotFound.Remove(sbNotFound.Length - 2, 2);
-            }
-            throw new InvalidOperationException($"The next keys were not found in returned result: {sbNotFound}.");
-        }
-        return results;
-    }
-    #endregion
-    #region Snippet:Sample_GetResultsList_EvaluationsAgent_Async
-    private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
-    {
-        List<string> resultJsons = [];
-        bool hasMore = false;
-        do
-        {
-            ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
-            Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-            JsonDocument document = JsonDocument.ParseValue(ref reader);
-
-            foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
-            {
-                if (topProperty.NameEquals("has_more"u8))
-                {
-                    hasMore = topProperty.Value.GetBoolean();
-                }
-                else if (topProperty.NameEquals("data"u8))
-                {
-                    if (topProperty.Value.ValueKind == JsonValueKind.Array)
-                    {
-                        foreach (JsonElement dataElement in topProperty.Value.EnumerateArray())
-                        {
-                            resultJsons.Add(dataElement.ToString());
-                        }
-                    }
-                }
-            }
-        } while (hasMore);
-        return resultJsons;
-    }
-    #endregion
-    #region Snippet:Sample_GetResultsList_EvaluationsAgent_Sync
-    private static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
-    {
-        List<string> resultJsons = [];
-        bool hasMore = false;
-        do
-        {
-            ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
-            Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-            JsonDocument document = JsonDocument.ParseValue(ref reader);
-            List<string> data = [];
-
-            foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
-            {
-                if (topProperty.NameEquals("has_more"u8))
-                {
-                    hasMore = topProperty.Value.GetBoolean();
-                }
-                else if (topProperty.NameEquals("data"u8))
-                {
-                    if (topProperty.Value.ValueKind == JsonValueKind.Array)
-                    {
-                        foreach (JsonElement dataElement in topProperty.Value.EnumerateArray())
-                        {
-                            resultJsons.Add(dataElement.ToString());
-                        }
-                    }
-                }
-            }
-        } while (hasMore);
-        return resultJsons;
-    }
-    #endregion
-
     #region Snippet:Sample_CreateData_EvaluationsAgent
     private static BinaryData GetEvaluationConfig(string modelDeploymentName)
     {
@@ -253,21 +89,21 @@ public class Sample_EvaluationsAgent : SamplesBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #endregion
         #region Snippet:Sample_CreateAgent_EvaluationsAgent_Async
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant that answers general questions",
         };
-        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "evalAgent",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
         #endregion
         #region Snippet:Sample_CreateResponse_EvaluationsAgent_Async
         ResponseItem request = ResponseItem.CreateUserMessageItem("What is the size of France in square miles?");
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version));
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version));
         ResponseResult response = await responseClient.CreateResponseAsync([request]);
         Console.WriteLine(response.GetOutputText());
         #endregion
@@ -314,7 +150,7 @@ public class Sample_EvaluationsAgent : SamplesBase
         #endregion
         #region Snippet:Sample_Cleanup_EvaluationsAgent_Async
         await evaluationClient.DeleteEvaluationAsync(evaluationId, new System.ClientModel.Primitives.RequestOptions());
-        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
@@ -330,20 +166,20 @@ public class Sample_EvaluationsAgent : SamplesBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #region Snippet:Sample_CreateAgent_EvaluationsAgent_Sync
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant that answers general questions",
         };
-        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "evalAgent",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
         #endregion
         #region Snippet:Sample_CreateResponse_EvaluationsAgent_Sync
         ResponseItem request = ResponseItem.CreateUserMessageItem("What is the size of France in square miles?");
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version));
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version));
         ResponseResult response = responseClient.CreateResponse([request]);
         Console.WriteLine(response.GetOutputText());
         #endregion
@@ -390,7 +226,7 @@ public class Sample_EvaluationsAgent : SamplesBase
         #endregion
         #region Snippet:Sample_Cleanup_EvaluationsAgent_Sync
         evaluationClient.DeleteEvaluation(evaluationId, new System.ClientModel.Primitives.RequestOptions());
-        projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

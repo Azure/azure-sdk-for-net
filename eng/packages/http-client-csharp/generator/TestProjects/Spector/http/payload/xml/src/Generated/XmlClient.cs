@@ -26,23 +26,45 @@ namespace Payload.Xml
 
         public virtual SimpleModelValue GetSimpleModelValueClient() => throw null;
 
+        public virtual ModelWithRenamedPropertyValue GetModelWithRenamedPropertyValueClient() => throw null;
+
+        public virtual ModelWithRenamedFieldsValue GetModelWithRenamedFieldsValueClient() => throw null;
+
+        public virtual ModelWithNestedModelValue GetModelWithNestedModelValueClient() => throw null;
+
+        public virtual ModelWithRenamedNestedModelValue GetModelWithRenamedNestedModelValueClient() => throw null;
+
         public virtual ModelWithSimpleArraysValue GetModelWithSimpleArraysValueClient() => throw null;
-
-        public virtual ModelWithArrayOfModelValue GetModelWithArrayOfModelValueClient() => throw null;
-
-        public virtual ModelWithOptionalFieldValue GetModelWithOptionalFieldValueClient() => throw null;
-
-        public virtual ModelWithAttributesValue GetModelWithAttributesValueClient() => throw null;
 
         public virtual ModelWithUnwrappedArrayValue GetModelWithUnwrappedArrayValueClient() => throw null;
 
         public virtual ModelWithRenamedArraysValue GetModelWithRenamedArraysValueClient() => throw null;
 
-        public virtual ModelWithRenamedFieldsValue GetModelWithRenamedFieldsValueClient() => throw null;
+        public virtual ModelWithWrappedPrimitiveCustomItemNamesValue GetModelWithWrappedPrimitiveCustomItemNamesValueClient() => throw null;
 
-        public virtual ModelWithEmptyArrayValue GetModelWithEmptyArrayValueClient() => throw null;
+        public virtual ModelWithArrayOfModelValue GetModelWithArrayOfModelValueClient() => throw null;
+
+        public virtual ModelWithUnwrappedModelArrayValue GetModelWithUnwrappedModelArrayValueClient() => throw null;
+
+        public virtual ModelWithRenamedWrappedModelArrayValue GetModelWithRenamedWrappedModelArrayValueClient() => throw null;
+
+        public virtual ModelWithRenamedUnwrappedModelArrayValue GetModelWithRenamedUnwrappedModelArrayValueClient() => throw null;
+
+        public virtual ModelWithRenamedWrappedAndItemModelArrayValue GetModelWithRenamedWrappedAndItemModelArrayValueClient() => throw null;
+
+        public virtual ModelWithAttributesValue GetModelWithAttributesValueClient() => throw null;
+
+        public virtual ModelWithRenamedAttributeValue GetModelWithRenamedAttributeValueClient() => throw null;
+
+        public virtual ModelWithNamespaceValue GetModelWithNamespaceValueClient() => throw null;
+
+        public virtual ModelWithNamespaceOnPropertiesValue GetModelWithNamespaceOnPropertiesValueClient() => throw null;
 
         public virtual ModelWithTextValue GetModelWithTextValueClient() => throw null;
+
+        public virtual ModelWithOptionalFieldValue GetModelWithOptionalFieldValueClient() => throw null;
+
+        public virtual ModelWithEmptyArrayValue GetModelWithEmptyArrayValueClient() => throw null;
 
         public virtual ModelWithDictionaryValue GetModelWithDictionaryValueClient() => throw null;
 

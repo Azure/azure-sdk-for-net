@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.LoadTesting
         private readonly string _resourceGroupName;
         private readonly string _loadTestName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of LoadTestsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The LoadTests client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="loadTestName"> Load Test name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LoadTestsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(LoadTests client, Guid subscriptionId, string resourceGroupName, string loadTestName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public LoadTestsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(LoadTests client, Guid subscriptionId, string resourceGroupName, string loadTestName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _loadTestName = loadTestName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of LoadTestsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.LoadTesting
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetOutboundNetworkDependenciesEndpointsRequest(nextLink, _subscriptionId, _resourceGroupName, _loadTestName, _context) : _client.CreateGetOutboundNetworkDependenciesEndpointsRequest(_subscriptionId, _resourceGroupName, _loadTestName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LoadTestingResource.GetOutboundNetworkDependenciesEndpoints");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

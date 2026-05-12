@@ -5,8 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.Projects;
+namespace Azure.AI.Projects.Evaluation;
 
+[CodeGenType("WeeklyRecurrenceSchedule")]
 public partial class WeeklyRecurrenceSchedule : RecurrenceSchedule
 {
     /// <param name="writer"> The JSON writer. </param>

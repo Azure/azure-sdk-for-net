@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class KnowledgeRetrievalMinimalReasoningEffort : KnowledgeRetrievalReasoningEffort
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>. </summary>
-        public KnowledgeRetrievalMinimalReasoningEffort() : base(KnowledgeRetrievalReasoningEffortKind.Minimal)
+        internal KnowledgeRetrievalMinimalReasoningEffort() : base(KnowledgeRetrievalReasoningEffortKind.Minimal)
         {
         }
 

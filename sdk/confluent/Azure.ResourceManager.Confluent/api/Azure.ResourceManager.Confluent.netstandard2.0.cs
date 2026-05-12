@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Confluent
     }
     public partial class ConfluentConnectorData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.ConfluentConnectorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.ConfluentConnectorData>
     {
-        internal ConfluentConnectorData() { }
+        public ConfluentConnectorData() { }
         public Azure.ResourceManager.Confluent.Models.ConnectorInfoBase ConnectorBasicInfo { get { throw null; } set { } }
         public Azure.ResourceManager.Confluent.Models.ConnectorServiceTypeInfoBase ConnectorServiceTypeInfo { get { throw null; } set { } }
         public Azure.ResourceManager.Confluent.Models.PartnerInfoBase PartnerConnectorInfo { get { throw null; } set { } }

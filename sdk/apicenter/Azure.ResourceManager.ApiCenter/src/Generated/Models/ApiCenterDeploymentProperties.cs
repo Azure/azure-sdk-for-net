@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiCenter.Models
@@ -14,37 +15,8 @@ namespace Azure.ResourceManager.ApiCenter.Models
     /// <summary> API deployment entity properties. </summary>
     public partial class ApiCenterDeploymentProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiCenterDeploymentProperties"/>. </summary>
         public ApiCenterDeploymentProperties()
@@ -59,8 +31,8 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="state"> State of API deployment. </param>
         /// <param name="server"> The deployment server. </param>
         /// <param name="customProperties"> The custom metadata defined for API catalog entities. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCenterDeploymentProperties(string title, string description, ResourceIdentifier environmentId, ResourceIdentifier definitionId, ApiCenterDeploymentState? state, ApiCenterDeploymentServer server, BinaryData customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiCenterDeploymentProperties(string title, string description, ResourceIdentifier environmentId, ResourceIdentifier definitionId, ApiCenterDeploymentState? state, ApiCenterDeploymentServer server, BinaryData customProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Description = description;
@@ -69,62 +41,66 @@ namespace Azure.ResourceManager.ApiCenter.Models
             State = state;
             Server = server;
             CustomProperties = customProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> API deployment title. </summary>
         public string Title { get; set; }
+
         /// <summary> Description of the deployment. </summary>
         public string Description { get; set; }
+
         /// <summary> API center-scoped environment resource ID. </summary>
         public ResourceIdentifier EnvironmentId { get; set; }
+
         /// <summary> API center-scoped definition resource ID. </summary>
         public ResourceIdentifier DefinitionId { get; set; }
+
         /// <summary> State of API deployment. </summary>
         public ApiCenterDeploymentState? State { get; set; }
+
         /// <summary> The deployment server. </summary>
         internal ApiCenterDeploymentServer Server { get; set; }
+
+        /// <summary>
+        /// The custom metadata defined for API catalog entities.
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData CustomProperties { get; set; }
+
         /// <summary> Base runtime URLs for this deployment. </summary>
         public IList<Uri> ServerRuntimeUri
         {
             get
             {
                 if (Server is null)
+                {
                     Server = new ApiCenterDeploymentServer();
+                }
                 return Server.RuntimeUri;
             }
         }
-
-        /// <summary>
-        /// The custom metadata defined for API catalog entities.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData CustomProperties { get; set; }
     }
 }

@@ -9,9 +9,8 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Projects;
 
-namespace Azure.Core
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Paged collection of Schedule items. </summary>
     internal partial class PagedSchedule : IJsonModel<PagedSchedule>
     {
         /// <summary> Initializes a new instance of <see cref="PagedSchedule"/> for deserialization. </summary>

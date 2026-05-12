@@ -38,7 +38,7 @@ public class ArmProviderSchema
     public static ArmProviderSchema Deserialize(IReadOnlyDictionary<string, BinaryData> arguments, ManagementInputLibrary library, Func<NonResourceMethod, bool>? methodFilter = null)
     {
         var resourceMetadata = new List<ArmResourceMetadata>();
-        var resourceChildren = new Dictionary<string, List<string>>();
+        var resourceChildren = new Dictionary<string, List<RequestPathPattern>>();
 
         // Deserialize resources
         if (arguments.TryGetValue("resources", out var resourcesData))
@@ -61,7 +61,7 @@ public class ArmProviderSchema
                     continue;
                 }
 
-                var children = new List<string>();
+                var children = new List<RequestPathPattern>();
                 var metadata = ArmResourceMetadata.DeserializeResourceMetadata(item, model, children);
                 resourceMetadata.Add(metadata);
                 resourceChildren.Add(metadata.ResourceIdPattern, children);

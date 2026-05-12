@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             get
             {
-                return RunInformation.Steps;
+                return RunInformation is null ? default : RunInformation.Steps;
             }
         }
     }

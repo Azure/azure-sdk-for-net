@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetApp
 {
+    /// <summary></summary>
     public partial class NetAppElasticCapacityPoolResource : IJsonModel<NetAppElasticCapacityPoolData>
     {
-        private static NetAppElasticCapacityPoolData s_dataDeserializationInstance;
-        private static NetAppElasticCapacityPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetAppElasticCapacityPoolData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetAppElasticCapacityPoolData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppElasticCapacityPoolData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetAppElasticCapacityPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticCapacityPoolData>)Data).Write(writer, options);
 
-        NetAppElasticCapacityPoolData IJsonModel<NetAppElasticCapacityPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticCapacityPoolData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetAppElasticCapacityPoolData IJsonModel<NetAppElasticCapacityPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetAppElasticCapacityPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppElasticCapacityPoolData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetAppElasticCapacityPoolData IPersistableModel<NetAppElasticCapacityPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppElasticCapacityPoolData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<NetAppElasticCapacityPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppElasticCapacityPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetAppElasticCapacityPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

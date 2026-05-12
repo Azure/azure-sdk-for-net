@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             if (id.ResourceType != EventHubResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EventHubResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EventHubResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,8 @@ namespace Azure.ResourceManager.EventHubs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EventHubAuthorizationRuleResource(Client, data));
+                context,
+                "EventHubAuthorizationRuleCollection.GetAll"), data => new EventHubAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +328,8 @@ namespace Azure.ResourceManager.EventHubs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EventHubAuthorizationRuleResource(Client, data));
+                context,
+                "EventHubAuthorizationRuleCollection.GetAll"), data => new EventHubAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>

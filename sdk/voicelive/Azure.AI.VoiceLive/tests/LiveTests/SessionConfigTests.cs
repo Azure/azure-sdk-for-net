@@ -333,7 +333,7 @@ namespace Azure.AI.VoiceLive.Tests
             var options = new VoiceLiveSessionOptions()
             {
                 Model = "gpt-4o",
-                Modalities = { InteractionModality.Text },
+                Modalities = { InteractionModality.Audio },
                 InputAudioEchoCancellation = new AudioEchoCancellation(),
                 InputAudioNoiseReduction = new AudioNoiseReduction()
                 {

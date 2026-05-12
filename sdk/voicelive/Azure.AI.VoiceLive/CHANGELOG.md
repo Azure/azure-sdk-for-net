@@ -3,10 +3,15 @@
 ## 1.1.0-beta.4 (Unreleased)
 
 ### Features Added
+- Replaced `BinaryData` with new `RequireApprovalOption` typed property on `VoiceLiveMcpServerDefinition.RequireApproval`. Customers can now set approval directly (`server.RequireApproval = MCPApprovalType.Never`) instead of using `BinaryData.FromObjectAsJson()`.
+- Added OpenTelemetry distributed tracing support. The SDK now emits spans via `System.Diagnostics.ActivitySource` named `"Azure.AI.VoiceLive"` — no extra instrumentation package required. Spans include standard [GenAI semantic convention](https://opentelemetry.io/docs/specs/semconv/gen-ai/) attributes such as token usage, first-token latency, turn count, and interruption count. 
+- Added OpenTelemetry metrics support. The SDK now emits `gen_ai.client.operation.duration` and `gen_ai.client.token.usage` metrics via a `System.Diagnostics.Metrics.Meter` named `"Azure.AI.VoiceLive"` in compliance with GenAI semantic conventions.
 
 ### Breaking Changes
+- `VoiceLiveMcpServerDefinition.RequireApproval` property type changed from `BinaryData` to `RequireApprovalOption`.
 
 ### Bugs Fixed
+- Fixed `MCPApprovalType` serialization so that `require_approval` correctly serializes to `"never"` on the wire. Previously, using `BinaryData.FromObjectAsJson(MCPApprovalType.Never)` silently produced an empty object `{}`, causing the service to treat it as `"always"` and send unexpected approval requests.
 
 ### Other Changes
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             if (id.ResourceType != EnterpriseMccCustomerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EnterpriseMccCustomerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EnterpriseMccCustomerResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EnterpriseMccCacheNodeData, EnterpriseMccCacheNodeResource>(new EnterpriseMccCacheNodesOperationsGetByEnterpriseMccCustomerResourceAsyncCollectionResultOfT(_enterpriseMccCacheNodesOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EnterpriseMccCacheNodeResource(Client, data));
+            return new AsyncPageableWrapper<EnterpriseMccCacheNodeData, EnterpriseMccCacheNodeResource>(new EnterpriseMccCacheNodesOperationsGetByEnterpriseMccCustomerResourceAsyncCollectionResultOfT(
+                _enterpriseMccCacheNodesOperationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EnterpriseMccCacheNodeCollection.GetAll"), data => new EnterpriseMccCacheNodeResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EnterpriseMccCacheNodeData, EnterpriseMccCacheNodeResource>(new EnterpriseMccCacheNodesOperationsGetByEnterpriseMccCustomerResourceCollectionResultOfT(_enterpriseMccCacheNodesOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EnterpriseMccCacheNodeResource(Client, data));
+            return new PageableWrapper<EnterpriseMccCacheNodeData, EnterpriseMccCacheNodeResource>(new EnterpriseMccCacheNodesOperationsGetByEnterpriseMccCustomerResourceCollectionResultOfT(
+                _enterpriseMccCacheNodesOperationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EnterpriseMccCacheNodeCollection.GetAll"), data => new EnterpriseMccCacheNodeResource(Client, data));
         }
 
         /// <summary>

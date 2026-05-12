@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> One-time trigger. </summary>
     public partial class OneTimeTrigger : ScheduleTrigger, IJsonModel<OneTimeTrigger>
@@ -77,7 +78,7 @@ namespace Azure.AI.Projects
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("triggerAt"u8);
-            writer.WriteStringValue(TriggerAt);
+            writer.WriteStringValue(TriggerAt, "O");
             if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
@@ -112,7 +113,7 @@ namespace Azure.AI.Projects
             }
             TriggerType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string triggerAt = default;
+            DateTimeOffset triggerAt = default;
             string timeZone = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -123,7 +124,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("triggerAt"u8))
                 {
-                    triggerAt = prop.Value.GetString();
+                    triggerAt = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("timeZone"u8))

@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
+using Azure.AI.Projects.Evaluation;
 
 namespace Azure.AI.Projects
 {

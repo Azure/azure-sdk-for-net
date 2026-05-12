@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceProvisioningServiceData, DeviceProvisioningServiceResource>(new ProvisioningServiceDescriptionsGetBySubscriptionAsyncCollectionResultOfT(ProvisioningServiceDescriptionsRestClient, Id.SubscriptionId, context), data => new DeviceProvisioningServiceResource(Client, data));
+            return new AsyncPageableWrapper<DeviceProvisioningServiceData, DeviceProvisioningServiceResource>(new ProvisioningServiceDescriptionsGetBySubscriptionAsyncCollectionResultOfT(ProvisioningServiceDescriptionsRestClient, Id.SubscriptionId, context, "MockableDeviceProvisioningServicesSubscriptionResource.GetDeviceProvisioningServices"), data => new DeviceProvisioningServiceResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceProvisioningServiceData, DeviceProvisioningServiceResource>(new ProvisioningServiceDescriptionsGetBySubscriptionCollectionResultOfT(ProvisioningServiceDescriptionsRestClient, Id.SubscriptionId, context), data => new DeviceProvisioningServiceResource(Client, data));
+            return new PageableWrapper<DeviceProvisioningServiceData, DeviceProvisioningServiceResource>(new ProvisioningServiceDescriptionsGetBySubscriptionCollectionResultOfT(ProvisioningServiceDescriptionsRestClient, Id.SubscriptionId, context, "MockableDeviceProvisioningServicesSubscriptionResource.GetDeviceProvisioningServices"), data => new DeviceProvisioningServiceResource(Client, data));
         }
 
         /// <summary>

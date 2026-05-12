@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Redis.Models
     public readonly partial struct AccessPolicyType : IEquatable<AccessPolicyType>
     {
         private readonly string _value;
+        /// <summary> User-configurable access policy, using the redis access policy authoring language. </summary>
+        private const string CustomValue = "Custom";
+        /// <summary> Built-in or well-known access policies, whose policy is not configurable. </summary>
+        private const string BuiltInValue = "BuiltIn";
 
         /// <summary> Initializes a new instance of <see cref="AccessPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AccessPolicyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CustomValue = "Custom";
-        private const string BuiltInValue = "BuiltIn";
-
-        /// <summary> Custom. </summary>
+        /// <summary> User-configurable access policy, using the redis access policy authoring language. </summary>
         public static AccessPolicyType Custom { get; } = new AccessPolicyType(CustomValue);
-        /// <summary> BuiltIn. </summary>
+
+        /// <summary> Built-in or well-known access policies, whose policy is not configurable. </summary>
         public static AccessPolicyType BuiltIn { get; } = new AccessPolicyType(BuiltInValue);
+
         /// <summary> Determines if two <see cref="AccessPolicyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AccessPolicyType left, AccessPolicyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AccessPolicyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AccessPolicyType left, AccessPolicyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AccessPolicyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AccessPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AccessPolicyType(string value) => new AccessPolicyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AccessPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AccessPolicyType?(string value) => value == null ? null : new AccessPolicyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AccessPolicyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AccessPolicyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

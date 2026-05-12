@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 IPv4ConnectedPrefix = TestEnvironment.L3Ipv4Prefix,
                 IPv6ConnectedPrefix = TestEnvironment.L3Ipv6Prefix,
             };
-            ArmOperation<NetworkCloudL3NetworkResource> NetworkCloudL3NetworkResourceOp = await l3NetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, l3NetworkName, data);
+            ArmOperation<NetworkCloudL3NetworkResource> NetworkCloudL3NetworkResourceOp = await l3NetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, l3NetworkName, data, matchConditions: null);
             Assert.AreEqual(NetworkCloudL3NetworkResourceOp.Value.Data.Name, l3NetworkName);
 
             // Get
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                         ["key1"] = "myvalue1",
                     },
             };
-            NetworkCloudL3NetworkResource updateResult = await l3Network.UpdateAsync(patch);
+            NetworkCloudL3NetworkResource updateResult = await l3Network.UpdateAsync(patch, matchConditions: null);
             Assert.AreEqual(updateResult.Data.Tags, patch.Tags);
 
             // Delete

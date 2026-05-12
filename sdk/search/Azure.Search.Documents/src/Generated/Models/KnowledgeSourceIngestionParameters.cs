@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
@@ -21,7 +20,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceIngestionParameters"/>. </summary>
         public KnowledgeSourceIngestionParameters()
         {
-            IngestionPermissionOptions = new ChangeTrackingList<KnowledgeSourceIngestionPermissionOption>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceIngestionParameters"/>. </summary>
@@ -30,18 +28,16 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="chatCompletionModel"> Optional chat completion model for image verbalization or context extraction. </param>
         /// <param name="disableImageVerbalization"> Indicates whether image verbalization should be disabled. Default is false. </param>
         /// <param name="ingestionSchedule"> Optional schedule for data ingestion. </param>
-        /// <param name="ingestionPermissionOptions"> Optional list of permission types to ingest together with document content. If specified, it will set the indexer permission options for the data source. </param>
         /// <param name="contentExtractionMode"> Optional content extraction mode. Default is 'minimal'. </param>
         /// <param name="aiServices"> Optional AI Services configuration for content processing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity, KnowledgeSourceVectorizer embeddingModel, KnowledgeBaseModel chatCompletionModel, bool? disableImageVerbalization, IndexingSchedule ingestionSchedule, IList<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions, KnowledgeSourceContentExtractionMode? contentExtractionMode, AIServices aiServices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity, KnowledgeSourceVectorizer embeddingModel, KnowledgeBaseModel chatCompletionModel, bool? disableImageVerbalization, IndexingSchedule ingestionSchedule, KnowledgeSourceContentExtractionMode? contentExtractionMode, AIServices aiServices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             EmbeddingModel = embeddingModel;
             ChatCompletionModel = chatCompletionModel;
             DisableImageVerbalization = disableImageVerbalization;
             IngestionSchedule = ingestionSchedule;
-            IngestionPermissionOptions = ingestionPermissionOptions;
             ContentExtractionMode = contentExtractionMode;
             AiServices = aiServices;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -61,9 +57,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Optional schedule for data ingestion. </summary>
         public IndexingSchedule IngestionSchedule { get; set; }
-
-        /// <summary> Optional list of permission types to ingest together with document content. If specified, it will set the indexer permission options for the data source. </summary>
-        public IList<KnowledgeSourceIngestionPermissionOption> IngestionPermissionOptions { get; set; }
 
         /// <summary> Optional content extraction mode. Default is 'minimal'. </summary>
         public KnowledgeSourceContentExtractionMode? ContentExtractionMode { get; set; }

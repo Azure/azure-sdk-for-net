@@ -18,13 +18,13 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClie
     {
         protected IndividuallyNestedWithHeaderClient() => throw null;
 
-        public IndividuallyNestedWithHeaderClient(string name) : this(new Uri("http://localhost:3000"), name, new IndividuallyNestedWithHeaderClientOptions()) => throw null;
+        public IndividuallyNestedWithHeaderClient(string name) : this(new Uri("http://localhost:3000"), name, new SpecsAzureTcgcClientInitIndividuallyClientOptions()) => throw null;
 
-        public IndividuallyNestedWithHeaderClient(string name, IndividuallyNestedWithHeaderClientOptions options) : this(new Uri("http://localhost:3000"), name, options) => throw null;
+        public IndividuallyNestedWithHeaderClient(string name, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(new Uri("http://localhost:3000"), name, options) => throw null;
 
-        internal IndividuallyNestedWithHeaderClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, IndividuallyNestedWithHeaderClientOptions options) => throw null;
+        internal IndividuallyNestedWithHeaderClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, SpecsAzureTcgcClientInitIndividuallyClientOptions options) => throw null;
 
-        public IndividuallyNestedWithHeaderClient(Uri endpoint, string name, IndividuallyNestedWithHeaderClientOptions options) : this(null, endpoint, name, options) => throw null;
+        public IndividuallyNestedWithHeaderClient(Uri endpoint, string name, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(null, endpoint, name, options) => throw null;
 
         [Experimental("SCME0002")]
         public IndividuallyNestedWithHeaderClient(IndividuallyNestedWithHeaderClientSettings settings) : this(null, settings?.Endpoint, settings?.Name, settings?.Options) => throw null;

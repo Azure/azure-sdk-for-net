@@ -138,13 +138,17 @@ namespace Azure.Core.Tests
             // Arrange
             var requestCount = 0;
             var responseCount = 0;
+            var requestsInHandler = new SemaphoreSlim(0);
+            var releaseRequests = new ManualResetEventSlim(false);
+            using var overallTimeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+
             Func<HttpPipelineTransportOptions, HttpClient> clientFactory = _ =>
             {
                 var handler = new MockHttpHandler(req =>
                 {
                     Interlocked.Increment(ref requestCount);
-                    // Simulate some processing time
-                    Thread.Sleep(10);
+                    requestsInHandler.Release();
+                    releaseRequests.Wait(overallTimeout.Token);
                     Interlocked.Increment(ref responseCount);
                     return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                 });
@@ -153,25 +157,43 @@ namespace Azure.Core.Tests
 
             using var transport = new HttpClientTransport(clientFactory);
 
-            // Act - Start multiple concurrent requests and update transport during processing
+            // Act - Start multiple concurrent requests on dedicated threads to avoid thread pool starvation
             var tasks = new List<Task>();
-
-            // Start several requests
             for (int i = 0; i < 5; i++)
             {
-                tasks.Add(Task.Run(async () =>
+                tasks.Add(Task.Factory.StartNew(async () =>
                 {
                     var request = transport.CreateRequest();
                     request.Uri.Reset(new Uri("https://example.com"));
                     var message = new HttpMessage(request, ResponseClassifier.Shared);
                     await ProcessSyncOrAsync(transport, message);
                     Assert.AreEqual(200, message.Response.Status);
-                }));
+                }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default).Unwrap());
             }
 
-            // Update transport while requests are in flight
-            await Task.Delay(5); // Let some requests start
-            transport.Update(new HttpPipelineTransportOptions());
+            try
+            {
+                // Wait until all requests are in the handler (past TryAddRef, holding refs)
+                try
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        await requestsInHandler.WaitAsync(overallTimeout.Token);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    Assert.Fail("Timed out waiting for requests to enter handler");
+                }
+
+                // Update transport while requests are definitely in-flight
+                transport.Update(new HttpPipelineTransportOptions());
+            }
+            finally
+            {
+                // Always unblock handler threads to prevent test hangs on failure
+                releaseRequests.Set();
+            }
 
             // Wait for all requests to complete
             await Task.WhenAll(tasks);
@@ -231,46 +253,70 @@ namespace Azure.Core.Tests
         {
             // Arrange
             var updateCount = 0;
+            var requestsInHandler = new SemaphoreSlim(0);
+            var releaseRequests = new ManualResetEventSlim(false);
+            using var overallTimeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+
             Func<HttpPipelineTransportOptions, HttpClient> clientFactory = _ =>
             {
                 Interlocked.Increment(ref updateCount);
-                var handler = new MockHttpHandler(req => new HttpResponseMessage(System.Net.HttpStatusCode.OK));
+                var handler = new MockHttpHandler(req =>
+                {
+                    requestsInHandler.Release();
+                    releaseRequests.Wait(overallTimeout.Token);
+                    return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                });
                 return new HttpClient(handler);
             };
 
             using var transport = new HttpClientTransport(clientFactory);
 
-            // Act - Multiple updates and concurrent requests
+            // Act - Start concurrent requests on dedicated threads to avoid thread pool starvation
+            const int requestCount = 10;
             var tasks = new List<Task>();
-
-            // Start continuous requests
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < requestCount; i++)
             {
-                tasks.Add(Task.Run(async () =>
+                tasks.Add(Task.Factory.StartNew(async () =>
                 {
-                    for (int j = 0; j < 5; j++)
-                    {
-                        var request = transport.CreateRequest();
-                        request.Uri.Reset(new Uri("https://example.com"));
-                        var message = new HttpMessage(request, ResponseClassifier.Shared);
-                        await ProcessSyncOrAsync(transport, message);
-                        Assert.AreEqual(200, message.Response.Status);
-                        await Task.Delay(1); // Small delay between requests
-                    }
-                }));
+                    var request = transport.CreateRequest();
+                    request.Uri.Reset(new Uri("https://example.com"));
+                    var message = new HttpMessage(request, ResponseClassifier.Shared);
+                    await ProcessSyncOrAsync(transport, message);
+                    Assert.AreEqual(200, message.Response.Status);
+                }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default).Unwrap());
             }
 
-            // Perform updates while requests are running
-            for (int i = 0; i < 3; i++)
+            try
             {
-                await Task.Delay(5);
-                transport.Update(new HttpPipelineTransportOptions());
+                // Wait until all requests are in the handler (past TryAddRef, holding refs)
+                try
+                {
+                    for (int i = 0; i < requestCount; i++)
+                    {
+                        await requestsInHandler.WaitAsync(overallTimeout.Token);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    Assert.Fail("Timed out waiting for requests to enter handler");
+                }
+
+                // Perform multiple updates while requests hold refs to the old wrapper
+                for (int i = 0; i < 3; i++)
+                {
+                    transport.Update(new HttpPipelineTransportOptions());
+                }
+            }
+            finally
+            {
+                // Always unblock handler threads to prevent test hangs on failure
+                releaseRequests.Set();
             }
 
-            // Wait for all requests to complete
+            // Wait for all requests to complete - they should succeed despite updates
             await Task.WhenAll(tasks);
 
-            // Assert - Should have created multiple clients due to updates
+            // Assert - Should have created initial client + 3 update clients
             Assert.GreaterOrEqual(updateCount, 4, "Should have created multiple clients due to updates");
         }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Communication
         {
             if (id.ResourceType != CommunicationServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CommunicationServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CommunicationServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CommunicationSmtpUsernameData, CommunicationSmtpUsernameResource>(new SmtpUsernamesGetAllAsyncCollectionResultOfT(_smtpUsernamesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CommunicationSmtpUsernameResource(Client, data));
+            return new AsyncPageableWrapper<CommunicationSmtpUsernameData, CommunicationSmtpUsernameResource>(new SmtpUsernamesGetAllAsyncCollectionResultOfT(
+                _smtpUsernamesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CommunicationSmtpUsernameCollection.GetAll"), data => new CommunicationSmtpUsernameResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CommunicationSmtpUsernameData, CommunicationSmtpUsernameResource>(new SmtpUsernamesGetAllCollectionResultOfT(_smtpUsernamesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CommunicationSmtpUsernameResource(Client, data));
+            return new PageableWrapper<CommunicationSmtpUsernameData, CommunicationSmtpUsernameResource>(new SmtpUsernamesGetAllCollectionResultOfT(
+                _smtpUsernamesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CommunicationSmtpUsernameCollection.GetAll"), data => new CommunicationSmtpUsernameResource(Client, data));
         }
 
         /// <summary>

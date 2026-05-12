@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Red team details. </summary>
     public partial class RedTeam
@@ -30,9 +31,9 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="RedTeam"/>. </summary>
         /// <param name="name"> Identifier of the red team run. </param>
         /// <param name="displayName"> Name of the red-team run. </param>
-        /// <param name="numTurns"> Number of simulation rounds. </param>
+        /// <param name="turnCount"> Number of simulation rounds. </param>
         /// <param name="attackStrategies"> List of attack strategies or nested lists of attack strategies. </param>
-        /// <param name="simulationOnly"> Simulation-only or Simulation + Evaluation. Default false, if true the scan outputs conversation not evaluation result. </param>
+        /// <param name="isSimulationOnly"> Simulation-only or Simulation + Evaluation. Default false, if true the scan outputs conversation not evaluation result. </param>
         /// <param name="riskCategories"> List of risk categories to generate attack objectives for. </param>
         /// <param name="applicationScenario"> Application scenario for the red team operation, to generate scenario specific attacks. </param>
         /// <param name="tags"> Red team's tags. Unlike properties, tags are fully mutable. </param>
@@ -40,13 +41,13 @@ namespace Azure.AI.Projects
         /// <param name="status"> Status of the red-team. It is set by service and is read-only. </param>
         /// <param name="target"> Target configuration for the red-team run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedTeam(string name, string displayName, int? numTurns, IList<AttackStrategy> attackStrategies, bool? simulationOnly, IList<RiskCategory> riskCategories, string applicationScenario, IDictionary<string, string> tags, IDictionary<string, string> properties, string status, TargetConfig target, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedTeam(string name, string displayName, int? turnCount, IList<AttackStrategy> attackStrategies, bool? isSimulationOnly, IList<RiskCategory> riskCategories, string applicationScenario, IDictionary<string, string> tags, IDictionary<string, string> properties, string status, TargetConfig target, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
-            NumTurns = numTurns;
+            TurnCount = turnCount;
             AttackStrategies = attackStrategies;
-            SimulationOnly = simulationOnly;
+            IsSimulationOnly = isSimulationOnly;
             RiskCategories = riskCategories;
             ApplicationScenario = applicationScenario;
             Tags = tags;
@@ -63,13 +64,13 @@ namespace Azure.AI.Projects
         public string DisplayName { get; set; }
 
         /// <summary> Number of simulation rounds. </summary>
-        public int? NumTurns { get; set; }
+        public int? TurnCount { get; set; }
 
         /// <summary> List of attack strategies or nested lists of attack strategies. </summary>
         public IList<AttackStrategy> AttackStrategies { get; }
 
         /// <summary> Simulation-only or Simulation + Evaluation. Default false, if true the scan outputs conversation not evaluation result. </summary>
-        public bool? SimulationOnly { get; set; }
+        public bool? IsSimulationOnly { get; set; }
 
         /// <summary> List of risk categories to generate attack objectives for. </summary>
         public IList<RiskCategory> RiskCategories { get; }

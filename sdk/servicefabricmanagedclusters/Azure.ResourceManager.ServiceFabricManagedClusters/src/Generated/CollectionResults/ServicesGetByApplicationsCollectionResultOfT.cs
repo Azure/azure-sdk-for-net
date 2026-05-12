@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         private readonly string _clusterName;
         private readonly string _applicationName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ServicesGetByApplicationsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Services client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="clusterName"> The name of the cluster resource. </param>
         /// <param name="applicationName"> The name of the application resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ServicesGetByApplicationsCollectionResultOfT(Services client, string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ServicesGetByApplicationsCollectionResultOfT(Services client, string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             _clusterName = clusterName;
             _applicationName = applicationName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ServicesGetByApplicationsCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByApplicationsRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _applicationName, _context) : _client.CreateGetByApplicationsRequest(_subscriptionId, _resourceGroupName, _clusterName, _applicationName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ServiceFabricManagedServiceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

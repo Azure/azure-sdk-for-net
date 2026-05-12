@@ -20,16 +20,19 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private readonly ResourceGuardResources _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ResourceGuardResourcesGetResourcesInSubscriptionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ResourceGuardResources client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ResourceGuardResourcesGetResourcesInSubscriptionAsyncCollectionResultOfT(ResourceGuardResources client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ResourceGuardResourcesGetResourcesInSubscriptionAsyncCollectionResultOfT(ResourceGuardResources client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ResourceGuardResourcesGetResourcesInSubscriptionAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -63,7 +66,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetResourcesInSubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetResourcesInSubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDataProtectionBackupSubscriptionResource.GetResourceGuards");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

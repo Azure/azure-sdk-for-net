@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             if (id.ResourceType != DisconnectedOperationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DisconnectedOperationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DisconnectedOperationResource.ResourceType), nameof(id));
             }
         }
 
@@ -188,7 +188,8 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 filter,
                 maxCount,
                 skip,
-                context), data => new DisconnectedOperationsImageResource(Client, data));
+                context,
+                "DisconnectedOperationsImageCollection.GetAll"), data => new DisconnectedOperationsImageResource(Client, data));
         }
 
         /// <summary>
@@ -227,7 +228,8 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 filter,
                 maxCount,
                 skip,
-                context), data => new DisconnectedOperationsImageResource(Client, data));
+                context,
+                "DisconnectedOperationsImageCollection.GetAll"), data => new DisconnectedOperationsImageResource(Client, data));
         }
 
         /// <summary>

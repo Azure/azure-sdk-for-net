@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (options.Format != "W" && Optional.IsDefined(MaxConcurrency))
+            {
+                writer.WritePropertyName("maxConcurrency"u8);
+                writer.WriteNumberValue(MaxConcurrency.Value);
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(Groups))
             {
                 writer.WritePropertyName("groups"u8);
@@ -163,6 +168,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
             ContainerServiceFleetUpdateStatus status = default;
             string name = default;
+            int? maxConcurrency = default;
             IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> groups = default;
             IReadOnlyList<UpdateRunGateStatus> beforeGates = default;
             IReadOnlyList<UpdateRunGateStatus> afterGates = default;
@@ -182,6 +188,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("maxConcurrency"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxConcurrency = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("groups"u8))
@@ -243,6 +258,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new ContainerServiceFleetUpdateStageStatus(
                 status,
                 name,
+                maxConcurrency,
                 groups ?? new ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus>(),
                 beforeGates ?? new ChangeTrackingList<UpdateRunGateStatus>(),
                 afterGates ?? new ChangeTrackingList<UpdateRunGateStatus>(),

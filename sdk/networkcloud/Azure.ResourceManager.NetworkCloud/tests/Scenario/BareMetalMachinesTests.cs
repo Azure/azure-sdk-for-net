@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 patch.Tags.Add(key, firstBMM.Tags[key]);
             }
-            ArmOperation<NetworkCloudBareMetalMachineResource> updateResult = await bareMetalMachine.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudBareMetalMachineResource> updateResult = await bareMetalMachine.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             patch.Tags.Remove(testKey);
-            updateResult = await bareMetalMachine.UpdateAsync(WaitUntil.Completed, patch);
+            updateResult = await bareMetalMachine.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags, "tag reversion failed");
         }
     }

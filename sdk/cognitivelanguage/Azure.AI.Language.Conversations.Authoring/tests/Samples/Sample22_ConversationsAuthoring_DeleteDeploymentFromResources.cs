@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -19,20 +19,18 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client =
-                new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client =
+                new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample22_ConversationsAuthoring_DeleteDeploymentFromResources
+            ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
-
-            // Get the deployment-scoped client
-            ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
-
             // Define the Azure resource IDs from which the deployment should be deleted
-            var deleteBody = new ConversationAuthoringProjectResourceIds
+            var deleteBody = new ConversationAuthoringDeleteDeploymentDetails
             {
-                AzureResourceIds =
+                AssignedResourceIds =
                 {
                     "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.CognitiveServices/accounts/{accountName}"
                 }
@@ -40,7 +38,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             // Begin delete operation
             Operation operation =
-                deploymentClient.DeleteDeploymentFromResources(WaitUntil.Started, deleteBody);
+                deploymentClient.DeleteDeploymentFromResources(WaitUntil.Started, projectName, deploymentName, deleteBody);
 
             // Wait for completion
             operation.WaitForCompletionResponse();
@@ -55,20 +53,18 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client =
-                new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client =
+                new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample22_ConversationsAuthoring_DeleteDeploymentFromResourcesAsync
+            ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
-
-            // Get the deployment-scoped client
-            ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
-
             // Define the Azure resource IDs from which the deployment should be deleted
-            var deleteBody = new ConversationAuthoringProjectResourceIds
+            var deleteBody = new ConversationAuthoringDeleteDeploymentDetails
             {
-                AzureResourceIds =
+                AssignedResourceIds =
                 {
                     "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.CognitiveServices/accounts/{accountName}"
                 }
@@ -78,6 +74,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Operation operation =
                 await deploymentClient.DeleteDeploymentFromResourcesAsync(
                     WaitUntil.Started,
+                    projectName,
+                    deploymentName,
                     deleteBody);
 
             // Wait for completion

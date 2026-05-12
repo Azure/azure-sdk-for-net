@@ -46,9 +46,18 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Shape = shape;
             SshPublicKeys = sshPublicKeys.ToList();
             TotalEcpuCount = totalEcpuCount;
-            VmFileSystemStorage = vmFileSystemStorage;
+            VmFileSystem = vmFileSystemStorage;
             ScanIPIds = new ChangeTrackingList<string>();
             VipIds = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Filesystem total size in Gbs. </summary>
+        [System.Obsolete("This property is obsolete and will be removed in a future release. Please use 'VmFileSystemTotalSizeInGbs' instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public int? VmFileSystemStorageTotalSizeInGbs
+        {
+            get => VmFileSystemTotalSizeInGbs;
+            set { if (value.HasValue) VmFileSystemTotalSizeInGbs = value.Value; }
         }
     }
 }

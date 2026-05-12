@@ -254,6 +254,23 @@ dotnet build eng\service.proj /p:ServiceDirectory=eventhub /p:UpdateSourceOnBuil
 ### How it works
 Each library needs to provide a `ApiCompatVersion` property which is set to the last GA'ed version of the library that will be used to compare APIs with the current to ensure no breaks have been introduced. Projects with this property set will download the specified package and the ApiCompat (Microsoft.DotNet.ApiCompat) tools package as part of the restore step of the project. Then as a post build step of the project it will run ApiCompat to verify the current APIs are compatible with the last GA'ed version of the APIs. For libraries that wish to disable the APICompat check they can remove the `ApiCompatVersion` property from their project. Our version bump automation will automatically add or increment the `ApiCompatVersion` property to the project when it detects that the version it is changing was a GA version which usually indicates that we just shipped that GA version and so it should be the new baseline for API checks.
 
+### API Compat Baseline Suppressions
+In rare cases, an intentional breaking change may be acceptable (e.g., removing an experimental API, fixing an attribute that was incorrectly applied). When ApiCompat reports errors for such changes, they can be suppressed using baseline files.
+
+**All baseline suppression files are centrally managed** in `eng/apicompatbaselines/` and named after the project (e.g., `eng/apicompatbaselines/Azure.Core.txt`). Local `ApiCompatBaseline.txt` files in package `src/` directories are no longer supported and will produce a build error.
+
+To add or modify baseline suppressions:
+1. Create or edit `eng/apicompatbaselines/<ProjectName>.txt` (the project name matches your `.csproj` filename)
+2. Add suppression entries with a comment explaining why the breaking change is acceptable
+3. Changes to this directory require review from the SDK team (enforced via CODEOWNERS)
+
+Example baseline file format:
+```
+# This constructor was marked as Experimental and was consolidated into the two-parameter overload.
+# It is safe to remove as it was under experimental feature flag SCME0002.
+MembersMustExist : Member 'protected void Azure.Core.ClientOptions..ctor(Microsoft.Extensions.Configuration.IConfigurationSection)' does not exist in the implementation but it does exist in the contract.
+```
+
 ### Releasing a new version of a GA'ed libary
 Since the [eng/centralpackagemanagement/Directory.Packages.props]<!--(https://github.com/Azure/azure-sdk-for-net/blob/main/eng/centralpackagemanagement/Directory.Packages.props)--> is currently maintained manually, you will need to update the version number for your library in this file when releasing a new version.
 

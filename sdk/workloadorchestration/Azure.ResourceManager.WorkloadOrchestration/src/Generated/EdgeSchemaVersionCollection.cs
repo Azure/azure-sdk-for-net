@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != EdgeSchemaResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeSchemaResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeSchemaResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSchemaVersionData, EdgeSchemaVersionResource>(new SchemaVersionsGetBySchemaAsyncCollectionResultOfT(_schemaVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeSchemaVersionResource(Client, data));
+            return new AsyncPageableWrapper<EdgeSchemaVersionData, EdgeSchemaVersionResource>(new SchemaVersionsGetBySchemaAsyncCollectionResultOfT(
+                _schemaVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeSchemaVersionCollection.GetAll"), data => new EdgeSchemaVersionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSchemaVersionData, EdgeSchemaVersionResource>(new SchemaVersionsGetBySchemaCollectionResultOfT(_schemaVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeSchemaVersionResource(Client, data));
+            return new PageableWrapper<EdgeSchemaVersionData, EdgeSchemaVersionResource>(new SchemaVersionsGetBySchemaCollectionResultOfT(
+                _schemaVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeSchemaVersionCollection.GetAll"), data => new EdgeSchemaVersionResource(Client, data));
         }
 
         /// <summary>

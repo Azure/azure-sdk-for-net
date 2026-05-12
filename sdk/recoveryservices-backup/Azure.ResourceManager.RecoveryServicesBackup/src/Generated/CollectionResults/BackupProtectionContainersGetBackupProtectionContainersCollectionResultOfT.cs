@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly string _subscriptionId;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of BackupProtectionContainersGetBackupProtectionContainersCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BackupProtectionContainers client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BackupProtectionContainersGetBackupProtectionContainersCollectionResultOfT(BackupProtectionContainers client, string vaultName, string resourceGroupName, string subscriptionId, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public BackupProtectionContainersGetBackupProtectionContainersCollectionResultOfT(BackupProtectionContainers client, string vaultName, string resourceGroupName, string subscriptionId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _vaultName = vaultName;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _subscriptionId = subscriptionId;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of BackupProtectionContainersGetBackupProtectionContainersCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBackupProtectionContainersRequest(nextLink, _vaultName, _resourceGroupName, _subscriptionId, _filter, _context) : _client.CreateGetBackupProtectionContainersRequest(_vaultName, _resourceGroupName, _subscriptionId, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionContainers");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -18,7 +18,7 @@ This sample demonstrates how to use file operations with OpenAI Files API throug
 string trainFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
 var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+ProjectOpenAIClient oaiClient = projectClient.ProjectOpenAIClient;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 ```
 
@@ -28,7 +28,7 @@ OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 string trainFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
 var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+ProjectOpenAIClient oaiClient = projectClient.ProjectOpenAIClient;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 ```
 

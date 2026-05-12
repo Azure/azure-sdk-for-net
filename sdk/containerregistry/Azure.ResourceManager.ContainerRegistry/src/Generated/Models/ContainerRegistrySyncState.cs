@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public readonly partial struct ContainerRegistrySyncState : IEquatable<ContainerRegistrySyncState>
     {
         private readonly string _value;
+        /// <summary> Connected Registry is not activated. </summary>
+        private const string NotActivatedValue = "NotActivated";
+        /// <summary> Connected Registry is syncing. </summary>
+        private const string SyncingValue = "Syncing";
+        /// <summary> Connected Registry sync failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Connected Registry sync succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Connected Registry sync timed out. </summary>
+        private const string TimedOutValue = "TimedOut";
+        /// <summary> Connected Registry sync is pending. </summary>
+        private const string PendingValue = "Pending";
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistrySyncState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerRegistrySyncState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotActivatedValue = "NotActivated";
-        private const string SyncingValue = "Syncing";
-        private const string FailedValue = "Failed";
-        private const string SucceededValue = "Succeeded";
-        private const string TimedOutValue = "TimedOut";
-        private const string PendingValue = "Pending";
+            _value = value;
+        }
 
         /// <summary> Connected Registry is not activated. </summary>
         public static ContainerRegistrySyncState NotActivated { get; } = new ContainerRegistrySyncState(NotActivatedValue);
+
         /// <summary> Connected Registry is syncing. </summary>
         public static ContainerRegistrySyncState Syncing { get; } = new ContainerRegistrySyncState(SyncingValue);
+
         /// <summary> Connected Registry sync failed. </summary>
         public static ContainerRegistrySyncState Failed { get; } = new ContainerRegistrySyncState(FailedValue);
+
         /// <summary> Connected Registry sync succeeded. </summary>
         public static ContainerRegistrySyncState Succeeded { get; } = new ContainerRegistrySyncState(SucceededValue);
+
         /// <summary> Connected Registry sync timed out. </summary>
         public static ContainerRegistrySyncState TimedOut { get; } = new ContainerRegistrySyncState(TimedOutValue);
+
         /// <summary> Connected Registry sync is pending. </summary>
         public static ContainerRegistrySyncState Pending { get; } = new ContainerRegistrySyncState(PendingValue);
+
         /// <summary> Determines if two <see cref="ContainerRegistrySyncState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerRegistrySyncState left, ContainerRegistrySyncState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerRegistrySyncState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerRegistrySyncState left, ContainerRegistrySyncState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistrySyncState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerRegistrySyncState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerRegistrySyncState(string value) => new ContainerRegistrySyncState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerRegistrySyncState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerRegistrySyncState?(string value) => value == null ? null : new ContainerRegistrySyncState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerRegistrySyncState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerRegistrySyncState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

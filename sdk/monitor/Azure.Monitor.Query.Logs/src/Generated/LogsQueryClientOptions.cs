@@ -43,6 +43,10 @@ namespace Azure.Monitor.Query.Logs
             {
                 Version = version;
             }
+            if (section["Audience"] is string audience)
+            {
+                Audience = new LogsQueryAudience(audience);
+            }
             ConfigureLogging();
         }
 

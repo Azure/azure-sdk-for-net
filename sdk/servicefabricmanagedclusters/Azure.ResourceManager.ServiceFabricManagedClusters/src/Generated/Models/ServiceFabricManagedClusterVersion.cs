@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             get
             {
-                return Properties.ClusterCodeVersion;
+                return Properties is null ? default : Properties.ClusterCodeVersion;
             }
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             get
             {
-                return Properties.VersionSupportExpireOn;
+                return Properties is null ? default : Properties.VersionSupportExpireOn;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             get
             {
-                return Properties.OSType;
+                return Properties is null ? default : Properties.OSType;
             }
         }
     }

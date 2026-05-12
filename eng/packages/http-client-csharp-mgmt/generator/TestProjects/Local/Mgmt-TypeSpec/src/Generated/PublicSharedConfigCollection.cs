@@ -51,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SharedConfigData, PublicSharedConfigResource>(new PublicSharedConfigsGetAllAsyncCollectionResultOfT(_publicSharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PublicSharedConfigResource(Client, data));
+            return new AsyncPageableWrapper<SharedConfigData, PublicSharedConfigResource>(new PublicSharedConfigsGetAllAsyncCollectionResultOfT(_publicSharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), context, "PublicSharedConfigCollection.GetAll"), data => new PublicSharedConfigResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SharedConfigData, PublicSharedConfigResource>(new PublicSharedConfigsGetAllCollectionResultOfT(_publicSharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PublicSharedConfigResource(Client, data));
+            return new PageableWrapper<SharedConfigData, PublicSharedConfigResource>(new PublicSharedConfigsGetAllCollectionResultOfT(_publicSharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), context, "PublicSharedConfigCollection.GetAll"), data => new PublicSharedConfigResource(Client, data));
         }
 
         /// <summary>

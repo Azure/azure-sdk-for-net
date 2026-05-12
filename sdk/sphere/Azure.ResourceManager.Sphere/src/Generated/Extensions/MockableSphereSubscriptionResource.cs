@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sphere.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SphereCatalogData, SphereCatalogResource>(new CatalogsGetBySubscriptionAsyncCollectionResultOfT(CatalogsRestClient, Id.SubscriptionId, context), data => new SphereCatalogResource(Client, data));
+            return new AsyncPageableWrapper<SphereCatalogData, SphereCatalogResource>(new CatalogsGetBySubscriptionAsyncCollectionResultOfT(CatalogsRestClient, Id.SubscriptionId, context, "MockableSphereSubscriptionResource.GetSphereCatalogs"), data => new SphereCatalogResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sphere.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SphereCatalogData, SphereCatalogResource>(new CatalogsGetBySubscriptionCollectionResultOfT(CatalogsRestClient, Id.SubscriptionId, context), data => new SphereCatalogResource(Client, data));
+            return new PageableWrapper<SphereCatalogData, SphereCatalogResource>(new CatalogsGetBySubscriptionCollectionResultOfT(CatalogsRestClient, Id.SubscriptionId, context, "MockableSphereSubscriptionResource.GetSphereCatalogs"), data => new SphereCatalogResource(Client, data));
         }
     }
 }

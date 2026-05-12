@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -24,75 +25,85 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudBareMetalMachineKeySetCollection : ArmCollection, IEnumerable<NetworkCloudBareMetalMachineKeySetResource>, IAsyncEnumerable<NetworkCloudBareMetalMachineKeySetResource>
     {
-        private readonly ClientDiagnostics _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics;
-        private readonly BareMetalMachineKeySetsRestOperations _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient;
+        private readonly ClientDiagnostics _bareMetalMachineKeySetsClientDiagnostics;
+        private readonly BareMetalMachineKeySets _bareMetalMachineKeySetsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkCloudBareMetalMachineKeySetCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkCloudBareMetalMachineKeySetCollection for mocking. </summary>
         protected NetworkCloudBareMetalMachineKeySetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkCloudBareMetalMachineKeySetCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineKeySetCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudBareMetalMachineKeySetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudBareMetalMachineKeySetResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NetworkCloudBareMetalMachineKeySetResource.ResourceType, out string networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsApiVersion);
-            _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient = new BareMetalMachineKeySetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(NetworkCloudBareMetalMachineKeySetResource.ResourceType, out string networkCloudBareMetalMachineKeySetApiVersion);
+            _bareMetalMachineKeySetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudBareMetalMachineKeySetResource.ResourceType.Namespace, Diagnostics);
+            _bareMetalMachineKeySetsRestClient = new BareMetalMachineKeySets(_bareMetalMachineKeySetsClientDiagnostics, Pipeline, Endpoint, networkCloudBareMetalMachineKeySetApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != NetworkCloudClusterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkCloudClusterResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetworkCloudClusterResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create a new bare metal machine key set or update the existing one for the provided cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachineKeySets_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachineKeySets_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="bareMetalMachineKeySetName"> The name of the bare metal machine key set. </param>
         /// <param name="data"> The request body. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineKeySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineKeySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bareMetalMachineKeySetName, nameof(bareMetalMachineKeySetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _bareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource>(new NetworkCloudBareMetalMachineKeySetOperationSource(Client), _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics, Pipeline, _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData.ToRequestContent(data), matchConditions, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource> operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource>(
+                    new NetworkCloudBareMetalMachineKeySetOperationSource(Client),
+                    _bareMetalMachineKeySetsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,44 +117,52 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Create a new bare metal machine key set or update the existing one for the provided cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachineKeySets_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachineKeySets_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="bareMetalMachineKeySetName"> The name of the bare metal machine key set. </param>
         /// <param name="data"> The request body. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<NetworkCloudBareMetalMachineKeySetResource> CreateOrUpdate(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<NetworkCloudBareMetalMachineKeySetResource> CreateOrUpdate(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bareMetalMachineKeySetName, nameof(bareMetalMachineKeySetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _bareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource>(new NetworkCloudBareMetalMachineKeySetOperationSource(Client), _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics, Pipeline, _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData.ToRequestContent(data), matchConditions, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource> operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource>(
+                    new NetworkCloudBareMetalMachineKeySetOperationSource(Client),
+                    _bareMetalMachineKeySetsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +176,42 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Get bare metal machine key set of the provided cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachineKeySets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachineKeySets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="bareMetalMachineKeySetName"> The name of the bare metal machine key set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NetworkCloudBareMetalMachineKeySetResource>> GetAsync(string bareMetalMachineKeySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bareMetalMachineKeySetName, nameof(bareMetalMachineKeySetName));
 
-            using var scope = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.Get");
+            using DiagnosticScope scope = _bareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkCloudBareMetalMachineKeySetData> response = Response.FromValue(NetworkCloudBareMetalMachineKeySetData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkCloudBareMetalMachineKeySetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +225,42 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Get bare metal machine key set of the provided cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachineKeySets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachineKeySets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="bareMetalMachineKeySetName"> The name of the bare metal machine key set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NetworkCloudBareMetalMachineKeySetResource> Get(string bareMetalMachineKeySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bareMetalMachineKeySetName, nameof(bareMetalMachineKeySetName));
 
-            using var scope = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.Get");
+            using DiagnosticScope scope = _bareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkCloudBareMetalMachineKeySetData> response = Response.FromValue(NetworkCloudBareMetalMachineKeySetData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkCloudBareMetalMachineKeySetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,52 +274,16 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Get a list of bare metal machine key sets for the provided cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachineKeySets_ListByCluster</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachineKeySets_ListByCluster. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudBareMetalMachineKeySetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudBareMetalMachineKeySetResource> GetAllAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudBareMetalMachineKeySetResource(Client, NetworkCloudBareMetalMachineKeySetData.DeserializeNetworkCloudBareMetalMachineKeySetData(e)), _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics, Pipeline, "NetworkCloudBareMetalMachineKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of bare metal machine key sets for the provided cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachineKeySets_ListByCluster</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,47 +291,109 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineKeySetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudBareMetalMachineKeySetResource> GetAll(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkCloudBareMetalMachineKeySetResource> GetAllAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudBareMetalMachineKeySetResource(Client, NetworkCloudBareMetalMachineKeySetData.DeserializeNetworkCloudBareMetalMachineKeySetData(e)), _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics, Pipeline, "NetworkCloudBareMetalMachineKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkCloudBareMetalMachineKeySetData, NetworkCloudBareMetalMachineKeySetResource>(new BareMetalMachineKeySetsGetByClusterAsyncCollectionResultOfT(
+                _bareMetalMachineKeySetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                top,
+                skipToken,
+                context,
+                "NetworkCloudBareMetalMachineKeySetCollection.GetAll"), data => new NetworkCloudBareMetalMachineKeySetResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get a list of bare metal machine key sets for the provided cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachineKeySets_ListByCluster. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineKeySetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudBareMetalMachineKeySetResource> GetAll(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkCloudBareMetalMachineKeySetData, NetworkCloudBareMetalMachineKeySetResource>(new BareMetalMachineKeySetsGetByClusterCollectionResultOfT(
+                _bareMetalMachineKeySetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                top,
+                skipToken,
+                context,
+                "NetworkCloudBareMetalMachineKeySetCollection.GetAll"), data => new NetworkCloudBareMetalMachineKeySetResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachineKeySets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachineKeySets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="bareMetalMachineKeySetName"> The name of the bare metal machine key set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string bareMetalMachineKeySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bareMetalMachineKeySetName, nameof(bareMetalMachineKeySetName));
 
-            using var scope = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.Exists");
+            using DiagnosticScope scope = _bareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkCloudBareMetalMachineKeySetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkCloudBareMetalMachineKeySetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkCloudBareMetalMachineKeySetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -354,36 +407,50 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachineKeySets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachineKeySets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="bareMetalMachineKeySetName"> The name of the bare metal machine key set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string bareMetalMachineKeySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bareMetalMachineKeySetName, nameof(bareMetalMachineKeySetName));
 
-            using var scope = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.Exists");
+            using DiagnosticScope scope = _bareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkCloudBareMetalMachineKeySetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkCloudBareMetalMachineKeySetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkCloudBareMetalMachineKeySetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,38 +464,54 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachineKeySets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachineKeySets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="bareMetalMachineKeySetName"> The name of the bare metal machine key set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NetworkCloudBareMetalMachineKeySetResource>> GetIfExistsAsync(string bareMetalMachineKeySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bareMetalMachineKeySetName, nameof(bareMetalMachineKeySetName));
 
-            using var scope = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.GetIfExists");
+            using DiagnosticScope scope = _bareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkCloudBareMetalMachineKeySetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkCloudBareMetalMachineKeySetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkCloudBareMetalMachineKeySetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkCloudBareMetalMachineKeySetResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkCloudBareMetalMachineKeySetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -442,38 +525,54 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachineKeySets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachineKeySets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="bareMetalMachineKeySetName"> The name of the bare metal machine key set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NetworkCloudBareMetalMachineKeySetResource> GetIfExists(string bareMetalMachineKeySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bareMetalMachineKeySetName, nameof(bareMetalMachineKeySetName));
 
-            using var scope = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.GetIfExists");
+            using DiagnosticScope scope = _bareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkCloudBareMetalMachineKeySetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkCloudBareMetalMachineKeySetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkCloudBareMetalMachineKeySetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkCloudBareMetalMachineKeySetResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkCloudBareMetalMachineKeySetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -493,6 +592,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkCloudBareMetalMachineKeySetResource> IAsyncEnumerable<NetworkCloudBareMetalMachineKeySetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmLogicalNetworkData, HciVmLogicalNetworkResource>(new LogicalNetworksGetByResourceGroupAsyncCollectionResultOfT(_logicalNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmLogicalNetworkResource(Client, data));
+            return new AsyncPageableWrapper<HciVmLogicalNetworkData, HciVmLogicalNetworkResource>(new LogicalNetworksGetByResourceGroupAsyncCollectionResultOfT(_logicalNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmLogicalNetworkCollection.GetAll"), data => new HciVmLogicalNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmLogicalNetworkData, HciVmLogicalNetworkResource>(new LogicalNetworksGetByResourceGroupCollectionResultOfT(_logicalNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmLogicalNetworkResource(Client, data));
+            return new PageableWrapper<HciVmLogicalNetworkData, HciVmLogicalNetworkResource>(new LogicalNetworksGetByResourceGroupCollectionResultOfT(_logicalNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmLogicalNetworkCollection.GetAll"), data => new HciVmLogicalNetworkResource(Client, data));
         }
 
         /// <summary>

@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> AzureDisk CSI Driver settings for the storage profile. </summary>
-    internal partial class ManagedClusterStorageProfileDiskCsiDriver
+    public partial class ManagedClusterStorageProfileDiskCsiDriver
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -24,15 +24,21 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfileDiskCsiDriver"/>. </summary>
         /// <param name="isDiskCsiDriverEnabled"> Whether to enable AzureDisk CSI Driver. The default value is true. </param>
+        /// <param name="version"> The version of AzureDisk CSI Driver. The default value is v1. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterStorageProfileDiskCsiDriver(bool? isDiskCsiDriverEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterStorageProfileDiskCsiDriver(bool? isDiskCsiDriverEnabled, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsDiskCsiDriverEnabled = isDiskCsiDriverEnabled;
+            Version = version;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to enable AzureDisk CSI Driver. The default value is true. </summary>
         [WirePath("enabled")]
         public bool? IsDiskCsiDriverEnabled { get; set; }
+
+        /// <summary> The version of AzureDisk CSI Driver. The default value is v1. </summary>
+        [WirePath("version")]
+        public string Version { get; set; }
     }
 }

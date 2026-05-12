@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Input configuration for the evaluation taxonomy when the input type is agent. </summary>
     public partial class AgentTaxonomyInput : EvaluationTaxonomyInput, IJsonModel<AgentTaxonomyInput>

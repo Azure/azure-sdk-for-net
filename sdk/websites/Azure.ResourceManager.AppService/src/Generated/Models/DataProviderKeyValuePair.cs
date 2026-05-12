@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The DataProviderKeyValuePair. </summary>
+    /// <summary>
+    /// The DataProviderKeyValuePair.
+    /// Serialized Name: KeyValuePairStringObject
+    /// </summary>
     public partial class DataProviderKeyValuePair
     {
         /// <summary>
@@ -51,8 +54,11 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProviderKeyValuePair"/>. </summary>
-        /// <param name="key"></param>
-        /// <param name="value"> Any object. </param>
+        /// <param name="key"> Serialized Name: KeyValuePairStringObject.key. </param>
+        /// <param name="value">
+        /// Any object
+        /// Serialized Name: KeyValuePairStringObject.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataProviderKeyValuePair(string key, BinaryData value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,11 +67,12 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the key. </summary>
+        /// <summary> Serialized Name: KeyValuePairStringObject.key. </summary>
         [WirePath("key")]
         public string Key { get; }
         /// <summary>
         /// Any object
+        /// Serialized Name: KeyValuePairStringObject.value
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

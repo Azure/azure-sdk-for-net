@@ -121,15 +121,13 @@ export function fixClientApiVersions(
       for (const method of client.methods) {
         details.push(`  - ${method.name}: [${method.apiVersions.join(", ")}]`);
       }
-      sdkContext.logger.reportDiagnostic({
+      sdkContext.program.reportDiagnostic({
         code: "general-error",
-        messageId: "default",
-        format: {
-          message:
-            `Client '${client.name}' has empty apiVersions but its methods have inconsistent API versions. ` +
-            `Use @@clientLocation decorator to move methods with different API versions into separate clients.\n` +
-            `Methods and their API versions:\n${details.join("\n")}`
-        },
+        severity: "error",
+        message:
+          `Client '${client.name}' has empty apiVersions but its methods have inconsistent API versions. ` +
+          `Use @@clientLocation decorator to move methods with different API versions into separate clients.\n` +
+          `Methods and their API versions:\n${details.join("\n")}`,
         target: NoTarget
       });
     }

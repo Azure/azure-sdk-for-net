@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Chaos
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -183,7 +183,13 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetAllAsyncCollectionResultOfT(_targetTypesRestClient, Guid.Parse(Id.SubscriptionId), _location, continuationToken, context), data => new ChaosTargetMetadataResource(Client, data));
+            return new AsyncPageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetAllAsyncCollectionResultOfT(
+                _targetTypesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                _location,
+                continuationToken,
+                context,
+                "ChaosTargetMetadataCollection.GetAll"), data => new ChaosTargetMetadataResource(Client, data));
         }
 
         /// <summary>
@@ -212,7 +218,13 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetAllCollectionResultOfT(_targetTypesRestClient, Guid.Parse(Id.SubscriptionId), _location, continuationToken, context), data => new ChaosTargetMetadataResource(Client, data));
+            return new PageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetAllCollectionResultOfT(
+                _targetTypesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                _location,
+                continuationToken,
+                context,
+                "ChaosTargetMetadataCollection.GetAll"), data => new ChaosTargetMetadataResource(Client, data));
         }
 
         /// <summary>

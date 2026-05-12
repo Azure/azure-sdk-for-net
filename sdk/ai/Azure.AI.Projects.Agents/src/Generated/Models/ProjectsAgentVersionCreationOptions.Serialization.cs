@@ -98,6 +98,11 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("definition"u8);
             writer.WriteObjectValue(Definition, options);
+            if (Optional.IsDefined(BlueprintReference))
+            {
+                writer.WritePropertyName("blueprint_reference"u8);
+                writer.WriteObjectValue(BlueprintReference, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -143,6 +148,7 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, string> metadata = default;
             string description = default;
             ProjectsAgentDefinition definition = default;
+            AgentBlueprintReference blueprintReference = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,12 +183,21 @@ namespace Azure.AI.Projects.Agents
                     DeserializeDefinitionValue(prop, ref definition);
                     continue;
                 }
+                if (prop.NameEquals("blueprint_reference"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    blueprintReference = AgentBlueprintReference.DeserializeAgentBlueprintReference(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectsAgentVersionCreationOptions(metadata ?? new ChangeTrackingDictionary<string, string>(), description, definition, additionalBinaryDataProperties);
+            return new ProjectsAgentVersionCreationOptions(metadata ?? new ChangeTrackingDictionary<string, string>(), description, definition, blueprintReference, additionalBinaryDataProperties);
         }
     }
 }

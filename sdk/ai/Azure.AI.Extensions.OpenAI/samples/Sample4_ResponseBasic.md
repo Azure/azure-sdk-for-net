@@ -14,13 +14,13 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_Sync
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 ResponseResult response = responseClient.CreateResponse("What is the size of France in square miles?");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_Async
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 ResponseResult response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 ```
 

@@ -13,14 +13,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A class representing a QuotaAllocationRequestStatus along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="QuotaAllocationRequestStatusResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource"/> using the GetQuotaAllocationRequestStatuses method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetQuotaAllocationRequestStatuses method.
     /// </summary>
     public partial class QuotaAllocationRequestStatusResource : ArmResource
     {
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Quota
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

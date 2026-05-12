@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.Publisher;
+                return Properties is null ? default : Properties.Publisher;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.TargetType;
+                return Properties is null ? default : Properties.TargetType;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.DisplayName;
+                return Properties is null ? default : Properties.DisplayName;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.ParametersSchema;
+                return Properties is null ? default : Properties.ParametersSchema;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.Urn;
+                return Properties is null ? default : Properties.Urn;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.Kind;
+                return Properties is null ? default : Properties.Kind;
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.AzureRbacActions;
+                return Properties is null ? default : Properties.AzureRbacActions;
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.AzureRbacDataActions;
+                return Properties is null ? default : Properties.AzureRbacDataActions;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.RequiredAzureRoleDefinitionIds;
+                return Properties is null ? default : Properties.RequiredAzureRoleDefinitionIds;
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.RuntimeKind;
+                return Properties is null ? default : Properties.RuntimeKind;
             }
         }
     }

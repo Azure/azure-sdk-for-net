@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sphere
         {
             get
             {
-                return Properties.Certificate;
+                return Properties is null ? default : Properties.Certificate;
             }
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sphere
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sphere
         {
             get
             {
-                return Properties.Subject;
+                return Properties is null ? default : Properties.Subject;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sphere
         {
             get
             {
-                return Properties.Thumbprint;
+                return Properties is null ? default : Properties.Thumbprint;
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Sphere
         {
             get
             {
-                return Properties.ExpiryUtc;
+                return Properties is null ? default : Properties.ExpiryUtc;
             }
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Sphere
         {
             get
             {
-                return Properties.NotBeforeUtc;
+                return Properties is null ? default : Properties.NotBeforeUtc;
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sphere
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
     }

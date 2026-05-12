@@ -4,8 +4,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary></summary>
     public readonly partial struct MemoryStoreListOrder : IEquatable<MemoryStoreListOrder>

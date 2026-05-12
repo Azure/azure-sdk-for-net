@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DomainRegistration
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TopLevelDomainData, TopLevelDomainResource>(new TopLevelDomainsGetAllAsyncCollectionResultOfT(_topLevelDomainsRestClient, Id.SubscriptionId, context), data => new TopLevelDomainResource(Client, data));
+            return new AsyncPageableWrapper<TopLevelDomainData, TopLevelDomainResource>(new TopLevelDomainsGetAllAsyncCollectionResultOfT(_topLevelDomainsRestClient, Id.SubscriptionId, context, "TopLevelDomainCollection.GetAll"), data => new TopLevelDomainResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TopLevelDomainData, TopLevelDomainResource>(new TopLevelDomainsGetAllCollectionResultOfT(_topLevelDomainsRestClient, Id.SubscriptionId, context), data => new TopLevelDomainResource(Client, data));
+            return new PageableWrapper<TopLevelDomainData, TopLevelDomainResource>(new TopLevelDomainsGetAllCollectionResultOfT(_topLevelDomainsRestClient, Id.SubscriptionId, context, "TopLevelDomainCollection.GetAll"), data => new TopLevelDomainResource(Client, data));
         }
 
         /// <summary>

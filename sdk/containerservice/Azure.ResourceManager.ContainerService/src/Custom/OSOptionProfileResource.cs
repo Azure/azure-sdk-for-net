@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerService
             _osOptionProfileManagedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string osOptionProfileManagedClustersApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

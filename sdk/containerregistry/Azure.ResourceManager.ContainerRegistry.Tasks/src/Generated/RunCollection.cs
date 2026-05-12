@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -191,7 +191,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 _registryName,
                 filter,
                 top,
-                context), data => new RunResource(Client, data));
+                context,
+                "RunCollection.GetAll"), data => new RunResource(Client, data));
         }
 
         /// <summary>
@@ -228,7 +229,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 _registryName,
                 filter,
                 top,
-                context), data => new RunResource(Client, data));
+                context,
+                "RunCollection.GetAll"), data => new RunResource(Client, data));
         }
 
         /// <summary>

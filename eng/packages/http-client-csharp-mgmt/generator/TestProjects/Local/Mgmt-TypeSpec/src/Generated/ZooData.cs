@@ -53,7 +53,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> something. </summary>
         [WirePath("properties.something")]
-        public string ZooSomething
+        public string Something
         {
             get
             {
@@ -66,6 +66,96 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Properties = new ZooProperties();
                 }
                 Properties.Something = value;
+            }
+        }
+
+        /// <summary>
+        /// Required value-type property. Used to validate that required value types
+        ///       flattened from an optional ``properties?:`` parent (default-optional
+        ///       `properties?`) surface as Nullable&lt;T&gt; on the public property while
+        ///       remaining non-nullable T on the inner model and the model factory body.
+        /// </summary>
+        [WirePath("properties.requiredInt")]
+        public int? RequiredInt
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiredInt;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ZooProperties();
+                    }
+                    Properties.RequiredInt = value.Value;
+                }
+            }
+        }
+
+        /// <summary> Required fixed (closed) enum. </summary>
+        [WirePath("properties.requiredFixedEnum")]
+        public ZooFixedMode? RequiredFixedEnum
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiredFixedEnum;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ZooProperties();
+                    }
+                    Properties.RequiredFixedEnum = value.Value;
+                }
+            }
+        }
+
+        /// <summary> Required extensible enum (union). </summary>
+        [WirePath("properties.requiredExtensibleEnum")]
+        public ZooProvisioningState? RequiredExtensibleEnum
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiredExtensibleEnum;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ZooProperties();
+                    }
+                    Properties.RequiredExtensibleEnum = value.Value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Required reference-type property. Used to validate that required reference
+        ///       types flattened from an optional ``properties?:`` parent surface as nullable
+        ///       on the public property under the unified wrapper-optionality rule.
+        /// </summary>
+        [WirePath("properties.requiredString")]
+        public string RequiredString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiredString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ZooProperties();
+                }
+                Properties.RequiredString = value;
             }
         }
     }

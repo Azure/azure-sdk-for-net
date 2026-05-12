@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <returns> A new <see cref="Models.StandbyVirtualMachinePoolPrediction"/> instance for mocking. </returns>
         public static StandbyVirtualMachinePoolPrediction StandbyVirtualMachinePoolPrediction(IEnumerable<long> forecastValuesInstancesRequestedCount = default, DateTimeOffset forecastStartOn = default, string forecastInfo = default)
         {
-            return new StandbyVirtualMachinePoolPrediction(forecastValuesInstancesRequestedCount is null ? default : new StandbyVirtualMachinePoolForecastValues((forecastValuesInstancesRequestedCount ?? new ChangeTrackingList<long>()).ToList(), null), forecastStartOn, forecastInfo, additionalBinaryDataProperties: null);
+            return new StandbyVirtualMachinePoolPrediction(new StandbyVirtualMachinePoolForecastValues((forecastValuesInstancesRequestedCount ?? new ChangeTrackingList<long>()).ToList(), null), forecastStartOn, forecastInfo, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A StandbyContainerGroupPoolResource. </summary>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <returns> A new <see cref="Models.StandbyContainerGroupPoolPrediction"/> instance for mocking. </returns>
         public static StandbyContainerGroupPoolPrediction StandbyContainerGroupPoolPrediction(IEnumerable<long> forecastValuesInstancesRequestedCount = default, DateTimeOffset forecastStartOn = default, string forecastInfo = default)
         {
-            return new StandbyContainerGroupPoolPrediction(forecastValuesInstancesRequestedCount is null ? default : new StandbyContainerGroupPoolForecastValues((forecastValuesInstancesRequestedCount ?? new ChangeTrackingList<long>()).ToList(), null), forecastStartOn, forecastInfo, additionalBinaryDataProperties: null);
+            return new StandbyContainerGroupPoolPrediction(new StandbyContainerGroupPoolForecastValues((forecastValuesInstancesRequestedCount ?? new ChangeTrackingList<long>()).ToList(), null), forecastStartOn, forecastInfo, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StandbyVirtualMachineInstanceCountSummary"/>. </summary>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StandbyContainerGroupPoolRuntimeViewProperties StandbyContainerGroupPoolRuntimeViewProperties(IEnumerable<ContainerGroupInstanceCountSummary> instanceCountSummary, StandbyProvisioningState? provisioningState)
         {
-            return StandbyContainerGroupPoolRuntimeViewProperties(instanceCountSummary, status: default, provisioningState, prediction: default);
+            return StandbyContainerGroupPoolRuntimeViewProperties(instanceCountSummary: instanceCountSummary, status: default, provisioningState: provisioningState, prediction: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StandbyContainerGroupPoolProperties"/>. </summary>
@@ -313,22 +313,22 @@ namespace Azure.ResourceManager.StandbyPool.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StandbyContainerGroupPoolProperties StandbyContainerGroupPoolProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, StandbyContainerGroupProperties containerGroupProperties, StandbyProvisioningState? provisioningState)
         {
-            return StandbyContainerGroupPoolProperties(elasticityProfile, containerGroupProperties, zones: default, provisioningState);
+            return StandbyContainerGroupPoolProperties(elasticityProfile: elasticityProfile, containerGroupProperties: containerGroupProperties, zones: default, provisioningState: provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StandbyVirtualMachinePoolRuntimeViewProperties"/>. </summary>
         /// <param name="instanceCountSummary">
         /// A list containing the counts of virtual machines in each possible power state for each zone if enabled, as known by the StandbyPool resource provider.
-        ///             If zones are not enabled on the attached VMSS, the list will contain a single entry with null zone values.
-        ///             Note: any updates to pool resources outside of StandbyPoolRP (i.e deleting a VM through portal) are not reflected here.
-        ///             Note: any resources in the Running state may still be installing extensions / not fully provisioned.
+        ///                         If zones are not enabled on the attached VMSS, the list will contain a single entry with null zone values.
+        ///                         Note: any updates to pool resources outside of StandbyPoolRP (i.e deleting a VM through portal) are not reflected here.
+        ///                         Note: any resources in the Running state may still be installing extensions / not fully provisioned.
         /// </param>
         /// <param name="provisioningState"> Displays the provisioning state of the standby pool. </param>
         /// <returns> A new <see cref="Models.StandbyVirtualMachinePoolRuntimeViewProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StandbyVirtualMachinePoolRuntimeViewProperties StandbyVirtualMachinePoolRuntimeViewProperties(IEnumerable<StandbyVirtualMachineInstanceCountSummary> instanceCountSummary, StandbyProvisioningState? provisioningState)
         {
-            return StandbyVirtualMachinePoolRuntimeViewProperties(instanceCountSummary, status: default, provisioningState, prediction: default);
+            return StandbyVirtualMachinePoolRuntimeViewProperties(instanceCountSummary: instanceCountSummary, status: default, provisioningState: provisioningState, prediction: default);
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The LocalSkillParam. </summary>
-    internal partial class LocalSkillParam
+    public partial class LocalSkillParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -43,12 +43,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The name of the skill. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> The description of the skill. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> The path to the directory containing the skill. </summary>
-        public string Path { get; }
+        public string Path { get; set; }
     }
 }

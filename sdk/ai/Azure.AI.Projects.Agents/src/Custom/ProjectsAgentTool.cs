@@ -38,4 +38,11 @@ public abstract partial class ProjectsAgentTool
             ModelSerializationExtensions.WireOptions,
             OpenAIContext.Default);
     }
+    public static ProjectsAgentTool AsProjectTool(ResponseTool tool)
+    {
+        Argument.AssertNotNull(tool, nameof(tool));
+        // ProjectTool is an alias of ResponseTool in a Azure.AI.Projects namespace, so we can reinterpret ResponseTool.
+        BinaryData serializedResponseItem = ModelReaderWriter.Write(tool, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+        return ModelReaderWriter.Read<ProjectsAgentTool>(serializedResponseItem, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+    }
 }

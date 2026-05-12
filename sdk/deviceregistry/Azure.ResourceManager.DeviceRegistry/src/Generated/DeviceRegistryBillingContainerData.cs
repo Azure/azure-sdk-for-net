@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
     }

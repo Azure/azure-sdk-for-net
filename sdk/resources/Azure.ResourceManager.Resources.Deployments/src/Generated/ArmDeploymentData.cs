@@ -13,43 +13,11 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary>
-    /// A class representing the ArmDeployment data model.
-    /// Deployment information.
-    /// </summary>
+    /// <summary> Deployment information. </summary>
     public partial class ArmDeploymentData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ArmDeploymentData"/>. </summary>
         internal ArmDeploymentData()
@@ -58,30 +26,32 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of <see cref="ArmDeploymentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> the location of the deployment. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Deployment properties. </param>
+        /// <param name="location"> the location of the deployment. </param>
         /// <param name="tags"> Deployment tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ArmDeploymentPropertiesExtended properties, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ArmDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ArmDeploymentPropertiesExtended properties, AzureLocation? location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
-            Location = location;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            Location = location;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Deployment properties. </summary>
+        [WirePath("properties")]
+        public ArmDeploymentPropertiesExtended Properties { get; }
 
         /// <summary> the location of the deployment. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
-        /// <summary> Deployment properties. </summary>
-        [WirePath("properties")]
-        public ArmDeploymentPropertiesExtended Properties { get; }
+
         /// <summary> Deployment tags. </summary>
         [WirePath("tags")]
-        public IReadOnlyDictionary<string, string> Tags { get; }
+        public IDictionary<string, string> Tags { get; }
     }
 }

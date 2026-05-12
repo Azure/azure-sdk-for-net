@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the nonce used in the login flow. </summary>
+    /// <summary>
+    /// The configuration settings of the nonce used in the login flow.
+    /// Serialized Name: Nonce
+    /// </summary>
     public partial class LoginFlowNonceSettings
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LoginFlowNonceSettings"/>. </summary>
-        /// <param name="validateNonce"> &lt;code&gt;false&lt;/code&gt; if the nonce should not be validated while completing the login flow; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="nonceExpirationInterval"> The time after the request is made when the nonce should expire. </param>
+        /// <param name="validateNonce">
+        /// &lt;code&gt;false&lt;/code&gt; if the nonce should not be validated while completing the login flow; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: Nonce.validateNonce
+        /// </param>
+        /// <param name="nonceExpirationInterval">
+        /// The time after the request is made when the nonce should expire.
+        /// Serialized Name: Nonce.nonceExpirationInterval
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LoginFlowNonceSettings(bool? validateNonce, string nonceExpirationInterval, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> &lt;code&gt;false&lt;/code&gt; if the nonce should not be validated while completing the login flow; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;false&lt;/code&gt; if the nonce should not be validated while completing the login flow; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: Nonce.validateNonce
+        /// </summary>
         [WirePath("validateNonce")]
         public bool? ValidateNonce { get; set; }
-        /// <summary> The time after the request is made when the nonce should expire. </summary>
+        /// <summary>
+        /// The time after the request is made when the nonce should expire.
+        /// Serialized Name: Nonce.nonceExpirationInterval
+        /// </summary>
         [WirePath("nonceExpirationInterval")]
         public string NonceExpirationInterval { get; set; }
     }

@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         private readonly string _schemaRegistryName;
         private readonly string _schemaName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SchemaVersionsGetBySchemaCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SchemaVersions client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="schemaRegistryName"> Schema registry name parameter. </param>
         /// <param name="schemaName"> Schema name parameter. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SchemaVersionsGetBySchemaCollectionResultOfT(SchemaVersions client, Guid subscriptionId, string resourceGroupName, string schemaRegistryName, string schemaName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SchemaVersionsGetBySchemaCollectionResultOfT(SchemaVersions client, Guid subscriptionId, string resourceGroupName, string schemaRegistryName, string schemaName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             _schemaRegistryName = schemaRegistryName;
             _schemaName = schemaName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SchemaVersionsGetBySchemaCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySchemaRequest(nextLink, _subscriptionId, _resourceGroupName, _schemaRegistryName, _schemaName, _context) : _client.CreateGetBySchemaRequest(_subscriptionId, _resourceGroupName, _schemaRegistryName, _schemaName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeviceRegistrySchemaVersionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

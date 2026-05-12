@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Threading.Channels;
-using NAudio.Wave;
 using Azure.Core.Pipeline;
+using NAudio.Wave;
 
 namespace Azure.AI.VoiceLive.Samples;
 

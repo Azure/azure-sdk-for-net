@@ -18,7 +18,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -29,7 +29,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -38,7 +38,7 @@ ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersio
 
 Synchronous sample:
 ```C# Snippet:Sample_ListAgentVersions_Sync
-var agentVersions = projectClient.Agents.GetAgentVersions(agentName: "myAgent");
+var agentVersions = projectClient.AgentAdministrationClient.GetAgentVersions(agentName: "myAgent");
 foreach (ProjectsAgentVersion oneAgentVersion in agentVersions)
 {
     Console.WriteLine($"Agent: {oneAgentVersion.Id}, Name: {oneAgentVersion.Name}, Version: {oneAgentVersion.Version}");
@@ -47,7 +47,7 @@ foreach (ProjectsAgentVersion oneAgentVersion in agentVersions)
 
 Asynchronous sample:
 ```C# Snippet:Sample_ListAgentVersions_Async
-var agentVersions = projectClient.Agents.GetAgentVersionsAsync(agentName: "myAgent");
+var agentVersions = projectClient.AgentAdministrationClient.GetAgentVersionsAsync(agentName: "myAgent");
 await foreach (ProjectsAgentVersion oneAgentVersion in agentVersions)
 {
     Console.WriteLine($"Agent: {oneAgentVersion.Id}, Name: {oneAgentVersion.Name}, Version: {oneAgentVersion.Version}");
@@ -59,13 +59,13 @@ await foreach (ProjectsAgentVersion oneAgentVersion in agentVersions)
 Synchronous sample:
 ```C# Snippet:Sample_CreateConversation_Sync
 ProjectConversation conversation
-    = projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversation();
+    = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateConversation_Async
 ProjectConversation conversation
-    = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync();
+    = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
 ```
 
 5. Ask question for an agent.
@@ -73,7 +73,7 @@ ProjectConversation conversation
 Synchronous sample:
 ```C# Snippet:Sample_CreateSimpleResponse_Sync
 ProjectResponsesClient responseClient
-    = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
+    = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
 
 ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
 ```
@@ -81,7 +81,7 @@ ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke."
 Asynchronous sample:
 ```C# Snippet:Sample_CreateSimpleResponse_Async
 ProjectResponsesClient responseClient
-    = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
+    = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
 
 ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 ```
@@ -102,12 +102,12 @@ Console.WriteLine(response.GetOutputText());
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_Sync
-projectClient.OpenAI.GetProjectConversationsClient().DeleteConversation(conversationId: conversation.Id);
-projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.ProjectOpenAIClient.GetProjectConversationsClient().DeleteConversation(conversationId: conversation.Id);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_Async
-await projectClient.OpenAI.GetProjectConversationsClient().DeleteConversationAsync(conversationId: conversation.Id);
-await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().DeleteConversationAsync(conversationId: conversation.Id);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

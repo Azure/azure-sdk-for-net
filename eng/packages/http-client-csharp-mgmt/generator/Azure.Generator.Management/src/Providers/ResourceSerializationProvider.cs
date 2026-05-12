@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.ClientModel.Primitives;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -17,17 +18,17 @@ namespace Azure.Generator.Management.Providers
     {
         private readonly FieldProvider _dataField;
         private readonly CSharpType _resourceDataType;
-        private readonly ResourceClientProvider _resoruce;
+        private readonly ResourceClientProvider _resource;
         private readonly CSharpType _jsonModelInterfaceType;
         public ResourceSerializationProvider(ResourceClientProvider resource)
         {
-            _resoruce = resource;
+            _resource = resource;
             _resourceDataType = resource.ResourceData.Type;
             _jsonModelInterfaceType = new CSharpType(typeof(IJsonModel<>), _resourceDataType);
             _dataField = new FieldProvider(FieldModifiers.Private | FieldModifiers.Static, _jsonModelInterfaceType, "s_dataDeserializationInstance", this);
         }
 
-        protected override string BuildName() => _resoruce.Name;
+        protected override string BuildName() => _resource.Name;
 
         protected override string BuildRelativeFilePath()
             => Path.Combine("src", "Generated", $"{Name}.Serialization.cs");
@@ -41,8 +42,27 @@ namespace Azure.Generator.Management.Providers
 
         protected override PropertyProvider[] BuildProperties() =>
             [
-                new PropertyProvider(null, MethodSignatureModifiers.Private | MethodSignatureModifiers.Static, _jsonModelInterfaceType, "DataDeserializationInstance", new ExpressionPropertyBody(new AssignmentExpression(_dataField, New.Instance(_resourceDataType), true)), this)
+                new PropertyProvider(null, MethodSignatureModifiers.Private | MethodSignatureModifiers.Static, _jsonModelInterfaceType, "DataDeserializationInstance", new ExpressionPropertyBody(new AssignmentExpression(_dataField, New.Instance(GetInstantiableDataType()), true)), this)
             ];
+
+        /// <summary>
+        /// Gets the concrete type to use for instantiating the DataDeserializationInstance.
+        /// For abstract data types (from @discriminator), uses the Unknown proxy type instead.
+        /// </summary>
+        private CSharpType GetInstantiableDataType()
+        {
+            var resourceData = _resource.ResourceData;
+            if (resourceData.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Abstract))
+            {
+                var unknownDerivedModel = resourceData.DerivedModels
+                    .FirstOrDefault(m => m.IsUnknownDiscriminatorModel);
+                if (unknownDerivedModel != null)
+                {
+                    return unknownDerivedModel.Type;
+                }
+            }
+            return _resourceDataType;
+        }
 
         protected override MethodProvider[] BuildMethods()
         {

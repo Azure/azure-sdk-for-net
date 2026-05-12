@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Communication
         {
             if (id.ResourceType != EmailServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EmailServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EmailServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CommunicationDomainResourceData, CommunicationDomainResource>(new DomainsGetByEmailServiceResourceAsyncCollectionResultOfT(_domainsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CommunicationDomainResource(Client, data));
+            return new AsyncPageableWrapper<CommunicationDomainResourceData, CommunicationDomainResource>(new DomainsGetByEmailServiceResourceAsyncCollectionResultOfT(
+                _domainsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CommunicationDomainResourceCollection.GetAll"), data => new CommunicationDomainResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CommunicationDomainResourceData, CommunicationDomainResource>(new DomainsGetByEmailServiceResourceCollectionResultOfT(_domainsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CommunicationDomainResource(Client, data));
+            return new PageableWrapper<CommunicationDomainResourceData, CommunicationDomainResource>(new DomainsGetByEmailServiceResourceCollectionResultOfT(
+                _domainsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CommunicationDomainResourceCollection.GetAll"), data => new CommunicationDomainResource(Client, data));
         }
 
         /// <summary>

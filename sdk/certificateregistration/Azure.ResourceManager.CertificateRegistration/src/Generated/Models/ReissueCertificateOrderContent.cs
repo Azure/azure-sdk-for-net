@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 {
                     Properties = new ReissueCertificateOrderRequestProperties();
                 }
-                Properties.KeySize = value.Value;
+                Properties.KeySize = value;
             }
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 {
                     Properties = new ReissueCertificateOrderRequestProperties();
                 }
-                Properties.DelayExistingRevokeInHours = value.Value;
+                Properties.DelayExistingRevokeInHours = value;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 {
                     Properties = new ReissueCertificateOrderRequestProperties();
                 }
-                Properties.IsPrivateKeyExternal = value.Value;
+                Properties.IsPrivateKeyExternal = value;
             }
         }
     }

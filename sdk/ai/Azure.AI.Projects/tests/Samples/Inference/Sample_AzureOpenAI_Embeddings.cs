@@ -23,7 +23,7 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase
         #region Snippet:AI_Projects_AzureOpenAIEmbeddingsSync
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_NAME");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_FOUNDRY_MODEL_NAME");
         var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
         var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
@@ -67,7 +67,7 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase
         #region Snippet:AI_Projects_AzureOpenAIEmbeddingsAsync
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_NAME");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_FOUNDRY_MODEL_NAME");
         var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
         var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;

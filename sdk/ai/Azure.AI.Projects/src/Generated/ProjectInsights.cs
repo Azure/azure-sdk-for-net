@@ -7,8 +7,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The ProjectInsights sub-client. </summary>
     public partial class ProjectInsights
@@ -85,12 +86,12 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="insight"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectInsight> Generate(ProjectInsight insight, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<ProjectsInsight> Generate(ProjectsInsight insight, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(insight, nameof(insight));
 
             ClientResult result = Generate(insight, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ProjectInsight)result, result.GetRawResponse());
+            return ClientResult.FromValue((ProjectsInsight)result, result.GetRawResponse());
         }
 
         /// <summary> Generate Insights. </summary>
@@ -99,12 +100,12 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="insight"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectInsight>> GenerateAsync(ProjectInsight insight, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<ProjectsInsight>> GenerateAsync(ProjectsInsight insight, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(insight, nameof(insight));
 
             ClientResult result = await GenerateAsync(insight, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ProjectInsight)result, result.GetRawResponse());
+            return ClientResult.FromValue((ProjectsInsight)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -163,12 +164,12 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectInsight> Get(string id, FoundryFeaturesOptInKeys? foundryFeatures = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<ProjectsInsight> Get(string id, FoundryFeaturesOptInKeys? foundryFeatures = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             ClientResult result = Get(id, foundryFeatures?.ToSerialString(), includeCoordinates, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ProjectInsight)result, result.GetRawResponse());
+            return ClientResult.FromValue((ProjectsInsight)result, result.GetRawResponse());
         }
 
         /// <summary> Get a specific insight by Id. </summary>
@@ -179,12 +180,12 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectInsight>> GetAsync(string id, FoundryFeaturesOptInKeys? foundryFeatures = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<ProjectsInsight>> GetAsync(string id, FoundryFeaturesOptInKeys? foundryFeatures = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             ClientResult result = await GetAsync(id, foundryFeatures?.ToSerialString(), includeCoordinates, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ProjectInsight)result, result.GetRawResponse());
+            return ClientResult.FromValue((ProjectsInsight)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -256,7 +257,7 @@ namespace Azure.AI.Projects
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<ProjectInsight> GetAll(FoundryFeaturesOptInKeys? foundryFeatures = default, InsightType? @type = default, string evalId = default, string runId = default, string agentName = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<ProjectsInsight> GetAll(FoundryFeaturesOptInKeys? foundryFeatures = default, InsightType? @type = default, string evalId = default, string runId = default, string agentName = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
         {
             return new ProjectInsightsGetAllCollectionResultOfT(
                 this,
@@ -278,7 +279,7 @@ namespace Azure.AI.Projects
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<ProjectInsight> GetAllAsync(FoundryFeaturesOptInKeys? foundryFeatures = default, InsightType? @type = default, string evalId = default, string runId = default, string agentName = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<ProjectsInsight> GetAllAsync(FoundryFeaturesOptInKeys? foundryFeatures = default, InsightType? @type = default, string evalId = default, string runId = default, string agentName = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
         {
             return new ProjectInsightsGetAllAsyncCollectionResultOfT(
                 this,

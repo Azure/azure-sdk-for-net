@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PureStorageReservationData, PureStorageReservationResource>(new ReservationsGetByResourceGroupAsyncCollectionResultOfT(_reservationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PureStorageReservationResource(Client, data));
+            return new AsyncPageableWrapper<PureStorageReservationData, PureStorageReservationResource>(new ReservationsGetByResourceGroupAsyncCollectionResultOfT(_reservationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PureStorageReservationCollection.GetAll"), data => new PureStorageReservationResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PureStorageReservationData, PureStorageReservationResource>(new ReservationsGetByResourceGroupCollectionResultOfT(_reservationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PureStorageReservationResource(Client, data));
+            return new PageableWrapper<PureStorageReservationData, PureStorageReservationResource>(new ReservationsGetByResourceGroupCollectionResultOfT(_reservationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PureStorageReservationCollection.GetAll"), data => new PureStorageReservationResource(Client, data));
         }
 
         /// <summary>

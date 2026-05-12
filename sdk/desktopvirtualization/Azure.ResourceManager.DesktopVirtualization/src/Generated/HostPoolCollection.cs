@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -322,7 +322,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new HostPoolResource(Client, data));
+                context,
+                "HostPoolCollection.GetAll"), data => new HostPoolResource(Client, data));
         }
 
         /// <summary>
@@ -360,7 +361,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new HostPoolResource(Client, data));
+                context,
+                "HostPoolCollection.GetAll"), data => new HostPoolResource(Client, data));
         }
 
         /// <summary>

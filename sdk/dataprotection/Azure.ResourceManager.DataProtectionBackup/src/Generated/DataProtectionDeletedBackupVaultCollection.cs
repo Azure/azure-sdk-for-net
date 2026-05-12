@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             TryGetApiVersion(DataProtectionDeletedBackupVaultResource.ResourceType, out string dataProtectionDeletedBackupVaultApiVersion);
             _location = location;
             _deletedBackupVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionDeletedBackupVaultResource.ResourceType.Namespace, Diagnostics);
-            _deletedBackupVaultsRestClient = new DeletedBackupVaults(_deletedBackupVaultsClientDiagnostics, Pipeline, Endpoint, dataProtectionDeletedBackupVaultApiVersion ?? "2025-09-01");
+            _deletedBackupVaultsRestClient = new DeletedBackupVaults(_deletedBackupVaultsClientDiagnostics, Pipeline, Endpoint, dataProtectionDeletedBackupVaultApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataProtectionDeletedBackupVaultData, DataProtectionDeletedBackupVaultResource>(new DeletedBackupVaultsGetByLocationAsyncCollectionResultOfT(_deletedBackupVaultsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new DataProtectionDeletedBackupVaultResource(Client, data));
+            return new AsyncPageableWrapper<DataProtectionDeletedBackupVaultData, DataProtectionDeletedBackupVaultResource>(new DeletedBackupVaultsGetByLocationAsyncCollectionResultOfT(_deletedBackupVaultsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "DataProtectionDeletedBackupVaultCollection.GetAll"), data => new DataProtectionDeletedBackupVaultResource(Client, data));
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataProtectionDeletedBackupVaultData, DataProtectionDeletedBackupVaultResource>(new DeletedBackupVaultsGetByLocationCollectionResultOfT(_deletedBackupVaultsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new DataProtectionDeletedBackupVaultResource(Client, data));
+            return new PageableWrapper<DataProtectionDeletedBackupVaultData, DataProtectionDeletedBackupVaultResource>(new DeletedBackupVaultsGetByLocationCollectionResultOfT(_deletedBackupVaultsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "DataProtectionDeletedBackupVaultCollection.GetAll"), data => new DataProtectionDeletedBackupVaultResource(Client, data));
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
