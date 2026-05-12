@@ -13,6 +13,37 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public readonly partial struct ListKeysRequestExpand
     {
+        // Workaround for a regression in @typespec/http-client-csharp 1.0.0-alpha.20260506.3
+        // (introduced by microsoft/typespec#10600, picked up via Azure/azure-sdk-for-net#59101):
+        // when a type has a sibling customize struct re-publishing its old generated name,
+        // the generator drops the struct body partial (field/ctor/named values/Equals/GetHashCode/ToString)
+        // and emits only the operators/conversions partial, breaking the build. Re-declare the
+        // missing members here. Remove once the generator regression is fixed upstream.
+        private readonly string _value;
+        private const string KerbValue = "kerb";
+
+        /// <summary> Initializes a new instance of <see cref="ListKeysRequestExpand"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ListKeysRequestExpand(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        /// <summary> Gets the Kerb. </summary>
+        public static ListKeysRequestExpand Kerb { get; } = new ListKeysRequestExpand(KerbValue);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ListKeysRequestExpand other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(ListKeysRequestExpand other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
+
         // Backward-compatible: Converts to StorageListKeyExpand.
         public static implicit operator StorageListKeyExpand(ListKeysRequestExpand value) => new StorageListKeyExpand(value._value);
         // Backward-compatible: Converts from StorageListKeyExpand.
