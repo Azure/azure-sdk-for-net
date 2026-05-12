@@ -15,61 +15,61 @@ using Azure.ResourceManager.ServiceNetworking;
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     /// <summary> The type used for update operations of the Association. </summary>
-    public partial class TrafficControllerAssociationUpdate : IJsonModel<TrafficControllerAssociationUpdate>
+    public partial class TrafficControllerAssociationPatch : IJsonModel<TrafficControllerAssociationPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TrafficControllerAssociationUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TrafficControllerAssociationPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficControllerAssociationUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficControllerAssociationPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTrafficControllerAssociationUpdate(document.RootElement, options);
+                        return DeserializeTrafficControllerAssociationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrafficControllerAssociationUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficControllerAssociationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficControllerAssociationUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficControllerAssociationPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceNetworkingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TrafficControllerAssociationUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficControllerAssociationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TrafficControllerAssociationUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TrafficControllerAssociationPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TrafficControllerAssociationUpdate IPersistableModel<TrafficControllerAssociationUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TrafficControllerAssociationPatch IPersistableModel<TrafficControllerAssociationPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TrafficControllerAssociationUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TrafficControllerAssociationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="trafficControllerAssociationUpdate"> The <see cref="TrafficControllerAssociationUpdate"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(TrafficControllerAssociationUpdate trafficControllerAssociationUpdate)
+        /// <param name="trafficControllerAssociationPatch"> The <see cref="TrafficControllerAssociationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(TrafficControllerAssociationPatch trafficControllerAssociationPatch)
         {
-            if (trafficControllerAssociationUpdate == null)
+            if (trafficControllerAssociationPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(trafficControllerAssociationUpdate, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(trafficControllerAssociationPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TrafficControllerAssociationUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TrafficControllerAssociationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficControllerAssociationUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficControllerAssociationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficControllerAssociationUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficControllerAssociationPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TrafficControllerAssociationUpdate IJsonModel<TrafficControllerAssociationUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TrafficControllerAssociationPatch IJsonModel<TrafficControllerAssociationPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TrafficControllerAssociationUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TrafficControllerAssociationPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficControllerAssociationUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficControllerAssociationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficControllerAssociationUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficControllerAssociationPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTrafficControllerAssociationUpdate(document.RootElement, options);
+            return DeserializeTrafficControllerAssociationPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TrafficControllerAssociationUpdate DeserializeTrafficControllerAssociationUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static TrafficControllerAssociationPatch DeserializeTrafficControllerAssociationPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TrafficControllerAssociationUpdate(tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
+            return new TrafficControllerAssociationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
         }
     }
 }

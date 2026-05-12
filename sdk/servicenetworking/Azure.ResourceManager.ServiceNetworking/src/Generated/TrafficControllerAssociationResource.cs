@@ -211,12 +211,12 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<Response<TrafficControllerAssociationResource>> UpdateAsync(TrafficControllerAssociationUpdate properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<TrafficControllerAssociationResource>> UpdateAsync(TrafficControllerAssociationPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _associationsInterfaceClientDiagnostics.CreateScope("TrafficControllerAssociationResource.Update");
             scope.Start();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _associationsInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, TrafficControllerAssociationUpdate.ToRequestContent(properties), context);
+                HttpMessage message = _associationsInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, TrafficControllerAssociationPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficControllerAssociationData> response = Response.FromValue(TrafficControllerAssociationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -263,12 +263,12 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual Response<TrafficControllerAssociationResource> Update(TrafficControllerAssociationUpdate properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<TrafficControllerAssociationResource> Update(TrafficControllerAssociationPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _associationsInterfaceClientDiagnostics.CreateScope("TrafficControllerAssociationResource.Update");
             scope.Start();
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _associationsInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, TrafficControllerAssociationUpdate.ToRequestContent(properties), context);
+                HttpMessage message = _associationsInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, TrafficControllerAssociationPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficControllerAssociationData> response = Response.FromValue(TrafficControllerAssociationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 else
                 {
                     TrafficControllerAssociationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    TrafficControllerAssociationUpdate patch = new TrafficControllerAssociationUpdate();
+                    TrafficControllerAssociationPatch patch = new TrafficControllerAssociationPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 else
                 {
                     TrafficControllerAssociationData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    TrafficControllerAssociationUpdate patch = new TrafficControllerAssociationUpdate();
+                    TrafficControllerAssociationPatch patch = new TrafficControllerAssociationPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 else
                 {
                     TrafficControllerAssociationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    TrafficControllerAssociationUpdate patch = new TrafficControllerAssociationUpdate();
+                    TrafficControllerAssociationPatch patch = new TrafficControllerAssociationPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<TrafficControllerAssociationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 else
                 {
                     TrafficControllerAssociationData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    TrafficControllerAssociationUpdate patch = new TrafficControllerAssociationUpdate();
+                    TrafficControllerAssociationPatch patch = new TrafficControllerAssociationPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<TrafficControllerAssociationResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 else
                 {
                     TrafficControllerAssociationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    TrafficControllerAssociationUpdate patch = new TrafficControllerAssociationUpdate();
+                    TrafficControllerAssociationPatch patch = new TrafficControllerAssociationPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 else
                 {
                     TrafficControllerAssociationData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    TrafficControllerAssociationUpdate patch = new TrafficControllerAssociationUpdate();
+                    TrafficControllerAssociationPatch patch = new TrafficControllerAssociationPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

@@ -13,22 +13,22 @@ using Azure.ResourceManager.ServiceNetworking;
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     /// <summary> The type used for update operations of the Association. </summary>
-    public partial class TrafficControllerAssociationUpdate
+    public partial class TrafficControllerAssociationPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TrafficControllerAssociationUpdate"/>. </summary>
-        public TrafficControllerAssociationUpdate()
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerAssociationPatch"/>. </summary>
+        public TrafficControllerAssociationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrafficControllerAssociationUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerAssociationPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficControllerAssociationUpdate(IDictionary<string, string> tags, AssociationUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TrafficControllerAssociationPatch(IDictionary<string, string> tags, AssociationUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
