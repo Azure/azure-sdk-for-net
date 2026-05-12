@@ -57,16 +57,21 @@ are:
 - **Resource type.** `<namespace>/<type1>/.../<typeN>`. Type segments occupy
   the even positions after `/providers/`; name segments occupy the odd
   positions.
-- **Scope.** Determined entirely by the path prefix preceding the final
-  `/providers/`:
+- **Scope.** Determined entirely by the path prefix preceding the
+  resource's own `/providers/<namespace>/...` segments. An instance path
+  can contain more than one `/providers/<namespace>/` portion (extension
+  resources are anchored on another resource which itself starts with a
+  `/providers/...`), so the relevant split is the **last** occurrence of
+  `/providers/<namespace>/<type>/...` in the path — everything before it
+  is the scope:
 
-  | Path prefix | Scope |
+  | Path prefix (before the last `/providers/`) | Scope |
   | --- | --- |
   | `/` | `Tenant` |
   | `/providers/Microsoft.Management/managementGroups/{}/` | `ManagementGroup` |
   | `/subscriptions/{}/` | `Subscription` |
   | `/subscriptions/{}/resourceGroups/{}/` | `ResourceGroup` |
-  | Any other path ending in another resource instance | `Extension` |
+  | Any other prefix that is itself another resource's instance path | `Extension` |
 
 - **Parent chain.** Each `type/{name}` pair after the namespace is one level.
   The parent of `.../typeN-1/{nameN-1}/typeN/{nameN}` is the resource at
@@ -201,11 +206,16 @@ both depend on whether *another* path in the set is a resource path:
 - A resource's **parent** is the resource at the next-shorter
   `/type/{name}` prefix of its instance path. That prefix is a parent
   only if it is itself a detected resource.
-- A resource's **scope** is determined by the segment that precedes the
-  resource's `/providers/<namespace>/...` portion. If that segment is
-  itself another resource's instance path, the scope is `Extension`
-  (the resource is anchored on whatever resource it extends); otherwise
-  it is `Tenant` / `Subscription` / `ResourceGroup` /
+- A resource's **scope** is determined by the path segment that
+  precedes the **last** `/providers/<namespace>/...` portion of its
+  instance path. An instance path can contain more than one
+  `/providers/<namespace>/` block — extension resources are anchored
+  on another resource whose own path already starts with
+  `/providers/...` — so the split point is always the *last*
+  `/providers/`. If the prefix before that last `/providers/` is itself
+  another resource's instance path, the scope is `Extension` (the
+  resource is anchored on whatever resource it extends); otherwise it
+  is `Tenant` / `Subscription` / `ResourceGroup` /
   `ManagementGroup` as defined in
   [*Ground truth*](#ground-truth-arm-resources-are-defined-by-their-paths).
 
@@ -218,8 +228,10 @@ For each resource `R` from Step 2:
    [*How a resource's parent is determined*](#how-a-resources-parent-is-determined)
    for additional rules covering dynamic parent expansion and the
    shared-model / `@parentResource` decorator cases.
-2. **Scope.** Inspect the prefix of `R`'s instance path before its
-   `/providers/<namespace>/...` portion:
+2. **Scope.** Inspect the prefix of `R`'s instance path that precedes
+   the **last** `/providers/<namespace>/...` segment in the path (a
+   single path can contain more than one `/providers/<namespace>/`
+   block when the resource extends another resource):
    - `/` → `Tenant`.
    - `/subscriptions/{}/` → `Subscription`.
    - `/subscriptions/{}/resourceGroups/{}/` → `ResourceGroup`.
@@ -295,10 +307,15 @@ resource (`SubscriptionResource` / `ResourceGroupResource` /
 
 ## How resource scope is determined
 
-The scope of a resource is the path prefix before the final `/providers/` in
-its instance path, mapped to `Tenant`, `Subscription`, `ResourceGroup`,
+The scope of a resource is the path prefix before the **last** `/providers/`
+in its instance path, mapped to `Tenant`, `Subscription`, `ResourceGroup`,
 `ManagementGroup`, or `Extension` as defined in
 [*Ground truth*](#ground-truth-arm-resources-are-defined-by-their-paths).
+The "last `/providers/`" qualifier matters because an instance path may
+contain several `/providers/<namespace>/` blocks — for example, an
+extension resource on top of another provider's resource — and only the
+final block belongs to the resource itself; everything before it is the
+scope.
 
 In TypeSpec inputs the scope therefore comes from the **`Read` operation's
 path**, not from scope decorators on the model. Scope decorators
