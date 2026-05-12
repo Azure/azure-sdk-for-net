@@ -11,7 +11,7 @@ using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> A map to describe the settings of an action. </summary>
+    /// <summary> A map used to describe parameters for actions or configurations. </summary>
     public partial class ChaosKeyValuePair
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
