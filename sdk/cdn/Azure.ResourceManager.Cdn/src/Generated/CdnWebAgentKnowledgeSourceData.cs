@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Format or origin of the knowledge source. </summary>
         [WirePath("properties.sourceType")]
-        public WebAgentKnowledgeSourceType SourceType
+        public WebAgentKnowledgeSourceType? SourceType
         {
             get
             {
@@ -69,11 +69,14 @@ namespace Azure.ResourceManager.Cdn
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new KnowledgeSourceProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new KnowledgeSourceProperties();
+                    }
+                    Properties.SourceType = value.Value;
                 }
-                Properties.SourceType = value;
             }
         }
 
@@ -109,7 +112,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new KnowledgeSourceProperties();
                 }
-                Properties.UpdateFrequency = value.Value;
+                Properties.UpdateFrequency = value;
             }
         }
 

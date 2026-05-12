@@ -15,22 +15,6 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenType("Skills")]
 public partial class ProjectAgentSkills
 {
-    private static BinaryData CreateAndReadZipFile(string directoryPath)
-    {
-        string temporaryFile = Path.GetTempFileName();
-        File.Delete(temporaryFile);
-        ZipFile.CreateFromDirectory(directoryPath, temporaryFile);
-        return new(File.ReadAllBytes(temporaryFile));
-    }
-
-    private static void SaveAndUnzipData(string directoryPath, BinaryData content)
-    {
-        string temporaryFile = Path.GetTempFileName();
-        File.Delete(temporaryFile);
-        File.WriteAllBytes(temporaryFile, content.ToArray());
-        ZipFile.ExtractToDirectory(temporaryFile, directoryPath);
-    }
-
     /// <summary> Creates a skill from a zip package. </summary>
     /// <param name="directoryPath"> The path to the directory, containing skill description. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -41,7 +25,7 @@ public partial class ProjectAgentSkills
     {
         Argument.AssertNotNullOrEmpty(directoryPath, nameof(directoryPath));
 
-        ClientResult result = CreateSkillFromPackage(BinaryContent.Create(CreateAndReadZipFile(directoryPath)), cancellationToken.ToRequestOptions());
+        ClientResult result = CreateSkillFromPackage(BinaryContent.Create(FileHelper.CreateAndReadZipFileFromDirectory(directoryPath)), cancellationToken.ToRequestOptions());
         return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
     }
 
@@ -55,7 +39,7 @@ public partial class ProjectAgentSkills
     {
         Argument.AssertNotNullOrEmpty(directoryPath, nameof(directoryPath));
 
-        ClientResult result = await CreateSkillFromPackageAsync(BinaryContent.Create(CreateAndReadZipFile(directoryPath)), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        ClientResult result = await CreateSkillFromPackageAsync(BinaryContent.Create(FileHelper.CreateAndReadZipFileFromDirectory(directoryPath)), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
     }
 
@@ -146,7 +130,7 @@ public partial class ProjectAgentSkills
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
         BinaryData result = DownloadSkill(skillName, cancellationToken);
-        SaveAndUnzipData(path, result);
+        FileHelper.SaveAndUnzipData(path, result);
         return result;
     }
 
@@ -163,7 +147,7 @@ public partial class ProjectAgentSkills
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
         BinaryData result = await DownloadSkillAsync(skillName, cancellationToken).ConfigureAwait(false);
-        SaveAndUnzipData(path, result);
+        FileHelper.SaveAndUnzipData(path, result);
         return result;
     }
 }

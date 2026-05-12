@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new ProfilePropertiesUpdateParameters();
                 }
-                Properties.OriginResponseTimeoutSeconds = value.Value;
+                Properties.OriginResponseTimeoutSeconds = value;
             }
         }
 

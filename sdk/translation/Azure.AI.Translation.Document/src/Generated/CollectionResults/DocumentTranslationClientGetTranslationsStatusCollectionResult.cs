@@ -24,7 +24,7 @@ namespace Azure.AI.Translation.Document
         private readonly IEnumerable<string> _statuses;
         private readonly DateTimeOffset? _createdDateTimeUtcStart;
         private readonly DateTimeOffset? _createdDateTimeUtcEnd;
-        private readonly IEnumerable<string> _orderby;
+        private readonly IEnumerable<string> _orderBy;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -67,10 +67,10 @@ namespace Azure.AI.Translation.Document
         /// <param name="statuses"> Statuses to use in filtering. </param>
         /// <param name="createdDateTimeUtcStart"> the start datetime to get items after. </param>
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
-        /// <param name="orderby"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
+        /// <param name="orderBy"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DocumentTranslationClientGetTranslationsStatusCollectionResult(DocumentTranslationClient client, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> translationIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> @orderby, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DocumentTranslationClientGetTranslationsStatusCollectionResult(DocumentTranslationClient client, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> translationIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _maxCount = maxCount;
@@ -80,7 +80,7 @@ namespace Azure.AI.Translation.Document
             _statuses = statuses;
             _createdDateTimeUtcStart = createdDateTimeUtcStart;
             _createdDateTimeUtcEnd = createdDateTimeUtcEnd;
-            _orderby = @orderby;
+            _orderBy = orderBy;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -120,7 +120,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTranslationsStatusRequest(nextLink, _maxCount, _skip, _maxpagesize, _translationIds, _statuses, _createdDateTimeUtcStart, _createdDateTimeUtcEnd, _orderby, _context) : _client.CreateGetTranslationsStatusRequest(_maxCount, _skip, _maxpagesize, _translationIds, _statuses, _createdDateTimeUtcStart, _createdDateTimeUtcEnd, _orderby, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetTranslationsStatusRequest(nextLink, _maxCount, _skip, _maxpagesize, _translationIds, _statuses, _createdDateTimeUtcStart, _createdDateTimeUtcEnd, _orderBy, _context) : _client.CreateGetTranslationsStatusRequest(_maxCount, _skip, _maxpagesize, _translationIds, _statuses, _createdDateTimeUtcStart, _createdDateTimeUtcEnd, _orderBy, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

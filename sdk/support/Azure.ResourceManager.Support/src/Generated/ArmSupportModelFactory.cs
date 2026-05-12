@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="displayName"> Localized name of the Azure service. </param>
-        /// <param name="armResourceTypes"> ARM Resource types. </param>
+        /// <param name="resourceTypes"> ARM Resource types. </param>
         /// <returns> A new <see cref="Support.SupportAzureServiceData"/> instance for mocking. </returns>
-        public static SupportAzureServiceData SupportAzureServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, IEnumerable<string> armResourceTypes = default)
+        public static SupportAzureServiceData SupportAzureServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, IEnumerable<string> resourceTypes = default)
         {
             return new SupportAzureServiceData(
                 id,
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Support.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                displayName is null && armResourceTypes is null ? default : new ServiceProperties(displayName, (armResourceTypes ?? new ChangeTrackingList<string>()).ToList(), null));
+                displayName is null && resourceTypes is null ? default : new ServiceProperties(displayName, (resourceTypes ?? new ChangeTrackingList<string>()).ToList(), null));
         }
 
         /// <summary> Output of the service classification API. </summary>
@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="displayName"> Localized name of problem classification. </param>
-        /// <param name="secondaryConsentEnabledInfo"> This property indicates whether secondary consent is present for problem classification. </param>
+        /// <param name="secondaryConsentEnabled"> This property indicates whether secondary consent is present for problem classification. </param>
         /// <returns> A new <see cref="Support.ProblemClassificationData"/> instance for mocking. </returns>
-        public static ProblemClassificationData ProblemClassificationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, IEnumerable<SecondaryConsentEnabled> secondaryConsentEnabledInfo = default)
+        public static ProblemClassificationData ProblemClassificationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, IEnumerable<SecondaryConsentEnabled> secondaryConsentEnabled = default)
         {
             return new ProblemClassificationData(
                 id,
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Support.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                displayName is null && secondaryConsentEnabledInfo is null ? default : new ProblemClassificationProperties(displayName, (secondaryConsentEnabledInfo ?? new ChangeTrackingList<SecondaryConsentEnabled>()).ToList(), null));
+                displayName is null && secondaryConsentEnabled is null ? default : new ProblemClassificationProperties(displayName, (secondaryConsentEnabled ?? new ChangeTrackingList<SecondaryConsentEnabled>()).ToList(), null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Support.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SupportTicketData SupportTicketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string supportTicketId, string description, string problemClassificationId, string problemClassificationDisplayName, SupportSeverityLevel severity, string enrollmentId, bool? require24X7Response, AdvancedDiagnosticConsent advancedDiagnosticConsent, string problemScopingQuestions, string supportPlanId, SupportContactProfile contactDetails, SupportServiceLevelAgreement serviceLevelAgreement, string supportEngineerEmailAddress, string supportPlanType, string supportPlanDisplayName, string title, DateTimeOffset? problemStartOn, string serviceId, string serviceDisplayName, string status, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string fileWorkspaceName, IsTemporaryTicket? isTemporaryTicket, ResourceIdentifier technicalTicketDetailsResourceId, QuotaTicketDetails quotaTicketDetails, IEnumerable<SecondaryConsent> secondaryConsent)
         {
-            return SupportTicketData(id, name, resourceType, systemData, supportTicketId, description, problemClassificationId, problemClassificationDisplayName, severity, enrollmentId, require24X7Response, advancedDiagnosticConsent, problemScopingQuestions, supportPlanId, contactDetails, serviceLevelAgreement, supportPlanType, supportPlanDisplayName, title, problemStartOn, serviceId, serviceDisplayName, status, createdOn, modifiedOn, fileWorkspaceName, isTemporaryTicket, quotaTicketDetails, secondaryConsent, directConnectEscalation: default, communityForumPost: default, supportEngineerEmailAddress, technicalTicketDetailsResourceId);
+            return SupportTicketData(id: id, name: name, resourceType: resourceType, systemData: systemData, supportTicketId: supportTicketId, description: description, problemClassificationId: problemClassificationId, problemClassificationDisplayName: problemClassificationDisplayName, severity: severity, enrollmentId: enrollmentId, require24X7Response: require24X7Response, advancedDiagnosticConsent: advancedDiagnosticConsent, problemScopingQuestions: problemScopingQuestions, supportPlanId: supportPlanId, contactDetails: contactDetails, serviceLevelAgreement: serviceLevelAgreement, supportPlanType: supportPlanType, supportPlanDisplayName: supportPlanDisplayName, title: title, problemStartOn: problemStartOn, serviceId: serviceId, serviceDisplayName: serviceDisplayName, status: status, createdOn: createdOn, modifiedOn: modifiedOn, fileWorkspaceName: fileWorkspaceName, isTemporaryTicket: isTemporaryTicket, quotaTicketDetails: quotaTicketDetails, secondaryConsent: secondaryConsent, directConnectEscalation: default, communityForumPost: default, supportEngineerEmailAddress: supportEngineerEmailAddress, technicalTicketDetailsResourceId: technicalTicketDetailsResourceId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ChatTranscriptMessageProperties"/>. </summary>

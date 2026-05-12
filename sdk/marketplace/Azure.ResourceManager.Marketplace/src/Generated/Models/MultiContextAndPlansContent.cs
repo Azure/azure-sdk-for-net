@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     Properties = new MultiContextAndPlansProperties();
                 }
-                Properties.ETag = value.Value;
+                Properties.ETag = value;
             }
         }
 

@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    internal class PostgreSqlFlexibleServerLtrBackupResultOperationSource : IOperationSource<PostgreSqlFlexibleServerLtrBackupResult>
+    /// <summary></summary>
+    internal partial class PostgreSqlFlexibleServerLtrBackupResultOperationSource : IOperationSource<PostgreSqlFlexibleServerLtrBackupResult>
     {
-        PostgreSqlFlexibleServerLtrBackupResult IOperationSource<PostgreSqlFlexibleServerLtrBackupResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal PostgreSqlFlexibleServerLtrBackupResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return PostgreSqlFlexibleServerLtrBackupResult.DeserializePostgreSqlFlexibleServerLtrBackupResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        PostgreSqlFlexibleServerLtrBackupResult IOperationSource<PostgreSqlFlexibleServerLtrBackupResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            PostgreSqlFlexibleServerLtrBackupResult result = PostgreSqlFlexibleServerLtrBackupResult.DeserializePostgreSqlFlexibleServerLtrBackupResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<PostgreSqlFlexibleServerLtrBackupResult> IOperationSource<PostgreSqlFlexibleServerLtrBackupResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return PostgreSqlFlexibleServerLtrBackupResult.DeserializePostgreSqlFlexibleServerLtrBackupResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            PostgreSqlFlexibleServerLtrBackupResult result = PostgreSqlFlexibleServerLtrBackupResult.DeserializePostgreSqlFlexibleServerLtrBackupResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }
