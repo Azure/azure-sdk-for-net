@@ -11,25 +11,25 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> C# extensible replacement for NetApp provisioning state values. </summary>
+    /// <summary> Gets the status of the VolumeQuotaRule at the time the operation was called. </summary>
     public readonly partial struct NetAppProvisioningState : IEquatable<NetAppProvisioningState>
     {
         private readonly string _value;
-        /// <summary> The request has been accepted. </summary>
+        /// <summary> Resource has been Accepted. </summary>
         private const string AcceptedValue = "Accepted";
-        /// <summary> The resource is being created. </summary>
+        /// <summary> Resource is being Created. </summary>
         private const string CreatingValue = "Creating";
-        /// <summary> The resource is being patched. </summary>
+        /// <summary> Resource is being Patched. </summary>
         private const string PatchingValue = "Patching";
-        /// <summary> The resource is being updated. </summary>
+        /// <summary> Resource is updating. </summary>
         private const string UpdatingValue = "Updating";
-        /// <summary> The resource is being deleted. </summary>
+        /// <summary> Resource is being Deleted. </summary>
         private const string DeletingValue = "Deleting";
-        /// <summary> The resource is being moved. </summary>
+        /// <summary> Resource is being Moved. </summary>
         private const string MovingValue = "Moving";
-        /// <summary> The operation failed. </summary>
+        /// <summary> Resource has Failed. </summary>
         private const string FailedValue = "Failed";
-        /// <summary> The operation succeeded. </summary>
+        /// <summary> Resource has Succeeded. </summary>
         private const string SucceededValue = "Succeeded";
 
         /// <summary> Initializes a new instance of <see cref="NetAppProvisioningState"/>. </summary>
@@ -42,28 +42,28 @@ namespace Azure.ResourceManager.NetApp.Models
             _value = value;
         }
 
-        /// <summary> The request has been accepted. </summary>
+        /// <summary> Resource has been Accepted. </summary>
         public static NetAppProvisioningState Accepted { get; } = new NetAppProvisioningState(AcceptedValue);
 
-        /// <summary> The resource is being created. </summary>
+        /// <summary> Resource is being Created. </summary>
         public static NetAppProvisioningState Creating { get; } = new NetAppProvisioningState(CreatingValue);
 
-        /// <summary> The resource is being patched. </summary>
+        /// <summary> Resource is being Patched. </summary>
         public static NetAppProvisioningState Patching { get; } = new NetAppProvisioningState(PatchingValue);
 
-        /// <summary> The resource is being updated. </summary>
+        /// <summary> Resource is updating. </summary>
         public static NetAppProvisioningState Updating { get; } = new NetAppProvisioningState(UpdatingValue);
 
-        /// <summary> The resource is being deleted. </summary>
+        /// <summary> Resource is being Deleted. </summary>
         public static NetAppProvisioningState Deleting { get; } = new NetAppProvisioningState(DeletingValue);
 
-        /// <summary> The resource is being moved. </summary>
+        /// <summary> Resource is being Moved. </summary>
         public static NetAppProvisioningState Moving { get; } = new NetAppProvisioningState(MovingValue);
 
-        /// <summary> The operation failed. </summary>
+        /// <summary> Resource has Failed. </summary>
         public static NetAppProvisioningState Failed { get; } = new NetAppProvisioningState(FailedValue);
 
-        /// <summary> The operation succeeded. </summary>
+        /// <summary> Resource has Succeeded. </summary>
         public static NetAppProvisioningState Succeeded { get; } = new NetAppProvisioningState(SucceededValue);
 
         /// <summary> Determines if two <see cref="NetAppProvisioningState"/> values are the same. </summary>
