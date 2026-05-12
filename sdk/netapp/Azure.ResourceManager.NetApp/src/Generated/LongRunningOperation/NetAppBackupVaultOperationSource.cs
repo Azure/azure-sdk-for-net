@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal class NetAppBackupVaultOperationSource : IOperationSource<NetAppBackupVaultResource>
+    /// <summary></summary>
+    internal partial class NetAppBackupVaultOperationSource : IOperationSource<NetAppBackupVaultResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NetAppBackupVaultOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NetAppBackupVaultResource IOperationSource<NetAppBackupVaultResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetAppBackupVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetAppBackupVaultData data = NetAppBackupVaultData.DeserializeNetAppBackupVaultData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetAppBackupVaultResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetAppBackupVaultResource> IOperationSource<NetAppBackupVaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetAppBackupVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
-            return await Task.FromResult(new NetAppBackupVaultResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetAppBackupVaultData data = NetAppBackupVaultData.DeserializeNetAppBackupVaultData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetAppBackupVaultResource(_client, data);
         }
     }
 }
