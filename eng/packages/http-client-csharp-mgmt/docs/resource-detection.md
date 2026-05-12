@@ -156,27 +156,74 @@ For each candidate resource model `M` from Step 1:
 
 1. **Find the `Read`.** Scan every operation in the service for a `GET`
    whose response is exactly `M` (not a collection-of-`M`, not a
-   wrapper). For each such GET:
-   - Validate its path under [*Ground truth*](#ground-truth-arm-resources-are-defined-by-their-paths)
-     (literal namespace; alternating `type/{name}` segments; recognized
-     scope prefix or the `resourceGroups` special case). Reject ill-
-     formed paths with a diagnostic.
-   - The GET is the resource's `Read`; its path is the resource's
-     **instance path**.
-   - Multiple GETs returning `M` from different well-formed paths are
-     not an error — each path defines a separate resource. This is how
-     the same model can legitimately back resources at different
-     scopes.
-2. **Derive the path-based facts intrinsic to this resource.** Apply
+   wrapper). For each such GET, run the path through the validation
+   below. The GET is the resource's `Read`; its path is the resource's
+   **instance path**. Multiple GETs returning `M` from different
+   well-formed paths are not an error — each well-formed path defines a
+   separate resource. This is how the same model can legitimately back
+   resources at different scopes.
+
+2. **Validate the path.** A resource's instance path must conform to
+   the [*Ground truth*](#ground-truth-arm-resources-are-defined-by-their-paths)
+   shape. Walk the path and check, in order:
+
+   1. The path contains at least one `/providers/<namespace>/...`
+      segment. The split point is the **last** occurrence of
+      `/providers/`. Everything before it is the *scope prefix*;
+      everything after it (starting with `<namespace>`) is the
+      *resource-typed tail*. As a special case, a path that ends in
+      `/subscriptions/{}/resourceGroups/{name}` is treated as if it
+      were
+      `/subscriptions/{}/providers/Microsoft.Resources/resourceGroups/{name}`
+      so the resource-group resource fits the same shape as everything
+      else.
+   2. `<namespace>` must be a **literal** (e.g. `Microsoft.Foo`). A
+      parameterized namespace (`/providers/{nsName}/...`) is rejected.
+   3. After the namespace, segments must alternate
+      `type1/name1/type2/name2/...` and end on a name. The numbers of
+      type segments and name segments must match; an unmatched trailing
+      `/type` (no name) is rejected.
+   4. Each **type** segment is normally a literal. It may instead be a
+      `{variable}` parameter, but only when that parameter is a closed
+      enum (a sealed/closed `union` of string literals) with at least
+      one value. Any other parameterized type segment — including
+      `string`-typed `{variable}` type segments — is rejected.
+   5. Each **name** segment is either a literal (the resource is a
+      singleton; the literal becomes its constant name) or a
+      `{variable}` parameter (the resource has a parameterized name).
+   6. The scope prefix must match one of the recognized shapes —
+      empty (`Tenant`), `/subscriptions/{}/`, `/subscriptions/{}/resourceGroups/{}/`,
+      `/providers/Microsoft.Management/managementGroups/{}/`, or any
+      prefix that is itself another resource's instance path
+      (`Extension`); these are evaluated definitively in
+      [Step 3](#step-3--resolve-parent-relationships-and-scopes).
+
+   Any path that fails one of these checks is rejected with a
+   diagnostic naming the offending segment, and the corresponding GET
+   does **not** make `M` a resource. If `M` has no other well-formed
+   `Read`, it falls through to step 5 below.
+
+3. **Expand dynamic resource types.** If any **type** segment of the
+   validated path is a closed-enum `{variable}`, expand the path into
+   one concrete resource per enum value, substituting the value into
+   that segment. If multiple type segments are dynamic, take the
+   cross-product. After expansion **every resource has a fully
+   constant resource type** (`<namespace>/<type1>/.../<typeN>` with no
+   variables in the type positions); all subsequent steps operate on
+   the expanded resources.
+
+4. **Derive the path-based facts intrinsic to each (expanded)
+   resource.** Apply
    [*Ground truth*](#ground-truth-arm-resources-are-defined-by-their-paths)
    to the instance path to obtain `resourceType`, the trailing `{name}`
    parameter (or the literal singleton name), and the `apiVersion`. See
-   [*How a resource is named*](#how-a-resource-is-named). The resource's
-   `parent` and `scope` are resolved in
+   [*How a resource is named*](#how-a-resource-is-named). The
+   resource's `parent` and `scope` are resolved in
    [Step 3](#step-3--resolve-parent-relationships-and-scopes) once the
    full resource set is known.
-3. **Attach CRUD operations by verb.** For every other operation in the
-   service whose path equals the resource's instance path:
+
+5. **Attach CRUD operations by verb.** For every other operation in
+   the service whose path equals the resource's instance path:
 
    | Verb | Kind |
    | --- | --- |
@@ -186,17 +233,20 @@ For each candidate resource model `M` from Step 1:
 
    Operation-kind decorators are not consulted. If two operations of
    the same kind hit the same path, emit a diagnostic and pick the one
-   whose model matches the resource model.
+   whose model matches the resource model. When the resource came from
+   a dynamic-type expansion, each expanded resource attaches the
+   operations that hit *its* concrete path (i.e. with the same enum
+   substitution).
 
-4. **Diagnostic if no `Read` exists.** A candidate model with no
-   matching GET is not a resource. Emit a diagnostic naming the model;
-   the spec author either forgot the `Read`, or the model was wrongly
-   annotated as a resource.
+6. **Diagnostic if no `Read` exists.** A candidate model with no
+   well-formed GET is not a resource. Emit a diagnostic naming the
+   model; the spec author either forgot the `Read`, or the model was
+   wrongly annotated as a resource.
 
 After Step 2, the resource set is fixed: a list of resources each with
 `{ model, instance path, type, name, apiVersion,
-Read [, Create] [, Update] [, Delete] }`. Parent and scope are filled in
-by Step 3.
+Read [, Create] [, Update] [, Delete] }`, where `type` is fully
+constant. Parent and scope are filled in by Step 3.
 
 ### Step 3 — Resolve parent relationships and scopes
 
