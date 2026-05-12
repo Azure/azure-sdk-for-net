@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PreviewAlertRules_PreviewAlertRule. </description>
+        /// <description> AlertsManagement_PreviewAlertRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PreviewAlertRules_PreviewAlertRule. </description>
+        /// <description> AlertsManagement_PreviewAlertRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
