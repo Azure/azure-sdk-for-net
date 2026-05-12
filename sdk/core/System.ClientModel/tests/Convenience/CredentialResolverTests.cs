@@ -856,78 +856,24 @@ public class CredentialResolverTests
         Assert.That(providerA, Is.Not.SameAs(providerB));
     }
 
-    // -------- Built-in ApiKey fallback (Phase 1.7) --------
+    // -------- Inline ApiKey configurations are NOT synthesized by SCM --------
+    //
+    // SCM intentionally does not auto-synthesize an AuthenticationTokenProvider
+    // for inline ApiKey configurations. The source of truth for inline ApiKey
+    // is CredentialSettings.Key, which the consuming library reads directly
+    // when CredentialProvider is null. Customer resolvers are still free to
+    // claim ApiKey sections (e.g., to fetch the key from a vault and produce
+    // a refreshable provider) and run before SCM gives up and returns null.
 
     [Test]
-    public void GetCredential_ApiKeySource_NoResolvers_BuiltInFallbackProducesProvider()
+    public void GetCredential_ApiKeySource_NoResolvers_ReturnsNull()
     {
+        // SCM does not produce a built-in provider for inline ApiKey configs.
+        // The consuming library is expected to read settings.Credential.Key
+        // directly when CredentialProvider is null.
         IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
         {
             ["TestClient:Credential:CredentialSource"] = "ApiKey",
-            ["TestClient:Credential:Key"] = "secret-key",
-        });
-
-        AuthenticationTokenProvider? cred = config.GetCredential("TestClient:Credential");
-
-        Assert.That(cred, Is.InstanceOf<ApiKeyTokenProvider>());
-        AuthenticationToken token = cred!.GetToken(
-            new GetTokenOptions(new Dictionary<string, object>
-            {
-                { GetTokenOptions.ScopesPropertyName, new[] { "ignored" } }
-            }),
-            default);
-        Assert.That(token.TokenValue, Is.EqualTo("secret-key"));
-    }
-
-    [Test]
-    public void GetCredential_ApiKeyCredentialAlias_NoResolvers_BuiltInFallbackProducesProvider()
-    {
-        // CredentialSettings normalizes "ApiKey" -> "apikeycredential"; the built-in
-        // resolver must accept either spelling so users can write either form.
-        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
-        {
-            ["TestClient:Credential:CredentialSource"] = "ApiKeyCredential",
-            ["TestClient:Credential:Key"] = "secret-key",
-        });
-
-        AuthenticationTokenProvider? cred = config.GetCredential("TestClient:Credential");
-
-        Assert.That(cred, Is.InstanceOf<ApiKeyTokenProvider>());
-    }
-
-    [Test]
-    public void GetCredential_ApiKeySource_MissingKey_ReturnsNull()
-    {
-        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
-        {
-            ["TestClient:Credential:CredentialSource"] = "ApiKey",
-        });
-
-        AuthenticationTokenProvider? cred = config.GetCredential("TestClient:Credential");
-
-        Assert.That(cred, Is.Null);
-    }
-
-    [Test]
-    public void GetCredential_ApiKeySource_EmptyKey_ReturnsNull()
-    {
-        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
-        {
-            ["TestClient:Credential:CredentialSource"] = "ApiKey",
-            ["TestClient:Credential:Key"] = "",
-        });
-
-        AuthenticationTokenProvider? cred = config.GetCredential("TestClient:Credential");
-
-        Assert.That(cred, Is.Null);
-    }
-
-    [Test]
-    public void GetCredential_NonApiKeySource_NoResolvers_BuiltInDoesNotFire()
-    {
-        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
-        {
-            ["TestClient:Credential:CredentialSource"] = "TokenCredential",
             ["TestClient:Credential:Key"] = "secret-key",
         });
 
@@ -937,14 +883,14 @@ public class CredentialResolverTests
     }
 
     [Test]
-    public void GetCredential_ApiKeySource_CustomResolverInterceptsBeforeBuiltIn()
+    public void GetCredential_ApiKeySource_CustomResolverClaimsSection()
     {
-        // Customer resolver matches ApiKey first; built-in must not run when a
-        // customer resolver claims the section.
+        // Customer resolvers can still claim ApiKey sections — for example,
+        // to back the key with a vault lookup that needs refresh semantics.
         IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
         {
             ["TestClient:Credential:CredentialSource"] = "ApiKey",
-            ["TestClient:Credential:Key"] = "secret-key",
+            ["TestClient:Credential:Key"] = "config-key",
         });
 
         var customer = new ScopedRecordingResolver("ApiKey", "customer");
@@ -952,13 +898,14 @@ public class CredentialResolverTests
         AuthenticationTokenProvider? cred = config.GetCredential("TestClient:Credential", customer);
 
         Assert.That(cred, Is.SameAs(customer.LastProvider));
-        Assert.That(cred, Is.Not.InstanceOf<ApiKeyTokenProvider>());
     }
 
     [Test]
-    public void GetCredential_ApiKeySource_FallsThroughCustomerResolverToBuiltIn()
+    public void GetCredential_ApiKeySource_NonMatchingCustomResolver_ReturnsNull()
     {
-        // Customer resolver does not match ApiKey -> built-in fallback claims it.
+        // No fallback: when a customer resolver doesn't claim the section,
+        // SCM returns null rather than synthesizing a provider for inline
+        // ApiKey.
         IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
         {
             ["TestClient:Credential:CredentialSource"] = "ApiKey",
@@ -969,56 +916,16 @@ public class CredentialResolverTests
 
         AuthenticationTokenProvider? cred = config.GetCredential("TestClient:Credential", nonMatching);
 
-        Assert.That(cred, Is.InstanceOf<ApiKeyTokenProvider>());
+        Assert.That(cred, Is.Null);
     }
 
     [Test]
-    public void GetCredential_ApiKeySource_RepeatedCalls_ReturnSameInstance()
+    public void GetClientSettings_ApiKeySource_WithEmptyResolverChain_LeavesCredentialProviderNull()
     {
-        // The built-in resolver is a process-wide singleton, so repeated
-        // resolutions of the same ApiKey section share one cached provider.
-        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
-        {
-            ["TestClient:Credential:CredentialSource"] = "ApiKey",
-            ["TestClient:Credential:Key"] = "secret-key",
-        });
-
-        AuthenticationTokenProvider? a = config.GetCredential("TestClient:Credential");
-        AuthenticationTokenProvider? b = config.GetCredential("TestClient:Credential");
-
-        Assert.That(a, Is.Not.Null);
-        Assert.That(b, Is.SameAs(a));
-    }
-
-    [Test]
-    public void GetCredential_ApiKeySource_ConfigureOverridesAppliedBeforeBuiltIn()
-    {
-        // ConfigureOverrides must apply to the section the built-in sees so a
-        // caller can mutate the inline Key without touching the underlying config.
-        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
-        {
-            ["TestClient:Credential:CredentialSource"] = "ApiKey",
-            ["TestClient:Credential:Key"] = "original",
-        });
-
-        AuthenticationTokenProvider? cred = config.GetCredential(
-            "TestClient:Credential",
-            Array.Empty<CredentialResolver>(),
-            section => section["Key"] = "override");
-
-        Assert.That(cred, Is.InstanceOf<ApiKeyTokenProvider>());
-        AuthenticationToken token = cred!.GetToken(
-            new GetTokenOptions(new Dictionary<string, object>
-            {
-                { GetTokenOptions.ScopesPropertyName, new[] { "ignored" } }
-            }),
-            default);
-        Assert.That(token.TokenValue, Is.EqualTo("override"));
-    }
-
-    [Test]
-    public void GetClientSettings_ApiKeySource_WithEmptyResolverChain_AutoFillsCredentialProvider()
-    {
+        // GetClientSettings must NOT synthesize a CredentialProvider for an
+        // inline ApiKey config. The library consuming the settings is
+        // responsible for reading Credential.Key when CredentialProvider is
+        // null.
         IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
         {
             ["TestClient:Endpoint"] = "https://example.com",
@@ -1030,15 +937,16 @@ public class CredentialResolverTests
             "TestClient",
             Array.Empty<CredentialResolver>());
 
-        Assert.That(settings.CredentialProvider, Is.InstanceOf<ApiKeyTokenProvider>());
+        Assert.That(settings.CredentialProvider, Is.Null);
+        Assert.That(settings.Credential, Is.Not.Null);
+        Assert.That(settings.Credential!.Key, Is.EqualTo("secret-key"));
     }
 
     [Test]
-    public void DI_AddClient_ApiKeySource_NoCustomResolvers_BuiltInAutoFills()
+    public void DI_AddClient_ApiKeySource_NoCustomResolvers_LeavesCredentialProviderNull()
     {
-        // Real-world non-branded OpenAI scenario: customer registers a client
-        // with an ApiKey config and never registers any CredentialResolver.
-        // Built-in fallback must populate CredentialProvider.
+        // DI path mirrors GetClientSettings: no synthesis for inline ApiKey;
+        // Credential.Key holds the value the consuming library will read.
         var builder = Host.CreateEmptyApplicationBuilder(null);
         builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
         {
@@ -1052,7 +960,8 @@ public class CredentialResolverTests
         using IHost host = builder.Build();
         TestClient client = host.Services.GetRequiredService<TestClient>();
 
-        Assert.That(client.Settings.CredentialProvider, Is.InstanceOf<ApiKeyTokenProvider>());
+        Assert.That(client.Settings.CredentialProvider, Is.Null);
+        Assert.That(client.Settings.Credential!.Key, Is.EqualTo("secret-key"));
     }
 
     private sealed class MatchAllNamedAResolver : CredentialResolver

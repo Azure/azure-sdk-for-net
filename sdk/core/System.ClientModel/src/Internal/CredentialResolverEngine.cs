@@ -79,23 +79,6 @@ internal static class CredentialResolverEngine
             }
         }
 
-        // Built-in fallback: SCM-owned ApiKey resolver runs last so caller
-        // resolvers can intercept Source: ApiKey (e.g., vault-backed key
-        // lookup) before the default takes effect. Goes through the same
-        // cache so repeated resolution of the same section yields the same
-        // ApiKeyTokenProvider instance.
-        AuthenticationTokenProvider? builtIn = CredentialCache.GetOrTryCreate(
-            workingSection,
-            ApiKeyCredentialResolver.Instance,
-            static (section, r) =>
-            {
-                if (r.TryResolve(section, out AuthenticationTokenProvider? p) && p is not null)
-                {
-                    return p;
-                }
-                return null;
-            });
-
-        return builtIn;
+        return null;
     }
 }
