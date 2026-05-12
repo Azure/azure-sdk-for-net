@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> The result summary of an installation operation. </summary>
     public partial class MachineInstallPatchesResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineInstallPatchesResult"/>. </summary>
         internal MachineInstallPatchesResult()
@@ -66,8 +38,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="patchServiceUsed"> Specifies the patch service used for the operation. </param>
         /// <param name="osType"> The operating system type of the machine. </param>
         /// <param name="errorDetails"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineInstallPatchesResult(MachineOperationStatus? status, string installationActivityId, VmGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, PatchOperationStartedBy? startedBy, PatchServiceUsed? patchServiceUsed, HybridComputeOSType? osType, ResponseError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineInstallPatchesResult(MachineOperationStatus? status, string installationActivityId, VmGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, PatchOperationStartedBy? startedBy, PatchServiceUsed? patchServiceUsed, HybridComputeOSType? osType, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             InstallationActivityId = installationActivityId;
@@ -82,55 +54,54 @@ namespace Azure.ResourceManager.HybridCompute.Models
             LastModifiedOn = lastModifiedOn;
             StartedBy = startedBy;
             PatchServiceUsed = patchServiceUsed;
-            OSType = osType;
+            OsType = osType;
             ErrorDetails = errorDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Failed", "Succeeded", "Unknown" or "CompletedWithWarnings.". </summary>
-        [WirePath("status")]
         public MachineOperationStatus? Status { get; }
+
         /// <summary> The activity ID of the operation that produced this result. </summary>
-        [WirePath("installationActivityId")]
         public string InstallationActivityId { get; }
+
         /// <summary> The reboot state of the VM following completion of the operation. </summary>
-        [WirePath("rebootStatus")]
         public VmGuestPatchRebootStatus? RebootStatus { get; }
+
         /// <summary> Whether the operation ran out of time before it completed all its intended actions. </summary>
-        [WirePath("maintenanceWindowExceeded")]
         public bool? MaintenanceWindowExceeded { get; }
+
         /// <summary> The number of patches that were not installed due to the user blocking their installation. </summary>
-        [WirePath("excludedPatchCount")]
         public int? ExcludedPatchCount { get; }
+
         /// <summary> The number of patches that were detected as available for install, but did not meet the operation's criteria. </summary>
-        [WirePath("notSelectedPatchCount")]
         public int? NotSelectedPatchCount { get; }
+
         /// <summary> The number of patches that were identified as meeting the installation criteria, but were not able to be installed. Typically this happens when maintenanceWindowExceeded == true. </summary>
-        [WirePath("pendingPatchCount")]
         public int? PendingPatchCount { get; }
+
         /// <summary> The number of patches successfully installed. </summary>
-        [WirePath("installedPatchCount")]
         public int? InstalledPatchCount { get; }
+
         /// <summary> The number of patches that could not be installed due to some issue. See errors for details. </summary>
-        [WirePath("failedPatchCount")]
         public int? FailedPatchCount { get; }
+
         /// <summary> The UTC timestamp when the operation began. </summary>
-        [WirePath("startDateTime")]
         public DateTimeOffset? StartOn { get; }
+
         /// <summary> The UTC timestamp when the operation finished. </summary>
-        [WirePath("lastModifiedDateTime")]
         public DateTimeOffset? LastModifiedOn { get; }
+
         /// <summary> Indicates if operation was triggered by user or by platform. </summary>
-        [WirePath("startedBy")]
         public PatchOperationStartedBy? StartedBy { get; }
+
         /// <summary> Specifies the patch service used for the operation. </summary>
-        [WirePath("patchServiceUsed")]
         public PatchServiceUsed? PatchServiceUsed { get; }
+
         /// <summary> The operating system type of the machine. </summary>
-        [WirePath("osType")]
-        public HybridComputeOSType? OSType { get; }
+        public HybridComputeOSType? OsType { get; }
+
         /// <summary> The errors that were encountered during execution of the operation. The details array contains the list of them. </summary>
-        [WirePath("errorDetails")]
         public ResponseError ErrorDetails { get; }
     }
 }

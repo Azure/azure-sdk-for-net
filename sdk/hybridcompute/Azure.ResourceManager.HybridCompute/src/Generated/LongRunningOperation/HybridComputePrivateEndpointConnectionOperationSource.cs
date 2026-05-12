@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    internal class HybridComputePrivateEndpointConnectionOperationSource : IOperationSource<HybridComputePrivateEndpointConnectionResource>
+    /// <summary></summary>
+    internal partial class HybridComputePrivateEndpointConnectionOperationSource : IOperationSource<HybridComputePrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal HybridComputePrivateEndpointConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         HybridComputePrivateEndpointConnectionResource IOperationSource<HybridComputePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HybridComputePrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            HybridComputePrivateEndpointConnectionData data = HybridComputePrivateEndpointConnectionData.DeserializeHybridComputePrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new HybridComputePrivateEndpointConnectionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<HybridComputePrivateEndpointConnectionResource> IOperationSource<HybridComputePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HybridComputePrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
-            return await Task.FromResult(new HybridComputePrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            HybridComputePrivateEndpointConnectionData data = HybridComputePrivateEndpointConnectionData.DeserializeHybridComputePrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HybridComputePrivateEndpointConnectionResource(_client, data);
         }
     }
 }

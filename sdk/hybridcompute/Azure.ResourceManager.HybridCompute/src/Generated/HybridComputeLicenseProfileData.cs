@@ -7,155 +7,225 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    /// <summary>
-    /// A class representing the HybridComputeLicenseProfile data model.
-    /// Describes a license profile in a hybrid machine.
-    /// </summary>
+    /// <summary> Describes a license profile in a hybrid machine. </summary>
     public partial class HybridComputeLicenseProfileData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseProfileData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public HybridComputeLicenseProfileData(AzureLocation location) : base(location)
         {
-            ProductFeatures = new ChangeTrackingList<HybridComputeProductFeature>();
-            EsuKeys = new ChangeTrackingList<EsuKey>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="subscriptionStatus"> Indicates the subscription status of the product. </param>
-        /// <param name="productType"> Indicates the product type of the license. </param>
-        /// <param name="enrollmentOn"> The timestamp in UTC when the user enrolls the feature. </param>
-        /// <param name="billingStartOn"> The timestamp in UTC when the billing starts. </param>
-        /// <param name="disenrollmentOn"> The timestamp in UTC when the user disenrolled the feature. </param>
-        /// <param name="billingEndOn"> The timestamp in UTC when the billing ends. </param>
-        /// <param name="error"> The errors that were encountered during the feature enrollment or disenrollment. </param>
-        /// <param name="productFeatures"> The list of product features. </param>
-        /// <param name="assignedLicenseImmutableId"> The guid id of the license. </param>
-        /// <param name="esuKeys"> The list of ESU keys. </param>
-        /// <param name="serverType"> The type of the Esu servers. </param>
-        /// <param name="esuEligibility"> Indicates the eligibility state of Esu. </param>
-        /// <param name="esuKeyState"> Indicates whether there is an ESU Key currently active for the machine. </param>
-        /// <param name="assignedLicense"> The resource id of the license. </param>
-        /// <param name="softwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeLicenseProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HybridComputeProvisioningState? provisioningState, LicenseProfileSubscriptionStatus? subscriptionStatus, LicenseProfileProductType? productType, DateTimeOffset? enrollmentOn, DateTimeOffset? billingStartOn, DateTimeOffset? disenrollmentOn, DateTimeOffset? billingEndOn, ResponseError error, IList<HybridComputeProductFeature> productFeatures, Guid? assignedLicenseImmutableId, IReadOnlyList<EsuKey> esuKeys, EsuServerType? serverType, EsuEligibility? esuEligibility, EsuKeyState? esuKeyState, string assignedLicense, bool? softwareAssuranceCustomer, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Describe the properties of a license profile. </param>
+        internal HybridComputeLicenseProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, LicenseProfileProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ProvisioningState = provisioningState;
-            SubscriptionStatus = subscriptionStatus;
-            ProductType = productType;
-            EnrollmentOn = enrollmentOn;
-            BillingStartOn = billingStartOn;
-            DisenrollmentOn = disenrollmentOn;
-            BillingEndOn = billingEndOn;
-            Error = error;
-            ProductFeatures = productFeatures;
-            AssignedLicenseImmutableId = assignedLicenseImmutableId;
-            EsuKeys = esuKeys;
-            ServerType = serverType;
-            EsuEligibility = esuEligibility;
-            EsuKeyState = esuKeyState;
-            AssignedLicense = assignedLicense;
-            SoftwareAssuranceCustomer = softwareAssuranceCustomer;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseProfileData"/> for deserialization. </summary>
-        internal HybridComputeLicenseProfileData()
-        {
-        }
+        /// <summary> Describe the properties of a license profile. </summary>
+        internal LicenseProfileProperties Properties { get; set; }
 
         /// <summary> The provisioning state, which only appears in the response. </summary>
-        [WirePath("properties.provisioningState")]
-        public HybridComputeProvisioningState? ProvisioningState { get; }
-        /// <summary> Indicates the subscription status of the product. </summary>
-        [WirePath("properties.subscriptionStatus")]
-        public LicenseProfileSubscriptionStatus? SubscriptionStatus { get; set; }
-        /// <summary> Indicates the product type of the license. </summary>
-        [WirePath("properties.productType")]
-        public LicenseProfileProductType? ProductType { get; set; }
-        /// <summary> The timestamp in UTC when the user enrolls the feature. </summary>
-        [WirePath("properties.enrollmentDate")]
-        public DateTimeOffset? EnrollmentOn { get; }
-        /// <summary> The timestamp in UTC when the billing starts. </summary>
-        [WirePath("properties.billingStartDate")]
-        public DateTimeOffset? BillingStartOn { get; }
-        /// <summary> The timestamp in UTC when the user disenrolled the feature. </summary>
-        [WirePath("properties.disenrollmentDate")]
-        public DateTimeOffset? DisenrollmentOn { get; }
-        /// <summary> The timestamp in UTC when the billing ends. </summary>
-        [WirePath("properties.billingEndDate")]
-        public DateTimeOffset? BillingEndOn { get; }
-        /// <summary> The errors that were encountered during the feature enrollment or disenrollment. </summary>
-        [WirePath("properties.error")]
-        public ResponseError Error { get; }
-        /// <summary> The list of product features. </summary>
-        [WirePath("properties.productFeatures")]
-        public IList<HybridComputeProductFeature> ProductFeatures { get; }
-        /// <summary> The guid id of the license. </summary>
-        [WirePath("properties.assignedLicenseImmutableId")]
-        public Guid? AssignedLicenseImmutableId { get; }
-        /// <summary> The list of ESU keys. </summary>
-        [WirePath("properties.esuKeys")]
-        public IReadOnlyList<EsuKey> EsuKeys { get; }
-        /// <summary> The type of the Esu servers. </summary>
-        [WirePath("properties.serverType")]
-        public EsuServerType? ServerType { get; }
-        /// <summary> Indicates the eligibility state of Esu. </summary>
-        [WirePath("properties.esuEligibility")]
-        public EsuEligibility? EsuEligibility { get; }
-        /// <summary> Indicates whether there is an ESU Key currently active for the machine. </summary>
-        [WirePath("properties.esuKeyState")]
-        public EsuKeyState? EsuKeyState { get; }
-        /// <summary> The resource id of the license. </summary>
-        [WirePath("properties.assignedLicense")]
-        public string AssignedLicense { get; set; }
+        public HybridComputeProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Specifies if this machine is licensed as part of a Software Assurance agreement. </summary>
-        [WirePath("properties.softwareAssuranceCustomer")]
-        public bool? SoftwareAssuranceCustomer { get; set; }
+        public bool? SoftwareAssuranceCustomer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SoftwareAssuranceCustomer;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LicenseProfileProperties();
+                }
+                Properties.SoftwareAssuranceCustomer = value;
+            }
+        }
+
+        /// <summary> The guid id of the license. </summary>
+        public Guid? AssignedLicenseImmutableId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssignedLicenseImmutableId;
+            }
+        }
+
+        /// <summary> The list of ESU keys. </summary>
+        public IReadOnlyList<EsuKey> EsuKeys
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new LicenseProfileProperties();
+                }
+                return Properties.EsuKeys;
+            }
+        }
+
+        /// <summary> The type of the Esu servers. </summary>
+        public EsuServerType? ServerType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerType;
+            }
+        }
+
+        /// <summary> Indicates the eligibility state of Esu. </summary>
+        public EsuEligibility? EsuEligibility
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EsuEligibility;
+            }
+        }
+
+        /// <summary> Indicates whether there is an ESU Key currently active for the machine. </summary>
+        public EsuKeyState? EsuKeyState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EsuKeyState;
+            }
+        }
+
+        /// <summary> The resource id of the license. </summary>
+        public string AssignedLicense
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssignedLicense;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LicenseProfileProperties();
+                }
+                Properties.AssignedLicense = value;
+            }
+        }
+
+        /// <summary> Indicates the subscription status of the product. </summary>
+        public LicenseProfileSubscriptionStatus? SubscriptionStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubscriptionStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LicenseProfileProperties();
+                }
+                Properties.SubscriptionStatus = value;
+            }
+        }
+
+        /// <summary> Indicates the product type of the license. </summary>
+        public LicenseProfileProductType? ProductType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProductType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LicenseProfileProperties();
+                }
+                Properties.ProductType = value;
+            }
+        }
+
+        /// <summary> The timestamp in UTC when the user enrolls the feature. </summary>
+        public DateTimeOffset? EnrollmentOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnrollmentOn;
+            }
+        }
+
+        /// <summary> The timestamp in UTC when the billing starts. </summary>
+        public DateTimeOffset? BillingStartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingStartOn;
+            }
+        }
+
+        /// <summary> The timestamp in UTC when the user disenrolled the feature. </summary>
+        public DateTimeOffset? DisenrollmentOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisenrollmentOn;
+            }
+        }
+
+        /// <summary> The timestamp in UTC when the billing ends. </summary>
+        public DateTimeOffset? BillingEndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingEndOn;
+            }
+        }
+
+        /// <summary> The errors that were encountered during the feature enrollment or disenrollment. </summary>
+        public ResponseError Error
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Error;
+            }
+        }
+
+        /// <summary> The list of product features. </summary>
+        public IList<HybridComputeProductFeature> ProductFeatures
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new LicenseProfileProperties();
+                }
+                return Properties.ProductFeatures;
+            }
+        }
     }
 }

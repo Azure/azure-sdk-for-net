@@ -16,40 +16,99 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseProfilePatch"/>. </summary>
         public HybridComputeLicenseProfilePatch()
         {
-            ProductFeatures = new ChangeTrackingList<HybridComputeProductFeatureUpdate>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseProfilePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="subscriptionStatus"> Indicates the subscription status of the product. </param>
-        /// <param name="productType"> Indicates the product type of the license. </param>
-        /// <param name="productFeatures"> The list of product feature updates. </param>
-        /// <param name="assignedLicense"> The resource id of the license. </param>
-        /// <param name="softwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
-        internal HybridComputeLicenseProfilePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, LicenseProfileSubscriptionStatusUpdate? subscriptionStatus, LicenseProfileProductType? productType, IList<HybridComputeProductFeatureUpdate> productFeatures, string assignedLicense, bool? softwareAssuranceCustomer) : base(tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Describe the Update properties of a license profile. </param>
+        internal HybridComputeLicenseProfilePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, LicenseProfileUpdateProperties properties) : base(tags, additionalBinaryDataProperties)
         {
-            SubscriptionStatus = subscriptionStatus;
-            ProductType = productType;
-            ProductFeatures = productFeatures;
-            AssignedLicense = assignedLicense;
-            SoftwareAssuranceCustomer = softwareAssuranceCustomer;
+            Properties = properties;
+        }
+
+        /// <summary> Describe the Update properties of a license profile. </summary>
+        internal LicenseProfileUpdateProperties Properties { get; set; }
+
+        /// <summary> Specifies if this machine is licensed as part of a Software Assurance agreement. </summary>
+        public bool? SoftwareAssuranceCustomer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SoftwareAssuranceCustomer;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LicenseProfileUpdateProperties();
+                }
+                Properties.SoftwareAssuranceCustomer = value;
+            }
+        }
+
+        /// <summary> The resource id of the license. </summary>
+        public string AssignedLicense
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssignedLicense;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LicenseProfileUpdateProperties();
+                }
+                Properties.AssignedLicense = value;
+            }
         }
 
         /// <summary> Indicates the subscription status of the product. </summary>
-        [WirePath("properties.subscriptionStatus")]
-        public LicenseProfileSubscriptionStatusUpdate? SubscriptionStatus { get; set; }
+        public LicenseProfileSubscriptionStatusUpdate? SubscriptionStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubscriptionStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LicenseProfileUpdateProperties();
+                }
+                Properties.SubscriptionStatus = value;
+            }
+        }
+
         /// <summary> Indicates the product type of the license. </summary>
-        [WirePath("properties.productType")]
-        public LicenseProfileProductType? ProductType { get; set; }
+        public LicenseProfileProductType? ProductType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProductType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LicenseProfileUpdateProperties();
+                }
+                Properties.ProductType = value;
+            }
+        }
+
         /// <summary> The list of product feature updates. </summary>
-        [WirePath("properties.productFeatures")]
-        public IList<HybridComputeProductFeatureUpdate> ProductFeatures { get; }
-        /// <summary> The resource id of the license. </summary>
-        [WirePath("properties.assignedLicense")]
-        public string AssignedLicense { get; set; }
-        /// <summary> Specifies if this machine is licensed as part of a Software Assurance agreement. </summary>
-        [WirePath("properties.softwareAssuranceCustomer")]
-        public bool? SoftwareAssuranceCustomer { get; set; }
+        public IList<HybridComputeProductFeatureUpdate> ProductFeatures
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new LicenseProfileUpdateProperties();
+                }
+                return Properties.ProductFeatures;
+            }
+        }
     }
 }

@@ -22,10 +22,13 @@ namespace Azure.ResourceManager.HybridCompute
         public ArcGatewayData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<string> AllowedFeatures { get { throw null; } }
         public string GatewayEndpoint { get { throw null; } }
-        public Azure.Core.ResourceIdentifier GatewayId { get { throw null; } }
+        public string GatewayId { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.ArcGatewayType? GatewayType { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.ArcGatewayData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.ArcGatewayData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.ArcGatewayData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.ArcGatewayData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.ArcGatewayData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -57,24 +60,132 @@ namespace Azure.ResourceManager.HybridCompute
         public virtual Azure.Response<Azure.ResourceManager.HybridCompute.ArcGatewayResource> Update(Azure.ResourceManager.HybridCompute.Models.ArcGatewayPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.ArcGatewayResource>> UpdateAsync(Azure.ResourceManager.HybridCompute.Models.ArcGatewayPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class ArcSettingsCollection : Azure.ResourceManager.ArmCollection
+    {
+        protected ArcSettingsCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.ArcSettingsResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string settingsResourceName, Azure.ResourceManager.HybridCompute.ArcSettingsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.ArcSettingsResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string settingsResourceName, Azure.ResourceManager.HybridCompute.ArcSettingsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string settingsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string settingsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.ArcSettingsResource> Get(string settingsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.ArcSettingsResource>> GetAsync(string settingsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridCompute.ArcSettingsResource> GetIfExists(string settingsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridCompute.ArcSettingsResource>> GetIfExistsAsync(string settingsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ArcSettingsData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.ArcSettingsData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.ArcSettingsData>
+    {
+        public ArcSettingsData() { }
+        public Azure.Core.ResourceIdentifier GatewayResourceId { get { throw null; } set { } }
+        public string TenantId { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridCompute.ArcSettingsData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.ArcSettingsData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.ArcSettingsData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.ArcSettingsData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.ArcSettingsData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.ArcSettingsData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.ArcSettingsData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ArcSettingsResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.ArcSettingsData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.ArcSettingsData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ArcSettingsResource() { }
+        public virtual Azure.ResourceManager.HybridCompute.ArcSettingsData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.ArcSettingsResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.ArcSettingsResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridCompute.ArcSettingsData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.ArcSettingsData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.ArcSettingsData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.ArcSettingsData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.ArcSettingsData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.ArcSettingsData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.ArcSettingsData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.ArcSettingsResource> Update(Azure.ResourceManager.HybridCompute.ArcSettingsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.ArcSettingsResource>> UpdateAsync(Azure.ResourceManager.HybridCompute.ArcSettingsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class AzureResourceManagerHybridComputeContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerHybridComputeContext() { }
         public static Azure.ResourceManager.HybridCompute.AzureResourceManagerHybridComputeContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
+    public partial class ExtensionValueV2Collection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource>, System.Collections.IEnumerable
+    {
+        protected ExtensionValueV2Collection() { }
+        public virtual Azure.Response<bool> Exists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource> Get(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource>> GetAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource> GetIfExists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource>> GetIfExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ExtensionValueV2Data : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.ExtensionValueV2Data>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.ExtensionValueV2Data>
+    {
+        internal ExtensionValueV2Data() { }
+        public System.Collections.Generic.IReadOnlyList<string> Architecture { get { throw null; } }
+        public System.Uri ExtensionSignatureUri { get { throw null; } }
+        public string ExtensionType { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Uri> ExtensionUris { get { throw null; } }
+        public string OperatingSystem { get { throw null; } }
+        public string Publisher { get { throw null; } }
+        public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridCompute.ExtensionValueV2Data System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.ExtensionValueV2Data>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.ExtensionValueV2Data>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.ExtensionValueV2Data System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.ExtensionValueV2Data>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.ExtensionValueV2Data>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.ExtensionValueV2Data>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ExtensionValueV2Resource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.ExtensionValueV2Data>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.ExtensionValueV2Data>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ExtensionValueV2Resource() { }
+        public virtual Azure.ResourceManager.HybridCompute.ExtensionValueV2Data Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string location, string publisher, string extensionType, string version) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridCompute.ExtensionValueV2Data System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.ExtensionValueV2Data>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.ExtensionValueV2Data>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.ExtensionValueV2Data System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.ExtensionValueV2Data>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.ExtensionValueV2Data>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.ExtensionValueV2Data>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public static partial class HybridComputeExtensions
     {
+        public static Azure.Pageable<Azure.ResourceManager.HybridCompute.Models.ExtensionType> GetAll(this Azure.ResourceManager.Resources.TenantResource tenantResource, string location, string publisher, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.HybridCompute.Models.ExtensionPublisher> GetAll(this Azure.ResourceManager.Resources.TenantResource tenantResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.HybridCompute.Models.OperationValue> GetAll(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.ArcSettingsCollection GetAllArcSettings(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.Models.ExtensionType> GetAllAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string location, string publisher, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.Models.ExtensionPublisher> GetAllAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.Models.OperationValue> GetAllAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.HybridCompute.ArcGatewayResource> GetArcGateway(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string gatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.ArcGatewayResource>> GetArcGatewayAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string gatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.ArcGatewayResource GetArcGatewayResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.HybridCompute.ArcGatewayCollection GetArcGateways(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.HybridCompute.ArcGatewayResource> GetArcGateways(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.ArcGatewayResource> GetArcGatewaysAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueResource> GetHybridComputeExtensionValue(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string publisher, string extensionType, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueResource>> GetHybridComputeExtensionValueAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string publisher, string extensionType, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.HybridCompute.ArcSettingsResource> GetArcSettings(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string settingsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.ArcSettingsResource>> GetArcSettingsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string settingsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.ArcSettingsResource GetArcSettingsResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource> GetExtensionValueV2(this Azure.ResourceManager.Resources.TenantResource tenantResource, string location, string publisher, string extensionType, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource>> GetExtensionValueV2Async(this Azure.ResourceManager.Resources.TenantResource tenantResource, string location, string publisher, string extensionType, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource GetExtensionValueV2Resource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.ExtensionValueV2Collection GetExtensionValueV2s(this Azure.ResourceManager.Resources.TenantResource tenantResource, string location, string publisher, string extensionType) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueResource> GetHybridComputeExtensionValue(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, string publisher, string extensionType, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueResource>> GetHybridComputeExtensionValueAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, string publisher, string extensionType, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueResource GetHybridComputeExtensionValueResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueCollection GetHybridComputeExtensionValues(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string publisher, string extensionType) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueCollection GetHybridComputeExtensionValues(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, string publisher, string extensionType) { throw null; }
         public static Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource> GetHybridComputeLicense(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource>> GetHybridComputeLicenseAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileResource GetHybridComputeLicenseProfileResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -82,8 +193,8 @@ namespace Azure.ResourceManager.HybridCompute
         public static Azure.ResourceManager.HybridCompute.HybridComputeLicenseCollection GetHybridComputeLicenses(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource> GetHybridComputeLicenses(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource> GetHybridComputeLicensesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> GetHybridComputeMachine(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string machineName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>> GetHybridComputeMachineAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string machineName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> GetHybridComputeMachine(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string machineName, Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>> GetHybridComputeMachineAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string machineName, Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionResource GetHybridComputeMachineExtensionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.HybridCompute.HybridComputeMachineResource GetHybridComputeMachineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.HybridCompute.HybridComputeMachineCollection GetHybridComputeMachines(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
@@ -99,12 +210,10 @@ namespace Azure.ResourceManager.HybridCompute
         public static Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScopesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.MachineRunCommandResource GetMachineRunCommandResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.HybridCompute.NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails> GetValidationDetailsPrivateLinkScope(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string privateLinkScopeId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails>> GetValidationDetailsPrivateLinkScopeAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string privateLinkScopeId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.HybridCompute.Models.ArcSettings> UpdateSetting(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, Azure.ResourceManager.HybridCompute.Models.ArcSettings arcSettings, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.Models.ArcSettings>> UpdateSettingAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, Azure.ResourceManager.HybridCompute.Models.ArcSettings arcSettings, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource> ValidateLicenseLicense(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.HybridComputeLicenseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource>> ValidateLicenseLicenseAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.HybridComputeLicenseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails> GetValidationDetails(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string privateLinkScopeId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails>> GetValidationDetailsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string privateLinkScopeId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource> ValidateLicense(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.HybridComputeLicenseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource>> ValidateLicenseAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.HybridComputeLicenseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class HybridComputeExtensionValueCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueResource>, System.Collections.IEnumerable
     {
@@ -123,11 +232,14 @@ namespace Azure.ResourceManager.HybridCompute
     }
     public partial class HybridComputeExtensionValueData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueData>
     {
-        public HybridComputeExtensionValueData() { }
+        internal HybridComputeExtensionValueData() { }
         public string ExtensionType { get { throw null; } }
         public string Publisher { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -140,7 +252,7 @@ namespace Azure.ResourceManager.HybridCompute
         protected HybridComputeExtensionValueResource() { }
         public virtual Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string publisher, string extensionType, string version) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string publisher, string extensionType, string version) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -172,8 +284,11 @@ namespace Azure.ResourceManager.HybridCompute
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseDetails LicenseDetails { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType? LicenseType { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState? ProvisioningState { get { throw null; } }
-        public System.Guid? TenantId { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.HybridComputeLicenseData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputeLicenseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputeLicenseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.HybridComputeLicenseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.HybridComputeLicenseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -199,7 +314,10 @@ namespace Azure.ResourceManager.HybridCompute
         public Azure.ResourceManager.HybridCompute.Models.EsuServerType? ServerType { get { throw null; } }
         public bool? SoftwareAssuranceCustomer { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus? SubscriptionStatus { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -216,7 +334,7 @@ namespace Azure.ResourceManager.HybridCompute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string machineName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string machineName, string licenseProfileName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -255,22 +373,22 @@ namespace Azure.ResourceManager.HybridCompute
         Azure.ResourceManager.HybridCompute.HybridComputeLicenseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.HybridComputeLicenseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.HybridComputeLicenseData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.HybridComputeLicenseData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.HybridComputeLicenseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.HybridComputeLicenseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicensePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicensePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class HybridComputeMachineCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>, System.Collections.IEnumerable
     {
         protected HybridComputeMachineCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string machineName, Azure.ResourceManager.HybridCompute.HybridComputeMachineData data, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string machineName, Azure.ResourceManager.HybridCompute.HybridComputeMachineData data, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string machineName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string machineName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> Get(string machineName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string machineName, Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string machineName, Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> Get(string machineName, Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> GetAll(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> GetAllAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>> GetAsync(string machineName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> GetIfExists(string machineName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>> GetIfExistsAsync(string machineName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>> GetAsync(string machineName, Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> GetIfExists(string machineName, Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>> GetIfExistsAsync(string machineName, Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -278,7 +396,7 @@ namespace Azure.ResourceManager.HybridCompute
     public partial class HybridComputeMachineData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputeMachineData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.HybridComputeMachineData>
     {
         public HybridComputeMachineData(Azure.Core.AzureLocation location) { }
-        public string ADFqdn { get { throw null; } }
+        public string AdFqdn { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.AgentConfiguration AgentConfiguration { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.AgentUpgrade AgentUpgrade { get { throw null; } set { } }
         public string AgentVersion { get { throw null; } }
@@ -292,20 +410,22 @@ namespace Azure.ResourceManager.HybridCompute
         public System.Collections.Generic.IList<Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView> Extensions { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeFirmwareProfile FirmwareProfile { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeHardwareProfile HardwareProfile { get { throw null; } }
+        public string HardwareResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridCompute.Models.IdentityKeyStore? IdentityKeyStore { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.ArcKindEnum? Kind { get { throw null; } set { } }
         public System.DateTimeOffset? LastStatusChange { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceView LicenseProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation LocationData { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridCompute.Models.LocationData LocationData { get { throw null; } set { } }
         public string MachineFqdn { get { throw null; } }
-        public string MSSqlDiscovered { get { throw null; } set { } }
+        public string MssqlDiscovered { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface> NetworkInterfaces { get { throw null; } }
-        public string OSEdition { get { throw null; } }
-        public string OSName { get { throw null; } }
+        public string OsEdition { get { throw null; } }
+        public string OsName { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeOSProfile OSProfile { get { throw null; } set { } }
-        public string OSSku { get { throw null; } }
-        public string OSType { get { throw null; } set { } }
-        public string OSVersion { get { throw null; } }
+        public string OsSku { get { throw null; } }
+        public string OsType { get { throw null; } set { } }
+        public string OsVersion { get { throw null; } }
         public Azure.Core.ResourceIdentifier ParentClusterResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateLinkScopeResourceId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -313,9 +433,13 @@ namespace Azure.ResourceManager.HybridCompute
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatuses ServiceStatuses { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType? Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridCompute.Models.HybridComputeDisk> StorageDisks { get { throw null; } }
-        public System.Guid? VmId { get { throw null; } set { } }
-        public System.Guid? VmUuid { get { throw null; } }
+        public string TpmEkCertificate { get { throw null; } set { } }
+        public string VmId { get { throw null; } set { } }
+        public string VmUuid { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.HybridComputeMachineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputeMachineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputeMachineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.HybridComputeMachineData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.HybridComputeMachineData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -343,7 +467,10 @@ namespace Azure.ResourceManager.HybridCompute
     {
         public HybridComputeMachineExtensionData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HybridCompute.Models.MachineExtensionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -388,8 +515,8 @@ namespace Azure.ResourceManager.HybridCompute
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string machineName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> Get(Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>> GetAsync(Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileResource GetHybridComputeLicenseProfile() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionResource> GetHybridComputeMachineExtension(string extensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionResource>> GetHybridComputeMachineExtensionAsync(string extensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -399,14 +526,16 @@ namespace Azure.ResourceManager.HybridCompute
         public virtual Azure.ResourceManager.HybridCompute.MachineRunCommandCollection GetMachineRunCommands() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkProfile> GetNetworkProfile(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkProfile>> GetNetworkProfileAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails> GetValidationDetailsForMachinePrivateLinkScope(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails>> GetValidationDetailsForMachinePrivateLinkScopeAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesResult> InstallPatches(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesResult>> InstallPatchesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails> GetValidationDetailsForMachine(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails>> GetValidationDetailsForMachineAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesResult> InstallPatches(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesParameters content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesResult>> InstallPatchesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesParameters content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.Models.SetupExtensionRequest> SetupExtensions(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.Models.SetupExtensionRequest content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.Models.SetupExtensionRequest>> SetupExtensionsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.Models.SetupExtensionRequest content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.HybridCompute.HybridComputeMachineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputeMachineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputeMachineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.HybridComputeMachineData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.HybridComputeMachineData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -438,7 +567,10 @@ namespace Azure.ResourceManager.HybridCompute
     {
         public HybridComputePrivateEndpointConnectionData() { }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.HybridComputePrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputePrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputePrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.HybridComputePrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.HybridComputePrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -496,9 +628,12 @@ namespace Azure.ResourceManager.HybridCompute
     }
     public partial class HybridComputePrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResourceData>
     {
-        public HybridComputePrivateLinkResourceData() { }
-        public Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkResourceProperties Properties { get { throw null; } set { } }
+        internal HybridComputePrivateLinkResourceData() { }
+        public Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkResourceProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -526,7 +661,10 @@ namespace Azure.ResourceManager.HybridCompute
     {
         public HybridComputePrivateLinkScopeData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopeProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -589,10 +727,10 @@ namespace Azure.ResourceManager.HybridCompute
         public MachineRunCommandData(Azure.Core.AzureLocation location) { }
         public bool? AsyncExecution { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity ErrorBlobManagedIdentity { get { throw null; } set { } }
-        public System.Uri ErrorBlobUri { get { throw null; } set { } }
+        public string ErrorBlobUri { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView InstanceView { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity OutputBlobManagedIdentity { get { throw null; } set { } }
-        public System.Uri OutputBlobUri { get { throw null; } set { } }
+        public string OutputBlobUri { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter> Parameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter> ProtectedParameters { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
@@ -600,7 +738,10 @@ namespace Azure.ResourceManager.HybridCompute
         public string RunAsUser { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource Source { get { throw null; } set { } }
         public int? TimeoutInSeconds { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.MachineRunCommandData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.MachineRunCommandData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.MachineRunCommandData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.MachineRunCommandData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.MachineRunCommandData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -655,7 +796,10 @@ namespace Azure.ResourceManager.HybridCompute
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssue> ProvisioningIssues { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceAssociation ResourceAssociation { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.NetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.NetworkSecurityPerimeterConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.NetworkSecurityPerimeterConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.NetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.NetworkSecurityPerimeterConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -685,7 +829,12 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
     public partial class MockableHybridComputeArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableHybridComputeArmClient() { }
+        public virtual Azure.ResourceManager.HybridCompute.ArcSettingsCollection GetAllArcSettings(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.HybridCompute.ArcGatewayResource GetArcGatewayResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.ArcSettingsResource> GetArcSettings(Azure.Core.ResourceIdentifier scope, string settingsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.ArcSettingsResource>> GetArcSettingsAsync(Azure.Core.ResourceIdentifier scope, string settingsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HybridCompute.ArcSettingsResource GetArcSettingsResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource GetExtensionValueV2Resource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueResource GetHybridComputeExtensionValueResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileResource GetHybridComputeLicenseProfileResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource GetHybridComputeLicenseResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -706,33 +855,44 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         public virtual Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource> GetHybridComputeLicense(string licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource>> GetHybridComputeLicenseAsync(string licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HybridCompute.HybridComputeLicenseCollection GetHybridComputeLicenses() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> GetHybridComputeMachine(string machineName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>> GetHybridComputeMachineAsync(string machineName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> GetHybridComputeMachine(string machineName, Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>> GetHybridComputeMachineAsync(string machineName, Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes? expand = default(Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HybridCompute.HybridComputeMachineCollection GetHybridComputeMachines() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScope(string scopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource>> GetHybridComputePrivateLinkScopeAsync(string scopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeCollection GetHybridComputePrivateLinkScopes() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.Models.ArcSettings> UpdateSetting(string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, Azure.ResourceManager.HybridCompute.Models.ArcSettings arcSettings, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.Models.ArcSettings>> UpdateSettingAsync(string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, Azure.ResourceManager.HybridCompute.Models.ArcSettings arcSettings, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MockableHybridComputeSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableHybridComputeSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.HybridCompute.ArcGatewayResource> GetArcGateways(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.ArcGatewayResource> GetArcGatewaysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueResource> GetHybridComputeExtensionValue(Azure.Core.AzureLocation location, string publisher, string extensionType, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueResource>> GetHybridComputeExtensionValueAsync(Azure.Core.AzureLocation location, string publisher, string extensionType, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueCollection GetHybridComputeExtensionValues(Azure.Core.AzureLocation location, string publisher, string extensionType) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueResource> GetHybridComputeExtensionValue(string location, string publisher, string extensionType, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueResource>> GetHybridComputeExtensionValueAsync(string location, string publisher, string extensionType, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueCollection GetHybridComputeExtensionValues(string location, string publisher, string extensionType) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource> GetHybridComputeLicenses(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource> GetHybridComputeLicensesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> GetHybridComputeMachines(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> GetHybridComputeMachinesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScopes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScopesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails> GetValidationDetailsPrivateLinkScope(Azure.Core.AzureLocation location, string privateLinkScopeId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails>> GetValidationDetailsPrivateLinkScopeAsync(Azure.Core.AzureLocation location, string privateLinkScopeId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource> ValidateLicenseLicense(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.HybridComputeLicenseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource>> ValidateLicenseLicenseAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.HybridComputeLicenseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails> GetValidationDetails(Azure.Core.AzureLocation location, string privateLinkScopeId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails>> GetValidationDetailsAsync(Azure.Core.AzureLocation location, string privateLinkScopeId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource> ValidateLicense(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.HybridComputeLicenseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource>> ValidateLicenseAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.HybridComputeLicenseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableHybridComputeTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableHybridComputeTenantResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.HybridCompute.Models.ExtensionType> GetAll(string location, string publisher, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HybridCompute.Models.ExtensionPublisher> GetAll(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HybridCompute.Models.OperationValue> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.Models.ExtensionType> GetAllAsync(string location, string publisher, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.Models.ExtensionPublisher> GetAllAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.Models.OperationValue> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource> GetExtensionValueV2(string location, string publisher, string extensionType, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.ExtensionValueV2Resource>> GetExtensionValueV2Async(string location, string publisher, string extensionType, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HybridCompute.ExtensionValueV2Collection GetExtensionValueV2s(string location, string publisher, string extensionType) { throw null; }
     }
 }
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -748,7 +908,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public System.Collections.Generic.IReadOnlyList<string> IncomingConnectionsPorts { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ProxyBypass { get { throw null; } }
         public System.Uri ProxyUri { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.AgentConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.AgentConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.AgentConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.AgentConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.AgentConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.AgentConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.AgentConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -768,6 +931,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.AgentConfigurationMode left, Azure.ResourceManager.HybridCompute.Models.AgentConfigurationMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.AgentConfigurationMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.AgentConfigurationMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.AgentConfigurationMode left, Azure.ResourceManager.HybridCompute.Models.AgentConfigurationMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -776,12 +940,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public AgentUpgrade() { }
         public System.Guid? CorrelationId { get { throw null; } set { } }
         public string DesiredVersion { get { throw null; } set { } }
-        public bool? IsAutomaticUpgradeEnabled { get { throw null; } set { } }
+        public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
         public string LastAttemptDesiredVersion { get { throw null; } }
-        public System.DateTimeOffset? LastAttemptedOn { get { throw null; } }
         public string LastAttemptMessage { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.LastAttemptStatusEnum? LastAttemptStatus { get { throw null; } }
+        public System.DateTimeOffset? LastAttemptTimestamp { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.AgentUpgrade JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.AgentUpgrade PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.AgentUpgrade System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.AgentUpgrade>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.AgentUpgrade>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.AgentUpgrade System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.AgentUpgrade>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -792,7 +959,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         public ArcGatewayPatch() { }
         public System.Collections.Generic.IList<string> AllowedFeatures { get { throw null; } }
+        protected override Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.ArcGatewayPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ArcGatewayPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ArcGatewayPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.ArcGatewayPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ArcGatewayPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -811,6 +981,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.ArcGatewayType left, Azure.ResourceManager.HybridCompute.Models.ArcGatewayType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.ArcGatewayType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.ArcGatewayType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.ArcGatewayType left, Azure.ResourceManager.HybridCompute.Models.ArcGatewayType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -820,90 +991,100 @@ namespace Azure.ResourceManager.HybridCompute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ArcKindEnum(string value) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.ArcKindEnum Avs { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.ArcKindEnum Aws { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.ArcKindEnum Eps { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.ArcKindEnum Gcp { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.ArcKindEnum Hci { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.ArcKindEnum ScVmm { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.ArcKindEnum AVS { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.ArcKindEnum AWS { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.ArcKindEnum EPS { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.ArcKindEnum GCP { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.ArcKindEnum HCI { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.ArcKindEnum SCVMM { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.ArcKindEnum VMware { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.ArcKindEnum other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.ArcKindEnum left, Azure.ResourceManager.HybridCompute.Models.ArcKindEnum right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.ArcKindEnum (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.ArcKindEnum? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.ArcKindEnum left, Azure.ResourceManager.HybridCompute.Models.ArcKindEnum right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ArcSettings : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ArcSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ArcSettings>
-    {
-        public ArcSettings() { }
-        public Azure.Core.ResourceIdentifier GatewayResourceId { get { throw null; } set { } }
-        public System.Guid? TenantId { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridCompute.Models.ArcSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ArcSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ArcSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridCompute.Models.ArcSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ArcSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ArcSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ArcSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ArmHybridComputeModelFactory
     {
         public static Azure.ResourceManager.HybridCompute.Models.AgentConfiguration AgentConfiguration(System.Uri proxyUri = null, System.Collections.Generic.IEnumerable<string> incomingConnectionsPorts = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeConfigurationExtension> extensionsAllowList = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeConfigurationExtension> extensionsBlockList = null, System.Collections.Generic.IEnumerable<string> proxyBypass = null, string extensionsEnabled = null, string guestConfigurationEnabled = null, Azure.ResourceManager.HybridCompute.Models.AgentConfigurationMode? configMode = default(Azure.ResourceManager.HybridCompute.Models.AgentConfigurationMode?)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.AgentUpgrade AgentUpgrade(string desiredVersion = null, System.Guid? correlationId = default(System.Guid?), bool? isAutomaticUpgradeEnabled = default(bool?), string lastAttemptDesiredVersion = null, System.DateTimeOffset? lastAttemptedOn = default(System.DateTimeOffset?), Azure.ResourceManager.HybridCompute.Models.LastAttemptStatusEnum? lastAttemptStatus = default(Azure.ResourceManager.HybridCompute.Models.LastAttemptStatusEnum?), string lastAttemptMessage = null) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.ArcGatewayData ArcGatewayData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState? provisioningState = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState?), Azure.Core.ResourceIdentifier gatewayId = null, Azure.ResourceManager.HybridCompute.Models.ArcGatewayType? gatewayType = default(Azure.ResourceManager.HybridCompute.Models.ArcGatewayType?), string gatewayEndpoint = null, System.Collections.Generic.IEnumerable<string> allowedFeatures = null) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.ArcSettings ArcSettings(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? tenantId = default(System.Guid?), Azure.Core.ResourceIdentifier gatewayResourceId = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.ArcGatewayData ArcGatewayData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState? provisioningState = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState?), string gatewayId = null, Azure.ResourceManager.HybridCompute.Models.ArcGatewayType? gatewayType = default(Azure.ResourceManager.HybridCompute.Models.ArcGatewayType?), string gatewayEndpoint = null, System.Collections.Generic.IEnumerable<string> allowedFeatures = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.ArcGatewayPatch ArcGatewayPatch(System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<string> allowedFeatures = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.ArcSettingsData ArcSettingsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string tenantId = null, Azure.Core.ResourceIdentifier gatewayResourceId = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.AvailablePatchCountByClassification AvailablePatchCountByClassification(int? security = default(int?), int? critical = default(int?), int? definition = default(int?), int? updateRollup = default(int?), int? featurePack = default(int?), int? servicePack = default(int?), int? tools = default(int?), int? updates = default(int?), int? other = default(int?)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.EsuKey EsuKey(string sku = null, int? licenseStatus = default(int?)) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus ExtensionsResourceStatus(string code = null, Azure.ResourceManager.HybridCompute.Models.ExtensionsStatusLevelType? level = default(Azure.ResourceManager.HybridCompute.Models.ExtensionsStatusLevelType?), string displayStatus = null, string message = null, System.DateTimeOffset? time = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.ExtensionPublisher ExtensionPublisher(string id = null, string name = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus ExtensionsResourceStatus(string code = null, Azure.ResourceManager.HybridCompute.Models.ExtensionsStatusLevelTypes? level = default(Azure.ResourceManager.HybridCompute.Models.ExtensionsStatusLevelTypes?), string displayStatus = null, string message = null, System.DateTimeOffset? time = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.ExtensionType ExtensionType(string id = null, string name = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.ExtensionValueV2Data ExtensionValueV2Data(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string version = null, string extensionType = null, string publisher = null, System.Collections.Generic.IEnumerable<System.Uri> extensionUris = null, System.Uri extensionSignatureUri = null, string operatingSystem = null, System.Collections.Generic.IEnumerable<string> architecture = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRule HybridComputeAccessRule(string name = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection? direction = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection?), System.Collections.Generic.IEnumerable<string> addressPrefixes = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeConfigurationExtension HybridComputeConfigurationExtension(string publisher = null, string configurationExtensionType = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeConnectionDetail HybridComputeConnectionDetail(Azure.Core.ResourceIdentifier id = null, string privateIPAddress = null, string linkIdentifier = null, string groupId = null, string memberName = null) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeDisk HybridComputeDisk(string path = null, string diskType = null, string generatedId = null, Azure.Core.ResourceIdentifier id = null, string name = null, long? maxSizeInBytes = default(long?), long? usedSpaceInBytes = default(long?)) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeDisk HybridComputeDisk(string path = null, string diskType = null, string generatedId = null, string id = null, string name = null, long? maxSizeInBytes = default(long?), long? usedSpaceInBytes = default(long?)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueData HybridComputeExtensionValueData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string version = null, string extensionType = null, string publisher = null) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeFirmwareProfile HybridComputeFirmwareProfile(string serialNumber = null, string firmwareProfileType = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeFirmwareProfile HybridComputeFirmwareProfile(string serialNumber = null, string type = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeHardwareProfile HybridComputeHardwareProfile(long? totalPhysicalMemoryInBytes = default(long?), int? numberOfCpuSockets = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeProcessor> processors = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress HybridComputeIPAddress(string address = null, string ipAddressVersion = null, string subnetAddressPrefix = null) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.HybridComputeLicenseData HybridComputeLicenseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState? provisioningState = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType? licenseType = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType?), Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseDetails licenseDetails = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.HybridComputeLicenseData HybridComputeLicenseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState? provisioningState = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState?), string tenantId = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType? licenseType = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType?), Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseDetails licenseDetails = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseDetails HybridComputeLicenseDetails(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseState? state = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseState?), Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseTarget? target = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseTarget?), Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseEdition? edition = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseEdition?), Azure.ResourceManager.HybridCompute.Models.LicenseCoreType? licenseCoreType = default(Azure.ResourceManager.HybridCompute.Models.LicenseCoreType?), int? processors = default(int?), int? assignedLicenses = default(int?), string immutableId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.VolumeLicenseDetails> volumeLicenseDetails = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicensePatch HybridComputeLicensePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType? licenseType = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType?), Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseState? state = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseState?), Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseTarget? target = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseTarget?), Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseEdition? edition = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseEdition?), Azure.ResourceManager.HybridCompute.Models.LicenseCoreType? type = default(Azure.ResourceManager.HybridCompute.Models.LicenseCoreType?), int? processors = default(int?)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileData HybridComputeLicenseProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState? provisioningState = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState?), Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus? subscriptionStatus = default(Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus?), Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType? productType = default(Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType?), System.DateTimeOffset? enrollmentOn = default(System.DateTimeOffset?), System.DateTimeOffset? billingStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? disenrollmentOn = default(System.DateTimeOffset?), System.DateTimeOffset? billingEndOn = default(System.DateTimeOffset?), Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeature> productFeatures = null, System.Guid? assignedLicenseImmutableId = default(System.Guid?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.EsuKey> esuKeys = null, Azure.ResourceManager.HybridCompute.Models.EsuServerType? serverType = default(Azure.ResourceManager.HybridCompute.Models.EsuServerType?), Azure.ResourceManager.HybridCompute.Models.EsuEligibility? esuEligibility = default(Azure.ResourceManager.HybridCompute.Models.EsuEligibility?), Azure.ResourceManager.HybridCompute.Models.EsuKeyState? esuKeyState = default(Azure.ResourceManager.HybridCompute.Models.EsuKeyState?), string assignedLicense = null, bool? softwareAssuranceCustomer = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxConfiguration HybridComputeLinuxConfiguration(Azure.ResourceManager.HybridCompute.Models.AssessmentModeType? assessmentMode = default(Azure.ResourceManager.HybridCompute.Models.AssessmentModeType?), Azure.ResourceManager.HybridCompute.Models.PatchModeType? patchMode = default(Azure.ResourceManager.HybridCompute.Models.PatchModeType?), bool? isHotpatchingEnabled = default(bool?), Azure.ResourceManager.HybridCompute.Models.HybridComputePatchSettingsStatus status = null) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.HybridComputeMachineData HybridComputeMachineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionData> resources = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.HybridCompute.Models.ArcKindEnum? kind = default(Azure.ResourceManager.HybridCompute.Models.ArcKindEnum?), Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation locationData = null, Azure.ResourceManager.HybridCompute.Models.AgentConfiguration agentConfiguration = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatuses serviceStatuses = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeHardwareProfile hardwareProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeDisk> storageDisks = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeFirmwareProfile firmwareProfile = null, string cloudMetadataProvider = null, Azure.ResourceManager.HybridCompute.Models.AgentUpgrade agentUpgrade = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeOSProfile osProfile = null, Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceView licenseProfile = null, string provisioningState = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType? status = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType?), System.DateTimeOffset? lastStatusChange = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResponseError> errorDetails = null, string agentVersion = null, System.Guid? vmId = default(System.Guid?), string displayName = null, string machineFqdn = null, string clientPublicKey = null, string osName = null, string osVersion = null, string osType = null, System.Guid? vmUuid = default(System.Guid?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView> extensions = null, string osSku = null, string osEdition = null, string domainName = null, string adFqdn = null, string dnsFqdn = null, Azure.Core.ResourceIdentifier privateLinkScopeResourceId = null, Azure.Core.ResourceIdentifier parentClusterResourceId = null, string msSqlDiscovered = null, System.Collections.Generic.IReadOnlyDictionary<string, string> detectedProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface> networkInterfaces = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseProfilePatch HybridComputeLicenseProfilePatch(System.Collections.Generic.IDictionary<string, string> tags = null, bool? softwareAssuranceCustomer = default(bool?), string assignedLicense = null, Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate? subscriptionStatus = default(Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate?), Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType? productType = default(Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeatureUpdate> productFeatures = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxConfiguration HybridComputeLinuxConfiguration(Azure.ResourceManager.HybridCompute.Models.AssessmentModeType? assessmentMode, Azure.ResourceManager.HybridCompute.Models.PatchModeType? patchMode, bool? isHotpatchingEnabled, Azure.ResourceManager.HybridCompute.Models.HybridComputePatchSettingsStatus status) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxParameters HybridComputeLinuxParameters(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux> classificationsToInclude = null, System.Collections.Generic.IEnumerable<string> packageNameMasksToInclude = null, System.Collections.Generic.IEnumerable<string> packageNameMasksToExclude = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.HybridComputeMachineData HybridComputeMachineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridCompute.Models.LocationData locationData = null, Azure.ResourceManager.HybridCompute.Models.AgentConfiguration agentConfiguration = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatuses serviceStatuses = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeHardwareProfile hardwareProfile = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeFirmwareProfile firmwareProfile = null, Azure.ResourceManager.HybridCompute.Models.AgentUpgrade agentUpgrade = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeOSProfile osProfile = null, Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceView licenseProfile = null, string provisioningState = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType? status = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType?), System.DateTimeOffset? lastStatusChange = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResponseError> errorDetails = null, string agentVersion = null, string vmId = null, string displayName = null, string machineFqdn = null, string clientPublicKey = null, Azure.ResourceManager.HybridCompute.Models.IdentityKeyStore? identityKeyStore = default(Azure.ResourceManager.HybridCompute.Models.IdentityKeyStore?), string tpmEkCertificate = null, string osName = null, string osVersion = null, string osType = null, string vmUuid = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView> extensions = null, string osSku = null, string osEdition = null, string domainName = null, string adFqdn = null, string dnsFqdn = null, Azure.Core.ResourceIdentifier privateLinkScopeResourceId = null, Azure.Core.ResourceIdentifier parentClusterResourceId = null, string hardwareResourceId = null, string mssqlDiscovered = null, System.Collections.Generic.IReadOnlyDictionary<string, string> detectedProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeDisk> storageDisks = null, string cloudMetadataProvider = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface> networkInterfaces = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionData> resources = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.HybridCompute.Models.ArcKindEnum? kind = default(Azure.ResourceManager.HybridCompute.Models.ArcKindEnum?)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.HybridComputeMachineData HybridComputeMachineData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionData> resources, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.HybridCompute.Models.ArcKindEnum? kind, Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation locationData, Azure.ResourceManager.HybridCompute.Models.AgentConfiguration agentConfiguration, Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatuses serviceStatuses, string cloudMetadataProvider, Azure.ResourceManager.HybridCompute.Models.AgentUpgrade agentUpgrade, Azure.ResourceManager.HybridCompute.Models.HybridComputeOSProfile osProfile, Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceView licenseProfile, string provisioningState, Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType? status, System.DateTimeOffset? lastStatusChange, System.Collections.Generic.IEnumerable<Azure.ResponseError> errorDetails, string agentVersion, System.Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, string osName, string osVersion, string osType, System.Guid? vmUuid, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView> extensions, string osSku, string osEdition, string domainName, string adFqdn, string dnsFqdn, Azure.Core.ResourceIdentifier privateLinkScopeResourceId, Azure.Core.ResourceIdentifier parentClusterResourceId, string msSqlDiscovered, System.Collections.Generic.IReadOnlyDictionary<string, string> detectedProperties, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface> networkInterfaces) { throw null; }
         public static Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionData HybridComputeMachineExtensionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridCompute.Models.MachineExtensionProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeMachineExtensionPatch HybridComputeMachineExtensionPatch(System.Collections.Generic.IDictionary<string, string> tags = null, string forceUpdateTag = null, string publisher = null, string type = null, string typeHandlerVersion = null, bool? enableAutomaticUpgrade = default(bool?), bool? autoUpgradeMinorVersion = default(bool?), System.Collections.Generic.IDictionary<string, System.BinaryData> settings = null, System.Collections.Generic.IDictionary<string, System.BinaryData> protectedSettings = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeMachinePatch HybridComputeMachinePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.HybridCompute.Models.ArcKindEnum? kind = default(Azure.ResourceManager.HybridCompute.Models.ArcKindEnum?), Azure.ResourceManager.HybridCompute.Models.LocationData locationData = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeOSProfile osProfile = null, Azure.ResourceManager.HybridCompute.Models.AgentUpgrade agentUpgrade = null, Azure.Core.ResourceIdentifier parentClusterResourceId = null, Azure.Core.ResourceIdentifier privateLinkScopeResourceId = null, string identityKeyStore = null, string tpmEkCertificate = null, string cloudMetadataProvider = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface HybridComputeNetworkInterface(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress> ipAddresses) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface HybridComputeNetworkInterface(string macAddress = null, Azure.Core.ResourceIdentifier id = null, string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress> ipAddresses = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface HybridComputeNetworkInterface(string macAddress = null, string id = null, string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress> ipAddresses = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkProfile HybridComputeNetworkProfile(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface> networkInterfaces = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeOSProfile HybridComputeOSProfile(string computerName = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsConfiguration windowsConfiguration = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxConfiguration linuxConfiguration = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputePatchSettingsStatus HybridComputePatchSettingsStatus(Azure.ResourceManager.HybridCompute.Models.HotpatchEnablementStatus? hotpatchEnablementStatus = default(Azure.ResourceManager.HybridCompute.Models.HotpatchEnablementStatus?), Azure.ResponseError error = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.HybridComputePrivateEndpointConnectionData HybridComputePrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties HybridComputePrivateEndpointConnectionProperties(Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkServiceConnectionStateProperty connectionState = null, string provisioningState = null, System.Collections.Generic.IEnumerable<string> groupIds = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties HybridComputePrivateEndpointConnectionProperties(Azure.Core.ResourceIdentifier privateEndpointId, Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkServiceConnectionStateProperty connectionState, string provisioningState, System.Collections.Generic.IEnumerable<string> groupIds) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties HybridComputePrivateEndpointConnectionProperties(string privateEndpointId = null, Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = null, string provisioningState = null, System.Collections.Generic.IEnumerable<string> groupIds = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResourceData HybridComputePrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkResourceProperties HybridComputePrivateLinkResourceProperties(string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeData HybridComputePrivateLinkScopeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopeProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopeProperties HybridComputePrivateLinkScopeProperties(Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType? publicNetworkAccess = default(Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType?), string provisioningState = null, string privateLinkScopeId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel> privateEndpointConnections = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopePatch HybridComputePrivateLinkScopePatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopeProperties HybridComputePrivateLinkScopeProperties(Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType? publicNetworkAccess, string provisioningState, string privateLinkScopeId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel> privateEndpointConnections) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopeProperties HybridComputePrivateLinkScopeProperties(Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType? publicNetworkAccess = default(Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType?), string provisioningState = null, string privateLinkScopeId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel> privateEndpointConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.ServiceExtension> serviceExtensions = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkServiceConnectionStateProperty HybridComputePrivateLinkServiceConnectionStateProperty(string status = null, string description = null, string actionsRequired = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeProcessor HybridComputeProcessor(string name = null, int? numberOfCores = default(int?)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeature HybridComputeProductFeature(string name = null, Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus? subscriptionStatus = default(Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus?), System.DateTimeOffset? enrollmentOn = default(System.DateTimeOffset?), System.DateTimeOffset? billingStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? disenrollmentOn = default(System.DateTimeOffset?), System.DateTimeOffset? billingEndOn = default(System.DateTimeOffset?), Azure.ResponseError error = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssue HybridComputeProvisioningIssue(string name = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueType? issueType = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueType?), Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueSeverity? severity = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueSeverity?), string description = null, System.Collections.Generic.IEnumerable<string> suggestedResourceIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRule> suggestedAccessRules = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceAssociation HybridComputeResourceAssociation(string name = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessMode? accessMode = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessMode?)) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsConfiguration HybridComputeWindowsConfiguration(Azure.ResourceManager.HybridCompute.Models.AssessmentModeType? assessmentMode = default(Azure.ResourceManager.HybridCompute.Models.AssessmentModeType?), Azure.ResourceManager.HybridCompute.Models.PatchModeType? patchMode = default(Azure.ResourceManager.HybridCompute.Models.PatchModeType?), bool? isHotpatchingEnabled = default(bool?), Azure.ResourceManager.HybridCompute.Models.HybridComputePatchSettingsStatus status = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate HybridComputeResourceUpdate(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsConfiguration HybridComputeWindowsConfiguration(Azure.ResourceManager.HybridCompute.Models.AssessmentModeType? assessmentMode, Azure.ResourceManager.HybridCompute.Models.PatchModeType? patchMode, bool? isHotpatchingEnabled, Azure.ResourceManager.HybridCompute.Models.HybridComputePatchSettingsStatus status) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsParameters HybridComputeWindowsParameters(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow> classificationsToInclude = null, System.Collections.Generic.IEnumerable<string> kbNumbersToInclude = null, System.Collections.Generic.IEnumerable<string> kbNumbersToExclude = null, bool? excludeKbsRequiringReboot = default(bool?), System.DateTimeOffset? maxPatchPublishOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> patchNameMasksToInclude = null, System.Collections.Generic.IEnumerable<string> patchNameMasksToExclude = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuProperties LicenseProfileArmEsuProperties(System.Guid? assignedLicenseImmutableId = default(System.Guid?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.EsuKey> esuKeys = null, Azure.ResourceManager.HybridCompute.Models.EsuServerType? serverType = default(Azure.ResourceManager.HybridCompute.Models.EsuServerType?), Azure.ResourceManager.HybridCompute.Models.EsuEligibility? esuEligibility = default(Azure.ResourceManager.HybridCompute.Models.EsuEligibility?), Azure.ResourceManager.HybridCompute.Models.EsuKeyState? esuKeyState = default(Azure.ResourceManager.HybridCompute.Models.EsuKeyState?), string assignedLicense = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuPropertiesWithoutAssignedLicense LicenseProfileArmEsuPropertiesWithoutAssignedLicense(System.Guid? assignedLicenseImmutableId = default(System.Guid?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.EsuKey> esuKeys = null, Azure.ResourceManager.HybridCompute.Models.EsuServerType? serverType = default(Azure.ResourceManager.HybridCompute.Models.EsuServerType?), Azure.ResourceManager.HybridCompute.Models.EsuEligibility? esuEligibility = default(Azure.ResourceManager.HybridCompute.Models.EsuEligibility?), Azure.ResourceManager.HybridCompute.Models.EsuKeyState? esuKeyState = default(Azure.ResourceManager.HybridCompute.Models.EsuKeyState?)) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceView LicenseProfileMachineInstanceView(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus? licenseStatus = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus?), string licenseChannel = null, Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceViewEsuProperties esuProfile = null, Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus? subscriptionStatus = default(Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus?), Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType? productType = default(Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType?), System.DateTimeOffset? enrollmentOn = default(System.DateTimeOffset?), System.DateTimeOffset? billingStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? disenrollmentOn = default(System.DateTimeOffset?), System.DateTimeOffset? billingEndOn = default(System.DateTimeOffset?), Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeature> productFeatures = null, bool? isSoftwareAssuranceCustomer = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceView LicenseProfileMachineInstanceView(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus? licenseStatus, string licenseChannel, Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceViewEsuProperties esuProfile, Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus? subscriptionStatus, Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType? productType, System.DateTimeOffset? enrollmentOn, System.DateTimeOffset? billingStartOn, System.DateTimeOffset? disenrollmentOn, System.DateTimeOffset? billingEndOn, Azure.ResponseError error, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeature> productFeatures, bool? isSoftwareAssuranceCustomer) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceView LicenseProfileMachineInstanceView(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus? licenseStatus = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus?), string licenseChannel = null, bool? softwareAssuranceCustomer = default(bool?), Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceViewEsuProperties esuProfile = null, Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus? subscriptionStatus = default(Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus?), Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType? productType = default(Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType?), System.DateTimeOffset? enrollmentOn = default(System.DateTimeOffset?), System.DateTimeOffset? billingStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? disenrollmentOn = default(System.DateTimeOffset?), System.DateTimeOffset? billingEndOn = default(System.DateTimeOffset?), Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeature> productFeatures = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceViewEsuProperties LicenseProfileMachineInstanceViewEsuProperties(System.Guid? assignedLicenseImmutableId = default(System.Guid?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.EsuKey> esuKeys = null, Azure.ResourceManager.HybridCompute.Models.EsuServerType? serverType = default(Azure.ResourceManager.HybridCompute.Models.EsuServerType?), Azure.ResourceManager.HybridCompute.Models.EsuEligibility? esuEligibility = default(Azure.ResourceManager.HybridCompute.Models.EsuEligibility?), Azure.ResourceManager.HybridCompute.Models.EsuKeyState? esuKeyState = default(Azure.ResourceManager.HybridCompute.Models.EsuKeyState?), Azure.ResourceManager.HybridCompute.HybridComputeLicenseData assignedLicense = null, Azure.ResourceManager.HybridCompute.Models.LicenseAssignmentState? licenseAssignmentState = default(Azure.ResourceManager.HybridCompute.Models.LicenseAssignmentState?)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.LicenseProfileStorageModelEsuProperties LicenseProfileStorageModelEsuProperties(System.Guid? assignedLicenseImmutableId = default(System.Guid?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.EsuKey> esuKeys = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.MachineAssessPatchesResult MachineAssessPatchesResult(Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus? status = default(Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus?), System.Guid? assessmentActivityId = default(System.Guid?), bool? isRebootPending = default(bool?), Azure.ResourceManager.HybridCompute.Models.AvailablePatchCountByClassification availablePatchCountByClassification = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy? startedBy = default(Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy?), Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed? patchServiceUsed = default(Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed?), Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType? osType = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType?), Azure.ResponseError errorDetails = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.MachineExtensionProperties MachineExtensionProperties(string forceUpdateTag = null, string publisher = null, string machineExtensionPropertiesType = null, string typeHandlerVersion = null, bool? enableAutomaticUpgrade = default(bool?), bool? autoUpgradeMinorVersion = default(bool?), System.Collections.Generic.IDictionary<string, System.BinaryData> settings = null, System.Collections.Generic.IDictionary<string, System.BinaryData> protectedSettings = null, string provisioningState = null, Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView instanceView = null) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesContent MachineInstallPatchesContent(System.TimeSpan maximumDuration = default(System.TimeSpan), Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting rebootSetting = default(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting), Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsParameters windowsParameters = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxParameters linuxParameters = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.MachineExtensionUpgrade MachineExtensionUpgrade(System.Collections.Generic.IDictionary<string, Azure.ResourceManager.HybridCompute.Models.ExtensionTargetProperties> extensionTargets = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesParameters MachineInstallPatchesParameters(System.TimeSpan maximumDuration = default(System.TimeSpan), Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting rebootSetting = default(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting), Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsParameters windowsParameters = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxParameters linuxParameters = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesResult MachineInstallPatchesResult(Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus? status = default(Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus?), string installationActivityId = null, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus? rebootStatus = default(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus?), bool? maintenanceWindowExceeded = default(bool?), int? excludedPatchCount = default(int?), int? notSelectedPatchCount = default(int?), int? pendingPatchCount = default(int?), int? installedPatchCount = default(int?), int? failedPatchCount = default(int?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy? startedBy = default(Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy?), Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed? patchServiceUsed = default(Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed?), Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType? osType = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType?), Azure.ResponseError errorDetails = null) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.MachineRunCommandData MachineRunCommandData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource source = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter> parameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter> protectedParameters = null, bool? asyncExecution = default(bool?), string runAsUser = null, string runAsPassword = null, int? timeoutInSeconds = default(int?), System.Uri outputBlobUri = null, System.Uri errorBlobUri = null, Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity outputBlobManagedIdentity = null, Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity errorBlobManagedIdentity = null, string provisioningState = null, Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView instanceView = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.MachineRunCommandData MachineRunCommandData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource source = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter> parameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter> protectedParameters = null, bool? asyncExecution = default(bool?), string runAsUser = null, string runAsPassword = null, int? timeoutInSeconds = default(int?), string outputBlobUri = null, string errorBlobUri = null, Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity outputBlobManagedIdentity = null, Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity errorBlobManagedIdentity = null, string provisioningState = null, Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView instanceView = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView MachineRunCommandInstanceView(Azure.ResourceManager.HybridCompute.Models.HybridComputeExecutionState? executionState = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeExecutionState?), string executionMessage = null, int? exitCode = default(int?), string output = null, string error = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus> statuses = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeter NetworkSecurityPerimeter(string id = null, string perimeterGuid = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string provisioningState = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssue> provisioningIssues = null, Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeter networkSecurityPerimeter = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceAssociation resourceAssociation = null, Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterProfile profile = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterConfigurationReconcileResult NetworkSecurityPerimeterConfigurationReconcileResult(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterProfile NetworkSecurityPerimeterProfile(string name = null, int? accessRulesVersion = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRule> accessRules = null, int? diagnosticSettingsVersion = default(int?), System.Collections.Generic.IEnumerable<string> enabledLogCategories = null) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel PrivateEndpointConnectionDataModel(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.OperationValue OperationValue(string origin = null, string name = null, Azure.ResourceManager.HybridCompute.Models.OperationValueDisplay display = null, bool? isDataAction = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.OperationValueDisplay OperationValueDisplay(string operation = null, string resource = null, string description = null, string provider = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel PrivateEndpointConnectionDataModel(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties properties) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel PrivateEndpointConnectionDataModel(string id = null, string name = null, string type = null, Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails PrivateLinkScopeValidationDetails(Azure.Core.ResourceIdentifier id = null, Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType? publicNetworkAccess = default(Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeConnectionDetail> connectionDetails = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.SetupExtensionRequest SetupExtensionRequest(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.MachineExtensionProperties> extensions = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AssessmentModeType : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.AssessmentModeType>
@@ -918,6 +1099,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.AssessmentModeType left, Azure.ResourceManager.HybridCompute.Models.AssessmentModeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.AssessmentModeType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.AssessmentModeType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.AssessmentModeType left, Azure.ResourceManager.HybridCompute.Models.AssessmentModeType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -933,7 +1115,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public int? Tools { get { throw null; } }
         public int? UpdateRollup { get { throw null; } }
         public int? Updates { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.AvailablePatchCountByClassification JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.AvailablePatchCountByClassification PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.AvailablePatchCountByClassification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.AvailablePatchCountByClassification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.AvailablePatchCountByClassification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.AvailablePatchCountByClassification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.AvailablePatchCountByClassification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -954,6 +1139,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.EsuEligibility left, Azure.ResourceManager.HybridCompute.Models.EsuEligibility right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.EsuEligibility (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.EsuEligibility? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.EsuEligibility left, Azure.ResourceManager.HybridCompute.Models.EsuEligibility right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -962,7 +1148,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         internal EsuKey() { }
         public int? LicenseStatus { get { throw null; } }
         public string Sku { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.EsuKey JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.EsuKey PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.EsuKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.EsuKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.EsuKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.EsuKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.EsuKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -982,6 +1171,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.EsuKeyState left, Azure.ResourceManager.HybridCompute.Models.EsuKeyState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.EsuKeyState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.EsuKeyState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.EsuKeyState left, Azure.ResourceManager.HybridCompute.Models.EsuKeyState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -991,32 +1181,51 @@ namespace Azure.ResourceManager.HybridCompute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public EsuServerType(string value) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.EsuServerType DataCenter { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.EsuServerType Datacenter { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.EsuServerType Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.EsuServerType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.EsuServerType left, Azure.ResourceManager.HybridCompute.Models.EsuServerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.EsuServerType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.EsuServerType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.EsuServerType left, Azure.ResourceManager.HybridCompute.Models.EsuServerType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ExtensionPublisher : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ExtensionPublisher>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionPublisher>
+    {
+        internal ExtensionPublisher() { }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.ExtensionPublisher JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.ExtensionPublisher PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridCompute.Models.ExtensionPublisher System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ExtensionPublisher>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ExtensionPublisher>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.ExtensionPublisher System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionPublisher>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionPublisher>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionPublisher>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ExtensionsResourceStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus>
     {
         internal ExtensionsResourceStatus() { }
         public string Code { get { throw null; } }
         public string DisplayStatus { get { throw null; } }
-        public Azure.ResourceManager.HybridCompute.Models.ExtensionsStatusLevelType? Level { get { throw null; } }
+        public Azure.ResourceManager.HybridCompute.Models.ExtensionsStatusLevelTypes? Level { get { throw null; } }
         public string Message { get { throw null; } }
         public System.DateTimeOffset? Time { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum ExtensionsStatusLevelType
+    public enum ExtensionsStatusLevelTypes
     {
         Info = 0,
         Warning = 1,
@@ -1026,12 +1235,30 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         public ExtensionTargetProperties() { }
         public string TargetVersion { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.ExtensionTargetProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.ExtensionTargetProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.ExtensionTargetProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ExtensionTargetProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ExtensionTargetProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.ExtensionTargetProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionTargetProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionTargetProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionTargetProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ExtensionType : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ExtensionType>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionType>
+    {
+        internal ExtensionType() { }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.ExtensionType JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.ExtensionType PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridCompute.Models.ExtensionType System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ExtensionType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ExtensionType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.ExtensionType System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionType>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionType>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HotpatchEnablementStatus : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.HotpatchEnablementStatus>
@@ -1049,6 +1276,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HotpatchEnablementStatus left, Azure.ResourceManager.HybridCompute.Models.HotpatchEnablementStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HotpatchEnablementStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.HotpatchEnablementStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.HotpatchEnablementStatus left, Azure.ResourceManager.HybridCompute.Models.HotpatchEnablementStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1066,6 +1294,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessMode left, Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessMode left, Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1075,7 +1304,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public System.Collections.Generic.IReadOnlyList<string> AddressPrefixes { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection? Direction { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1095,15 +1327,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection left, Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection left, Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class HybridComputeConfigurationExtension : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeConfigurationExtension>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeConfigurationExtension>
     {
         internal HybridComputeConfigurationExtension() { }
-        public string ConfigurationExtensionType { get { throw null; } }
         public string Publisher { get { throw null; } }
+        public string Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeConfigurationExtension JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeConfigurationExtension PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeConfigurationExtension System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeConfigurationExtension>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeConfigurationExtension>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeConfigurationExtension System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeConfigurationExtension>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1117,8 +1353,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string LinkIdentifier { get { throw null; } }
         public string MemberName { get { throw null; } }
-        public string PrivateIPAddress { get { throw null; } }
+        public string PrivateIpAddress { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeConnectionDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeConnectionDetail PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeConnectionDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeConnectionDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeConnectionDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeConnectionDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeConnectionDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1130,12 +1369,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         internal HybridComputeDisk() { }
         public string DiskType { get { throw null; } }
         public string GeneratedId { get { throw null; } }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public string Id { get { throw null; } }
         public long? MaxSizeInBytes { get { throw null; } }
         public string Name { get { throw null; } }
         public string Path { get { throw null; } }
         public long? UsedSpaceInBytes { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeDisk PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeDisk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeDisk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1160,15 +1402,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeExecutionState left, Azure.ResourceManager.HybridCompute.Models.HybridComputeExecutionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeExecutionState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeExecutionState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.HybridComputeExecutionState left, Azure.ResourceManager.HybridCompute.Models.HybridComputeExecutionState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class HybridComputeFirmwareProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeFirmwareProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeFirmwareProfile>
     {
         internal HybridComputeFirmwareProfile() { }
-        public string FirmwareProfileType { get { throw null; } }
         public string SerialNumber { get { throw null; } }
+        public string Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeFirmwareProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeFirmwareProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeFirmwareProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeFirmwareProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeFirmwareProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeFirmwareProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeFirmwareProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1181,7 +1427,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public int? NumberOfCpuSockets { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridCompute.Models.HybridComputeProcessor> Processors { get { throw null; } }
         public long? TotalPhysicalMemoryInBytes { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeHardwareProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeHardwareProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeHardwareProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeHardwareProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeHardwareProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeHardwareProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeHardwareProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1192,9 +1441,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         internal HybridComputeIPAddress() { }
         public string Address { get { throw null; } }
-        public string IPAddressVersion { get { throw null; } }
+        public string IpAddressVersion { get { throw null; } }
         public string SubnetAddressPrefix { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1212,7 +1464,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseState? State { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseTarget? Target { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HybridCompute.Models.VolumeLicenseDetails> VolumeLicenseDetails { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1232,8 +1487,28 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseEdition left, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseEdition right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseEdition (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseEdition? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseEdition left, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseEdition right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class HybridComputeLicensePatch : Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicensePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicensePatch>
+    {
+        public HybridComputeLicensePatch() { }
+        public Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseEdition? Edition { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType? LicenseType { get { throw null; } set { } }
+        public int? Processors { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseState? State { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseTarget? Target { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridCompute.Models.LicenseCoreType? Type { get { throw null; } set { } }
+        protected override Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridCompute.Models.HybridComputeLicensePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicensePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicensePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.HybridComputeLicensePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicensePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicensePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicensePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HybridComputeLicenseProfilePatch : Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseProfilePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseProfilePatch>
     {
@@ -1243,7 +1518,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType? ProductType { get { throw null; } set { } }
         public bool? SoftwareAssuranceCustomer { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate? SubscriptionStatus { get { throw null; } set { } }
+        protected override Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseProfilePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseProfilePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseProfilePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseProfilePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseProfilePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1263,6 +1541,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseState left, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseState left, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1276,14 +1555,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus Licensed { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus NonGenuineGrace { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus Notification { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus OobGrace { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus OotGrace { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus OOBGrace { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus OOTGrace { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus Unlicensed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus left, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus left, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1300,6 +1580,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseTarget left, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseTarget right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseTarget (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseTarget? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseTarget left, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseTarget right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1315,6 +1596,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType left, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType left, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1322,10 +1604,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         public HybridComputeLinuxConfiguration() { }
         public Azure.ResourceManager.HybridCompute.Models.AssessmentModeType? AssessmentMode { get { throw null; } set { } }
-        public bool? IsHotpatchingEnabled { get { throw null; } set { } }
+        public bool? EnableHotpatching { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.PatchModeType? PatchMode { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputePatchSettingsStatus Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1338,26 +1623,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux> ClassificationsToInclude { get { throw null; } }
         public System.Collections.Generic.IList<string> PackageNameMasksToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> PackageNameMasksToInclude { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxParameters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HybridComputeLocation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation>
+    public partial class HybridComputeLocation : Azure.ResourceManager.HybridCompute.Models.LocationData
     {
-        public HybridComputeLocation(string name) { }
-        public string City { get { throw null; } set { } }
-        public string CountryOrRegion { get { throw null; } set { } }
-        public string District { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public HybridComputeLocation(string name) : base (default(string)) { }
     }
     public partial class HybridComputeMachineExtensionPatch : Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeMachineExtensionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeMachineExtensionPatch>
     {
@@ -1365,12 +1643,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
         public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
-        public string MachineExtensionUpdatePropertiesType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> ProtectedSettings { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Settings { get { throw null; } }
+        public string Type { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
+        protected override Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeMachineExtensionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeMachineExtensionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeMachineExtensionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeMachineExtensionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeMachineExtensionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1383,12 +1664,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public Azure.ResourceManager.HybridCompute.Models.AgentUpgrade AgentUpgrade { get { throw null; } set { } }
         public string CloudMetadataProvider { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public string IdentityKeyStore { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.ArcKindEnum? Kind { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation LocationData { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridCompute.Models.LocationData LocationData { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeOSProfile OSProfile { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ParentClusterResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateLinkScopeResourceId { get { throw null; } set { } }
+        public string TpmEkCertificate { get { throw null; } set { } }
+        protected override Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeMachinePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeMachinePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeMachinePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeMachinePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeMachinePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1398,11 +1684,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public partial class HybridComputeNetworkInterface : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface>
     {
         internal HybridComputeNetworkInterface() { }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress> IPAddresses { get { throw null; } }
+        public string Id { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress> IpAddresses { get { throw null; } }
         public string MacAddress { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1413,7 +1702,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         internal HybridComputeNetworkProfile() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface> NetworkInterfaces { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1426,7 +1718,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public string ComputerName { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxConfiguration LinuxConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsConfiguration WindowsConfiguration { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeOSProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeOSProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeOSProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeOSProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeOSProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeOSProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeOSProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1446,6 +1741,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType left, Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType left, Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1454,7 +1750,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         internal HybridComputePatchSettingsStatus() { }
         public Azure.ResponseError Error { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.HotpatchEnablementStatus? HotpatchEnablementStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputePatchSettingsStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputePatchSettingsStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputePatchSettingsStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePatchSettingsStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePatchSettingsStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputePatchSettingsStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePatchSettingsStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1464,11 +1763,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public partial class HybridComputePrivateEndpointConnectionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties>
     {
         public HybridComputePrivateEndpointConnectionProperties() { }
-        public Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkServiceConnectionStateProperty ConnectionState { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
-        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
+        public string PrivateEndpointId { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1477,11 +1779,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
     }
     public partial class HybridComputePrivateLinkResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkResourceProperties>
     {
-        public HybridComputePrivateLinkResourceProperties() { }
+        internal HybridComputePrivateLinkResourceProperties() { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1492,7 +1797,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         public HybridComputePrivateLinkScopePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1506,7 +1814,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public string PrivateLinkScopeId { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridCompute.Models.ServiceExtension> ServiceExtensions { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopeProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopeProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1519,7 +1831,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public string ActionsRequired { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkServiceConnectionStateProperty JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkServiceConnectionStateProperty PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkServiceConnectionStateProperty System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkServiceConnectionStateProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkServiceConnectionStateProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkServiceConnectionStateProperty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkServiceConnectionStateProperty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1531,7 +1846,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         internal HybridComputeProcessor() { }
         public string Name { get { throw null; } }
         public int? NumberOfCores { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeProcessor JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeProcessor PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeProcessor System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProcessor>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProcessor>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeProcessor System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProcessor>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1548,7 +1866,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public Azure.ResponseError Error { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus? SubscriptionStatus { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeature JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeature PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeature System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeature>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeature>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeature System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeature>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1560,7 +1881,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public HybridComputeProductFeatureUpdate() { }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate? SubscriptionStatus { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeatureUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeatureUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeatureUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeatureUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeatureUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeatureUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeatureUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1581,6 +1905,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeProgramYear left, Azure.ResourceManager.HybridCompute.Models.HybridComputeProgramYear right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeProgramYear (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeProgramYear? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.HybridComputeProgramYear left, Azure.ResourceManager.HybridCompute.Models.HybridComputeProgramYear right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1593,7 +1918,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueSeverity? Severity { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRule> SuggestedAccessRules { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SuggestedResourceIds { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssue PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1613,6 +1941,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueSeverity left, Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueSeverity (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueSeverity? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueSeverity left, Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueSeverity right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1631,6 +1960,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueType left, Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueType left, Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1653,6 +1983,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState left, Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState left, Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1664,12 +1995,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public HybridComputePublicNetworkAccessType(string value) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType Disabled { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType Enabled { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType SecuredByPerimeter { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType left, Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType left, Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1678,7 +2009,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         internal HybridComputeResourceAssociation() { }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessMode? AccessMode { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceAssociation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceAssociation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceAssociation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceAssociation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceAssociation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceAssociation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceAssociation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1689,7 +2023,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         public HybridComputeResourceUpdate() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1701,7 +2038,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public HybridComputeServiceStatus() { }
         public string StartupType { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1713,7 +2053,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public HybridComputeServiceStatuses() { }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatus ExtensionService { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatus GuestConfigurationService { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatuses JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatuses PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatuses System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatuses>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatuses>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatuses System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatuses>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1734,6 +2077,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusLevelType left, Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusLevelType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusLevelType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusLevelType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusLevelType left, Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusLevelType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1743,6 +2087,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public HybridComputeStatusType(string value) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType AwaitingConnection { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType Connected { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType Disconnected { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType Error { get { throw null; } }
@@ -1751,6 +2096,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType left, Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType left, Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1758,10 +2104,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         public HybridComputeWindowsConfiguration() { }
         public Azure.ResourceManager.HybridCompute.Models.AssessmentModeType? AssessmentMode { get { throw null; } set { } }
-        public bool? IsHotpatchingEnabled { get { throw null; } set { } }
+        public bool? EnableHotpatching { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.PatchModeType? PatchMode { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputePatchSettingsStatus Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1776,12 +2125,50 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public System.Collections.Generic.IList<string> KbNumbersToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> KbNumbersToInclude { get { throw null; } }
         public System.DateTimeOffset? MaxPatchPublishOn { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> PatchNameMasksToExclude { get { throw null; } }
+        public System.Collections.Generic.IList<string> PatchNameMasksToInclude { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsParameters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IdentityKeyStore : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.IdentityKeyStore>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IdentityKeyStore(string value) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.IdentityKeyStore Default { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.IdentityKeyStore TPM { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HybridCompute.Models.IdentityKeyStore other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.IdentityKeyStore left, Azure.ResourceManager.HybridCompute.Models.IdentityKeyStore right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.IdentityKeyStore (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.IdentityKeyStore? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.IdentityKeyStore left, Azure.ResourceManager.HybridCompute.Models.IdentityKeyStore right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct InstanceViewTypes : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public InstanceViewTypes(string value) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes InstanceView { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes left, Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes left, Azure.ResourceManager.HybridCompute.Models.InstanceViewTypes right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LastAttemptStatusEnum : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.LastAttemptStatusEnum>
@@ -1796,6 +2183,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.LastAttemptStatusEnum left, Azure.ResourceManager.HybridCompute.Models.LastAttemptStatusEnum right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.LastAttemptStatusEnum (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.LastAttemptStatusEnum? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.LastAttemptStatusEnum left, Azure.ResourceManager.HybridCompute.Models.LastAttemptStatusEnum right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1812,6 +2200,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.LicenseAssignmentState left, Azure.ResourceManager.HybridCompute.Models.LicenseAssignmentState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.LicenseAssignmentState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.LicenseAssignmentState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.LicenseAssignmentState left, Azure.ResourceManager.HybridCompute.Models.LicenseAssignmentState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1828,8 +2217,23 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.LicenseCoreType left, Azure.ResourceManager.HybridCompute.Models.LicenseCoreType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.LicenseCoreType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.LicenseCoreType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.LicenseCoreType left, Azure.ResourceManager.HybridCompute.Models.LicenseCoreType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class LicenseProfileArmEsuProperties : Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuPropertiesWithoutAssignedLicense, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuProperties>
+    {
+        public LicenseProfileArmEsuProperties() { }
+        public string AssignedLicense { get { throw null; } set { } }
+        protected override Azure.ResourceManager.HybridCompute.Models.LicenseProfileStorageModelEsuProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.HybridCompute.Models.LicenseProfileStorageModelEsuProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class LicenseProfileArmEsuPropertiesWithoutAssignedLicense : Azure.ResourceManager.HybridCompute.Models.LicenseProfileStorageModelEsuProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuPropertiesWithoutAssignedLicense>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuPropertiesWithoutAssignedLicense>
     {
@@ -1837,7 +2241,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public Azure.ResourceManager.HybridCompute.Models.EsuEligibility? EsuEligibility { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.EsuKeyState? EsuKeyState { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.EsuServerType? ServerType { get { throw null; } }
+        protected override Azure.ResourceManager.HybridCompute.Models.LicenseProfileStorageModelEsuProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.HybridCompute.Models.LicenseProfileStorageModelEsuProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuPropertiesWithoutAssignedLicense System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuPropertiesWithoutAssignedLicense>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuPropertiesWithoutAssignedLicense>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuPropertiesWithoutAssignedLicense System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuPropertiesWithoutAssignedLicense>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1853,13 +2260,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public System.DateTimeOffset? EnrollmentOn { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceViewEsuProperties EsuProfile { get { throw null; } set { } }
-        public bool? IsSoftwareAssuranceCustomer { get { throw null; } set { } }
         public string LicenseChannel { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus? LicenseStatus { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeature> ProductFeatures { get { throw null; } }
-        public Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType? ProductType { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus? SubscriptionStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType? ProductType { get { throw null; } }
+        public bool? SoftwareAssuranceCustomer { get { throw null; } }
+        public Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus? SubscriptionStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceView JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceView PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceView System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceView>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceView>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceView System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceView>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1871,7 +2281,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public LicenseProfileMachineInstanceViewEsuProperties() { }
         public Azure.ResourceManager.HybridCompute.HybridComputeLicenseData AssignedLicense { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.LicenseAssignmentState? LicenseAssignmentState { get { throw null; } set { } }
+        protected override Azure.ResourceManager.HybridCompute.Models.LicenseProfileStorageModelEsuProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.HybridCompute.Models.LicenseProfileStorageModelEsuProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceViewEsuProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceViewEsuProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceViewEsuProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceViewEsuProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceViewEsuProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1884,13 +2297,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public LicenseProfileProductType(string value) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType WindowsIotEnterprise { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType WindowsIoTEnterprise { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType WindowsServer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType left, Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType left, Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1899,7 +2313,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public LicenseProfileStorageModelEsuProperties() { }
         public System.Guid? AssignedLicenseImmutableId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridCompute.Models.EsuKey> EsuKeys { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.LicenseProfileStorageModelEsuProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.LicenseProfileStorageModelEsuProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.LicenseProfileStorageModelEsuProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileStorageModelEsuProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileStorageModelEsuProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.LicenseProfileStorageModelEsuProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileStorageModelEsuProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1923,6 +2340,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus left, Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus left, Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1939,8 +2357,26 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate left, Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate left, Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class LocationData : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.LocationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.LocationData>
+    {
+        public LocationData(string name) { }
+        public string City { get { throw null; } set { } }
+        public string CountryOrRegion { get { throw null; } set { } }
+        public string District { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.LocationData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.LocationData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridCompute.Models.LocationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.LocationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.LocationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.LocationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.LocationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.LocationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.LocationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MachineAssessPatchesResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineAssessPatchesResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineAssessPatchesResult>
     {
@@ -1948,14 +2384,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public System.Guid? AssessmentActivityId { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.AvailablePatchCountByClassification AvailablePatchCountByClassification { get { throw null; } }
         public Azure.ResponseError ErrorDetails { get { throw null; } }
-        public bool? IsRebootPending { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
-        public Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType? OSType { get { throw null; } }
+        public Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType? OsType { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed? PatchServiceUsed { get { throw null; } }
+        public bool? RebootPending { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy? StartedBy { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.MachineAssessPatchesResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.MachineAssessPatchesResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.MachineAssessPatchesResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineAssessPatchesResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineAssessPatchesResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.MachineAssessPatchesResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineAssessPatchesResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1965,11 +2404,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public partial class MachineExtensionInstanceView : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView>
     {
         public MachineExtensionInstanceView() { }
-        public string MachineExtensionInstanceViewType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceViewStatus Status { get { throw null; } set { } }
+        public string Type { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1984,7 +2426,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusLevelType? Level { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
         public System.DateTimeOffset? Time { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceViewStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceViewStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceViewStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceViewStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceViewStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceViewStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceViewStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1998,13 +2443,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView InstanceView { get { throw null; } set { } }
-        public string MachineExtensionPropertiesType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> ProtectedSettings { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Settings { get { throw null; } }
+        public string Type { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.MachineExtensionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.MachineExtensionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.MachineExtensionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineExtensionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineExtensionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.MachineExtensionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineExtensionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2015,26 +2463,32 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         public MachineExtensionUpgrade() { }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.HybridCompute.Models.ExtensionTargetProperties> ExtensionTargets { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.MachineExtensionUpgrade JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.MachineExtensionUpgrade PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.MachineExtensionUpgrade System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineExtensionUpgrade>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineExtensionUpgrade>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.MachineExtensionUpgrade System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineExtensionUpgrade>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineExtensionUpgrade>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineExtensionUpgrade>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MachineInstallPatchesContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesContent>
+    public partial class MachineInstallPatchesParameters : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesParameters>
     {
-        public MachineInstallPatchesContent(System.TimeSpan maximumDuration, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting rebootSetting) { }
+        public MachineInstallPatchesParameters(System.TimeSpan maximumDuration, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting rebootSetting) { }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxParameters LinuxParameters { get { throw null; } set { } }
         public System.TimeSpan MaximumDuration { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting RebootSetting { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsParameters WindowsParameters { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesParameters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MachineInstallPatchesResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesResult>
     {
@@ -2047,14 +2501,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public bool? MaintenanceWindowExceeded { get { throw null; } }
         public int? NotSelectedPatchCount { get { throw null; } }
-        public Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType? OSType { get { throw null; } }
+        public Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType? OsType { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed? PatchServiceUsed { get { throw null; } }
         public int? PendingPatchCount { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus? RebootStatus { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy? StartedBy { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2077,6 +2534,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus left, Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus left, Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2090,8 +2548,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public int? ExitCode { get { throw null; } }
         public string Output { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus> Statuses { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus> Statuses { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2103,9 +2564,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public MachineRunCommandScriptSource() { }
         public string CommandId { get { throw null; } set { } }
         public string Script { get { throw null; } set { } }
-        public System.Uri ScriptUri { get { throw null; } set { } }
+        public string ScriptUri { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity ScriptUriManagedIdentity { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2118,7 +2582,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public string Id { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string PerimeterGuid { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2129,7 +2596,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         internal NetworkSecurityPerimeterConfigurationReconcileResult() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterConfigurationReconcileResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterConfigurationReconcileResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterConfigurationReconcileResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterConfigurationReconcileResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterConfigurationReconcileResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterConfigurationReconcileResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterConfigurationReconcileResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2144,12 +2614,49 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public int? DiagnosticSettingsVersion { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> EnabledLogCategories { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OperationValue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.OperationValue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.OperationValue>
+    {
+        internal OperationValue() { }
+        public Azure.ResourceManager.HybridCompute.Models.OperationValueDisplay Display { get { throw null; } }
+        public bool? IsDataAction { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Origin { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.OperationValue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.OperationValue PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridCompute.Models.OperationValue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.OperationValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.OperationValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.OperationValue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.OperationValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.OperationValue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.OperationValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OperationValueDisplay : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.OperationValueDisplay>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.OperationValueDisplay>
+    {
+        internal OperationValueDisplay() { }
+        public string Description { get { throw null; } }
+        public string Operation { get { throw null; } }
+        public string Provider { get { throw null; } }
+        public string Resource { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.OperationValueDisplay JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.OperationValueDisplay PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridCompute.Models.OperationValueDisplay System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.OperationValueDisplay>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.OperationValueDisplay>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.OperationValueDisplay System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.OperationValueDisplay>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.OperationValueDisplay>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.OperationValueDisplay>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PatchModeType : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.PatchModeType>
@@ -2166,6 +2673,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.PatchModeType left, Azure.ResourceManager.HybridCompute.Models.PatchModeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.PatchModeType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.PatchModeType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.PatchModeType left, Azure.ResourceManager.HybridCompute.Models.PatchModeType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2182,6 +2690,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy left, Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy left, Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2191,25 +2700,32 @@ namespace Azure.ResourceManager.HybridCompute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public PatchServiceUsed(string value) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed Apt { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed APT { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed Unknown { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed WU { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed WUWsus { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed Yum { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed WUWSUS { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed YUM { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed Zypper { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed left, Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed left, Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PrivateEndpointConnectionDataModel : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel>
+    public partial class PrivateEndpointConnectionDataModel : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel>
     {
         internal PrivateEndpointConnectionDataModel() { }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateEndpointConnectionProperties Properties { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public string Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2222,7 +2738,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridCompute.Models.HybridComputeConnectionDetail> ConnectionDetails { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType? PublicNetworkAccess { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2234,7 +2753,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public RunCommandInputParameter(string name, string value) { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2244,14 +2766,63 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public partial class RunCommandManagedIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity>
     {
         public RunCommandManagedIdentity() { }
-        public System.Guid? ClientId { get { throw null; } set { } }
-        public System.Guid? ObjectId { get { throw null; } set { } }
+        public string ClientId { get { throw null; } set { } }
+        public string ObjectId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ServiceExtension : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ServiceExtension>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ServiceExtension>
+    {
+        public ServiceExtension() { }
+        public Azure.ResourceManager.HybridCompute.Models.ServiceExtensionPublicNetworkAccess? ServiceExtensionPublicNetworkAccess { get { throw null; } set { } }
+        public System.BinaryData ServiceExtensionType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.ServiceExtension JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.ServiceExtension PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridCompute.Models.ServiceExtension System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ServiceExtension>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ServiceExtension>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.ServiceExtension System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ServiceExtension>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ServiceExtension>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ServiceExtension>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ServiceExtensionPublicNetworkAccess : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.ServiceExtensionPublicNetworkAccess>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ServiceExtensionPublicNetworkAccess(string value) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.ServiceExtensionPublicNetworkAccess Disabled { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.ServiceExtensionPublicNetworkAccess Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HybridCompute.Models.ServiceExtensionPublicNetworkAccess other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.ServiceExtensionPublicNetworkAccess left, Azure.ResourceManager.HybridCompute.Models.ServiceExtensionPublicNetworkAccess right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.ServiceExtensionPublicNetworkAccess (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.ServiceExtensionPublicNetworkAccess? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.ServiceExtensionPublicNetworkAccess left, Azure.ResourceManager.HybridCompute.Models.ServiceExtensionPublicNetworkAccess right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SetupExtensionRequest : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.SetupExtensionRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.SetupExtensionRequest>
+    {
+        public SetupExtensionRequest() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridCompute.Models.MachineExtensionProperties> Extensions { get { throw null; } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.SetupExtensionRequest JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.SetupExtensionRequest PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridCompute.Models.SetupExtensionRequest System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.SetupExtensionRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.SetupExtensionRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.SetupExtensionRequest System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.SetupExtensionRequest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.SetupExtensionRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.SetupExtensionRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VmGuestPatchClassificationLinux : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux>
@@ -2267,6 +2838,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2289,6 +2861,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2306,6 +2879,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2326,6 +2900,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2334,7 +2909,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public VolumeLicenseDetails() { }
         public string InvoiceId { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputeProgramYear? ProgramYear { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.VolumeLicenseDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HybridCompute.Models.VolumeLicenseDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridCompute.Models.VolumeLicenseDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.VolumeLicenseDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.VolumeLicenseDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridCompute.Models.VolumeLicenseDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.VolumeLicenseDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

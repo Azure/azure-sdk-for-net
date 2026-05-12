@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Product Feature. </summary>
     public partial class HybridComputeProductFeature
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeProductFeature"/>. </summary>
         public HybridComputeProductFeature()
@@ -58,8 +30,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="disenrollmentOn"> The timestamp in UTC when the user disenrolled the feature. </param>
         /// <param name="billingEndOn"> The timestamp in UTC when the billing ends. </param>
         /// <param name="error"> The errors that were encountered during the feature enrollment or disenrollment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeProductFeature(string name, LicenseProfileSubscriptionStatus? subscriptionStatus, DateTimeOffset? enrollmentOn, DateTimeOffset? billingStartOn, DateTimeOffset? disenrollmentOn, DateTimeOffset? billingEndOn, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HybridComputeProductFeature(string name, LicenseProfileSubscriptionStatus? subscriptionStatus, DateTimeOffset? enrollmentOn, DateTimeOffset? billingStartOn, DateTimeOffset? disenrollmentOn, DateTimeOffset? billingEndOn, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             SubscriptionStatus = subscriptionStatus;
@@ -68,29 +40,28 @@ namespace Azure.ResourceManager.HybridCompute.Models
             DisenrollmentOn = disenrollmentOn;
             BillingEndOn = billingEndOn;
             Error = error;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Product feature name. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> Indicates the current status of the product features. </summary>
-        [WirePath("subscriptionStatus")]
         public LicenseProfileSubscriptionStatus? SubscriptionStatus { get; set; }
+
         /// <summary> The timestamp in UTC when the user enrolls the feature. </summary>
-        [WirePath("enrollmentDate")]
         public DateTimeOffset? EnrollmentOn { get; }
+
         /// <summary> The timestamp in UTC when the billing starts. </summary>
-        [WirePath("billingStartDate")]
         public DateTimeOffset? BillingStartOn { get; }
+
         /// <summary> The timestamp in UTC when the user disenrolled the feature. </summary>
-        [WirePath("disenrollmentDate")]
         public DateTimeOffset? DisenrollmentOn { get; }
+
         /// <summary> The timestamp in UTC when the billing ends. </summary>
-        [WirePath("billingEndDate")]
         public DateTimeOffset? BillingEndOn { get; }
+
         /// <summary> The errors that were encountered during the feature enrollment or disenrollment. </summary>
-        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }

@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineExtensionProperties : IUtf8JsonSerializable, IJsonModel<MachineExtensionProperties>
+    /// <summary> Describes the properties of a Machine Extension. </summary>
+    public partial class MachineExtensionProperties : IJsonModel<MachineExtensionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineExtensionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineExtensionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMachineExtensionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineExtensionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MachineExtensionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MachineExtensionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineExtensionProperties IPersistableModel<MachineExtensionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineExtensionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineExtensionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineExtensionProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ForceUpdateTag))
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
@@ -46,10 +84,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(MachineExtensionPropertiesType))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(MachineExtensionPropertiesType);
+                writer.WriteStringValue(Type);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {
@@ -79,9 +117,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         continue;
                     }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -102,9 +140,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         continue;
                     }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -122,15 +160,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -139,29 +177,34 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
         }
 
-        MachineExtensionProperties IJsonModel<MachineExtensionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineExtensionProperties IJsonModel<MachineExtensionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineExtensionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineExtensionProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMachineExtensionProperties(document.RootElement, options);
         }
 
-        internal static MachineExtensionProperties DeserializeMachineExtensionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MachineExtensionProperties DeserializeMachineExtensionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string forceUpdateTag = default;
             string publisher = default;
-            string type = default;
+            string @type = default;
             string typeHandlerVersion = default;
             bool? enableAutomaticUpgrade = default;
             bool? autoUpgradeMinorVersion = default;
@@ -169,114 +212,112 @@ namespace Azure.ResourceManager.HybridCompute.Models
             IDictionary<string, BinaryData> protectedSettings = default;
             string provisioningState = default;
             MachineExtensionInstanceView instanceView = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("forceUpdateTag"u8))
+                if (prop.NameEquals("forceUpdateTag"u8))
                 {
-                    forceUpdateTag = property.Value.GetString();
+                    forceUpdateTag = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publisher"u8))
+                if (prop.NameEquals("publisher"u8))
                 {
-                    publisher = property.Value.GetString();
+                    publisher = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeHandlerVersion"u8))
+                if (prop.NameEquals("typeHandlerVersion"u8))
                 {
-                    typeHandlerVersion = property.Value.GetString();
+                    typeHandlerVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enableAutomaticUpgrade"u8))
+                if (prop.NameEquals("enableAutomaticUpgrade"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableAutomaticUpgrade = property.Value.GetBoolean();
+                    enableAutomaticUpgrade = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("autoUpgradeMinorVersion"u8))
+                if (prop.NameEquals("autoUpgradeMinorVersion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoUpgradeMinorVersion = property.Value.GetBoolean();
+                    autoUpgradeMinorVersion = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("settings"u8))
+                if (prop.NameEquals("settings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     settings = dictionary;
                     continue;
                 }
-                if (property.NameEquals("protectedSettings"u8))
+                if (prop.NameEquals("protectedSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     protectedSettings = dictionary;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    provisioningState = property.Value.GetString();
+                    provisioningState = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceView"u8))
+                if (prop.NameEquals("instanceView"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    instanceView = MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(property.Value, options);
+                    instanceView = MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MachineExtensionProperties(
                 forceUpdateTag,
                 publisher,
-                type,
+                @type,
                 typeHandlerVersion,
                 enableAutomaticUpgrade,
                 autoUpgradeMinorVersion,
@@ -284,275 +325,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 protectedSettings ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 provisioningState,
                 instanceView,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ForceUpdateTag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  forceUpdateTag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ForceUpdateTag))
-                {
-                    builder.Append("  forceUpdateTag: ");
-                    if (ForceUpdateTag.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ForceUpdateTag}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ForceUpdateTag}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Publisher), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  publisher: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Publisher))
-                {
-                    builder.Append("  publisher: ");
-                    if (Publisher.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Publisher}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Publisher}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MachineExtensionPropertiesType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MachineExtensionPropertiesType))
-                {
-                    builder.Append("  type: ");
-                    if (MachineExtensionPropertiesType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MachineExtensionPropertiesType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MachineExtensionPropertiesType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TypeHandlerVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  typeHandlerVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TypeHandlerVersion))
-                {
-                    builder.Append("  typeHandlerVersion: ");
-                    if (TypeHandlerVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TypeHandlerVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TypeHandlerVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableAutomaticUpgrade), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableAutomaticUpgrade: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableAutomaticUpgrade))
-                {
-                    builder.Append("  enableAutomaticUpgrade: ");
-                    var boolValue = EnableAutomaticUpgrade.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoUpgradeMinorVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  autoUpgradeMinorVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AutoUpgradeMinorVersion))
-                {
-                    builder.Append("  autoUpgradeMinorVersion: ");
-                    var boolValue = AutoUpgradeMinorVersion.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Settings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  settings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Settings))
-                {
-                    if (Settings.Any())
-                    {
-                        builder.Append("  settings: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Settings)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            builder.AppendLine($"'{item.Value.ToString()}'");
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProtectedSettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  protectedSettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ProtectedSettings))
-                {
-                    if (ProtectedSettings.Any())
-                    {
-                        builder.Append("  protectedSettings: ");
-                        builder.AppendLine("{");
-                        foreach (var item in ProtectedSettings)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            builder.AppendLine($"'{item.Value.ToString()}'");
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("  provisioningState: ");
-                    if (ProvisioningState.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ProvisioningState}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ProvisioningState}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceView), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  instanceView: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(InstanceView))
-                {
-                    builder.Append("  instanceView: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, InstanceView, options, 2, false, "  instanceView: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<MachineExtensionProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(MachineExtensionProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MachineExtensionProperties IPersistableModel<MachineExtensionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMachineExtensionProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MachineExtensionProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MachineExtensionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,78 +8,63 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    /// <summary>
-    /// A class representing the HybridComputeExtensionValue data model.
-    /// Describes a Extension Metadata
-    /// </summary>
+    /// <summary> Describes a Extension Metadata. </summary>
     public partial class HybridComputeExtensionValueData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeExtensionValueData"/>. </summary>
-        public HybridComputeExtensionValueData()
+        internal HybridComputeExtensionValueData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeExtensionValueData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="version"> The version of the Extension being received. </param>
-        /// <param name="extensionType"> The type of the Extension being received. </param>
-        /// <param name="publisher"> The publisher of the Extension being received. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeExtensionValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, string extensionType, string publisher, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The single extension based on search criteria. </param>
+        internal HybridComputeExtensionValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExtensionValueProperties properties) : base(id, name, resourceType, systemData)
         {
-            Version = version;
-            ExtensionType = extensionType;
-            Publisher = publisher;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> The single extension based on search criteria. </summary>
+        internal ExtensionValueProperties Properties { get; }
 
         /// <summary> The version of the Extension being received. </summary>
-        [WirePath("properties.version")]
-        public string Version { get; }
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+        }
+
         /// <summary> The type of the Extension being received. </summary>
-        [WirePath("properties.extensionType")]
-        public string ExtensionType { get; }
+        public string ExtensionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExtensionType;
+            }
+        }
+
         /// <summary> The publisher of the Extension being received. </summary>
-        [WirePath("properties.publisher")]
-        public string Publisher { get; }
+        public string Publisher
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Publisher;
+            }
+        }
     }
 }

@@ -5,39 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableHybridComputeArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableHybridComputeArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableHybridComputeArmClient for mocking. </summary>
         protected MockableHybridComputeArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHybridComputeArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableHybridComputeArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHybridComputeArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableHybridComputeArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="HybridComputeLicenseResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridComputeLicenseResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeLicenseResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HybridComputeLicenseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HybridComputeLicenseResource"/> object. </returns>
         public virtual HybridComputeLicenseResource GetHybridComputeLicenseResource(ResourceIdentifier id)
@@ -46,10 +39,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return new HybridComputeLicenseResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HybridComputeMachineResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridComputeMachineResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeMachineResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HybridComputeMachineResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HybridComputeMachineResource"/> object. </returns>
         public virtual HybridComputeMachineResource GetHybridComputeMachineResource(ResourceIdentifier id)
@@ -58,10 +48,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return new HybridComputeMachineResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HybridComputeLicenseProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridComputeLicenseProfileResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeLicenseProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HybridComputeLicenseProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HybridComputeLicenseProfileResource"/> object. </returns>
         public virtual HybridComputeLicenseProfileResource GetHybridComputeLicenseProfileResource(ResourceIdentifier id)
@@ -70,10 +57,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return new HybridComputeLicenseProfileResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HybridComputeMachineExtensionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridComputeMachineExtensionResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeMachineExtensionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HybridComputeMachineExtensionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HybridComputeMachineExtensionResource"/> object. </returns>
         public virtual HybridComputeMachineExtensionResource GetHybridComputeMachineExtensionResource(ResourceIdentifier id)
@@ -82,22 +66,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return new HybridComputeMachineExtensionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HybridComputeExtensionValueResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridComputeExtensionValueResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeExtensionValueResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridComputeExtensionValueResource"/> object. </returns>
-        public virtual HybridComputeExtensionValueResource GetHybridComputeExtensionValueResource(ResourceIdentifier id)
-        {
-            HybridComputeExtensionValueResource.ValidateResourceId(id);
-            return new HybridComputeExtensionValueResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MachineRunCommandResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineRunCommandResource.CreateResourceIdentifier" /> to create a <see cref="MachineRunCommandResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="MachineRunCommandResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MachineRunCommandResource"/> object. </returns>
         public virtual MachineRunCommandResource GetMachineRunCommandResource(ResourceIdentifier id)
@@ -106,10 +75,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return new MachineRunCommandResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="ArcGatewayResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArcGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ArcGatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ArcGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ArcGatewayResource"/> object. </returns>
         public virtual ArcGatewayResource GetArcGatewayResource(ResourceIdentifier id)
@@ -118,22 +84,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return new ArcGatewayResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HybridComputePrivateLinkScopeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridComputePrivateLinkScopeResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputePrivateLinkScopeResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridComputePrivateLinkScopeResource"/> object. </returns>
-        public virtual HybridComputePrivateLinkScopeResource GetHybridComputePrivateLinkScopeResource(ResourceIdentifier id)
-        {
-            HybridComputePrivateLinkScopeResource.ValidateResourceId(id);
-            return new HybridComputePrivateLinkScopeResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="HybridComputePrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridComputePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputePrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HybridComputePrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HybridComputePrivateLinkResource"/> object. </returns>
         public virtual HybridComputePrivateLinkResource GetHybridComputePrivateLinkResource(ResourceIdentifier id)
@@ -142,10 +93,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return new HybridComputePrivateLinkResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HybridComputePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridComputePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputePrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HybridComputePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HybridComputePrivateEndpointConnectionResource"/> object. </returns>
         public virtual HybridComputePrivateEndpointConnectionResource GetHybridComputePrivateEndpointConnectionResource(ResourceIdentifier id)
@@ -154,16 +102,85 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return new HybridComputePrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
         public virtual NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
         {
             NetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
             return new NetworkSecurityPerimeterConfigurationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HybridComputePrivateLinkScopeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HybridComputePrivateLinkScopeResource"/> object. </returns>
+        public virtual HybridComputePrivateLinkScopeResource GetHybridComputePrivateLinkScopeResource(ResourceIdentifier id)
+        {
+            HybridComputePrivateLinkScopeResource.ValidateResourceId(id);
+            return new HybridComputePrivateLinkScopeResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HybridComputeExtensionValueResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HybridComputeExtensionValueResource"/> object. </returns>
+        public virtual HybridComputeExtensionValueResource GetHybridComputeExtensionValueResource(ResourceIdentifier id)
+        {
+            HybridComputeExtensionValueResource.ValidateResourceId(id);
+            return new HybridComputeExtensionValueResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ExtensionValueV2Resource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExtensionValueV2Resource"/> object. </returns>
+        public virtual ExtensionValueV2Resource GetExtensionValueV2Resource(ResourceIdentifier id)
+        {
+            ExtensionValueV2Resource.ValidateResourceId(id);
+            return new ExtensionValueV2Resource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ArcSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ArcSettingsResource"/> object. </returns>
+        public virtual ArcSettingsResource GetArcSettingsResource(ResourceIdentifier id)
+        {
+            ArcSettingsResource.ValidateResourceId(id);
+            return new ArcSettingsResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ArcSettingsCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ArcSettingsResource"/> objects. </returns>
+        public virtual ArcSettingsCollection GetAllArcSettings(ResourceIdentifier scope)
+        {
+            return new ArcSettingsCollection(Client, scope);
+        }
+
+        /// <summary> Returns the base Settings for the target resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="settingsResourceName"> The name of the settings resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ArcSettingsResource> GetArcSettings(ResourceIdentifier scope, string settingsResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
+
+            return GetAllArcSettings(scope).Get(settingsResourceName, cancellationToken);
+        }
+
+        /// <summary> Returns the base Settings for the target resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="settingsResourceName"> The name of the settings resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ArcSettingsResource>> GetArcSettingsAsync(ResourceIdentifier scope, string settingsResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
+
+            return await GetAllArcSettings(scope).GetAsync(settingsResourceName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

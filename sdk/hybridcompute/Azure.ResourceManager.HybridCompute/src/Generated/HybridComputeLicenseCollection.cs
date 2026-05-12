@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridCompute
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.HybridCompute
     /// </summary>
     public partial class HybridComputeLicenseCollection : ArmCollection, IEnumerable<HybridComputeLicenseResource>, IAsyncEnumerable<HybridComputeLicenseResource>
     {
-        private readonly ClientDiagnostics _hybridComputeLicenseLicensesClientDiagnostics;
-        private readonly LicensesRestOperations _hybridComputeLicenseLicensesRestClient;
+        private readonly ClientDiagnostics _licensesClientDiagnostics;
+        private readonly Licenses _licensesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HybridComputeLicenseCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HybridComputeLicenseCollection for mocking. </summary>
         protected HybridComputeLicenseCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HybridComputeLicenseCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HybridComputeLicenseCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hybridComputeLicenseLicensesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeLicenseResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HybridComputeLicenseResource.ResourceType, out string hybridComputeLicenseLicensesApiVersion);
-            _hybridComputeLicenseLicensesRestClient = new LicensesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeLicenseLicensesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(HybridComputeLicenseResource.ResourceType, out string hybridComputeLicenseApiVersion);
+            _licensesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeLicenseResource.ResourceType.Namespace, Diagnostics);
+            _licensesRestClient = new Licenses(_licensesClientDiagnostics, Pipeline, Endpoint, hybridComputeLicenseApiVersion ?? "2025-09-16-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// The operation to create or update a license.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Licenses_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Licenses_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeLicenseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="licenseName"> The name of the license. </param>
         /// <param name="data"> Parameters supplied to the Create license operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="licenseName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<HybridComputeLicenseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string licenseName, HybridComputeLicenseData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(licenseName, nameof(licenseName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hybridComputeLicenseLicensesClientDiagnostics.CreateScope("HybridComputeLicenseCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _licensesClientDiagnostics.CreateScope("HybridComputeLicenseCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hybridComputeLicenseLicensesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, licenseName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridComputeArmOperation<HybridComputeLicenseResource>(new HybridComputeLicenseOperationSource(Client), _hybridComputeLicenseLicensesClientDiagnostics, Pipeline, _hybridComputeLicenseLicensesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, licenseName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _licensesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, licenseName, HybridComputeLicenseData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridComputeArmOperation<HybridComputeLicenseResource> operation = new HybridComputeArmOperation<HybridComputeLicenseResource>(
+                    new HybridComputeLicenseOperationSource(Client),
+                    _licensesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.HybridCompute
         /// The operation to create or update a license.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Licenses_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Licenses_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeLicenseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="licenseName"> The name of the license. </param>
         /// <param name="data"> Parameters supplied to the Create license operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="licenseName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<HybridComputeLicenseResource> CreateOrUpdate(WaitUntil waitUntil, string licenseName, HybridComputeLicenseData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(licenseName, nameof(licenseName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hybridComputeLicenseLicensesClientDiagnostics.CreateScope("HybridComputeLicenseCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _licensesClientDiagnostics.CreateScope("HybridComputeLicenseCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hybridComputeLicenseLicensesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, licenseName, data, cancellationToken);
-                var operation = new HybridComputeArmOperation<HybridComputeLicenseResource>(new HybridComputeLicenseOperationSource(Client), _hybridComputeLicenseLicensesClientDiagnostics, Pipeline, _hybridComputeLicenseLicensesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, licenseName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _licensesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, licenseName, HybridComputeLicenseData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridComputeArmOperation<HybridComputeLicenseResource> operation = new HybridComputeArmOperation<HybridComputeLicenseResource>(
+                    new HybridComputeLicenseOperationSource(Client),
+                    _licensesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.HybridCompute
         /// Retrieves information about the view of a license.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Licenses_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Licenses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeLicenseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="licenseName"> The name of the license. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="licenseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<HybridComputeLicenseResource>> GetAsync(string licenseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(licenseName, nameof(licenseName));
 
-            using var scope = _hybridComputeLicenseLicensesClientDiagnostics.CreateScope("HybridComputeLicenseCollection.Get");
+            using DiagnosticScope scope = _licensesClientDiagnostics.CreateScope("HybridComputeLicenseCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hybridComputeLicenseLicensesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, licenseName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _licensesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, licenseName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HybridComputeLicenseData> response = Response.FromValue(HybridComputeLicenseData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HybridComputeLicenseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.HybridCompute
         /// Retrieves information about the view of a license.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Licenses_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Licenses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeLicenseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="licenseName"> The name of the license. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="licenseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<HybridComputeLicenseResource> Get(string licenseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(licenseName, nameof(licenseName));
 
-            using var scope = _hybridComputeLicenseLicensesClientDiagnostics.CreateScope("HybridComputeLicenseCollection.Get");
+            using DiagnosticScope scope = _licensesClientDiagnostics.CreateScope("HybridComputeLicenseCollection.Get");
             scope.Start();
             try
             {
-                var response = _hybridComputeLicenseLicensesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, licenseName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _licensesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, licenseName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HybridComputeLicenseData> response = Response.FromValue(HybridComputeLicenseData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HybridComputeLicenseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.HybridCompute
         /// The operation to get all licenses of a non-Azure machine
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Licenses_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Licenses_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeLicenseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridComputeLicenseResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HybridComputeLicenseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridComputeLicenseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeLicenseLicensesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputeLicenseLicensesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputeLicenseResource(Client, HybridComputeLicenseData.DeserializeHybridComputeLicenseData(e)), _hybridComputeLicenseLicensesClientDiagnostics, Pipeline, "HybridComputeLicenseCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HybridComputeLicenseData, HybridComputeLicenseResource>(new LicensesGetByResourceGroupAsyncCollectionResultOfT(_licensesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HybridComputeLicenseCollection.GetAll"), data => new HybridComputeLicenseResource(Client, data));
         }
 
         /// <summary>
         /// The operation to get all licenses of a non-Azure machine
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Licenses_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Licenses_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeLicenseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> A collection of <see cref="HybridComputeLicenseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridComputeLicenseResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeLicenseLicensesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputeLicenseLicensesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputeLicenseResource(Client, HybridComputeLicenseData.DeserializeHybridComputeLicenseData(e)), _hybridComputeLicenseLicensesClientDiagnostics, Pipeline, "HybridComputeLicenseCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HybridComputeLicenseData, HybridComputeLicenseResource>(new LicensesGetByResourceGroupCollectionResultOfT(_licensesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HybridComputeLicenseCollection.GetAll"), data => new HybridComputeLicenseResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Licenses_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Licenses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeLicenseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="licenseName"> The name of the license. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="licenseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string licenseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(licenseName, nameof(licenseName));
 
-            using var scope = _hybridComputeLicenseLicensesClientDiagnostics.CreateScope("HybridComputeLicenseCollection.Exists");
+            using DiagnosticScope scope = _licensesClientDiagnostics.CreateScope("HybridComputeLicenseCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _hybridComputeLicenseLicensesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, licenseName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _licensesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, licenseName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HybridComputeLicenseData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HybridComputeLicenseData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HybridComputeLicenseData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.HybridCompute
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Licenses_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Licenses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeLicenseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="licenseName"> The name of the license. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="licenseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string licenseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(licenseName, nameof(licenseName));
 
-            using var scope = _hybridComputeLicenseLicensesClientDiagnostics.CreateScope("HybridComputeLicenseCollection.Exists");
+            using DiagnosticScope scope = _licensesClientDiagnostics.CreateScope("HybridComputeLicenseCollection.Exists");
             scope.Start();
             try
             {
-                var response = _hybridComputeLicenseLicensesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, licenseName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _licensesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, licenseName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HybridComputeLicenseData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HybridComputeLicenseData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HybridComputeLicenseData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.HybridCompute
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Licenses_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Licenses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeLicenseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="licenseName"> The name of the license. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="licenseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<HybridComputeLicenseResource>> GetIfExistsAsync(string licenseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(licenseName, nameof(licenseName));
 
-            using var scope = _hybridComputeLicenseLicensesClientDiagnostics.CreateScope("HybridComputeLicenseCollection.GetIfExists");
+            using DiagnosticScope scope = _licensesClientDiagnostics.CreateScope("HybridComputeLicenseCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _hybridComputeLicenseLicensesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, licenseName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _licensesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, licenseName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HybridComputeLicenseData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HybridComputeLicenseData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HybridComputeLicenseData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HybridComputeLicenseResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HybridComputeLicenseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.HybridCompute
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Licenses_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Licenses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeLicenseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="licenseName"> The name of the license. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="licenseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<HybridComputeLicenseResource> GetIfExists(string licenseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(licenseName, nameof(licenseName));
 
-            using var scope = _hybridComputeLicenseLicensesClientDiagnostics.CreateScope("HybridComputeLicenseCollection.GetIfExists");
+            using DiagnosticScope scope = _licensesClientDiagnostics.CreateScope("HybridComputeLicenseCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _hybridComputeLicenseLicensesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, licenseName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _licensesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, licenseName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HybridComputeLicenseData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HybridComputeLicenseData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HybridComputeLicenseData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HybridComputeLicenseResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HybridComputeLicenseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.HybridCompute
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HybridComputeLicenseResource> IAsyncEnumerable<HybridComputeLicenseResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

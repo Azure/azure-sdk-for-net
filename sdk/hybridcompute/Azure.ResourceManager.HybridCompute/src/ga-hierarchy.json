@@ -1,0 +1,328 @@
+[
+  {
+    "Name": "HybridComputeExtensionValueResource",
+    "FullName": "Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueResource",
+    "ResourceType": "Microsoft.HybridCompute/locations/publishers/extensionTypes/versions",
+    "ResourceId": null,
+    "DataType": "HybridComputeExtensionValueData",
+    "IsTrackedResource": false,
+    "IsSingleton": false,
+    "IsObsolete": false,
+    "ObsoleteMessage": null,
+    "IsEditorBrowsableNever": false,
+    "CollectionType": "HybridComputeExtensionValueCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableHybridComputeSubscriptionResource"
+    ],
+    "Scopes": [
+      "Subscription"
+    ]
+  },
+  {
+    "Name": "HybridComputeLicenseProfileResource",
+    "FullName": "Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileResource",
+    "ResourceType": "Microsoft.HybridCompute/machines/licenseProfiles",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/licenseProfiles/default",
+    "DataType": "HybridComputeLicenseProfileData",
+    "IsTrackedResource": true,
+    "IsSingleton": true,
+    "IsObsolete": false,
+    "ObsoleteMessage": null,
+    "IsEditorBrowsableNever": false,
+    "CollectionType": null,
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "HybridComputeMachineResource"
+    ],
+    "Scopes": [
+      "ResourceGroup"
+    ]
+  },
+  {
+    "Name": "HybridComputeLicenseResource",
+    "FullName": "Azure.ResourceManager.HybridCompute.HybridComputeLicenseResource",
+    "ResourceType": "Microsoft.HybridCompute/licenses",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}",
+    "DataType": "HybridComputeLicenseData",
+    "IsTrackedResource": true,
+    "IsSingleton": false,
+    "IsObsolete": false,
+    "ObsoleteMessage": null,
+    "IsEditorBrowsableNever": false,
+    "CollectionType": "HybridComputeLicenseCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableHybridComputeResourceGroupResource"
+    ],
+    "Scopes": [
+      "ResourceGroup"
+    ]
+  },
+  {
+    "Name": "HybridComputeMachineExtensionResource",
+    "FullName": "Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionResource",
+    "ResourceType": "Microsoft.HybridCompute/machines/extensions",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}",
+    "DataType": "HybridComputeMachineExtensionData",
+    "IsTrackedResource": true,
+    "IsSingleton": false,
+    "IsObsolete": false,
+    "ObsoleteMessage": null,
+    "IsEditorBrowsableNever": false,
+    "CollectionType": "HybridComputeMachineExtensionCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "HybridComputeMachineResource"
+    ],
+    "Scopes": [
+      "ResourceGroup"
+    ]
+  },
+  {
+    "Name": "HybridComputeMachineResource",
+    "FullName": "Azure.ResourceManager.HybridCompute.HybridComputeMachineResource",
+    "ResourceType": "Microsoft.HybridCompute/machines",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}",
+    "DataType": "HybridComputeMachineData",
+    "IsTrackedResource": true,
+    "IsSingleton": false,
+    "IsObsolete": false,
+    "ObsoleteMessage": null,
+    "IsEditorBrowsableNever": false,
+    "CollectionType": "HybridComputeMachineCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetHybridComputeMachineExtensions",
+        "ReturnType": "HybridComputeMachineExtensionCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [
+      {
+        "MethodName": "GetHybridComputeLicenseProfile",
+        "ReturnType": "HybridComputeLicenseProfileResource",
+        "ParameterCount": 0
+      }
+    ],
+    "ParentResources": [
+      "MockableHybridComputeResourceGroupResource"
+    ],
+    "Scopes": [
+      "ResourceGroup"
+    ]
+  },
+  {
+    "Name": "HybridComputePrivateEndpointConnectionResource",
+    "FullName": "Azure.ResourceManager.HybridCompute.HybridComputePrivateEndpointConnectionResource",
+    "ResourceType": "Microsoft.HybridCompute/privateLinkScopes/privateEndpointConnections",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}/privateEndpointConnections/{privateEndpointConnectionName}",
+    "DataType": "HybridComputePrivateEndpointConnectionData",
+    "IsTrackedResource": false,
+    "IsSingleton": false,
+    "IsObsolete": false,
+    "ObsoleteMessage": null,
+    "IsEditorBrowsableNever": false,
+    "CollectionType": "HybridComputePrivateEndpointConnectionCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "HybridComputePrivateLinkScopeResource"
+    ],
+    "Scopes": [
+      "ResourceGroup"
+    ]
+  },
+  {
+    "Name": "HybridComputePrivateLinkResource",
+    "FullName": "Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResource",
+    "ResourceType": "Microsoft.HybridCompute/privateLinkScopes/privateLinkResources",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}/privateLinkResources/{groupName}",
+    "DataType": "HybridComputePrivateLinkResourceData",
+    "IsTrackedResource": false,
+    "IsSingleton": true,
+    "IsObsolete": false,
+    "ObsoleteMessage": null,
+    "IsEditorBrowsableNever": false,
+    "CollectionType": null,
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [],
+    "Scopes": []
+  },
+  {
+    "Name": "HybridComputePrivateLinkScopeResource",
+    "FullName": "Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource",
+    "ResourceType": "Microsoft.HybridCompute/privateLinkScopes",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}",
+    "DataType": "HybridComputePrivateLinkScopeData",
+    "IsTrackedResource": true,
+    "IsSingleton": false,
+    "IsObsolete": false,
+    "ObsoleteMessage": null,
+    "IsEditorBrowsableNever": false,
+    "CollectionType": "HybridComputePrivateLinkScopeCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetHybridComputePrivateLinkResources",
+        "ReturnType": "HybridComputePrivateLinkResourceCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetHybridComputePrivateEndpointConnections",
+        "ReturnType": "HybridComputePrivateEndpointConnectionCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetNetworkSecurityPerimeterConfigurations",
+        "ReturnType": "NetworkSecurityPerimeterConfigurationCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableHybridComputeResourceGroupResource"
+    ],
+    "Scopes": [
+      "ResourceGroup"
+    ]
+  },
+  {
+    "Name": "MockableHybridComputeArmClient",
+    "FullName": "Azure.ResourceManager.HybridCompute.Mocking.MockableHybridComputeArmClient",
+    "ResourceType": null,
+    "ResourceId": null,
+    "DataType": null,
+    "IsTrackedResource": false,
+    "IsSingleton": true,
+    "IsObsolete": false,
+    "ObsoleteMessage": null,
+    "IsEditorBrowsableNever": false,
+    "CollectionType": null,
+    "ChildCollections": [],
+    "ChildResources": [
+      {
+        "MethodName": "GetHybridComputeLicenseResource",
+        "ReturnType": "HybridComputeLicenseResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetHybridComputeMachineResource",
+        "ReturnType": "HybridComputeMachineResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetHybridComputeLicenseProfileResource",
+        "ReturnType": "HybridComputeLicenseProfileResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetHybridComputeMachineExtensionResource",
+        "ReturnType": "HybridComputeMachineExtensionResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetHybridComputeExtensionValueResource",
+        "ReturnType": "HybridComputeExtensionValueResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetHybridComputePrivateLinkScopeResource",
+        "ReturnType": "HybridComputePrivateLinkScopeResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetHybridComputePrivateLinkResource",
+        "ReturnType": "HybridComputePrivateLinkResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetHybridComputePrivateEndpointConnectionResource",
+        "ReturnType": "HybridComputePrivateEndpointConnectionResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetNetworkSecurityPerimeterConfigurationResource",
+        "ReturnType": "NetworkSecurityPerimeterConfigurationResource",
+        "ParameterCount": 1
+      }
+    ],
+    "ParentResources": [],
+    "Scopes": []
+  },
+  {
+    "Name": "MockableHybridComputeResourceGroupResource",
+    "FullName": "Azure.ResourceManager.HybridCompute.Mocking.MockableHybridComputeResourceGroupResource",
+    "ResourceType": null,
+    "ResourceId": null,
+    "DataType": null,
+    "IsTrackedResource": false,
+    "IsSingleton": true,
+    "IsObsolete": false,
+    "ObsoleteMessage": null,
+    "IsEditorBrowsableNever": false,
+    "CollectionType": null,
+    "ChildCollections": [
+      {
+        "MethodName": "GetHybridComputeLicenses",
+        "ReturnType": "HybridComputeLicenseCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetHybridComputeMachines",
+        "ReturnType": "HybridComputeMachineCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetHybridComputePrivateLinkScopes",
+        "ReturnType": "HybridComputePrivateLinkScopeCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [],
+    "Scopes": []
+  },
+  {
+    "Name": "MockableHybridComputeSubscriptionResource",
+    "FullName": "Azure.ResourceManager.HybridCompute.Mocking.MockableHybridComputeSubscriptionResource",
+    "ResourceType": null,
+    "ResourceId": null,
+    "DataType": null,
+    "IsTrackedResource": false,
+    "IsSingleton": true,
+    "IsObsolete": false,
+    "ObsoleteMessage": null,
+    "IsEditorBrowsableNever": false,
+    "CollectionType": null,
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [],
+    "Scopes": []
+  },
+  {
+    "Name": "NetworkSecurityPerimeterConfigurationResource",
+    "FullName": "Azure.ResourceManager.HybridCompute.NetworkSecurityPerimeterConfigurationResource",
+    "ResourceType": "Microsoft.HybridCompute/privateLinkScopes/networkSecurityPerimeterConfigurations",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}/networkSecurityPerimeterConfigurations/{perimeterName}",
+    "DataType": "NetworkSecurityPerimeterConfigurationData",
+    "IsTrackedResource": false,
+    "IsSingleton": false,
+    "IsObsolete": false,
+    "ObsoleteMessage": null,
+    "IsEditorBrowsableNever": false,
+    "CollectionType": "NetworkSecurityPerimeterConfigurationCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "HybridComputePrivateLinkScopeResource"
+    ],
+    "Scopes": [
+      "ResourceGroup"
+    ]
+  }
+]

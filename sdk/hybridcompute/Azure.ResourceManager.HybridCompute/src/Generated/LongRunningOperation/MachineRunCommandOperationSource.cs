@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    internal class MachineRunCommandOperationSource : IOperationSource<MachineRunCommandResource>
+    /// <summary></summary>
+    internal partial class MachineRunCommandOperationSource : IOperationSource<MachineRunCommandResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal MachineRunCommandOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         MachineRunCommandResource IOperationSource<MachineRunCommandResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MachineRunCommandData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            MachineRunCommandData data = MachineRunCommandData.DeserializeMachineRunCommandData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new MachineRunCommandResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<MachineRunCommandResource> IOperationSource<MachineRunCommandResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MachineRunCommandData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
-            return await Task.FromResult(new MachineRunCommandResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            MachineRunCommandData data = MachineRunCommandData.DeserializeMachineRunCommandData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new MachineRunCommandResource(_client, data);
         }
     }
 }

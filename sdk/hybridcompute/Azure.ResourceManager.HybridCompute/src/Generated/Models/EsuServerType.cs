@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct EsuServerType : IEquatable<EsuServerType>
     {
         private readonly string _value;
+        /// <summary> Standard. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> Datacenter. </summary>
+        private const string DatacenterValue = "Datacenter";
 
         /// <summary> Initializes a new instance of <see cref="EsuServerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EsuServerType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardValue = "Standard";
-        private const string DataCenterValue = "Datacenter";
+            _value = value;
+        }
 
         /// <summary> Standard. </summary>
         public static EsuServerType Standard { get; } = new EsuServerType(StandardValue);
+
         /// <summary> Datacenter. </summary>
-        public static EsuServerType DataCenter { get; } = new EsuServerType(DataCenterValue);
+        public static EsuServerType Datacenter { get; } = new EsuServerType(DatacenterValue);
+
         /// <summary> Determines if two <see cref="EsuServerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EsuServerType left, EsuServerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EsuServerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EsuServerType left, EsuServerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EsuServerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EsuServerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EsuServerType(string value) => new EsuServerType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EsuServerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EsuServerType?(string value) => value == null ? null : new EsuServerType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EsuServerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EsuServerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

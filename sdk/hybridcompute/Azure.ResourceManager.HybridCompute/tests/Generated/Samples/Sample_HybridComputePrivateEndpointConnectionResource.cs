@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             {
                 Properties = new HybridComputePrivateEndpointConnectionProperties
                 {
-                    ConnectionState = new HybridComputePrivateLinkServiceConnectionStateProperty("Approved", "Approved by johndoe@contoso.com"),
+                    PrivateLinkServiceConnectionState = new HybridComputePrivateLinkServiceConnectionStateProperty("Approved", "Approved by johndoe@contoso.com"),
                 },
             };
             ArmOperation<HybridComputePrivateEndpointConnectionResource> lro = await hybridComputePrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);

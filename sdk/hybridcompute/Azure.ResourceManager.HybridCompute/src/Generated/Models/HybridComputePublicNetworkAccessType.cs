@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,41 +15,57 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct HybridComputePublicNetworkAccessType : IEquatable<HybridComputePublicNetworkAccessType>
     {
         private readonly string _value;
+        /// <summary> Allows Azure Arc agents to communicate with Azure Arc services over both public (internet) and private endpoints. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Does not allow Azure Arc agents to communicate with Azure Arc services over public (internet) endpoints. The agents must use the private link. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="HybridComputePublicNetworkAccessType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridComputePublicNetworkAccessType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
+            _value = value;
+        }
 
         /// <summary> Allows Azure Arc agents to communicate with Azure Arc services over both public (internet) and private endpoints. </summary>
         public static HybridComputePublicNetworkAccessType Enabled { get; } = new HybridComputePublicNetworkAccessType(EnabledValue);
+
         /// <summary> Does not allow Azure Arc agents to communicate with Azure Arc services over public (internet) endpoints. The agents must use the private link. </summary>
         public static HybridComputePublicNetworkAccessType Disabled { get; } = new HybridComputePublicNetworkAccessType(DisabledValue);
-        /// <summary> Azure Arc agent communication with Azure Arc services over public (internet) is enforced by Network Security Perimeter (NSP). </summary>
-        public static HybridComputePublicNetworkAccessType SecuredByPerimeter { get; } = new HybridComputePublicNetworkAccessType(SecuredByPerimeterValue);
+
         /// <summary> Determines if two <see cref="HybridComputePublicNetworkAccessType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridComputePublicNetworkAccessType left, HybridComputePublicNetworkAccessType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridComputePublicNetworkAccessType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridComputePublicNetworkAccessType left, HybridComputePublicNetworkAccessType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridComputePublicNetworkAccessType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridComputePublicNetworkAccessType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridComputePublicNetworkAccessType(string value) => new HybridComputePublicNetworkAccessType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridComputePublicNetworkAccessType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridComputePublicNetworkAccessType?(string value) => value == null ? null : new HybridComputePublicNetworkAccessType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridComputePublicNetworkAccessType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridComputePublicNetworkAccessType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

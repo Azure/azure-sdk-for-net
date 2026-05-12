@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HybridCompute
 {
+    /// <summary></summary>
     public partial class MachineRunCommandResource : IJsonModel<MachineRunCommandData>
     {
-        private static MachineRunCommandData s_dataDeserializationInstance;
-        private static MachineRunCommandData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MachineRunCommandData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MachineRunCommandData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MachineRunCommandData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineRunCommandData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineRunCommandData>)Data).Write(writer, options);
 
-        MachineRunCommandData IJsonModel<MachineRunCommandData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineRunCommandData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineRunCommandData IJsonModel<MachineRunCommandData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MachineRunCommandData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineRunCommandData>(Data, options, AzureResourceManagerHybridComputeContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MachineRunCommandData IPersistableModel<MachineRunCommandData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineRunCommandData>(data, options, AzureResourceManagerHybridComputeContext.Default);
 
-        string IPersistableModel<MachineRunCommandData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineRunCommandData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineRunCommandData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

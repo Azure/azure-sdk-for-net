@@ -1,18 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Xml;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.TestFramework;
-using NUnit.Framework;
-using System.Threading.Tasks;
-using System;
 using Azure.Identity;
 using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Models;
-using System.Collections.Generic;
-using System.Xml;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridCompute.Tests
 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         {
             HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
 
-            MachineInstallPatchesContent content = new MachineInstallPatchesContent(XmlConvert.ToTimeSpan("PT4H"), VmGuestPatchRebootSetting.IfRequired)
+            MachineInstallPatchesParameters content = new MachineInstallPatchesParameters(XmlConvert.ToTimeSpan("PT4H"), VmGuestPatchRebootSetting.IfRequired)
             {
                 WindowsParameters = new HybridComputeWindowsParameters()
                 {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
                 Properties = new MachineExtensionProperties()
                 {
                     Publisher = "Microsoft.Azure.NetworkWatcher",
-                    MachineExtensionPropertiesType = "NetworkWatcherAgentWindows",
+                    Type = "NetworkWatcherAgentWindows",
                     TypeHandlerVersion = "1.4.2798.3",
                     Settings =
                     {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             HybridComputeMachineExtensionPatch patch = new HybridComputeMachineExtensionPatch()
             {
                 Publisher = "Microsoft.Azure.NetworkWatcher",
-                MachineExtensionUpdatePropertiesType = "NetworkWatcherAgentWindows",
+                Type = "NetworkWatcherAgentWindows",
                 TypeHandlerVersion = "1.4.2798.3",
                 EnableAutomaticUpgrade = true,
                 Settings =
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             {
                 Properties = new HybridComputePrivateEndpointConnectionProperties()
                 {
-                    ConnectionState = new HybridComputePrivateLinkServiceConnectionStateProperty("Approved", "Approved by johndoe@contoso.com"),
+                    PrivateLinkServiceConnectionState = new HybridComputePrivateLinkServiceConnectionStateProperty("Approved", "Approved by johndoe@contoso.com"),
                 },
             };
             ArmOperation<HybridComputePrivateEndpointConnectionResource> lro = await hybridComputePrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
@@ -432,10 +432,10 @@ namespace Azure.ResourceManager.HybridCompute.Tests
                 LicenseType = "ESU",
                 LicenseDetails = new HybridComputeLicenseDetails()
                 {
-                    State = "Activated",
-                    Target = "Windows Server 2012",
-                    Edition = "Datacenter",
-                    LicenseCoreType = "pCore",
+                    State = HybridComputeLicenseState.Activated,
+                    Target = HybridComputeLicenseTarget.WindowsServer2012,
+                    Edition = HybridComputeLicenseEdition.DataCenter,
+                    LicenseCoreType = LicenseCoreType.PCore,
                     Processors = 16,
                 },
             };
@@ -471,19 +471,16 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             ResourceIdentifier hybridComputeLicenseResourceId = HybridComputeLicenseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, esuLicenseName);
             HybridComputeLicenseResource hybridComputeLicense = ArmClient.GetHybridComputeLicenseResource(hybridComputeLicenseResourceId);
 
-            HybridComputeLicenseData data = new HybridComputeLicenseData(new AzureLocation("eastus"))
+            HybridComputeLicensePatch patch = new HybridComputeLicensePatch()
             {
-                LicenseType = "ESU",
-                LicenseDetails = new HybridComputeLicenseDetails()
-                {
-                    State = "Deactivated",
-                    Target = "Windows Server 2012",
-                    Edition = "Datacenter",
-                    LicenseCoreType = "pCore",
-                    Processors = 16,
-                },
+                LicenseType = HybridComputeLicenseType.Esu,
+                State = HybridComputeLicenseState.Deactivated,
+                Target = HybridComputeLicenseTarget.WindowsServer2012,
+                Edition = HybridComputeLicenseEdition.DataCenter,
+                Type = LicenseCoreType.PCore,
+                Processors = 16,
             };
-            ArmOperation<HybridComputeLicenseResource> lro = await hybridComputeLicense.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<HybridComputeLicenseResource> lro = await hybridComputeLicense.UpdateAsync(WaitUntil.Completed, patch);
             HybridComputeLicenseResource result = lro.Value;
 
             return result.Data;
@@ -491,7 +488,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
 
         protected async Task<HybridComputeLicenseProfileData> createLicenseProfile()
         {
-            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupNameProfile, machineNamePaygo);
+            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupNameProfile, machineNamePaygo, "default");
             HybridComputeLicenseProfileResource hybridComputeLicenseProfile = ArmClient.GetHybridComputeLicenseProfileResource(hybridComputeLicenseProfileResourceId);
 
             // invoke the operation
@@ -516,7 +513,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
 
         protected async Task<HybridComputeLicenseProfileData> getLicenseProfile()
         {
-            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupNameProfile, machineNamePaygo);
+            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupNameProfile, machineNamePaygo, "default");
             HybridComputeLicenseProfileResource hybridComputeLicenseProfile = ArmClient.GetHybridComputeLicenseProfileResource(hybridComputeLicenseProfileResourceId);
 
             HybridComputeLicenseProfileResource result = await hybridComputeLicenseProfile.GetAsync();
@@ -526,7 +523,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
 
         protected async Task<HybridComputeLicenseProfileData> updateLicenseProfile()
         {
-            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupNameProfile, machineNamePaygo);
+            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupNameProfile, machineNamePaygo, "default");
             HybridComputeLicenseProfileResource hybridComputeLicenseProfile = ArmClient.GetHybridComputeLicenseProfileResource(hybridComputeLicenseProfileResourceId);
 
             HybridComputeLicenseProfilePatch patch = new HybridComputeLicenseProfilePatch()
@@ -589,7 +586,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
 
         protected async Task deleteLicenseProfile()
         {
-            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupNameProfile, machineNamePaygo);
+            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupNameProfile, machineNamePaygo, "default");
             HybridComputeLicenseProfileResource hybridComputeLicenseProfile = ArmClient.GetHybridComputeLicenseProfileResource(hybridComputeLicenseProfileResourceId);
 
             await hybridComputeLicenseProfile.DeleteAsync(WaitUntil.Completed);

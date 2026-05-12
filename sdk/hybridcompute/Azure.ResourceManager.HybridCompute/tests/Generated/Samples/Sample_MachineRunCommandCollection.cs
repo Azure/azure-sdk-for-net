@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.HybridCompute.Samples
                 RunAsUser = "user1",
                 RunAsPassword = "<runAsPassword>",
                 TimeoutInSeconds = 3600,
-                OutputBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/myscriptoutputcontainer/MyScriptoutput.txt"),
-                ErrorBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/mycontainer/MyScriptError.txt"),
+                OutputBlobUri = "https://mystorageaccount.blob.core.windows.net/myscriptoutputcontainer/MyScriptoutput.txt",
+                ErrorBlobUri = "https://mystorageaccount.blob.core.windows.net/mycontainer/MyScriptError.txt",
             };
             ArmOperation<MachineRunCommandResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, runCommandName, data);
             MachineRunCommandResource result = lro.Value;

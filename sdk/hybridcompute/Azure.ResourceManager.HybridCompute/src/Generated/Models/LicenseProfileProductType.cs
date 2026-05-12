@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct LicenseProfileProductType : IEquatable<LicenseProfileProductType>
     {
         private readonly string _value;
+        /// <summary> WindowsServer. </summary>
+        private const string WindowsServerValue = "WindowsServer";
+        /// <summary> WindowsIoTEnterprise. </summary>
+        private const string WindowsIoTEnterpriseValue = "WindowsIoTEnterprise";
 
         /// <summary> Initializes a new instance of <see cref="LicenseProfileProductType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LicenseProfileProductType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WindowsServerValue = "WindowsServer";
-        private const string WindowsIotEnterpriseValue = "WindowsIoTEnterprise";
+            _value = value;
+        }
 
         /// <summary> WindowsServer. </summary>
         public static LicenseProfileProductType WindowsServer { get; } = new LicenseProfileProductType(WindowsServerValue);
+
         /// <summary> WindowsIoTEnterprise. </summary>
-        public static LicenseProfileProductType WindowsIotEnterprise { get; } = new LicenseProfileProductType(WindowsIotEnterpriseValue);
+        public static LicenseProfileProductType WindowsIoTEnterprise { get; } = new LicenseProfileProductType(WindowsIoTEnterpriseValue);
+
         /// <summary> Determines if two <see cref="LicenseProfileProductType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LicenseProfileProductType left, LicenseProfileProductType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LicenseProfileProductType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LicenseProfileProductType left, LicenseProfileProductType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LicenseProfileProductType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LicenseProfileProductType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LicenseProfileProductType(string value) => new LicenseProfileProductType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LicenseProfileProductType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LicenseProfileProductType?(string value) => value == null ? null : new LicenseProfileProductType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LicenseProfileProductType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LicenseProfileProductType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

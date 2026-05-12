@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    internal class HybridComputeMachineExtensionOperationSource : IOperationSource<HybridComputeMachineExtensionResource>
+    /// <summary></summary>
+    internal partial class HybridComputeMachineExtensionOperationSource : IOperationSource<HybridComputeMachineExtensionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal HybridComputeMachineExtensionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         HybridComputeMachineExtensionResource IOperationSource<HybridComputeMachineExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HybridComputeMachineExtensionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            HybridComputeMachineExtensionData data = HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new HybridComputeMachineExtensionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<HybridComputeMachineExtensionResource> IOperationSource<HybridComputeMachineExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HybridComputeMachineExtensionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
-            return await Task.FromResult(new HybridComputeMachineExtensionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            HybridComputeMachineExtensionData data = HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HybridComputeMachineExtensionResource(_client, data);
         }
     }
 }

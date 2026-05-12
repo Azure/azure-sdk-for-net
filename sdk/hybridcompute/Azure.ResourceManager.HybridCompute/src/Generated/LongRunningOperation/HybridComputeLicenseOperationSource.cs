@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    internal class HybridComputeLicenseOperationSource : IOperationSource<HybridComputeLicenseResource>
+    /// <summary></summary>
+    internal partial class HybridComputeLicenseOperationSource : IOperationSource<HybridComputeLicenseResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal HybridComputeLicenseOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         HybridComputeLicenseResource IOperationSource<HybridComputeLicenseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HybridComputeLicenseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            HybridComputeLicenseData data = HybridComputeLicenseData.DeserializeHybridComputeLicenseData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new HybridComputeLicenseResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<HybridComputeLicenseResource> IOperationSource<HybridComputeLicenseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HybridComputeLicenseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
-            return await Task.FromResult(new HybridComputeLicenseResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            HybridComputeLicenseData data = HybridComputeLicenseData.DeserializeHybridComputeLicenseData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HybridComputeLicenseResource(_client, data);
         }
     }
 }

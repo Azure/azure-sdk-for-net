@@ -7,45 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Properties of a private endpoint connection. </summary>
     public partial class HybridComputePrivateEndpointConnectionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridComputePrivateEndpointConnectionProperties"/>. </summary>
         public HybridComputePrivateEndpointConnectionProperties()
@@ -55,42 +25,46 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Initializes a new instance of <see cref="HybridComputePrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
-        /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
+        /// <param name="privateLinkServiceConnectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
         /// <param name="groupIds"> List of group IDs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputePrivateEndpointConnectionProperties(WritableSubResource privateEndpoint, HybridComputePrivateLinkServiceConnectionStateProperty connectionState, string provisioningState, IReadOnlyList<string> groupIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HybridComputePrivateEndpointConnectionProperties(PrivateEndpointProperty privateEndpoint, HybridComputePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, string provisioningState, IReadOnlyList<string> groupIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateEndpoint = privateEndpoint;
-            ConnectionState = connectionState;
+            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
             GroupIds = groupIds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Private endpoint which the connection belongs to. </summary>
-        internal WritableSubResource PrivateEndpoint { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("privateEndpoint.id")]
-        public ResourceIdentifier PrivateEndpointId
+        internal PrivateEndpointProperty PrivateEndpoint { get; set; }
+
+        /// <summary> Connection state of the private endpoint connection. </summary>
+        public HybridComputePrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; set; }
+
+        /// <summary> State of the private endpoint connection. </summary>
+        public string ProvisioningState { get; }
+
+        /// <summary> List of group IDs. </summary>
+        public IReadOnlyList<string> GroupIds { get; }
+
+        /// <summary> Resource id of the private endpoint. </summary>
+        public string PrivateEndpointId
         {
-            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            get
+            {
+                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            }
             set
             {
                 if (PrivateEndpoint is null)
-                    PrivateEndpoint = new WritableSubResource();
+                {
+                    PrivateEndpoint = new PrivateEndpointProperty();
+                }
                 PrivateEndpoint.Id = value;
             }
         }
-
-        /// <summary> Connection state of the private endpoint connection. </summary>
-        [WirePath("privateLinkServiceConnectionState")]
-        public HybridComputePrivateLinkServiceConnectionStateProperty ConnectionState { get; set; }
-        /// <summary> State of the private endpoint connection. </summary>
-        [WirePath("provisioningState")]
-        public string ProvisioningState { get; }
-        /// <summary> List of group IDs. </summary>
-        [WirePath("groupIds")]
-        public IReadOnlyList<string> GroupIds { get; }
     }
 }

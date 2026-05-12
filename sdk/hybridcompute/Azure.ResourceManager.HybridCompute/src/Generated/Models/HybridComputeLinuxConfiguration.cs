@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Specifies the linux configuration for update management. </summary>
     public partial class HybridComputeLinuxConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeLinuxConfiguration"/>. </summary>
         public HybridComputeLinuxConfiguration()
@@ -51,31 +22,75 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeLinuxConfiguration"/>. </summary>
-        /// <param name="assessmentMode"> Specifies the assessment mode. </param>
-        /// <param name="patchMode"> Specifies the patch mode. </param>
-        /// <param name="isHotpatchingEnabled"> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </param>
-        /// <param name="status"> Status of the hotpatch capability enrollment or disenrollment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeLinuxConfiguration(AssessmentModeType? assessmentMode, PatchModeType? patchMode, bool? isHotpatchingEnabled, HybridComputePatchSettingsStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="patchSettings"> Specifies the patch settings. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HybridComputeLinuxConfiguration(PatchSettings patchSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AssessmentMode = assessmentMode;
-            PatchMode = patchMode;
-            IsHotpatchingEnabled = isHotpatchingEnabled;
-            Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            PatchSettings = patchSettings;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Specifies the patch settings. </summary>
+        internal PatchSettings PatchSettings { get; set; }
+
         /// <summary> Specifies the assessment mode. </summary>
-        [WirePath("patchSettings.assessmentMode")]
-        public AssessmentModeType? AssessmentMode { get; set; }
+        public AssessmentModeType? AssessmentMode
+        {
+            get
+            {
+                return PatchSettings is null ? default : PatchSettings.AssessmentMode;
+            }
+            set
+            {
+                if (PatchSettings is null)
+                {
+                    PatchSettings = new PatchSettings();
+                }
+                PatchSettings.AssessmentMode = value;
+            }
+        }
+
         /// <summary> Specifies the patch mode. </summary>
-        [WirePath("patchSettings.patchMode")]
-        public PatchModeType? PatchMode { get; set; }
+        public PatchModeType? PatchMode
+        {
+            get
+            {
+                return PatchSettings is null ? default : PatchSettings.PatchMode;
+            }
+            set
+            {
+                if (PatchSettings is null)
+                {
+                    PatchSettings = new PatchSettings();
+                }
+                PatchSettings.PatchMode = value;
+            }
+        }
+
         /// <summary> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </summary>
-        [WirePath("patchSettings.enableHotpatching")]
-        public bool? IsHotpatchingEnabled { get; set; }
+        public bool? EnableHotpatching
+        {
+            get
+            {
+                return PatchSettings is null ? default : PatchSettings.EnableHotpatching;
+            }
+            set
+            {
+                if (PatchSettings is null)
+                {
+                    PatchSettings = new PatchSettings();
+                }
+                PatchSettings.EnableHotpatching = value;
+            }
+        }
+
         /// <summary> Status of the hotpatch capability enrollment or disenrollment. </summary>
-        [WirePath("patchSettings.status")]
-        public HybridComputePatchSettingsStatus Status { get; }
+        public HybridComputePatchSettingsStatus Status
+        {
+            get
+            {
+                return PatchSettings is null ? default : PatchSettings.Status;
+            }
+        }
     }
 }

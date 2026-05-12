@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridCompute
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.HybridCompute
     /// </summary>
     public partial class MachineRunCommandCollection : ArmCollection, IEnumerable<MachineRunCommandResource>, IAsyncEnumerable<MachineRunCommandResource>
     {
-        private readonly ClientDiagnostics _machineRunCommandClientDiagnostics;
-        private readonly MachineRunCommandsRestOperations _machineRunCommandRestClient;
+        private readonly ClientDiagnostics _machineRunCommandsClientDiagnostics;
+        private readonly MachineRunCommands _machineRunCommandsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MachineRunCommandCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MachineRunCommandCollection for mocking. </summary>
         protected MachineRunCommandCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MachineRunCommandCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineRunCommandCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineRunCommandCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _machineRunCommandClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", MachineRunCommandResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(MachineRunCommandResource.ResourceType, out string machineRunCommandApiVersion);
-            _machineRunCommandRestClient = new MachineRunCommandsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, machineRunCommandApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _machineRunCommandsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", MachineRunCommandResource.ResourceType.Namespace, Diagnostics);
+            _machineRunCommandsRestClient = new MachineRunCommands(_machineRunCommandsClientDiagnostics, Pipeline, Endpoint, machineRunCommandApiVersion ?? "2025-09-16-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != HybridComputeMachineResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HybridComputeMachineResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HybridComputeMachineResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// The operation to create or update a run command.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MachineRunCommands_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> MachineRunCommands_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineRunCommandResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="runCommandName"> The name of the run command. </param>
         /// <param name="data"> Parameters supplied to the Create Run Command. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<MachineRunCommandResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string runCommandName, MachineRunCommandData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineRunCommandClientDiagnostics.CreateScope("MachineRunCommandCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _machineRunCommandsClientDiagnostics.CreateScope("MachineRunCommandCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _machineRunCommandRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridComputeArmOperation<MachineRunCommandResource>(new MachineRunCommandOperationSource(Client), _machineRunCommandClientDiagnostics, Pipeline, _machineRunCommandRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _machineRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, MachineRunCommandData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridComputeArmOperation<MachineRunCommandResource> operation = new HybridComputeArmOperation<MachineRunCommandResource>(
+                    new MachineRunCommandOperationSource(Client),
+                    _machineRunCommandsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.HybridCompute
         /// The operation to create or update a run command.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MachineRunCommands_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> MachineRunCommands_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineRunCommandResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="runCommandName"> The name of the run command. </param>
         /// <param name="data"> Parameters supplied to the Create Run Command. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<MachineRunCommandResource> CreateOrUpdate(WaitUntil waitUntil, string runCommandName, MachineRunCommandData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineRunCommandClientDiagnostics.CreateScope("MachineRunCommandCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _machineRunCommandsClientDiagnostics.CreateScope("MachineRunCommandCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _machineRunCommandRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, data, cancellationToken);
-                var operation = new HybridComputeArmOperation<MachineRunCommandResource>(new MachineRunCommandOperationSource(Client), _machineRunCommandClientDiagnostics, Pipeline, _machineRunCommandRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _machineRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, MachineRunCommandData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridComputeArmOperation<MachineRunCommandResource> operation = new HybridComputeArmOperation<MachineRunCommandResource>(
+                    new MachineRunCommandOperationSource(Client),
+                    _machineRunCommandsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.HybridCompute
         /// The operation to get a run command.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MachineRunCommands_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MachineRunCommands_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineRunCommandResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="runCommandName"> The name of the run command. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<MachineRunCommandResource>> GetAsync(string runCommandName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            using var scope = _machineRunCommandClientDiagnostics.CreateScope("MachineRunCommandCollection.Get");
+            using DiagnosticScope scope = _machineRunCommandsClientDiagnostics.CreateScope("MachineRunCommandCollection.Get");
             scope.Start();
             try
             {
-                var response = await _machineRunCommandRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _machineRunCommandsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MachineRunCommandData> response = Response.FromValue(MachineRunCommandData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineRunCommandResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.HybridCompute
         /// The operation to get a run command.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MachineRunCommands_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MachineRunCommands_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineRunCommandResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="runCommandName"> The name of the run command. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<MachineRunCommandResource> Get(string runCommandName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            using var scope = _machineRunCommandClientDiagnostics.CreateScope("MachineRunCommandCollection.Get");
+            using DiagnosticScope scope = _machineRunCommandsClientDiagnostics.CreateScope("MachineRunCommandCollection.Get");
             scope.Start();
             try
             {
-                var response = _machineRunCommandRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _machineRunCommandsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MachineRunCommandData> response = Response.FromValue(MachineRunCommandData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineRunCommandResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,98 +272,122 @@ namespace Azure.ResourceManager.HybridCompute
         /// The operation to get all the run commands of a non-Azure machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MachineRunCommands_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> MachineRunCommands_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineRunCommandResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineRunCommandResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineRunCommandResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineRunCommandRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineRunCommandRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineRunCommandResource(Client, MachineRunCommandData.DeserializeMachineRunCommandData(e)), _machineRunCommandClientDiagnostics, Pipeline, "MachineRunCommandCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// The operation to get all the run commands of a non-Azure machine.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MachineRunCommands_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineRunCommandResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineRunCommandResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineRunCommandResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineRunCommandResource> GetAllAsync(string expand = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineRunCommandRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineRunCommandRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineRunCommandResource(Client, MachineRunCommandData.DeserializeMachineRunCommandData(e)), _machineRunCommandClientDiagnostics, Pipeline, "MachineRunCommandCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MachineRunCommandData, MachineRunCommandResource>(new MachineRunCommandsGetAllAsyncCollectionResultOfT(
+                _machineRunCommandsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                expand,
+                context,
+                "MachineRunCommandCollection.GetAll"), data => new MachineRunCommandResource(Client, data));
+        }
+
+        /// <summary>
+        /// The operation to get all the run commands of a non-Azure machine.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MachineRunCommands_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MachineRunCommandResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineRunCommandResource> GetAll(string expand = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MachineRunCommandData, MachineRunCommandResource>(new MachineRunCommandsGetAllCollectionResultOfT(
+                _machineRunCommandsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                expand,
+                context,
+                "MachineRunCommandCollection.GetAll"), data => new MachineRunCommandResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MachineRunCommands_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MachineRunCommands_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineRunCommandResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="runCommandName"> The name of the run command. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string runCommandName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            using var scope = _machineRunCommandClientDiagnostics.CreateScope("MachineRunCommandCollection.Exists");
+            using DiagnosticScope scope = _machineRunCommandsClientDiagnostics.CreateScope("MachineRunCommandCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _machineRunCommandRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _machineRunCommandsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MachineRunCommandData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineRunCommandData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineRunCommandData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -348,36 +401,50 @@ namespace Azure.ResourceManager.HybridCompute
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MachineRunCommands_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MachineRunCommands_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineRunCommandResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="runCommandName"> The name of the run command. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string runCommandName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            using var scope = _machineRunCommandClientDiagnostics.CreateScope("MachineRunCommandCollection.Exists");
+            using DiagnosticScope scope = _machineRunCommandsClientDiagnostics.CreateScope("MachineRunCommandCollection.Exists");
             scope.Start();
             try
             {
-                var response = _machineRunCommandRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _machineRunCommandsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MachineRunCommandData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineRunCommandData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineRunCommandData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,38 +458,54 @@ namespace Azure.ResourceManager.HybridCompute
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MachineRunCommands_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MachineRunCommands_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineRunCommandResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="runCommandName"> The name of the run command. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<MachineRunCommandResource>> GetIfExistsAsync(string runCommandName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            using var scope = _machineRunCommandClientDiagnostics.CreateScope("MachineRunCommandCollection.GetIfExists");
+            using DiagnosticScope scope = _machineRunCommandsClientDiagnostics.CreateScope("MachineRunCommandCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _machineRunCommandRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _machineRunCommandsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MachineRunCommandData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineRunCommandData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineRunCommandData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MachineRunCommandResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineRunCommandResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -436,38 +519,54 @@ namespace Azure.ResourceManager.HybridCompute
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MachineRunCommands_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MachineRunCommands_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineRunCommandResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="runCommandName"> The name of the run command. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<MachineRunCommandResource> GetIfExists(string runCommandName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            using var scope = _machineRunCommandClientDiagnostics.CreateScope("MachineRunCommandCollection.GetIfExists");
+            using DiagnosticScope scope = _machineRunCommandsClientDiagnostics.CreateScope("MachineRunCommandCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _machineRunCommandRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _machineRunCommandsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MachineRunCommandData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineRunCommandData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineRunCommandData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MachineRunCommandResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineRunCommandResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -487,6 +586,7 @@ namespace Azure.ResourceManager.HybridCompute
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MachineRunCommandResource> IAsyncEnumerable<MachineRunCommandResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

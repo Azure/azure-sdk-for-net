@@ -136,7 +136,6 @@ namespace Azure.ResourceManager.HybridCompute.Samples
                     {
                         AssessmentMode = AssessmentModeType.ImageDefault,
                         PatchMode = PatchModeType.AutomaticByPlatform,
-                        IsHotpatchingEnabled = true,
                     },
                     LinuxConfiguration = new HybridComputeLinuxConfiguration
                     {
@@ -204,7 +203,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             HybridComputeMachineResource hybridComputeMachine = client.GetHybridComputeMachineResource(hybridComputeMachineResourceId);
 
             // invoke the operation
-            MachineInstallPatchesContent content = new MachineInstallPatchesContent(XmlConvert.ToTimeSpan("PT4H"), VmGuestPatchRebootSetting.IfRequired)
+            MachineInstallPatchesParameters content = new MachineInstallPatchesParameters(XmlConvert.ToTimeSpan("PT4H"), VmGuestPatchRebootSetting.IfRequired)
             {
                 WindowsParameters = new HybridComputeWindowsParameters
                 {
@@ -305,7 +304,7 @@ TargetVersion = "1.10",
             HybridComputeMachineResource hybridComputeMachine = client.GetHybridComputeMachineResource(hybridComputeMachineResourceId);
 
             // invoke the operation
-            PrivateLinkScopeValidationDetails result = await hybridComputeMachine.GetValidationDetailsForMachinePrivateLinkScopeAsync();
+            PrivateLinkScopeValidationDetails result = await hybridComputeMachine.GetValidationDetailsForMachineAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

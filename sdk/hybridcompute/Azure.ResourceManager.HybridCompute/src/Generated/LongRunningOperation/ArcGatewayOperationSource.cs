@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    internal class ArcGatewayOperationSource : IOperationSource<ArcGatewayResource>
+    /// <summary></summary>
+    internal partial class ArcGatewayOperationSource : IOperationSource<ArcGatewayResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ArcGatewayOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ArcGatewayResource IOperationSource<ArcGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArcGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ArcGatewayData data = ArcGatewayData.DeserializeArcGatewayData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ArcGatewayResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ArcGatewayResource> IOperationSource<ArcGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArcGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
-            return await Task.FromResult(new ArcGatewayResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ArcGatewayData data = ArcGatewayData.DeserializeArcGatewayData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ArcGatewayResource(_client, data);
         }
     }
 }

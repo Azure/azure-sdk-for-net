@@ -7,116 +7,132 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> License Profile Instance View in Machine Properties. </summary>
     public partial class LicenseProfileMachineInstanceView
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LicenseProfileMachineInstanceView"/>. </summary>
         public LicenseProfileMachineInstanceView()
         {
-            ProductFeatures = new ChangeTrackingList<HybridComputeProductFeature>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LicenseProfileMachineInstanceView"/>. </summary>
         /// <param name="licenseStatus"> Indicates the license status of the OS. </param>
         /// <param name="licenseChannel"> Indicates the license channel. </param>
+        /// <param name="softwareAssurance"></param>
         /// <param name="esuProfile"> Properties for the Machine ESU profile. </param>
-        /// <param name="subscriptionStatus"> Indicates the subscription status of the product. </param>
-        /// <param name="productType"> Indicates the product type of the license. </param>
-        /// <param name="enrollmentOn"> The timestamp in UTC when the user enrolls the feature. </param>
-        /// <param name="billingStartOn"> The timestamp in UTC when the billing starts. </param>
-        /// <param name="disenrollmentOn"> The timestamp in UTC when the user disenrolled the feature. </param>
-        /// <param name="billingEndOn"> The timestamp in UTC when the billing ends. </param>
-        /// <param name="error"> The errors that were encountered during the feature enrollment or disenrollment. </param>
-        /// <param name="productFeatures"> The list of product features. </param>
-        /// <param name="isSoftwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LicenseProfileMachineInstanceView(HybridComputeLicenseStatus? licenseStatus, string licenseChannel, LicenseProfileMachineInstanceViewEsuProperties esuProfile, LicenseProfileSubscriptionStatus? subscriptionStatus, LicenseProfileProductType? productType, DateTimeOffset? enrollmentOn, DateTimeOffset? billingStartOn, DateTimeOffset? disenrollmentOn, DateTimeOffset? billingEndOn, ResponseError error, IList<HybridComputeProductFeature> productFeatures, bool? isSoftwareAssuranceCustomer, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="productProfile"> Hybrid Compute Product Profile properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LicenseProfileMachineInstanceView(HybridComputeLicenseStatus? licenseStatus, string licenseChannel, LicenseProfileMachineInstanceViewSoftwareAssurance softwareAssurance, LicenseProfileMachineInstanceViewEsuProperties esuProfile, LicenseProfileArmProductProfileProperties productProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LicenseStatus = licenseStatus;
             LicenseChannel = licenseChannel;
+            SoftwareAssurance = softwareAssurance;
             EsuProfile = esuProfile;
-            SubscriptionStatus = subscriptionStatus;
-            ProductType = productType;
-            EnrollmentOn = enrollmentOn;
-            BillingStartOn = billingStartOn;
-            DisenrollmentOn = disenrollmentOn;
-            BillingEndOn = billingEndOn;
-            Error = error;
-            ProductFeatures = productFeatures;
-            IsSoftwareAssuranceCustomer = isSoftwareAssuranceCustomer;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ProductProfile = productProfile;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates the license status of the OS. </summary>
-        [WirePath("licenseStatus")]
         public HybridComputeLicenseStatus? LicenseStatus { get; }
+
         /// <summary> Indicates the license channel. </summary>
-        [WirePath("licenseChannel")]
         public string LicenseChannel { get; }
+
+        /// <summary> Gets the SoftwareAssurance. </summary>
+        internal LicenseProfileMachineInstanceViewSoftwareAssurance SoftwareAssurance { get; }
+
         /// <summary> Properties for the Machine ESU profile. </summary>
-        [WirePath("esuProfile")]
         public LicenseProfileMachineInstanceViewEsuProperties EsuProfile { get; set; }
-        /// <summary> Indicates the subscription status of the product. </summary>
-        [WirePath("productProfile.subscriptionStatus")]
-        public LicenseProfileSubscriptionStatus? SubscriptionStatus { get; set; }
-        /// <summary> Indicates the product type of the license. </summary>
-        [WirePath("productProfile.productType")]
-        public LicenseProfileProductType? ProductType { get; set; }
-        /// <summary> The timestamp in UTC when the user enrolls the feature. </summary>
-        [WirePath("productProfile.enrollmentDate")]
-        public DateTimeOffset? EnrollmentOn { get; }
-        /// <summary> The timestamp in UTC when the billing starts. </summary>
-        [WirePath("productProfile.billingStartDate")]
-        public DateTimeOffset? BillingStartOn { get; }
-        /// <summary> The timestamp in UTC when the user disenrolled the feature. </summary>
-        [WirePath("productProfile.disenrollmentDate")]
-        public DateTimeOffset? DisenrollmentOn { get; }
-        /// <summary> The timestamp in UTC when the billing ends. </summary>
-        [WirePath("productProfile.billingEndDate")]
-        public DateTimeOffset? BillingEndOn { get; }
-        /// <summary> The errors that were encountered during the feature enrollment or disenrollment. </summary>
-        [WirePath("productProfile.error")]
-        public ResponseError Error { get; }
-        /// <summary> The list of product features. </summary>
-        [WirePath("productProfile.productFeatures")]
-        public IList<HybridComputeProductFeature> ProductFeatures { get; }
+
+        /// <summary> Hybrid Compute Product Profile properties. </summary>
+        internal LicenseProfileArmProductProfileProperties ProductProfile { get; }
+
         /// <summary> Specifies if this machine is licensed as part of a Software Assurance agreement. </summary>
-        [WirePath("softwareAssurance.softwareAssuranceCustomer")]
-        public bool? IsSoftwareAssuranceCustomer { get; set; }
+        public bool? SoftwareAssuranceCustomer
+        {
+            get
+            {
+                return SoftwareAssurance is null ? default : SoftwareAssurance.SoftwareAssuranceCustomer;
+            }
+        }
+
+        /// <summary> Indicates the subscription status of the product. </summary>
+        public LicenseProfileSubscriptionStatus? SubscriptionStatus
+        {
+            get
+            {
+                return ProductProfile is null ? default : ProductProfile.SubscriptionStatus;
+            }
+        }
+
+        /// <summary> Indicates the product type of the license. </summary>
+        public LicenseProfileProductType? ProductType
+        {
+            get
+            {
+                return ProductProfile is null ? default : ProductProfile.ProductType;
+            }
+        }
+
+        /// <summary> The timestamp in UTC when the user enrolls the feature. </summary>
+        public DateTimeOffset? EnrollmentOn
+        {
+            get
+            {
+                return ProductProfile is null ? default : ProductProfile.EnrollmentOn;
+            }
+        }
+
+        /// <summary> The timestamp in UTC when the billing starts. </summary>
+        public DateTimeOffset? BillingStartOn
+        {
+            get
+            {
+                return ProductProfile is null ? default : ProductProfile.BillingStartOn;
+            }
+        }
+
+        /// <summary> The timestamp in UTC when the user disenrolled the feature. </summary>
+        public DateTimeOffset? DisenrollmentOn
+        {
+            get
+            {
+                return ProductProfile is null ? default : ProductProfile.DisenrollmentOn;
+            }
+        }
+
+        /// <summary> The timestamp in UTC when the billing ends. </summary>
+        public DateTimeOffset? BillingEndOn
+        {
+            get
+            {
+                return ProductProfile is null ? default : ProductProfile.BillingEndOn;
+            }
+        }
+
+        /// <summary> The errors that were encountered during the feature enrollment or disenrollment. </summary>
+        public ResponseError Error
+        {
+            get
+            {
+                return ProductProfile is null ? default : ProductProfile.Error;
+            }
+        }
+
+        /// <summary> The list of product features. </summary>
+        public IList<HybridComputeProductFeature> ProductFeatures
+        {
+            get
+            {
+                return ProductProfile is null ? default : ProductProfile.ProductFeatures;
+            }
+        }
     }
 }
