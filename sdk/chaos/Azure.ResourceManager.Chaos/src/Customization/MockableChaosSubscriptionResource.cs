@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Mocking
@@ -91,6 +92,54 @@ namespace Azure.ResourceManager.Chaos.Mocking
         public virtual async Task<Response<ChaosTargetTypeResource>> GetChaosTargetTypeAsync(string locationName, string targetTypeName, CancellationToken cancellationToken = default)
         {
             return await GetChaosTargetTypes(locationName).GetAsync(targetTypeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the current status of an async operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/operationStatuses/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationStatuses_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location of the async operation. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Azure.Response<Azure.ResourceManager.Models.OperationStatusResult>> GetChaosOperationStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            return await GetChaosOperationStatusAsync(location.Name, operationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the current status of an async operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/operationStatuses/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationStatuses_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location of the async operation. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Azure.Response<Azure.ResourceManager.Models.OperationStatusResult> GetChaosOperationStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            return GetChaosOperationStatus(location.Name, operationId, cancellationToken);
         }
     }
 }
