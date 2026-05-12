@@ -1,11 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -126,7 +124,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.CodeInterpreterGen, "You are a personal math tutor. When asked a math question, generate the appropriate PDF, save it and return its file ID." },
         {ToolType.MCP, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
         {ToolType.MCPConnection, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
-        {ToolType.MCPConnection, "You are a helpful assistant." },
+        {ToolType.MCPToolbox, "You are a helpful assistant." },
         {ToolType.A2A, "You are a helpful assistant."},
         {ToolType.A2ASpecialConnection, "You are a helpful assistant."},
     };

@@ -1,6 +1,6 @@
 # Sample using Agents with Toolbox and a search for a tool in Azure.AI.Extensions.OpenAI.
 
-In this example we are demonstrating how to use Toolbox MCP server.
+In this example, we are demonstrating how to use Toolbox MCP server.
 
 1. First, we need to create project client and read in the environment variables that will be used in the next steps.
 ```C# Snippet:Sample_CreateAgentClient_ToolSearch
@@ -11,7 +11,7 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
 ```
 
-2. Create the toolbox, containing two tools: `CodeInterpreterTool` and `McpTool` in both cases we must convert them from `ResponseTool` to `ProjectsAgentTool` object by calling `AsAgentTool` method.
+2. Create the toolbox, containing two tools: `CodeInterpreterTool` and `McpTool`. In both cases we must convert them from `ResponseTool` to `ProjectsAgentTool` object by calling `AsAgentTool` method.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateToolbox_ToolSearch_Sync
