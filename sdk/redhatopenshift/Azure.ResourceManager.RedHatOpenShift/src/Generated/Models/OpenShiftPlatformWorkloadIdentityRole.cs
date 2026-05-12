@@ -14,40 +14,11 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
     /// <summary> PlatformWorkloadIdentityRole represents a mapping from a particular OCP operator to the built-in role that should be assigned to that operator's corresponding managed identity. </summary>
     public partial class OpenShiftPlatformWorkloadIdentityRole
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftPlatformWorkloadIdentityRole"/>. </summary>
-        public OpenShiftPlatformWorkloadIdentityRole()
+        internal OpenShiftPlatformWorkloadIdentityRole()
         {
         }
 
@@ -55,20 +26,22 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="operatorName"> OperatorName represents the name of the operator that this role is for. </param>
         /// <param name="roleDefinitionName"> RoleDefinitionName represents the name of the role. </param>
         /// <param name="roleDefinitionId"> RoleDefinitionID represents the resource ID of the role definition. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenShiftPlatformWorkloadIdentityRole(string operatorName, string roleDefinitionName, ResourceIdentifier roleDefinitionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OpenShiftPlatformWorkloadIdentityRole(string operatorName, string roleDefinitionName, ResourceIdentifier roleDefinitionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperatorName = operatorName;
             RoleDefinitionName = roleDefinitionName;
             RoleDefinitionId = roleDefinitionId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> OperatorName represents the name of the operator that this role is for. </summary>
-        public string OperatorName { get; set; }
+        public string OperatorName { get; }
+
         /// <summary> RoleDefinitionName represents the name of the role. </summary>
-        public string RoleDefinitionName { get; set; }
+        public string RoleDefinitionName { get; }
+
         /// <summary> RoleDefinitionID represents the resource ID of the role definition. </summary>
-        public ResourceIdentifier RoleDefinitionId { get; set; }
+        public ResourceIdentifier RoleDefinitionId { get; }
     }
 }

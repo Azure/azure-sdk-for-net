@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RedHatOpenShift;
 
 namespace Azure.ResourceManager.RedHatOpenShift.Models
 {
     /// <summary> PlatformWorkloadIdentityProfile encapsulates all information that is specific to workload identity clusters. </summary>
     public partial class OpenShiftPlatformWorkloadIdentityProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftPlatformWorkloadIdentityProfile"/>. </summary>
         public OpenShiftPlatformWorkloadIdentityProfile()
@@ -54,16 +26,17 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <summary> Initializes a new instance of <see cref="OpenShiftPlatformWorkloadIdentityProfile"/>. </summary>
         /// <param name="upgradeableTo"> UpgradeableTo stores a single OpenShift version a workload identity cluster can be upgraded to. </param>
         /// <param name="platformWorkloadIdentities"> Dictionary of &lt;PlatformWorkloadIdentity&gt;. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenShiftPlatformWorkloadIdentityProfile(string upgradeableTo, IDictionary<string, OpenShiftPlatformWorkloadIdentity> platformWorkloadIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OpenShiftPlatformWorkloadIdentityProfile(string upgradeableTo, IDictionary<string, OpenShiftPlatformWorkloadIdentity> platformWorkloadIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpgradeableTo = upgradeableTo;
             PlatformWorkloadIdentities = platformWorkloadIdentities;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> UpgradeableTo stores a single OpenShift version a workload identity cluster can be upgraded to. </summary>
         public string UpgradeableTo { get; set; }
+
         /// <summary> Dictionary of &lt;PlatformWorkloadIdentity&gt;. </summary>
         public IDictionary<string, OpenShiftPlatformWorkloadIdentity> PlatformWorkloadIdentities { get; }
     }

@@ -466,7 +466,9 @@ export function buildArmProviderSchema(
     if (resourceList.length > 1) {
       // Multiple resource paths for the same model - use explicit names or derive from client names
       for (const resource of resourceList) {
-        const metadataKey = `${resource.resourceModelId}|${resource.metadata.resourceIdPattern?.path ?? ""}`;
+        const metadataKey = `${resource.resourceModelId}|${
+          resource.metadata.resourceIdPattern?.path ?? ""
+        }`;
         // Prioritize explicit resource name from TypeSpec (e.g., LegacyOperations ResourceName parameter)
         const explicitName = resourcePathToExplicitName.get(metadataKey);
         if (explicitName) {
@@ -1201,7 +1203,8 @@ function inferLegacyParentsFromPaths(expanded: ArmResourceSchema[]): void {
       true
     );
     if (bestParent) {
-      resource.metadata.parentResourceId = bestParent.metadata.resourceIdPattern;
+      resource.metadata.parentResourceId =
+        bestParent.metadata.resourceIdPattern;
     }
   }
 }
@@ -1256,10 +1259,7 @@ function findLegacyParentResource(
 
   const candidates: ArmResourceSchema[] = [];
   for (const r of expanded) {
-    if (
-      r.resourceModelId === parentModelId &&
-      r.metadata.resourceIdPattern
-    ) {
+    if (r.resourceModelId === parentModelId && r.metadata.resourceIdPattern) {
       candidates.push(r);
     }
   }

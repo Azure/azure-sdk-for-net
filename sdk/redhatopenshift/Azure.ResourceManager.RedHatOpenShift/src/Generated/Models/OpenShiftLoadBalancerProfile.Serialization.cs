@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.RedHatOpenShift;
 
 namespace Azure.ResourceManager.RedHatOpenShift.Models
 {
-    public partial class OpenShiftLoadBalancerProfile : IUtf8JsonSerializable, IJsonModel<OpenShiftLoadBalancerProfile>
+    /// <summary> LoadBalancerProfile represents the profile of the cluster public load balancer. </summary>
+    public partial class OpenShiftLoadBalancerProfile : IJsonModel<OpenShiftLoadBalancerProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OpenShiftLoadBalancerProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OpenShiftLoadBalancerProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OpenShiftLoadBalancerProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOpenShiftLoadBalancerProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OpenShiftLoadBalancerProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OpenShiftLoadBalancerProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedHatOpenShiftContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(OpenShiftLoadBalancerProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OpenShiftLoadBalancerProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OpenShiftLoadBalancerProfile IPersistableModel<OpenShiftLoadBalancerProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OpenShiftLoadBalancerProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OpenShiftLoadBalancerProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenShiftLoadBalancerProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenShiftLoadBalancerProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OpenShiftLoadBalancerProfile)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ManagedOutboundIps))
             {
                 writer.WritePropertyName("managedOutboundIps"u8);
@@ -45,21 +83,21 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             {
                 writer.WritePropertyName("effectiveOutboundIps"u8);
                 writer.WriteStartArray();
-                foreach (var item in EffectiveOutboundIps)
+                foreach (EffectiveOutboundIP item in EffectiveOutboundIps)
                 {
-                    ((IJsonModel<SubResource>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -68,93 +106,65 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             }
         }
 
-        OpenShiftLoadBalancerProfile IJsonModel<OpenShiftLoadBalancerProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OpenShiftLoadBalancerProfile IJsonModel<OpenShiftLoadBalancerProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OpenShiftLoadBalancerProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenShiftLoadBalancerProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenShiftLoadBalancerProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OpenShiftLoadBalancerProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeOpenShiftLoadBalancerProfile(document.RootElement, options);
         }
 
-        internal static OpenShiftLoadBalancerProfile DeserializeOpenShiftLoadBalancerProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static OpenShiftLoadBalancerProfile DeserializeOpenShiftLoadBalancerProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            OpenShiftManagedOutboundIPs managedOutboundIPs = default;
-            IReadOnlyList<SubResource> effectiveOutboundIPs = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            OpenShiftManagedOutboundIPs managedOutboundIps = default;
+            IReadOnlyList<EffectiveOutboundIP> effectiveOutboundIps = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("managedOutboundIps"u8))
+                if (prop.NameEquals("managedOutboundIps"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    managedOutboundIPs = OpenShiftManagedOutboundIPs.DeserializeOpenShiftManagedOutboundIPs(property.Value, options);
+                    managedOutboundIps = OpenShiftManagedOutboundIPs.DeserializeOpenShiftManagedOutboundIPs(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("effectiveOutboundIps"u8))
+                if (prop.NameEquals("effectiveOutboundIps"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    List<EffectiveOutboundIP> array = new List<EffectiveOutboundIP>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerRedHatOpenShiftContext.Default));
+                        array.Add(EffectiveOutboundIP.DeserializeEffectiveOutboundIP(item, options));
                     }
-                    effectiveOutboundIPs = array;
+                    effectiveOutboundIps = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new OpenShiftLoadBalancerProfile(managedOutboundIPs, effectiveOutboundIPs ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
+            return new OpenShiftLoadBalancerProfile(managedOutboundIps, effectiveOutboundIps ?? new ChangeTrackingList<EffectiveOutboundIP>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<OpenShiftLoadBalancerProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenShiftLoadBalancerProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedHatOpenShiftContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(OpenShiftLoadBalancerProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        OpenShiftLoadBalancerProfile IPersistableModel<OpenShiftLoadBalancerProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenShiftLoadBalancerProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOpenShiftLoadBalancerProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OpenShiftLoadBalancerProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<OpenShiftLoadBalancerProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

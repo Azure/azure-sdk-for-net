@@ -158,6 +158,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new AdlsBlobBackupDataSourceSettings("BlobBackupDatasourceParameters", additionalBinaryDataProperties: null, containersList.ToList());
         }
 
+        /// <summary> Parameters to be used for Blob Backup Rule Based Auto Protection settings. </summary>
+        /// <param name="enabled"> Flag to enable whether auto protection. </param>
+        /// <param name="rules">
+        /// Rules are evaluated in the order provided. Inclusion adds candidates; exclusion removes candidates.
+        /// If no rules are present, all containers are considered eligible when enabled = true.
+        /// </param>
+        /// <returns> A new <see cref="Models.BlobBackupRuleBasedAutoProtectionSettings"/> instance for mocking. </returns>
+        public static BlobBackupRuleBasedAutoProtectionSettings BlobBackupRuleBasedAutoProtectionSettings(bool enabled = default, IEnumerable<BlobBackupAutoProtectionRule> rules = default)
+        {
+            rules ??= new ChangeTrackingList<BlobBackupAutoProtectionRule>();
+
+            return new BlobBackupRuleBasedAutoProtectionSettings("BlobBackupRuleBasedAutoProtectionSettings", enabled, additionalBinaryDataProperties: null, rules.ToList());
+        }
+
         /// <summary> Error object used by layers that have access to localized content, and propagate that to user. </summary>
         /// <param name="code"> Unique code for this error. </param>
         /// <param name="details"> Additional related Errors. </param>
@@ -1454,14 +1468,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             storageSettings ??= new ChangeTrackingList<DataProtectionBackupStorageSetting>();
 
             return new DataProtectionBackupVaultProperties(
-                default,
+                alertSettingsForAllJobFailures is null ? default : new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures, default), default),
                 provisioningState,
                 resourceMoveState,
                 resourceMoveDetails,
                 securitySettings,
                 storageSettings.ToList(),
                 isVaultProtectedByResourceGuard,
-                default,
+                crossSubscriptionRestoreState is null ? default : new BackupVaultFeatureSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default, default),
                 default,
                 default,
                 default,
@@ -1486,7 +1500,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             storageSettings ??= new ChangeTrackingList<DataProtectionBackupStorageSetting>();
 
             return new DataProtectionBackupVaultProperties(
-                default,
+                alertSettingsForAllJobFailures is null ? default : new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures, default), default),
                 provisioningState,
                 resourceMoveState,
                 resourceMoveDetails,
@@ -1735,7 +1749,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ItemPathBasedRestoreCriteria ItemPathBasedRestoreCriteria(string itemPath, bool isPathRelativeToBackupItem, IEnumerable<string> subItemPathPrefix)
         {
-            return ItemPathBasedRestoreCriteria(itemPath, isPathRelativeToBackupItem, subItemPathPrefix, renameTo: default);
+            return ItemPathBasedRestoreCriteria(itemPath: itemPath, isPathRelativeToBackupItem: isPathRelativeToBackupItem, subItemPathPrefix: subItemPathPrefix, renameTo: default);
         }
 
         /// <summary> Initializes a new instance of DataProtectionBackupJobProperties. </summary>
@@ -1858,7 +1872,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BackupJobExtendedInfo BackupJobExtendedInfo(IReadOnlyDictionary<string, string> additionalDetails, string backupInstanceState, double? dataTransferredInBytes, string recoveryDestination, RestoreJobRecoveryPointDetails sourceRecoverPoint, IEnumerable<BackupJobSubTask> subTasks, RestoreJobRecoveryPointDetails targetRecoverPoint)
         {
-            return BackupJobExtendedInfo(additionalDetails, backupInstanceState, dataTransferredInBytes, recoveryDestination, sourceRecoverPoint, subTasks, targetRecoverPoint, warningDetails: default);
+            return BackupJobExtendedInfo(additionalDetails: additionalDetails, backupInstanceState: backupInstanceState, dataTransferredInBytes: dataTransferredInBytes, recoveryDestination: recoveryDestination, sourceRecoverPoint: sourceRecoverPoint, subTasks: subTasks, targetRecoverPoint: targetRecoverPoint, warningDetails: default);
         }
 
         /// <summary> Initializes a new instance of DataProtectionBackupDiscreteRecoveryPointProperties. </summary>
@@ -1876,7 +1890,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName, IEnumerable<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, DateTimeOffset? expireOn)
         {
-            return DataProtectionBackupDiscreteRecoveryPointProperties(friendlyName, recoveryPointDataStoresDetails, recoverOn, policyName, policyVersion, recoveryPointId, recoveryPointType, retentionTagName, retentionTagVersion, expireOn, recoveryPointState: default);
+            return DataProtectionBackupDiscreteRecoveryPointProperties(friendlyName: friendlyName, recoveryPointDataStoresDetails: recoveryPointDataStoresDetails, recoverOn: recoverOn, policyName: policyName, policyVersion: policyVersion, recoveryPointId: recoveryPointId, recoveryPointType: recoveryPointType, retentionTagName: retentionTagName, retentionTagVersion: retentionTagVersion, expireOn: expireOn, recoveryPointState: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupRestoreWithRehydrationContent"/>. </summary>
@@ -1898,7 +1912,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BackupRestoreWithRehydrationContent BackupRestoreWithRehydrationContent(RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, DataProtectionIdentityDetails identityDetails, string recoveryPointId, BackupRehydrationPriority rehydrationPriority, TimeSpan rehydrationRetentionDuration)
         {
-            return BackupRestoreWithRehydrationContent(restoreTargetInfo, sourceDataStoreType, sourceResourceId, resourceGuardOperationRequests: default, identityDetails, recoveryPointId, rehydrationPriority, rehydrationRetentionDuration);
+            return BackupRestoreWithRehydrationContent(restoreTargetInfo: restoreTargetInfo, sourceDataStoreType: sourceDataStoreType, sourceResourceId: sourceResourceId, resourceGuardOperationRequests: default, identityDetails: identityDetails, recoveryPointId: recoveryPointId, rehydrationPriority: rehydrationPriority, rehydrationRetentionDuration: rehydrationRetentionDuration);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupRecoveryTimeBasedRestoreContent"/>. </summary>
@@ -1918,7 +1932,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BackupRecoveryTimeBasedRestoreContent BackupRecoveryTimeBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, DataProtectionIdentityDetails identityDetails, DateTimeOffset recoverOn)
         {
-            return BackupRecoveryTimeBasedRestoreContent(restoreTargetInfo, sourceDataStoreType, sourceResourceId, resourceGuardOperationRequests: default, identityDetails, recoverOn);
+            return BackupRecoveryTimeBasedRestoreContent(restoreTargetInfo: restoreTargetInfo, sourceDataStoreType: sourceDataStoreType, sourceResourceId: sourceResourceId, resourceGuardOperationRequests: default, identityDetails: identityDetails, recoverOn: recoverOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupRecoveryPointBasedRestoreContent"/>. </summary>
@@ -1938,7 +1952,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BackupRecoveryPointBasedRestoreContent BackupRecoveryPointBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, DataProtectionIdentityDetails identityDetails, string recoveryPointId)
         {
-            return BackupRecoveryPointBasedRestoreContent(restoreTargetInfo, sourceDataStoreType, sourceResourceId, resourceGuardOperationRequests: default, identityDetails, recoveryPointId);
+            return BackupRecoveryPointBasedRestoreContent(restoreTargetInfo: restoreTargetInfo, sourceDataStoreType: sourceDataStoreType, sourceResourceId: sourceResourceId, resourceGuardOperationRequests: default, identityDetails: identityDetails, recoveryPointId: recoveryPointId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupVaultProperties"/>. </summary>
@@ -1960,7 +1974,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             replicatedRegions ??= new ChangeTrackingList<AzureLocation>();
 
             return new DataProtectionBackupVaultProperties(
-                default,
+                alertSettingsForAllJobFailures is null ? default : new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures, default), default),
                 provisioningState,
                 resourceMoveState,
                 resourceMoveDetails,
