@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.Consumption.Mocking
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableConsumptionArmClient : ArmResource
     {
+        private ClientDiagnostics _priceSheetClientDiagnostics;
+        private PriceSheet _priceSheetRestClient;
         private ClientDiagnostics _usageDetailsClientDiagnostics;
         private UsageDetails _usageDetailsRestClient;
         private ClientDiagnostics _marketplacesClientDiagnostics;
@@ -58,6 +60,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         internal MockableConsumptionArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics PriceSheetClientDiagnostics => _priceSheetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PriceSheet PriceSheetRestClient => _priceSheetRestClient ??= new PriceSheet(PriceSheetClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
 
         private ClientDiagnostics UsageDetailsClientDiagnostics => _usageDetailsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -197,6 +203,116 @@ namespace Azure.ResourceManager.Consumption.Mocking
         public virtual ConsumptionCreditSummaryResource GetConsumptionCreditSummary(ResourceIdentifier scope)
         {
             return new ConsumptionCreditSummaryResource(Client, scope.AppendProviderResource("Microsoft.Consumption", "credits", "balanceSummary"));
+        }
+
+        /// <summary>
+        /// Generates the pricesheet for the provided billing period asynchronously based on the enrollment id
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/download. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PriceSheetOperationGroup_DownloadByBillingAccountPeriod. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual async Task<ArmOperation<OperationStatus>> DownloadByBillingAccountPeriodAsync(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = PriceSheetClientDiagnostics.CreateScope("MockableConsumptionArmClient.DownloadByBillingAccountPeriod");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingAccountPeriodRequest(scope.Parent.Name, scope.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ConsumptionArmOperation<OperationStatus> operation = new ConsumptionArmOperation<OperationStatus>(
+                    new OperationStatusOperationSource(),
+                    PriceSheetClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates the pricesheet for the provided billing period asynchronously based on the enrollment id
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/download. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PriceSheetOperationGroup_DownloadByBillingAccountPeriod. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual ArmOperation<OperationStatus> DownloadByBillingAccountPeriod(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = PriceSheetClientDiagnostics.CreateScope("MockableConsumptionArmClient.DownloadByBillingAccountPeriod");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingAccountPeriodRequest(scope.Parent.Name, scope.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ConsumptionArmOperation<OperationStatus> operation = new ConsumptionArmOperation<OperationStatus>(
+                    new OperationStatusOperationSource(),
+                    PriceSheetClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

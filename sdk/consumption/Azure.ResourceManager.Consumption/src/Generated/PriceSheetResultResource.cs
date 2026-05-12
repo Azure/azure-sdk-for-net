@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.Consumption
     {
         private readonly ClientDiagnostics _priceSheetResultsClientDiagnostics;
         private readonly PriceSheetResults _priceSheetResultsRestClient;
-        private readonly ClientDiagnostics _priceSheetClientDiagnostics;
-        private readonly PriceSheet _priceSheetRestClient;
         private readonly PriceSheetResultData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Consumption/pricesheets";
@@ -54,8 +52,6 @@ namespace Azure.ResourceManager.Consumption
             TryGetApiVersion(ResourceType, out string priceSheetResultApiVersion);
             _priceSheetResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ResourceType.Namespace, Diagnostics);
             _priceSheetResultsRestClient = new PriceSheetResults(_priceSheetResultsClientDiagnostics, Pipeline, Endpoint, priceSheetResultApiVersion ?? "2024-08-01");
-            _priceSheetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ResourceType.Namespace, Diagnostics);
-            _priceSheetRestClient = new PriceSheet(_priceSheetClientDiagnostics, Pipeline, Endpoint, priceSheetResultApiVersion ?? "2024-08-01");
             ValidateResourceId(id);
         }
 

@@ -3,11 +3,8 @@
 
 #nullable disable
 
-#pragma warning disable CS1591
-
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json;
 using Azure.Core;
@@ -16,74 +13,48 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Consumption.Models
 {
     // This type was renamed to ConsumptionCreditSummaryData and moved to the root namespace.
-    // Stub retained for backward compatibility; explicitly implements IJsonModel<ConsumptionCreditSummary>
-    // so ApiCompat against the shipped v1.1.0 interface list still passes.
+    // Stub retained for source/binary-compatibility with the shipped v1.1.0 surface only;
+    // every member throws NotSupportedException at runtime. The serialization interfaces
+    // are declared (as in v1.1.0) but no longer have a real implementation - they are part
+    // of the v1.1.0 public surface and are required by ApiCompat to remain on the type.
+    /// <summary> Obsolete. Use <see cref="ConsumptionCreditSummaryData"/> instead. </summary>
     [Obsolete("This type is obsolete. Use ConsumptionCreditSummaryData instead.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class ConsumptionCreditSummary : ResourceData, IJsonModel<ConsumptionCreditSummary>
+    public partial class ConsumptionCreditSummary : ResourceData, IJsonModel<ConsumptionCreditSummary>, IPersistableModel<ConsumptionCreditSummary>
     {
+        private const string ObsoleteMessage = "This type is obsolete. Use ConsumptionCreditSummaryData instead.";
+
         /// <summary> Initializes a new instance of <see cref="ConsumptionCreditSummary"/>. </summary>
         public ConsumptionCreditSummary()
         {
-            throw new NotSupportedException("This type is obsolete. Use ConsumptionCreditSummaryData instead.");
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConsumptionCreditSummary"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="balanceSummary"> Summary of balances associated with this credit summary. </param>
-        /// <param name="pendingCreditAdjustments"> Pending credit adjustments. </param>
-        /// <param name="expiredCredit"> Expired credit. </param>
-        /// <param name="pendingEligibleCharges"> Pending eligible charges. </param>
-        /// <param name="creditCurrency"> The credit currency. </param>
-        /// <param name="billingCurrency"> The billing currency. </param>
-        /// <param name="reseller"> Credit's reseller. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionCreditSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CreditBalanceSummary balanceSummary, ConsumptionAmount pendingCreditAdjustments, ConsumptionAmount expiredCredit, ConsumptionAmount pendingEligibleCharges, string creditCurrency, string billingCurrency, ConsumptionReseller reseller, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            throw new NotSupportedException("This type is obsolete.");
+            throw new NotSupportedException(ObsoleteMessage);
         }
 
         /// <summary> Summary of balances associated with this credit summary. </summary>
-        public CreditBalanceSummary BalanceSummary { get; }
+        public CreditBalanceSummary BalanceSummary => throw new NotSupportedException(ObsoleteMessage);
         /// <summary> Pending credit adjustments. </summary>
-        public ConsumptionAmount PendingCreditAdjustments { get; }
+        public ConsumptionAmount PendingCreditAdjustments => throw new NotSupportedException(ObsoleteMessage);
         /// <summary> Expired credit. </summary>
-        public ConsumptionAmount ExpiredCredit { get; }
+        public ConsumptionAmount ExpiredCredit => throw new NotSupportedException(ObsoleteMessage);
         /// <summary> Pending eligible charges. </summary>
-        public ConsumptionAmount PendingEligibleCharges { get; }
+        public ConsumptionAmount PendingEligibleCharges => throw new NotSupportedException(ObsoleteMessage);
         /// <summary> The credit currency. </summary>
-        public string CreditCurrency { get; }
+        public string CreditCurrency => throw new NotSupportedException(ObsoleteMessage);
         /// <summary> The billing currency. </summary>
-        public string BillingCurrency { get; }
+        public string BillingCurrency => throw new NotSupportedException(ObsoleteMessage);
         /// <summary> Credit's reseller. </summary>
-        public ConsumptionReseller Reseller { get; }
+        public ConsumptionReseller Reseller => throw new NotSupportedException(ObsoleteMessage);
         /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
-        public ETag? ETag { get; set; }
+        public ETag? ETag
+        {
+            get => throw new NotSupportedException(ObsoleteMessage);
+            set => throw new NotSupportedException(ObsoleteMessage);
+        }
 
-        // All IJsonModel/IPersistableModel members throw because this type is obsolete and cannot be
-        // constructed (every public ctor throws). The previous implementation cast `this` to
-        // IJsonModel<ConsumptionCreditSummaryData>, which would have thrown InvalidCastException
-        // because this type does not implement that interface.
-        void IJsonModel<ConsumptionCreditSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => throw new NotSupportedException("This type is obsolete. Use ConsumptionCreditSummaryData instead.");
-
-        ConsumptionCreditSummary IJsonModel<ConsumptionCreditSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-            => throw new NotSupportedException("This type is obsolete. Use ConsumptionCreditSummaryData instead.");
-
-        ConsumptionCreditSummary IPersistableModel<ConsumptionCreditSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
-            => throw new NotSupportedException("This type is obsolete. Use ConsumptionCreditSummaryData instead.");
-
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => throw new NotSupportedException("This type is obsolete. Use ConsumptionCreditSummaryData instead.");
-
-        BinaryData IPersistableModel<ConsumptionCreditSummary>.Write(ModelReaderWriterOptions options)
-            => throw new NotSupportedException("This type is obsolete. Use ConsumptionCreditSummaryData instead.");
-
-        string IPersistableModel<ConsumptionCreditSummary>.GetFormatFromOptions(ModelReaderWriterOptions options)
-            => throw new NotSupportedException("This type is obsolete. Use ConsumptionCreditSummaryData instead.");
+        ConsumptionCreditSummary IJsonModel<ConsumptionCreditSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException(ObsoleteMessage);
+        void IJsonModel<ConsumptionCreditSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException(ObsoleteMessage);
+        ConsumptionCreditSummary IPersistableModel<ConsumptionCreditSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException(ObsoleteMessage);
+        string IPersistableModel<ConsumptionCreditSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException(ObsoleteMessage);
+        BinaryData IPersistableModel<ConsumptionCreditSummary>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException(ObsoleteMessage);
     }
 }

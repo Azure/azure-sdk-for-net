@@ -206,6 +206,44 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary>
+        /// Generates the pricesheet for the provided billing period asynchronously based on the enrollment id
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableConsumptionArmClient.DownloadByBillingAccountPeriodAsync(WaitUntil, ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static async Task<ArmOperation<OperationStatus>> DownloadByBillingAccountPeriodAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableConsumptionArmClient(client).DownloadByBillingAccountPeriodAsync(waitUntil, scope, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Generates the pricesheet for the provided billing period asynchronously based on the enrollment id
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableConsumptionArmClient.DownloadByBillingAccountPeriod(WaitUntil, ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static ArmOperation<OperationStatus> DownloadByBillingAccountPeriod(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).DownloadByBillingAccountPeriod(waitUntil, scope, cancellationToken);
+        }
+
+        /// <summary>
         /// Lists the usage details for the defined scope. Usage details are available via this API only for May 1, 2014 or later.
         /// <b>Note:Microsoft will be retiring the Consumption Usage Details API at some point in the future. We do not recommend that you take a new dependency on this API. Please use the Cost Details API instead. We will notify customers once a date for retirement has been determined.For Learn more,see [Generate Cost Details Report - Create Operation](https://learn.microsoft.com/en-us/rest/api/cost-management/generate-cost-details-report/create-operation?tabs=HTTP)</b>
         /// <item>

@@ -3,18 +3,21 @@
 
 #nullable disable
 
-#pragma warning disable CS1591
-
 using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Mocking
 {
-    // Stub retained so ApiCompat against the v1.1.0 contract succeeds; the TypeSpec migration no longer
-    // exposes tenant-scoped consumption operations, so this class is effectively a no-op placeholder.
+    /// <summary>
+    /// Obsolete back-compat stub for the v1.1.0 mockable tenant-scoped consumption surface. The
+    /// TypeSpec migration no longer exposes tenant-scoped consumption operations, so this class is
+    /// effectively a no-op placeholder. Hidden from IntelliSense and retained only so ApiCompat
+    /// against the shipped contract succeeds.
+    /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class MockableConsumptionTenantResource : ArmResource
     {
+        /// <summary> Initializes a new instance of the <see cref="MockableConsumptionTenantResource"/> class for mocking. </summary>
         protected MockableConsumptionTenantResource()
         {
         }

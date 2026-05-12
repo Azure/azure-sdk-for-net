@@ -7,9 +7,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    // Rename the generated UnknownConsumptionChargeSummary to UnknownChargeSummary via [CodeGenType]
-    // to keep the internal sentinel discriminator subclass name short and consistent with the rest
-    // of the SDK's "Unknown*" naming convention.
+    // Although this type is internal, the v1.1.0 baseline assembly emits
+    // [PersistableModelProxyAttribute(typeof(UnknownChargeSummary))] on the PUBLIC
+    // discriminator base type ConsumptionChargeSummary. That attribute argument captures the
+    // internal type's name into the public metadata of a public type, so renaming the
+    // generator default 'UnknownConsumptionChargeSummary' back to the v1.1.0 'UnknownChargeSummary'
+    // is required for binary compatibility (ApiCompat: CannotChangeAttribute on PersistableModelProxyAttribute).
     [CodeGenType("UnknownConsumptionChargeSummary")]
     internal partial class UnknownChargeSummary
     {

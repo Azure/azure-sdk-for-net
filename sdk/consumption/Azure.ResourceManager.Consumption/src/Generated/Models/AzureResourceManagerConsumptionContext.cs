@@ -86,6 +86,8 @@ namespace Azure.ResourceManager.Consumption
     [ModelReaderWriterBuildable(typeof(ModernSharedScopeReservationRecommendationProperties))]
     [ModelReaderWriterBuildable(typeof(ModernSingleScopeReservationRecommendationProperties))]
     [ModelReaderWriterBuildable(typeof(ModernUsageDetailProperties))]
+    [ModelReaderWriterBuildable(typeof(OperationStatus))]
+    [ModelReaderWriterBuildable(typeof(PricesheetDownloadProperties))]
     [ModelReaderWriterBuildable(typeof(PriceSheetModel))]
     [ModelReaderWriterBuildable(typeof(PriceSheetProperties))]
     [ModelReaderWriterBuildable(typeof(PriceSheetResource))]

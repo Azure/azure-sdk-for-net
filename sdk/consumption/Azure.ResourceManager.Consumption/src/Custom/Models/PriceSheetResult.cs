@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS1591
-
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -16,65 +14,38 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Consumption.Models
 {
     // This type was renamed to PriceSheetResultData and moved to the root namespace.
-    // Stub retained for backward compatibility; explicitly implements IJsonModel<PriceSheetResult>
-    // so ApiCompat against the shipped v1.1.0 interface list still passes.
+    // Stub retained for source/binary-compatibility with the shipped v1.1.0 surface only;
+    // every member throws NotSupportedException at runtime. The serialization interfaces
+    // are declared (as in v1.1.0) but no longer have a real implementation - they are part
+    // of the v1.1.0 public surface and are required by ApiCompat to remain on the type.
+    /// <summary> Obsolete. Use <see cref="PriceSheetResultData"/> instead. </summary>
     [Obsolete("This type is obsolete. Use PriceSheetResultData instead.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class PriceSheetResult : ResourceData, IJsonModel<PriceSheetResult>
+    public partial class PriceSheetResult : ResourceData, IJsonModel<PriceSheetResult>, IPersistableModel<PriceSheetResult>
     {
+        private const string ObsoleteMessage = "This type is obsolete. Use PriceSheetResultData instead.";
+
         /// <summary> Initializes a new instance of <see cref="PriceSheetResult"/>. </summary>
         internal PriceSheetResult()
         {
-            throw new NotSupportedException("This type is obsolete.");
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PriceSheetResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="pricesheets"> Price sheet. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        /// <param name="download"> Pricesheet download details. </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PriceSheetResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<PriceSheetProperties> pricesheets, string nextLink, ConsumptionMeterDetails download, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            throw new NotSupportedException("This type is obsolete.");
+            throw new NotSupportedException(ObsoleteMessage);
         }
 
         /// <summary> Price sheet. </summary>
-        public IReadOnlyList<PriceSheetProperties> Pricesheets { get; }
+        public IReadOnlyList<PriceSheetProperties> Pricesheets => throw new NotSupportedException(ObsoleteMessage);
         /// <summary> The link (url) to the next page of results. </summary>
-        public string NextLink { get; }
+        public string NextLink => throw new NotSupportedException(ObsoleteMessage);
         /// <summary> Pricesheet download details. </summary>
-        public ConsumptionMeterDetails Download { get; }
+        public ConsumptionMeterDetails Download => throw new NotSupportedException(ObsoleteMessage);
         /// <summary> The etag for the resource. </summary>
-        public ETag? ETag { get; }
+        public ETag? ETag => throw new NotSupportedException(ObsoleteMessage);
         /// <summary> Resource tags. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
+        public IReadOnlyDictionary<string, string> Tags => throw new NotSupportedException(ObsoleteMessage);
 
-        // All IJsonModel/IPersistableModel members throw because this type is obsolete and cannot be
-        // constructed (every ctor throws). The previous implementation cast `this` to
-        // IJsonModel<PriceSheetResultData>, which would have thrown InvalidCastException
-        // because this type does not implement that interface.
-        void IJsonModel<PriceSheetResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => throw new NotSupportedException("This type is obsolete. Use PriceSheetResultData instead.");
-
-        PriceSheetResult IJsonModel<PriceSheetResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-            => throw new NotSupportedException("This type is obsolete. Use PriceSheetResultData instead.");
-
-        PriceSheetResult IPersistableModel<PriceSheetResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-            => throw new NotSupportedException("This type is obsolete. Use PriceSheetResultData instead.");
-
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => throw new NotSupportedException("This type is obsolete. Use PriceSheetResultData instead.");
-
-        BinaryData IPersistableModel<PriceSheetResult>.Write(ModelReaderWriterOptions options)
-            => throw new NotSupportedException("This type is obsolete. Use PriceSheetResultData instead.");
-
-        string IPersistableModel<PriceSheetResult>.GetFormatFromOptions(ModelReaderWriterOptions options)
-            => throw new NotSupportedException("This type is obsolete. Use PriceSheetResultData instead.");
+        PriceSheetResult IJsonModel<PriceSheetResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException(ObsoleteMessage);
+        void IJsonModel<PriceSheetResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException(ObsoleteMessage);
+        PriceSheetResult IPersistableModel<PriceSheetResult>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException(ObsoleteMessage);
+        string IPersistableModel<PriceSheetResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException(ObsoleteMessage);
+        BinaryData IPersistableModel<PriceSheetResult>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException(ObsoleteMessage);
     }
 }
