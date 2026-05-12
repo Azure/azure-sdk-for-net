@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(rackId, nameof(rackId));
             Argument.AssertNotNull(serialNumber, nameof(serialNumber));
             Argument.AssertNotNull(storageApplianceSkuId, nameof(storageApplianceSkuId));
-            Properties = new StorageApplianceProperties(rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials);
+            Properties = new StorageApplianceProperties(administratorCredentials, rackId, rackSlot, serialNumber, storageApplianceSkuId, caCertificate: null, capacity: null, capacityUsed: null, clusterId: null, detailedStatus: null, detailedStatusMessage: null, expansionShelves: null, managementIPv4Address: null, manufacturer: null, model: null, monitoringConfigurationStatus: null, remoteVendorManagementFeature: null, remoteVendorManagementStatus: null, secretRotationStatus: null, version: null, provisioningState: null, additionalBinaryDataProperties: null);
             ExtendedLocation = extendedLocation;
         }
 
