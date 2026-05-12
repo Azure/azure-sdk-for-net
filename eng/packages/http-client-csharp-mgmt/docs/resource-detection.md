@@ -91,14 +91,16 @@ from TypeSpec inputs.
 
 ## Detection algorithm
 
-Detection runs in three stages:
+Detection runs in four stages:
 
 1. **Identify resource models** by their TypeSpec annotation.
 2. **Identify resource instance paths and CRUD operations** by finding,
    for each resource model, the service `Read` that materializes it. The
    `Read` fixes the resource's instance path; the other CRUD verbs on
    the same path attach to the resource by **verb**, not by decorator.
-3. **Assign every remaining operation** to a resource as `List` or
+3. **Resolve parent relationships and scopes** among the resources by
+   matching instance paths against each other.
+4. **Assign every remaining operation** to a resource as `List` or
    `Action` — or to the non-resource bucket — by matching path and
    model.
 
@@ -160,13 +162,14 @@ For each candidate resource model `M` from Step 1:
      not an error — each path defines a separate resource. This is how
      the same model can legitimately back resources at different
      scopes.
-2. **Derive the path-based facts.** Apply [*Ground truth*](#ground-truth-arm-resources-are-defined-by-their-paths)
-   to the instance path to obtain `resourceType`, `scope`, the
-   path-nesting `parent`, the trailing `{name}` parameter (or the
-   literal singleton name), and the `apiVersion`. See the per-aspect
-   sections [*How resource scope is determined*](#how-resource-scope-is-determined),
-   [*How a resource's parent is determined*](#how-a-resources-parent-is-determined),
-   [*How a resource is named*](#how-a-resource-is-named).
+2. **Derive the path-based facts intrinsic to this resource.** Apply
+   [*Ground truth*](#ground-truth-arm-resources-are-defined-by-their-paths)
+   to the instance path to obtain `resourceType`, the trailing `{name}`
+   parameter (or the literal singleton name), and the `apiVersion`. See
+   [*How a resource is named*](#how-a-resource-is-named). The resource's
+   `parent` and `scope` are resolved in
+   [Step 3](#step-3--resolve-parent-relationships-and-scopes) once the
+   full resource set is known.
 3. **Attach CRUD operations by verb.** For every other operation in the
    service whose path equals the resource's instance path:
 
@@ -186,10 +189,53 @@ For each candidate resource model `M` from Step 1:
    annotated as a resource.
 
 After Step 2, the resource set is fixed: a list of resources each with
-`{ model, instance path, type, scope, parent, name, apiVersion,
-Read [, Create] [, Update] [, Delete] }`.
+`{ model, instance path, type, name, apiVersion,
+Read [, Create] [, Update] [, Delete] }`. Parent and scope are filled in
+by Step 3.
 
-### Step 3 — Assign remaining operations
+### Step 3 — Resolve parent relationships and scopes
+
+Parent and scope cannot be settled before Step 2 is complete, because
+both depend on whether *another* path in the set is a resource path:
+
+- A resource's **parent** is the resource at the next-shorter
+  `/type/{name}` prefix of its instance path. That prefix is a parent
+  only if it is itself a detected resource.
+- A resource's **scope** is determined by the segment that precedes the
+  resource's `/providers/<namespace>/...` portion. If that segment is
+  itself another resource's instance path, the scope is `Extension`
+  (the resource is anchored on whatever resource it extends); otherwise
+  it is `Tenant` / `Subscription` / `ResourceGroup` /
+  `ManagementGroup` as defined in
+  [*Ground truth*](#ground-truth-arm-resources-are-defined-by-their-paths).
+
+For each resource `R` from Step 2:
+
+1. **Parent.** Take `R`'s instance path. Strip the trailing
+   `/<typeN>/<nameN>` pair. If the remaining path is the instance path
+   of some resource `P` in the set, `P` is `R`'s parent. Otherwise `R`
+   has no resource parent (it is top-level under its scope). See
+   [*How a resource's parent is determined*](#how-a-resources-parent-is-determined)
+   for additional rules covering dynamic parent expansion and the
+   shared-model / `@parentResource` decorator cases.
+2. **Scope.** Inspect the prefix of `R`'s instance path before its
+   `/providers/<namespace>/...` portion:
+   - `/` → `Tenant`.
+   - `/subscriptions/{}/` → `Subscription`.
+   - `/subscriptions/{}/resourceGroups/{}/` → `ResourceGroup`.
+   - `/providers/Microsoft.Management/managementGroups/{}/` →
+     `ManagementGroup`.
+   - Any other prefix that is itself a resource instance path →
+     `Extension`, anchored on that resource.
+
+   See [*How resource scope is determined*](#how-resource-scope-is-determined).
+
+`@parentResource(P)` and the scope-marker decorators
+(`@subscriptionResource`, `@resourceGroupResource`, etc.) are consulted
+only as fallback / disambiguation in the cases the per-aspect sections
+spell out; the path-derived parent and scope take precedence.
+
+### Step 4 — Assign remaining operations
 
 Every operation not consumed in Step 2 is now considered for attachment
 to one of the resources from Step 2. For each remaining operation, try
@@ -233,14 +279,14 @@ method** and is emitted as an extension on the appropriate scope
 resource (`SubscriptionResource` / `ResourceGroupResource` /
 `TenantResource` / `ManagementGroupResource` / `ArmResource`).
 
-> Notes on what is intentionally **not** considered in Step 3:
+> Notes on what is intentionally **not** considered in Step 4:
 >
 > - Operation-kind decorators such as `@armResourceList` or
 >   `@armResourceAction`. The combination of verb, path relationship,
 >   and response model is what classifies an operation.
 > - `@armResourceOperations(R)` as authoritative ownership. The
 >   decorator is a useful starting hint (it tells us which operations
->   the spec author meant to associate with `R`'s group), but Step 3
+>   the spec author meant to associate with `R`'s group), but Step 4
 >   does not require the operation to be in `R`'s group to attach it
 >   to `R`. A list-of-containers operation declared inside the storage-
 >   account group still ends up on the container resource.
@@ -328,10 +374,10 @@ true for singletons as well, because the .NET mgmt SDK contract requires
 every resource client to have a `Get` method (see the introduction).
 
 In addition, a detected resource is removed during post-processing if
-**all** of the following hold after Step 3 has run:
+**all** of the following hold after Step 4 has run:
 
 - It has no `Create`, no `Update`, no `Delete`.
-- After [Step 3](#step-3--assign-remaining-operations), no `List` or
+- After [Step 4](#step-4--assign-remaining-operations), no `List` or
   `Action` is attached to it.
 
 Such a resource has only a `Read` and nothing else — it is a path stub
