@@ -73,7 +73,7 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("ScheduleProvisioningStatus")] public readonly partial struct ScheduleProvisioningStatus { }
 [CodeGenType("ScheduleRun")] public partial class ScheduleRun { }
 [CodeGenType("ScheduleTaskType")] public readonly partial struct ScheduleTaskType { }
-[CodeGenType("TargetConfig")] public abstract partial class TargetConfig { }
+[CodeGenType("RedTeamTargetConfig")] public abstract partial class TargetConfig { }
 [CodeGenType("TaxonomyCategory")] public partial class TaxonomyCategory { }
 [CodeGenType("TaxonomySubCategory")] public partial class TaxonomySubCategory { }
 [CodeGenType("TriggerType")] internal readonly partial struct TriggerType { }
@@ -86,5 +86,5 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("UnknownInsightSample")] internal partial class UnknownInsightSample { }
 [CodeGenType("UnknownRecurrenceSchedule")] internal partial class UnknownRecurrenceSchedule { }
 [CodeGenType("UnknownScheduleTask")] internal partial class UnknownScheduleTask { }
-[CodeGenType("UnknownTargetConfig")] internal partial class UnknownTargetConfig { }
+[CodeGenType("UnknownRedTeamTargetConfig")] internal partial class UnknownTargetConfig { }
 [CodeGenType("UnknownTrigger")] internal partial class UnknownTrigger { }

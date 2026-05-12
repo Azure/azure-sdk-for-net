@@ -67,7 +67,7 @@ namespace Azure.Generator.Management.Visitors
                     else if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } }
                         && TryUpdateNewInstanceArguments(method, newInstanceExpression, out var updatedArguments, out var matchedParameters))
                     {
-                        updatedBodyStatements.RemoveAll(s => IsNullCoalescingAssignmentToMatchedParameter(s, matchedParameters));
+                        updatedBodyStatements.RemoveAll(s => IsNullCoalescingAssignmentToMatchedParameter(s, matchedParameters, newInstanceExpression.Parameters));
                         updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, updatedArguments)));
                         bodyUpdated = true;
                     }
@@ -198,6 +198,7 @@ namespace Azure.Generator.Management.Visitors
 
             List<ValueExpression>? arguments = null;
             List<ParameterProvider>? matched = null;
+            var unavailableDirectParameterNames = GetUnavailableDirectParameterNames(method, constructorParameters, newInstanceExpression.Parameters);
             for (int i = 0; i < newInstanceExpression.Parameters.Count; i++)
             {
                 // Only default slots are candidates for repair. Non-default arguments were intentionally present in the
@@ -208,7 +209,7 @@ namespace Azure.Generator.Management.Visitors
                     continue;
                 }
 
-                if (TryBuildCompatibilityArgument(method, constructorParameters[i], [], wrapWithNullCheck: true, out var replacement))
+                if (TryBuildCompatibilityArgument(method, constructorParameters[i], unavailableDirectParameterNames, out var replacement))
                 {
                     arguments ??= [.. newInstanceExpression.Parameters];
                     matched ??= [];
@@ -231,7 +232,7 @@ namespace Azure.Generator.Management.Visitors
         {
             for (int i = 0; i < arguments.Count; i++)
             {
-                if (TryGetNamedArgumentName(arguments[i], out var argumentName)
+                if (arguments[i] is PositionalParameterReferenceExpression { ParameterName: var argumentName }
                     && !string.Equals(argumentName, constructorParameters[i].Name, StringComparison.Ordinal))
                 {
                     return true;
@@ -242,62 +243,113 @@ namespace Azure.Generator.Management.Visitors
         }
 
         /// <summary>
-        /// Extracts the name from a rendered named argument expression such as <c>serializedAdditionalRawData: null</c>.
-        /// Input is an expression; output is the argument name when the expression looks like a simple named argument.
-        /// Used by <see cref="HasNamedArgumentMismatchingFullConstructor"/> to identify custom-constructor binding.
-        /// </summary>
-        private static bool TryGetNamedArgumentName(ValueExpression argument, [NotNullWhen(true)] out string? name)
-        {
-            name = null;
-            var text = argument.ToDisplayString();
-            var colonIndex = text.IndexOf(':');
-            if (colonIndex <= 0)
-            {
-                return false;
-            }
-
-            var candidate = text[..colonIndex].Trim();
-            if (candidate.Length == 0 || candidate.Any(c => !char.IsLetterOrDigit(c) && c != '_' && c != '@'))
-            {
-                return false;
-            }
-
-            name = candidate[0] == '@' ? candidate[1..] : candidate;
-            return name.Length > 0;
-        }
-
-        /// <summary>
         /// Returns true for a null-coalescing assignment statement that initializes a parameter consumed by a repaired argument.
         /// Inputs are a method body statement and repaired parameters; output is whether the statement should be removed.
         /// Used after rebuilding nested model arguments because the new conditional construction handles null/default behavior.
         /// </summary>
         private static bool IsNullCoalescingAssignmentToMatchedParameter(
             MethodBodyStatement statement,
-            IReadOnlyList<ParameterProvider> parameters)
+            IReadOnlyList<ParameterProvider> parameters,
+            IReadOnlyList<ValueExpression> originalArguments)
         {
-            var text = statement.ToDisplayString();
-            return parameters.Any(parameter => text.StartsWith($"{parameter.Name} ??=", StringComparison.Ordinal));
+            if (statement is not ExpressionStatement { Expression: AssignmentExpression { UseNullCoalesce: true } assignment })
+            {
+                return false;
+            }
+
+            return parameters.Any(parameter =>
+                ReferencesParameter(assignment.Variable, parameter)
+                && !IsParameterUsedByOriginalArgument(parameter, originalArguments));
         }
 
         /// <summary>
-        /// Builds a compatibility argument for one current constructor parameter from parameters still present on the old overload.
-        /// Inputs are the old method, target constructor parameter, recursion stack, and whether to wrap all-null inputs in default;
-        /// output is the rebuilt argument and matched old parameters. Used recursively for flattened nested model parameters.
+        /// Returns true when a matched old parameter is still used by an original non-default constructor argument.
+        /// Used to preserve existing null-coalescing assignments needed by unrepaired direct arguments.
         /// </summary>
+        private static bool IsParameterUsedByOriginalArgument(ParameterProvider parameter, IReadOnlyList<ValueExpression> originalArguments)
+        {
+            return originalArguments.Any(argument =>
+                !IsDefaultExpression(argument)
+                && ReferencesParameter(argument, parameter));
+        }
+
+        private static HashSet<string> GetUnavailableDirectParameterNames(MethodProvider method, IReadOnlyList<ParameterProvider> constructorParameters, IReadOnlyList<ValueExpression> originalArguments)
+        {
+            var result = GetParameterNamesUsedByOriginalArguments(method.Signature.Parameters, originalArguments);
+            foreach (var constructorParameter in constructorParameters)
+            {
+                if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, out _))
+                {
+                    result.Add(constructorParameter.Name);
+                }
+            }
+
+            return result;
+        }
+
+        private static HashSet<string> GetParameterNamesUsedByOriginalArguments(IReadOnlyList<ParameterProvider> parameters, IReadOnlyList<ValueExpression> originalArguments)
+            => parameters
+                .Where(parameter => IsParameterUsedByOriginalArgument(parameter, originalArguments))
+                .Select(parameter => parameter.Name)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        private static bool ReferencesParameter(ValueExpression expression, ParameterProvider parameter)
+        {
+            if (ReferenceEquals(expression, parameter))
+            {
+                return true;
+            }
+
+            return expression switch
+            {
+                VariableExpression variable => string.Equals(variable.Declaration.RequestedName, parameter.Name, StringComparison.Ordinal),
+                PositionalParameterReferenceExpression positional => string.Equals(positional.ParameterName, parameter.Name, StringComparison.Ordinal)
+                    || ReferencesParameter(positional.ParameterValue, parameter),
+                InvokeMethodExpression invoke => (invoke.InstanceReference is not null && ReferencesParameter(invoke.InstanceReference, parameter))
+                    || invoke.Arguments.Any(argument => ReferencesParameter(argument, parameter)),
+                NewInstanceExpression newInstance => newInstance.Parameters.Any(argument => ReferencesParameter(argument, parameter)),
+                BinaryOperatorExpression binary => ReferencesParameter(binary.Left, parameter) || ReferencesParameter(binary.Right, parameter),
+                _ => false
+            };
+        }
+
         private static bool TryBuildCompatibilityArgument(
             MethodProvider method,
             ParameterProvider constructorParameter,
-            List<CSharpType> visitedTypes,
-            bool wrapWithNullCheck,
+            IReadOnlySet<string> unavailableDirectParameterNames,
             [NotNullWhen(true)] out CompatibilityArgument? argument)
         {
-            // Prefer a direct name/type match first; this handles parameters that remained on the old overload unchanged.
+            // Direct matching is only safe for the constructor slot currently being repaired. Recursive nested
+            // resolution uses combined/contextual names to avoid stealing outer parameters with the same name.
             if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, out var directParameter))
             {
                 argument = new CompatibilityArgument(BuildParameterArgument(directParameter, constructorParameter.Type), [directParameter]);
                 return true;
             }
 
+            return TryBuildModelCompatibilityArgument(method, constructorParameter, [], unavailableDirectParameterNames, useNullGuard: true, out argument);
+        }
+
+        /// <summary>
+        /// Reconstructs a model argument from parameters still present on the old overload.
+        /// </summary>
+        /// <param name="method">The hidden backward-compatible overload being repaired.</param>
+        /// <param name="constructorParameter">The model-typed constructor parameter to build an argument for.</param>
+        /// <param name="visitedTypes">The current recursion stack used to avoid cycles in nested model graphs.</param>
+        /// <param name="unavailableDirectParameterNames">Old parameter names that should not be reused by direct nested-name fallback.</param>
+        /// <param name="useNullGuard">
+        /// True when creating a top-level nested model argument, so the old overload keeps returning default when all flattened inputs are null.
+        /// False for recursive nested models, which are already inside a parent instance that decided whether to be created.
+        /// </param>
+        /// <param name="argument">The reconstructed model argument and old parameters used by it.</param>
+        private static bool TryBuildModelCompatibilityArgument(
+            MethodProvider method,
+            ParameterProvider constructorParameter,
+            List<CSharpType> visitedTypes,
+            IReadOnlySet<string> unavailableDirectParameterNames,
+            bool useNullGuard,
+            [NotNullWhen(true)] out CompatibilityArgument? argument)
+        {
             // For flattened models, old overload parameters often correspond to leaves of a nested model. Track visited
             // model types by name to avoid infinite recursion in self-referential model graphs.
             if (visitedTypes.Any(type => type.AreNamesEqual(constructorParameter.Type)))
@@ -322,7 +374,7 @@ namespace Azure.Generator.Management.Visitors
             var matchedParameters = new List<ParameterProvider>();
             foreach (var nestedParameter in nestedConstructorParameters)
             {
-                if (TryGetNestedCompatibilityArgument(method, constructorParameter.Property, nestedParameter, visitedTypes, out var nestedArgument))
+                if (TryGetNestedCompatibilityArgument(method, constructorParameter.Property, constructorParameter.Name, nestedParameter, visitedTypes, unavailableDirectParameterNames, out var nestedArgument))
                 {
                     nestedArguments.Add(nestedArgument.Argument);
                     matchedParameters.AddRange(nestedArgument.MatchedParameters);
@@ -343,7 +395,7 @@ namespace Azure.Generator.Management.Visitors
             // For top-level replacement arguments, preserve old all-null behavior by returning default instead of creating
             // an empty nested model. Recursive replacements are embedded inside an already-created parent and skip this guard.
             var newInstance = New.Instance(constructorParameter.Type, nestedArguments);
-            var condition = wrapWithNullCheck ? BuildAllNullCondition(matchedParameters) : null;
+            var condition = useNullGuard ? BuildAllNullCondition(matchedParameters) : null;
             var expression = condition is null
                 ? newInstance
                 : new TernaryConditionalExpression(condition, Default, newInstance);
@@ -357,7 +409,14 @@ namespace Azure.Generator.Management.Visitors
         /// Inputs are the old method, optional parent property, nested parameter, and recursion stack; output is the rebuilt nested argument.
         /// Used by <see cref="TryBuildCompatibilityArgument"/> while reconstructing flattened nested model instances.
         /// </summary>
-        private static bool TryGetNestedCompatibilityArgument(MethodProvider method, PropertyProvider? parentProperty, ParameterProvider nestedParameter, List<CSharpType> visitedTypes, [NotNullWhen(true)] out CompatibilityArgument? argument)
+        private static bool TryGetNestedCompatibilityArgument(
+            MethodProvider method,
+            PropertyProvider? parentProperty,
+            string? parentName,
+            ParameterProvider nestedParameter,
+            List<CSharpType> visitedTypes,
+            IReadOnlySet<string> unavailableDirectParameterNames,
+            [NotNullWhen(true)] out CompatibilityArgument? argument)
         {
             // Prefer the flattened combined name (for example, parent + child) when available so it wins over unrelated
             // top-level parameters with the same child name.
@@ -371,14 +430,28 @@ namespace Azure.Generator.Management.Visitors
                 }
             }
 
-            // Fall back to the nested parameter's own name, then recursively attempt to build another nested model.
-            if (TryGetMethodParameter(method, nestedParameter.Name, nestedParameter.Type, out var directParameter))
+            // Fall back to contextual old names before the nested parameter's own name. Some old overloads preserved
+            // collision-avoiding names that are not identical to the current combined name, such as
+            // namePropertiesProgressName for a nested progress.name leaf.
+            if (parentName is not null
+                && nestedParameter.Property is not null
+                && TryGetContextualMethodParameter(method, parentName, nestedParameter, out var contextualParameter))
+            {
+                argument = new CompatibilityArgument(BuildParameterArgument(contextualParameter, nestedParameter.Type), [contextualParameter]);
+                return true;
+            }
+
+            // Fall back to the nested parameter's own name when it is not already consumed by an original non-default
+            // constructor argument or exposed as a current top-level constructor parameter. Reusing such a parameter is
+            // ambiguous because it likely belongs to that original slot.
+            if (TryGetMethodParameter(method, nestedParameter.Name, nestedParameter.Type, out var directParameter)
+                && !unavailableDirectParameterNames.Contains(directParameter.Name))
             {
                 argument = new CompatibilityArgument(BuildParameterArgument(directParameter, nestedParameter.Type), [directParameter]);
                 return true;
             }
 
-            return TryBuildCompatibilityArgument(method, nestedParameter, visitedTypes, wrapWithNullCheck: false, out argument);
+            return TryBuildModelCompatibilityArgument(method, nestedParameter, visitedTypes, unavailableDirectParameterNames, useNullGuard: false, out argument);
         }
 
         /// <summary>
@@ -388,9 +461,20 @@ namespace Azure.Generator.Management.Visitors
         /// </summary>
         private static bool TryGetMethodParameter(MethodProvider method, string name, CSharpType expectedType, [NotNullWhen(true)] out ParameterProvider? parameter)
         {
-            parameter = method.Signature.Parameters.FirstOrDefault(p =>
+            parameter = method.Signature.Parameters.SingleOrDefault(p =>
                 string.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase)
                 && AreCompatibleParameterTypes(p.Type, expectedType));
+            return parameter is not null;
+        }
+
+        private static bool TryGetContextualMethodParameter(MethodProvider method, string parentName, ParameterProvider nestedParameter, [NotNullWhen(true)] out ParameterProvider? parameter)
+        {
+            var matches = method.Signature.Parameters.Where(p =>
+                !string.Equals(p.Name, nestedParameter.Name, StringComparison.OrdinalIgnoreCase)
+                && p.Name.Contains(parentName, StringComparison.OrdinalIgnoreCase)
+                && p.Name.EndsWith(nestedParameter.Name, StringComparison.OrdinalIgnoreCase)
+                && AreCompatibleParameterTypes(p.Type, nestedParameter.Type)).ToArray();
+            parameter = matches.Length == 1 ? matches[0] : null;
             return parameter is not null;
         }
 
@@ -402,7 +486,8 @@ namespace Azure.Generator.Management.Visitors
         private static bool AreCompatibleParameterTypes(CSharpType parameterType, CSharpType expectedType)
             => parameterType.AreNamesEqual(expectedType)
             || parameterType.InputType.AreNamesEqual(expectedType.InputType)
-            || AreCompatibleListTypes(parameterType, expectedType);
+            || AreCompatibleListTypes(parameterType, expectedType)
+            || AreCompatibleDictionaryTypes(parameterType, expectedType);
 
         /// <summary>
         /// Determines whether two list-like types have compatible element types.
@@ -415,6 +500,12 @@ namespace Azure.Generator.Management.Visitors
             && parameterType.Arguments.Count == expectedType.Arguments.Count
             && parameterType.Arguments.Zip(expectedType.Arguments).All(pair => pair.First.AreNamesEqual(pair.Second));
 
+        private static bool AreCompatibleDictionaryTypes(CSharpType parameterType, CSharpType expectedType)
+            => parameterType.IsDictionary
+            && expectedType.IsDictionary
+            && parameterType.Arguments.Count == expectedType.Arguments.Count
+            && parameterType.Arguments.Zip(expectedType.Arguments).All(pair => pair.First.AreNamesEqual(pair.Second));
+
         /// <summary>
         /// Converts an old overload parameter into an expression suitable for a current constructor parameter.
         /// Inputs are the matched old parameter and expected type; output is the expression to pass to generated code.
@@ -422,9 +513,18 @@ namespace Azure.Generator.Management.Visitors
         /// </summary>
         private static ValueExpression BuildParameterArgument(ParameterProvider parameter, CSharpType expectedType)
         {
-            if (AreCompatibleListTypes(parameter.Type, expectedType) && !parameter.Type.AreNamesEqual(expectedType))
+            if (AreCompatibleListTypes(parameter.Type, expectedType))
             {
                 return parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList();
+            }
+
+            if (AreCompatibleDictionaryTypes(parameter.Type, expectedType))
+            {
+                var dictionaryType = ManagementClientGenerator.Instance.TypeFactory.DictionaryInitializationType.MakeGenericType(expectedType.Arguments);
+                var nullCoalescedDictionary = parameter.NullCoalesce(New.Instance(dictionaryType));
+                return parameter.Type.AreNamesEqual(expectedType)
+                    ? nullCoalescedDictionary
+                    : New.Instance(dictionaryType, nullCoalescedDictionary);
             }
 
             if (parameter.Type.IsValueType && parameter.Type.IsNullable && expectedType.IsValueType && !expectedType.IsNullable)
@@ -464,8 +564,7 @@ namespace Azure.Generator.Management.Visitors
         /// </summary>
         private static bool IsDefaultExpression(ValueExpression expression)
         {
-            var displayString = expression.ToDisplayString();
-            return displayString == "default" || displayString.StartsWith("default(", StringComparison.Ordinal);
+            return expression is KeywordExpression { Keyword: "default" };
         }
 
         /// <summary>
