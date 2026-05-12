@@ -161,3 +161,7 @@ Whether to use the legacy custom resource detection logic instead of the standar
 **Type:** `boolean`
 
 Temporary workaround: Whether to pass skipApiVersionOverride: true when instantiating ArmOperation types in generated LRO methods. When true, the LRO polling will not override the api-version from the initial request URI. This option will be removed once the api-version override issue is properly resolved in Azure.Core. The default value is 'false'.
+
+## Design docs
+
+- [Resource detection](docs/resource-detection.md) — how ARM resources and their related operations are detected from a TypeSpec mgmt spec. Covers the path-shape ground truth, the four-step detection algorithm (model identification, instance-path + scope + CRUD, parent resolution, list/action assignment), and the desired output shape.
