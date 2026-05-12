@@ -333,12 +333,12 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<OperationStatusResult>> GetAsync(string location, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OperationStatusResult>> GetChaosOperationStatusAsync(string location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using DiagnosticScope scope = OperationStatusesClientDiagnostics.CreateScope("MockableChaosSubscriptionResource.Get");
+            using DiagnosticScope scope = OperationStatusesClientDiagnostics.CreateScope("MockableChaosSubscriptionResource.GetChaosOperationStatus");
             scope.Start();
             try
             {
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                HttpMessage message = OperationStatusesRestClient.CreateGetChaosOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content), result);
                 if (response.Value == null)
@@ -384,12 +384,12 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OperationStatusResult> Get(string location, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<OperationStatusResult> GetChaosOperationStatus(string location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using DiagnosticScope scope = OperationStatusesClientDiagnostics.CreateScope("MockableChaosSubscriptionResource.Get");
+            using DiagnosticScope scope = OperationStatusesClientDiagnostics.CreateScope("MockableChaosSubscriptionResource.GetChaosOperationStatus");
             scope.Start();
             try
             {
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                HttpMessage message = OperationStatusesRestClient.CreateGetChaosOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content), result);
                 if (response.Value == null)
