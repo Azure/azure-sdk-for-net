@@ -743,3 +743,55 @@ EndGlobal
         $content | Should -Match "Azure\.ResourceManager\.HorizonDb\.SecondPkg"
     }
 }
+
+Describe "New-MgmtPackageScaffolding multi-segment package" -Tag "UnitTest" {
+    # Regression test: for multi-segment packages like Azure.ResourceManager.Compute.Bulkactions
+    # placed under sdk/compute/, the ci.mgmt.yml ServiceDirectory must be the actual service
+    # directory leaf ("compute"), not the package's last segment ("bulkactions").
+    BeforeAll {
+        $script:msTestRootDir = Join-Path ([System.IO.Path]::GetTempPath()) "mgmt-scaffold-ms-test-$(Get-Random)"
+        New-Item -ItemType Directory -Path $script:msTestRootDir -Force | Out-Null
+
+        $script:msService = "compute"
+        $script:msPackageName = "Azure.ResourceManager.Compute.Bulkactions"
+        $script:msSdkRoot = Join-Path $script:msTestRootDir "sdk-root"
+        $script:msServiceDir = Join-Path $script:msSdkRoot "sdk" $script:msService
+        $script:msProjectDir = Join-Path $script:msServiceDir $script:msPackageName
+        $script:msSrcDir = Join-Path $script:msProjectDir "src"
+
+        New-Item -ItemType Directory -Path $script:msSrcDir -Force | Out-Null
+
+        $realTemplateDir = Join-Path $PSScriptRoot ".." ".." ".." ".." "eng" "templates" "Azure.ResourceManager.Template"
+        $realTemplateDir = Resolve-Path $realTemplateDir
+        $mockTemplateDir = Join-Path $script:msSdkRoot "eng" "templates" "Azure.ResourceManager.Template"
+        Copy-Item -Path $realTemplateDir -Destination $mockTemplateDir -Recurse -Force
+
+        $csprojContent = @"
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-beta.1</Version>
+  </PropertyGroup>
+</Project>
+"@
+        Set-Content -Path (Join-Path $script:msSrcDir "$($script:msPackageName).csproj") -Value $csprojContent
+    }
+
+    AfterAll {
+        if (Test-Path $script:msTestRootDir) {
+            Remove-Item -Recurse -Force $script:msTestRootDir
+        }
+    }
+
+    It "should derive ServiceDirectory from the service folder, not the package's last segment" {
+        New-MgmtPackageScaffolding `
+            -sdkProjectFolder $script:msProjectDir `
+            -packageName $script:msPackageName `
+            -sdkRootPath $script:msSdkRoot
+
+        $ciPath = Join-Path $script:msSdkRoot "sdk" $script:msService "ci.mgmt.yml"
+        $content = Get-Content $ciPath -Raw
+        $content | Should -Match "ServiceDirectory: compute"
+        $content | Should -Not -Match "ServiceDirectory: bulkactions"
+        $content | Should -Match "name: Azure.ResourceManager.Compute.Bulkactions"
+    }
+}

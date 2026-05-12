@@ -749,7 +749,11 @@ function New-MgmtPackageScaffolding()
         $providerSuffix = $providerShortName
     }
     $providerFullName = "Microsoft.$providerSuffix"
-    $lowercaseProviderShortName = $providerShortName.ToLower()
+    # LowercaseProviderShortName in templates maps to the service directory name
+    # (e.g. sdk/compute/Azure.ResourceManager.Compute.Bulkactions => "compute"),
+    # not the package's last segment. Otherwise multi-segment packages would write
+    # an incorrect ServiceDirectory into ci.mgmt.yml.
+    $lowercaseProviderShortName = (Split-Path $serviceDirectory -Leaf).ToLower()
 
     # Locate the mgmt template directory
     $templateDir = Join-Path $sdkRootPath "eng" "templates" "Azure.ResourceManager.Template"
