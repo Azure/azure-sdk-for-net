@@ -817,15 +817,15 @@ namespace Azure.ResourceManager.Marketplace
         }
 
         /// <summary>
-        /// Delete Private store collection. This is a workaround.
+        /// Delete Private store offer. This is a workaround.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}. </description>
+        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}/offers/{offerId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateStoreCollectionOperationGroup_Post. </description>
+        /// <description> PrivateStoreCollectionOfferOperationGroup_Post. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -837,11 +837,16 @@ namespace Azure.ResourceManager.Marketplace
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="offerId"> The offer ID to update or delete. </param>
         /// <param name="payload"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteAsync(PrivateStoreOperation? payload = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteAsync(string offerId, PrivateStoreOperation? payload = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreCollectionInfoClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.Delete");
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
+
+            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.Delete");
             scope.Start();
             try
             {
@@ -849,7 +854,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateDeleteRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), PrivateStoreOperation.ToRequestContent(payload), context);
+                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateDeleteRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), offerId, PrivateStoreOperation.ToRequestContent(payload), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -861,15 +866,15 @@ namespace Azure.ResourceManager.Marketplace
         }
 
         /// <summary>
-        /// Delete Private store collection. This is a workaround.
+        /// Delete Private store offer. This is a workaround.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}. </description>
+        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}/offers/{offerId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateStoreCollectionOperationGroup_Post. </description>
+        /// <description> PrivateStoreCollectionOfferOperationGroup_Post. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -881,11 +886,16 @@ namespace Azure.ResourceManager.Marketplace
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="offerId"> The offer ID to update or delete. </param>
         /// <param name="payload"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(PrivateStoreOperation? payload = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Delete(string offerId, PrivateStoreOperation? payload = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreCollectionInfoClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.Delete");
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
+
+            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.Delete");
             scope.Start();
             try
             {
@@ -893,7 +903,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateDeleteRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), PrivateStoreOperation.ToRequestContent(payload), context);
+                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateDeleteRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), offerId, PrivateStoreOperation.ToRequestContent(payload), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

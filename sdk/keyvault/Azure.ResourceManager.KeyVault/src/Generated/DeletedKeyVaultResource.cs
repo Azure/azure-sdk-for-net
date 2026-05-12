@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.KeyVault
     {
         private readonly ClientDiagnostics _deletedVaultsClientDiagnostics;
         private readonly DeletedVaults _deletedVaultsRestClient;
+        private readonly ClientDiagnostics _vaultsOperationGroupClientDiagnostics;
+        private readonly VaultsOperationGroup _vaultsOperationGroupRestClient;
         private readonly DeletedKeyVaultData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.KeyVault/locations/deletedVaults";
@@ -52,6 +54,8 @@ namespace Azure.ResourceManager.KeyVault
             TryGetApiVersion(ResourceType, out string deletedKeyVaultApiVersion);
             _deletedVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, Diagnostics);
             _deletedVaultsRestClient = new DeletedVaults(_deletedVaultsClientDiagnostics, Pipeline, Endpoint, deletedKeyVaultApiVersion ?? "2026-02-01");
+            _vaultsOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, Diagnostics);
+            _vaultsOperationGroupRestClient = new VaultsOperationGroup(_vaultsOperationGroupClientDiagnostics, Pipeline, Endpoint, deletedKeyVaultApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

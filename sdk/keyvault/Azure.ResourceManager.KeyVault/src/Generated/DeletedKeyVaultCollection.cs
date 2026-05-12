@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,10 +24,12 @@ namespace Azure.ResourceManager.KeyVault
     /// Each <see cref="DeletedKeyVaultResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
     /// To get a <see cref="DeletedKeyVaultCollection"/> instance call the GetDeletedKeyVaults method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class DeletedKeyVaultCollection : ArmCollection
+    public partial class DeletedKeyVaultCollection : ArmCollection, IEnumerable<DeletedKeyVaultResource>, IAsyncEnumerable<DeletedKeyVaultResource>
     {
         private readonly ClientDiagnostics _deletedVaultsClientDiagnostics;
         private readonly DeletedVaults _deletedVaultsRestClient;
+        private readonly ClientDiagnostics _vaultsOperationGroupClientDiagnostics;
+        private readonly VaultsOperationGroup _vaultsOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of DeletedKeyVaultCollection for mocking. </summary>
         protected DeletedKeyVaultCollection()
@@ -40,6 +44,8 @@ namespace Azure.ResourceManager.KeyVault
             TryGetApiVersion(DeletedKeyVaultResource.ResourceType, out string deletedKeyVaultApiVersion);
             _deletedVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", DeletedKeyVaultResource.ResourceType.Namespace, Diagnostics);
             _deletedVaultsRestClient = new DeletedVaults(_deletedVaultsClientDiagnostics, Pipeline, Endpoint, deletedKeyVaultApiVersion ?? "2026-02-01");
+            _vaultsOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", DeletedKeyVaultResource.ResourceType.Namespace, Diagnostics);
+            _vaultsOperationGroupRestClient = new VaultsOperationGroup(_vaultsOperationGroupClientDiagnostics, Pipeline, Endpoint, deletedKeyVaultApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -151,6 +157,62 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets information about the deleted vaults in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VaultsOperationGroup_ListDeleted. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedKeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeletedKeyVaultResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DeletedKeyVaultData, DeletedKeyVaultResource>(new VaultsOperationGroupGetDeletedKeyVaultsAsyncCollectionResultOfT(_vaultsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "DeletedKeyVaultCollection.GetAll"), data => new DeletedKeyVaultResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets information about the deleted vaults in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VaultsOperationGroup_ListDeleted. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedKeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeletedKeyVaultResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DeletedKeyVaultData, DeletedKeyVaultResource>(new VaultsOperationGroupGetDeletedKeyVaultsCollectionResultOfT(_vaultsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "DeletedKeyVaultCollection.GetAll"), data => new DeletedKeyVaultResource(Client, data));
         }
 
         /// <summary>
@@ -391,6 +453,22 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<DeletedKeyVaultResource> IEnumerable<DeletedKeyVaultResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<DeletedKeyVaultResource> IAsyncEnumerable<DeletedKeyVaultResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

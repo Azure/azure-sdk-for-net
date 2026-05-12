@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary></summary>
-    public partial class GuestConfigurationHcrpAssignmentResource : IJsonModel<GuestConfigurationAssignmentData>
+    public partial class GuestConfigurationHCRPAssignmentResource : IJsonModel<GuestConfigurationAssignmentData>
     {
         private static IJsonModel<GuestConfigurationAssignmentData> s_dataDeserializationInstance;
 

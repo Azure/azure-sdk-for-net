@@ -19,32 +19,32 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GuestConfigurationHcrpAssignmentResource"/> and their operations.
-    /// Each <see cref="GuestConfigurationHcrpAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="GuestConfigurationHcrpAssignmentCollection"/> instance call the GetGuestConfigurationHcrpAssignments method from an instance of <see cref="ArmResource"/>.
+    /// A class representing a collection of <see cref="GuestConfigurationHCRPAssignmentResource"/> and their operations.
+    /// Each <see cref="GuestConfigurationHCRPAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="GuestConfigurationHCRPAssignmentCollection"/> instance call the GetGuestConfigurationHCRPAssignments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class GuestConfigurationHcrpAssignmentCollection : ArmCollection, IEnumerable<GuestConfigurationHcrpAssignmentResource>, IAsyncEnumerable<GuestConfigurationHcrpAssignmentResource>
+    public partial class GuestConfigurationHCRPAssignmentCollection : ArmCollection, IEnumerable<GuestConfigurationHCRPAssignmentResource>, IAsyncEnumerable<GuestConfigurationHCRPAssignmentResource>
     {
         private readonly ClientDiagnostics _guestConfigurationHCRPAssignmentsClientDiagnostics;
         private readonly GuestConfigurationHCRPAssignments _guestConfigurationHCRPAssignmentsRestClient;
         private readonly ClientDiagnostics _guestConfigurationHCRPAssignmentReportsClientDiagnostics;
         private readonly GuestConfigurationHCRPAssignmentReports _guestConfigurationHCRPAssignmentReportsRestClient;
 
-        /// <summary> Initializes a new instance of GuestConfigurationHcrpAssignmentCollection for mocking. </summary>
-        protected GuestConfigurationHcrpAssignmentCollection()
+        /// <summary> Initializes a new instance of GuestConfigurationHCRPAssignmentCollection for mocking. </summary>
+        protected GuestConfigurationHCRPAssignmentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GuestConfigurationHcrpAssignmentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationHCRPAssignmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GuestConfigurationHcrpAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal GuestConfigurationHCRPAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(GuestConfigurationHcrpAssignmentResource.ResourceType, out string guestConfigurationHcrpAssignmentApiVersion);
-            _guestConfigurationHCRPAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationHcrpAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _guestConfigurationHCRPAssignmentsRestClient = new GuestConfigurationHCRPAssignments(_guestConfigurationHCRPAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationHcrpAssignmentApiVersion ?? "2024-04-05");
-            _guestConfigurationHCRPAssignmentReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationHcrpAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _guestConfigurationHCRPAssignmentReportsRestClient = new GuestConfigurationHCRPAssignmentReports(_guestConfigurationHCRPAssignmentReportsClientDiagnostics, Pipeline, Endpoint, guestConfigurationHcrpAssignmentApiVersion ?? "2024-04-05");
+            TryGetApiVersion(GuestConfigurationHCRPAssignmentResource.ResourceType, out string guestConfigurationHCRPAssignmentApiVersion);
+            _guestConfigurationHCRPAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationHCRPAssignmentResource.ResourceType.Namespace, Diagnostics);
+            _guestConfigurationHCRPAssignmentsRestClient = new GuestConfigurationHCRPAssignments(_guestConfigurationHCRPAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationHCRPAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationHCRPAssignmentReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationHCRPAssignmentResource.ResourceType.Namespace, Diagnostics);
+            _guestConfigurationHCRPAssignmentReportsRestClient = new GuestConfigurationHCRPAssignmentReports(_guestConfigurationHCRPAssignmentReportsClientDiagnostics, Pipeline, Endpoint, guestConfigurationHCRPAssignmentApiVersion ?? "2024-04-05");
             ValidateResourceId(id);
         }
 
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<GuestConfigurationHcrpAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string guestConfigurationAssignmentName, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GuestConfigurationHCRPAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string guestConfigurationAssignmentName, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _guestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _guestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHCRPAssignmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 Response<GuestConfigurationAssignmentData> response = Response.FromValue(GuestConfigurationAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                GuestConfigurationArmOperation<GuestConfigurationHcrpAssignmentResource> operation = new GuestConfigurationArmOperation<GuestConfigurationHcrpAssignmentResource>(Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                GuestConfigurationArmOperation<GuestConfigurationHCRPAssignmentResource> operation = new GuestConfigurationArmOperation<GuestConfigurationHCRPAssignmentResource>(Response.FromValue(new GuestConfigurationHCRPAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<GuestConfigurationHcrpAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string guestConfigurationAssignmentName, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GuestConfigurationHCRPAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string guestConfigurationAssignmentName, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _guestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _guestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHCRPAssignmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 Response<GuestConfigurationAssignmentData> response = Response.FromValue(GuestConfigurationAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                GuestConfigurationArmOperation<GuestConfigurationHcrpAssignmentResource> operation = new GuestConfigurationArmOperation<GuestConfigurationHcrpAssignmentResource>(Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                GuestConfigurationArmOperation<GuestConfigurationHCRPAssignmentResource> operation = new GuestConfigurationArmOperation<GuestConfigurationHCRPAssignmentResource>(Response.FromValue(new GuestConfigurationHCRPAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -189,11 +189,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<GuestConfigurationHcrpAssignmentResource>> GetAsync(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GuestConfigurationHCRPAssignmentResource>> GetAsync(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
-            using DiagnosticScope scope = _guestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.Get");
+            using DiagnosticScope scope = _guestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHCRPAssignmentCollection.Get");
             scope.Start();
             try
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GuestConfigurationHCRPAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -238,11 +238,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<GuestConfigurationHcrpAssignmentResource> Get(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<GuestConfigurationHCRPAssignmentResource> Get(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
-            using DiagnosticScope scope = _guestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.Get");
+            using DiagnosticScope scope = _guestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHCRPAssignmentCollection.Get");
             scope.Start();
             try
             {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GuestConfigurationHCRPAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -284,20 +284,20 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationHcrpAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GuestConfigurationHcrpAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GuestConfigurationHCRPAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GuestConfigurationHCRPAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationHcrpAssignmentResource>(new GuestConfigurationHCRPAssignmentsGetAllForMachineAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationHCRPAssignmentResource>(new GuestConfigurationHCRPAssignmentsGetAllForMachineAsyncCollectionResultOfT(
                 _guestConfigurationHCRPAssignmentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "GuestConfigurationHcrpAssignmentCollection.GetAll"), data => new GuestConfigurationHcrpAssignmentResource(Client, data));
+                "GuestConfigurationHCRPAssignmentCollection.GetAll"), data => new GuestConfigurationHCRPAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -318,20 +318,20 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationHcrpAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GuestConfigurationHcrpAssignmentResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GuestConfigurationHCRPAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GuestConfigurationHCRPAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationHcrpAssignmentResource>(new GuestConfigurationHCRPAssignmentsGetAllForMachineCollectionResultOfT(
+            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationHCRPAssignmentResource>(new GuestConfigurationHCRPAssignmentsGetAllForMachineCollectionResultOfT(
                 _guestConfigurationHCRPAssignmentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "GuestConfigurationHcrpAssignmentCollection.GetAll"), data => new GuestConfigurationHcrpAssignmentResource(Client, data));
+                "GuestConfigurationHCRPAssignmentCollection.GetAll"), data => new GuestConfigurationHCRPAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
-            using DiagnosticScope scope = _guestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.Exists");
+            using DiagnosticScope scope = _guestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHCRPAssignmentCollection.Exists");
             scope.Start();
             try
             {
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
-            using DiagnosticScope scope = _guestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.Exists");
+            using DiagnosticScope scope = _guestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHCRPAssignmentCollection.Exists");
             scope.Start();
             try
             {
@@ -469,11 +469,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<GuestConfigurationHcrpAssignmentResource>> GetIfExistsAsync(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<GuestConfigurationHCRPAssignmentResource>> GetIfExistsAsync(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
-            using DiagnosticScope scope = _guestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.GetIfExists");
+            using DiagnosticScope scope = _guestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHCRPAssignmentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -498,9 +498,9 @@ namespace Azure.ResourceManager.GuestConfiguration
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<GuestConfigurationHcrpAssignmentResource>(response.GetRawResponse());
+                    return new NoValueResponse<GuestConfigurationHCRPAssignmentResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GuestConfigurationHCRPAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -530,11 +530,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<GuestConfigurationHcrpAssignmentResource> GetIfExists(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<GuestConfigurationHCRPAssignmentResource> GetIfExists(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
-            using DiagnosticScope scope = _guestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.GetIfExists");
+            using DiagnosticScope scope = _guestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHCRPAssignmentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -559,9 +559,9 @@ namespace Azure.ResourceManager.GuestConfiguration
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<GuestConfigurationHcrpAssignmentResource>(response.GetRawResponse());
+                    return new NoValueResponse<GuestConfigurationHCRPAssignmentResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GuestConfigurationHCRPAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             }
         }
 
-        IEnumerator<GuestConfigurationHcrpAssignmentResource> IEnumerable<GuestConfigurationHcrpAssignmentResource>.GetEnumerator()
+        IEnumerator<GuestConfigurationHCRPAssignmentResource> IEnumerable<GuestConfigurationHCRPAssignmentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<GuestConfigurationHcrpAssignmentResource> IAsyncEnumerable<GuestConfigurationHcrpAssignmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<GuestConfigurationHCRPAssignmentResource> IAsyncEnumerable<GuestConfigurationHCRPAssignmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

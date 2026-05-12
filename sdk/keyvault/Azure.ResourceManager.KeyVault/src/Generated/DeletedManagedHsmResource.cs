@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.KeyVault
     {
         private readonly ClientDiagnostics _deletedManagedHsmsClientDiagnostics;
         private readonly DeletedManagedHsms _deletedManagedHsmsRestClient;
+        private readonly ClientDiagnostics _managedHsmsOperationGroupClientDiagnostics;
+        private readonly ManagedHsmsOperationGroup _managedHsmsOperationGroupRestClient;
         private readonly DeletedManagedHsmData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.KeyVault/locations/deletedManagedHSMs";
@@ -52,6 +54,8 @@ namespace Azure.ResourceManager.KeyVault
             TryGetApiVersion(ResourceType, out string deletedManagedHsmApiVersion);
             _deletedManagedHsmsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, Diagnostics);
             _deletedManagedHsmsRestClient = new DeletedManagedHsms(_deletedManagedHsmsClientDiagnostics, Pipeline, Endpoint, deletedManagedHsmApiVersion ?? "2026-02-01");
+            _managedHsmsOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, Diagnostics);
+            _managedHsmsOperationGroupRestClient = new ManagedHsmsOperationGroup(_managedHsmsOperationGroupClientDiagnostics, Pipeline, Endpoint, deletedManagedHsmApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

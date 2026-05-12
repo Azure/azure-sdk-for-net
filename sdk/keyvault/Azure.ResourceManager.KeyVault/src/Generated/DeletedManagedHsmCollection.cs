@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,10 +24,12 @@ namespace Azure.ResourceManager.KeyVault
     /// Each <see cref="DeletedManagedHsmResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
     /// To get a <see cref="DeletedManagedHsmCollection"/> instance call the GetDeletedManagedHsms method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class DeletedManagedHsmCollection : ArmCollection
+    public partial class DeletedManagedHsmCollection : ArmCollection, IEnumerable<DeletedManagedHsmResource>, IAsyncEnumerable<DeletedManagedHsmResource>
     {
         private readonly ClientDiagnostics _deletedManagedHsmsClientDiagnostics;
         private readonly DeletedManagedHsms _deletedManagedHsmsRestClient;
+        private readonly ClientDiagnostics _managedHsmsOperationGroupClientDiagnostics;
+        private readonly ManagedHsmsOperationGroup _managedHsmsOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of DeletedManagedHsmCollection for mocking. </summary>
         protected DeletedManagedHsmCollection()
@@ -40,6 +44,8 @@ namespace Azure.ResourceManager.KeyVault
             TryGetApiVersion(DeletedManagedHsmResource.ResourceType, out string deletedManagedHsmApiVersion);
             _deletedManagedHsmsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", DeletedManagedHsmResource.ResourceType.Namespace, Diagnostics);
             _deletedManagedHsmsRestClient = new DeletedManagedHsms(_deletedManagedHsmsClientDiagnostics, Pipeline, Endpoint, deletedManagedHsmApiVersion ?? "2026-02-01");
+            _managedHsmsOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", DeletedManagedHsmResource.ResourceType.Namespace, Diagnostics);
+            _managedHsmsOperationGroupRestClient = new ManagedHsmsOperationGroup(_managedHsmsOperationGroupClientDiagnostics, Pipeline, Endpoint, deletedManagedHsmApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -151,6 +157,62 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// The List operation gets information about the deleted managed HSMs associated with the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedManagedHSMs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedHsmsOperationGroup_ListDeleted. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedManagedHsmResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeletedManagedHsmResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DeletedManagedHsmData, DeletedManagedHsmResource>(new ManagedHsmsOperationGroupGetDeletedManagedHsmsAsyncCollectionResultOfT(_managedHsmsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "DeletedManagedHsmCollection.GetAll"), data => new DeletedManagedHsmResource(Client, data));
+        }
+
+        /// <summary>
+        /// The List operation gets information about the deleted managed HSMs associated with the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedManagedHSMs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedHsmsOperationGroup_ListDeleted. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedManagedHsmResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeletedManagedHsmResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DeletedManagedHsmData, DeletedManagedHsmResource>(new ManagedHsmsOperationGroupGetDeletedManagedHsmsCollectionResultOfT(_managedHsmsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "DeletedManagedHsmCollection.GetAll"), data => new DeletedManagedHsmResource(Client, data));
         }
 
         /// <summary>
@@ -391,6 +453,22 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<DeletedManagedHsmResource> IEnumerable<DeletedManagedHsmResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<DeletedManagedHsmResource> IAsyncEnumerable<DeletedManagedHsmResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
