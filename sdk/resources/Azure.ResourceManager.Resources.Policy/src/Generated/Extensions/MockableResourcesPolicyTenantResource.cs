@@ -25,8 +25,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         private PolicyDefinitionVersions _policyDefinitionVersionsRestClient;
         private ClientDiagnostics _policySetDefinitionVersionsClientDiagnostics;
         private PolicySetDefinitionVersions _policySetDefinitionVersionsRestClient;
-        private ClientDiagnostics _policyAssignmentsClientDiagnostics;
-        private PolicyAssignments _policyAssignmentsRestClient;
 
         /// <summary> Initializes a new instance of MockableResourcesPolicyTenantResource for mocking. </summary>
         protected MockableResourcesPolicyTenantResource()
@@ -48,9 +46,70 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
 
         private PolicySetDefinitionVersions PolicySetDefinitionVersionsRestClient => _policySetDefinitionVersionsRestClient ??= new PolicySetDefinitionVersions(PolicySetDefinitionVersionsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
 
-        private ClientDiagnostics PolicyAssignmentsClientDiagnostics => _policyAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        /// <summary> Gets a collection of PolicyAssignments in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of PolicyAssignments and their operations over a PolicyAssignmentResource. </returns>
+        public virtual PolicyAssignmentCollection GetPolicyAssignments()
+        {
+            return this.GetCachedClient(client => new PolicyAssignmentCollection(client, Id));
+        }
 
-        private PolicyAssignments PolicyAssignmentsRestClient => _policyAssignmentsRestClient ??= new PolicyAssignments(PolicyAssignmentsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+        /// <summary>
+        /// The operation retrieves the policy assignment with the given ID. Policy assignment IDs have this format: '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{policyAssignmentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Authorization_GetById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyAssignmentId"> The ID of the policy assignment to get. Use the format '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PolicyAssignmentResource>> GetPolicyAssignmentAsync(string policyAssignmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyAssignmentId, nameof(policyAssignmentId));
+
+            return await GetPolicyAssignments().GetAsync(policyAssignmentId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The operation retrieves the policy assignment with the given ID. Policy assignment IDs have this format: '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{policyAssignmentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Authorization_GetById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyAssignmentId"> The ID of the policy assignment to get. Use the format '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PolicyAssignmentResource> GetPolicyAssignment(string policyAssignmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyAssignmentId, nameof(policyAssignmentId));
+
+            return GetPolicyAssignments().Get(policyAssignmentId, cancellationToken);
+        }
 
         /// <summary> Gets a collection of DataPolicyManifests in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of DataPolicyManifests and their operations over a DataPolicyManifestResource. </returns>
@@ -135,9 +194,9 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolicyDefinitionVersionListResult>> GetPolicyDefinitionsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyDefinitionVersionListResult>> GetAllBuiltinsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = PolicyDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.GetPolicyDefinitions");
+            using DiagnosticScope scope = PolicyDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.GetAllBuiltins");
             scope.Start();
             try
             {
@@ -179,9 +238,9 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolicyDefinitionVersionListResult> GetPolicyDefinitions(CancellationToken cancellationToken = default)
+        public virtual Response<PolicyDefinitionVersionListResult> GetAllBuiltins(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = PolicyDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.GetPolicyDefinitions");
+            using DiagnosticScope scope = PolicyDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.GetAllBuiltins");
             scope.Start();
             try
             {
@@ -223,9 +282,9 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolicySetDefinitionVersionListResult>> GetPolicySetDefinitionsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicySetDefinitionVersionListResult>> GetAllBuiltinsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = PolicySetDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.GetPolicySetDefinitions");
+            using DiagnosticScope scope = PolicySetDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.GetAllBuiltins");
             scope.Start();
             try
             {
@@ -267,9 +326,9 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolicySetDefinitionVersionListResult> GetPolicySetDefinitions(CancellationToken cancellationToken = default)
+        public virtual Response<PolicySetDefinitionVersionListResult> GetAllBuiltins(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = PolicySetDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.GetPolicySetDefinitions");
+            using DiagnosticScope scope = PolicySetDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.GetAllBuiltins");
             scope.Start();
             try
             {
@@ -285,406 +344,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                     throw new RequestFailedException(response.GetRawResponse());
                 }
                 return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation retrieves the policy assignment with the given ID. Policy assignment IDs have this format: '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{policyAssignmentId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Authorization_GetById. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyAssignmentId"> The ID of the policy assignment to get. Use the format '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PolicyAssignmentResource>> GetByIdAsync(string policyAssignmentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentId, nameof(policyAssignmentId));
-
-            using DiagnosticScope scope = PolicyAssignmentsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.GetById");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicyAssignmentsRestClient.CreateGetByIdRequest(policyAssignmentId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation retrieves the policy assignment with the given ID. Policy assignment IDs have this format: '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{policyAssignmentId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Authorization_GetById. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyAssignmentId"> The ID of the policy assignment to get. Use the format '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PolicyAssignmentResource> GetById(string policyAssignmentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentId, nameof(policyAssignmentId));
-
-            using DiagnosticScope scope = PolicyAssignmentsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.GetById");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicyAssignmentsRestClient.CreateGetByIdRequest(policyAssignmentId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This operation creates or updates the policy assignment with the given ID. Policy assignments made on a scope apply to all resources contained in that scope. For example, when you assign a policy to a resource group that policy applies to all resources in the group. Policy assignment IDs have this format: '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{policyAssignmentId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Authorization_CreateById. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyAssignmentId"> The ID of the policy assignment to get. Use the format '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. </param>
-        /// <param name="data"> Parameters for policy assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PolicyAssignmentResource>> CreateByIdAsync(string policyAssignmentId, PolicyAssignmentData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentId, nameof(policyAssignmentId));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = PolicyAssignmentsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.CreateById");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicyAssignmentsRestClient.CreateCreateByIdRequest(policyAssignmentId, PolicyAssignmentData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This operation creates or updates the policy assignment with the given ID. Policy assignments made on a scope apply to all resources contained in that scope. For example, when you assign a policy to a resource group that policy applies to all resources in the group. Policy assignment IDs have this format: '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{policyAssignmentId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Authorization_CreateById. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyAssignmentId"> The ID of the policy assignment to get. Use the format '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. </param>
-        /// <param name="data"> Parameters for policy assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PolicyAssignmentResource> CreateById(string policyAssignmentId, PolicyAssignmentData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentId, nameof(policyAssignmentId));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = PolicyAssignmentsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.CreateById");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicyAssignmentsRestClient.CreateCreateByIdRequest(policyAssignmentId, PolicyAssignmentData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This operation updates the policy assignment with the given ID. Policy assignments made on a scope apply to all resources contained in that scope. For example, when you assign a policy to a resource group that policy applies to all resources in the group. Policy assignment IDs have this format: '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{policyAssignmentId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Authorization_UpdateById. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyAssignmentId"> The ID of the policy assignment to get. Use the format '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. </param>
-        /// <param name="patch"> Parameters for policy assignment patch request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PolicyAssignmentResource>> UpdateByIdAsync(string policyAssignmentId, PolicyAssignmentPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentId, nameof(policyAssignmentId));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using DiagnosticScope scope = PolicyAssignmentsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.UpdateById");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicyAssignmentsRestClient.CreateUpdateByIdRequest(policyAssignmentId, PolicyAssignmentPatch.ToRequestContent(patch), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This operation updates the policy assignment with the given ID. Policy assignments made on a scope apply to all resources contained in that scope. For example, when you assign a policy to a resource group that policy applies to all resources in the group. Policy assignment IDs have this format: '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{policyAssignmentId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Authorization_UpdateById. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyAssignmentId"> The ID of the policy assignment to get. Use the format '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. </param>
-        /// <param name="patch"> Parameters for policy assignment patch request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PolicyAssignmentResource> UpdateById(string policyAssignmentId, PolicyAssignmentPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentId, nameof(policyAssignmentId));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using DiagnosticScope scope = PolicyAssignmentsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.UpdateById");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicyAssignmentsRestClient.CreateUpdateByIdRequest(policyAssignmentId, PolicyAssignmentPatch.ToRequestContent(patch), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This operation deletes the policy with the given ID. Policy assignment IDs have this format: '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. Valid formats for {scope} are: '/providers/Microsoft.Management/managementGroups/{managementGroup}' (management group), '/subscriptions/{subscriptionId}' (subscription), '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' (resource group), or '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}' (resource).
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{policyAssignmentId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Authorization_DeleteById. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyAssignmentId"> The ID of the policy assignment to get. Use the format '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PolicyAssignmentResource>> DeleteByIdAsync(string policyAssignmentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentId, nameof(policyAssignmentId));
-
-            using DiagnosticScope scope = PolicyAssignmentsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.DeleteById");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicyAssignmentsRestClient.CreateDeleteByIdRequest(policyAssignmentId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This operation deletes the policy with the given ID. Policy assignment IDs have this format: '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. Valid formats for {scope} are: '/providers/Microsoft.Management/managementGroups/{managementGroup}' (management group), '/subscriptions/{subscriptionId}' (subscription), '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' (resource group), or '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}' (resource).
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{policyAssignmentId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Authorization_DeleteById. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyAssignmentId"> The ID of the policy assignment to get. Use the format '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PolicyAssignmentResource> DeleteById(string policyAssignmentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentId, nameof(policyAssignmentId));
-
-            using DiagnosticScope scope = PolicyAssignmentsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.DeleteById");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicyAssignmentsRestClient.CreateDeleteByIdRequest(policyAssignmentId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

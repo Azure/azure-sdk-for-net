@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PolicyAssignmentResource(ArmClient client, PolicyAssignmentData data) : this(client, data.Id)
         {
-            HasData = true;
+            this.HasData = true;
             _data = data;
         }
 
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PolicyAssignmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string policyAssignmentApiVersion);
+            this.TryGetApiVersion(ResourceType, out string policyAssignmentApiVersion);
             _policyAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Policy", ResourceType.Namespace, Diagnostics);
             _policyAssignmentsRestClient = new PolicyAssignments(_policyAssignmentsClientDiagnostics, Pipeline, Endpoint, policyAssignmentApiVersion ?? "2025-12-01-preview");
-            ValidateResourceId(id);
+            PolicyAssignmentResource.ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
@@ -209,12 +209,12 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Parameters for policy assignment patch request. </param>
+        /// <param name="policyAssignmentUpdate"> Parameters for policy assignment patch request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<PolicyAssignmentResource>> UpdateAsync(PolicyAssignmentPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentUpdate"/> is null. </exception>
+        public virtual async Task<Response<PolicyAssignmentResource>> UpdateAsync(PolicyAssignmentUpdate policyAssignmentUpdate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(policyAssignmentUpdate, nameof(policyAssignmentUpdate));
 
             using DiagnosticScope scope = _policyAssignmentsClientDiagnostics.CreateScope("PolicyAssignmentResource.Update");
             scope.Start();
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyAssignmentsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, PolicyAssignmentPatch.ToRequestContent(patch), context);
+                HttpMessage message = _policyAssignmentsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, PolicyAssignmentUpdate.ToRequestContent(policyAssignmentUpdate), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -261,12 +261,12 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Parameters for policy assignment patch request. </param>
+        /// <param name="policyAssignmentUpdate"> Parameters for policy assignment patch request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<PolicyAssignmentResource> Update(PolicyAssignmentPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentUpdate"/> is null. </exception>
+        public virtual Response<PolicyAssignmentResource> Update(PolicyAssignmentUpdate policyAssignmentUpdate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(policyAssignmentUpdate, nameof(policyAssignmentUpdate));
 
             using DiagnosticScope scope = _policyAssignmentsClientDiagnostics.CreateScope("PolicyAssignmentResource.Update");
             scope.Start();
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyAssignmentsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, PolicyAssignmentPatch.ToRequestContent(patch), context);
+                HttpMessage message = _policyAssignmentsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, PolicyAssignmentUpdate.ToRequestContent(policyAssignmentUpdate), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)

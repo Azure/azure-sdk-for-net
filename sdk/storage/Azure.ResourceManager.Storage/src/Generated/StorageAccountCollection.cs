@@ -29,8 +29,14 @@ namespace Azure.ResourceManager.Storage
     {
         private readonly ClientDiagnostics _storageAccountsClientDiagnostics;
         private readonly StorageAccounts _storageAccountsRestClient;
+        private readonly ClientDiagnostics _fileServicesClientDiagnostics;
+        private readonly FileServices _fileServicesRestClient;
+        private readonly ClientDiagnostics _queueServicesClientDiagnostics;
+        private readonly QueueServices _queueServicesRestClient;
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResources _privateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _tableServicesClientDiagnostics;
+        private readonly TableServices _tableServicesRestClient;
 
         /// <summary> Initializes a new instance of StorageAccountCollection for mocking. </summary>
         protected StorageAccountCollection()
@@ -45,8 +51,14 @@ namespace Azure.ResourceManager.Storage
             TryGetApiVersion(StorageAccountResource.ResourceType, out string storageAccountApiVersion);
             _storageAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageAccountResource.ResourceType.Namespace, Diagnostics);
             _storageAccountsRestClient = new StorageAccounts(_storageAccountsClientDiagnostics, Pipeline, Endpoint, storageAccountApiVersion ?? "2025-06-01");
+            _fileServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageAccountResource.ResourceType.Namespace, Diagnostics);
+            _fileServicesRestClient = new FileServices(_fileServicesClientDiagnostics, Pipeline, Endpoint, storageAccountApiVersion ?? "2025-06-01");
+            _queueServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageAccountResource.ResourceType.Namespace, Diagnostics);
+            _queueServicesRestClient = new QueueServices(_queueServicesClientDiagnostics, Pipeline, Endpoint, storageAccountApiVersion ?? "2025-06-01");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageAccountResource.ResourceType.Namespace, Diagnostics);
             _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, storageAccountApiVersion ?? "2025-06-01");
+            _tableServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageAccountResource.ResourceType.Namespace, Diagnostics);
+            _tableServicesRestClient = new TableServices(_tableServicesClientDiagnostics, Pipeline, Endpoint, storageAccountApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 

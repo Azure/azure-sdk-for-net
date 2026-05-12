@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DisasterRecoveryConfigResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> object. </returns>
-        public virtual ServiceBusDisasterRecoveryAuthorizationRuleResource GetServiceBusDisasterRecoveryAuthorizationRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DisasterRecoveryConfigResource"/> object. </returns>
+        public virtual DisasterRecoveryConfigResource GetDisasterRecoveryConfigResource(ResourceIdentifier id)
         {
-            ServiceBusDisasterRecoveryAuthorizationRuleResource.ValidateResourceId(id);
-            return new ServiceBusDisasterRecoveryAuthorizationRuleResource(Client, id);
+            DisasterRecoveryConfigResource.ValidateResourceId(id);
+            return new DisasterRecoveryConfigResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ServiceBusDisasterRecoveryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
             return new ServiceBusDisasterRecoveryResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SBAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> object. </returns>
-        public virtual ServiceBusNamespaceAuthorizationRuleResource GetServiceBusNamespaceAuthorizationRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SBAuthorizationRuleResource"/> object. </returns>
+        public virtual SBAuthorizationRuleResource GetSBAuthorizationRuleResource(ResourceIdentifier id)
         {
-            ServiceBusNamespaceAuthorizationRuleResource.ValidateResourceId(id);
-            return new ServiceBusNamespaceAuthorizationRuleResource(Client, id);
+            SBAuthorizationRuleResource.ValidateResourceId(id);
+            return new SBAuthorizationRuleResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ServiceBusQueueAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="QueueResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusQueueAuthorizationRuleResource"/> object. </returns>
-        public virtual ServiceBusQueueAuthorizationRuleResource GetServiceBusQueueAuthorizationRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="QueueResource"/> object. </returns>
+        public virtual QueueResource GetQueueResource(ResourceIdentifier id)
         {
-            ServiceBusQueueAuthorizationRuleResource.ValidateResourceId(id);
-            return new ServiceBusQueueAuthorizationRuleResource(Client, id);
+            QueueResource.ValidateResourceId(id);
+            return new QueueResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ServiceBusQueueResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
             return new ServiceBusQueueResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ServiceBusTopicAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="TopicResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusTopicAuthorizationRuleResource"/> object. </returns>
-        public virtual ServiceBusTopicAuthorizationRuleResource GetServiceBusTopicAuthorizationRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TopicResource"/> object. </returns>
+        public virtual TopicResource GetTopicResource(ResourceIdentifier id)
         {
-            ServiceBusTopicAuthorizationRuleResource.ValidateResourceId(id);
-            return new ServiceBusTopicAuthorizationRuleResource(Client, id);
+            TopicResource.ValidateResourceId(id);
+            return new TopicResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ServiceBusTopicResource"/> along with the instance operations that can be performed on it but with no data. </summary>

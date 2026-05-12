@@ -23,8 +23,6 @@ namespace Azure.ResourceManager.Storage.Mocking
     {
         private ClientDiagnostics _storageAccountsClientDiagnostics;
         private StorageAccounts _storageAccountsRestClient;
-        private ClientDiagnostics _deletedAccountsClientDiagnostics;
-        private DeletedAccounts _deletedAccountsRestClient;
         private ClientDiagnostics _skusClientDiagnostics;
         private Skus _skusRestClient;
         private ClientDiagnostics _usagesClientDiagnostics;
@@ -45,10 +43,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         private ClientDiagnostics StorageAccountsClientDiagnostics => _storageAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private StorageAccounts StorageAccountsRestClient => _storageAccountsRestClient ??= new StorageAccounts(StorageAccountsClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
-
-        private ClientDiagnostics DeletedAccountsClientDiagnostics => _deletedAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private DeletedAccounts DeletedAccountsRestClient => _deletedAccountsRestClient ??= new DeletedAccounts(DeletedAccountsClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
 
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

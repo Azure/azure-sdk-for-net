@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         private PolicyAssignments _policyAssignmentsRestClient;
         private ClientDiagnostics _policyExemptionsClientDiagnostics;
         private PolicyExemptions _policyExemptionsRestClient;
+        private ClientDiagnostics _policyDefinitionVersionsClientDiagnostics;
+        private PolicyDefinitionVersions _policyDefinitionVersionsRestClient;
+        private ClientDiagnostics _policySetDefinitionVersionsClientDiagnostics;
+        private PolicySetDefinitionVersions _policySetDefinitionVersionsRestClient;
         private ClientDiagnostics _policyTokensClientDiagnostics;
         private PolicyTokens _policyTokensRestClient;
 
@@ -47,6 +51,14 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         private ClientDiagnostics PolicyExemptionsClientDiagnostics => _policyExemptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private PolicyExemptions PolicyExemptionsRestClient => _policyExemptionsRestClient ??= new PolicyExemptions(PolicyExemptionsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+
+        private ClientDiagnostics PolicyDefinitionVersionsClientDiagnostics => _policyDefinitionVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PolicyDefinitionVersions PolicyDefinitionVersionsRestClient => _policyDefinitionVersionsRestClient ??= new PolicyDefinitionVersions(PolicyDefinitionVersionsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+
+        private ClientDiagnostics PolicySetDefinitionVersionsClientDiagnostics => _policySetDefinitionVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PolicySetDefinitionVersions PolicySetDefinitionVersionsRestClient => _policySetDefinitionVersionsRestClient ??= new PolicySetDefinitionVersions(PolicySetDefinitionVersionsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
 
         private ClientDiagnostics PolicyTokensClientDiagnostics => _policyTokensClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -381,6 +393,182 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<PolicyExemptionData, PolicyExemptionResource>(new PolicyExemptionsGetAllCollectionResultOfT(PolicyExemptionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableResourcesPolicySubscriptionResource.GetPolicyExemptions"), data => new PolicyExemptionResource(Client, data));
+        }
+
+        /// <summary>
+        /// This operation lists all the policy definition versions for all policy definitions within a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/listPolicyDefinitionVersions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyDefinitionVersionsOperationGroup_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PolicyDefinitionVersionListResult>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = PolicyDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicySubscriptionResource.GetAll");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PolicyDefinitionVersionsRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PolicyDefinitionVersionListResult> response = Response.FromValue(PolicyDefinitionVersionListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This operation lists all the policy definition versions for all policy definitions within a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/listPolicyDefinitionVersions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyDefinitionVersionsOperationGroup_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PolicyDefinitionVersionListResult> GetAll(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = PolicyDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicySubscriptionResource.GetAll");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PolicyDefinitionVersionsRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PolicyDefinitionVersionListResult> response = Response.FromValue(PolicyDefinitionVersionListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This operation lists all the policy set definition versions for all policy set definitions within a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/listPolicySetDefinitionVersions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicySetDefinitionVersionsOperationGroup_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PolicySetDefinitionVersionListResult>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = PolicySetDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicySubscriptionResource.GetAll");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PolicySetDefinitionVersionsRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PolicySetDefinitionVersionListResult> response = Response.FromValue(PolicySetDefinitionVersionListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This operation lists all the policy set definition versions for all policy set definitions within a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/listPolicySetDefinitionVersions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicySetDefinitionVersionsOperationGroup_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PolicySetDefinitionVersionListResult> GetAll(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = PolicySetDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicySubscriptionResource.GetAll");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PolicySetDefinitionVersionsRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PolicySetDefinitionVersionListResult> response = Response.FromValue(PolicySetDefinitionVersionListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

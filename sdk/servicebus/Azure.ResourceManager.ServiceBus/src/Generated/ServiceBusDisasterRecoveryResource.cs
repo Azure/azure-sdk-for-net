@@ -576,11 +576,11 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Gets a collection of ServiceBusDisasterRecoveryAuthorizationRules in the <see cref="ServiceBusDisasterRecoveryResource"/>. </summary>
-        /// <returns> An object representing collection of ServiceBusDisasterRecoveryAuthorizationRules and their operations over a ServiceBusDisasterRecoveryAuthorizationRuleResource. </returns>
-        public virtual ServiceBusDisasterRecoveryAuthorizationRuleCollection GetServiceBusDisasterRecoveryAuthorizationRules()
+        /// <summary> Gets a collection of DisasterRecoveryConfigs in the <see cref="ServiceBusDisasterRecoveryResource"/>. </summary>
+        /// <returns> An object representing collection of DisasterRecoveryConfigs and their operations over a DisasterRecoveryConfigResource. </returns>
+        public virtual DisasterRecoveryConfigCollection GetDisasterRecoveryConfigs()
         {
-            return GetCachedClient(client => new ServiceBusDisasterRecoveryAuthorizationRuleCollection(client, Id));
+            return GetCachedClient(client => new DisasterRecoveryConfigCollection(client, Id));
         }
 
         /// <summary> Gets an authorization rule for a namespace by rule name. </summary>
@@ -589,11 +589,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceBusDisasterRecoveryAuthorizationRuleResource>> GetServiceBusDisasterRecoveryAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DisasterRecoveryConfigResource>> GetDisasterRecoveryConfigAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            return await GetServiceBusDisasterRecoveryAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetDisasterRecoveryConfigs().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an authorization rule for a namespace by rule name. </summary>
@@ -602,11 +602,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceBusDisasterRecoveryAuthorizationRuleResource> GetServiceBusDisasterRecoveryAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<DisasterRecoveryConfigResource> GetDisasterRecoveryConfig(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            return GetServiceBusDisasterRecoveryAuthorizationRules().Get(authorizationRuleName, cancellationToken);
+            return GetDisasterRecoveryConfigs().Get(authorizationRuleName, cancellationToken);
         }
     }
 }

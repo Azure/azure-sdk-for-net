@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DisasterRecoveryConfigResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceBusArmClient.GetServiceBusDisasterRecoveryAuthorizationRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceBusArmClient.GetDisasterRecoveryConfigResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> object. </returns>
-        public static ServiceBusDisasterRecoveryAuthorizationRuleResource GetServiceBusDisasterRecoveryAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DisasterRecoveryConfigResource"/> object. </returns>
+        public static DisasterRecoveryConfigResource GetDisasterRecoveryConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableServiceBusArmClient(client).GetServiceBusDisasterRecoveryAuthorizationRuleResource(id);
+            return GetMockableServiceBusArmClient(client).GetDisasterRecoveryConfigResource(id);
         }
 
         /// <summary>
@@ -75,39 +75,39 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SBAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceBusArmClient.GetServiceBusNamespaceAuthorizationRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceBusArmClient.GetSBAuthorizationRuleResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> object. </returns>
-        public static ServiceBusNamespaceAuthorizationRuleResource GetServiceBusNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SBAuthorizationRuleResource"/> object. </returns>
+        public static SBAuthorizationRuleResource GetSBAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableServiceBusArmClient(client).GetServiceBusNamespaceAuthorizationRuleResource(id);
+            return GetMockableServiceBusArmClient(client).GetSBAuthorizationRuleResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceBusQueueAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="QueueResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceBusArmClient.GetServiceBusQueueAuthorizationRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceBusArmClient.GetQueueResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceBusQueueAuthorizationRuleResource"/> object. </returns>
-        public static ServiceBusQueueAuthorizationRuleResource GetServiceBusQueueAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="QueueResource"/> object. </returns>
+        public static QueueResource GetQueueResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableServiceBusArmClient(client).GetServiceBusQueueAuthorizationRuleResource(id);
+            return GetMockableServiceBusArmClient(client).GetQueueResource(id);
         }
 
         /// <summary>
@@ -129,21 +129,21 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceBusTopicAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="TopicResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceBusArmClient.GetServiceBusTopicAuthorizationRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceBusArmClient.GetTopicResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceBusTopicAuthorizationRuleResource"/> object. </returns>
-        public static ServiceBusTopicAuthorizationRuleResource GetServiceBusTopicAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TopicResource"/> object. </returns>
+        public static TopicResource GetTopicResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableServiceBusArmClient(client).GetServiceBusTopicAuthorizationRuleResource(id);
+            return GetMockableServiceBusArmClient(client).GetTopicResource(id);
         }
 
         /// <summary>

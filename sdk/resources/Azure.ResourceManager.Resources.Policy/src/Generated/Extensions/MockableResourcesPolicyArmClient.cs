@@ -39,6 +39,15 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
             return new PolicyAssignmentResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="PolicyAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PolicyAssignmentResource"/> object. </returns>
+        public virtual PolicyAssignmentResource GetPolicyAssignmentResource(ResourceIdentifier id)
+        {
+            PolicyAssignmentResource.ValidateResourceId(id);
+            return new PolicyAssignmentResource(Client, id);
+        }
+
         /// <summary> Gets a collection of <see cref="PolicyAssignmentCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="PolicyAssignmentResource"/> objects. </returns>

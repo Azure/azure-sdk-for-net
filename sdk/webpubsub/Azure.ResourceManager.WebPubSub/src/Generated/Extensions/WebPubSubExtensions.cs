@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebPubSubReplicaSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableWebPubSubArmClient.GetWebPubSubReplicaSharedPrivateLinkResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableWebPubSubArmClient.GetSharedPrivateLinkResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebPubSubReplicaSharedPrivateLinkResource"/> object. </returns>
-        public static WebPubSubReplicaSharedPrivateLinkResource GetWebPubSubReplicaSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SharedPrivateLinkResource"/> object. </returns>
+        public static SharedPrivateLinkResource GetSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWebPubSubArmClient(client).GetWebPubSubReplicaSharedPrivateLinkResource(id);
+            return GetMockableWebPubSubArmClient(client).GetSharedPrivateLinkResource(id);
         }
 
         /// <summary>
@@ -241,36 +241,36 @@ namespace Azure.ResourceManager.WebPubSub
         /// Handles requests to list all resources in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableWebPubSubSubscriptionResource.GetWebPubSubsAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableWebPubSubSubscriptionResource.GetBySubscriptionAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="WebPubSubResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WebPubSubResource> GetWebPubSubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<WebPubSubResource> GetBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableWebPubSubSubscriptionResource(subscriptionResource).GetWebPubSubsAsync(cancellationToken);
+            return GetMockableWebPubSubSubscriptionResource(subscriptionResource).GetBySubscriptionAsync(cancellationToken);
         }
 
         /// <summary>
         /// Handles requests to list all resources in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableWebPubSubSubscriptionResource.GetWebPubSubs(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableWebPubSubSubscriptionResource.GetBySubscription(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="WebPubSubResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WebPubSubResource> GetWebPubSubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<WebPubSubResource> GetBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableWebPubSubSubscriptionResource(subscriptionResource).GetWebPubSubs(cancellationToken);
+            return GetMockableWebPubSubSubscriptionResource(subscriptionResource).GetBySubscription(cancellationToken);
         }
 
         /// <summary>
