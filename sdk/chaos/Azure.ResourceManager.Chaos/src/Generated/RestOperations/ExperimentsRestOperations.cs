@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Chaos
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, bool? running, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetExperimentsRequest(Guid subscriptionId, bool? running, string continuationToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Chaos
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, bool? running, string continuationToken, RequestContext context)
+        internal HttpMessage CreateNextGetExperimentsRequest(Uri nextPage, Guid subscriptionId, bool? running, string continuationToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

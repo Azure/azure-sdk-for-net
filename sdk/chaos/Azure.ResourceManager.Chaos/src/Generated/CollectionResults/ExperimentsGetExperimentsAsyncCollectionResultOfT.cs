@@ -15,7 +15,7 @@ using Azure.ResourceManager.Chaos.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
-    internal partial class ExperimentsListAllAsyncCollectionResultOfT : AsyncPageable<ChaosExperimentData>
+    internal partial class ExperimentsGetExperimentsAsyncCollectionResultOfT : AsyncPageable<ChaosExperimentData>
     {
         private readonly Experiments _client;
         private readonly Guid _subscriptionId;
@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Chaos
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ExperimentsListAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ExperimentsGetExperimentsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Experiments client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ExperimentsListAllAsyncCollectionResultOfT(Experiments client, Guid subscriptionId, bool? running, string continuationToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ExperimentsGetExperimentsAsyncCollectionResultOfT(Experiments client, Guid subscriptionId, bool? running, string continuationToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Chaos
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ExperimentsListAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ExperimentsGetExperimentsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ExperimentsListAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ExperimentsGetExperimentsAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ChaosExperimentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _running, _continuationToken, _context) : _client.CreateGetAllRequest(_subscriptionId, _running, _continuationToken, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetExperimentsRequest(nextLink, _subscriptionId, _running, _continuationToken, _context) : _client.CreateGetExperimentsRequest(_subscriptionId, _running, _continuationToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
