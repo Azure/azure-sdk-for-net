@@ -462,7 +462,6 @@ namespace Azure.AI.VoiceLive.Tests
 
         [LiveOnly]
         [TestCase]
-        [Ignore("Service-side issue: require_approval='never' setting may not be working correctly. Tool execution still requires approval even when configured not to.")]
         public async Task ShouldNotRequestApprovalWhenRequireApprovalNever()
         {
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2025_10_01));
@@ -473,6 +472,12 @@ namespace Azure.AI.VoiceLive.Tests
 
             await using var session = await client.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
+
+            await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
+            await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
+            await GetNextUpdate<SessionUpdateConversationItemCreated>(updatesEnum).ConfigureAwait(false);
+            await GetNextUpdate<SessionUpdateMcpListToolsInProgress>(updatesEnum).ConfigureAwait(false);
+            await GetNextUpdate<SessionUpdateMcpListToolsCompleted>(updatesEnum).ConfigureAwait(false);
 
             var userMessage = new UserMessageItem(new InputTextContentPart(
                 "Use Microsoft Learn tools to search for Azure Speech SDK documentation."));
