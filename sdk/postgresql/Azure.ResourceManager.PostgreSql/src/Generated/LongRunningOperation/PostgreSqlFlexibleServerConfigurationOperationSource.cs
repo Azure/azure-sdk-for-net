@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    internal class PostgreSqlFlexibleServerConfigurationOperationSource : IOperationSource<PostgreSqlFlexibleServerConfigurationResource>
+    /// <summary></summary>
+    internal partial class PostgreSqlFlexibleServerConfigurationOperationSource : IOperationSource<PostgreSqlFlexibleServerConfigurationResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal PostgreSqlFlexibleServerConfigurationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         PostgreSqlFlexibleServerConfigurationResource IOperationSource<PostgreSqlFlexibleServerConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServerConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            PostgreSqlFlexibleServerConfigurationData data = PostgreSqlFlexibleServerConfigurationData.DeserializePostgreSqlFlexibleServerConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new PostgreSqlFlexibleServerConfigurationResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<PostgreSqlFlexibleServerConfigurationResource> IOperationSource<PostgreSqlFlexibleServerConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServerConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
-            return await Task.FromResult(new PostgreSqlFlexibleServerConfigurationResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            PostgreSqlFlexibleServerConfigurationData data = PostgreSqlFlexibleServerConfigurationData.DeserializePostgreSqlFlexibleServerConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PostgreSqlFlexibleServerConfigurationResource(_client, data);
         }
     }
 }

@@ -22,4 +22,8 @@
     <PackageReference Include="OpenTelemetry.Exporter.Console" />
     <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TestData\roll-dice\references\" />
+  </ItemGroup>
 </Project>

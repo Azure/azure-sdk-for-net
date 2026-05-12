@@ -15,7 +15,7 @@ steps:
   - template: /eng/common/pipelines/templates/steps/login-to-github.yml
     parameters:
       TokenOwners:
-        - ${{ parameters.TargetRepoOwner }}
+        - ${{ parameters.BaseRepoOwner }}
       ScriptDirectory: ${{ parameters.ScriptDirectory }}
 
 - task: PowerShell@2

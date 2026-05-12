@@ -290,12 +290,18 @@ Maps a custom class name to the generated type.
 public partial class SearchClientOptions : ClientOptions { }
 ```
 
-SDK usages: `SearchClientOptions.cs` (`DocumentsClientOptions` → `SearchClientOptions`), `SearchModelFactory.cs` (`DocumentsModelFactory` → `SearchModelFactory`).
-SDK usages: `SearchClientOptions.cs` (`DocumentsClientOptions` → `SearchClientOptions`), `SearchModelFactory.cs` (`DocumentsModelFactory` → `SearchModelFactory`).
+SDK usages: `SearchClientOptions.cs` (`DocumentsClientOptions` → `SearchClientOptions`), `SearchModelFactory.cs` (`DocumentsModelFactory` → `SearchModelFactory`), `SearchOptions` (`SearchRequest`), `SuggestOptions` (`SuggestPostRequest`), `AutocompleteOptions` (`AutocompletePostRequest`).
+
+**Danger:** If the generated type is renamed in a new spec version, the `[CodeGenType("OldName")]` mapping breaks **silently** — the custom partial disconnects from generated code with no compile error.
 
 ### `[CodeGenMember("OriginalPropertyName")]`
-Renames a generated property/field in the custom partial.
-Renames a generated property/field in the custom partial.
+Renames a generated property/field in the custom partial. **61 usages** across the package.
+
+**Heaviest files:**
+- `Options/SearchOptions.cs` (~20 usages) — wraps comma-separated strings as `IList<string>`, delegates semantic/vector options to sub-objects
+- `Indexes/Models/SearchField.cs` (~15 usages) — renames `Searchable` → `IsSearchable`, `Filterable` → `IsFilterable`, etc.
+- `Options/SuggestOptions.cs` (~8 usages) — same comma-join pattern as SearchOptions
+- `Options/AutocompleteOptions.cs` (~5 usages)
 
 ```csharp
 [CodeGenMember("ETag")]
@@ -319,18 +325,11 @@ SDK usages:
 | `VectorQuery.cs` | `Fields` → `FieldsRaw` | Comma-joined string → `IList<string>` |
 | `SearchClientOptions.cs` | `Version` → `RawVersion` | Custom enum wraps raw string |
 | `IndexingParameters.cs` | `Configuration` → strongly typed | Typed configuration |
-| File | Original → Custom | Why |
-|---|---|---|
-| `SearchField.cs` | `Searchable` → `IsSearchable` | Idiomatic naming |
-| `SearchIndex.cs` | `ETag` → `_etag` → `ETag?` | Typed `Azure.ETag` wrapper |
-| `SynonymMap.cs` | `Synonyms` → `SynonymsList` | Split newline string → list |
-| `SearchResourceEncryptionKey.cs` | `VaultUri` → `_vaultUri` → `Uri` | Typed `Uri` |
-| `VectorQuery.cs` | `Fields` → `FieldsRaw` | Comma-joined string → `IList<string>` |
-| `SearchClientOptions.cs` | `Version` → `RawVersion` | Custom enum wraps raw string |
-| `IndexingParameters.cs` | `Configuration` → strongly typed | Typed configuration |
 
-### `[CodeGenSuppress("MemberName", typeof(Arg1))]`
-Removes a generated constructor or method.
+#### SearchOptions redirector pattern
+
+`SearchOptions` routes semantic/vector properties through private `[CodeGenMember]` redirectors to public sub-objects (`SemanticSearchOptions`, `VectorSearchOptions`). When a new generated property belongs to a sub-object, follow the full procedure in [architecture.md → SearchOptions Architecture](./architecture.md#searchoptions-architecture).
+
 ### `[CodeGenSuppress("MemberName", typeof(Arg1))]`
 Removes a generated constructor or method.
 
@@ -350,9 +349,8 @@ SDK usages:
 | `SearchIndexerDataSourceConnection.cs` | Generated 4-arg ctor | Replaced with user-friendly `connectionString` ctor |
 | `SearchResourceEncryptionKey.cs` | Generated `(string, string)` ctor | Replaced with `(Uri, string, string)` ctor |
 | `SearchModelFactory.cs` | `IndexDocumentsResult(IReadOnlyList<IndexingResult>)` | Custom overload with additional params |
-| `SearchIndexerDataSourceConnection.cs` | Generated 4-arg ctor | Replaced with user-friendly `connectionString` ctor |
-| `SearchResourceEncryptionKey.cs` | Generated `(string, string)` ctor | Replaced with `(Uri, string, string)` ctor |
-| `SearchModelFactory.cs` | `IndexDocumentsResult(IReadOnlyList<IndexingResult>)` | Custom overload with additional params |
+
+**Danger:** If the generator renames/removes a suppressed member, `[CodeGenSuppress]` silently does nothing — the generated member reappears in the public API without a compile error. Audit with: `Select-String -Path src/**/*.cs -Pattern "CodeGenSuppress" -Recurse`.
 
 ---
 
@@ -446,33 +444,6 @@ Remove enum member and all three switch arms. This is a **breaking change** requ
 
 ---
 
-## SearchModelFactory Customizations
-## SearchModelFactory Customizations
-
-`Models/SearchModelFactory.cs` is the custom partial. Uses `[CodeGenType("DocumentsModelFactory")]`.
-`Models/SearchModelFactory.cs` is the custom partial. Uses `[CodeGenType("DocumentsModelFactory")]`.
-
-**When to edit:**
-- Generated factory method signature changed (parameters added/removed) → add `[EditorBrowsable(EditorBrowsableState.Never)]` overload forwarding to new signature.
-- Model removed from generated code → restore factory method manually.
-- New custom factory method needed for a type without a generated one.
-**When to edit:**
-- Generated factory method signature changed (parameters added/removed) → add `[EditorBrowsable(EditorBrowsableState.Never)]` overload forwarding to new signature.
-- Model removed from generated code → restore factory method manually.
-- New custom factory method needed for a type without a generated one.
-
-```csharp
-[EditorBrowsable(EditorBrowsableState.Never)]
-public static IndexerExecutionResult IndexerExecutionResult(
-    IndexerExecutionStatus status, string errorMessage, ...)
-    IndexerExecutionStatus status, string errorMessage, ...)
-{
-    return IndexerExecutionResult(status, errorMessage, ..., default, default);
-}
-```
-
----
-
 ## Identifying What Needs Updating After Regeneration
 
 | Generator action | What to check |
@@ -519,14 +490,16 @@ Select-String -Path src/**/*.cs -Pattern "CodeGenMember" -Recurse
 ## Efficient Update Patterns
 
 ### Constructor gains a new parameter
-Build will identify call sites. **Do not blindly add `default`**. Classify each call site:
 
-- **SearchModelFactory method** — add the new parameter to the factory method signature (with a default value) and forward it. This exposes the new feature to SDK consumers.
-- **Custom convenience constructor** — accept the new parameter (with a default) and forward it.
-- **Custom method building a request/response** — source the value from the available context (options, response data). Only use `null` when no source exists.
-- **Test/sample code** — `default` is acceptable here.
+Build will identify call sites. The fix depends on **what kind of call site** it is:
 
-Keep old factory overloads with `[EditorBrowsable(Never)]` for backward compat.
+| Call site type | Correct fix | WRONG fix |
+|---|---|---|
+| **Factory method** (`SearchModelFactory`) | Add `default` for new params. Add `[EditorBrowsable(Never)]` backward-compat overload forwarding to the new signature. | — |
+| **Convenience wrapper** (client methods passing through to generated code) | Use named parameter syntax (`cancellationToken: cancellationToken`) to skip new optional params, or pass `default` for optional header/query params that the wrapper doesn't expose. | — |
+| **Custom deserializer** (`FacetResult.cs`, `SearchResults.cs`) | **Parse the new fields from JSON** and pass the deserialized values to the constructor. Mirror the generated serialization pattern. | Passing `null`/`default` — silently drops data at runtime with no compile error. |
+
+> **CRITICAL**: Custom deserializers are the most dangerous case. `null`/`default` compiles fine but causes silent data loss. Always check [architecture.md](./architecture.md#custom-deserialization-sites) for the inventory of custom deserialization sites.
 
 ### Constructor loses a parameter
 Build will identify call sites. Remove the argument. Set deleted property after construction if needed.

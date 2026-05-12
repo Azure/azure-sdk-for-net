@@ -32,6 +32,8 @@
 - [Known retained types](#known-retained-types)
 - [SearchOptions property wiring](#searchoptions-property-wiring)
 - [SearchModelFactory](#searchmodelfactory)
+- [SearchOptions architecture](#searchoptions-architecture)
+- [Custom deserialization sites](#custom-deserialization-sites)
 - [SearchDocument (dynamic documents)](#searchdocument-dynamic-documents)
 - [Buffered indexing](#buffered-indexing)
 - [Key supporting files](#key-supporting-files)
@@ -428,6 +430,93 @@ The custom file uses `[CodeGenType("DocumentsModelFactory")]`. See [customizatio
 
 ---
 
+## SearchOptions Architecture
+
+`SearchOptions` uses `[CodeGenType("SearchRequest")]` to map onto the generated flat request model, but the public API groups related properties into two sub-objects: `SemanticSearchOptions` and `VectorSearchOptions`. Private `[CodeGenMember]` redirector properties bridge between them — the generated serializer reads/writes the redirectors, which transparently delegate to the sub-objects.
+
+### Why this matters
+
+The generated serializer accesses properties by `[CodeGenMember]` name. If a new generated property is left as an auto-property instead of being routed through the correct sub-object, it will serialize correctly but be **invisible to users** (they'd need to set `searchOptions.QueryLanguage` instead of `searchOptions.SemanticSearch.QueryLanguage`), breaking the public API design.
+
+### Property routing rules
+
+| If the new generated property is... | Route it to | Mechanism |
+|---|---|---|
+| Related to semantic search (language, speller, answers, captions, rewrites, semantic fields, semantic config, error mode, max wait, semantic query) | `SemanticSearchOptions` | Private `[CodeGenMember]` redirector in `Options/SearchOptions.cs` → public property on `SemanticSearchOptions` |
+| Related to vector/hybrid search (vector queries, filter mode, hybrid search config) | `VectorSearchOptions` | Private `[CodeGenMember]` redirector in `Options/SearchOptions.cs` → public property on `VectorSearchOptions` |
+| A comma-separated string that users should see as a list | `SearchOptions` itself | Public `IList<string>` + private `[CodeGenMember]` `string` Raw accessor using `CommaJoin()`/`CommaSplit()` |
+| A simple property with acceptable generated name/type | `SearchOptions` itself | No custom code needed — the generated auto-property is the public API |
+| A simple property that needs renaming | `SearchOptions` itself | `[CodeGenMember("GeneratedName")]` on a public property in `Options/SearchOptions.cs` |
+
+### Adding a property to a sub-object
+
+All four steps are required — skipping any one creates a silent bug:
+
+1. Add the public property to the sub-object class (`Options/SemanticSearchOptions.cs` or `Options/VectorSearchOptions.cs`).
+2. Add a private redirector in `Options/SearchOptions.cs`:
+   ```csharp
+   [CodeGenMember("GeneratedPropertyName")]
+   private PropertyType PropertyName
+   {
+       get { return SubObject?.PropertyName; }
+       set { if (SubObject != null) { SubObject.PropertyName = value; } }
+   }
+   ```
+3. Update the **internal constructor** in `Options/SearchOptions.cs`:
+   - Add the parameter (match the generated constructor's signature).
+   - Add the parameter to the null-check that decides whether to create the sub-object.
+   - Assign via the redirector.
+4. **Regenerate** so the generated `SearchOptions.cs` drops the auto-property (the `[CodeGenMember]` claim causes the generator to skip it).
+
+### Two constructors — different callers
+
+The generated and hand-written files each define an internal constructor with nearly the same parameters. They serve different call sites:
+
+| Constructor | Called by | Key difference |
+|---|---|---|
+| Generated (in `Generated/Models/SearchOptions.cs`) | `DeserializeSearchOptions` in `Serialization.cs` | Has `additionalBinaryDataProperties` param; assigns flat properties directly |
+| Hand-written (in `Options/SearchOptions.cs`) | `SearchContinuationToken.Deserialize` | Creates `SemanticSearchOptions`/`VectorSearchOptions` sub-objects; assigns via redirectors |
+
+When the generated constructor gains a new parameter, the hand-written constructor must gain the same parameter and route it through the correct redirector.
+
+### `Copy()` and continuation tokens
+
+`Copy()` in `Options/SearchOptions.cs` transfers state between instances for continuation token support. It copies **public** properties only (`SemanticSearch`, `VectorSearch`, `Facets`, etc.). When adding a new direct public property, add it to `Copy()`.
+
+---
+
+## Custom Deserialization Sites
+
+Several model types have **hand-written deserialization** that bypasses the generated `Deserialize*` methods. When the generated model constructor gains new parameters, these sites will produce build errors. **Do NOT fix them by passing `null`/`default`** — that silently drops the new data at runtime.
+
+### Inventory
+
+| File | Method | What it constructs | Risk |
+|---|---|---|---|
+| `Models/FacetResult.cs` | `DeserializeFacetResult(JsonElement, ModelReaderWriterOptions)` | `FacetResult` | Overrides the generated deserializer. New constructor params = new JSON properties to parse. |
+| `Models/SearchResults.cs` | `DeserializeEnvelope(...)` facets loop | `FacetResult` (inline) | Parses facets from the search response envelope. Same constructor — same new fields. |
+
+### Update pattern
+
+When `FacetResult` (or any model with a custom deserializer) gains new constructor parameters:
+
+1. **Read the generated model** (`Generated/Models/FacetResult.cs`) to identify the new properties and their types.
+2. **Read the generated serialization** (`Generated/Models/FacetResult.Serialization.cs`) to identify the JSON property names and deserialization logic.
+3. **Update the custom deserializer** to parse the new JSON properties and pass them to the constructor — mirror the generated deserializer's pattern.
+4. **Update `SearchResults.cs`** inline facet construction to also parse and pass the new fields.
+5. Do NOT use `null`/`default` as a shortcut — the data will exist in service responses and must be deserialized.
+
+### How to detect new parameters after regen
+
+```powershell
+# Find custom files that construct model types directly (non-generated call sites)
+Get-ChildItem -Path src -Filter "*.cs" -Recurse -Exclude "Generated*" |
+  Select-String -Pattern "new FacetResult\(|new SearchResult\(|new SuggestResults\(" |
+  Select-Object Path, LineNumber, Line
+```
+
+---
+
 ## SearchDocument (Dynamic Documents)
 
 `SearchDocument` is a dictionary-backed dynamic type (`IDictionary<string, object>`) with a custom `System.Text.Json` converter (`SearchDocumentConverter`). Supports GeoJSON via `Azure.Core.GeoJson`.
@@ -519,6 +608,8 @@ tests/
 ├── Models/                 # Model serialization, factory
 ├── Samples/                # Runnable doc examples
 ├── Serialization/          # SearchDocument converter
+├── TypeCompleteness/       # Self-discovering reflection-based tests
+├── Utilities/              # Shared test helpers
 └── SearchClientTests.cs / SearchIndexClientTests.cs / ...
 ├── Batching/               # SearchIndexingBufferedSender tests
 ├── DocumentOperations/     # Search, get, suggest, autocomplete
@@ -527,3 +618,15 @@ tests/
 ├── Serialization/          # SearchDocument converter
 └── SearchClientTests.cs / SearchIndexClientTests.cs / ...
 ```
+
+---
+
+## Build Properties
+
+| Property | Value |
+|---|---|
+| `TargetFrameworks` | `$(RequiredTargetFrameworks)` — `net10.0;net8.0;netstandard2.0` |
+| `ApiCompatVersion` | Set to last GA version — enforces no binary-breaking changes |
+| `DisableEnhancedAnalysis` | `true` |
+| `AotCompatOptOut` | `true` |
+| `AZURE_SEARCH_PREVIEW` | Defined when `<Version>` contains `beta` — gates preview API surface at compile time |

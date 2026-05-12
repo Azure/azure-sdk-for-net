@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    public class SearchTests : SearchTestBase
+    public partial class SearchTests : SearchTestBase
     {
         public SearchTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)

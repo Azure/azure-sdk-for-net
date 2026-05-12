@@ -45,6 +45,13 @@ namespace Azure.Monitor.Query.Logs
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<T>>> QueryWorkspaceAsync<T>(string workspaceId, string query, Azure.Monitor.Query.Logs.LogsQueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<T>> QueryWorkspace<T>(string workspaceId, string query, Azure.Monitor.Query.Logs.LogsQueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class LogsQueryClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedLogsQueryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedLogsQueryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Monitor.Query.Logs.LogsQueryClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddLogsQueryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddLogsQueryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Monitor.Query.Logs.LogsQueryClientSettings> configureSettings) { throw null; }
+    }
     public partial class LogsQueryClientOptions : Azure.Core.ClientOptions
     {
         public LogsQueryClientOptions(Azure.Monitor.Query.Logs.LogsQueryClientOptions.ServiceVersion version = Azure.Monitor.Query.Logs.LogsQueryClientOptions.ServiceVersion.V1) { }

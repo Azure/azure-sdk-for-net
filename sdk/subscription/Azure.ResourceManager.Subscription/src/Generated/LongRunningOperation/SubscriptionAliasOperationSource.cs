@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Subscription
 {
-    internal class SubscriptionAliasOperationSource : IOperationSource<SubscriptionAliasResource>
+    /// <summary></summary>
+    internal partial class SubscriptionAliasOperationSource : IOperationSource<SubscriptionAliasResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SubscriptionAliasOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SubscriptionAliasResource IOperationSource<SubscriptionAliasResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SubscriptionAliasData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSubscriptionContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SubscriptionAliasData data = SubscriptionAliasData.DeserializeSubscriptionAliasData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SubscriptionAliasResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SubscriptionAliasResource> IOperationSource<SubscriptionAliasResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SubscriptionAliasData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSubscriptionContext.Default);
-            return await Task.FromResult(new SubscriptionAliasResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SubscriptionAliasData data = SubscriptionAliasData.DeserializeSubscriptionAliasData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SubscriptionAliasResource(_client, data);
         }
     }
 }

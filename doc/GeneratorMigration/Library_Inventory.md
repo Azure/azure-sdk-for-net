@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-04-30 09:56:43 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-05-09 03:25:15 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -16,10 +16,10 @@
 
 ## Summary
 
-- Total libraries: 403
-- Management Plane (MPG): 232
-  - Autorest/Swagger: 83
-  - New Emitter (TypeSpec): 149
+- Total libraries: 405
+- Management Plane (MPG): 234
+  - Autorest/Swagger: 81
+  - New Emitter (TypeSpec): 153
   - Old TypeSpec: 0
 - Data Plane (DPG): 128
   - Autorest/Swagger: 37
@@ -134,7 +134,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 37
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 149 / 149 (100%)
+**Migration Status**: 153 / 153 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -227,6 +227,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | marketplace | Azure.ResourceManager.Marketplace | ✅ |
 | mongocluster | Azure.ResourceManager.MongoCluster | ✅ |
 | mongodbatlas | Azure.ResourceManager.MongoDBAtlas | ✅ |
+| monitorpipelinegroups | Azure.ResourceManager.Monitor.PipelineGroups | ✅ |
 | mysql | Azure.ResourceManager.MySql | ✅ |
 | networkcloud | Azure.ResourceManager.NetworkCloud | ✅ |
 | networkfunction | Azure.ResourceManager.NetworkFunction | ✅ |
@@ -241,6 +242,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | planetarycomputer | Azure.ResourceManager.PlanetaryComputer | ✅ |
 | playwright | Azure.ResourceManager.Playwright | ✅ |
 | portalservices | Azure.ResourceManager.PortalServicesCopilot | ✅ |
+| postgresql | Azure.ResourceManager.PostgreSql | ✅ |
 | powerbidedicated | Azure.ResourceManager.PowerBIDedicated | ✅ |
 | providerhub | Azure.ResourceManager.ProviderHub | ✅ |
 | purestorageblock | Azure.ResourceManager.PureStorageBlock | ✅ |
@@ -251,6 +253,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | recoveryservices | Azure.ResourceManager.RecoveryServices | ✅ |
 | recoveryservices-backup | Azure.ResourceManager.RecoveryServicesBackup | ✅ |
 | recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication | ✅ |
+| redhatopenshift | Azure.ResourceManager.RedHatOpenShift | ✅ |
 | redis | Azure.ResourceManager.Redis | ✅ |
 | redisenterprise | Azure.ResourceManager.RedisEnterprise | ✅ |
 | relationships | Azure.ResourceManager.Relationships | ✅ |
@@ -278,6 +281,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | storagediscovery | Azure.ResourceManager.StorageDiscovery | ✅ |
 | storagemover | Azure.ResourceManager.StorageMover | ✅ |
 | storagesync | Azure.ResourceManager.StorageSync | ✅ |
+| subscription | Azure.ResourceManager.Subscription | ✅ |
 | support | Azure.ResourceManager.Support | ✅ |
 | terraform | Azure.ResourceManager.Terraform | ✅ |
 | trafficmanager | Azure.ResourceManager.TrafficManager | ✅ |
@@ -291,7 +295,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 83
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 81
 
 | Service | Library |
 | ------- | ------- |
@@ -354,7 +358,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 83
 | operationalinsights | Azure.ResourceManager.OperationalInsights |
 | orbital | Azure.ResourceManager.Orbital |
 | policyinsights | Azure.ResourceManager.PolicyInsights |
-| postgresql | Azure.ResourceManager.PostgreSql |
 | privatedns | Azure.ResourceManager.PrivateDns |
 | recoveryservices-siterecovery | Azure.ResourceManager.RecoveryServicesSiteRecovery |
 | reservations | Azure.ResourceManager.Reservations |
@@ -372,7 +375,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 83
 | storagecache | Azure.ResourceManager.StorageCache |
 | storagepool | Azure.ResourceManager.StoragePool |
 | streamanalytics | Azure.ResourceManager.StreamAnalytics |
-| subscription | Azure.ResourceManager.Subscription |
 | synapse | Azure.ResourceManager.Synapse |
 | voiceservices | Azure.ResourceManager.VoiceServices |
 | websites | Azure.ResourceManager.AppService |
@@ -415,7 +417,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | mysql | Azure.Provisioning.MySql | Azure.ResourceManager.MySql ✅ | TypeSpec ✅ |
 | network | Azure.Provisioning.Network | Azure.ResourceManager.Network | Reflection |
 | operationalinsights | Azure.Provisioning.OperationalInsights | Azure.ResourceManager.OperationalInsights | Reflection |
-| postgresql | Azure.Provisioning.PostgreSql | Azure.ResourceManager.PostgreSql | Reflection |
+| postgresql | Azure.Provisioning.PostgreSql | Azure.ResourceManager.PostgreSql ✅ | Reflection |
 | privatedns | Azure.Provisioning.PrivateDns | Azure.ResourceManager.PrivateDns | Reflection |
 | provisioning | Azure.Provisioning | Azure.ResourceManager<br>Azure.ResourceManager.Resources<br>Azure.ResourceManager.Authorization<br>Azure.ResourceManager.ManagedServiceIdentities ✅ | Reflection |
 | provisioning | Azure.Provisioning.Deployment | Azure.ResourceManager<br>Azure.ResourceManager.Resources | None |
