@@ -24647,124 +24647,29 @@
                 "rbacRoles": []
               },
               {
-                "resourceModelId": "MgmtTypeSpec.Bar",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
-                "resourceType": "MgmtTypeSpec/foos/bars",
-                "methods": [
-                  {
-                    "$id": "1830",
-                    "methodId": "MgmtTypeSpec.Bars.createOrUpdate",
-                    "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
-                    "scope": {
-                      "$id": "1831",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "1832",
-                    "methodId": "MgmtTypeSpec.Bars.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
-                    "scope": {
-                      "$id": "1833",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "1834",
-                    "methodId": "MgmtTypeSpec.Bars.update",
-                    "kind": "Update",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
-                    "scope": {
-                      "$id": "1835",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "1836",
-                    "methodId": "MgmtTypeSpec.Bars.delete",
-                    "kind": "Delete",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
-                    "scope": {
-                      "$id": "1837",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "1838",
-                    "methodId": "MgmtTypeSpec.Bars.list",
-                    "kind": "List",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{name}/bars",
-                    "scope": {
-                      "$id": "1839",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "1840",
-                    "methodId": "MgmtTypeSpec.Employees.listByParent",
-                    "kind": "List",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/employees",
-                    "scope": {
-                      "$id": "1841",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  }
-                ],
-                "scope": {
-                  "$id": "1842",
-                  "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                },
-                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}",
-                "resourceName": "Bar",
-                "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                },
-                "apiVersions": [
-                  "2024-04-01",
-                  "2024-05-01"
-                ],
-                "rbacRoles": []
-              },
-              {
                 "resourceModelId": "MgmtTypeSpec.BarSettingsResource",
                 "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/settings/current",
                 "resourceType": "MgmtTypeSpec/foos/bars/settings",
                 "methods": [
                   {
-                    "$id": "1843",
+                    "$id": "1830",
                     "methodId": "MgmtTypeSpec.BarSettingsOperations.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/settings/current",
                     "scope": {
-                      "$id": "1844",
+                      "$id": "1831",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/settings/current",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1845",
+                    "$id": "1832",
                     "methodId": "MgmtTypeSpec.BarSettingsOperations.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/settings/current",
                     "scope": {
-                      "$id": "1846",
+                      "$id": "1833",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/settings/current",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -24772,7 +24677,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "1847",
+                  "$id": "1834",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -24795,24 +24700,24 @@
                 "resourceType": "MgmtTypeSpec/foos/bars/quotas",
                 "methods": [
                   {
-                    "$id": "1848",
+                    "$id": "1835",
                     "methodId": "MgmtTypeSpec.BarQuotaOperations.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/quotas/{barQuotaResourceName}",
                     "scope": {
-                      "$id": "1849",
+                      "$id": "1836",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/quotas/{barQuotaResourceName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1850",
+                    "$id": "1837",
                     "methodId": "MgmtTypeSpec.BarQuotaOperations.update",
                     "kind": "Update",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/quotas/{barQuotaResourceName}",
                     "scope": {
-                      "$id": "1851",
+                      "$id": "1838",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/quotas/{barQuotaResourceName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -24820,7 +24725,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "1852",
+                  "$id": "1839",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -24842,72 +24747,72 @@
                 "resourceType": "MgmtTypeSpec/bazs",
                 "methods": [
                   {
-                    "$id": "1853",
+                    "$id": "1840",
                     "methodId": "MgmtTypeSpec.Bazs.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs/{bazName}",
                     "scope": {
-                      "$id": "1854",
+                      "$id": "1841",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs/{bazName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1855",
+                    "$id": "1842",
                     "methodId": "MgmtTypeSpec.Bazs.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs/{bazName}",
                     "scope": {
-                      "$id": "1856",
+                      "$id": "1843",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs/{bazName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1857",
+                    "$id": "1844",
                     "methodId": "MgmtTypeSpec.Bazs.update",
                     "kind": "Update",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs/{bazName}",
                     "scope": {
-                      "$id": "1858",
+                      "$id": "1845",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs/{bazName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1859",
+                    "$id": "1846",
                     "methodId": "MgmtTypeSpec.Bazs.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs/{bazName}",
                     "scope": {
-                      "$id": "1860",
+                      "$id": "1847",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs/{bazName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1861",
+                    "$id": "1848",
                     "methodId": "MgmtTypeSpec.Bazs.list",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs",
                     "scope": {
-                      "$id": "1862",
+                      "$id": "1849",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1863",
+                    "$id": "1850",
                     "methodId": "MgmtTypeSpec.Bazs.listBySubscription",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/bazs",
                     "scope": {
-                      "$id": "1864",
+                      "$id": "1851",
                       "kind": "Subscription",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}",
                       "scopeResourceType": "Microsoft.Resources/subscriptions"
@@ -24915,7 +24820,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "1865",
+                  "$id": "1852",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -24936,96 +24841,96 @@
                 "resourceType": "MgmtTypeSpec/zoos",
                 "methods": [
                   {
-                    "$id": "1866",
+                    "$id": "1853",
                     "methodId": "MgmtTypeSpec.Zoos.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}",
                     "scope": {
-                      "$id": "1867",
+                      "$id": "1854",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1868",
+                    "$id": "1855",
                     "methodId": "MgmtTypeSpec.Zoos.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}",
                     "scope": {
-                      "$id": "1869",
+                      "$id": "1856",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1870",
+                    "$id": "1857",
                     "methodId": "MgmtTypeSpec.Zoos.update",
                     "kind": "Update",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}",
                     "scope": {
-                      "$id": "1871",
+                      "$id": "1858",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1872",
+                    "$id": "1859",
                     "methodId": "MgmtTypeSpec.Zoos.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}",
                     "scope": {
-                      "$id": "1873",
+                      "$id": "1860",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1874",
+                    "$id": "1861",
                     "methodId": "MgmtTypeSpec.Zoos.list",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos",
                     "scope": {
-                      "$id": "1875",
+                      "$id": "1862",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1876",
+                    "$id": "1863",
                     "methodId": "MgmtTypeSpec.Zoos.listBySubscription",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/zoos",
                     "scope": {
-                      "$id": "1877",
+                      "$id": "1864",
                       "kind": "Subscription",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}",
                       "scopeResourceType": "Microsoft.Resources/subscriptions"
                     }
                   },
                   {
-                    "$id": "1878",
+                    "$id": "1865",
                     "methodId": "MgmtTypeSpec.Zoos.recommend",
                     "kind": "Action",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}/recommend",
                     "scope": {
-                      "$id": "1879",
+                      "$id": "1866",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1880",
+                    "$id": "1867",
                     "methodId": "MgmtTypeSpec.Zoos.zooAddressList",
                     "kind": "Action",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}/zooAddressList",
                     "scope": {
-                      "$id": "1881",
+                      "$id": "1868",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -25033,7 +24938,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "1882",
+                  "$id": "1869",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -25054,48 +24959,48 @@
                 "resourceType": "MgmtTypeSpec/issueTests",
                 "methods": [
                   {
-                    "$id": "1883",
+                    "$id": "1870",
                     "methodId": "MgmtTypeSpec.IssueTestResources.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/issueTests/{issueTestResourceName}",
                     "scope": {
-                      "$id": "1884",
+                      "$id": "1871",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/issueTests/{issueTestResourceName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1885",
+                    "$id": "1872",
                     "methodId": "MgmtTypeSpec.IssueTestResources.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/issueTests/{issueTestResourceName}",
                     "scope": {
-                      "$id": "1886",
+                      "$id": "1873",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/issueTests/{issueTestResourceName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1887",
+                    "$id": "1874",
                     "methodId": "MgmtTypeSpec.IssueTestResources.update",
                     "kind": "Update",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/issueTests/{issueTestResourceName}",
                     "scope": {
-                      "$id": "1888",
+                      "$id": "1875",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/issueTests/{issueTestResourceName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1889",
+                    "$id": "1876",
                     "methodId": "MgmtTypeSpec.IssueTestResources.listByResourceGroup",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/issueTests",
                     "scope": {
-                      "$id": "1890",
+                      "$id": "1877",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -25103,7 +25008,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "1891",
+                  "$id": "1878",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -25124,63 +25029,63 @@
                 "resourceType": "MgmtTypeSpec/endpoints",
                 "methods": [
                   {
-                    "$id": "1892",
+                    "$id": "1879",
                     "methodId": "MgmtTypeSpec.EndpointResources.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}",
                     "scope": {
-                      "$id": "1893",
+                      "$id": "1880",
                       "kind": "Extension",
                       "scopeIdPattern": "/{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}"
                     }
                   },
                   {
-                    "$id": "1894",
+                    "$id": "1881",
                     "methodId": "MgmtTypeSpec.EndpointResources.get",
                     "kind": "Read",
                     "operationPath": "/{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}",
                     "scope": {
-                      "$id": "1895",
+                      "$id": "1882",
                       "kind": "Extension",
                       "scopeIdPattern": "/{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}"
                     }
                   },
                   {
-                    "$id": "1896",
+                    "$id": "1883",
                     "methodId": "MgmtTypeSpec.EndpointResources.update",
                     "kind": "Update",
                     "operationPath": "/{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}",
                     "scope": {
-                      "$id": "1897",
+                      "$id": "1884",
                       "kind": "Extension",
                       "scopeIdPattern": "/{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}"
                     }
                   },
                   {
-                    "$id": "1898",
+                    "$id": "1885",
                     "methodId": "MgmtTypeSpec.EndpointResources.delete",
                     "kind": "Delete",
                     "operationPath": "/{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}",
                     "scope": {
-                      "$id": "1899",
+                      "$id": "1886",
                       "kind": "Extension",
                       "scopeIdPattern": "/{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}"
                     }
                   },
                   {
-                    "$id": "1900",
+                    "$id": "1887",
                     "methodId": "MgmtTypeSpec.EndpointResources.list",
                     "kind": "List",
                     "operationPath": "/{resourceUri}/providers/MgmtTypeSpec/endpoints",
                     "scope": {
-                      "$id": "1901",
+                      "$id": "1888",
                       "kind": "Extension",
                       "scopeIdPattern": "/{resourceUri}"
                     }
                   }
                 ],
                 "scope": {
-                  "$id": "1902",
+                  "$id": "1889",
                   "kind": "Extension",
                   "scopeIdPattern": "/{resourceUri}"
                 },
@@ -25198,19 +25103,19 @@
                 "resourceType": "MgmtTypeSpec/selfHelps",
                 "methods": [
                   {
-                    "$id": "1903",
+                    "$id": "1890",
                     "methodId": "MgmtTypeSpec.SolutionResources.get",
                     "kind": "Read",
                     "operationPath": "/{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}",
                     "scope": {
-                      "$id": "1904",
+                      "$id": "1891",
                       "kind": "Extension",
                       "scopeIdPattern": "/{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}"
                     }
                   }
                 ],
                 "scope": {
-                  "$id": "1905",
+                  "$id": "1892",
                   "kind": "Extension",
                   "scopeIdPattern": "/{scope}"
                 },
@@ -25228,36 +25133,36 @@
                 "resourceType": "MgmtTypeSpec/locations/playwrightQuotas",
                 "methods": [
                   {
-                    "$id": "1906",
+                    "$id": "1893",
                     "methodId": "MgmtTypeSpec.PlaywrightQuotas.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas/{playwrightQuotaName}",
                     "scope": {
-                      "$id": "1907",
+                      "$id": "1894",
                       "kind": "Subscription",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas/{playwrightQuotaName}",
                       "scopeResourceType": "Microsoft.Resources/subscriptions"
                     }
                   },
                   {
-                    "$id": "1908",
+                    "$id": "1895",
                     "methodId": "MgmtTypeSpec.PlaywrightQuotas.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas/{playwrightQuotaName}",
                     "scope": {
-                      "$id": "1909",
+                      "$id": "1896",
                       "kind": "Subscription",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas/{playwrightQuotaName}",
                       "scopeResourceType": "Microsoft.Resources/subscriptions"
                     }
                   },
                   {
-                    "$id": "1910",
+                    "$id": "1897",
                     "methodId": "MgmtTypeSpec.PlaywrightQuotas.listBySubscription",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas",
                     "scope": {
-                      "$id": "1911",
+                      "$id": "1898",
                       "kind": "Subscription",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}",
                       "scopeResourceType": "Microsoft.Resources/subscriptions"
@@ -25265,7 +25170,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "1912",
+                  "$id": "1899",
                   "kind": "Subscription",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}",
                   "scopeResourceType": "Microsoft.Resources/subscriptions"
@@ -25286,36 +25191,36 @@
                 "resourceType": "MgmtTypeSpec/jobs",
                 "methods": [
                   {
-                    "$id": "1913",
+                    "$id": "1900",
                     "methodId": "MgmtTypeSpec.JobResources.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}",
                     "scope": {
-                      "$id": "1914",
+                      "$id": "1901",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1915",
+                    "$id": "1902",
                     "methodId": "MgmtTypeSpec.JobResources.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}",
                     "scope": {
-                      "$id": "1916",
+                      "$id": "1903",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1917",
+                    "$id": "1904",
                     "methodId": "MgmtTypeSpec.JobResources.update",
                     "kind": "Update",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}",
                     "scope": {
-                      "$id": "1918",
+                      "$id": "1905",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -25323,7 +25228,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "1919",
+                  "$id": "1906",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -25344,19 +25249,19 @@
                 "resourceType": "MgmtTypeSpec/virtualMachineInstances",
                 "methods": [
                   {
-                    "$id": "1920",
+                    "$id": "1907",
                     "methodId": "MgmtTypeSpec.HciVmInstances.get",
                     "kind": "Read",
                     "operationPath": "/{resourceUri}/providers/MgmtTypeSpec/virtualMachineInstances/default",
                     "scope": {
-                      "$id": "1921",
+                      "$id": "1908",
                       "kind": "Extension",
                       "scopeIdPattern": "/{resourceUri}/providers/MgmtTypeSpec/virtualMachineInstances/default"
                     }
                   }
                 ],
                 "scope": {
-                  "$id": "1922",
+                  "$id": "1909",
                   "kind": "Extension",
                   "scopeIdPattern": "/{resourceUri}"
                 },
@@ -25377,12 +25282,12 @@
                 "resourceType": "MgmtTypeSpec/quotas",
                 "methods": [
                   {
-                    "$id": "1923",
+                    "$id": "1910",
                     "methodId": "MgmtTypeSpec.GroupQuotaSubscriptionRequestStatuses.get",
                     "kind": "Read",
                     "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/MgmtTypeSpec/quotas/{requestId}",
                     "scope": {
-                      "$id": "1924",
+                      "$id": "1911",
                       "kind": "ManagementGroup",
                       "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/MgmtTypeSpec/quotas/{requestId}",
                       "scopeResourceType": "Microsoft.Management/managementGroups"
@@ -25390,7 +25295,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "1925",
+                  "$id": "1912",
                   "kind": "ManagementGroup",
                   "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}",
                   "scopeResourceType": "Microsoft.Management/managementGroups"
@@ -25409,12 +25314,12 @@
                 "resourceType": "MgmtTypeSpec/groupQuotas/resourceProviders/quotaAllocations",
                 "methods": [
                   {
-                    "$id": "1926",
+                    "$id": "1913",
                     "methodId": "MgmtTypeSpec.SubscriptionQuotaAllocationsLists.get",
                     "kind": "Read",
                     "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}",
                     "scope": {
-                      "$id": "1927",
+                      "$id": "1914",
                       "kind": "Extension",
                       "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}",
                       "scopeResourceType": "Microsoft.Management/managementGroups/subscriptions"
@@ -25422,7 +25327,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "1928",
+                  "$id": "1915",
                   "kind": "Extension",
                   "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}",
                   "scopeResourceType": "Microsoft.Management/managementGroups/subscriptions"
@@ -25441,36 +25346,36 @@
                 "resourceType": "MgmtTypeSpec/joos",
                 "methods": [
                   {
-                    "$id": "1929",
+                    "$id": "1916",
                     "methodId": "MgmtTypeSpec.Joos.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/joos/{jooName}",
                     "scope": {
-                      "$id": "1930",
+                      "$id": "1917",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/joos/{jooName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1931",
+                    "$id": "1918",
                     "methodId": "MgmtTypeSpec.Joos.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/joos/{jooName}",
                     "scope": {
-                      "$id": "1932",
+                      "$id": "1919",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/joos/{jooName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1933",
+                    "$id": "1920",
                     "methodId": "MgmtTypeSpec.Joos.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/joos/{jooName}",
                     "scope": {
-                      "$id": "1934",
+                      "$id": "1921",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/joos/{jooName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -25478,7 +25383,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "1935",
+                  "$id": "1922",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -25499,24 +25404,24 @@
                 "resourceType": "MgmtTypeSpec/sapVirtualInstances",
                 "methods": [
                   {
-                    "$id": "1936",
+                    "$id": "1923",
                     "methodId": "MgmtTypeSpec.SAPVirtualInstances.create",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sapVirtualInstances/{sapVirtualInstanceName}",
                     "scope": {
-                      "$id": "1937",
+                      "$id": "1924",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sapVirtualInstances/{sapVirtualInstanceName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1938",
+                    "$id": "1925",
                     "methodId": "MgmtTypeSpec.SAPVirtualInstances.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sapVirtualInstances/{sapVirtualInstanceName}",
                     "scope": {
-                      "$id": "1939",
+                      "$id": "1926",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sapVirtualInstances/{sapVirtualInstanceName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -25524,7 +25429,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "1940",
+                  "$id": "1927",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -25545,60 +25450,60 @@
                 "resourceType": "MgmtTypeSpec/bestPractices",
                 "methods": [
                   {
-                    "$id": "1941",
+                    "$id": "1928",
                     "methodId": "MgmtTypeSpec.BestPractices.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}",
                     "scope": {
-                      "$id": "1942",
+                      "$id": "1929",
                       "kind": "Tenant",
                       "scopeIdPattern": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}",
                       "scopeResourceType": "Microsoft.Resources/tenants"
                     }
                   },
                   {
-                    "$id": "1943",
+                    "$id": "1930",
                     "methodId": "MgmtTypeSpec.BestPractices.get",
                     "kind": "Read",
                     "operationPath": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}",
                     "scope": {
-                      "$id": "1944",
+                      "$id": "1931",
                       "kind": "Tenant",
                       "scopeIdPattern": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}",
                       "scopeResourceType": "Microsoft.Resources/tenants"
                     }
                   },
                   {
-                    "$id": "1945",
+                    "$id": "1932",
                     "methodId": "MgmtTypeSpec.BestPractices.update",
                     "kind": "Update",
                     "operationPath": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}",
                     "scope": {
-                      "$id": "1946",
+                      "$id": "1933",
                       "kind": "Tenant",
                       "scopeIdPattern": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}",
                       "scopeResourceType": "Microsoft.Resources/tenants"
                     }
                   },
                   {
-                    "$id": "1947",
+                    "$id": "1934",
                     "methodId": "MgmtTypeSpec.BestPractices.delete",
                     "kind": "Delete",
                     "operationPath": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}",
                     "scope": {
-                      "$id": "1948",
+                      "$id": "1935",
                       "kind": "Tenant",
                       "scopeIdPattern": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}",
                       "scopeResourceType": "Microsoft.Resources/tenants"
                     }
                   },
                   {
-                    "$id": "1949",
+                    "$id": "1936",
                     "methodId": "MgmtTypeSpec.BestPractices.list",
                     "kind": "List",
                     "operationPath": "/providers/MgmtTypeSpec/bestPractices",
                     "scope": {
-                      "$id": "1950",
+                      "$id": "1937",
                       "kind": "Tenant",
                       "scopeIdPattern": "",
                       "scopeResourceType": "Microsoft.Resources/tenants"
@@ -25606,7 +25511,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "1951",
+                  "$id": "1938",
                   "kind": "Tenant",
                   "scopeIdPattern": "",
                   "scopeResourceType": "Microsoft.Resources/tenants"
@@ -25625,60 +25530,60 @@
                 "resourceType": "MgmtTypeSpec/bestPractices/versions",
                 "methods": [
                   {
-                    "$id": "1952",
+                    "$id": "1939",
                     "methodId": "MgmtTypeSpec.BestPracticeVersions.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions/{versionName}",
                     "scope": {
-                      "$id": "1953",
+                      "$id": "1940",
                       "kind": "Tenant",
                       "scopeIdPattern": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions/{versionName}",
                       "scopeResourceType": "Microsoft.Resources/tenants"
                     }
                   },
                   {
-                    "$id": "1954",
+                    "$id": "1941",
                     "methodId": "MgmtTypeSpec.BestPracticeVersions.get",
                     "kind": "Read",
                     "operationPath": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions/{versionName}",
                     "scope": {
-                      "$id": "1955",
+                      "$id": "1942",
                       "kind": "Tenant",
                       "scopeIdPattern": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions/{versionName}",
                       "scopeResourceType": "Microsoft.Resources/tenants"
                     }
                   },
                   {
-                    "$id": "1956",
+                    "$id": "1943",
                     "methodId": "MgmtTypeSpec.BestPracticeVersions.update",
                     "kind": "Update",
                     "operationPath": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions/{versionName}",
                     "scope": {
-                      "$id": "1957",
+                      "$id": "1944",
                       "kind": "Tenant",
                       "scopeIdPattern": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions/{versionName}",
                       "scopeResourceType": "Microsoft.Resources/tenants"
                     }
                   },
                   {
-                    "$id": "1958",
+                    "$id": "1945",
                     "methodId": "MgmtTypeSpec.BestPracticeVersions.delete",
                     "kind": "Delete",
                     "operationPath": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions/{versionName}",
                     "scope": {
-                      "$id": "1959",
+                      "$id": "1946",
                       "kind": "Tenant",
                       "scopeIdPattern": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions/{versionName}",
                       "scopeResourceType": "Microsoft.Resources/tenants"
                     }
                   },
                   {
-                    "$id": "1960",
+                    "$id": "1947",
                     "methodId": "MgmtTypeSpec.BestPracticeVersions.list",
                     "kind": "List",
                     "operationPath": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions",
                     "scope": {
-                      "$id": "1961",
+                      "$id": "1948",
                       "kind": "Tenant",
                       "scopeIdPattern": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}",
                       "scopeResourceType": "Microsoft.Resources/tenants"
@@ -25686,7 +25591,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "1962",
+                  "$id": "1949",
                   "kind": "Tenant",
                   "scopeIdPattern": "",
                   "scopeResourceType": "Microsoft.Resources/tenants"
@@ -25706,24 +25611,24 @@
                 "resourceType": "MgmtTypeSpec/resourceTypeTestResources",
                 "methods": [
                   {
-                    "$id": "1963",
+                    "$id": "1950",
                     "methodId": "MgmtTypeSpec.ResourceTypeTests.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/resourceTypeTestResources/{resourceTypeTestResourceName}",
                     "scope": {
-                      "$id": "1964",
+                      "$id": "1951",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/resourceTypeTestResources/{resourceTypeTestResourceName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1965",
+                    "$id": "1952",
                     "methodId": "MgmtTypeSpec.ResourceTypeTests.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/resourceTypeTestResources/{resourceTypeTestResourceName}",
                     "scope": {
-                      "$id": "1966",
+                      "$id": "1953",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/resourceTypeTestResources/{resourceTypeTestResourceName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -25731,7 +25636,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "1967",
+                  "$id": "1954",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -25752,48 +25657,48 @@
                 "resourceType": "MgmtTypeSpec/sampleDatas",
                 "methods": [
                   {
-                    "$id": "1968",
+                    "$id": "1955",
                     "methodId": "MgmtTypeSpec.SampleDatas.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sampleDatas/{sampleDataName}",
                     "scope": {
-                      "$id": "1969",
+                      "$id": "1956",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sampleDatas/{sampleDataName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1970",
+                    "$id": "1957",
                     "methodId": "MgmtTypeSpec.SampleDatas.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sampleDatas/{sampleDataName}",
                     "scope": {
-                      "$id": "1971",
+                      "$id": "1958",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sampleDatas/{sampleDataName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1972",
+                    "$id": "1959",
                     "methodId": "MgmtTypeSpec.SampleDatas.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sampleDatas/{sampleDataName}",
                     "scope": {
-                      "$id": "1973",
+                      "$id": "1960",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sampleDatas/{sampleDataName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1974",
+                    "$id": "1961",
                     "methodId": "MgmtTypeSpec.SampleDatas.list",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sampleDatas",
                     "scope": {
-                      "$id": "1975",
+                      "$id": "1962",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -25801,7 +25706,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "1976",
+                  "$id": "1963",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -25822,48 +25727,48 @@
                 "resourceType": "MgmtTypeSpec/workloadNetworks",
                 "methods": [
                   {
-                    "$id": "1977",
+                    "$id": "1964",
                     "methodId": "MgmtTypeSpec.WorkloadNetworksOps.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/workloadNetworks/{workloadNetworkName}",
                     "scope": {
-                      "$id": "1978",
+                      "$id": "1965",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/workloadNetworks/{workloadNetworkName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1979",
+                    "$id": "1966",
                     "methodId": "MgmtTypeSpec.WorkloadNetworksOps.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/workloadNetworks/{workloadNetworkName}",
                     "scope": {
-                      "$id": "1980",
+                      "$id": "1967",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/workloadNetworks/{workloadNetworkName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1981",
+                    "$id": "1968",
                     "methodId": "MgmtTypeSpec.WorkloadNetworksOps.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/workloadNetworks/{workloadNetworkName}",
                     "scope": {
-                      "$id": "1982",
+                      "$id": "1969",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/workloadNetworks/{workloadNetworkName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "1983",
+                    "$id": "1970",
                     "methodId": "MgmtTypeSpec.WorkloadNetworksOps.list",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/workloadNetworks",
                     "scope": {
-                      "$id": "1984",
+                      "$id": "1971",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -25871,7 +25776,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "1985",
+                  "$id": "1972",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -25887,221 +25792,57 @@
                 "rbacRoles": []
               },
               {
-                "resourceModelId": "MgmtTypeSpec.WorkloadNetworkVmGroup",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}",
-                "resourceType": "MgmtTypeSpec/vmGroups",
-                "methods": [
-                  {
-                    "$id": "1986",
-                    "methodId": "MgmtTypeSpec.WorkloadNetworkVmGroups.createOrUpdate",
-                    "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}",
-                    "scope": {
-                      "$id": "1987",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "1988",
-                    "methodId": "MgmtTypeSpec.WorkloadNetworkVmGroups.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}",
-                    "scope": {
-                      "$id": "1989",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "1990",
-                    "methodId": "MgmtTypeSpec.WorkloadNetworkVmGroups.update",
-                    "kind": "Update",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}",
-                    "scope": {
-                      "$id": "1991",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "1992",
-                    "methodId": "MgmtTypeSpec.WorkloadNetworkVmGroups.delete",
-                    "kind": "Delete",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}",
-                    "scope": {
-                      "$id": "1993",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "1994",
-                    "methodId": "MgmtTypeSpec.WorkloadNetworkVmGroups.list",
-                    "kind": "List",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups",
-                    "scope": {
-                      "$id": "1995",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  }
-                ],
-                "scope": {
-                  "$id": "1996",
-                  "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                },
-                "resourceName": "WorkloadNetworkVmGroup",
-                "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                },
-                "apiVersions": [
-                  "2024-04-01",
-                  "2024-05-01"
-                ],
-                "rbacRoles": []
-              },
-              {
-                "resourceModelId": "MgmtTypeSpec.WorkloadNetworkSegment",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}",
-                "resourceType": "MgmtTypeSpec/segments",
-                "methods": [
-                  {
-                    "$id": "1997",
-                    "methodId": "MgmtTypeSpec.WorkloadNetworkSegments.createOrUpdate",
-                    "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}",
-                    "scope": {
-                      "$id": "1998",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "1999",
-                    "methodId": "MgmtTypeSpec.WorkloadNetworkSegments.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}",
-                    "scope": {
-                      "$id": "2000",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "2001",
-                    "methodId": "MgmtTypeSpec.WorkloadNetworkSegments.update",
-                    "kind": "Update",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}",
-                    "scope": {
-                      "$id": "2002",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "2003",
-                    "methodId": "MgmtTypeSpec.WorkloadNetworkSegments.delete",
-                    "kind": "Delete",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}",
-                    "scope": {
-                      "$id": "2004",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "2005",
-                    "methodId": "MgmtTypeSpec.WorkloadNetworkSegments.list",
-                    "kind": "List",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments",
-                    "scope": {
-                      "$id": "2006",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  }
-                ],
-                "scope": {
-                  "$id": "2007",
-                  "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                },
-                "resourceName": "WorkloadNetworkSegment",
-                "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                },
-                "apiVersions": [
-                  "2024-04-01",
-                  "2024-05-01"
-                ],
-                "rbacRoles": []
-              },
-              {
                 "resourceModelId": "MgmtTypeSpec.Target",
                 "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}",
                 "resourceType": "MgmtTypeSpec/targets",
                 "methods": [
                   {
-                    "$id": "2008",
+                    "$id": "1973",
                     "methodId": "MgmtTypeSpec.Targets.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}",
                     "scope": {
-                      "$id": "2009",
+                      "$id": "1974",
                       "kind": "Extension",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}"
                     }
                   },
                   {
-                    "$id": "2010",
+                    "$id": "1975",
                     "methodId": "MgmtTypeSpec.Targets.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}",
                     "scope": {
-                      "$id": "2011",
+                      "$id": "1976",
                       "kind": "Extension",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}"
                     }
                   },
                   {
-                    "$id": "2012",
+                    "$id": "1977",
                     "methodId": "MgmtTypeSpec.Targets.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}",
                     "scope": {
-                      "$id": "2013",
+                      "$id": "1978",
                       "kind": "Extension",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}"
                     }
                   },
                   {
-                    "$id": "2014",
+                    "$id": "1979",
                     "methodId": "MgmtTypeSpec.Targets.list",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets",
                     "scope": {
-                      "$id": "2015",
+                      "$id": "1980",
                       "kind": "Extension",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}"
                     }
                   }
                 ],
                 "scope": {
-                  "$id": "2016",
+                  "$id": "1981",
                   "kind": "Extension",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}"
                 },
@@ -26121,72 +25862,72 @@
                 "resourceType": "MgmtTypeSpec/clusters",
                 "methods": [
                   {
-                    "$id": "2017",
+                    "$id": "1982",
                     "methodId": "MgmtTypeSpec.Clusters.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/clusters/{clusterName}",
                     "scope": {
-                      "$id": "2018",
+                      "$id": "1983",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/clusters/{clusterName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2019",
+                    "$id": "1984",
                     "methodId": "MgmtTypeSpec.Clusters.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/clusters/{clusterName}",
                     "scope": {
-                      "$id": "2020",
+                      "$id": "1985",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/clusters/{clusterName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2021",
+                    "$id": "1986",
                     "methodId": "MgmtTypeSpec.Clusters.update",
                     "kind": "Update",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/clusters/{clusterName}",
                     "scope": {
-                      "$id": "2022",
+                      "$id": "1987",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/clusters/{clusterName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2023",
+                    "$id": "1988",
                     "methodId": "MgmtTypeSpec.Clusters.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/clusters/{clusterName}",
                     "scope": {
-                      "$id": "2024",
+                      "$id": "1989",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/clusters/{clusterName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2025",
+                    "$id": "1990",
                     "methodId": "MgmtTypeSpec.Clusters.listByResourceGroup",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/clusters",
                     "scope": {
-                      "$id": "2026",
+                      "$id": "1991",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2027",
+                    "$id": "1992",
                     "methodId": "MgmtTypeSpec.Clusters.listBySubscription",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/clusters",
                     "scope": {
-                      "$id": "2028",
+                      "$id": "1993",
                       "kind": "Subscription",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}",
                       "scopeResourceType": "Microsoft.Resources/subscriptions"
@@ -26194,7 +25935,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "2029",
+                  "$id": "1994",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -26215,48 +25956,48 @@
                 "resourceType": "MgmtTypeSpec/duplicatePropertyTests",
                 "methods": [
                   {
-                    "$id": "2030",
+                    "$id": "1995",
                     "methodId": "MgmtTypeSpec.DuplicatePropertyTests.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/duplicatePropertyTests/{duplicatePropertyTestName}",
                     "scope": {
-                      "$id": "2031",
+                      "$id": "1996",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/duplicatePropertyTests/{duplicatePropertyTestName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2032",
+                    "$id": "1997",
                     "methodId": "MgmtTypeSpec.DuplicatePropertyTests.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/duplicatePropertyTests/{duplicatePropertyTestName}",
                     "scope": {
-                      "$id": "2033",
+                      "$id": "1998",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/duplicatePropertyTests/{duplicatePropertyTestName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2034",
+                    "$id": "1999",
                     "methodId": "MgmtTypeSpec.DuplicatePropertyTests.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/duplicatePropertyTests/{duplicatePropertyTestName}",
                     "scope": {
-                      "$id": "2035",
+                      "$id": "2000",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/duplicatePropertyTests/{duplicatePropertyTestName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2036",
+                    "$id": "2001",
                     "methodId": "MgmtTypeSpec.DuplicatePropertyTests.list",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/duplicatePropertyTests",
                     "scope": {
-                      "$id": "2037",
+                      "$id": "2002",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -26264,7 +26005,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "2038",
+                  "$id": "2003",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -26285,36 +26026,36 @@
                 "resourceType": "MgmtTypeSpec/sites",
                 "methods": [
                   {
-                    "$id": "2039",
+                    "$id": "2004",
                     "methodId": "MgmtTypeSpec.ServiceGroupSites.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/MgmtTypeSpec/sites/{siteName}",
                     "scope": {
-                      "$id": "2040",
+                      "$id": "2005",
                       "kind": "Extension",
                       "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/MgmtTypeSpec/sites/{siteName}",
                       "scopeResourceType": "Microsoft.Management/serviceGroups"
                     }
                   },
                   {
-                    "$id": "2041",
+                    "$id": "2006",
                     "methodId": "MgmtTypeSpec.ServiceGroupSites.get",
                     "kind": "Read",
                     "operationPath": "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/MgmtTypeSpec/sites/{siteName}",
                     "scope": {
-                      "$id": "2042",
+                      "$id": "2007",
                       "kind": "Extension",
                       "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/MgmtTypeSpec/sites/{siteName}",
                       "scopeResourceType": "Microsoft.Management/serviceGroups"
                     }
                   },
                   {
-                    "$id": "2043",
+                    "$id": "2008",
                     "methodId": "MgmtTypeSpec.ServiceGroupSites.listByServiceGroup",
                     "kind": "List",
                     "operationPath": "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/MgmtTypeSpec/sites",
                     "scope": {
-                      "$id": "2044",
+                      "$id": "2009",
                       "kind": "Extension",
                       "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{servicegroupName}",
                       "scopeResourceType": "Microsoft.Management/serviceGroups"
@@ -26322,7 +26063,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "2045",
+                  "$id": "2010",
                   "kind": "Extension",
                   "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{servicegroupName}",
                   "scopeResourceType": "Microsoft.Management/serviceGroups"
@@ -26343,48 +26084,48 @@
                 "resourceType": "MgmtTypeSpec/trafficProfiles",
                 "methods": [
                   {
-                    "$id": "2046",
+                    "$id": "2011",
                     "methodId": "MgmtTypeSpec.TrafficProfiles.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}",
                     "scope": {
-                      "$id": "2047",
+                      "$id": "2012",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2048",
+                    "$id": "2013",
                     "methodId": "MgmtTypeSpec.TrafficProfiles.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}",
                     "scope": {
-                      "$id": "2049",
+                      "$id": "2014",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2050",
+                    "$id": "2015",
                     "methodId": "MgmtTypeSpec.TrafficProfiles.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}",
                     "scope": {
-                      "$id": "2051",
+                      "$id": "2016",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2052",
+                    "$id": "2017",
                     "methodId": "MgmtTypeSpec.TrafficProfiles.list",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec",
                     "scope": {
-                      "$id": "2053",
+                      "$id": "2018",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -26392,7 +26133,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "2054",
+                  "$id": "2019",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -26411,36 +26152,36 @@
                 "resourceType": "MgmtTypeSpec/trafficProfiles/endpoints",
                 "methods": [
                   {
-                    "$id": "2055",
+                    "$id": "2020",
                     "methodId": "MgmtTypeSpec.TrafficEndpoints.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}/endpoints/{endpointName}",
                     "scope": {
-                      "$id": "2056",
+                      "$id": "2021",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}/endpoints/{endpointName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2057",
+                    "$id": "2022",
                     "methodId": "MgmtTypeSpec.TrafficEndpoints.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}/endpoints/{endpointName}",
                     "scope": {
-                      "$id": "2058",
+                      "$id": "2023",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}/endpoints/{endpointName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2059",
+                    "$id": "2024",
                     "methodId": "MgmtTypeSpec.TrafficEndpoints.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}/endpoints/{endpointName}",
                     "scope": {
-                      "$id": "2060",
+                      "$id": "2025",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}/endpoints/{endpointName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -26448,7 +26189,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "2061",
+                  "$id": "2026",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -26468,19 +26209,19 @@
                 "resourceType": "MgmtTypeSpec/vmConfigurationAssignments",
                 "methods": [
                   {
-                    "$id": "2062",
+                    "$id": "2027",
                     "methodId": "MgmtTypeSpec.VmConfigurationAssignments.get",
                     "kind": "Read",
                     "operationPath": "/{scope}/providers/MgmtTypeSpec/vmConfigurationAssignments/{vmConfigAssignmentName}",
                     "scope": {
-                      "$id": "2063",
+                      "$id": "2028",
                       "kind": "Extension",
                       "scopeIdPattern": "/{scope}/providers/MgmtTypeSpec/vmConfigurationAssignments/{vmConfigAssignmentName}"
                     }
                   }
                 ],
                 "scope": {
-                  "$id": "2064",
+                  "$id": "2029",
                   "kind": "Extension",
                   "scopeIdPattern": "/{scope}"
                 },
@@ -26498,19 +26239,19 @@
                 "resourceType": "MgmtTypeSpec/hcrpConfigurationAssignments",
                 "methods": [
                   {
-                    "$id": "2065",
+                    "$id": "2030",
                     "methodId": "MgmtTypeSpec.HcrpConfigurationAssignments.get",
                     "kind": "Read",
                     "operationPath": "/{scope}/providers/MgmtTypeSpec/hcrpConfigurationAssignments/{hcrpConfigAssignmentName}",
                     "scope": {
-                      "$id": "2066",
+                      "$id": "2031",
                       "kind": "Extension",
                       "scopeIdPattern": "/{scope}/providers/MgmtTypeSpec/hcrpConfigurationAssignments/{hcrpConfigAssignmentName}"
                     }
                   }
                 ],
                 "scope": {
-                  "$id": "2067",
+                  "$id": "2032",
                   "kind": "Extension",
                   "scopeIdPattern": "/{scope}"
                 },
@@ -26528,24 +26269,24 @@
                 "resourceType": "MgmtTypeSpec/foos/multiFlatten",
                 "methods": [
                   {
-                    "$id": "2068",
+                    "$id": "2033",
                     "methodId": "MgmtTypeSpec.MultiFlattenOps.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/multiFlatten/{multiFlattenTestName}",
                     "scope": {
-                      "$id": "2069",
+                      "$id": "2034",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/multiFlatten/{multiFlattenTestName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2070",
+                    "$id": "2035",
                     "methodId": "MgmtTypeSpec.MultiFlattenOps.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/multiFlatten/{multiFlattenTestName}",
                     "scope": {
-                      "$id": "2071",
+                      "$id": "2036",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/multiFlatten/{multiFlattenTestName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -26553,7 +26294,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "2072",
+                  "$id": "2037",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -26575,48 +26316,48 @@
                 "resourceType": "MgmtTypeSpec/policyAssignments",
                 "methods": [
                   {
-                    "$id": "2073",
+                    "$id": "2038",
                     "methodId": "MgmtTypeSpec.PolicyVmAssignments.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}",
                     "scope": {
-                      "$id": "2074",
+                      "$id": "2039",
                       "kind": "Extension",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}",
                       "scopeResourceType": "Microsoft.Compute/virtualMachines"
                     }
                   },
                   {
-                    "$id": "2075",
+                    "$id": "2040",
                     "methodId": "MgmtTypeSpec.PolicyVmAssignments.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}",
                     "scope": {
-                      "$id": "2076",
+                      "$id": "2041",
                       "kind": "Extension",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}",
                       "scopeResourceType": "Microsoft.Compute/virtualMachines"
                     }
                   },
                   {
-                    "$id": "2077",
+                    "$id": "2042",
                     "methodId": "MgmtTypeSpec.PolicyVmAssignments.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}",
                     "scope": {
-                      "$id": "2078",
+                      "$id": "2043",
                       "kind": "Extension",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}",
                       "scopeResourceType": "Microsoft.Compute/virtualMachines"
                     }
                   },
                   {
-                    "$id": "2079",
+                    "$id": "2044",
                     "methodId": "MgmtTypeSpec.PolicyVmAssignments.list",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/MgmtTypeSpec/policyAssignments",
                     "scope": {
-                      "$id": "2080",
+                      "$id": "2045",
                       "kind": "Extension",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
                       "scopeResourceType": "Microsoft.Compute/virtualMachines"
@@ -26624,7 +26365,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "2081",
+                  "$id": "2046",
                   "kind": "Extension",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
                   "scopeResourceType": "Microsoft.Compute/virtualMachines"
@@ -26643,48 +26384,48 @@
                 "resourceType": "MgmtTypeSpec/policyAssignments",
                 "methods": [
                   {
-                    "$id": "2082",
+                    "$id": "2047",
                     "methodId": "MgmtTypeSpec.PolicyArcAssignments.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}",
                     "scope": {
-                      "$id": "2083",
+                      "$id": "2048",
                       "kind": "Extension",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}",
                       "scopeResourceType": "Microsoft.HybridCompute/machines"
                     }
                   },
                   {
-                    "$id": "2084",
+                    "$id": "2049",
                     "methodId": "MgmtTypeSpec.PolicyArcAssignments.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}",
                     "scope": {
-                      "$id": "2085",
+                      "$id": "2050",
                       "kind": "Extension",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}",
                       "scopeResourceType": "Microsoft.HybridCompute/machines"
                     }
                   },
                   {
-                    "$id": "2086",
+                    "$id": "2051",
                     "methodId": "MgmtTypeSpec.PolicyArcAssignments.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}",
                     "scope": {
-                      "$id": "2087",
+                      "$id": "2052",
                       "kind": "Extension",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}",
                       "scopeResourceType": "Microsoft.HybridCompute/machines"
                     }
                   },
                   {
-                    "$id": "2088",
+                    "$id": "2053",
                     "methodId": "MgmtTypeSpec.PolicyArcAssignments.list",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/MgmtTypeSpec/policyAssignments",
                     "scope": {
-                      "$id": "2089",
+                      "$id": "2054",
                       "kind": "Extension",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}",
                       "scopeResourceType": "Microsoft.HybridCompute/machines"
@@ -26692,7 +26433,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "2090",
+                  "$id": "2055",
                   "kind": "Extension",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}",
                   "scopeResourceType": "Microsoft.HybridCompute/machines"
@@ -26711,48 +26452,48 @@
                 "resourceType": "MgmtTypeSpec/certificates",
                 "methods": [
                   {
-                    "$id": "2091",
+                    "$id": "2056",
                     "methodId": "MgmtTypeSpec.TestCertificates.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/certificates/{certificateName}",
                     "scope": {
-                      "$id": "2092",
+                      "$id": "2057",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/certificates/{certificateName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2093",
+                    "$id": "2058",
                     "methodId": "MgmtTypeSpec.TestCertificates.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/certificates/{certificateName}",
                     "scope": {
-                      "$id": "2094",
+                      "$id": "2059",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/certificates/{certificateName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2095",
+                    "$id": "2060",
                     "methodId": "MgmtTypeSpec.TestCertificates.update",
                     "kind": "Update",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/certificates/{certificateName}",
                     "scope": {
-                      "$id": "2096",
+                      "$id": "2061",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/certificates/{certificateName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2097",
+                    "$id": "2062",
                     "methodId": "MgmtTypeSpec.TestCertificates.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/certificates/{certificateName}",
                     "scope": {
-                      "$id": "2098",
+                      "$id": "2063",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/certificates/{certificateName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -26760,7 +26501,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "2099",
+                  "$id": "2064",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -26779,24 +26520,24 @@
                 "resourceType": "MgmtTypeSpec/publicSharedConfigs",
                 "methods": [
                   {
-                    "$id": "2100",
+                    "$id": "2065",
                     "methodId": "MgmtTypeSpec.PublicSharedConfigs.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/publicSharedConfigs/{configName}",
                     "scope": {
-                      "$id": "2101",
+                      "$id": "2066",
                       "kind": "Subscription",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/publicSharedConfigs/{configName}",
                       "scopeResourceType": "Microsoft.Resources/subscriptions"
                     }
                   },
                   {
-                    "$id": "2102",
+                    "$id": "2067",
                     "methodId": "MgmtTypeSpec.PublicSharedConfigs.list",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/sharedConfigs",
                     "scope": {
-                      "$id": "2103",
+                      "$id": "2068",
                       "kind": "Subscription",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}",
                       "scopeResourceType": "Microsoft.Resources/subscriptions"
@@ -26804,7 +26545,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "2104",
+                  "$id": "2069",
                   "kind": "Subscription",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}",
                   "scopeResourceType": "Microsoft.Resources/subscriptions"
@@ -26823,48 +26564,48 @@
                 "resourceType": "MgmtTypeSpec/sharedConfigs",
                 "methods": [
                   {
-                    "$id": "2105",
+                    "$id": "2070",
                     "methodId": "MgmtTypeSpec.SharedConfigs.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs/{configName}",
                     "scope": {
-                      "$id": "2106",
+                      "$id": "2071",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs/{configName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2107",
+                    "$id": "2072",
                     "methodId": "MgmtTypeSpec.SharedConfigs.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs/{configName}",
                     "scope": {
-                      "$id": "2108",
+                      "$id": "2073",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs/{configName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2109",
+                    "$id": "2074",
                     "methodId": "MgmtTypeSpec.SharedConfigs.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs/{configName}",
                     "scope": {
-                      "$id": "2110",
+                      "$id": "2075",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs/{configName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2111",
+                    "$id": "2076",
                     "methodId": "MgmtTypeSpec.SharedConfigs.list",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs",
                     "scope": {
-                      "$id": "2112",
+                      "$id": "2077",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -26872,7 +26613,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "2113",
+                  "$id": "2078",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -26891,30 +26632,30 @@
                 "resourceType": "MgmtTypeSpec/polyDevices",
                 "methods": [
                   {
-                    "$id": "2114",
+                    "$id": "2079",
                     "methodId": "MgmtTypeSpec.PolyDevices.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/{scope}/providers/MgmtTypeSpec/polyDevices/{deviceName}",
                     "scope": {
-                      "$id": "2115",
+                      "$id": "2080",
                       "kind": "Extension",
                       "scopeIdPattern": "/{scope}/providers/MgmtTypeSpec/polyDevices/{deviceName}"
                     }
                   },
                   {
-                    "$id": "2116",
+                    "$id": "2081",
                     "methodId": "MgmtTypeSpec.PolyDevices.get",
                     "kind": "Read",
                     "operationPath": "/{scope}/providers/MgmtTypeSpec/polyDevices/{deviceName}",
                     "scope": {
-                      "$id": "2117",
+                      "$id": "2082",
                       "kind": "Extension",
                       "scopeIdPattern": "/{scope}/providers/MgmtTypeSpec/polyDevices/{deviceName}"
                     }
                   }
                 ],
                 "scope": {
-                  "$id": "2118",
+                  "$id": "2083",
                   "kind": "Extension",
                   "scopeIdPattern": "/{scope}"
                 },
@@ -26932,24 +26673,24 @@
                 "resourceType": "MgmtTypeSpec/cycleTestStores",
                 "methods": [
                   {
-                    "$id": "2119",
+                    "$id": "2084",
                     "methodId": "MgmtTypeSpec.CycleTestStores.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/cycleTestStores/{cycleTestStoreName}",
                     "scope": {
-                      "$id": "2120",
+                      "$id": "2085",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/cycleTestStores/{cycleTestStoreName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2121",
+                    "$id": "2086",
                     "methodId": "MgmtTypeSpec.CycleTestStores.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/cycleTestStores/{cycleTestStoreName}",
                     "scope": {
-                      "$id": "2122",
+                      "$id": "2087",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/cycleTestStores/{cycleTestStoreName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -26957,7 +26698,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "2123",
+                  "$id": "2088",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -26978,48 +26719,48 @@
                 "resourceType": "MgmtTypeSpec/eventGridTopics",
                 "methods": [
                   {
-                    "$id": "2124",
+                    "$id": "2089",
                     "methodId": "MgmtTypeSpec.EventGridTopics.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridTopics/{topicName}",
                     "scope": {
-                      "$id": "2125",
+                      "$id": "2090",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridTopics/{topicName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2126",
+                    "$id": "2091",
                     "methodId": "MgmtTypeSpec.EventGridTopics.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridTopics/{topicName}",
                     "scope": {
-                      "$id": "2127",
+                      "$id": "2092",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridTopics/{topicName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2128",
+                    "$id": "2093",
                     "methodId": "MgmtTypeSpec.EventGridTopics.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridTopics/{topicName}",
                     "scope": {
-                      "$id": "2129",
+                      "$id": "2094",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridTopics/{topicName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "2130",
+                    "$id": "2095",
                     "methodId": "MgmtTypeSpec.EventGridTopics.listByResourceGroup",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridTopics",
                     "scope": {
-                      "$id": "2131",
+                      "$id": "2096",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -27027,7 +26768,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "2132",
+                  "$id": "2097",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -27048,46 +26789,305 @@
                 "resourceType": "MgmtTypeSpec/eventGridDomains",
                 "methods": [
                   {
-                    "$id": "2133",
+                    "$id": "2098",
                     "methodId": "MgmtTypeSpec.EventGridDomains.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains/{domainName}",
                     "scope": {
-                      "$id": "2134",
+                      "$id": "2099",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains/{domainName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "2100",
+                    "methodId": "MgmtTypeSpec.EventGridDomains.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains/{domainName}",
+                    "scope": {
+                      "$id": "2101",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains/{domainName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "2102",
+                    "methodId": "MgmtTypeSpec.EventGridDomains.delete",
+                    "kind": "Delete",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains/{domainName}",
+                    "scope": {
+                      "$id": "2103",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains/{domainName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "2104",
+                    "methodId": "MgmtTypeSpec.EventGridDomains.listByResourceGroup",
+                    "kind": "List",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains",
+                    "scope": {
+                      "$id": "2105",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "2106",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "resourceName": "EventGridDomain",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "apiVersions": [
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "MgmtTypeSpec.Bar",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
+                "resourceType": "MgmtTypeSpec/foos/bars",
+                "methods": [
+                  {
+                    "$id": "2107",
+                    "methodId": "MgmtTypeSpec.Bars.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
+                    "scope": {
+                      "$id": "2108",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "2109",
+                    "methodId": "MgmtTypeSpec.Bars.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
+                    "scope": {
+                      "$id": "2110",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "2111",
+                    "methodId": "MgmtTypeSpec.Bars.update",
+                    "kind": "Update",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
+                    "scope": {
+                      "$id": "2112",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "2113",
+                    "methodId": "MgmtTypeSpec.Bars.delete",
+                    "kind": "Delete",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
+                    "scope": {
+                      "$id": "2114",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "2115",
+                    "methodId": "MgmtTypeSpec.Bars.list",
+                    "kind": "List",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{name}/bars",
+                    "scope": {
+                      "$id": "2116",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "2117",
+                    "methodId": "MgmtTypeSpec.Employees.listByParent",
+                    "kind": "List",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/employees",
+                    "scope": {
+                      "$id": "2118",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "2119",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}",
+                "resourceName": "Bar",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "apiVersions": [
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "MgmtTypeSpec.WorkloadNetworkVmGroup",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}",
+                "resourceType": "MgmtTypeSpec/vmGroups",
+                "methods": [
+                  {
+                    "$id": "2120",
+                    "methodId": "MgmtTypeSpec.WorkloadNetworkVmGroups.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}",
+                    "scope": {
+                      "$id": "2121",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "2122",
+                    "methodId": "MgmtTypeSpec.WorkloadNetworkVmGroups.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}",
+                    "scope": {
+                      "$id": "2123",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "2124",
+                    "methodId": "MgmtTypeSpec.WorkloadNetworkVmGroups.update",
+                    "kind": "Update",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}",
+                    "scope": {
+                      "$id": "2125",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "2126",
+                    "methodId": "MgmtTypeSpec.WorkloadNetworkVmGroups.delete",
+                    "kind": "Delete",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}",
+                    "scope": {
+                      "$id": "2127",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "2128",
+                    "methodId": "MgmtTypeSpec.WorkloadNetworkVmGroups.list",
+                    "kind": "List",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups",
+                    "scope": {
+                      "$id": "2129",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "2130",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "resourceName": "WorkloadNetworkVmGroup",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "apiVersions": [
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "MgmtTypeSpec.WorkloadNetworkSegment",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}",
+                "resourceType": "MgmtTypeSpec/segments",
+                "methods": [
+                  {
+                    "$id": "2131",
+                    "methodId": "MgmtTypeSpec.WorkloadNetworkSegments.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}",
+                    "scope": {
+                      "$id": "2132",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "2133",
+                    "methodId": "MgmtTypeSpec.WorkloadNetworkSegments.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}",
+                    "scope": {
+                      "$id": "2134",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
                     "$id": "2135",
-                    "methodId": "MgmtTypeSpec.EventGridDomains.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains/{domainName}",
+                    "methodId": "MgmtTypeSpec.WorkloadNetworkSegments.update",
+                    "kind": "Update",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}",
                     "scope": {
                       "$id": "2136",
                       "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains/{domainName}",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
                     "$id": "2137",
-                    "methodId": "MgmtTypeSpec.EventGridDomains.delete",
+                    "methodId": "MgmtTypeSpec.WorkloadNetworkSegments.delete",
                     "kind": "Delete",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains/{domainName}",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}",
                     "scope": {
                       "$id": "2138",
                       "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains/{domainName}",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
                     "$id": "2139",
-                    "methodId": "MgmtTypeSpec.EventGridDomains.listByResourceGroup",
+                    "methodId": "MgmtTypeSpec.WorkloadNetworkSegments.list",
                     "kind": "List",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments",
                     "scope": {
                       "$id": "2140",
                       "kind": "ResourceGroup",
@@ -27102,7 +27102,7 @@
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
-                "resourceName": "EventGridDomain",
+                "resourceName": "WorkloadNetworkSegment",
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -27253,10 +27253,20 @@
                 }
               },
               {
+                "methodId": "MgmtTypeSpec.PrivateLinks.listByMongoCluster",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/privateLinkResources",
+                "scope": {
+                  "$id": "2158",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                }
+              },
+              {
                 "methodId": "MgmtTypeSpec.CheckNameAvailabilityOperationGroup.checkNameAvailability",
                 "operationPath": "/{scope}/providers/MgmtTypeSpec/checkNameAvailability",
                 "scope": {
-                  "$id": "2158",
+                  "$id": "2159",
                   "kind": "Extension",
                   "scopeIdPattern": "/{scope}"
                 }
@@ -27265,7 +27275,7 @@
                 "methodId": "MgmtTypeSpec.SelfHelpScopeQueryOperationGroup.getDetails",
                 "operationPath": "/{resourceScope}/providers/MgmtTypeSpec/selfHelpDetails",
                 "scope": {
-                  "$id": "2159",
+                  "$id": "2160",
                   "kind": "Extension",
                   "scopeIdPattern": "/{resourceScope}"
                 }
@@ -27274,7 +27284,7 @@
                 "methodId": "MgmtTypeSpec.NetworkProviderActions.queryNetworkSiblingSet",
                 "operationPath": "/{provider}",
                 "scope": {
-                  "$id": "2160",
+                  "$id": "2161",
                   "kind": "Tenant",
                   "scopeIdPattern": "",
                   "scopeResourceType": "Microsoft.Resources/tenants"
@@ -27284,20 +27294,10 @@
                 "methodId": "MgmtTypeSpec.SAPVirtualInstances.getAvailabilityZoneDetails",
                 "operationPath": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails",
                 "scope": {
-                  "$id": "2161",
+                  "$id": "2162",
                   "kind": "Subscription",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}",
                   "scopeResourceType": "Microsoft.Resources/subscriptions"
-                }
-              },
-              {
-                "methodId": "MgmtTypeSpec.PrivateLinks.listByMongoCluster",
-                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/privateLinkResources",
-                "scope": {
-                  "$id": "2162",
-                  "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 }
               },
               {
