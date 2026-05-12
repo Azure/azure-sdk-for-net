@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
 {
     public partial class MockableAlertsManagementSubscriptionResource
     {
-        private const string AlertProcessingRuleRemovedMessage = "The AlertProcessingRule APIs have been removed from this package and will be shipped in a separate package in a future release.";
+        private const string AlertProcessingRuleRemovedMessage = "The AlertProcessingRule APIs have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions, MockableAlertProcessingRulesArmClient, MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource, ArmAlertProcessingRulesModelFactory) instead.";
         private const string SmartGroupRemovedMessage = "The SmartGroup APIs have been removed from this package and will be shipped in a separate package in a future release.";
         private const string GetServiceAlertGuidReplacedMessage = "Use MockableAlertsManagementArmClient.GetServiceAlertResource(id) or ServiceAlertCollection.Get(alertId.ToString()) instead.";
 

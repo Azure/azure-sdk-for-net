@@ -5,8 +5,11 @@
 // These members throw at runtime; the [Obsolete(error: true)] attribute surfaces a compile-time error
 // with the replacement guidance shown below.
 //
-// - AlertProcessingRule*: moved out of this TypeSpec project. The APIs still exist in Azure and will be
-//   shipped from a separate package in a future release.
+// - AlertProcessingRule*: moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference
+//   that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions or the mockable
+//   extension classes such as MockableAlertProcessingRulesArmClient,
+//   MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource)
+//   instead.
 // - SmartGroup*: moved to Legacy in the spec repo. The APIs still exist in Azure and will be shipped
 //   from a separate package in a future release.
 // - GetServiceAlert(Guid) on SubscriptionResource: replaced by ArmClient.GetServiceAlertResource(id) /
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.AlertsManagement
 {
     public static partial class AlertsManagementExtensions
     {
-        private const string AlertProcessingRuleRemovedMessage = "The AlertProcessingRule APIs have been removed from this package and will be shipped in a separate package in a future release.";
+        private const string AlertProcessingRuleRemovedMessage = "The AlertProcessingRule APIs have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions, MockableAlertProcessingRulesArmClient, MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource, ArmAlertProcessingRulesModelFactory) instead.";
         private const string SmartGroupRemovedMessage = "The SmartGroup APIs have been removed from this package and will be shipped in a separate package in a future release.";
         private const string GetServiceAlertGuidReplacedMessage = "Use ArmClient.GetServiceAlertResource(id) or ServiceAlertCollection.Get(alertId.ToString()) instead.";
 

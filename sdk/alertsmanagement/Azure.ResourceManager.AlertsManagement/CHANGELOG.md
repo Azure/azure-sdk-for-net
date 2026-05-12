@@ -11,7 +11,7 @@
 ### Breaking Changes
 
 - Migrated from AutoRest/Swagger to TypeSpec-based code generation using Azure Management Generator.
-- Removed `AlertProcessingRule*` types and operations (moved to separate TypeSpec project `AlertProcessingRules`).
+- Removed `AlertProcessingRule*` types and operations. They are now shipped in the new `Azure.ResourceManager.AlertProcessingRules` package. Backward-compatible stubs remain in this package with `[Obsolete]` errors pointing users to the new package.
 - Removed `SmartGroup*` types and operations (deprecated in the service). Backward-compatible stubs remain with `[Obsolete]` attributes.
 - `GetServiceAlerts()` extension method on `SubscriptionResource` is now `[EditorBrowsable(Never)]`; prefer `GetServiceAlerts(ResourceIdentifier)` on `ArmClient`.
 - `GetServiceAlertSummary` extension methods moved from `SubscriptionResource` to `ArmClient` as `GetSummary`. The old `SubscriptionResource` extension methods remain as backward-compatible overloads.
