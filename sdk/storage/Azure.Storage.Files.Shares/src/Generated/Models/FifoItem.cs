@@ -10,33 +10,32 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> A listed directory item. </summary>
-    internal partial class DirectoryItem
+    /// <summary> A listed FIFO item. </summary>
+    internal partial class FifoItem
     {
-        /// <summary> Initializes a new instance of <see cref="DirectoryItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FifoItem"/>. </summary>
         /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal DirectoryItem(StringEncoded name)
+        /// <param name="properties"> File properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
+        internal FifoItem(StringEncoded name, FileProperty properties)
         {
             Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Name = name;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DirectoryItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FifoItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="fileId"></param>
         /// <param name="properties"> File properties. </param>
-        /// <param name="attributes"></param>
-        /// <param name="permissionKey"></param>
         /// <param name="linkCount"></param>
-        internal DirectoryItem(StringEncoded name, string fileId, FileProperty properties, string attributes, string permissionKey, long? linkCount)
+        internal FifoItem(StringEncoded name, string fileId, FileProperty properties, long? linkCount)
         {
             Name = name;
             FileId = fileId;
             Properties = properties;
-            Attributes = attributes;
-            PermissionKey = permissionKey;
             LinkCount = linkCount;
         }
 
@@ -46,10 +45,6 @@ namespace Azure.Storage.Files.Shares.Models
         public string FileId { get; }
         /// <summary> File properties. </summary>
         public FileProperty Properties { get; }
-        /// <summary> Gets the attributes. </summary>
-        public string Attributes { get; }
-        /// <summary> Gets the permission key. </summary>
-        public string PermissionKey { get; }
         /// <summary> Gets the link count. </summary>
         public long? LinkCount { get; }
     }

@@ -10,14 +10,14 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> A listed file item. </summary>
-    internal partial class FileItem
+    /// <summary> A listed block device item. </summary>
+    internal partial class BlockDeviceItem
     {
-        /// <summary> Initializes a new instance of <see cref="FileItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlockDeviceItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="properties"> File properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        internal FileItem(StringEncoded name, FileProperty properties)
+        internal BlockDeviceItem(StringEncoded name, FileProperty properties)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(properties, nameof(properties));
@@ -26,23 +26,21 @@ namespace Azure.Storage.Files.Shares.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlockDeviceItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="fileId"></param>
         /// <param name="properties"> File properties. </param>
-        /// <param name="attributes"></param>
-        /// <param name="permissionKey"></param>
         /// <param name="linkCount"></param>
-        /// <param name="fileType"> Type of the file. </param>
-        internal FileItem(StringEncoded name, string fileId, FileProperty properties, string attributes, string permissionKey, long? linkCount, NfsFileType? fileType)
+        /// <param name="deviceMajor"></param>
+        /// <param name="deviceMinor"></param>
+        internal BlockDeviceItem(StringEncoded name, string fileId, FileProperty properties, long? linkCount, long? deviceMajor, long? deviceMinor)
         {
             Name = name;
             FileId = fileId;
             Properties = properties;
-            Attributes = attributes;
-            PermissionKey = permissionKey;
             LinkCount = linkCount;
-            FileType = fileType;
+            DeviceMajor = deviceMajor;
+            DeviceMinor = deviceMinor;
         }
 
         /// <summary> Gets the name. </summary>
@@ -51,13 +49,11 @@ namespace Azure.Storage.Files.Shares.Models
         public string FileId { get; }
         /// <summary> File properties. </summary>
         public FileProperty Properties { get; }
-        /// <summary> Gets the attributes. </summary>
-        public string Attributes { get; }
-        /// <summary> Gets the permission key. </summary>
-        public string PermissionKey { get; }
         /// <summary> Gets the link count. </summary>
         public long? LinkCount { get; }
-        /// <summary> Type of the file. </summary>
-        public NfsFileType? FileType { get; }
+        /// <summary> Gets the device major. </summary>
+        public long? DeviceMajor { get; }
+        /// <summary> Gets the device minor. </summary>
+        public long? DeviceMinor { get; }
     }
 }

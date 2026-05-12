@@ -9,17 +9,16 @@ using System.Xml.Linq;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class FileItem
+    internal partial class BlockDeviceItem
     {
-        internal static FileItem DeserializeFileItem(XElement element)
+        internal static BlockDeviceItem DeserializeBlockDeviceItem(XElement element)
         {
             StringEncoded name = default;
             string fileId = default;
             FileProperty properties = default;
-            string attributes = default;
-            string permissionKey = default;
             long? linkCount = default;
-            NfsFileType? fileType = default;
+            long? deviceMajor = default;
+            long? deviceMinor = default;
             if (element.Element("Name") is XElement nameElement)
             {
                 name = StringEncoded.DeserializeStringEncoded(nameElement);
@@ -32,30 +31,25 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 properties = FileProperty.DeserializeFileProperty(propertiesElement);
             }
-            if (element.Element("Attributes") is XElement attributesElement)
-            {
-                attributes = (string)attributesElement;
-            }
-            if (element.Element("PermissionKey") is XElement permissionKeyElement)
-            {
-                permissionKey = (string)permissionKeyElement;
-            }
             if (element.Element("LinkCount") is XElement linkCountElement)
             {
                 linkCount = (long?)linkCountElement;
             }
-            if (element.Element("FileType") is XElement fileTypeElement)
+            if (element.Element("DeviceMajor") is XElement deviceMajorElement)
             {
-                fileType = new NfsFileType(fileTypeElement.Value);
+                deviceMajor = (long?)deviceMajorElement;
             }
-            return new FileItem(
+            if (element.Element("DeviceMinor") is XElement deviceMinorElement)
+            {
+                deviceMinor = (long?)deviceMinorElement;
+            }
+            return new BlockDeviceItem(
                 name,
                 fileId,
                 properties,
-                attributes,
-                permissionKey,
                 linkCount,
-                fileType);
+                deviceMajor,
+                deviceMinor);
         }
     }
 }

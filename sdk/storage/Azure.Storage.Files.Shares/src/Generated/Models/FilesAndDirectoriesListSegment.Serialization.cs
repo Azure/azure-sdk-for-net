@@ -16,6 +16,11 @@ namespace Azure.Storage.Files.Shares.Models
         {
             IReadOnlyList<DirectoryItem> directoryItems = default;
             IReadOnlyList<FileItem> fileItems = default;
+            IReadOnlyList<SymLinkItem> symLinkItems = default;
+            IReadOnlyList<BlockDeviceItem> blockDeviceItems = default;
+            IReadOnlyList<CharDeviceItem> charDeviceItems = default;
+            IReadOnlyList<FifoItem> fifoItems = default;
+            IReadOnlyList<SocketItem> socketItems = default;
             var array = new List<DirectoryItem>();
             foreach (var e in element.Elements("Directory"))
             {
@@ -28,7 +33,44 @@ namespace Azure.Storage.Files.Shares.Models
                 array0.Add(FileItem.DeserializeFileItem(e));
             }
             fileItems = array0;
-            return new FilesAndDirectoriesListSegment(directoryItems, fileItems);
+            var array1 = new List<SymLinkItem>();
+            foreach (var e in element.Elements("SymLink"))
+            {
+                array1.Add(SymLinkItem.DeserializeSymLinkItem(e));
+            }
+            symLinkItems = array1;
+            var array2 = new List<BlockDeviceItem>();
+            foreach (var e in element.Elements("BlockDevice"))
+            {
+                array2.Add(BlockDeviceItem.DeserializeBlockDeviceItem(e));
+            }
+            blockDeviceItems = array2;
+            var array3 = new List<CharDeviceItem>();
+            foreach (var e in element.Elements("CharDevice"))
+            {
+                array3.Add(CharDeviceItem.DeserializeCharDeviceItem(e));
+            }
+            charDeviceItems = array3;
+            var array4 = new List<FifoItem>();
+            foreach (var e in element.Elements("Fifo"))
+            {
+                array4.Add(FifoItem.DeserializeFifoItem(e));
+            }
+            fifoItems = array4;
+            var array5 = new List<SocketItem>();
+            foreach (var e in element.Elements("Socket"))
+            {
+                array5.Add(SocketItem.DeserializeSocketItem(e));
+            }
+            socketItems = array5;
+            return new FilesAndDirectoriesListSegment(
+                directoryItems,
+                fileItems,
+                symLinkItems,
+                blockDeviceItems,
+                charDeviceItems,
+                fifoItems,
+                socketItems);
         }
     }
 }

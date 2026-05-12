@@ -9,17 +9,14 @@ using System.Xml.Linq;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class FileItem
+    internal partial class SocketItem
     {
-        internal static FileItem DeserializeFileItem(XElement element)
+        internal static SocketItem DeserializeSocketItem(XElement element)
         {
             StringEncoded name = default;
             string fileId = default;
             FileProperty properties = default;
-            string attributes = default;
-            string permissionKey = default;
             long? linkCount = default;
-            NfsFileType? fileType = default;
             if (element.Element("Name") is XElement nameElement)
             {
                 name = StringEncoded.DeserializeStringEncoded(nameElement);
@@ -32,30 +29,11 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 properties = FileProperty.DeserializeFileProperty(propertiesElement);
             }
-            if (element.Element("Attributes") is XElement attributesElement)
-            {
-                attributes = (string)attributesElement;
-            }
-            if (element.Element("PermissionKey") is XElement permissionKeyElement)
-            {
-                permissionKey = (string)permissionKeyElement;
-            }
             if (element.Element("LinkCount") is XElement linkCountElement)
             {
                 linkCount = (long?)linkCountElement;
             }
-            if (element.Element("FileType") is XElement fileTypeElement)
-            {
-                fileType = new NfsFileType(fileTypeElement.Value);
-            }
-            return new FileItem(
-                name,
-                fileId,
-                properties,
-                attributes,
-                permissionKey,
-                linkCount,
-                fileType);
+            return new SocketItem(name, fileId, properties, linkCount);
         }
     }
 }

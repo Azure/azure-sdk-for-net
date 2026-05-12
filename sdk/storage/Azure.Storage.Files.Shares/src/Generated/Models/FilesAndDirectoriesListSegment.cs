@@ -26,20 +26,45 @@ namespace Azure.Storage.Files.Shares.Models
 
             DirectoryItems = directoryItems.ToList();
             FileItems = fileItems.ToList();
+            SymLinkItems = new ChangeTrackingList<SymLinkItem>();
+            BlockDeviceItems = new ChangeTrackingList<BlockDeviceItem>();
+            CharDeviceItems = new ChangeTrackingList<CharDeviceItem>();
+            FifoItems = new ChangeTrackingList<FifoItem>();
+            SocketItems = new ChangeTrackingList<SocketItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FilesAndDirectoriesListSegment"/>. </summary>
         /// <param name="directoryItems"></param>
         /// <param name="fileItems"></param>
-        internal FilesAndDirectoriesListSegment(IReadOnlyList<DirectoryItem> directoryItems, IReadOnlyList<FileItem> fileItems)
+        /// <param name="symLinkItems"></param>
+        /// <param name="blockDeviceItems"></param>
+        /// <param name="charDeviceItems"></param>
+        /// <param name="fifoItems"></param>
+        /// <param name="socketItems"></param>
+        internal FilesAndDirectoriesListSegment(IReadOnlyList<DirectoryItem> directoryItems, IReadOnlyList<FileItem> fileItems, IReadOnlyList<SymLinkItem> symLinkItems, IReadOnlyList<BlockDeviceItem> blockDeviceItems, IReadOnlyList<CharDeviceItem> charDeviceItems, IReadOnlyList<FifoItem> fifoItems, IReadOnlyList<SocketItem> socketItems)
         {
             DirectoryItems = directoryItems;
             FileItems = fileItems;
+            SymLinkItems = symLinkItems;
+            BlockDeviceItems = blockDeviceItems;
+            CharDeviceItems = charDeviceItems;
+            FifoItems = fifoItems;
+            SocketItems = socketItems;
         }
 
         /// <summary> Gets the directory items. </summary>
         public IReadOnlyList<DirectoryItem> DirectoryItems { get; }
         /// <summary> Gets the file items. </summary>
         public IReadOnlyList<FileItem> FileItems { get; }
+        /// <summary> Gets the sym link items. </summary>
+        public IReadOnlyList<SymLinkItem> SymLinkItems { get; }
+        /// <summary> Gets the block device items. </summary>
+        public IReadOnlyList<BlockDeviceItem> BlockDeviceItems { get; }
+        /// <summary> Gets the char device items. </summary>
+        public IReadOnlyList<CharDeviceItem> CharDeviceItems { get; }
+        /// <summary> Gets the fifo items. </summary>
+        public IReadOnlyList<FifoItem> FifoItems { get; }
+        /// <summary> Gets the socket items. </summary>
+        public IReadOnlyList<SocketItem> SocketItems { get; }
     }
 }

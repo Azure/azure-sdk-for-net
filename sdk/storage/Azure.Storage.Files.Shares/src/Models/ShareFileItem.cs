@@ -49,6 +49,43 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public long? FileSize { get; }
 
+        /// <summary>
+        /// Gets the count of hard links for this item.
+        /// Applicable to all item types in NFS shares: files, directories,
+        /// symbolic links, block devices, character devices, FIFOs, and sockets.
+        /// Supported in version 2026-12-06 and above.
+        /// </summary>
+        public long? LinkCount { get; }
+
+        /// <summary>
+        /// Gets the NFS file type for this item.
+        /// Applicable to all item types in NFS shares: files, directories,
+        /// symbolic links, block devices, character devices, FIFOs, and sockets.
+        /// Supported in version 2026-12-06 and above.
+        /// </summary>
+        public NfsFileType? FileType { get; }
+
+        /// <summary>
+        /// Gets the link text for this item.
+        /// Only applicable to symbolic links in NFS shares.
+        /// Supported in version 2026-12-06 and above.
+        /// </summary>
+        public string LinkText { get; }
+
+        /// <summary>
+        /// Gets the major device number for this item.
+        /// Only applicable to block devices and character devices in NFS shares.
+        /// Supported in version 2026-12-06 and above.
+        /// </summary>
+        public long? DeviceMajor { get; }
+
+        /// <summary>
+        /// Gets the minor device number for this item.
+        /// Only applicable to block devices and character devices in NFS shares.
+        /// Supported in version 2026-12-06 and above.
+        /// </summary>
+        public long? DeviceMinor { get; }
+
         internal ShareFileItem(
             bool isDirectory,
             string name,
@@ -56,7 +93,12 @@ namespace Azure.Storage.Files.Shares.Models
             ShareFileItemProperties properties,
             NtfsFileAttributes? fileAttributes,
             string permissionKey,
-            long? fileSize)
+            long? fileSize,
+            long? linkCount,
+            NfsFileType? fileType,
+            string linkText,
+            long? deviceMajor,
+            long? deviceMinor)
         {
             IsDirectory = isDirectory;
             Name = name;
@@ -65,6 +107,12 @@ namespace Azure.Storage.Files.Shares.Models
             FileAttributes = fileAttributes;
             PermissionKey = permissionKey;
             FileSize = fileSize;
+            LinkCount = linkCount;
+            FileType = fileType;
+            LinkText = linkText;
+
+            DeviceMajor = deviceMajor;
+            DeviceMinor = deviceMinor;
         }
     }
 
@@ -74,7 +122,7 @@ namespace Azure.Storage.Files.Shares.Models
     public static partial class FilesModelFactory
     {
         /// <summary>
-        /// Creates a new StorageFileItem instance for mocking.
+        /// Creates a new ShareFileItem instance for mocking.
         /// </summary>
         public static ShareFileItem ShareFileItem(
             bool isDirectory = default,
@@ -83,7 +131,12 @@ namespace Azure.Storage.Files.Shares.Models
             string id = default,
             ShareFileItemProperties properties = default,
             NtfsFileAttributes? fileAttributes = default,
-            string permissionKey = default) =>
+            string permissionKey = default,
+            long? linkCount = default,
+            NfsFileType? fileType = default,
+            string linkText = default,
+            long? deviceMajor = default,
+            long? deviceMinor = default) =>
             new ShareFileItem(
                 isDirectory: isDirectory,
                 name: name,
@@ -91,7 +144,38 @@ namespace Azure.Storage.Files.Shares.Models
                 properties: properties,
                 fileAttributes: fileAttributes,
                 permissionKey: permissionKey,
-                fileSize: fileSize);
+                fileSize: fileSize,
+                linkCount: linkCount,
+                fileType: fileType,
+                linkText: linkText,
+                deviceMajor: deviceMajor,
+                deviceMinor: deviceMinor);
+
+        /// <summary>
+        /// Creates a new ShareFileItem instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ShareFileItem ShareFileItem(
+            bool isDirectory,
+            string name,
+            long? fileSize,
+            string id,
+            ShareFileItemProperties properties,
+            NtfsFileAttributes? fileAttributes,
+            string permissionKey) =>
+            new ShareFileItem(
+                isDirectory: isDirectory,
+                name: name,
+                id: id,
+                properties: properties,
+                fileAttributes: fileAttributes,
+                permissionKey: permissionKey,
+                fileSize: fileSize,
+                linkCount: null,
+                fileType: null,
+                linkText: null,
+                deviceMajor: null,
+                deviceMinor: null);
 
         /// <summary>
         /// Creates a new StorageFileItem instance for mocking.
@@ -108,6 +192,11 @@ namespace Azure.Storage.Files.Shares.Models
                 properties: null,
                 fileAttributes: null,
                 permissionKey: null,
-                fileSize: fileSize);
+                fileSize: fileSize,
+                linkCount: null,
+                fileType: null,
+                linkText: null,
+                deviceMajor: null,
+                deviceMinor: null);
     }
 }

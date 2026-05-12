@@ -997,7 +997,12 @@ namespace Azure.Storage.Files.Shares
                 properties: directoryItem.Properties.ToShareFileItemProperties(),
                 fileAttributes: ShareModelExtensions.ToFileAttributes(directoryItem.Attributes),
                 permissionKey: directoryItem.PermissionKey,
-                fileSize: null);
+                fileSize: null,
+                linkCount: directoryItem.LinkCount,
+                fileType: NfsFileType.Directory,
+                linkText: null,
+                deviceMajor: null,
+                deviceMinor: null);
         }
 
         internal static ShareFileItem ToShareFileItem(this FileItem fileItem)
@@ -1014,7 +1019,122 @@ namespace Azure.Storage.Files.Shares
                 properties: fileItem.Properties.ToShareFileItemProperties(),
                 fileAttributes: ShareModelExtensions.ToFileAttributes(fileItem.Attributes),
                 permissionKey: fileItem.PermissionKey,
-                fileSize: fileItem.Properties.ContentLength);
+                fileSize: fileItem.Properties.ContentLength,
+                linkCount: fileItem.LinkCount,
+                fileType: fileItem.FileType,
+                linkText: null,
+                deviceMajor: null,
+                deviceMinor: null);
+        }
+
+        internal static ShareFileItem ToShareFileItem(this SymLinkItem fileItem)
+        {
+            if (fileItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem(
+                isDirectory: false,
+                name: fileItem.Name.Encoded == true ? Uri.UnescapeDataString(fileItem.Name.Content) : fileItem.Name.Content,
+                id: fileItem.FileId,
+                properties: fileItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: null,
+                permissionKey: null,
+                fileSize: null,
+                linkCount: fileItem.LinkCount,
+                fileType: NfsFileType.SymLink,
+                linkText: fileItem.LinkText,
+                deviceMajor: null,
+                deviceMinor: null);
+        }
+
+        internal static ShareFileItem ToShareFileItem(this BlockDeviceItem blockDeviceItem)
+        {
+            if (blockDeviceItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem(
+                isDirectory: false,
+                name: blockDeviceItem.Name.Encoded == true ? Uri.UnescapeDataString(blockDeviceItem.Name.Content) : blockDeviceItem.Name.Content,
+                id: blockDeviceItem.FileId,
+                properties: blockDeviceItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: null,
+                permissionKey: null,
+                fileSize: null,
+                linkCount: blockDeviceItem.LinkCount,
+                fileType: NfsFileType.BlockDevice,
+                linkText: null,
+                deviceMajor: blockDeviceItem.DeviceMajor,
+                deviceMinor: blockDeviceItem.DeviceMinor);
+        }
+
+        internal static ShareFileItem ToShareFileItem(this CharDeviceItem charDeviceItem)
+        {
+            if (charDeviceItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem(
+                isDirectory: false,
+                name: charDeviceItem.Name.Encoded == true ? Uri.UnescapeDataString(charDeviceItem.Name.Content) : charDeviceItem.Name.Content,
+                id: charDeviceItem.FileId,
+                properties: charDeviceItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: null,
+                permissionKey: null,
+                fileSize: null,
+                linkCount: charDeviceItem.LinkCount,
+                fileType: NfsFileType.CharacterDevice,
+                linkText: null,
+                deviceMajor: charDeviceItem.DeviceMajor,
+                deviceMinor: charDeviceItem.DeviceMinor);
+        }
+
+        internal static ShareFileItem ToShareFileItem(this FifoItem fifoItem)
+        {
+            if (fifoItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem(
+                isDirectory: false,
+                name: fifoItem.Name.Encoded == true ? Uri.UnescapeDataString(fifoItem.Name.Content) : fifoItem.Name.Content,
+                id: fifoItem.FileId,
+                properties: fifoItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: null,
+                permissionKey: null,
+                fileSize: null,
+                linkCount: fifoItem.LinkCount,
+                fileType: NfsFileType.Fifo,
+                linkText: null,
+                deviceMajor: null,
+                deviceMinor: null);
+        }
+
+        internal static ShareFileItem ToShareFileItem(this SocketItem socketItem)
+        {
+            if (socketItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem(
+                isDirectory: false,
+                name: socketItem.Name.Encoded == true ? Uri.UnescapeDataString(socketItem.Name.Content) : socketItem.Name.Content,
+                id: socketItem.FileId,
+                properties: socketItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: null,
+                permissionKey: null,
+                fileSize: null,
+                linkCount: socketItem.LinkCount,
+                fileType: NfsFileType.Socket,
+                linkText: null,
+                deviceMajor: null,
+                deviceMinor: null);
         }
 
         internal static ShareFileItemProperties ToShareFileItemProperties(this FileProperty fileProperty)
@@ -1030,7 +1150,10 @@ namespace Azure.Storage.Files.Shares
                 lastWrittenOn: fileProperty.LastWriteTime,
                 changedOn: fileProperty.ChangeTime,
                 lastModified: fileProperty.LastModified,
-                eTag: fileProperty.Etag == null ? null : new ETag(fileProperty.Etag));
+                eTag: fileProperty.Etag == null ? null : new ETag(fileProperty.Etag),
+                owner: fileProperty.Uid,
+                group: fileProperty.Gid,
+                fileMode: NfsFileMode.ParseOctalFileMode(fileProperty.Mode));
         }
 
         internal static DateTimeOffset ExtractLastModified(this ResponseHeaders responseHeaders)

@@ -17,6 +17,10 @@ namespace Azure.Storage.Files.Shares.Models
             ListFilesIncludeType.Etag => "Etag",
             ListFilesIncludeType.Attributes => "Attributes",
             ListFilesIncludeType.PermissionKey => "PermissionKey",
+            ListFilesIncludeType.Permissions => "Permissions",
+            ListFilesIncludeType.LinkCount => "LinkCount",
+            ListFilesIncludeType.NfsAttributes => "NfsAttributes",
+            ListFilesIncludeType.All => "All",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ListFilesIncludeType value.")
         };
 
@@ -26,6 +30,10 @@ namespace Azure.Storage.Files.Shares.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Etag")) return ListFilesIncludeType.Etag;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Attributes")) return ListFilesIncludeType.Attributes;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "PermissionKey")) return ListFilesIncludeType.PermissionKey;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Permissions")) return ListFilesIncludeType.Permissions;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LinkCount")) return ListFilesIncludeType.LinkCount;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NfsAttributes")) return ListFilesIncludeType.NfsAttributes;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "All")) return ListFilesIncludeType.All;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ListFilesIncludeType value.");
         }
     }
