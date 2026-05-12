@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetAppUsageResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppUsageResult> GetNetAppResourceUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetAppUsageResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppUsageResult> GetNetAppResourceUsages(AzureLocation location, CancellationToken cancellationToken = default)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="usageType"> The type of usage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="usageType"/> is null. </exception>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="usageType"> The type of usage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="usageType"/> is null. </exception>

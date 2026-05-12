@@ -5484,11 +5484,13 @@ namespace Azure.ResourceManager.NetApp.Models
         private readonly int _dummyPrimitive;
         public NetAppVolumeQuotaRuleProvisioningState(string value) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaRuleProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaRuleProvisioningState Canceled { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaRuleProvisioningState Creating { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaRuleProvisioningState Deleting { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaRuleProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaRuleProvisioningState Moving { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaRuleProvisioningState Patching { get { throw null; } }
+        public static Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaRuleProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaRuleProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaRuleProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaRuleProvisioningState other) { throw null; }

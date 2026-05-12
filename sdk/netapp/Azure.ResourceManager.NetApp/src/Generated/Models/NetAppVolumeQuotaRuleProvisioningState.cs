@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string CreatingValue = "Creating";
         /// <summary> The resource is being patched. </summary>
         private const string PatchingValue = "Patching";
+        /// <summary> The resource is being updated. </summary>
+        private const string UpdatingValue = "Updating";
         /// <summary> The resource is being deleted. </summary>
         private const string DeletingValue = "Deleting";
         /// <summary> The resource is being moved. </summary>
@@ -29,8 +31,10 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string FailedValue = "Failed";
         /// <summary> The operation succeeded. </summary>
         private const string SucceededValue = "Succeeded";
-        /// <summary> The resource is being updated. </summary>
-        private const string UpdatingValue = "Updating";
+        /// <summary> The operation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The resource is provisioning. </summary>
+        private const string ProvisioningValue = "Provisioning";
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaRuleProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -51,6 +55,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> The resource is being patched. </summary>
         public static NetAppVolumeQuotaRuleProvisioningState Patching { get; } = new NetAppVolumeQuotaRuleProvisioningState(PatchingValue);
 
+        /// <summary> The resource is being updated. </summary>
+        public static NetAppVolumeQuotaRuleProvisioningState Updating { get; } = new NetAppVolumeQuotaRuleProvisioningState(UpdatingValue);
+
         /// <summary> The resource is being deleted. </summary>
         public static NetAppVolumeQuotaRuleProvisioningState Deleting { get; } = new NetAppVolumeQuotaRuleProvisioningState(DeletingValue);
 
@@ -63,8 +70,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> The operation succeeded. </summary>
         public static NetAppVolumeQuotaRuleProvisioningState Succeeded { get; } = new NetAppVolumeQuotaRuleProvisioningState(SucceededValue);
 
-        /// <summary> The resource is being updated. </summary>
-        public static NetAppVolumeQuotaRuleProvisioningState Updating { get; } = new NetAppVolumeQuotaRuleProvisioningState(UpdatingValue);
+        /// <summary> The operation was canceled. </summary>
+        public static NetAppVolumeQuotaRuleProvisioningState Canceled { get; } = new NetAppVolumeQuotaRuleProvisioningState(CanceledValue);
+
+        /// <summary> The resource is provisioning. </summary>
+        public static NetAppVolumeQuotaRuleProvisioningState Provisioning { get; } = new NetAppVolumeQuotaRuleProvisioningState(ProvisioningValue);
 
         /// <summary> Determines if two <see cref="NetAppVolumeQuotaRuleProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
