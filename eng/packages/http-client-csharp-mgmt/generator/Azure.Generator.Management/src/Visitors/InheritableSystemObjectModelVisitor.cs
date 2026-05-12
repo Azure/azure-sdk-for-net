@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.Generator.Management.Visitors;
@@ -25,11 +24,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             EnsureFrameworkTypeRegistered(systemType);
         }
 
-        if (type is not SystemObjectModelProvider && type is not null && TryGetCustomInheritableSystemBase(type, out var customBaseClrType))
-        {
-            UpdateWithClrBase(customBaseClrType, type);
-        }
-        else if (type?.BaseModelProvider is not null && type is not SystemObjectModelProvider)
+        if (type?.BaseModelProvider is not null && type is not SystemObjectModelProvider)
         {
             UpdateRegularModelInheritance(type);
         }
@@ -49,11 +44,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             EnsureFrameworkTypeRegistered(systemType);
         }
 
-        if (type is ModelProvider model2 && model2 is not SystemObjectModelProvider && TryGetCustomInheritableSystemBase(model2, out var customBaseClrType))
-        {
-            UpdateWithClrBase(customBaseClrType, model2);
-        }
-        else if (type is ModelProvider model3 && model3.BaseModelProvider is not null && model3 is not SystemObjectModelProvider)
+        if (type is ModelProvider model3 && model3.BaseModelProvider is not null && model3 is not SystemObjectModelProvider)
         {
             UpdateRegularModelInheritance(model3);
         }
@@ -98,64 +89,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         }
     }
 
-    /// <summary>
-    /// Checks if a model's custom code overrides the base type to a known inheritable system type
-    /// that differs from the spec-defined base. This handles scenarios like custom code declaring
-    /// ": TrackedResourceData" when the spec says ProxyResource (→ ResourceData).
-    /// </summary>
-    private static bool TryGetCustomInheritableSystemBase(ModelProvider model, [MaybeNullWhen(false)] out Type clrType)
-    {
-        clrType = null;
-        var customBaseType = model.CustomCodeView?.BaseType;
-        if (customBaseType == null)
-        {
-            return false;
-        }
-
-        // Check if the custom base type matches a known inheritable system type
-        if (!KnownManagementTypes.TryGetInheritableSystemTypeByName(customBaseType, out clrType))
-        {
-            return false;
-        }
-
-        // Only return false if the model already has a SystemObjectModelProvider
-        // with the same CLR base type — otherwise treat the differing inheritable type as a custom override
-        if (model.BaseModelProvider is SystemObjectModelProvider inheritableBase
-            && inheritableBase.SystemType.FrameworkType == clrType)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    private HashSet<ModelProvider> _customBaseUpdated = new();
     private HashSet<ModelProvider> _regularUpdated = new();
-
-    /// <summary>
-    /// Replaces the model's base with a <see cref="SystemObjectModelProvider"/> wrapping the
-    /// correct CLR type, then resets the model so it rebuilds properties, serialization, etc.
-    /// using the base generator's native handling (property dedup, raw data field, serialization modifiers).
-    /// </summary>
-    private void UpdateWithClrBase(Type baseClrType, ModelProvider model)
-    {
-        if (_customBaseUpdated.Contains(model))
-        {
-            return;
-        }
-
-        // Look up the existing SystemObjectModelProvider for the target CLR type from CSharpTypeMap.
-        // ManagementTypeFactory creates these for all inheritable system types, and
-        // EnsureFrameworkTypeRegistered registers them under the framework CSharpType.
-        var clrCSharpType = new CSharpType(baseClrType);
-        var typeMap = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap;
-
-        if (typeMap.TryGetValue(clrCSharpType, out var existingProvider) && existingProvider is SystemObjectModelProvider systemBase)
-        {
-            model.Update(baseModelProvider: systemBase);
-            _customBaseUpdated.Add(model);
-        }
-    }
 
     private void UpdateRegularModelInheritance(ModelProvider model)
     {
