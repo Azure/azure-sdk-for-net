@@ -22,6 +22,8 @@ namespace Azure.ResourceManager.Peering.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockablePeeringSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _legacyPeeringsClientDiagnostics;
+        private LegacyPeerings _legacyPeeringsRestClient;
         private ClientDiagnostics _peeringsClientDiagnostics;
         private Peerings _peeringsRestClient;
         private ClientDiagnostics _peeringServicesClientDiagnostics;
@@ -30,8 +32,6 @@ namespace Azure.ResourceManager.Peering.Mocking
         private PeeringClient _peeringClientRestClient;
         private ClientDiagnostics _cdnPeeringPrefixesClientDiagnostics;
         private CdnPeeringPrefixes _cdnPeeringPrefixesRestClient;
-        private ClientDiagnostics _legacyPeeringsClientDiagnostics;
-        private LegacyPeerings _legacyPeeringsRestClient;
         private ClientDiagnostics _lookingGlassClientDiagnostics;
         private LookingGlass _lookingGlassRestClient;
         private ClientDiagnostics _peeringLocationsClientDiagnostics;
@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         {
         }
 
+        private ClientDiagnostics LegacyPeeringsClientDiagnostics => _legacyPeeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private LegacyPeerings LegacyPeeringsRestClient => _legacyPeeringsRestClient ??= new LegacyPeerings(LegacyPeeringsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+
         private ClientDiagnostics PeeringsClientDiagnostics => _peeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Peerings PeeringsRestClient => _peeringsRestClient ??= new Peerings(PeeringsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
@@ -70,10 +74,6 @@ namespace Azure.ResourceManager.Peering.Mocking
         private ClientDiagnostics CdnPeeringPrefixesClientDiagnostics => _cdnPeeringPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private CdnPeeringPrefixes CdnPeeringPrefixesRestClient => _cdnPeeringPrefixesRestClient ??= new CdnPeeringPrefixes(CdnPeeringPrefixesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
-
-        private ClientDiagnostics LegacyPeeringsClientDiagnostics => _legacyPeeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private LegacyPeerings LegacyPeeringsRestClient => _legacyPeeringsRestClient ??= new LegacyPeerings(LegacyPeeringsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
         private ClientDiagnostics LookingGlassClientDiagnostics => _lookingGlassClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -158,6 +158,94 @@ namespace Azure.ResourceManager.Peering.Mocking
             Argument.AssertNotNullOrEmpty(peerAsnName, nameof(peerAsnName));
 
             return GetPeerAsns().Get(peerAsnName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the legacy peerings under the given subscription matching the specified kind and location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LegacyPeeringsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="peeringLocation"> The location of the peering. </param>
+        /// <param name="kind"> The kind of the peering. </param>
+        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
+        /// <param name="directPeeringType"> The direct peering type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peeringLocation"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(string peeringLocation, LegacyPeeringsKind kind, int? asn = default, DirectPeeringType? directPeeringType = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(peeringLocation, nameof(peeringLocation));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PeeringData, PeeringResource>(new LegacyPeeringsGetPeeringsByLegacyPeeringAsyncCollectionResultOfT(
+                LegacyPeeringsRestClient,
+                Id.SubscriptionId,
+                peeringLocation,
+                kind.ToString(),
+                asn,
+                directPeeringType?.ToString(),
+                context,
+                "MockablePeeringSubscriptionResource.GetPeeringsByLegacyPeering"), data => new PeeringResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all of the legacy peerings under the given subscription matching the specified kind and location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LegacyPeeringsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="peeringLocation"> The location of the peering. </param>
+        /// <param name="kind"> The kind of the peering. </param>
+        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
+        /// <param name="directPeeringType"> The direct peering type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peeringLocation"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PeeringResource> GetPeeringsByLegacyPeering(string peeringLocation, LegacyPeeringsKind kind, int? asn = default, DirectPeeringType? directPeeringType = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(peeringLocation, nameof(peeringLocation));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PeeringData, PeeringResource>(new LegacyPeeringsGetPeeringsByLegacyPeeringCollectionResultOfT(
+                LegacyPeeringsRestClient,
+                Id.SubscriptionId,
+                peeringLocation,
+                kind.ToString(),
+                asn,
+                directPeeringType?.ToString(),
+                context,
+                "MockablePeeringSubscriptionResource.GetPeeringsByLegacyPeering"), data => new PeeringResource(Client, data));
         }
 
         /// <summary>
@@ -510,94 +598,6 @@ namespace Azure.ResourceManager.Peering.Mocking
                 CancellationToken = cancellationToken
             };
             return new CdnPeeringPrefixesGetCdnPeeringPrefixesCollectionResultOfT(CdnPeeringPrefixesRestClient, Id.SubscriptionId, peeringLocation, context, "MockablePeeringSubscriptionResource.GetCdnPeeringPrefixes");
-        }
-
-        /// <summary>
-        /// Lists all of the legacy peerings under the given subscription matching the specified kind and location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LegacyPeeringsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="peeringLocation"> The location of the peering. </param>
-        /// <param name="kind"> The kind of the peering. </param>
-        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
-        /// <param name="directPeeringType"> The direct peering type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="peeringLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(string peeringLocation, LegacyPeeringsKind kind, int? asn = default, DirectPeeringType? directPeeringType = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(peeringLocation, nameof(peeringLocation));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<PeeringData, PeeringResource>(new LegacyPeeringsGetPeeringsByLegacyPeeringAsyncCollectionResultOfT(
-                LegacyPeeringsRestClient,
-                Id.SubscriptionId,
-                peeringLocation,
-                kind.ToString(),
-                asn,
-                directPeeringType?.ToString(),
-                context,
-                "MockablePeeringSubscriptionResource.GetPeeringsByLegacyPeering"), data => new PeeringResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists all of the legacy peerings under the given subscription matching the specified kind and location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LegacyPeeringsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="peeringLocation"> The location of the peering. </param>
-        /// <param name="kind"> The kind of the peering. </param>
-        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
-        /// <param name="directPeeringType"> The direct peering type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="peeringLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PeeringResource> GetPeeringsByLegacyPeering(string peeringLocation, LegacyPeeringsKind kind, int? asn = default, DirectPeeringType? directPeeringType = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(peeringLocation, nameof(peeringLocation));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<PeeringData, PeeringResource>(new LegacyPeeringsGetPeeringsByLegacyPeeringCollectionResultOfT(
-                LegacyPeeringsRestClient,
-                Id.SubscriptionId,
-                peeringLocation,
-                kind.ToString(),
-                asn,
-                directPeeringType?.ToString(),
-                context,
-                "MockablePeeringSubscriptionResource.GetPeeringsByLegacyPeering"), data => new PeeringResource(Client, data));
         }
 
         /// <summary>

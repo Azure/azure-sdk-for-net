@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NotificationHubNamespaceAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NamespaceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNotificationHubsArmClient.GetNotificationHubNamespaceAuthorizationRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNotificationHubsArmClient.GetNamespaceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NotificationHubNamespaceAuthorizationRuleResource"/> object. </returns>
-        public static NotificationHubNamespaceAuthorizationRuleResource GetNotificationHubNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NamespaceResource"/> object. </returns>
+        public static NamespaceResource GetNamespaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNotificationHubsArmClient(client).GetNotificationHubNamespaceAuthorizationRuleResource(id);
+            return GetMockableNotificationHubsArmClient(client).GetNamespaceResource(id);
         }
 
         /// <summary>
@@ -93,21 +93,21 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NotificationHubAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SharedAccessAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNotificationHubsArmClient.GetNotificationHubAuthorizationRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNotificationHubsArmClient.GetSharedAccessAuthorizationRuleResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NotificationHubAuthorizationRuleResource"/> object. </returns>
-        public static NotificationHubAuthorizationRuleResource GetNotificationHubAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SharedAccessAuthorizationRuleResource"/> object. </returns>
+        public static SharedAccessAuthorizationRuleResource GetSharedAccessAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNotificationHubsArmClient(client).GetNotificationHubAuthorizationRuleResource(id);
+            return GetMockableNotificationHubsArmClient(client).GetSharedAccessAuthorizationRuleResource(id);
         }
 
         /// <summary>

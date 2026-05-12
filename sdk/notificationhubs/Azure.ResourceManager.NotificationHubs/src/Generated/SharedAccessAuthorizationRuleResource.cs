@@ -20,40 +20,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.NotificationHubs
 {
     /// <summary>
-    /// A class representing a NotificationHubNamespaceAuthorizationRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NotificationHubNamespaceAuthorizationRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NotificationHubNamespaceResource"/> using the GetNotificationHubNamespaceAuthorizationRules method.
+    /// A class representing a SharedAccessAuthorizationRuleResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SharedAccessAuthorizationRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NotificationHubResource"/> using the GetSharedAccessAuthorizationRuleResources method.
     /// </summary>
-    public partial class NotificationHubNamespaceAuthorizationRuleResource : ArmResource
+    public partial class SharedAccessAuthorizationRuleResource : ArmResource
     {
-        private readonly ClientDiagnostics _namespacesClientDiagnostics;
-        private readonly Namespaces _namespacesRestClient;
+        private readonly ClientDiagnostics _sharedAccessAuthorizationRuleResourcesClientDiagnostics;
+        private readonly SharedAccessAuthorizationRuleResources _sharedAccessAuthorizationRuleResourcesRestClient;
         private readonly NotificationHubAuthorizationRuleData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NotificationHubs/namespaces/authorizationRules";
+        public static readonly ResourceType ResourceType = "Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules";
 
-        /// <summary> Initializes a new instance of NotificationHubNamespaceAuthorizationRuleResource for mocking. </summary>
-        protected NotificationHubNamespaceAuthorizationRuleResource()
+        /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleResource for mocking. </summary>
+        protected SharedAccessAuthorizationRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NotificationHubNamespaceAuthorizationRuleResource(ArmClient client, NotificationHubAuthorizationRuleData data) : this(client, data.Id)
+        internal SharedAccessAuthorizationRuleResource(ArmClient client, NotificationHubAuthorizationRuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NotificationHubNamespaceAuthorizationRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SharedAccessAuthorizationRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string notificationHubNamespaceAuthorizationRuleApiVersion);
-            _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, notificationHubNamespaceAuthorizationRuleApiVersion ?? "2023-10-01-preview");
+            TryGetApiVersion(ResourceType, out string sharedAccessAuthorizationRuleResourceApiVersion);
+            _sharedAccessAuthorizationRuleResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", ResourceType.Namespace, Diagnostics);
+            _sharedAccessAuthorizationRuleResourcesRestClient = new SharedAccessAuthorizationRuleResources(_sharedAccessAuthorizationRuleResourcesClientDiagnostics, Pipeline, Endpoint, sharedAccessAuthorizationRuleResourceApiVersion ?? "2023-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -77,10 +77,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="notificationHubName"> The notificationHubName. </param>
         /// <param name="authorizationRuleName"> The authorizationRuleName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -95,15 +96,15 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Gets an authorization rule for a namespace by name.
+        /// Gets an authorization rule for a NotificationHub by name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_GetAuthorizationRule. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -111,14 +112,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NotificationHubNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="SharedAccessAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NotificationHubNamespaceAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedAccessAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.Get");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResource.Get");
             scope.Start();
             try
             {
@@ -126,14 +127,14 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedAccessAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,15 +144,15 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Gets an authorization rule for a namespace by name.
+        /// Gets an authorization rule for a NotificationHub by name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_GetAuthorizationRule. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -159,14 +160,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NotificationHubNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="SharedAccessAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NotificationHubNamespaceAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SharedAccessAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.Get");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResource.Get");
             scope.Start();
             try
             {
@@ -174,14 +175,14 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedAccessAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,15 +192,15 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Deletes a namespace authorization rule
+        /// Deletes a notificationHub authorization rule
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_DeleteAuthorizationRule. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_DeleteAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -207,7 +208,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NotificationHubNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="SharedAccessAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.Delete");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResource.Delete");
             scope.Start();
             try
             {
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateDeleteAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateDeleteAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -242,15 +243,15 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Deletes a namespace authorization rule
+        /// Deletes a notificationHub authorization rule
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_DeleteAuthorizationRule. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_DeleteAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NotificationHubNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="SharedAccessAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,7 +267,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.Delete");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResource.Delete");
             scope.Start();
             try
             {
@@ -274,7 +275,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateDeleteAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateDeleteAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -293,15 +294,15 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Gets the Primary and Secondary ConnectionStrings to the namespace.
+        /// Gets the Primary and Secondary ConnectionStrings to the NotificationHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/listKeys. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}/listKeys. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_ListKeys. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_ListKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -309,14 +310,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NotificationHubNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="SharedAccessAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NotificationHubResourceKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.GetKeys");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResource.GetKeys");
             scope.Start();
             try
             {
@@ -324,7 +325,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NotificationHubResourceKeys> response = Response.FromValue(NotificationHubResourceKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -341,15 +342,15 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Gets the Primary and Secondary ConnectionStrings to the namespace.
+        /// Gets the Primary and Secondary ConnectionStrings to the NotificationHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/listKeys. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}/listKeys. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_ListKeys. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_ListKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -357,14 +358,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NotificationHubNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="SharedAccessAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NotificationHubResourceKeys> GetKeys(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.GetKeys");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResource.GetKeys");
             scope.Start();
             try
             {
@@ -372,7 +373,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NotificationHubResourceKeys> response = Response.FromValue(NotificationHubResourceKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -389,15 +390,15 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Regenerates the Primary/Secondary Keys to the Namespace Authorization Rule
+        /// Regenerates the Primary/Secondary Keys to the NotificationHub Authorization Rule
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/regenerateKeys. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}/regenerateKeys. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_RegenerateKeys. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_RegenerateKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -405,7 +406,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NotificationHubNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="SharedAccessAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,7 +417,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNull(notificationHubPolicyKey, nameof(notificationHubPolicyKey));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.RegenerateKeys");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResource.RegenerateKeys");
             scope.Start();
             try
             {
@@ -424,7 +425,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateRegenerateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NotificationHubPolicyKey.ToRequestContent(notificationHubPolicyKey), context);
+                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateRegenerateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NotificationHubPolicyKey.ToRequestContent(notificationHubPolicyKey), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NotificationHubResourceKeys> response = Response.FromValue(NotificationHubResourceKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -441,15 +442,15 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Regenerates the Primary/Secondary Keys to the Namespace Authorization Rule
+        /// Regenerates the Primary/Secondary Keys to the NotificationHub Authorization Rule
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/regenerateKeys. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}/regenerateKeys. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_RegenerateKeys. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_RegenerateKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -457,7 +458,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NotificationHubNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="SharedAccessAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -468,7 +469,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNull(notificationHubPolicyKey, nameof(notificationHubPolicyKey));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.RegenerateKeys");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResource.RegenerateKeys");
             scope.Start();
             try
             {
@@ -476,7 +477,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateRegenerateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NotificationHubPolicyKey.ToRequestContent(notificationHubPolicyKey), context);
+                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateRegenerateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NotificationHubPolicyKey.ToRequestContent(notificationHubPolicyKey), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NotificationHubResourceKeys> response = Response.FromValue(NotificationHubResourceKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -493,15 +494,15 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Update a NotificationHubNamespaceAuthorizationRule.
+        /// Update a SharedAccessAuthorizationRuleResource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_CreateOrUpdateAuthorizationRule. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_CreateOrUpdateAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -509,7 +510,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NotificationHubNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="SharedAccessAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -517,11 +518,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="data"> Request content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<NotificationHubNamespaceAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, NotificationHubAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SharedAccessAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, NotificationHubAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.Update");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResource.Update");
             scope.Start();
             try
             {
@@ -529,12 +530,12 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NotificationHubAuthorizationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NotificationHubAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource> operation = new NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource>(Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                NotificationHubsArmOperation<SharedAccessAuthorizationRuleResource> operation = new NotificationHubsArmOperation<SharedAccessAuthorizationRuleResource>(Response.FromValue(new SharedAccessAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -549,15 +550,15 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Update a NotificationHubNamespaceAuthorizationRule.
+        /// Update a SharedAccessAuthorizationRuleResource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_CreateOrUpdateAuthorizationRule. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_CreateOrUpdateAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -565,7 +566,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NotificationHubNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="SharedAccessAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -573,11 +574,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="data"> Request content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<NotificationHubNamespaceAuthorizationRuleResource> Update(WaitUntil waitUntil, NotificationHubAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SharedAccessAuthorizationRuleResource> Update(WaitUntil waitUntil, NotificationHubAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.Update");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResource.Update");
             scope.Start();
             try
             {
@@ -585,12 +586,12 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NotificationHubAuthorizationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NotificationHubAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource> operation = new NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource>(Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                NotificationHubsArmOperation<SharedAccessAuthorizationRuleResource> operation = new NotificationHubsArmOperation<SharedAccessAuthorizationRuleResource>(Response.FromValue(new SharedAccessAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -609,12 +610,12 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<NotificationHubNamespaceAuthorizationRuleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedAccessAuthorizationRuleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.AddTag");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResource.AddTag");
             scope.Start();
             try
             {
@@ -627,16 +628,16 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
-                    return Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new SharedAccessAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     NotificationHubAuthorizationRuleData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<NotificationHubNamespaceAuthorizationRuleResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<SharedAccessAuthorizationRuleResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -652,12 +653,12 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<NotificationHubNamespaceAuthorizationRuleResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<SharedAccessAuthorizationRuleResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.AddTag");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResource.AddTag");
             scope.Start();
             try
             {
@@ -670,16 +671,16 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
-                    return Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new SharedAccessAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     NotificationHubAuthorizationRuleData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<NotificationHubNamespaceAuthorizationRuleResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<SharedAccessAuthorizationRuleResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -694,11 +695,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<NotificationHubNamespaceAuthorizationRuleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedAccessAuthorizationRuleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.SetTags");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResource.SetTags");
             scope.Start();
             try
             {
@@ -712,16 +713,16 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
-                    return Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new SharedAccessAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     NotificationHubAuthorizationRuleData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<NotificationHubNamespaceAuthorizationRuleResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<SharedAccessAuthorizationRuleResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -736,11 +737,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<NotificationHubNamespaceAuthorizationRuleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<SharedAccessAuthorizationRuleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.SetTags");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResource.SetTags");
             scope.Start();
             try
             {
@@ -754,16 +755,16 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
-                    return Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new SharedAccessAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     NotificationHubAuthorizationRuleData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<NotificationHubNamespaceAuthorizationRuleResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<SharedAccessAuthorizationRuleResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -778,11 +779,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<NotificationHubNamespaceAuthorizationRuleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedAccessAuthorizationRuleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.RemoveTag");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResource.RemoveTag");
             scope.Start();
             try
             {
@@ -795,16 +796,16 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
-                    return Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new SharedAccessAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     NotificationHubAuthorizationRuleData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<NotificationHubNamespaceAuthorizationRuleResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<SharedAccessAuthorizationRuleResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -819,11 +820,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<NotificationHubNamespaceAuthorizationRuleResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<SharedAccessAuthorizationRuleResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.RemoveTag");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResource.RemoveTag");
             scope.Start();
             try
             {
@@ -836,16 +837,16 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
-                    return Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new SharedAccessAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     NotificationHubAuthorizationRuleData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<NotificationHubNamespaceAuthorizationRuleResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<SharedAccessAuthorizationRuleResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

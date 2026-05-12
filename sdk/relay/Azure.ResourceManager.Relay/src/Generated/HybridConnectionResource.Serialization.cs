@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Relay
 {
     /// <summary></summary>
-    public partial class RelayNamespaceAuthorizationRuleResource : IJsonModel<RelayAuthorizationRuleData>
+    public partial class HybridConnectionResource : IJsonModel<RelayAuthorizationRuleData>
     {
         private static IJsonModel<RelayAuthorizationRuleData> s_dataDeserializationInstance;
 

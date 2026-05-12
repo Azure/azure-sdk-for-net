@@ -16,31 +16,31 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Relay
+namespace Azure.ResourceManager.NotificationHubs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RelayNamespaceAuthorizationRuleResource"/> and their operations.
-    /// Each <see cref="RelayNamespaceAuthorizationRuleResource"/> in the collection will belong to the same instance of <see cref="RelayNamespaceResource"/>.
-    /// To get a <see cref="RelayNamespaceAuthorizationRuleCollection"/> instance call the GetRelayNamespaceAuthorizationRules method from an instance of <see cref="RelayNamespaceResource"/>.
+    /// A class representing a collection of <see cref="SharedAccessAuthorizationRuleResource"/> and their operations.
+    /// Each <see cref="SharedAccessAuthorizationRuleResource"/> in the collection will belong to the same instance of <see cref="NotificationHubResource"/>.
+    /// To get a <see cref="SharedAccessAuthorizationRuleResourceCollection"/> instance call the GetSharedAccessAuthorizationRuleResources method from an instance of <see cref="NotificationHubResource"/>.
     /// </summary>
-    public partial class RelayNamespaceAuthorizationRuleCollection : ArmCollection, IEnumerable<RelayNamespaceAuthorizationRuleResource>, IAsyncEnumerable<RelayNamespaceAuthorizationRuleResource>
+    public partial class SharedAccessAuthorizationRuleResourceCollection : ArmCollection, IEnumerable<SharedAccessAuthorizationRuleResource>, IAsyncEnumerable<SharedAccessAuthorizationRuleResource>
     {
-        private readonly ClientDiagnostics _namespacesClientDiagnostics;
-        private readonly Namespaces _namespacesRestClient;
+        private readonly ClientDiagnostics _sharedAccessAuthorizationRuleResourcesClientDiagnostics;
+        private readonly SharedAccessAuthorizationRuleResources _sharedAccessAuthorizationRuleResourcesRestClient;
 
-        /// <summary> Initializes a new instance of RelayNamespaceAuthorizationRuleCollection for mocking. </summary>
-        protected RelayNamespaceAuthorizationRuleCollection()
+        /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleResourceCollection for mocking. </summary>
+        protected SharedAccessAuthorizationRuleResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RelayNamespaceAuthorizationRuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RelayNamespaceAuthorizationRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SharedAccessAuthorizationRuleResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(RelayNamespaceAuthorizationRuleResource.ResourceType, out string relayNamespaceAuthorizationRuleApiVersion);
-            _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", RelayNamespaceAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, relayNamespaceAuthorizationRuleApiVersion ?? "2024-01-01");
+            TryGetApiVersion(SharedAccessAuthorizationRuleResource.ResourceType, out string sharedAccessAuthorizationRuleResourceApiVersion);
+            _sharedAccessAuthorizationRuleResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", SharedAccessAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
+            _sharedAccessAuthorizationRuleResourcesRestClient = new SharedAccessAuthorizationRuleResources(_sharedAccessAuthorizationRuleResourcesClientDiagnostics, Pipeline, Endpoint, sharedAccessAuthorizationRuleResourceApiVersion ?? "2023-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -48,41 +48,41 @@ namespace Azure.ResourceManager.Relay
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != RelayNamespaceResource.ResourceType)
+            if (id.ResourceType != NotificationHubResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RelayNamespaceResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NotificationHubResource.ResourceType), nameof(id));
             }
         }
 
         /// <summary>
-        /// Creates or updates an authorization rule for a namespace.
+        /// Creates/Updates an authorization rule for a NotificationHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_CreateOrUpdateAuthorizationRule. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_CreateOrUpdateAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
-        /// <param name="data"> The authorization rule parameters. </param>
+        /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
+        /// <param name="data"> Request content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<RelayNamespaceAuthorizationRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationRuleName, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SharedAccessAuthorizationRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationRuleName, NotificationHubAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, RelayAuthorizationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, NotificationHubAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
+                Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                RelayArmOperation<RelayNamespaceAuthorizationRuleResource> operation = new RelayArmOperation<RelayNamespaceAuthorizationRuleResource>(Response.FromValue(new RelayNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                NotificationHubsArmOperation<SharedAccessAuthorizationRuleResource> operation = new NotificationHubsArmOperation<SharedAccessAuthorizationRuleResource>(Response.FromValue(new SharedAccessAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -110,34 +110,34 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Creates or updates an authorization rule for a namespace.
+        /// Creates/Updates an authorization rule for a NotificationHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_CreateOrUpdateAuthorizationRule. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_CreateOrUpdateAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
-        /// <param name="data"> The authorization rule parameters. </param>
+        /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
+        /// <param name="data"> Request content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<RelayNamespaceAuthorizationRuleResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationRuleName, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SharedAccessAuthorizationRuleResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationRuleName, NotificationHubAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, RelayAuthorizationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, NotificationHubAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
+                Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                RelayArmOperation<RelayNamespaceAuthorizationRuleResource> operation = new RelayArmOperation<RelayNamespaceAuthorizationRuleResource>(Response.FromValue(new RelayNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                NotificationHubsArmOperation<SharedAccessAuthorizationRuleResource> operation = new NotificationHubsArmOperation<SharedAccessAuthorizationRuleResource>(Response.FromValue(new SharedAccessAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -165,31 +165,31 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Authorization rule for a namespace by name.
+        /// Gets an authorization rule for a NotificationHub by name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_GetAuthorizationRule. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<RelayNamespaceAuthorizationRuleResource>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedAccessAuthorizationRuleResource>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleCollection.Get");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResourceCollection.Get");
             scope.Start();
             try
             {
@@ -197,14 +197,14 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
+                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
+                Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RelayNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedAccessAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,31 +214,31 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Authorization rule for a namespace by name.
+        /// Gets an authorization rule for a NotificationHub by name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_GetAuthorizationRule. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<RelayNamespaceAuthorizationRuleResource> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<SharedAccessAuthorizationRuleResource> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleCollection.Get");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResourceCollection.Get");
             scope.Start();
             try
             {
@@ -246,14 +246,14 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
+                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
+                Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RelayNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedAccessAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -263,71 +263,73 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Authorization rules for a namespace.
+        /// Gets the authorization rules for a NotificationHub.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_ListAuthorizationRules. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_ListAuthorizationRules. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RelayNamespaceAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RelayNamespaceAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SharedAccessAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SharedAccessAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayAuthorizationRuleData, RelayNamespaceAuthorizationRuleResource>(new NamespacesGetAuthorizationRulesAsyncCollectionResultOfT(
-                _namespacesRestClient,
-                Id.SubscriptionId,
+            return new AsyncPageableWrapper<NotificationHubAuthorizationRuleData, SharedAccessAuthorizationRuleResource>(new SharedAccessAuthorizationRuleResourcesGetAuthorizationRulesAsyncCollectionResultOfT(
+                _sharedAccessAuthorizationRuleResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
+                Id.Parent.Name,
                 Id.Name,
                 context,
-                "RelayNamespaceAuthorizationRuleCollection.GetAll"), data => new RelayNamespaceAuthorizationRuleResource(Client, data));
+                "SharedAccessAuthorizationRuleResourceCollection.GetAll"), data => new SharedAccessAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
-        /// Authorization rules for a namespace.
+        /// Gets the authorization rules for a NotificationHub.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_ListAuthorizationRules. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_ListAuthorizationRules. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RelayNamespaceAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RelayNamespaceAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SharedAccessAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SharedAccessAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayAuthorizationRuleData, RelayNamespaceAuthorizationRuleResource>(new NamespacesGetAuthorizationRulesCollectionResultOfT(
-                _namespacesRestClient,
-                Id.SubscriptionId,
+            return new PageableWrapper<NotificationHubAuthorizationRuleData, SharedAccessAuthorizationRuleResource>(new SharedAccessAuthorizationRuleResourcesGetAuthorizationRulesCollectionResultOfT(
+                _sharedAccessAuthorizationRuleResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
+                Id.Parent.Name,
                 Id.Name,
                 context,
-                "RelayNamespaceAuthorizationRuleCollection.GetAll"), data => new RelayNamespaceAuthorizationRuleResource(Client, data));
+                "SharedAccessAuthorizationRuleResourceCollection.GetAll"), data => new SharedAccessAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -335,19 +337,19 @@ namespace Azure.ResourceManager.Relay
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_GetAuthorizationRule. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -355,7 +357,7 @@ namespace Azure.ResourceManager.Relay
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleCollection.Exists");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -363,17 +365,17 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
+                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<RelayAuthorizationRuleData> response = default;
+                Response<NotificationHubAuthorizationRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
+                        response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RelayAuthorizationRuleData)null, result);
+                        response = Response.FromValue((NotificationHubAuthorizationRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -392,19 +394,19 @@ namespace Azure.ResourceManager.Relay
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_GetAuthorizationRule. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -412,7 +414,7 @@ namespace Azure.ResourceManager.Relay
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleCollection.Exists");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -420,17 +422,17 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
+                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<RelayAuthorizationRuleData> response = default;
+                Response<NotificationHubAuthorizationRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
+                        response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RelayAuthorizationRuleData)null, result);
+                        response = Response.FromValue((NotificationHubAuthorizationRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -449,27 +451,27 @@ namespace Azure.ResourceManager.Relay
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_GetAuthorizationRule. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<RelayNamespaceAuthorizationRuleResource>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SharedAccessAuthorizationRuleResource>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -477,26 +479,26 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
+                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<RelayAuthorizationRuleData> response = default;
+                Response<NotificationHubAuthorizationRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
+                        response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RelayAuthorizationRuleData)null, result);
+                        response = Response.FromValue((NotificationHubAuthorizationRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<RelayNamespaceAuthorizationRuleResource>(response.GetRawResponse());
+                    return new NoValueResponse<SharedAccessAuthorizationRuleResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new RelayNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedAccessAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -510,27 +512,27 @@ namespace Azure.ResourceManager.Relay
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_GetAuthorizationRule. </description>
+        /// <description> SharedAccessAuthorizationRuleResources_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<RelayNamespaceAuthorizationRuleResource> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SharedAccessAuthorizationRuleResource> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _sharedAccessAuthorizationRuleResourcesClientDiagnostics.CreateScope("SharedAccessAuthorizationRuleResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -538,26 +540,26 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
+                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<RelayAuthorizationRuleData> response = default;
+                Response<NotificationHubAuthorizationRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
+                        response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RelayAuthorizationRuleData)null, result);
+                        response = Response.FromValue((NotificationHubAuthorizationRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<RelayNamespaceAuthorizationRuleResource>(response.GetRawResponse());
+                    return new NoValueResponse<SharedAccessAuthorizationRuleResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new RelayNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedAccessAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -566,7 +568,7 @@ namespace Azure.ResourceManager.Relay
             }
         }
 
-        IEnumerator<RelayNamespaceAuthorizationRuleResource> IEnumerable<RelayNamespaceAuthorizationRuleResource>.GetEnumerator()
+        IEnumerator<SharedAccessAuthorizationRuleResource> IEnumerable<SharedAccessAuthorizationRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -577,7 +579,7 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<RelayNamespaceAuthorizationRuleResource> IAsyncEnumerable<RelayNamespaceAuthorizationRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SharedAccessAuthorizationRuleResource> IAsyncEnumerable<SharedAccessAuthorizationRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

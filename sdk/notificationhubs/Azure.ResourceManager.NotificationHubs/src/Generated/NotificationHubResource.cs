@@ -862,11 +862,11 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
-        /// <summary> Gets a collection of NotificationHubAuthorizationRules in the <see cref="NotificationHubResource"/>. </summary>
-        /// <returns> An object representing collection of NotificationHubAuthorizationRules and their operations over a NotificationHubAuthorizationRuleResource. </returns>
-        public virtual NotificationHubAuthorizationRuleCollection GetNotificationHubAuthorizationRules()
+        /// <summary> Gets a collection of SharedAccessAuthorizationRuleResources in the <see cref="NotificationHubResource"/>. </summary>
+        /// <returns> An object representing collection of SharedAccessAuthorizationRuleResources and their operations over a SharedAccessAuthorizationRuleResource. </returns>
+        public virtual SharedAccessAuthorizationRuleResourceCollection GetSharedAccessAuthorizationRuleResources()
         {
-            return GetCachedClient(client => new NotificationHubAuthorizationRuleCollection(client, Id));
+            return GetCachedClient(client => new SharedAccessAuthorizationRuleResourceCollection(client, Id));
         }
 
         /// <summary> Gets an authorization rule for a NotificationHub by name. </summary>
@@ -875,11 +875,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NotificationHubAuthorizationRuleResource>> GetNotificationHubAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedAccessAuthorizationRuleResource>> GetSharedAccessAuthorizationRuleResourceAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            return await GetNotificationHubAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetSharedAccessAuthorizationRuleResources().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an authorization rule for a NotificationHub by name. </summary>
@@ -888,11 +888,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NotificationHubAuthorizationRuleResource> GetNotificationHubAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<SharedAccessAuthorizationRuleResource> GetSharedAccessAuthorizationRuleResource(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            return GetNotificationHubAuthorizationRules().Get(authorizationRuleName, cancellationToken);
+            return GetSharedAccessAuthorizationRuleResources().Get(authorizationRuleName, cancellationToken);
         }
     }
 }

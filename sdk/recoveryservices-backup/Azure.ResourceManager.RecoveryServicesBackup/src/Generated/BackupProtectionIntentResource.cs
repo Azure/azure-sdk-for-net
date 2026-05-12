@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     {
         private readonly ClientDiagnostics _protectionIntentResourcesClientDiagnostics;
         private readonly ProtectionIntentResources _protectionIntentResourcesRestClient;
+        private readonly ClientDiagnostics _backupProtectionIntentClientDiagnostics;
+        private readonly BackupProtectionIntent _backupProtectionIntentRestClient;
         private readonly BackupProtectionIntentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupFabrics/backupProtectionIntent";
@@ -53,6 +55,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             TryGetApiVersion(ResourceType, out string backupProtectionIntentApiVersion);
             _protectionIntentResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
             _protectionIntentResourcesRestClient = new ProtectionIntentResources(_protectionIntentResourcesClientDiagnostics, Pipeline, Endpoint, backupProtectionIntentApiVersion ?? "2026-01-31-preview");
+            _backupProtectionIntentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
+            _backupProtectionIntentRestClient = new BackupProtectionIntent(_backupProtectionIntentClientDiagnostics, Pipeline, Endpoint, backupProtectionIntentApiVersion ?? "2026-01-31-preview");
             ValidateResourceId(id);
         }
 

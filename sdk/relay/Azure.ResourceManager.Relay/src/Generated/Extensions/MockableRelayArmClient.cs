@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Relay.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="RelayHybridConnectionAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HybridConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RelayHybridConnectionAuthorizationRuleResource"/> object. </returns>
-        public virtual RelayHybridConnectionAuthorizationRuleResource GetRelayHybridConnectionAuthorizationRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridConnectionResource"/> object. </returns>
+        public virtual HybridConnectionResource GetHybridConnectionResource(ResourceIdentifier id)
         {
-            RelayHybridConnectionAuthorizationRuleResource.ValidateResourceId(id);
-            return new RelayHybridConnectionAuthorizationRuleResource(Client, id);
+            HybridConnectionResource.ValidateResourceId(id);
+            return new HybridConnectionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="RelayHybridConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.Relay.Mocking
             return new RelayHybridConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WcfRelayAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="WCFRelayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WcfRelayAuthorizationRuleResource"/> object. </returns>
-        public virtual WcfRelayAuthorizationRuleResource GetWcfRelayAuthorizationRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WCFRelayResource"/> object. </returns>
+        public virtual WCFRelayResource GetWCFRelayResource(ResourceIdentifier id)
         {
-            WcfRelayAuthorizationRuleResource.ValidateResourceId(id);
-            return new WcfRelayAuthorizationRuleResource(Client, id);
+            WCFRelayResource.ValidateResourceId(id);
+            return new WCFRelayResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="WcfRelayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.Relay.Mocking
             return new RelayPrivateLinkResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="RelayNamespaceAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NamespaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RelayNamespaceAuthorizationRuleResource"/> object. </returns>
-        public virtual RelayNamespaceAuthorizationRuleResource GetRelayNamespaceAuthorizationRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NamespaceResource"/> object. </returns>
+        public virtual NamespaceResource GetNamespaceResource(ResourceIdentifier id)
         {
-            RelayNamespaceAuthorizationRuleResource.ValidateResourceId(id);
-            return new RelayNamespaceAuthorizationRuleResource(Client, id);
+            NamespaceResource.ValidateResourceId(id);
+            return new NamespaceResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="RelayNamespaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>

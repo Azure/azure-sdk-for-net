@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,12 +24,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     /// Each <see cref="BackupProtectionContainerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
     /// To get a <see cref="BackupProtectionContainerCollection"/> instance call the GetBackupProtectionContainers method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class BackupProtectionContainerCollection : ArmCollection
+    public partial class BackupProtectionContainerCollection : ArmCollection, IEnumerable<BackupProtectionContainerResource>, IAsyncEnumerable<BackupProtectionContainerResource>
     {
         private readonly ClientDiagnostics _protectionContainersClientDiagnostics;
         private readonly ProtectionContainers _protectionContainersRestClient;
+        private readonly ClientDiagnostics _backupProtectionContainersClientDiagnostics;
+        private readonly BackupProtectionContainers _backupProtectionContainersRestClient;
+        private readonly ClientDiagnostics _deletedProtectionContainersClientDiagnostics;
+        private readonly DeletedProtectionContainers _deletedProtectionContainersRestClient;
         private readonly ClientDiagnostics _backupWorkloadItemsClientDiagnostics;
         private readonly BackupWorkloadItems _backupWorkloadItemsRestClient;
+        /// <summary> The vaultName. </summary>
+        private readonly string _vaultName;
 
         /// <summary> Initializes a new instance of BackupProtectionContainerCollection for mocking. </summary>
         protected BackupProtectionContainerCollection()
@@ -37,11 +45,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> Initializes a new instance of <see cref="BackupProtectionContainerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BackupProtectionContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="vaultName"> The vaultName for the resource. </param>
+        internal BackupProtectionContainerCollection(ArmClient client, ResourceIdentifier id, string vaultName) : base(client, id)
         {
             TryGetApiVersion(BackupProtectionContainerResource.ResourceType, out string backupProtectionContainerApiVersion);
+            _vaultName = vaultName;
             _protectionContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionContainerResource.ResourceType.Namespace, Diagnostics);
             _protectionContainersRestClient = new ProtectionContainers(_protectionContainersClientDiagnostics, Pipeline, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-31-preview");
+            _backupProtectionContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionContainerResource.ResourceType.Namespace, Diagnostics);
+            _backupProtectionContainersRestClient = new BackupProtectionContainers(_backupProtectionContainersClientDiagnostics, Pipeline, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-31-preview");
+            _deletedProtectionContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionContainerResource.ResourceType.Namespace, Diagnostics);
+            _deletedProtectionContainersRestClient = new DeletedProtectionContainers(_deletedProtectionContainersClientDiagnostics, Pipeline, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-31-preview");
             _backupWorkloadItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionContainerResource.ResourceType.Namespace, Diagnostics);
             _backupWorkloadItemsRestClient = new BackupWorkloadItems(_backupWorkloadItemsClientDiagnostics, Pipeline, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-31-preview");
             ValidateResourceId(id);
@@ -77,16 +91,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="data"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<BackupProtectionContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, string fabricName, string containerName, BackupProtectionContainerData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<BackupProtectionContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fabricName, string containerName, BackupProtectionContainerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNull(data, nameof(data));
@@ -99,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, BackupProtectionContainerData.ToRequestContent(data), context);
+                HttpMessage message = _protectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, fabricName, containerName, BackupProtectionContainerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation<BackupProtectionContainerResource> operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(
                     new BackupProtectionContainerOperationSource(Client),
@@ -141,16 +153,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="data"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<BackupProtectionContainerResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, string fabricName, string containerName, BackupProtectionContainerData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<BackupProtectionContainerResource> CreateOrUpdate(WaitUntil waitUntil, string fabricName, string containerName, BackupProtectionContainerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNull(data, nameof(data));
@@ -163,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, BackupProtectionContainerData.ToRequestContent(data), context);
+                HttpMessage message = _protectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, fabricName, containerName, BackupProtectionContainerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation<BackupProtectionContainerResource> operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(
                     new BackupProtectionContainerOperationSource(Client),
@@ -202,15 +212,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<BackupProtectionContainerResource>> GetAsync(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<BackupProtectionContainerResource>> GetAsync(string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
@@ -222,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, context);
+                HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, fabricName, containerName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BackupProtectionContainerData> response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,15 +263,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<BackupProtectionContainerResource> Get(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<BackupProtectionContainerResource> Get(string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
@@ -275,7 +281,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, context);
+                HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, fabricName, containerName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BackupProtectionContainerData> response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -292,6 +298,78 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary>
+        /// Lists the containers registered to Recovery Services Vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectionContainers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BackupProtectionContainers_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-31-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BackupProtectionContainerResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainersGetBackupProtectionContainersAsyncCollectionResultOfT(
+                _backupProtectionContainersRestClient,
+                _vaultName,
+                Id.ResourceGroupName,
+                Id.SubscriptionId,
+                filter,
+                context,
+                "BackupProtectionContainerCollection.GetAll"), data => new BackupProtectionContainerResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists the containers registered to Recovery Services Vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectionContainers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BackupProtectionContainers_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-31-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BackupProtectionContainerResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainersGetBackupProtectionContainersCollectionResultOfT(
+                _backupProtectionContainersRestClient,
+                _vaultName,
+                Id.ResourceGroupName,
+                Id.SubscriptionId,
+                filter,
+                context,
+                "BackupProtectionContainerCollection.GetAll"), data => new BackupProtectionContainerResource(Client, data));
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -308,15 +386,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
@@ -328,7 +404,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, context);
+                HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, fabricName, containerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BackupProtectionContainerData> response = default;
@@ -369,15 +445,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
@@ -389,7 +463,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, context);
+                HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, fabricName, containerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BackupProtectionContainerData> response = default;
@@ -430,15 +504,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<BackupProtectionContainerResource>> GetIfExistsAsync(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<BackupProtectionContainerResource>> GetIfExistsAsync(string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
@@ -450,7 +522,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, context);
+                HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, fabricName, containerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BackupProtectionContainerData> response = default;
@@ -495,15 +567,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<BackupProtectionContainerResource> GetIfExists(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<BackupProtectionContainerResource> GetIfExists(string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
@@ -515,7 +585,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, context);
+                HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, fabricName, containerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BackupProtectionContainerData> response = default;
@@ -541,6 +611,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<BackupProtectionContainerResource> IEnumerable<BackupProtectionContainerResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<BackupProtectionContainerResource> IAsyncEnumerable<BackupProtectionContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

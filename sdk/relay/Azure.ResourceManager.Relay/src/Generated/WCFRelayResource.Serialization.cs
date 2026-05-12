@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Relay
 {
     /// <summary></summary>
-    public partial class WcfRelayAuthorizationRuleResource : IJsonModel<RelayAuthorizationRuleData>
+    public partial class WCFRelayResource : IJsonModel<RelayAuthorizationRuleData>
     {
         private static IJsonModel<RelayAuthorizationRuleData> s_dataDeserializationInstance;
 

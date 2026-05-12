@@ -330,6 +330,50 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary>
+        /// Lists all of the legacy peerings under the given subscription matching the specified kind and location.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringsByLegacyPeeringAsync(string, LegacyPeeringsKind, int?, DirectPeeringType?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="peeringLocation"> The location of the peering. </param>
+        /// <param name="kind"> The kind of the peering. </param>
+        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
+        /// <param name="directPeeringType"> The direct peering type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = default, DirectPeeringType? directPeeringType = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringsByLegacyPeeringAsync(peeringLocation, kind, asn, directPeeringType, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the legacy peerings under the given subscription matching the specified kind and location.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringsByLegacyPeering(string, LegacyPeeringsKind, int?, DirectPeeringType?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="peeringLocation"> The location of the peering. </param>
+        /// <param name="kind"> The kind of the peering. </param>
+        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
+        /// <param name="directPeeringType"> The direct peering type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PeeringResource> GetPeeringsByLegacyPeering(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = default, DirectPeeringType? directPeeringType = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringsByLegacyPeering(peeringLocation, kind, asn, directPeeringType, cancellationToken);
+        }
+
+        /// <summary>
         /// Lists all of the peerings under the given subscription.
         /// <item>
         /// <term> Mocking. </term>
@@ -507,50 +551,6 @@ namespace Azure.ResourceManager.Peering
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePeeringSubscriptionResource(subscriptionResource).GetCdnPeeringPrefixes(peeringLocation, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the legacy peerings under the given subscription matching the specified kind and location.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringsByLegacyPeeringAsync(string, LegacyPeeringsKind, int?, DirectPeeringType?, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="peeringLocation"> The location of the peering. </param>
-        /// <param name="kind"> The kind of the peering. </param>
-        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
-        /// <param name="directPeeringType"> The direct peering type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = default, DirectPeeringType? directPeeringType = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringsByLegacyPeeringAsync(peeringLocation, kind, asn, directPeeringType, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the legacy peerings under the given subscription matching the specified kind and location.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringsByLegacyPeering(string, LegacyPeeringsKind, int?, DirectPeeringType?, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="peeringLocation"> The location of the peering. </param>
-        /// <param name="kind"> The kind of the peering. </param>
-        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
-        /// <param name="directPeeringType"> The direct peering type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PeeringResource> GetPeeringsByLegacyPeering(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = default, DirectPeeringType? directPeeringType = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringsByLegacyPeering(peeringLocation, kind, asn, directPeeringType, cancellationToken);
         }
 
         /// <summary>

@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.Peering
     {
         private readonly ClientDiagnostics _peeringsClientDiagnostics;
         private readonly Peerings _peeringsRestClient;
+        private readonly ClientDiagnostics _legacyPeeringsClientDiagnostics;
+        private readonly LegacyPeerings _legacyPeeringsRestClient;
         private readonly ClientDiagnostics _rpUnbilledPrefixesClientDiagnostics;
         private readonly RpUnbilledPrefixes _rpUnbilledPrefixesRestClient;
         private readonly ClientDiagnostics _receivedRoutesClientDiagnostics;
@@ -46,6 +48,8 @@ namespace Azure.ResourceManager.Peering
             TryGetApiVersion(PeeringResource.ResourceType, out string peeringApiVersion);
             _peeringsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", PeeringResource.ResourceType.Namespace, Diagnostics);
             _peeringsRestClient = new Peerings(_peeringsClientDiagnostics, Pipeline, Endpoint, peeringApiVersion ?? "2025-05-01");
+            _legacyPeeringsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", PeeringResource.ResourceType.Namespace, Diagnostics);
+            _legacyPeeringsRestClient = new LegacyPeerings(_legacyPeeringsClientDiagnostics, Pipeline, Endpoint, peeringApiVersion ?? "2025-05-01");
             _rpUnbilledPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", PeeringResource.ResourceType.Namespace, Diagnostics);
             _rpUnbilledPrefixesRestClient = new RpUnbilledPrefixes(_rpUnbilledPrefixesClientDiagnostics, Pipeline, Endpoint, peeringApiVersion ?? "2025-05-01");
             _receivedRoutesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", PeeringResource.ResourceType.Namespace, Diagnostics);

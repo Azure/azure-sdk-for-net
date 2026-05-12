@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Relay
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WcfRelayAuthorizationRuleResource"/> and their operations.
-    /// Each <see cref="WcfRelayAuthorizationRuleResource"/> in the collection will belong to the same instance of <see cref="WcfRelayResource"/>.
-    /// To get a <see cref="WcfRelayAuthorizationRuleCollection"/> instance call the GetWcfRelayAuthorizationRules method from an instance of <see cref="WcfRelayResource"/>.
+    /// A class representing a collection of <see cref="NamespaceResource"/> and their operations.
+    /// Each <see cref="NamespaceResource"/> in the collection will belong to the same instance of <see cref="RelayNamespaceResource"/>.
+    /// To get a <see cref="NamespaceCollection"/> instance call the GetNamespaces method from an instance of <see cref="RelayNamespaceResource"/>.
     /// </summary>
-    public partial class WcfRelayAuthorizationRuleCollection : ArmCollection, IEnumerable<WcfRelayAuthorizationRuleResource>, IAsyncEnumerable<WcfRelayAuthorizationRuleResource>
+    public partial class NamespaceCollection : ArmCollection, IEnumerable<NamespaceResource>, IAsyncEnumerable<NamespaceResource>
     {
-        private readonly ClientDiagnostics _wcfRelaysClientDiagnostics;
-        private readonly WCFRelays _wcfRelaysRestClient;
+        private readonly ClientDiagnostics _namespacesClientDiagnostics;
+        private readonly Namespaces _namespacesRestClient;
 
-        /// <summary> Initializes a new instance of WcfRelayAuthorizationRuleCollection for mocking. </summary>
-        protected WcfRelayAuthorizationRuleCollection()
+        /// <summary> Initializes a new instance of NamespaceCollection for mocking. </summary>
+        protected NamespaceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WcfRelayAuthorizationRuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WcfRelayAuthorizationRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NamespaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(WcfRelayAuthorizationRuleResource.ResourceType, out string wcfRelayAuthorizationRuleApiVersion);
-            _wcfRelaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", WcfRelayAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
-            _wcfRelaysRestClient = new WCFRelays(_wcfRelaysClientDiagnostics, Pipeline, Endpoint, wcfRelayAuthorizationRuleApiVersion ?? "2024-01-01");
+            TryGetApiVersion(NamespaceResource.ResourceType, out string namespaceApiVersion);
+            _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", NamespaceResource.ResourceType.Namespace, Diagnostics);
+            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, namespaceApiVersion ?? "2024-01-01");
             ValidateResourceId(id);
         }
 
@@ -48,22 +48,22 @@ namespace Azure.ResourceManager.Relay
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WcfRelayResource.ResourceType)
+            if (id.ResourceType != RelayNamespaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WcfRelayResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RelayNamespaceResource.ResourceType), nameof(id));
             }
         }
 
         /// <summary>
-        /// Creates or updates an authorization rule for a WCF relay.
+        /// Creates or updates an authorization rule for a namespace.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_CreateOrUpdateAuthorizationRule. </description>
+        /// <description> AuthorizationRules_CreateOrUpdateAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<WcfRelayAuthorizationRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationRuleName, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NamespaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationRuleName, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, RelayAuthorizationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, RelayAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                RelayArmOperation<WcfRelayAuthorizationRuleResource> operation = new RelayArmOperation<WcfRelayAuthorizationRuleResource>(Response.FromValue(new WcfRelayAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                RelayArmOperation<NamespaceResource> operation = new RelayArmOperation<NamespaceResource>(Response.FromValue(new NamespaceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -110,15 +110,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Creates or updates an authorization rule for a WCF relay.
+        /// Creates or updates an authorization rule for a namespace.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_CreateOrUpdateAuthorizationRule. </description>
+        /// <description> AuthorizationRules_CreateOrUpdateAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<WcfRelayAuthorizationRuleResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationRuleName, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NamespaceResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationRuleName, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, RelayAuthorizationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, RelayAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                RelayArmOperation<WcfRelayAuthorizationRuleResource> operation = new RelayArmOperation<WcfRelayAuthorizationRuleResource>(Response.FromValue(new WcfRelayAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                RelayArmOperation<NamespaceResource> operation = new RelayArmOperation<NamespaceResource>(Response.FromValue(new NamespaceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -165,15 +165,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Get authorizationRule for a WCF relay by name.
+        /// Authorization rule for a namespace by name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_GetAuthorizationRule. </description>
+        /// <description> AuthorizationRules_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -185,11 +185,11 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WcfRelayAuthorizationRuleResource>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NamespaceResource>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleCollection.Get");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceCollection.Get");
             scope.Start();
             try
             {
@@ -197,14 +197,14 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
+                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new WcfRelayAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,15 +214,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Get authorizationRule for a WCF relay by name.
+        /// Authorization rule for a namespace by name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_GetAuthorizationRule. </description>
+        /// <description> AuthorizationRules_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -234,11 +234,11 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WcfRelayAuthorizationRuleResource> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<NamespaceResource> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleCollection.Get");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceCollection.Get");
             scope.Start();
             try
             {
@@ -246,14 +246,14 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
+                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new WcfRelayAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -263,15 +263,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Authorization rules for a WCF relay.
+        /// Authorization rules for a namespace.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_ListAuthorizationRules. </description>
+        /// <description> AuthorizationRules_ListAuthorizationRules. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -280,33 +280,32 @@ namespace Azure.ResourceManager.Relay
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WcfRelayAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WcfRelayAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NamespaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NamespaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayAuthorizationRuleData, WcfRelayAuthorizationRuleResource>(new WCFRelaysGetAuthorizationRulesAsyncCollectionResultOfT(
-                _wcfRelaysRestClient,
+            return new AsyncPageableWrapper<RelayAuthorizationRuleData, NamespaceResource>(new NamespacesGetAuthorizationRulesAsyncCollectionResultOfT(
+                _namespacesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                Id.Parent.Name,
                 Id.Name,
                 context,
-                "WcfRelayAuthorizationRuleCollection.GetAll"), data => new WcfRelayAuthorizationRuleResource(Client, data));
+                "NamespaceCollection.GetAll"), data => new NamespaceResource(Client, data));
         }
 
         /// <summary>
-        /// Authorization rules for a WCF relay.
+        /// Authorization rules for a namespace.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_ListAuthorizationRules. </description>
+        /// <description> AuthorizationRules_ListAuthorizationRules. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -315,21 +314,20 @@ namespace Azure.ResourceManager.Relay
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WcfRelayAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WcfRelayAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NamespaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NamespaceResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayAuthorizationRuleData, WcfRelayAuthorizationRuleResource>(new WCFRelaysGetAuthorizationRulesCollectionResultOfT(
-                _wcfRelaysRestClient,
+            return new PageableWrapper<RelayAuthorizationRuleData, NamespaceResource>(new NamespacesGetAuthorizationRulesCollectionResultOfT(
+                _namespacesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                Id.Parent.Name,
                 Id.Name,
                 context,
-                "WcfRelayAuthorizationRuleCollection.GetAll"), data => new WcfRelayAuthorizationRuleResource(Client, data));
+                "NamespaceCollection.GetAll"), data => new NamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -337,11 +335,11 @@ namespace Azure.ResourceManager.Relay
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_GetAuthorizationRule. </description>
+        /// <description> AuthorizationRules_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -357,7 +355,7 @@ namespace Azure.ResourceManager.Relay
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleCollection.Exists");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceCollection.Exists");
             scope.Start();
             try
             {
@@ -365,7 +363,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
+                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RelayAuthorizationRuleData> response = default;
@@ -394,11 +392,11 @@ namespace Azure.ResourceManager.Relay
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_GetAuthorizationRule. </description>
+        /// <description> AuthorizationRules_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -414,7 +412,7 @@ namespace Azure.ResourceManager.Relay
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleCollection.Exists");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceCollection.Exists");
             scope.Start();
             try
             {
@@ -422,7 +420,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
+                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RelayAuthorizationRuleData> response = default;
@@ -451,11 +449,11 @@ namespace Azure.ResourceManager.Relay
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_GetAuthorizationRule. </description>
+        /// <description> AuthorizationRules_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -467,11 +465,11 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<WcfRelayAuthorizationRuleResource>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<NamespaceResource>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -479,7 +477,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
+                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RelayAuthorizationRuleData> response = default;
@@ -496,9 +494,9 @@ namespace Azure.ResourceManager.Relay
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<WcfRelayAuthorizationRuleResource>(response.GetRawResponse());
+                    return new NoValueResponse<NamespaceResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new WcfRelayAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -512,11 +510,11 @@ namespace Azure.ResourceManager.Relay
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_GetAuthorizationRule. </description>
+        /// <description> AuthorizationRules_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -528,11 +526,11 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<WcfRelayAuthorizationRuleResource> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<NamespaceResource> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -540,7 +538,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
+                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RelayAuthorizationRuleData> response = default;
@@ -557,9 +555,9 @@ namespace Azure.ResourceManager.Relay
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<WcfRelayAuthorizationRuleResource>(response.GetRawResponse());
+                    return new NoValueResponse<NamespaceResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new WcfRelayAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -568,7 +566,7 @@ namespace Azure.ResourceManager.Relay
             }
         }
 
-        IEnumerator<WcfRelayAuthorizationRuleResource> IEnumerable<WcfRelayAuthorizationRuleResource>.GetEnumerator()
+        IEnumerator<NamespaceResource> IEnumerable<NamespaceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -579,7 +577,7 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<WcfRelayAuthorizationRuleResource> IAsyncEnumerable<WcfRelayAuthorizationRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NamespaceResource> IAsyncEnumerable<NamespaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -275,17 +275,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Gets a collection of BackupProtectionIntents in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionIntents()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionIntents(string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vaultName"> The vaultName for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of BackupProtectionIntents and their operations over a BackupProtectionIntentResource. </returns>
-        public static BackupProtectionIntentCollection GetBackupProtectionIntents(this ResourceGroupResource resourceGroupResource)
+        public static BackupProtectionIntentCollection GetBackupProtectionIntents(this ResourceGroupResource resourceGroupResource, string vaultName)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionIntents();
+            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionIntents(vaultName);
         }
 
         /// <summary>
@@ -297,7 +298,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="vaultName"> The vaultName for the resource. </param>
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="intentObjectName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -319,7 +320,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="vaultName"> The vaultName for the resource. </param>
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="intentObjectName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -427,17 +428,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Gets a collection of BackupProtectionContainers in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionContainers()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionContainers(string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vaultName"> The vaultName for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of BackupProtectionContainers and their operations over a BackupProtectionContainerResource. </returns>
-        public static BackupProtectionContainerCollection GetBackupProtectionContainers(this ResourceGroupResource resourceGroupResource)
+        public static BackupProtectionContainerCollection GetBackupProtectionContainers(this ResourceGroupResource resourceGroupResource, string vaultName)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionContainers();
+            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionContainers(vaultName);
         }
 
         /// <summary>
@@ -448,7 +450,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="vaultName"> The vaultName for the resource. </param>
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -469,7 +471,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="vaultName"> The vaultName for the resource. </param>
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -721,10 +723,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary>
-        /// Provides a pageable list of all intents that are present within a vault.
+        /// Provides a pageable list of all items that are backed up within a vault.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionIntentsAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectedItemsAsync(string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -733,19 +735,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="BackupProtectionIntentResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BackupProtectionIntentResource> GetBackupProtectionIntentsAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BackupProtectedItemResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<BackupProtectedItemResource> GetBackupProtectedItemsAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionIntentsAsync(vaultName, filter, skipToken, cancellationToken);
+            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectedItemsAsync(vaultName, filter, skipToken, cancellationToken);
         }
 
         /// <summary>
-        /// Provides a pageable list of all intents that are present within a vault.
+        /// Provides a pageable list of all items that are backed up within a vault.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionIntents(string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectedItems(string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -754,12 +756,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="BackupProtectionIntentResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BackupProtectionIntentResource> GetBackupProtectionIntents(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BackupProtectedItemResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<BackupProtectedItemResource> GetBackupProtectedItems(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionIntents(vaultName, filter, skipToken, cancellationToken);
+            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectedItems(vaultName, filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -840,48 +842,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).ExportJob(vaultName, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Provides a pageable list of all items that are backed up within a vault.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectedItemsAsync(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="skipToken"> skipToken Filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="BackupProtectedItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BackupProtectedItemResource> GetBackupProtectedItemsAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectedItemsAsync(vaultName, filter, skipToken, cancellationToken);
-        }
-
-        /// <summary>
-        /// Provides a pageable list of all items that are backed up within a vault.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectedItems(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="skipToken"> skipToken Filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="BackupProtectedItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BackupProtectedItemResource> GetBackupProtectedItems(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectedItems(vaultName, filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -1010,86 +970,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectableItems(vaultName, filter, skipToken, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the containers registered to Recovery Services Vault.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionContainersAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BackupProtectionContainerResource> GetBackupProtectionContainersAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionContainersAsync(vaultName, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the containers registered to Recovery Services Vault.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionContainers(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BackupProtectionContainerResource> GetBackupProtectionContainers(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionContainers(vaultName, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the soft deleted containers registered to Recovery Services Vault.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetSoftDeletedProtectionContainersAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BackupProtectionContainerResource> GetSoftDeletedProtectionContainersAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetSoftDeletedProtectionContainersAsync(vaultName, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the soft deleted containers registered to Recovery Services Vault.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetSoftDeletedProtectionContainers(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BackupProtectionContainerResource> GetSoftDeletedProtectionContainers(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetSoftDeletedProtectionContainers(vaultName, filter, cancellationToken);
         }
 
         /// <summary>

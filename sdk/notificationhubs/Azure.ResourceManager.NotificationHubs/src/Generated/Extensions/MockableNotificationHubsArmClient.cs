@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
             return new NotificationHubResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="NotificationHubNamespaceAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NamespaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NotificationHubNamespaceAuthorizationRuleResource"/> object. </returns>
-        public virtual NotificationHubNamespaceAuthorizationRuleResource GetNotificationHubNamespaceAuthorizationRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NamespaceResource"/> object. </returns>
+        public virtual NamespaceResource GetNamespaceResource(ResourceIdentifier id)
         {
-            NotificationHubNamespaceAuthorizationRuleResource.ValidateResourceId(id);
-            return new NotificationHubNamespaceAuthorizationRuleResource(Client, id);
+            NamespaceResource.ValidateResourceId(id);
+            return new NamespaceResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="NotificationHubNamespaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
             return new NotificationHubNamespaceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="NotificationHubAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SharedAccessAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NotificationHubAuthorizationRuleResource"/> object. </returns>
-        public virtual NotificationHubAuthorizationRuleResource GetNotificationHubAuthorizationRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SharedAccessAuthorizationRuleResource"/> object. </returns>
+        public virtual SharedAccessAuthorizationRuleResource GetSharedAccessAuthorizationRuleResource(ResourceIdentifier id)
         {
-            NotificationHubAuthorizationRuleResource.ValidateResourceId(id);
-            return new NotificationHubAuthorizationRuleResource(Client, id);
+            SharedAccessAuthorizationRuleResource.ValidateResourceId(id);
+            return new SharedAccessAuthorizationRuleResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="NotificationHubPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>

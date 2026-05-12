@@ -12,67 +12,66 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.MySql;
-using Azure.ResourceManager.MySql.FlexibleServers;
+using Azure.ResourceManager.RedisEnterprise;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers.Models
+namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> Parameters allowed to update for a server. </summary>
-    public partial class MySqlFlexibleServerPatch : IJsonModel<MySqlFlexibleServerPatch>
+    /// <summary> A partial update to the Redis Enterprise cluster. </summary>
+    public partial class RedisEnterpriseClusterUpdate : IJsonModel<RedisEnterpriseClusterUpdate>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MySqlFlexibleServerPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RedisEnterpriseClusterUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseClusterUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMySqlFlexibleServerPatch(document.RootElement, options);
+                        return DeserializeRedisEnterpriseClusterUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseClusterUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseClusterUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisEnterpriseContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseClusterUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MySqlFlexibleServerPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RedisEnterpriseClusterUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MySqlFlexibleServerPatch IPersistableModel<MySqlFlexibleServerPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RedisEnterpriseClusterUpdate IPersistableModel<RedisEnterpriseClusterUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MySqlFlexibleServerPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RedisEnterpriseClusterUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="mySqlFlexibleServerPatch"> The <see cref="MySqlFlexibleServerPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MySqlFlexibleServerPatch mySqlFlexibleServerPatch)
+        /// <param name="redisEnterpriseClusterUpdate"> The <see cref="RedisEnterpriseClusterUpdate"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RedisEnterpriseClusterUpdate redisEnterpriseClusterUpdate)
         {
-            if (mySqlFlexibleServerPatch == null)
+            if (redisEnterpriseClusterUpdate == null)
             {
                 return null;
             }
-            return RequestContent.Create(mySqlFlexibleServerPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(redisEnterpriseClusterUpdate, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MySqlFlexibleServerPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RedisEnterpriseClusterUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -83,15 +82,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseClusterUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerPatch)} does not support writing '{format}' format.");
-            }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
+                throw new FormatException($"The model {nameof(RedisEnterpriseClusterUpdate)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Sku))
             {
@@ -102,6 +96,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -138,52 +137,43 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MySqlFlexibleServerPatch IJsonModel<MySqlFlexibleServerPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RedisEnterpriseClusterUpdate IJsonModel<RedisEnterpriseClusterUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MySqlFlexibleServerPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RedisEnterpriseClusterUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseClusterUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseClusterUpdate)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMySqlFlexibleServerPatch(document.RootElement, options);
+            return DeserializeRedisEnterpriseClusterUpdate(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MySqlFlexibleServerPatch DeserializeMySqlFlexibleServerPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static RedisEnterpriseClusterUpdate DeserializeRedisEnterpriseClusterUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            RedisEnterpriseSku sku = default;
+            ClusterUpdateProperties properties = default;
             ManagedServiceIdentity identity = default;
-            MySqlFlexibleServerSku sku = default;
-            ServerPropertiesForUpdate properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("identity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerMySqlContext.Default);
-                    continue;
-                }
                 if (prop.NameEquals("sku"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sku = MySqlFlexibleServerSku.DeserializeMySqlFlexibleServerSku(prop.Value, options);
+                    sku = RedisEnterpriseSku.DeserializeRedisEnterpriseSku(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -192,7 +182,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    properties = ServerPropertiesForUpdate.DeserializeServerPropertiesForUpdate(prop.Value, options);
+                    properties = ClusterUpdateProperties.DeserializeClusterUpdateProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerRedisEnterpriseContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -221,7 +220,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MySqlFlexibleServerPatch(identity, sku, properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new RedisEnterpriseClusterUpdate(sku, properties, identity, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

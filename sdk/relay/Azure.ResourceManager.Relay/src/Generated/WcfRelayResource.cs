@@ -401,11 +401,11 @@ namespace Azure.ResourceManager.Relay
             }
         }
 
-        /// <summary> Gets a collection of WcfRelayAuthorizationRules in the <see cref="WcfRelayResource"/>. </summary>
-        /// <returns> An object representing collection of WcfRelayAuthorizationRules and their operations over a WcfRelayAuthorizationRuleResource. </returns>
-        public virtual WcfRelayAuthorizationRuleCollection GetWcfRelayAuthorizationRules()
+        /// <summary> Gets a collection of WCFRelays in the <see cref="WcfRelayResource"/>. </summary>
+        /// <returns> An object representing collection of WCFRelays and their operations over a WCFRelayResource. </returns>
+        public virtual WCFRelayCollection GetWCFRelays()
         {
-            return GetCachedClient(client => new WcfRelayAuthorizationRuleCollection(client, Id));
+            return GetCachedClient(client => new WCFRelayCollection(client, Id));
         }
 
         /// <summary> Get authorizationRule for a WCF relay by name. </summary>
@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WcfRelayAuthorizationRuleResource>> GetWcfRelayAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WCFRelayResource>> GetWCFRelayAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            return await GetWcfRelayAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetWCFRelays().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get authorizationRule for a WCF relay by name. </summary>
@@ -427,11 +427,11 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WcfRelayAuthorizationRuleResource> GetWcfRelayAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<WCFRelayResource> GetWCFRelay(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            return GetWcfRelayAuthorizationRules().Get(authorizationRuleName, cancellationToken);
+            return GetWCFRelays().Get(authorizationRuleName, cancellationToken);
         }
     }
 }

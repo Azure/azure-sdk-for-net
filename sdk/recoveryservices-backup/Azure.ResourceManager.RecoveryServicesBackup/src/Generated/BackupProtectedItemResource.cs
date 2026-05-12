@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     {
         private readonly ClientDiagnostics _protectedItemsClientDiagnostics;
         private readonly ProtectedItems _protectedItemsRestClient;
+        private readonly ClientDiagnostics _backupProtectedItemsClientDiagnostics;
+        private readonly BackupProtectedItems _backupProtectedItemsRestClient;
         private readonly ClientDiagnostics _recoveryPointsRecommendedForMoveClientDiagnostics;
         private readonly RecoveryPointsRecommendedForMove _recoveryPointsRecommendedForMoveRestClient;
         private readonly ClientDiagnostics _backupsClientDiagnostics;
@@ -58,6 +60,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             TryGetApiVersion(ResourceType, out string backupProtectedItemApiVersion);
             _protectedItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
             _protectedItemsRestClient = new ProtectedItems(_protectedItemsClientDiagnostics, Pipeline, Endpoint, backupProtectedItemApiVersion ?? "2026-01-31-preview");
+            _backupProtectedItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
+            _backupProtectedItemsRestClient = new BackupProtectedItems(_backupProtectedItemsClientDiagnostics, Pipeline, Endpoint, backupProtectedItemApiVersion ?? "2026-01-31-preview");
             _recoveryPointsRecommendedForMoveClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
             _recoveryPointsRecommendedForMoveRestClient = new RecoveryPointsRecommendedForMove(_recoveryPointsRecommendedForMoveClientDiagnostics, Pipeline, Endpoint, backupProtectedItemApiVersion ?? "2026-01-31-preview");
             _backupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);

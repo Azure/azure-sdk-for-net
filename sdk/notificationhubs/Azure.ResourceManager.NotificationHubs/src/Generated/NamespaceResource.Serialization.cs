@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.NotificationHubs
 {
     /// <summary></summary>
-    public partial class NotificationHubNamespaceAuthorizationRuleResource : IJsonModel<NotificationHubAuthorizationRuleData>
+    public partial class NamespaceResource : IJsonModel<NotificationHubAuthorizationRuleData>
     {
         private static IJsonModel<NotificationHubAuthorizationRuleData> s_dataDeserializationInstance;
 

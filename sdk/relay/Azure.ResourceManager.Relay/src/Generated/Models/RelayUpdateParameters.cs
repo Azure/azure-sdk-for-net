@@ -14,18 +14,18 @@ using Azure.ResourceManager.Relay;
 namespace Azure.ResourceManager.Relay.Models
 {
     /// <summary> Description of a namespace resource. </summary>
-    public partial class RelayNamespacePatch : ResourceData
+    public partial class RelayUpdateParameters : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RelayNamespacePatch"/>. </summary>
-        public RelayNamespacePatch()
+        /// <summary> Initializes a new instance of <see cref="RelayUpdateParameters"/>. </summary>
+        public RelayUpdateParameters()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RelayNamespacePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayUpdateParameters"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="sku"> SKU of the namespace. </param>
         /// <param name="properties"> Description of Relay namespace. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal RelayNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RelaySku sku, RelayNamespaceProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal RelayUpdateParameters(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RelaySku sku, RelayNamespaceProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Sku = sku;

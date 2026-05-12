@@ -18,40 +18,40 @@ using Azure.ResourceManager.Relay.Models;
 namespace Azure.ResourceManager.Relay
 {
     /// <summary>
-    /// A class representing a RelayNamespaceAuthorizationRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RelayNamespaceAuthorizationRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RelayNamespaceResource"/> using the GetRelayNamespaceAuthorizationRules method.
+    /// A class representing a HybridConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RelayHybridConnectionResource"/> using the GetHybridConnections method.
     /// </summary>
-    public partial class RelayNamespaceAuthorizationRuleResource : ArmResource
+    public partial class HybridConnectionResource : ArmResource
     {
-        private readonly ClientDiagnostics _namespacesClientDiagnostics;
-        private readonly Namespaces _namespacesRestClient;
+        private readonly ClientDiagnostics _hybridConnectionsClientDiagnostics;
+        private readonly HybridConnections _hybridConnectionsRestClient;
         private readonly RelayAuthorizationRuleData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/authorizationRules";
+        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/hybridConnections/authorizationRules";
 
-        /// <summary> Initializes a new instance of RelayNamespaceAuthorizationRuleResource for mocking. </summary>
-        protected RelayNamespaceAuthorizationRuleResource()
+        /// <summary> Initializes a new instance of HybridConnectionResource for mocking. </summary>
+        protected HybridConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RelayNamespaceAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RelayNamespaceAuthorizationRuleResource(ArmClient client, RelayAuthorizationRuleData data) : this(client, data.Id)
+        internal HybridConnectionResource(ArmClient client, RelayAuthorizationRuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RelayNamespaceAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RelayNamespaceAuthorizationRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HybridConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string relayNamespaceAuthorizationRuleApiVersion);
-            _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, relayNamespaceAuthorizationRuleApiVersion ?? "2024-01-01");
+            TryGetApiVersion(ResourceType, out string hybridConnectionApiVersion);
+            _hybridConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", ResourceType.Namespace, Diagnostics);
+            _hybridConnectionsRestClient = new HybridConnections(_hybridConnectionsClientDiagnostics, Pipeline, Endpoint, hybridConnectionApiVersion ?? "2024-01-01");
             ValidateResourceId(id);
         }
 
@@ -75,10 +75,11 @@ namespace Azure.ResourceManager.Relay
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="hybridConnectionName"> The hybridConnectionName. </param>
         /// <param name="authorizationRuleName"> The authorizationRuleName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string hybridConnectionName, string authorizationRuleName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -93,15 +94,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Authorization rule for a namespace by name.
+        /// Hybrid connection authorization rule for a hybrid connection by name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_GetAuthorizationRule. </description>
+        /// <description> HybridConnections_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -109,14 +110,14 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="HybridConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RelayNamespaceAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleResource.Get");
+            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("HybridConnectionResource.Get");
             scope.Start();
             try
             {
@@ -124,14 +125,14 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _hybridConnectionsRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RelayNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,15 +142,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Authorization rule for a namespace by name.
+        /// Hybrid connection authorization rule for a hybrid connection by name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_GetAuthorizationRule. </description>
+        /// <description> HybridConnections_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -157,14 +158,14 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="HybridConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RelayNamespaceAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HybridConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleResource.Get");
+            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("HybridConnectionResource.Get");
             scope.Start();
             try
             {
@@ -172,14 +173,14 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _hybridConnectionsRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RelayNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,15 +190,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Deletes a namespace authorization rule.
+        /// Deletes a hybrid connection authorization rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_DeleteAuthorizationRule. </description>
+        /// <description> HybridConnections_DeleteAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -205,7 +206,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="HybridConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,7 +214,7 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleResource.Delete");
+            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("HybridConnectionResource.Delete");
             scope.Start();
             try
             {
@@ -221,7 +222,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _hybridConnectionsRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -240,15 +241,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Deletes a namespace authorization rule.
+        /// Deletes a hybrid connection authorization rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_DeleteAuthorizationRule. </description>
+        /// <description> HybridConnections_DeleteAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="HybridConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,7 +265,7 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleResource.Delete");
+            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("HybridConnectionResource.Delete");
             scope.Start();
             try
             {
@@ -272,7 +273,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _hybridConnectionsRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -291,15 +292,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Primary and secondary connection strings to the namespace.
+        /// Primary and secondary connection strings to the hybrid connection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/listKeys. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}/listKeys. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_ListKeys. </description>
+        /// <description> HybridConnections_ListKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -307,14 +308,14 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="HybridConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RelayAccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleResource.GetKeys");
+            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("HybridConnectionResource.GetKeys");
             scope.Start();
             try
             {
@@ -322,7 +323,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _hybridConnectionsRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayAccessKeys> response = Response.FromValue(RelayAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -339,15 +340,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Primary and secondary connection strings to the namespace.
+        /// Primary and secondary connection strings to the hybrid connection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/listKeys. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}/listKeys. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_ListKeys. </description>
+        /// <description> HybridConnections_ListKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -355,14 +356,14 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="HybridConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RelayAccessKeys> GetKeys(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleResource.GetKeys");
+            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("HybridConnectionResource.GetKeys");
             scope.Start();
             try
             {
@@ -370,7 +371,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _hybridConnectionsRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayAccessKeys> response = Response.FromValue(RelayAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -387,15 +388,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Regenerates the primary or secondary connection strings to the namespace.
+        /// Regenerates the primary or secondary connection strings to the hybrid connection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/regenerateKeys. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}/regenerateKeys. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_RegenerateKeys. </description>
+        /// <description> HybridConnections_RegenerateKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -403,7 +404,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="HybridConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,7 +415,7 @@ namespace Azure.ResourceManager.Relay
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleResource.RegenerateKeys");
+            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("HybridConnectionResource.RegenerateKeys");
             scope.Start();
             try
             {
@@ -422,7 +423,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, RelayRegenerateAccessKeyContent.ToRequestContent(content), context);
+                HttpMessage message = _hybridConnectionsRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RelayRegenerateAccessKeyContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayAccessKeys> response = Response.FromValue(RelayAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -439,15 +440,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Regenerates the primary or secondary connection strings to the namespace.
+        /// Regenerates the primary or secondary connection strings to the hybrid connection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/regenerateKeys. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}/regenerateKeys. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_RegenerateKeys. </description>
+        /// <description> HybridConnections_RegenerateKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -455,7 +456,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="HybridConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -466,7 +467,7 @@ namespace Azure.ResourceManager.Relay
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleResource.RegenerateKeys");
+            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("HybridConnectionResource.RegenerateKeys");
             scope.Start();
             try
             {
@@ -474,7 +475,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, RelayRegenerateAccessKeyContent.ToRequestContent(content), context);
+                HttpMessage message = _hybridConnectionsRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RelayRegenerateAccessKeyContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayAccessKeys> response = Response.FromValue(RelayAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -491,15 +492,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Update a RelayNamespaceAuthorizationRule.
+        /// Update a HybridConnection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_CreateOrUpdateAuthorizationRule. </description>
+        /// <description> HybridConnections_CreateOrUpdateAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -507,7 +508,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="HybridConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -515,11 +516,11 @@ namespace Azure.ResourceManager.Relay
         /// <param name="data"> The authorization rule parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<RelayNamespaceAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HybridConnectionResource>> UpdateAsync(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleResource.Update");
+            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("HybridConnectionResource.Update");
             scope.Start();
             try
             {
@@ -527,12 +528,12 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, RelayAuthorizationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _hybridConnectionsRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RelayAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                RelayArmOperation<RelayNamespaceAuthorizationRuleResource> operation = new RelayArmOperation<RelayNamespaceAuthorizationRuleResource>(Response.FromValue(new RelayNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                RelayArmOperation<HybridConnectionResource> operation = new RelayArmOperation<HybridConnectionResource>(Response.FromValue(new HybridConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -547,15 +548,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Update a RelayNamespaceAuthorizationRule.
+        /// Update a HybridConnection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AuthorizationRules_CreateOrUpdateAuthorizationRule. </description>
+        /// <description> HybridConnections_CreateOrUpdateAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -563,7 +564,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayNamespaceAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="HybridConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -571,11 +572,11 @@ namespace Azure.ResourceManager.Relay
         /// <param name="data"> The authorization rule parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<RelayNamespaceAuthorizationRuleResource> Update(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HybridConnectionResource> Update(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleResource.Update");
+            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("HybridConnectionResource.Update");
             scope.Start();
             try
             {
@@ -583,12 +584,12 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, RelayAuthorizationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _hybridConnectionsRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RelayAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                RelayArmOperation<RelayNamespaceAuthorizationRuleResource> operation = new RelayArmOperation<RelayNamespaceAuthorizationRuleResource>(Response.FromValue(new RelayNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                RelayArmOperation<HybridConnectionResource> operation = new RelayArmOperation<HybridConnectionResource>(Response.FromValue(new HybridConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

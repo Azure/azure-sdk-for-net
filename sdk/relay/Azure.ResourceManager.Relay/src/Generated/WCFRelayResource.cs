@@ -18,40 +18,40 @@ using Azure.ResourceManager.Relay.Models;
 namespace Azure.ResourceManager.Relay
 {
     /// <summary>
-    /// A class representing a RelayHybridConnectionAuthorizationRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RelayHybridConnectionAuthorizationRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RelayHybridConnectionResource"/> using the GetRelayHybridConnectionAuthorizationRules method.
+    /// A class representing a WCFRelay along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WCFRelayResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WcfRelayResource"/> using the GetWCFRelays method.
     /// </summary>
-    public partial class RelayHybridConnectionAuthorizationRuleResource : ArmResource
+    public partial class WCFRelayResource : ArmResource
     {
-        private readonly ClientDiagnostics _hybridConnectionsClientDiagnostics;
-        private readonly HybridConnections _hybridConnectionsRestClient;
+        private readonly ClientDiagnostics _wcfRelaysClientDiagnostics;
+        private readonly WCFRelays _wcfRelaysRestClient;
         private readonly RelayAuthorizationRuleData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/hybridConnections/authorizationRules";
+        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/wcfRelays/authorizationRules";
 
-        /// <summary> Initializes a new instance of RelayHybridConnectionAuthorizationRuleResource for mocking. </summary>
-        protected RelayHybridConnectionAuthorizationRuleResource()
+        /// <summary> Initializes a new instance of WCFRelayResource for mocking. </summary>
+        protected WCFRelayResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RelayHybridConnectionAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WCFRelayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RelayHybridConnectionAuthorizationRuleResource(ArmClient client, RelayAuthorizationRuleData data) : this(client, data.Id)
+        internal WCFRelayResource(ArmClient client, RelayAuthorizationRuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RelayHybridConnectionAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WCFRelayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RelayHybridConnectionAuthorizationRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WCFRelayResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string relayHybridConnectionAuthorizationRuleApiVersion);
-            _hybridConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", ResourceType.Namespace, Diagnostics);
-            _hybridConnectionsRestClient = new HybridConnections(_hybridConnectionsClientDiagnostics, Pipeline, Endpoint, relayHybridConnectionAuthorizationRuleApiVersion ?? "2024-01-01");
+            TryGetApiVersion(ResourceType, out string wcfRelayApiVersion);
+            _wcfRelaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", ResourceType.Namespace, Diagnostics);
+            _wcfRelaysRestClient = new WCFRelays(_wcfRelaysClientDiagnostics, Pipeline, Endpoint, wcfRelayApiVersion ?? "2024-01-01");
             ValidateResourceId(id);
         }
 
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Relay
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="namespaceName"> The namespaceName. </param>
-        /// <param name="hybridConnectionName"> The hybridConnectionName. </param>
+        /// <param name="relayName"> The relayName. </param>
         /// <param name="authorizationRuleName"> The authorizationRuleName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string hybridConnectionName, string authorizationRuleName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Hybrid connection authorization rule for a hybrid connection by name.
+        /// Get authorizationRule for a WCF relay by name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HybridConnections_GetAuthorizationRule. </description>
+        /// <description> WCFRelays_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayHybridConnectionAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="WCFRelayResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RelayHybridConnectionAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WCFRelayResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionAuthorizationRuleResource.Get");
+            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WCFRelayResource.Get");
             scope.Start();
             try
             {
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridConnectionsRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _wcfRelaysRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RelayHybridConnectionAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WCFRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,15 +142,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Hybrid connection authorization rule for a hybrid connection by name.
+        /// Get authorizationRule for a WCF relay by name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HybridConnections_GetAuthorizationRule. </description>
+        /// <description> WCFRelays_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayHybridConnectionAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="WCFRelayResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RelayHybridConnectionAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<WCFRelayResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionAuthorizationRuleResource.Get");
+            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WCFRelayResource.Get");
             scope.Start();
             try
             {
@@ -173,14 +173,14 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridConnectionsRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _wcfRelaysRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RelayHybridConnectionAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WCFRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,15 +190,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Deletes a hybrid connection authorization rule.
+        /// Deletes a WCF relay authorization rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HybridConnections_DeleteAuthorizationRule. </description>
+        /// <description> WCFRelays_DeleteAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayHybridConnectionAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="WCFRelayResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionAuthorizationRuleResource.Delete");
+            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WCFRelayResource.Delete");
             scope.Start();
             try
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridConnectionsRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _wcfRelaysRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -241,15 +241,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Deletes a hybrid connection authorization rule.
+        /// Deletes a WCF relay authorization rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HybridConnections_DeleteAuthorizationRule. </description>
+        /// <description> WCFRelays_DeleteAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayHybridConnectionAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="WCFRelayResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionAuthorizationRuleResource.Delete");
+            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WCFRelayResource.Delete");
             scope.Start();
             try
             {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridConnectionsRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _wcfRelaysRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -292,15 +292,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Primary and secondary connection strings to the hybrid connection.
+        /// Primary and secondary connection strings to the WCF relay.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}/listKeys. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}/listKeys. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HybridConnections_ListKeys. </description>
+        /// <description> WCFRelays_ListKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -308,14 +308,14 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayHybridConnectionAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="WCFRelayResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RelayAccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionAuthorizationRuleResource.GetKeys");
+            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WCFRelayResource.GetKeys");
             scope.Start();
             try
             {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridConnectionsRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _wcfRelaysRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayAccessKeys> response = Response.FromValue(RelayAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -340,15 +340,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Primary and secondary connection strings to the hybrid connection.
+        /// Primary and secondary connection strings to the WCF relay.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}/listKeys. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}/listKeys. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HybridConnections_ListKeys. </description>
+        /// <description> WCFRelays_ListKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -356,14 +356,14 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayHybridConnectionAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="WCFRelayResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RelayAccessKeys> GetKeys(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionAuthorizationRuleResource.GetKeys");
+            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WCFRelayResource.GetKeys");
             scope.Start();
             try
             {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridConnectionsRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _wcfRelaysRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayAccessKeys> response = Response.FromValue(RelayAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -388,15 +388,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Regenerates the primary or secondary connection strings to the hybrid connection.
+        /// Regenerates the primary or secondary connection strings to the WCF relay.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}/regenerateKeys. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}/regenerateKeys. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HybridConnections_RegenerateKeys. </description>
+        /// <description> WCFRelays_RegenerateKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayHybridConnectionAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="WCFRelayResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Relay
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionAuthorizationRuleResource.RegenerateKeys");
+            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WCFRelayResource.RegenerateKeys");
             scope.Start();
             try
             {
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridConnectionsRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RelayRegenerateAccessKeyContent.ToRequestContent(content), context);
+                HttpMessage message = _wcfRelaysRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RelayRegenerateAccessKeyContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayAccessKeys> response = Response.FromValue(RelayAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -440,15 +440,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Regenerates the primary or secondary connection strings to the hybrid connection.
+        /// Regenerates the primary or secondary connection strings to the WCF relay.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}/regenerateKeys. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}/regenerateKeys. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HybridConnections_RegenerateKeys. </description>
+        /// <description> WCFRelays_RegenerateKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayHybridConnectionAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="WCFRelayResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Relay
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionAuthorizationRuleResource.RegenerateKeys");
+            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WCFRelayResource.RegenerateKeys");
             scope.Start();
             try
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridConnectionsRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RelayRegenerateAccessKeyContent.ToRequestContent(content), context);
+                HttpMessage message = _wcfRelaysRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RelayRegenerateAccessKeyContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayAccessKeys> response = Response.FromValue(RelayAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -492,15 +492,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Update a RelayHybridConnectionAuthorizationRule.
+        /// Update a WCFRelay.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HybridConnections_CreateOrUpdateAuthorizationRule. </description>
+        /// <description> WCFRelays_CreateOrUpdateAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayHybridConnectionAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="WCFRelayResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -516,11 +516,11 @@ namespace Azure.ResourceManager.Relay
         /// <param name="data"> The authorization rule parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<RelayHybridConnectionAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WCFRelayResource>> UpdateAsync(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionAuthorizationRuleResource.Update");
+            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WCFRelayResource.Update");
             scope.Start();
             try
             {
@@ -528,12 +528,12 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridConnectionsRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RelayAuthorizationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _wcfRelaysRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RelayAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                RelayArmOperation<RelayHybridConnectionAuthorizationRuleResource> operation = new RelayArmOperation<RelayHybridConnectionAuthorizationRuleResource>(Response.FromValue(new RelayHybridConnectionAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                RelayArmOperation<WCFRelayResource> operation = new RelayArmOperation<WCFRelayResource>(Response.FromValue(new WCFRelayResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -548,15 +548,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Update a RelayHybridConnectionAuthorizationRule.
+        /// Update a WCFRelay.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HybridConnections_CreateOrUpdateAuthorizationRule. </description>
+        /// <description> WCFRelays_CreateOrUpdateAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RelayHybridConnectionAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="WCFRelayResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -572,11 +572,11 @@ namespace Azure.ResourceManager.Relay
         /// <param name="data"> The authorization rule parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<RelayHybridConnectionAuthorizationRuleResource> Update(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WCFRelayResource> Update(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionAuthorizationRuleResource.Update");
+            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WCFRelayResource.Update");
             scope.Start();
             try
             {
@@ -584,12 +584,12 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridConnectionsRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RelayAuthorizationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _wcfRelaysRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RelayAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                RelayArmOperation<RelayHybridConnectionAuthorizationRuleResource> operation = new RelayArmOperation<RelayHybridConnectionAuthorizationRuleResource>(Response.FromValue(new RelayHybridConnectionAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                RelayArmOperation<WCFRelayResource> operation = new RelayArmOperation<WCFRelayResource>(Response.FromValue(new WCFRelayResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

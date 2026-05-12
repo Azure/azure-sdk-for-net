@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Parameters for updating a namespace resource. </param>
+        /// <param name="content"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<RelayNamespaceResource>> UpdateAsync(RelayNamespacePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<RelayNamespaceResource>> UpdateAsync(RelayUpdateParameters content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceResource.Update");
             scope.Start();
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, RelayNamespacePatch.ToRequestContent(patch), context);
+                HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, RelayUpdateParameters.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayNamespaceData> response = Response.FromValue(RelayNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -262,12 +262,12 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Parameters for updating a namespace resource. </param>
+        /// <param name="content"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<RelayNamespaceResource> Update(RelayNamespacePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<RelayNamespaceResource> Update(RelayUpdateParameters content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceResource.Update");
             scope.Start();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, RelayNamespacePatch.ToRequestContent(patch), context);
+                HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, RelayUpdateParameters.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayNamespaceData> response = Response.FromValue(RelayNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Relay
                 else
                 {
                     RelayNamespaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    RelayNamespacePatch patch = new RelayNamespacePatch();
+                    RelayUpdateParameters patch = new RelayUpdateParameters();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Relay
                 else
                 {
                     RelayNamespaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    RelayNamespacePatch patch = new RelayNamespacePatch();
+                    RelayUpdateParameters patch = new RelayUpdateParameters();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Relay
                 else
                 {
                     RelayNamespaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    RelayNamespacePatch patch = new RelayNamespacePatch();
+                    RelayUpdateParameters patch = new RelayUpdateParameters();
                     patch.Tags.ReplaceWith(tags);
                     Response<RelayNamespaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Relay
                 else
                 {
                     RelayNamespaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    RelayNamespacePatch patch = new RelayNamespacePatch();
+                    RelayUpdateParameters patch = new RelayUpdateParameters();
                     patch.Tags.ReplaceWith(tags);
                     Response<RelayNamespaceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Relay
                 else
                 {
                     RelayNamespaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    RelayNamespacePatch patch = new RelayNamespacePatch();
+                    RelayUpdateParameters patch = new RelayUpdateParameters();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.Relay
                 else
                 {
                     RelayNamespaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    RelayNamespacePatch patch = new RelayNamespacePatch();
+                    RelayUpdateParameters patch = new RelayUpdateParameters();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -797,11 +797,11 @@ namespace Azure.ResourceManager.Relay
             return GetRelayPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RelayNamespaceAuthorizationRules in the <see cref="RelayNamespaceResource"/>. </summary>
-        /// <returns> An object representing collection of RelayNamespaceAuthorizationRules and their operations over a RelayNamespaceAuthorizationRuleResource. </returns>
-        public virtual RelayNamespaceAuthorizationRuleCollection GetRelayNamespaceAuthorizationRules()
+        /// <summary> Gets a collection of Namespaces in the <see cref="RelayNamespaceResource"/>. </summary>
+        /// <returns> An object representing collection of Namespaces and their operations over a NamespaceResource. </returns>
+        public virtual NamespaceCollection GetNamespaces()
         {
-            return GetCachedClient(client => new RelayNamespaceAuthorizationRuleCollection(client, Id));
+            return GetCachedClient(client => new NamespaceCollection(client, Id));
         }
 
         /// <summary> Authorization rule for a namespace by name. </summary>
@@ -810,11 +810,11 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RelayNamespaceAuthorizationRuleResource>> GetRelayNamespaceAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NamespaceResource>> GetNamespaceAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            return await GetRelayNamespaceAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetNamespaces().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Authorization rule for a namespace by name. </summary>
@@ -823,11 +823,11 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RelayNamespaceAuthorizationRuleResource> GetRelayNamespaceAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<NamespaceResource> GetNamespace(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            return GetRelayNamespaceAuthorizationRules().Get(authorizationRuleName, cancellationToken);
+            return GetNamespaces().Get(authorizationRuleName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a <see cref="RelayNetworkRuleSetResource"/> along with the instance operations that can be performed on it in the <see cref="RelayNamespaceResource"/>. </summary>

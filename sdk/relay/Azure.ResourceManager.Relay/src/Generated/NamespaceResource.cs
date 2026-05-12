@@ -18,40 +18,40 @@ using Azure.ResourceManager.Relay.Models;
 namespace Azure.ResourceManager.Relay
 {
     /// <summary>
-    /// A class representing a WcfRelayAuthorizationRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WcfRelayAuthorizationRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WcfRelayResource"/> using the GetWcfRelayAuthorizationRules method.
+    /// A class representing a Namespace along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NamespaceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RelayNamespaceResource"/> using the GetNamespaces method.
     /// </summary>
-    public partial class WcfRelayAuthorizationRuleResource : ArmResource
+    public partial class NamespaceResource : ArmResource
     {
-        private readonly ClientDiagnostics _wcfRelaysClientDiagnostics;
-        private readonly WCFRelays _wcfRelaysRestClient;
+        private readonly ClientDiagnostics _namespacesClientDiagnostics;
+        private readonly Namespaces _namespacesRestClient;
         private readonly RelayAuthorizationRuleData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/wcfRelays/authorizationRules";
+        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/authorizationRules";
 
-        /// <summary> Initializes a new instance of WcfRelayAuthorizationRuleResource for mocking. </summary>
-        protected WcfRelayAuthorizationRuleResource()
+        /// <summary> Initializes a new instance of NamespaceResource for mocking. </summary>
+        protected NamespaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WcfRelayAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WcfRelayAuthorizationRuleResource(ArmClient client, RelayAuthorizationRuleData data) : this(client, data.Id)
+        internal NamespaceResource(ArmClient client, RelayAuthorizationRuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WcfRelayAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WcfRelayAuthorizationRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NamespaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string wcfRelayAuthorizationRuleApiVersion);
-            _wcfRelaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", ResourceType.Namespace, Diagnostics);
-            _wcfRelaysRestClient = new WCFRelays(_wcfRelaysClientDiagnostics, Pipeline, Endpoint, wcfRelayAuthorizationRuleApiVersion ?? "2024-01-01");
+            TryGetApiVersion(ResourceType, out string namespaceApiVersion);
+            _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", ResourceType.Namespace, Diagnostics);
+            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, namespaceApiVersion ?? "2024-01-01");
             ValidateResourceId(id);
         }
 
@@ -75,11 +75,10 @@ namespace Azure.ResourceManager.Relay
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="namespaceName"> The namespaceName. </param>
-        /// <param name="relayName"> The relayName. </param>
         /// <param name="authorizationRuleName"> The authorizationRuleName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -94,15 +93,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Get authorizationRule for a WCF relay by name.
+        /// Authorization rule for a namespace by name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_GetAuthorizationRule. </description>
+        /// <description> AuthorizationRules_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -110,14 +109,14 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WcfRelayAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="NamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WcfRelayAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NamespaceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.Get");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.Get");
             scope.Start();
             try
             {
@@ -125,14 +124,14 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new WcfRelayAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,15 +141,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Get authorizationRule for a WCF relay by name.
+        /// Authorization rule for a namespace by name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_GetAuthorizationRule. </description>
+        /// <description> AuthorizationRules_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -158,14 +157,14 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WcfRelayAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="NamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WcfRelayAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<NamespaceResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.Get");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.Get");
             scope.Start();
             try
             {
@@ -173,14 +172,14 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new WcfRelayAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,15 +189,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Deletes a WCF relay authorization rule.
+        /// Deletes a namespace authorization rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_DeleteAuthorizationRule. </description>
+        /// <description> AuthorizationRules_DeleteAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WcfRelayAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="NamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,7 +213,7 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.Delete");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.Delete");
             scope.Start();
             try
             {
@@ -222,7 +221,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _namespacesRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -241,15 +240,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Deletes a WCF relay authorization rule.
+        /// Deletes a namespace authorization rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_DeleteAuthorizationRule. </description>
+        /// <description> AuthorizationRules_DeleteAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -257,7 +256,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WcfRelayAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="NamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -265,7 +264,7 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.Delete");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.Delete");
             scope.Start();
             try
             {
@@ -273,7 +272,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _namespacesRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -292,15 +291,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Primary and secondary connection strings to the WCF relay.
+        /// Primary and secondary connection strings to the namespace.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}/listKeys. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/listKeys. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_ListKeys. </description>
+        /// <description> AuthorizationRules_ListKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -308,14 +307,14 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WcfRelayAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="NamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RelayAccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.GetKeys");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.GetKeys");
             scope.Start();
             try
             {
@@ -323,7 +322,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _namespacesRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayAccessKeys> response = Response.FromValue(RelayAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -340,15 +339,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Primary and secondary connection strings to the WCF relay.
+        /// Primary and secondary connection strings to the namespace.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}/listKeys. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/listKeys. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_ListKeys. </description>
+        /// <description> AuthorizationRules_ListKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -356,14 +355,14 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WcfRelayAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="NamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RelayAccessKeys> GetKeys(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.GetKeys");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.GetKeys");
             scope.Start();
             try
             {
@@ -371,7 +370,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _namespacesRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayAccessKeys> response = Response.FromValue(RelayAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -388,15 +387,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Regenerates the primary or secondary connection strings to the WCF relay.
+        /// Regenerates the primary or secondary connection strings to the namespace.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}/regenerateKeys. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/regenerateKeys. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_RegenerateKeys. </description>
+        /// <description> AuthorizationRules_RegenerateKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -404,7 +403,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WcfRelayAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="NamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -415,7 +414,7 @@ namespace Azure.ResourceManager.Relay
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.RegenerateKeys");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.RegenerateKeys");
             scope.Start();
             try
             {
@@ -423,7 +422,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RelayRegenerateAccessKeyContent.ToRequestContent(content), context);
+                HttpMessage message = _namespacesRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, RelayRegenerateAccessKeyContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayAccessKeys> response = Response.FromValue(RelayAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -440,15 +439,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Regenerates the primary or secondary connection strings to the WCF relay.
+        /// Regenerates the primary or secondary connection strings to the namespace.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}/regenerateKeys. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/regenerateKeys. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_RegenerateKeys. </description>
+        /// <description> AuthorizationRules_RegenerateKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -456,7 +455,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WcfRelayAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="NamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -467,7 +466,7 @@ namespace Azure.ResourceManager.Relay
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.RegenerateKeys");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.RegenerateKeys");
             scope.Start();
             try
             {
@@ -475,7 +474,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RelayRegenerateAccessKeyContent.ToRequestContent(content), context);
+                HttpMessage message = _namespacesRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, RelayRegenerateAccessKeyContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayAccessKeys> response = Response.FromValue(RelayAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -492,15 +491,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Update a WcfRelayAuthorizationRule.
+        /// Update a Namespace.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_CreateOrUpdateAuthorizationRule. </description>
+        /// <description> AuthorizationRules_CreateOrUpdateAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -508,7 +507,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WcfRelayAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="NamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -516,11 +515,11 @@ namespace Azure.ResourceManager.Relay
         /// <param name="data"> The authorization rule parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<WcfRelayAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NamespaceResource>> UpdateAsync(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.Update");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.Update");
             scope.Start();
             try
             {
@@ -528,12 +527,12 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RelayAuthorizationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, RelayAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                RelayArmOperation<WcfRelayAuthorizationRuleResource> operation = new RelayArmOperation<WcfRelayAuthorizationRuleResource>(Response.FromValue(new WcfRelayAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                RelayArmOperation<NamespaceResource> operation = new RelayArmOperation<NamespaceResource>(Response.FromValue(new NamespaceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -548,15 +547,15 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Update a WcfRelayAuthorizationRule.
+        /// Update a Namespace.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WCFRelays_CreateOrUpdateAuthorizationRule. </description>
+        /// <description> AuthorizationRules_CreateOrUpdateAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -564,7 +563,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WcfRelayAuthorizationRuleResource"/>. </description>
+        /// <description> <see cref="NamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -572,11 +571,11 @@ namespace Azure.ResourceManager.Relay
         /// <param name="data"> The authorization rule parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<WcfRelayAuthorizationRuleResource> Update(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NamespaceResource> Update(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.Update");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.Update");
             scope.Start();
             try
             {
@@ -584,12 +583,12 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RelayAuthorizationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, RelayAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                RelayArmOperation<WcfRelayAuthorizationRuleResource> operation = new RelayArmOperation<WcfRelayAuthorizationRuleResource>(Response.FromValue(new WcfRelayAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                RelayArmOperation<NamespaceResource> operation = new RelayArmOperation<NamespaceResource>(Response.FromValue(new NamespaceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

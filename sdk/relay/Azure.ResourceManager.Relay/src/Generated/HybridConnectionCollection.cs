@@ -16,31 +16,31 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.NotificationHubs
+namespace Azure.ResourceManager.Relay
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NotificationHubNamespaceAuthorizationRuleResource"/> and their operations.
-    /// Each <see cref="NotificationHubNamespaceAuthorizationRuleResource"/> in the collection will belong to the same instance of <see cref="NotificationHubNamespaceResource"/>.
-    /// To get a <see cref="NotificationHubNamespaceAuthorizationRuleCollection"/> instance call the GetNotificationHubNamespaceAuthorizationRules method from an instance of <see cref="NotificationHubNamespaceResource"/>.
+    /// A class representing a collection of <see cref="HybridConnectionResource"/> and their operations.
+    /// Each <see cref="HybridConnectionResource"/> in the collection will belong to the same instance of <see cref="RelayHybridConnectionResource"/>.
+    /// To get a <see cref="HybridConnectionCollection"/> instance call the GetHybridConnections method from an instance of <see cref="RelayHybridConnectionResource"/>.
     /// </summary>
-    public partial class NotificationHubNamespaceAuthorizationRuleCollection : ArmCollection, IEnumerable<NotificationHubNamespaceAuthorizationRuleResource>, IAsyncEnumerable<NotificationHubNamespaceAuthorizationRuleResource>
+    public partial class HybridConnectionCollection : ArmCollection, IEnumerable<HybridConnectionResource>, IAsyncEnumerable<HybridConnectionResource>
     {
-        private readonly ClientDiagnostics _namespacesClientDiagnostics;
-        private readonly Namespaces _namespacesRestClient;
+        private readonly ClientDiagnostics _hybridConnectionsClientDiagnostics;
+        private readonly HybridConnections _hybridConnectionsRestClient;
 
-        /// <summary> Initializes a new instance of NotificationHubNamespaceAuthorizationRuleCollection for mocking. </summary>
-        protected NotificationHubNamespaceAuthorizationRuleCollection()
+        /// <summary> Initializes a new instance of HybridConnectionCollection for mocking. </summary>
+        protected HybridConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceAuthorizationRuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NotificationHubNamespaceAuthorizationRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HybridConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NotificationHubNamespaceAuthorizationRuleResource.ResourceType, out string notificationHubNamespaceAuthorizationRuleApiVersion);
-            _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", NotificationHubNamespaceAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, notificationHubNamespaceAuthorizationRuleApiVersion ?? "2023-10-01-preview");
+            TryGetApiVersion(HybridConnectionResource.ResourceType, out string hybridConnectionApiVersion);
+            _hybridConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", HybridConnectionResource.ResourceType.Namespace, Diagnostics);
+            _hybridConnectionsRestClient = new HybridConnections(_hybridConnectionsClientDiagnostics, Pipeline, Endpoint, hybridConnectionApiVersion ?? "2024-01-01");
             ValidateResourceId(id);
         }
 
@@ -48,41 +48,41 @@ namespace Azure.ResourceManager.NotificationHubs
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != NotificationHubNamespaceResource.ResourceType)
+            if (id.ResourceType != RelayHybridConnectionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NotificationHubNamespaceResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RelayHybridConnectionResource.ResourceType), nameof(id));
             }
         }
 
         /// <summary>
-        /// Creates an authorization rule for a namespace
+        /// Creates or updates an authorization rule for a hybrid connection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_CreateOrUpdateAuthorizationRule. </description>
+        /// <description> HybridConnections_CreateOrUpdateAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
-        /// <param name="data"> Request content. </param>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="data"> The authorization rule parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<NotificationHubNamespaceAuthorizationRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationRuleName, NotificationHubAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HybridConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationRuleName, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("HybridConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationRuleName, NotificationHubAuthorizationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _hybridConnectionsRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, RelayAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
+                Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource> operation = new NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource>(Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                RelayArmOperation<HybridConnectionResource> operation = new RelayArmOperation<HybridConnectionResource>(Response.FromValue(new HybridConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -110,34 +110,34 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Creates an authorization rule for a namespace
+        /// Creates or updates an authorization rule for a hybrid connection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_CreateOrUpdateAuthorizationRule. </description>
+        /// <description> HybridConnections_CreateOrUpdateAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
-        /// <param name="data"> Request content. </param>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="data"> The authorization rule parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<NotificationHubNamespaceAuthorizationRuleResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationRuleName, NotificationHubAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HybridConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationRuleName, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("HybridConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationRuleName, NotificationHubAuthorizationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _hybridConnectionsRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, RelayAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
+                Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource> operation = new NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource>(Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                RelayArmOperation<HybridConnectionResource> operation = new RelayArmOperation<HybridConnectionResource>(Response.FromValue(new HybridConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -165,31 +165,31 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Gets an authorization rule for a namespace by name.
+        /// Hybrid connection authorization rule for a hybrid connection by name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_GetAuthorizationRule. </description>
+        /// <description> HybridConnections_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<NotificationHubNamespaceAuthorizationRuleResource>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridConnectionResource>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleCollection.Get");
+            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("HybridConnectionCollection.Get");
             scope.Start();
             try
             {
@@ -197,14 +197,14 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
+                HttpMessage message = _hybridConnectionsRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
+                Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,31 +214,31 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Gets an authorization rule for a namespace by name.
+        /// Hybrid connection authorization rule for a hybrid connection by name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_GetAuthorizationRule. </description>
+        /// <description> HybridConnections_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<NotificationHubNamespaceAuthorizationRuleResource> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<HybridConnectionResource> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleCollection.Get");
+            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("HybridConnectionCollection.Get");
             scope.Start();
             try
             {
@@ -246,14 +246,14 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
+                HttpMessage message = _hybridConnectionsRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
+                Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -263,71 +263,73 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Gets the authorization rules for a namespace.
+        /// Authorization rules for a hybrid connection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_ListAuthorizationRules. </description>
+        /// <description> HybridConnections_ListAuthorizationRules. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NotificationHubNamespaceAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NotificationHubNamespaceAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NotificationHubAuthorizationRuleData, NotificationHubNamespaceAuthorizationRuleResource>(new NamespacesGetAuthorizationRulesAsyncCollectionResultOfT(
-                _namespacesRestClient,
-                Guid.Parse(Id.SubscriptionId),
+            return new AsyncPageableWrapper<RelayAuthorizationRuleData, HybridConnectionResource>(new HybridConnectionsGetAuthorizationRulesAsyncCollectionResultOfT(
+                _hybridConnectionsRestClient,
+                Id.SubscriptionId,
                 Id.ResourceGroupName,
+                Id.Parent.Name,
                 Id.Name,
                 context,
-                "NotificationHubNamespaceAuthorizationRuleCollection.GetAll"), data => new NotificationHubNamespaceAuthorizationRuleResource(Client, data));
+                "HybridConnectionCollection.GetAll"), data => new HybridConnectionResource(Client, data));
         }
 
         /// <summary>
-        /// Gets the authorization rules for a namespace.
+        /// Authorization rules for a hybrid connection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_ListAuthorizationRules. </description>
+        /// <description> HybridConnections_ListAuthorizationRules. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NotificationHubNamespaceAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NotificationHubNamespaceAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NotificationHubAuthorizationRuleData, NotificationHubNamespaceAuthorizationRuleResource>(new NamespacesGetAuthorizationRulesCollectionResultOfT(
-                _namespacesRestClient,
-                Guid.Parse(Id.SubscriptionId),
+            return new PageableWrapper<RelayAuthorizationRuleData, HybridConnectionResource>(new HybridConnectionsGetAuthorizationRulesCollectionResultOfT(
+                _hybridConnectionsRestClient,
+                Id.SubscriptionId,
                 Id.ResourceGroupName,
+                Id.Parent.Name,
                 Id.Name,
                 context,
-                "NotificationHubNamespaceAuthorizationRuleCollection.GetAll"), data => new NotificationHubNamespaceAuthorizationRuleResource(Client, data));
+                "HybridConnectionCollection.GetAll"), data => new HybridConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -335,19 +337,19 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_GetAuthorizationRule. </description>
+        /// <description> HybridConnections_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -355,7 +357,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleCollection.Exists");
+            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("HybridConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -363,17 +365,17 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
+                HttpMessage message = _hybridConnectionsRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<NotificationHubAuthorizationRuleData> response = default;
+                Response<RelayAuthorizationRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
+                        response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NotificationHubAuthorizationRuleData)null, result);
+                        response = Response.FromValue((RelayAuthorizationRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -392,19 +394,19 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_GetAuthorizationRule. </description>
+        /// <description> HybridConnections_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -412,7 +414,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleCollection.Exists");
+            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("HybridConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -420,17 +422,17 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
+                HttpMessage message = _hybridConnectionsRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<NotificationHubAuthorizationRuleData> response = default;
+                Response<RelayAuthorizationRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
+                        response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NotificationHubAuthorizationRuleData)null, result);
+                        response = Response.FromValue((RelayAuthorizationRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -449,27 +451,27 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_GetAuthorizationRule. </description>
+        /// <description> HybridConnections_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<NotificationHubNamespaceAuthorizationRuleResource>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<HybridConnectionResource>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("HybridConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -477,26 +479,26 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
+                HttpMessage message = _hybridConnectionsRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<NotificationHubAuthorizationRuleData> response = default;
+                Response<RelayAuthorizationRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
+                        response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NotificationHubAuthorizationRuleData)null, result);
+                        response = Response.FromValue((RelayAuthorizationRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<NotificationHubNamespaceAuthorizationRuleResource>(response.GetRawResponse());
+                    return new NoValueResponse<HybridConnectionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -510,27 +512,27 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_GetAuthorizationRule. </description>
+        /// <description> HybridConnections_GetAuthorizationRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<NotificationHubNamespaceAuthorizationRuleResource> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<HybridConnectionResource> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _hybridConnectionsClientDiagnostics.CreateScope("HybridConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -538,26 +540,26 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
+                HttpMessage message = _hybridConnectionsRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<NotificationHubAuthorizationRuleData> response = default;
+                Response<RelayAuthorizationRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
+                        response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NotificationHubAuthorizationRuleData)null, result);
+                        response = Response.FromValue((RelayAuthorizationRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<NotificationHubNamespaceAuthorizationRuleResource>(response.GetRawResponse());
+                    return new NoValueResponse<HybridConnectionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -566,7 +568,7 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
-        IEnumerator<NotificationHubNamespaceAuthorizationRuleResource> IEnumerable<NotificationHubNamespaceAuthorizationRuleResource>.GetEnumerator()
+        IEnumerator<HybridConnectionResource> IEnumerable<HybridConnectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -577,7 +579,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<NotificationHubNamespaceAuthorizationRuleResource> IAsyncEnumerable<NotificationHubNamespaceAuthorizationRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<HybridConnectionResource> IAsyncEnumerable<HybridConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

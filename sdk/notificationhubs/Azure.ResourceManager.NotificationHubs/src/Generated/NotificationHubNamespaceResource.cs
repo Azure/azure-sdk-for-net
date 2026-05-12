@@ -906,11 +906,11 @@ namespace Azure.ResourceManager.NotificationHubs
             return GetNotificationHubs().Get(notificationHubName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NotificationHubNamespaceAuthorizationRules in the <see cref="NotificationHubNamespaceResource"/>. </summary>
-        /// <returns> An object representing collection of NotificationHubNamespaceAuthorizationRules and their operations over a NotificationHubNamespaceAuthorizationRuleResource. </returns>
-        public virtual NotificationHubNamespaceAuthorizationRuleCollection GetNotificationHubNamespaceAuthorizationRules()
+        /// <summary> Gets a collection of Namespaces in the <see cref="NotificationHubNamespaceResource"/>. </summary>
+        /// <returns> An object representing collection of Namespaces and their operations over a NamespaceResource. </returns>
+        public virtual NamespaceCollection GetNamespaces()
         {
-            return GetCachedClient(client => new NotificationHubNamespaceAuthorizationRuleCollection(client, Id));
+            return GetCachedClient(client => new NamespaceCollection(client, Id));
         }
 
         /// <summary> Gets an authorization rule for a namespace by name. </summary>
@@ -919,11 +919,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NotificationHubNamespaceAuthorizationRuleResource>> GetNotificationHubNamespaceAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NamespaceResource>> GetNamespaceAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            return await GetNotificationHubNamespaceAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetNamespaces().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an authorization rule for a namespace by name. </summary>
@@ -932,11 +932,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NotificationHubNamespaceAuthorizationRuleResource> GetNotificationHubNamespaceAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<NamespaceResource> GetNamespace(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            return GetNotificationHubNamespaceAuthorizationRules().Get(authorizationRuleName, cancellationToken);
+            return GetNamespaces().Get(authorizationRuleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NotificationHubPrivateEndpointConnections in the <see cref="NotificationHubNamespaceResource"/>. </summary>

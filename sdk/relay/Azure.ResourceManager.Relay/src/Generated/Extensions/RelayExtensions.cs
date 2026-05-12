@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RelayHybridConnectionAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="HybridConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRelayArmClient.GetRelayHybridConnectionAuthorizationRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRelayArmClient.GetHybridConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RelayHybridConnectionAuthorizationRuleResource"/> object. </returns>
-        public static RelayHybridConnectionAuthorizationRuleResource GetRelayHybridConnectionAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridConnectionResource"/> object. </returns>
+        public static HybridConnectionResource GetHybridConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRelayArmClient(client).GetRelayHybridConnectionAuthorizationRuleResource(id);
+            return GetMockableRelayArmClient(client).GetHybridConnectionResource(id);
         }
 
         /// <summary>
@@ -75,21 +75,21 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WcfRelayAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="WCFRelayResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRelayArmClient.GetWcfRelayAuthorizationRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRelayArmClient.GetWCFRelayResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WcfRelayAuthorizationRuleResource"/> object. </returns>
-        public static WcfRelayAuthorizationRuleResource GetWcfRelayAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WCFRelayResource"/> object. </returns>
+        public static WCFRelayResource GetWCFRelayResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRelayArmClient(client).GetWcfRelayAuthorizationRuleResource(id);
+            return GetMockableRelayArmClient(client).GetWCFRelayResource(id);
         }
 
         /// <summary>
@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RelayNamespaceAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NamespaceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRelayArmClient.GetRelayNamespaceAuthorizationRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRelayArmClient.GetNamespaceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RelayNamespaceAuthorizationRuleResource"/> object. </returns>
-        public static RelayNamespaceAuthorizationRuleResource GetRelayNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NamespaceResource"/> object. </returns>
+        public static NamespaceResource GetNamespaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRelayArmClient(client).GetRelayNamespaceAuthorizationRuleResource(id);
+            return GetMockableRelayArmClient(client).GetNamespaceResource(id);
         }
 
         /// <summary>
