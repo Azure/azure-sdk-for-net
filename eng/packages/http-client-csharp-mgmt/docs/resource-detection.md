@@ -297,6 +297,24 @@ This handles specs that skip intermediate resources in the chain: if
 detected as a resource (no resource defined for `a/{}/b/{}`), then
 `R`'s parent is `a/{}`, not nothing.
 
+#### Tuple resources
+
+When the walk above strips **more than one** `/type/{name}` pair
+before finding a parent (or before running out of path), `R` is a
+**tuple resource**: from its parent/scope's point of view, `R` is
+addressed by an ordered tuple of names, not by a single name.
+
+Concretely, if the walk strips `k` pairs
+`(typeN/nameN, typeN-1/nameN-1, …, typeN-k+1/nameN-k+1)` before
+matching parent `P` (or the scope), then `R`'s identity relative to
+`P` is the tuple `(typeN-k+1 = nameN-k+1, …, typeN = nameN)`. All
+`k` types are part of `R`'s `resourceType`
+(`<namespace>/typeN-k+1/.../typeN`) and all `k` name parameters
+belong to `R`'s instance.
+
+Mark such a resource as a tuple resource and record its tuple of name
+parameters. A non-tuple resource is just the `k = 1` case.
+
 A consistency check for `Extension`-scoped resources: when `R.scope`
 is `Extension`, the prefix before the **last** `/providers/` in `R`'s
 instance path must also match some known resource (the resource `R`
