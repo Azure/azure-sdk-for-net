@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
             writer.WriteObjectValue(Condition, options);
             writer.WritePropertyName("actions"u8);
             writer.WriteObjectValue(Actions, options);
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Description))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
             IList<string> scopes = default;
             AlertRuleAllOfCondition condition = default;
             ActionList actions = default;
-            bool? enabled = default;
+            bool? isEnabled = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
                 scopes ?? new ChangeTrackingList<string>(),
                 condition,
                 actions,
-                enabled,
+                isEnabled,
                 description,
                 additionalBinaryDataProperties);
         }

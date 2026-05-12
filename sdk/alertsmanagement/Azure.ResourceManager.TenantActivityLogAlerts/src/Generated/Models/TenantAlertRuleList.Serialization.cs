@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (TenantActivityLogAlertResourceData item in Value)
+            foreach (TenantActivityLogAlertData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
             {
                 return null;
             }
-            IList<TenantActivityLogAlertResourceData> value = default;
+            IList<TenantActivityLogAlertData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<TenantActivityLogAlertResourceData> array = new List<TenantActivityLogAlertResourceData>();
+                    List<TenantActivityLogAlertData> array = new List<TenantActivityLogAlertData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TenantActivityLogAlertResourceData.DeserializeTenantActivityLogAlertResourceData(item, options));
+                        array.Add(TenantActivityLogAlertData.DeserializeTenantActivityLogAlertData(item, options));
                     }
                     value = array;
                     continue;

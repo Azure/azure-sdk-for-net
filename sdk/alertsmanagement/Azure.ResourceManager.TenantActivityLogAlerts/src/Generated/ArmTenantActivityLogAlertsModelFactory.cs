@@ -25,18 +25,18 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tenantScope"> The tenant GUID. Must be provided for tenant-level and management group events rules. </param>
         /// <param name="scopes"> A list of resource IDs that will be used as prefixes. The alert will only apply to Activity Log events with resource IDs that fall under one of these prefixes. This list must include at least one item. </param>
-        /// <param name="enabled"> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </param>
+        /// <param name="isEnabled"> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </param>
         /// <param name="description"> A description of this Activity Log Alert rule. </param>
         /// <param name="conditionAllOf"> The list of Activity Log Alert rule conditions. </param>
         /// <param name="actionsActionGroups"> The list of the Action Groups. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="TenantActivityLogAlerts.TenantActivityLogAlertResourceData"/> instance for mocking. </returns>
-        public static TenantActivityLogAlertResourceData TenantActivityLogAlertResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string tenantScope = default, IEnumerable<string> scopes = default, bool? enabled = default, string description = default, IEnumerable<AlertRuleAnyOfOrLeafCondition> conditionAllOf = default, IEnumerable<ActionGroup> actionsActionGroups = default, IDictionary<string, string> tags = default, string location = default)
+        /// <returns> A new <see cref="TenantActivityLogAlerts.TenantActivityLogAlertData"/> instance for mocking. </returns>
+        public static TenantActivityLogAlertData TenantActivityLogAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string tenantScope = default, IEnumerable<string> scopes = default, bool? isEnabled = default, string description = default, IEnumerable<TenantActivityLogAlertAnyOfOrLeafCondition> conditionAllOf = default, IEnumerable<TenantActivityLogAlertActionGroup> actionsActionGroups = default, IDictionary<string, string> tags = default, AzureLocation? location = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TenantActivityLogAlertResourceData(
+            return new TenantActivityLogAlertData(
                 id,
                 name,
                 resourceType,
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
                 new AlertRuleProperties(
                     tenantScope,
                     (scopes ?? new ChangeTrackingList<string>()).ToList(),
-                    new AlertRuleAllOfCondition((conditionAllOf ?? new ChangeTrackingList<AlertRuleAnyOfOrLeafCondition>()).ToList(), null),
-                    new ActionList((actionsActionGroups ?? new ChangeTrackingList<ActionGroup>()).ToList(), null),
-                    enabled,
+                    new AlertRuleAllOfCondition((conditionAllOf ?? new ChangeTrackingList<TenantActivityLogAlertAnyOfOrLeafCondition>()).ToList(), null),
+                    new ActionList((actionsActionGroups ?? new ChangeTrackingList<TenantActivityLogAlertActionGroup>()).ToList(), null),
+                    isEnabled,
                     description,
                     null),
                 tags,
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
         /// <param name="equalTo"> The value of the event's field will be compared to this value (case-insensitive) to determine if the condition is met. </param>
         /// <param name="containsAny"> The value of the event's field will be compared to the values in this array (case-insensitive) to determine if the condition is met. </param>
         /// <param name="anyOf"> An Activity Log Alert rule condition that is met when at least one of its member leaf conditions are met. </param>
-        /// <returns> A new <see cref="Models.AlertRuleAnyOfOrLeafCondition"/> instance for mocking. </returns>
-        public static AlertRuleAnyOfOrLeafCondition AlertRuleAnyOfOrLeafCondition(string @field = default, string equalTo = default, IEnumerable<string> containsAny = default, IEnumerable<AlertRuleLeafCondition> anyOf = default)
+        /// <returns> A new <see cref="Models.TenantActivityLogAlertAnyOfOrLeafCondition"/> instance for mocking. </returns>
+        public static TenantActivityLogAlertAnyOfOrLeafCondition TenantActivityLogAlertAnyOfOrLeafCondition(string @field = default, string equalTo = default, IEnumerable<string> containsAny = default, IEnumerable<TenantActivityLogAlertLeafCondition> anyOf = default)
         {
             containsAny ??= new ChangeTrackingList<string>();
-            anyOf ??= new ChangeTrackingList<AlertRuleLeafCondition>();
+            anyOf ??= new ChangeTrackingList<TenantActivityLogAlertLeafCondition>();
 
-            return new AlertRuleAnyOfOrLeafCondition(@field, equalTo, containsAny.ToList(), additionalBinaryDataProperties: null, anyOf.ToList());
+            return new TenantActivityLogAlertAnyOfOrLeafCondition(@field, equalTo, containsAny.ToList(), additionalBinaryDataProperties: null, anyOf.ToList());
         }
 
         /// <summary>
@@ -89,35 +89,35 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
         /// </param>
         /// <param name="equalTo"> The value of the event's field will be compared to this value (case-insensitive) to determine if the condition is met. </param>
         /// <param name="containsAny"> The value of the event's field will be compared to the values in this array (case-insensitive) to determine if the condition is met. </param>
-        /// <returns> A new <see cref="Models.AlertRuleLeafCondition"/> instance for mocking. </returns>
-        public static AlertRuleLeafCondition AlertRuleLeafCondition(string @field = default, string equalTo = default, IEnumerable<string> containsAny = default)
+        /// <returns> A new <see cref="Models.TenantActivityLogAlertLeafCondition"/> instance for mocking. </returns>
+        public static TenantActivityLogAlertLeafCondition TenantActivityLogAlertLeafCondition(string @field = default, string equalTo = default, IEnumerable<string> containsAny = default)
         {
             containsAny ??= new ChangeTrackingList<string>();
 
-            return new AlertRuleLeafCondition(@field, equalTo, containsAny.ToList(), additionalBinaryDataProperties: null);
+            return new TenantActivityLogAlertLeafCondition(@field, equalTo, containsAny.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A pointer to an Azure Action Group. </summary>
         /// <param name="actionGroupId"> The resource ID of the Action Group. This cannot be null or empty. </param>
         /// <param name="webhookProperties"> the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload. </param>
         /// <param name="actionProperties"> Predefined list of properties and configuration items for the action group. </param>
-        /// <returns> A new <see cref="Models.ActionGroup"/> instance for mocking. </returns>
-        public static ActionGroup ActionGroup(string actionGroupId = default, IDictionary<string, string> webhookProperties = default, IDictionary<string, string> actionProperties = default)
+        /// <returns> A new <see cref="Models.TenantActivityLogAlertActionGroup"/> instance for mocking. </returns>
+        public static TenantActivityLogAlertActionGroup TenantActivityLogAlertActionGroup(ResourceIdentifier actionGroupId = default, IDictionary<string, string> webhookProperties = default, IDictionary<string, string> actionProperties = default)
         {
             webhookProperties ??= new ChangeTrackingDictionary<string, string>();
             actionProperties ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ActionGroup(actionGroupId, webhookProperties, actionProperties, additionalBinaryDataProperties: null);
+            return new TenantActivityLogAlertActionGroup(actionGroupId, webhookProperties, actionProperties, additionalBinaryDataProperties: null);
         }
 
         /// <param name="tags"> The resource tags. </param>
-        /// <param name="enabled"> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </param>
-        /// <returns> A new <see cref="Models.TenantActivityLogAlertResourcePatch"/> instance for mocking. </returns>
-        public static TenantActivityLogAlertResourcePatch TenantActivityLogAlertResourcePatch(IDictionary<string, string> tags = default, bool? enabled = default)
+        /// <param name="isEnabled"> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </param>
+        /// <returns> A new <see cref="Models.TenantActivityLogAlertPatch"/> instance for mocking. </returns>
+        public static TenantActivityLogAlertPatch TenantActivityLogAlertPatch(IDictionary<string, string> tags = default, bool? isEnabled = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TenantActivityLogAlertResourcePatch(tags, enabled is null ? default : new TenantAlertRulePatchProperties(enabled, null), additionalBinaryDataProperties: null);
+            return new TenantActivityLogAlertPatch(tags, isEnabled is null ? default : new TenantAlertRulePatchProperties(isEnabled, null), additionalBinaryDataProperties: null);
         }
     }
 }

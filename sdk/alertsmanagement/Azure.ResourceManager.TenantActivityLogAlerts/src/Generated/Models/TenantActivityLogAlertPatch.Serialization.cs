@@ -15,61 +15,61 @@ using Azure.ResourceManager.TenantActivityLogAlerts;
 namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
 {
     /// <summary> An Activity Log Alert rule object for the body of patch operations. </summary>
-    public partial class TenantActivityLogAlertResourcePatch : IJsonModel<TenantActivityLogAlertResourcePatch>
+    public partial class TenantActivityLogAlertPatch : IJsonModel<TenantActivityLogAlertPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TenantActivityLogAlertResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TenantActivityLogAlertPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTenantActivityLogAlertResourcePatch(document.RootElement, options);
+                        return DeserializeTenantActivityLogAlertPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TenantActivityLogAlertResourcePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantActivityLogAlertPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerTenantActivityLogAlertsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TenantActivityLogAlertResourcePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantActivityLogAlertPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TenantActivityLogAlertResourcePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TenantActivityLogAlertPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TenantActivityLogAlertResourcePatch IPersistableModel<TenantActivityLogAlertResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TenantActivityLogAlertPatch IPersistableModel<TenantActivityLogAlertPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TenantActivityLogAlertResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TenantActivityLogAlertPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="tenantActivityLogAlertResourcePatch"> The <see cref="TenantActivityLogAlertResourcePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(TenantActivityLogAlertResourcePatch tenantActivityLogAlertResourcePatch)
+        /// <param name="tenantActivityLogAlertPatch"> The <see cref="TenantActivityLogAlertPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(TenantActivityLogAlertPatch tenantActivityLogAlertPatch)
         {
-            if (tenantActivityLogAlertResourcePatch == null)
+            if (tenantActivityLogAlertPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(tenantActivityLogAlertResourcePatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(tenantActivityLogAlertPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TenantActivityLogAlertResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TenantActivityLogAlertPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TenantActivityLogAlertResourcePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantActivityLogAlertPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TenantActivityLogAlertResourcePatch IJsonModel<TenantActivityLogAlertResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TenantActivityLogAlertPatch IJsonModel<TenantActivityLogAlertPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TenantActivityLogAlertResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TenantActivityLogAlertPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TenantActivityLogAlertResourcePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantActivityLogAlertPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTenantActivityLogAlertResourcePatch(document.RootElement, options);
+            return DeserializeTenantActivityLogAlertPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TenantActivityLogAlertResourcePatch DeserializeTenantActivityLogAlertResourcePatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static TenantActivityLogAlertPatch DeserializeTenantActivityLogAlertPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TenantActivityLogAlertResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
+            return new TenantActivityLogAlertPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
         }
     }
 }

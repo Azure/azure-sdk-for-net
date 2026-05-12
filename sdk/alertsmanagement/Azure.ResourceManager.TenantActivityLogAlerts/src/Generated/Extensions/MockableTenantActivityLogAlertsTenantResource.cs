@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TenantActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TenantActivityLogAlertResource> GetTenantActivityLogAlertResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TenantActivityLogAlertResource> GetTenantActivityLogAlertsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TenantActivityLogAlertResourceData, TenantActivityLogAlertResource>(new TenantActivityLogAlertResourcesGetByTenantAsyncCollectionResultOfT(TenantActivityLogAlertResourcesRestClient, context, "MockableTenantActivityLogAlertsTenantResource.GetTenantActivityLogAlertResources"), data => new TenantActivityLogAlertResource(Client, data));
+            return new AsyncPageableWrapper<TenantActivityLogAlertData, TenantActivityLogAlertResource>(new TenantActivityLogAlertResourcesGetByTenantAsyncCollectionResultOfT(TenantActivityLogAlertResourcesRestClient, context, "MockableTenantActivityLogAlertsTenantResource.GetTenantActivityLogAlerts"), data => new TenantActivityLogAlertResource(Client, data));
         }
 
         /// <summary>
@@ -84,13 +84,13 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TenantActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TenantActivityLogAlertResource> GetTenantActivityLogAlertResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<TenantActivityLogAlertResource> GetTenantActivityLogAlerts(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TenantActivityLogAlertResourceData, TenantActivityLogAlertResource>(new TenantActivityLogAlertResourcesGetByTenantCollectionResultOfT(TenantActivityLogAlertResourcesRestClient, context, "MockableTenantActivityLogAlertsTenantResource.GetTenantActivityLogAlertResources"), data => new TenantActivityLogAlertResource(Client, data));
+            return new PageableWrapper<TenantActivityLogAlertData, TenantActivityLogAlertResource>(new TenantActivityLogAlertResourcesGetByTenantCollectionResultOfT(TenantActivityLogAlertResourcesRestClient, context, "MockableTenantActivityLogAlertsTenantResource.GetTenantActivityLogAlerts"), data => new TenantActivityLogAlertResource(Client, data));
         }
     }
 }

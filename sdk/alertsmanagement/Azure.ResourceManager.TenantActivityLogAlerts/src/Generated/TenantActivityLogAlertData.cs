@@ -14,15 +14,15 @@ using Azure.ResourceManager.TenantActivityLogAlerts.Models;
 namespace Azure.ResourceManager.TenantActivityLogAlerts
 {
     /// <summary> A Tenant Activity Log Alert rule resource. </summary>
-    public partial class TenantActivityLogAlertResourceData : ResourceData
+    public partial class TenantActivityLogAlertData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertData"/>. </summary>
         /// <param name="conditionAllOf"> The list of Activity Log Alert rule conditions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conditionAllOf"/> is null. </exception>
-        public TenantActivityLogAlertResourceData(IEnumerable<AlertRuleAnyOfOrLeafCondition> conditionAllOf)
+        public TenantActivityLogAlertData(IEnumerable<TenantActivityLogAlertAnyOfOrLeafCondition> conditionAllOf)
         {
             Argument.AssertNotNull(conditionAllOf, nameof(conditionAllOf));
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         /// <param name="properties"> The Activity Log Alert rule properties of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal TenantActivityLogAlertResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertRuleProperties properties, IDictionary<string, string> tags, string location) : base(id, name, resourceType, systemData)
+        internal TenantActivityLogAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertRuleProperties properties, IDictionary<string, string> tags, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> The tenant GUID. Must be provided for tenant-level and management group events rules. </summary>
         public string TenantScope
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         }
 
         /// <summary> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </summary>
-        public bool? Enabled
+        public bool? IsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.Enabled;
+                return Properties is null ? default : Properties.IsEnabled;
             }
             set
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 {
                     Properties = new AlertRuleProperties();
                 }
-                Properties.Enabled = value;
+                Properties.IsEnabled = value;
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         }
 
         /// <summary> The list of Activity Log Alert rule conditions. </summary>
-        public IList<AlertRuleAnyOfOrLeafCondition> ConditionAllOf
+        public IList<TenantActivityLogAlertAnyOfOrLeafCondition> ConditionAllOf
         {
             get
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         }
 
         /// <summary> The list of the Action Groups. </summary>
-        public IList<ActionGroup> ActionsActionGroups
+        public IList<TenantActivityLogAlertActionGroup> ActionsActionGroups
         {
             get
             {

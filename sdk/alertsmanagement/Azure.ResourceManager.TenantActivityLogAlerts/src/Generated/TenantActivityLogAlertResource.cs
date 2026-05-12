@@ -21,15 +21,15 @@ using Azure.ResourceManager.TenantActivityLogAlerts.Models;
 namespace Azure.ResourceManager.TenantActivityLogAlerts
 {
     /// <summary>
-    /// A class representing a TenantActivityLogAlertResource along with the instance operations that can be performed on it.
+    /// A class representing a TenantActivityLogAlert along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantActivityLogAlertResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource"/> using the GetTenantActivityLogAlertResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource"/> using the GetTenantActivityLogAlerts method.
     /// </summary>
     public partial class TenantActivityLogAlertResource : ArmResource
     {
         private readonly ClientDiagnostics _tenantActivityLogAlertResourcesClientDiagnostics;
         private readonly TenantActivityLogAlertResources _tenantActivityLogAlertResourcesRestClient;
-        private readonly TenantActivityLogAlertResourceData _data;
+        private readonly TenantActivityLogAlertData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AlertsManagement/tenantActivityLogAlerts";
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TenantActivityLogAlertResource(ArmClient client, TenantActivityLogAlertResourceData data) : this(client, data.Id)
+        internal TenantActivityLogAlertResource(ArmClient client, TenantActivityLogAlertData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TenantActivityLogAlertResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string tenantActivityLogAlertResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string tenantActivityLogAlertApiVersion);
             _tenantActivityLogAlertResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TenantActivityLogAlerts", ResourceType.Namespace, Diagnostics);
-            _tenantActivityLogAlertResourcesRestClient = new TenantActivityLogAlertResources(_tenantActivityLogAlertResourcesClientDiagnostics, Pipeline, Endpoint, tenantActivityLogAlertResourceApiVersion ?? "2023-04-01-preview");
+            _tenantActivityLogAlertResourcesRestClient = new TenantActivityLogAlertResources(_tenantActivityLogAlertResourcesClientDiagnostics, Pipeline, Endpoint, tenantActivityLogAlertApiVersion ?? "2023-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual TenantActivityLogAlertResourceData Data
+        public virtual TenantActivityLogAlertData Data
         {
             get
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 };
                 HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TenantActivityLogAlertResourceData> response = Response.FromValue(TenantActivityLogAlertResourceData.FromResponse(result), result);
+                Response<TenantActivityLogAlertData> response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 };
                 HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TenantActivityLogAlertResourceData> response = Response.FromValue(TenantActivityLogAlertResourceData.FromResponse(result), result);
+                Response<TenantActivityLogAlertData> response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         /// <param name="patch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<TenantActivityLogAlertResource>> UpdateAsync(TenantActivityLogAlertResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantActivityLogAlertResource>> UpdateAsync(TenantActivityLogAlertPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -225,9 +225,9 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, TenantActivityLogAlertResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, TenantActivityLogAlertPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TenantActivityLogAlertResourceData> response = Response.FromValue(TenantActivityLogAlertResourceData.FromResponse(result), result);
+                Response<TenantActivityLogAlertData> response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         /// <param name="patch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<TenantActivityLogAlertResource> Update(TenantActivityLogAlertResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<TenantActivityLogAlertResource> Update(TenantActivityLogAlertPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -277,9 +277,9 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, TenantActivityLogAlertResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, TenantActivityLogAlertPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TenantActivityLogAlertResourceData> response = Response.FromValue(TenantActivityLogAlertResourceData.FromResponse(result), result);
+                Response<TenantActivityLogAlertData> response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -420,13 +420,13 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                     };
                     HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<TenantActivityLogAlertResourceData> response = Response.FromValue(TenantActivityLogAlertResourceData.FromResponse(result), result);
+                    Response<TenantActivityLogAlertData> response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                     return Response.FromValue(new TenantActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    TenantActivityLogAlertResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    TenantActivityLogAlertResourcePatch patch = new TenantActivityLogAlertResourcePatch();
+                    TenantActivityLogAlertData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    TenantActivityLogAlertPatch patch = new TenantActivityLogAlertPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -468,13 +468,13 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                     };
                     HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<TenantActivityLogAlertResourceData> response = Response.FromValue(TenantActivityLogAlertResourceData.FromResponse(result), result);
+                    Response<TenantActivityLogAlertData> response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                     return Response.FromValue(new TenantActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    TenantActivityLogAlertResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    TenantActivityLogAlertResourcePatch patch = new TenantActivityLogAlertResourcePatch();
+                    TenantActivityLogAlertData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    TenantActivityLogAlertPatch patch = new TenantActivityLogAlertPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -515,13 +515,13 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                     };
                     HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<TenantActivityLogAlertResourceData> response = Response.FromValue(TenantActivityLogAlertResourceData.FromResponse(result), result);
+                    Response<TenantActivityLogAlertData> response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                     return Response.FromValue(new TenantActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    TenantActivityLogAlertResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    TenantActivityLogAlertResourcePatch patch = new TenantActivityLogAlertResourcePatch();
+                    TenantActivityLogAlertData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    TenantActivityLogAlertPatch patch = new TenantActivityLogAlertPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<TenantActivityLogAlertResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -558,13 +558,13 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                     };
                     HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<TenantActivityLogAlertResourceData> response = Response.FromValue(TenantActivityLogAlertResourceData.FromResponse(result), result);
+                    Response<TenantActivityLogAlertData> response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                     return Response.FromValue(new TenantActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    TenantActivityLogAlertResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    TenantActivityLogAlertResourcePatch patch = new TenantActivityLogAlertResourcePatch();
+                    TenantActivityLogAlertData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    TenantActivityLogAlertPatch patch = new TenantActivityLogAlertPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<TenantActivityLogAlertResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -600,13 +600,13 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                     };
                     HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<TenantActivityLogAlertResourceData> response = Response.FromValue(TenantActivityLogAlertResourceData.FromResponse(result), result);
+                    Response<TenantActivityLogAlertData> response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                     return Response.FromValue(new TenantActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    TenantActivityLogAlertResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    TenantActivityLogAlertResourcePatch patch = new TenantActivityLogAlertResourcePatch();
+                    TenantActivityLogAlertData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    TenantActivityLogAlertPatch patch = new TenantActivityLogAlertPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -646,13 +646,13 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                     };
                     HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<TenantActivityLogAlertResourceData> response = Response.FromValue(TenantActivityLogAlertResourceData.FromResponse(result), result);
+                    Response<TenantActivityLogAlertData> response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                     return Response.FromValue(new TenantActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    TenantActivityLogAlertResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    TenantActivityLogAlertResourcePatch patch = new TenantActivityLogAlertResourcePatch();
+                    TenantActivityLogAlertData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    TenantActivityLogAlertPatch patch = new TenantActivityLogAlertPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

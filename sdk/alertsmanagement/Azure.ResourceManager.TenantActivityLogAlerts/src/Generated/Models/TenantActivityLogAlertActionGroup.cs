@@ -7,20 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.TenantActivityLogAlerts;
 
 namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
 {
     /// <summary> A pointer to an Azure Action Group. </summary>
-    public partial class ActionGroup
+    public partial class TenantActivityLogAlertActionGroup
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActionGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertActionGroup"/>. </summary>
         /// <param name="actionGroupId"> The resource ID of the Action Group. This cannot be null or empty. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupId"/> is null. </exception>
-        public ActionGroup(string actionGroupId)
+        public TenantActivityLogAlertActionGroup(ResourceIdentifier actionGroupId)
         {
             Argument.AssertNotNull(actionGroupId, nameof(actionGroupId));
 
@@ -29,12 +30,12 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
             ActionProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertActionGroup"/>. </summary>
         /// <param name="actionGroupId"> The resource ID of the Action Group. This cannot be null or empty. </param>
         /// <param name="webhookProperties"> the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload. </param>
         /// <param name="actionProperties"> Predefined list of properties and configuration items for the action group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActionGroup(string actionGroupId, IDictionary<string, string> webhookProperties, IDictionary<string, string> actionProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TenantActivityLogAlertActionGroup(ResourceIdentifier actionGroupId, IDictionary<string, string> webhookProperties, IDictionary<string, string> actionProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionGroupId = actionGroupId;
             WebhookProperties = webhookProperties;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
         }
 
         /// <summary> The resource ID of the Action Group. This cannot be null or empty. </summary>
-        public string ActionGroupId { get; set; }
+        public ResourceIdentifier ActionGroupId { get; set; }
 
         /// <summary> the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload. </summary>
         public IDictionary<string, string> WebhookProperties { get; }

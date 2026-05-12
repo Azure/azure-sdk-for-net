@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
             {
                 writer.WritePropertyName("actionGroups"u8);
                 writer.WriteStartArray();
-                foreach (ActionGroup item in ActionGroups)
+                foreach (TenantActivityLogAlertActionGroup item in ActionGroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
             {
                 return null;
             }
-            IList<ActionGroup> actionGroups = default;
+            IList<TenantActivityLogAlertActionGroup> actionGroups = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
                     {
                         continue;
                     }
-                    List<ActionGroup> array = new List<ActionGroup>();
+                    List<TenantActivityLogAlertActionGroup> array = new List<TenantActivityLogAlertActionGroup>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ActionGroup.DeserializeActionGroup(item, options));
+                        array.Add(TenantActivityLogAlertActionGroup.DeserializeTenantActivityLogAlertActionGroup(item, options));
                     }
                     actionGroups = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ActionList(actionGroups ?? new ChangeTrackingList<ActionGroup>(), additionalBinaryDataProperties);
+            return new ActionList(actionGroups ?? new ChangeTrackingList<TenantActivityLogAlertActionGroup>(), additionalBinaryDataProperties);
         }
     }
 }

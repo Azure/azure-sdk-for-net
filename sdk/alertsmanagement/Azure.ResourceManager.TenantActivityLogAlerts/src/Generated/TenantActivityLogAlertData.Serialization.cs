@@ -18,10 +18,10 @@ using Azure.ResourceManager.TenantActivityLogAlerts.Models;
 namespace Azure.ResourceManager.TenantActivityLogAlerts
 {
     /// <summary> A Tenant Activity Log Alert rule resource. </summary>
-    public partial class TenantActivityLogAlertResourceData : ResourceData, IJsonModel<TenantActivityLogAlertResourceData>
+    public partial class TenantActivityLogAlertData : ResourceData, IJsonModel<TenantActivityLogAlertData>
     {
-        /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertResourceData"/> for deserialization. </summary>
-        internal TenantActivityLogAlertResourceData()
+        /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertData"/> for deserialization. </summary>
+        internal TenantActivityLogAlertData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTenantActivityLogAlertResourceData(document.RootElement, options);
+                        return DeserializeTenantActivityLogAlertData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TenantActivityLogAlertResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantActivityLogAlertData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerTenantActivityLogAlertsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TenantActivityLogAlertResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantActivityLogAlertData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TenantActivityLogAlertResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TenantActivityLogAlertData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TenantActivityLogAlertResourceData IPersistableModel<TenantActivityLogAlertResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (TenantActivityLogAlertResourceData)PersistableModelCreateCore(data, options);
+        TenantActivityLogAlertData IPersistableModel<TenantActivityLogAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => (TenantActivityLogAlertData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TenantActivityLogAlertResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TenantActivityLogAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="tenantActivityLogAlertResourceData"> The <see cref="TenantActivityLogAlertResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(TenantActivityLogAlertResourceData tenantActivityLogAlertResourceData)
+        /// <param name="tenantActivityLogAlertData"> The <see cref="TenantActivityLogAlertData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(TenantActivityLogAlertData tenantActivityLogAlertData)
         {
-            if (tenantActivityLogAlertResourceData == null)
+            if (tenantActivityLogAlertData == null)
             {
                 return null;
             }
-            return RequestContent.Create(tenantActivityLogAlertResourceData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(tenantActivityLogAlertData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TenantActivityLogAlertResourceData"/> from. </param>
-        internal static TenantActivityLogAlertResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TenantActivityLogAlertData"/> from. </param>
+        internal static TenantActivityLogAlertData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTenantActivityLogAlertResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeTenantActivityLogAlertData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TenantActivityLogAlertResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TenantActivityLogAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TenantActivityLogAlertResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantActivityLogAlertData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -122,30 +122,30 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TenantActivityLogAlertResourceData IJsonModel<TenantActivityLogAlertResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TenantActivityLogAlertResourceData)JsonModelCreateCore(ref reader, options);
+        TenantActivityLogAlertData IJsonModel<TenantActivityLogAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TenantActivityLogAlertData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TenantActivityLogAlertResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantActivityLogAlertData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTenantActivityLogAlertResourceData(document.RootElement, options);
+            return DeserializeTenantActivityLogAlertData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TenantActivityLogAlertResourceData DeserializeTenantActivityLogAlertResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static TenantActivityLogAlertData DeserializeTenantActivityLogAlertData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AlertRuleProperties properties = default;
             IDictionary<string, string> tags = default;
-            string location = default;
+            AzureLocation? location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -221,7 +221,11 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -229,7 +233,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TenantActivityLogAlertResourceData(
+            return new TenantActivityLogAlertData(
                 id,
                 name,
                 resourceType,

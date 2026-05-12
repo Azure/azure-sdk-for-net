@@ -17,51 +17,51 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
     /// An Activity Log Alert rule condition that is met by comparing the field and value of an Activity Log event.
     /// This condition must contain 'field' and either 'equals' or 'containsAny'.
     /// </summary>
-    public partial class AlertRuleLeafCondition : IJsonModel<AlertRuleLeafCondition>
+    public partial class TenantActivityLogAlertLeafCondition : IJsonModel<TenantActivityLogAlertLeafCondition>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AlertRuleLeafCondition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TenantActivityLogAlertLeafCondition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertRuleLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAlertRuleLeafCondition(document.RootElement, options);
+                        return DeserializeTenantActivityLogAlertLeafCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertRuleLeafCondition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantActivityLogAlertLeafCondition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertRuleLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerTenantActivityLogAlertsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AlertRuleLeafCondition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantActivityLogAlertLeafCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AlertRuleLeafCondition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TenantActivityLogAlertLeafCondition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AlertRuleLeafCondition IPersistableModel<AlertRuleLeafCondition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TenantActivityLogAlertLeafCondition IPersistableModel<TenantActivityLogAlertLeafCondition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AlertRuleLeafCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TenantActivityLogAlertLeafCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AlertRuleLeafCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TenantActivityLogAlertLeafCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertRuleLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertRuleLeafCondition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantActivityLogAlertLeafCondition)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Field))
             {
@@ -121,24 +121,24 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AlertRuleLeafCondition IJsonModel<AlertRuleLeafCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TenantActivityLogAlertLeafCondition IJsonModel<TenantActivityLogAlertLeafCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AlertRuleLeafCondition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TenantActivityLogAlertLeafCondition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertRuleLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantActivityLogAlertLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertRuleLeafCondition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantActivityLogAlertLeafCondition)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAlertRuleLeafCondition(document.RootElement, options);
+            return DeserializeTenantActivityLogAlertLeafCondition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AlertRuleLeafCondition DeserializeAlertRuleLeafCondition(JsonElement element, ModelReaderWriterOptions options)
+        internal static TenantActivityLogAlertLeafCondition DeserializeTenantActivityLogAlertLeafCondition(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AlertRuleLeafCondition(@field, equalTo, containsAny ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new TenantActivityLogAlertLeafCondition(@field, equalTo, containsAny ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

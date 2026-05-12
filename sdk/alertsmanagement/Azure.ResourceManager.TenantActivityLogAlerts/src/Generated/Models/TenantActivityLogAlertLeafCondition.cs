@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
     /// An Activity Log Alert rule condition that is met by comparing the field and value of an Activity Log event.
     /// This condition must contain 'field' and either 'equals' or 'containsAny'.
     /// </summary>
-    public partial class AlertRuleLeafCondition
+    public partial class TenantActivityLogAlertLeafCondition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AlertRuleLeafCondition"/>. </summary>
-        public AlertRuleLeafCondition()
+        /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertLeafCondition"/>. </summary>
+        public TenantActivityLogAlertLeafCondition()
         {
             ContainsAny = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertRuleLeafCondition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertLeafCondition"/>. </summary>
         /// <param name="field">
         /// The name of the Activity Log event's field that this condition will examine.
         /// The possible values for this field are (case-insensitive): 'resourceId', 'category', 'caller', 'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or anything beginning with 'properties'.
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
         /// <param name="equalTo"> The value of the event's field will be compared to this value (case-insensitive) to determine if the condition is met. </param>
         /// <param name="containsAny"> The value of the event's field will be compared to the values in this array (case-insensitive) to determine if the condition is met. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertRuleLeafCondition(string @field, string equalTo, IList<string> containsAny, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TenantActivityLogAlertLeafCondition(string @field, string equalTo, IList<string> containsAny, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Field = @field;
             EqualTo = equalTo;

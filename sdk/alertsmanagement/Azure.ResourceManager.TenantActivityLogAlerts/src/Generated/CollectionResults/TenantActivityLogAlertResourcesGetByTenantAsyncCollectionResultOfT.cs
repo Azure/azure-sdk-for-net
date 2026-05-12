@@ -15,7 +15,7 @@ using Azure.ResourceManager.TenantActivityLogAlerts.Models;
 
 namespace Azure.ResourceManager.TenantActivityLogAlerts
 {
-    internal partial class TenantActivityLogAlertResourcesGetByTenantAsyncCollectionResultOfT : AsyncPageable<TenantActivityLogAlertResourceData>
+    internal partial class TenantActivityLogAlertResourcesGetByTenantAsyncCollectionResultOfT : AsyncPageable<TenantActivityLogAlertData>
     {
         private readonly TenantActivityLogAlertResources _client;
         private readonly RequestContext _context;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of TenantActivityLogAlertResourcesGetByTenantAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<TenantActivityLogAlertResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<TenantActivityLogAlertData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                     yield break;
                 }
                 TenantAlertRuleList result = TenantAlertRuleList.FromResponse(response);
-                yield return Page<TenantActivityLogAlertResourceData>.FromValues((IReadOnlyList<TenantActivityLogAlertResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<TenantActivityLogAlertData>.FromValues((IReadOnlyList<TenantActivityLogAlertData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

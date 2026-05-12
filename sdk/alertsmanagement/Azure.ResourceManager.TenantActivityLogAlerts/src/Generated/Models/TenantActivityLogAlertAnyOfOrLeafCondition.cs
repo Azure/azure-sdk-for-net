@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
     /// * __AnyOf Condition -__ must contain __only__ 'anyOf' (which is an array of Leaf Conditions).
     /// _Please note, 'field', 'equals' and 'containsAny' should __not__ be set in an AnyOf Condition._
     /// </summary>
-    public partial class AlertRuleAnyOfOrLeafCondition : AlertRuleLeafCondition
+    public partial class TenantActivityLogAlertAnyOfOrLeafCondition : TenantActivityLogAlertLeafCondition
     {
-        /// <summary> Initializes a new instance of <see cref="AlertRuleAnyOfOrLeafCondition"/>. </summary>
-        public AlertRuleAnyOfOrLeafCondition()
+        /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertAnyOfOrLeafCondition"/>. </summary>
+        public TenantActivityLogAlertAnyOfOrLeafCondition()
         {
-            AnyOf = new ChangeTrackingList<AlertRuleLeafCondition>();
+            AnyOf = new ChangeTrackingList<TenantActivityLogAlertLeafCondition>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertRuleAnyOfOrLeafCondition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertAnyOfOrLeafCondition"/>. </summary>
         /// <param name="field">
         /// The name of the Activity Log event's field that this condition will examine.
         /// The possible values for this field are (case-insensitive): 'resourceId', 'category', 'caller', 'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or anything beginning with 'properties'.
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
         /// <param name="containsAny"> The value of the event's field will be compared to the values in this array (case-insensitive) to determine if the condition is met. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="anyOf"> An Activity Log Alert rule condition that is met when at least one of its member leaf conditions are met. </param>
-        internal AlertRuleAnyOfOrLeafCondition(string @field, string equalTo, IList<string> containsAny, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<AlertRuleLeafCondition> anyOf) : base(@field, equalTo, containsAny, additionalBinaryDataProperties)
+        internal TenantActivityLogAlertAnyOfOrLeafCondition(string @field, string equalTo, IList<string> containsAny, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<TenantActivityLogAlertLeafCondition> anyOf) : base(@field, equalTo, containsAny, additionalBinaryDataProperties)
         {
             AnyOf = anyOf;
         }
 
         /// <summary> An Activity Log Alert rule condition that is met when at least one of its member leaf conditions are met. </summary>
-        public IList<AlertRuleLeafCondition> AnyOf { get; }
+        public IList<TenantActivityLogAlertLeafCondition> AnyOf { get; }
     }
 }

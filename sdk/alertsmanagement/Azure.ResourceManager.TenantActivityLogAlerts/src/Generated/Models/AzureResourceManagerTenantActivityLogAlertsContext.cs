@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ActionGroup))]
     [ModelReaderWriterBuildable(typeof(ActionList))]
     [ModelReaderWriterBuildable(typeof(AlertRuleAllOfCondition))]
-    [ModelReaderWriterBuildable(typeof(AlertRuleAnyOfOrLeafCondition))]
-    [ModelReaderWriterBuildable(typeof(AlertRuleLeafCondition))]
     [ModelReaderWriterBuildable(typeof(AlertRuleProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TenantActivityLogAlertActionGroup))]
+    [ModelReaderWriterBuildable(typeof(TenantActivityLogAlertAnyOfOrLeafCondition))]
+    [ModelReaderWriterBuildable(typeof(TenantActivityLogAlertData))]
+    [ModelReaderWriterBuildable(typeof(TenantActivityLogAlertLeafCondition))]
+    [ModelReaderWriterBuildable(typeof(TenantActivityLogAlertPatch))]
     [ModelReaderWriterBuildable(typeof(TenantActivityLogAlertResource))]
-    [ModelReaderWriterBuildable(typeof(TenantActivityLogAlertResourceData))]
-    [ModelReaderWriterBuildable(typeof(TenantActivityLogAlertResourcePatch))]
     [ModelReaderWriterBuildable(typeof(TenantAlertRuleList))]
     [ModelReaderWriterBuildable(typeof(TenantAlertRulePatchProperties))]
     public partial class AzureResourceManagerTenantActivityLogAlertsContext : ModelReaderWriterContext

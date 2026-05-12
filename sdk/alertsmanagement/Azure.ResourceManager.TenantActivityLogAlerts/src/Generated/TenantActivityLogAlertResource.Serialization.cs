@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.TenantActivityLogAlerts
 {
     /// <summary></summary>
-    public partial class TenantActivityLogAlertResource : IJsonModel<TenantActivityLogAlertResourceData>
+    public partial class TenantActivityLogAlertResource : IJsonModel<TenantActivityLogAlertData>
     {
-        private static IJsonModel<TenantActivityLogAlertResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<TenantActivityLogAlertData> s_dataDeserializationInstance;
 
-        private static IJsonModel<TenantActivityLogAlertResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TenantActivityLogAlertResourceData();
+        private static IJsonModel<TenantActivityLogAlertData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TenantActivityLogAlertData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TenantActivityLogAlertResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TenantActivityLogAlertResourceData>)Data).Write(writer, options);
+        void IJsonModel<TenantActivityLogAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TenantActivityLogAlertData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TenantActivityLogAlertResourceData IJsonModel<TenantActivityLogAlertResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        TenantActivityLogAlertData IJsonModel<TenantActivityLogAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TenantActivityLogAlertResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TenantActivityLogAlertResourceData>(Data, options, AzureResourceManagerTenantActivityLogAlertsContext.Default);
+        BinaryData IPersistableModel<TenantActivityLogAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TenantActivityLogAlertData>(Data, options, AzureResourceManagerTenantActivityLogAlertsContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TenantActivityLogAlertResourceData IPersistableModel<TenantActivityLogAlertResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TenantActivityLogAlertResourceData>(data, options, AzureResourceManagerTenantActivityLogAlertsContext.Default);
+        TenantActivityLogAlertData IPersistableModel<TenantActivityLogAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TenantActivityLogAlertData>(data, options, AzureResourceManagerTenantActivityLogAlertsContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TenantActivityLogAlertResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<TenantActivityLogAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

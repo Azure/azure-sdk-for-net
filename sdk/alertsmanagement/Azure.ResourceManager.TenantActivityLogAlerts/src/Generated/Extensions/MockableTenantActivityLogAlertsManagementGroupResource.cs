@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Mocking
         {
         }
 
-        /// <summary> Gets a collection of TenantActivityLogAlertResources in the <see cref="ManagementGroupResource"/>. </summary>
-        /// <returns> An object representing collection of TenantActivityLogAlertResources and their operations over a TenantActivityLogAlertResource. </returns>
-        public virtual TenantActivityLogAlertResourceCollection GetTenantActivityLogAlertResources()
+        /// <summary> Gets a collection of TenantActivityLogAlerts in the <see cref="ManagementGroupResource"/>. </summary>
+        /// <returns> An object representing collection of TenantActivityLogAlerts and their operations over a TenantActivityLogAlertResource. </returns>
+        public virtual TenantActivityLogAlertCollection GetTenantActivityLogAlerts()
         {
-            return GetCachedClient(client => new TenantActivityLogAlertResourceCollection(client, Id));
+            return GetCachedClient(client => new TenantActivityLogAlertCollection(client, Id));
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="alertRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TenantActivityLogAlertResource>> GetTenantActivityLogAlertResourceAsync(string alertRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantActivityLogAlertResource>> GetTenantActivityLogAlertAsync(string alertRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertRuleName, nameof(alertRuleName));
 
-            return await GetTenantActivityLogAlertResources().GetAsync(alertRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetTenantActivityLogAlerts().GetAsync(alertRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="alertRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TenantActivityLogAlertResource> GetTenantActivityLogAlertResource(string alertRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<TenantActivityLogAlertResource> GetTenantActivityLogAlert(string alertRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertRuleName, nameof(alertRuleName));
 
-            return GetTenantActivityLogAlertResources().Get(alertRuleName, cancellationToken);
+            return GetTenantActivityLogAlerts().Get(alertRuleName, cancellationToken);
         }
     }
 }

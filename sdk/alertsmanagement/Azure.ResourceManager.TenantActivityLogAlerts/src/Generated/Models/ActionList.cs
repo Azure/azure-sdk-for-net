@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
         /// <summary> Initializes a new instance of <see cref="ActionList"/>. </summary>
         public ActionList()
         {
-            ActionGroups = new ChangeTrackingList<ActionGroup>();
+            ActionGroups = new ChangeTrackingList<TenantActivityLogAlertActionGroup>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ActionList"/>. </summary>
         /// <param name="actionGroups"> The list of the Action Groups. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActionList(IList<ActionGroup> actionGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActionList(IList<TenantActivityLogAlertActionGroup> actionGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionGroups = actionGroups;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of the Action Groups. </summary>
-        public IList<ActionGroup> ActionGroups { get; }
+        public IList<TenantActivityLogAlertActionGroup> ActionGroups { get; }
     }
 }

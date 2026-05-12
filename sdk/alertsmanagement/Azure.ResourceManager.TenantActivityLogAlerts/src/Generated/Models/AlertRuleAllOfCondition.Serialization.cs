@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
             }
             writer.WritePropertyName("allOf"u8);
             writer.WriteStartArray();
-            foreach (AlertRuleAnyOfOrLeafCondition item in AllOf)
+            foreach (TenantActivityLogAlertAnyOfOrLeafCondition item in AllOf)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -128,16 +128,16 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
             {
                 return null;
             }
-            IList<AlertRuleAnyOfOrLeafCondition> allOf = default;
+            IList<TenantActivityLogAlertAnyOfOrLeafCondition> allOf = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("allOf"u8))
                 {
-                    List<AlertRuleAnyOfOrLeafCondition> array = new List<AlertRuleAnyOfOrLeafCondition>();
+                    List<TenantActivityLogAlertAnyOfOrLeafCondition> array = new List<TenantActivityLogAlertAnyOfOrLeafCondition>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AlertRuleAnyOfOrLeafCondition.DeserializeAlertRuleAnyOfOrLeafCondition(item, options));
+                        array.Add(TenantActivityLogAlertAnyOfOrLeafCondition.DeserializeTenantActivityLogAlertAnyOfOrLeafCondition(item, options));
                     }
                     allOf = array;
                     continue;

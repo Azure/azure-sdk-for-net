@@ -12,22 +12,22 @@ using Azure.ResourceManager.TenantActivityLogAlerts;
 namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
 {
     /// <summary> An Activity Log Alert rule object for the body of patch operations. </summary>
-    public partial class TenantActivityLogAlertResourcePatch
+    public partial class TenantActivityLogAlertPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertResourcePatch"/>. </summary>
-        public TenantActivityLogAlertResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertPatch"/>. </summary>
+        public TenantActivityLogAlertPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertResourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertPatch"/>. </summary>
         /// <param name="tags"> The resource tags. </param>
         /// <param name="properties"> The activity log alert settings for an update operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TenantActivityLogAlertResourcePatch(IDictionary<string, string> tags, TenantAlertRulePatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TenantActivityLogAlertPatch(IDictionary<string, string> tags, TenantAlertRulePatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
         internal TenantAlertRulePatchProperties Properties { get; set; }
 
         /// <summary> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </summary>
-        public bool? Enabled
+        public bool? IsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.Enabled;
+                return Properties is null ? default : Properties.IsEnabled;
             }
             set
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
                 {
                     Properties = new TenantAlertRulePatchProperties();
                 }
-                Properties.Enabled = value;
+                Properties.IsEnabled = value;
             }
         }
     }

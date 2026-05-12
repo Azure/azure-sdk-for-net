@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
         /// <param name="scopes"> A list of resource IDs that will be used as prefixes. The alert will only apply to Activity Log events with resource IDs that fall under one of these prefixes. This list must include at least one item. </param>
         /// <param name="condition"> The condition that will cause this alert to activate. </param>
         /// <param name="actions"> The actions that will activate when the condition is met. </param>
-        /// <param name="enabled"> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </param>
+        /// <param name="isEnabled"> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </param>
         /// <param name="description"> A description of this Activity Log Alert rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertRuleProperties(string tenantScope, IList<string> scopes, AlertRuleAllOfCondition condition, ActionList actions, bool? enabled, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertRuleProperties(string tenantScope, IList<string> scopes, AlertRuleAllOfCondition condition, ActionList actions, bool? isEnabled, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantScope = tenantScope;
             Scopes = scopes;
             Condition = condition;
             Actions = actions;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Description = description;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
         internal ActionList Actions { get; set; }
 
         /// <summary> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> A description of this Activity Log Alert rule. </summary>
         public string Description { get; set; }
 
         /// <summary> The list of Activity Log Alert rule conditions. </summary>
-        public IList<AlertRuleAnyOfOrLeafCondition> ConditionAllOf
+        public IList<TenantActivityLogAlertAnyOfOrLeafCondition> ConditionAllOf
         {
             get
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
         }
 
         /// <summary> The list of the Action Groups. </summary>
-        public IList<ActionGroup> ActionsActionGroups
+        public IList<TenantActivityLogAlertActionGroup> ActionsActionGroups
         {
             get
             {

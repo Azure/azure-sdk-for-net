@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
         /// <summary> Initializes a new instance of <see cref="AlertRuleAllOfCondition"/>. </summary>
         /// <param name="allOf"> The list of Activity Log Alert rule conditions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allOf"/> is null. </exception>
-        public AlertRuleAllOfCondition(IEnumerable<AlertRuleAnyOfOrLeafCondition> allOf)
+        public AlertRuleAllOfCondition(IEnumerable<TenantActivityLogAlertAnyOfOrLeafCondition> allOf)
         {
             Argument.AssertNotNull(allOf, nameof(allOf));
 
@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
         /// <summary> Initializes a new instance of <see cref="AlertRuleAllOfCondition"/>. </summary>
         /// <param name="allOf"> The list of Activity Log Alert rule conditions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertRuleAllOfCondition(IList<AlertRuleAnyOfOrLeafCondition> allOf, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertRuleAllOfCondition(IList<TenantActivityLogAlertAnyOfOrLeafCondition> allOf, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllOf = allOf;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of Activity Log Alert rule conditions. </summary>
-        public IList<AlertRuleAnyOfOrLeafCondition> AllOf { get; }
+        public IList<TenantActivityLogAlertAnyOfOrLeafCondition> AllOf { get; }
     }
 }

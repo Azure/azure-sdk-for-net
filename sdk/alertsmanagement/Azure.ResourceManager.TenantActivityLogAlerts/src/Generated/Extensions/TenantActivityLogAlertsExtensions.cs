@@ -60,60 +60,60 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         /// Get a list of all Tenant Activity Log Alert rules in the tenant.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTenantActivityLogAlertsTenantResource.GetTenantActivityLogAlertResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTenantActivityLogAlertsTenantResource.GetTenantActivityLogAlertsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="TenantActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<TenantActivityLogAlertResource> GetTenantActivityLogAlertResourcesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<TenantActivityLogAlertResource> GetTenantActivityLogAlertsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableTenantActivityLogAlertsTenantResource(tenantResource).GetTenantActivityLogAlertResourcesAsync(cancellationToken);
+            return GetMockableTenantActivityLogAlertsTenantResource(tenantResource).GetTenantActivityLogAlertsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Get a list of all Tenant Activity Log Alert rules in the tenant.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTenantActivityLogAlertsTenantResource.GetTenantActivityLogAlertResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTenantActivityLogAlertsTenantResource.GetTenantActivityLogAlerts(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="TenantActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<TenantActivityLogAlertResource> GetTenantActivityLogAlertResources(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        public static Pageable<TenantActivityLogAlertResource> GetTenantActivityLogAlerts(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableTenantActivityLogAlertsTenantResource(tenantResource).GetTenantActivityLogAlertResources(cancellationToken);
+            return GetMockableTenantActivityLogAlertsTenantResource(tenantResource).GetTenantActivityLogAlerts(cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of TenantActivityLogAlertResources in the <see cref="ManagementGroupResource"/>
+        /// Gets a collection of TenantActivityLogAlerts in the <see cref="ManagementGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTenantActivityLogAlertsManagementGroupResource.GetTenantActivityLogAlertResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTenantActivityLogAlertsManagementGroupResource.GetTenantActivityLogAlerts()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of TenantActivityLogAlertResources and their operations over a TenantActivityLogAlertResource. </returns>
-        public static TenantActivityLogAlertResourceCollection GetTenantActivityLogAlertResources(this ManagementGroupResource managementGroupResource)
+        /// <returns> An object representing collection of TenantActivityLogAlerts and their operations over a TenantActivityLogAlertResource. </returns>
+        public static TenantActivityLogAlertCollection GetTenantActivityLogAlerts(this ManagementGroupResource managementGroupResource)
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return GetMockableTenantActivityLogAlertsManagementGroupResource(managementGroupResource).GetTenantActivityLogAlertResources();
+            return GetMockableTenantActivityLogAlertsManagementGroupResource(managementGroupResource).GetTenantActivityLogAlerts();
         }
 
         /// <summary>
         /// Get Tenant Activity Log Alert rule.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTenantActivityLogAlertsManagementGroupResource.GetTenantActivityLogAlertResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTenantActivityLogAlertsManagementGroupResource.GetTenantActivityLogAlertAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
@@ -121,18 +121,18 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<TenantActivityLogAlertResource>> GetTenantActivityLogAlertResourceAsync(this ManagementGroupResource managementGroupResource, string alertRuleName, CancellationToken cancellationToken = default)
+        public static async Task<Response<TenantActivityLogAlertResource>> GetTenantActivityLogAlertAsync(this ManagementGroupResource managementGroupResource, string alertRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return await GetMockableTenantActivityLogAlertsManagementGroupResource(managementGroupResource).GetTenantActivityLogAlertResourceAsync(alertRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableTenantActivityLogAlertsManagementGroupResource(managementGroupResource).GetTenantActivityLogAlertAsync(alertRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get Tenant Activity Log Alert rule.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTenantActivityLogAlertsManagementGroupResource.GetTenantActivityLogAlertResource(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTenantActivityLogAlertsManagementGroupResource.GetTenantActivityLogAlert(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<TenantActivityLogAlertResource> GetTenantActivityLogAlertResource(this ManagementGroupResource managementGroupResource, string alertRuleName, CancellationToken cancellationToken = default)
+        public static Response<TenantActivityLogAlertResource> GetTenantActivityLogAlert(this ManagementGroupResource managementGroupResource, string alertRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return GetMockableTenantActivityLogAlertsManagementGroupResource(managementGroupResource).GetTenantActivityLogAlertResource(alertRuleName, cancellationToken);
+            return GetMockableTenantActivityLogAlertsManagementGroupResource(managementGroupResource).GetTenantActivityLogAlert(alertRuleName, cancellationToken);
         }
     }
 }

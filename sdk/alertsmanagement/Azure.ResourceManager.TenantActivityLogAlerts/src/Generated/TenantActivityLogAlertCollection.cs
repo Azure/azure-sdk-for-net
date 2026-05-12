@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
     /// <summary>
     /// A class representing a collection of <see cref="TenantActivityLogAlertResource"/> and their operations.
     /// Each <see cref="TenantActivityLogAlertResource"/> in the collection will belong to the same instance of <see cref="ManagementGroupResource"/>.
-    /// To get a <see cref="TenantActivityLogAlertResourceCollection"/> instance call the GetTenantActivityLogAlertResources method from an instance of <see cref="ManagementGroupResource"/>.
+    /// To get a <see cref="TenantActivityLogAlertCollection"/> instance call the GetTenantActivityLogAlerts method from an instance of <see cref="ManagementGroupResource"/>.
     /// </summary>
-    public partial class TenantActivityLogAlertResourceCollection : ArmCollection, IEnumerable<TenantActivityLogAlertResource>, IAsyncEnumerable<TenantActivityLogAlertResource>
+    public partial class TenantActivityLogAlertCollection : ArmCollection, IEnumerable<TenantActivityLogAlertResource>, IAsyncEnumerable<TenantActivityLogAlertResource>
     {
         private readonly ClientDiagnostics _tenantActivityLogAlertResourcesClientDiagnostics;
         private readonly TenantActivityLogAlertResources _tenantActivityLogAlertResourcesRestClient;
 
-        /// <summary> Initializes a new instance of TenantActivityLogAlertResourceCollection for mocking. </summary>
-        protected TenantActivityLogAlertResourceCollection()
+        /// <summary> Initializes a new instance of TenantActivityLogAlertCollection for mocking. </summary>
+        protected TenantActivityLogAlertCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantActivityLogAlertCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TenantActivityLogAlertResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal TenantActivityLogAlertCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(TenantActivityLogAlertResource.ResourceType, out string tenantActivityLogAlertResourceApiVersion);
+            TryGetApiVersion(TenantActivityLogAlertResource.ResourceType, out string tenantActivityLogAlertApiVersion);
             _tenantActivityLogAlertResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TenantActivityLogAlerts", TenantActivityLogAlertResource.ResourceType.Namespace, Diagnostics);
-            _tenantActivityLogAlertResourcesRestClient = new TenantActivityLogAlertResources(_tenantActivityLogAlertResourcesClientDiagnostics, Pipeline, Endpoint, tenantActivityLogAlertResourceApiVersion ?? "2023-04-01-preview");
+            _tenantActivityLogAlertResourcesRestClient = new TenantActivityLogAlertResources(_tenantActivityLogAlertResourcesClientDiagnostics, Pipeline, Endpoint, tenantActivityLogAlertApiVersion ?? "2023-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<TenantActivityLogAlertResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string alertRuleName, TenantActivityLogAlertResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TenantActivityLogAlertResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string alertRuleName, TenantActivityLogAlertData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertRuleName, nameof(alertRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _tenantActivityLogAlertResourcesClientDiagnostics.CreateScope("TenantActivityLogAlertResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _tenantActivityLogAlertResourcesClientDiagnostics.CreateScope("TenantActivityLogAlertCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateCreateOrUpdateRequest(Id.Name, alertRuleName, TenantActivityLogAlertResourceData.ToRequestContent(data), context);
+                HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateCreateOrUpdateRequest(Id.Name, alertRuleName, TenantActivityLogAlertData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TenantActivityLogAlertResourceData> response = Response.FromValue(TenantActivityLogAlertResourceData.FromResponse(result), result);
+                Response<TenantActivityLogAlertData> response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 TenantActivityLogAlertsArmOperation<TenantActivityLogAlertResource> operation = new TenantActivityLogAlertsArmOperation<TenantActivityLogAlertResource>(Response.FromValue(new TenantActivityLogAlertResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<TenantActivityLogAlertResource> CreateOrUpdate(WaitUntil waitUntil, string alertRuleName, TenantActivityLogAlertResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TenantActivityLogAlertResource> CreateOrUpdate(WaitUntil waitUntil, string alertRuleName, TenantActivityLogAlertData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertRuleName, nameof(alertRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _tenantActivityLogAlertResourcesClientDiagnostics.CreateScope("TenantActivityLogAlertResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _tenantActivityLogAlertResourcesClientDiagnostics.CreateScope("TenantActivityLogAlertCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateCreateOrUpdateRequest(Id.Name, alertRuleName, TenantActivityLogAlertResourceData.ToRequestContent(data), context);
+                HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateCreateOrUpdateRequest(Id.Name, alertRuleName, TenantActivityLogAlertData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TenantActivityLogAlertResourceData> response = Response.FromValue(TenantActivityLogAlertResourceData.FromResponse(result), result);
+                Response<TenantActivityLogAlertData> response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 TenantActivityLogAlertsArmOperation<TenantActivityLogAlertResource> operation = new TenantActivityLogAlertsArmOperation<TenantActivityLogAlertResource>(Response.FromValue(new TenantActivityLogAlertResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         {
             Argument.AssertNotNullOrEmpty(alertRuleName, nameof(alertRuleName));
 
-            using DiagnosticScope scope = _tenantActivityLogAlertResourcesClientDiagnostics.CreateScope("TenantActivityLogAlertResourceCollection.Get");
+            using DiagnosticScope scope = _tenantActivityLogAlertResourcesClientDiagnostics.CreateScope("TenantActivityLogAlertCollection.Get");
             scope.Start();
             try
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 };
                 HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Name, alertRuleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TenantActivityLogAlertResourceData> response = Response.FromValue(TenantActivityLogAlertResourceData.FromResponse(result), result);
+                Response<TenantActivityLogAlertData> response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         {
             Argument.AssertNotNullOrEmpty(alertRuleName, nameof(alertRuleName));
 
-            using DiagnosticScope scope = _tenantActivityLogAlertResourcesClientDiagnostics.CreateScope("TenantActivityLogAlertResourceCollection.Get");
+            using DiagnosticScope scope = _tenantActivityLogAlertResourcesClientDiagnostics.CreateScope("TenantActivityLogAlertCollection.Get");
             scope.Start();
             try
             {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 };
                 HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Name, alertRuleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TenantActivityLogAlertResourceData> response = Response.FromValue(TenantActivityLogAlertResourceData.FromResponse(result), result);
+                Response<TenantActivityLogAlertData> response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TenantActivityLogAlertResourceData, TenantActivityLogAlertResource>(new TenantActivityLogAlertResourcesGetByManagementGroupAsyncCollectionResultOfT(_tenantActivityLogAlertResourcesRestClient, Id.Name, context, "TenantActivityLogAlertResourceCollection.GetAll"), data => new TenantActivityLogAlertResource(Client, data));
+            return new AsyncPageableWrapper<TenantActivityLogAlertData, TenantActivityLogAlertResource>(new TenantActivityLogAlertResourcesGetByManagementGroupAsyncCollectionResultOfT(_tenantActivityLogAlertResourcesRestClient, Id.Name, context, "TenantActivityLogAlertCollection.GetAll"), data => new TenantActivityLogAlertResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TenantActivityLogAlertResourceData, TenantActivityLogAlertResource>(new TenantActivityLogAlertResourcesGetByManagementGroupCollectionResultOfT(_tenantActivityLogAlertResourcesRestClient, Id.Name, context, "TenantActivityLogAlertResourceCollection.GetAll"), data => new TenantActivityLogAlertResource(Client, data));
+            return new PageableWrapper<TenantActivityLogAlertData, TenantActivityLogAlertResource>(new TenantActivityLogAlertResourcesGetByManagementGroupCollectionResultOfT(_tenantActivityLogAlertResourcesRestClient, Id.Name, context, "TenantActivityLogAlertCollection.GetAll"), data => new TenantActivityLogAlertResource(Client, data));
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         {
             Argument.AssertNotNullOrEmpty(alertRuleName, nameof(alertRuleName));
 
-            using DiagnosticScope scope = _tenantActivityLogAlertResourcesClientDiagnostics.CreateScope("TenantActivityLogAlertResourceCollection.Exists");
+            using DiagnosticScope scope = _tenantActivityLogAlertResourcesClientDiagnostics.CreateScope("TenantActivityLogAlertCollection.Exists");
             scope.Start();
             try
             {
@@ -355,14 +355,14 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Name, alertRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<TenantActivityLogAlertResourceData> response = default;
+                Response<TenantActivityLogAlertData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(TenantActivityLogAlertResourceData.FromResponse(result), result);
+                        response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((TenantActivityLogAlertResourceData)null, result);
+                        response = Response.FromValue((TenantActivityLogAlertData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         {
             Argument.AssertNotNullOrEmpty(alertRuleName, nameof(alertRuleName));
 
-            using DiagnosticScope scope = _tenantActivityLogAlertResourcesClientDiagnostics.CreateScope("TenantActivityLogAlertResourceCollection.Exists");
+            using DiagnosticScope scope = _tenantActivityLogAlertResourcesClientDiagnostics.CreateScope("TenantActivityLogAlertCollection.Exists");
             scope.Start();
             try
             {
@@ -412,14 +412,14 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Name, alertRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<TenantActivityLogAlertResourceData> response = default;
+                Response<TenantActivityLogAlertData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(TenantActivityLogAlertResourceData.FromResponse(result), result);
+                        response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((TenantActivityLogAlertResourceData)null, result);
+                        response = Response.FromValue((TenantActivityLogAlertData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         {
             Argument.AssertNotNullOrEmpty(alertRuleName, nameof(alertRuleName));
 
-            using DiagnosticScope scope = _tenantActivityLogAlertResourcesClientDiagnostics.CreateScope("TenantActivityLogAlertResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _tenantActivityLogAlertResourcesClientDiagnostics.CreateScope("TenantActivityLogAlertCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -469,14 +469,14 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Name, alertRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<TenantActivityLogAlertResourceData> response = default;
+                Response<TenantActivityLogAlertData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(TenantActivityLogAlertResourceData.FromResponse(result), result);
+                        response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((TenantActivityLogAlertResourceData)null, result);
+                        response = Response.FromValue((TenantActivityLogAlertData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         {
             Argument.AssertNotNullOrEmpty(alertRuleName, nameof(alertRuleName));
 
-            using DiagnosticScope scope = _tenantActivityLogAlertResourcesClientDiagnostics.CreateScope("TenantActivityLogAlertResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _tenantActivityLogAlertResourcesClientDiagnostics.CreateScope("TenantActivityLogAlertCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -530,14 +530,14 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Name, alertRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<TenantActivityLogAlertResourceData> response = default;
+                Response<TenantActivityLogAlertData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(TenantActivityLogAlertResourceData.FromResponse(result), result);
+                        response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((TenantActivityLogAlertResourceData)null, result);
+                        response = Response.FromValue((TenantActivityLogAlertData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
