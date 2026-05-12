@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.NetApp.Models
             DateTimeOffset? createdOn = default;
             DateTimeOffset? snapshotCreationOn = default;
             DateTimeOffset? completionOn = default;
-            NetAppVolumeQuotaRuleProvisioningState? provisioningState = default;
+            NetAppProvisioningState? provisioningState = default;
             long? size = default;
             string label = default;
             ElasticBackupType? backupType = default;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    provisioningState = new NetAppVolumeQuotaRuleProvisioningState(prop.Value.GetString());
+                    provisioningState = new NetAppProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("size"u8))

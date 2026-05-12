@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="availabilityStatus"> Current availability status of the resource. </param>
         /// <param name="activeDirectoryConfigResourceId"> The Azure Resource URI for an Active Directory configuration. This is used by all the SMB volumes within the pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticCapacityPoolProperties(long size, ElasticServiceLevel serviceLevel, NetAppVolumeQuotaRuleProvisioningState? provisioningState, ElasticEncryptionConfiguration encryption, double? totalThroughputMibps, ResourceIdentifier subnetResourceId, string currentZone, ElasticResourceAvailabilityStatus? availabilityStatus, ResourceIdentifier activeDirectoryConfigResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticCapacityPoolProperties(long size, ElasticServiceLevel serviceLevel, NetAppProvisioningState? provisioningState, ElasticEncryptionConfiguration encryption, double? totalThroughputMibps, ResourceIdentifier subnetResourceId, string currentZone, ElasticResourceAvailabilityStatus? availabilityStatus, ResourceIdentifier activeDirectoryConfigResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Size = size;
             ServiceLevel = serviceLevel;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public ElasticServiceLevel ServiceLevel { get; set; }
 
         /// <summary> Azure lifecycle management. </summary>
-        public NetAppVolumeQuotaRuleProvisioningState? ProvisioningState { get; }
+        public NetAppProvisioningState? ProvisioningState { get; }
 
         /// <summary> Encryption settings. </summary>
         public ElasticEncryptionConfiguration Encryption { get; set; }

@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            NetAppVolumeQuotaRuleProvisioningState? volumeQuotaRuleProvisioningState = default;
+            NetAppProvisioningState? volumeQuotaRuleProvisioningState = default;
             long? quotaSizeInKiBs = default;
             NetAppVolumeQuotaType? quotaType = default;
             string quotaTarget = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    volumeQuotaRuleProvisioningState = new NetAppVolumeQuotaRuleProvisioningState(prop.Value.GetString());
+                    volumeQuotaRuleProvisioningState = new NetAppProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("quotaSizeInKiBs"u8))

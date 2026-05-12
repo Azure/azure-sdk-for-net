@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.NetApp.Models
             long size = default;
             ElasticExportPolicy exportPolicy = default;
             IList<ElasticProtocolType> protocolTypes = default;
-            NetAppVolumeQuotaRuleProvisioningState? provisioningState = default;
+            NetAppProvisioningState? provisioningState = default;
             ElasticResourceAvailabilityStatus? availabilityStatus = default;
             ResourceIdentifier snapshotResourceId = default;
             IReadOnlyList<ElasticMountTargetProperties> mountTargets = default;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    provisioningState = new NetAppVolumeQuotaRuleProvisioningState(prop.Value.GetString());
+                    provisioningState = new NetAppProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("availabilityStatus"u8))

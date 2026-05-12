@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             NetAppFileSystemUser fileSystemUser = default;
-            NetAppVolumeQuotaRuleProvisioningState? provisioningState = default;
+            NetAppProvisioningState? provisioningState = default;
             NetAppBucketServerPatchProperties server = default;
             NetAppBucketPatchPermission? permissions = default;
             NetAppKeyVaultDetails keyVaultDetails = default;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    provisioningState = new NetAppVolumeQuotaRuleProvisioningState(prop.Value.GetString());
+                    provisioningState = new NetAppProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("server"u8))

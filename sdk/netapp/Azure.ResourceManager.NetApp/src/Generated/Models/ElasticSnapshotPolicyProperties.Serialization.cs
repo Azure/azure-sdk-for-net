@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp.Models
             ElasticSnapshotPolicyWeeklySchedule weeklySchedule = default;
             ElasticSnapshotPolicyMonthlySchedule monthlySchedule = default;
             ElasticSnapshotPolicyStatus? policyStatus = default;
-            NetAppVolumeQuotaRuleProvisioningState? provisioningState = default;
+            NetAppProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    provisioningState = new NetAppVolumeQuotaRuleProvisioningState(prop.Value.GetString());
+                    provisioningState = new NetAppProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

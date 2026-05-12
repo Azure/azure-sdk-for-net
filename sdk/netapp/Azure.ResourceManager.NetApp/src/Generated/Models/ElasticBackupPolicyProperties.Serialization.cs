@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            NetAppVolumeQuotaRuleProvisioningState? provisioningState = default;
+            NetAppProvisioningState? provisioningState = default;
             int? dailyBackupsToKeep = default;
             int? weeklyBackupsToKeep = default;
             int? monthlyBackupsToKeep = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    provisioningState = new NetAppVolumeQuotaRuleProvisioningState(prop.Value.GetString());
+                    provisioningState = new NetAppProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dailyBackupsToKeep"u8))

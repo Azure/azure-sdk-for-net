@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="elasticBackupPolicyResourceId"> ResourceId used to identify the elastic backup policy. </param>
         /// <param name="volumeSize"> Specifies if the backup is for a large volume. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticBackupProperties(DateTimeOffset? createdOn, DateTimeOffset? snapshotCreationOn, DateTimeOffset? completionOn, NetAppVolumeQuotaRuleProvisioningState? provisioningState, long? size, string label, ElasticBackupType? backupType, string failureReason, ResourceIdentifier elasticVolumeResourceId, ElasticBackupSnapshotUsage? snapshotUsage, ResourceIdentifier elasticSnapshotResourceId, ResourceIdentifier elasticBackupPolicyResourceId, ElasticBackupVolumeSize? volumeSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticBackupProperties(DateTimeOffset? createdOn, DateTimeOffset? snapshotCreationOn, DateTimeOffset? completionOn, NetAppProvisioningState? provisioningState, long? size, string label, ElasticBackupType? backupType, string failureReason, ResourceIdentifier elasticVolumeResourceId, ElasticBackupSnapshotUsage? snapshotUsage, ResourceIdentifier elasticSnapshotResourceId, ResourceIdentifier elasticBackupPolicyResourceId, ElasticBackupVolumeSize? volumeSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             SnapshotCreationOn = snapshotCreationOn;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public DateTimeOffset? CompletionOn { get; }
 
         /// <summary> Azure lifecycle management. </summary>
-        public NetAppVolumeQuotaRuleProvisioningState? ProvisioningState { get; }
+        public NetAppProvisioningState? ProvisioningState { get; }
 
         /// <summary> Size of backup in bytes. </summary>
         public long? Size { get; }

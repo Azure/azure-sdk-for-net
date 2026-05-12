@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Provisioning state of the resource. </summary>
-        public NetAppVolumeQuotaRuleProvisioningState? ProvisioningState
+        public NetAppProvisioningState? ProvisioningState
         {
             get
             {

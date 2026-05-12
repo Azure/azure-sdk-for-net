@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="domain"> Name of the Active Directory domain. </param>
         /// <param name="secretPassword"> Access password from Azure KeyVault Secrets to connect Active Directory. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActiveDirectoryConfigProperties(string userName, IList<IPAddress> dns, string smbServerName, string organizationalUnit, string site, IList<string> backupOperators, IList<string> administrators, IList<string> securityOperators, NetAppAccountActiveDirectoryStatus? activeDirectoryStatus, NetAppVolumeQuotaRuleProvisioningState? provisioningState, string domain, NetAppSecretPassword secretPassword, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActiveDirectoryConfigProperties(string userName, IList<IPAddress> dns, string smbServerName, string organizationalUnit, string site, IList<string> backupOperators, IList<string> administrators, IList<string> securityOperators, NetAppAccountActiveDirectoryStatus? activeDirectoryStatus, NetAppProvisioningState? provisioningState, string domain, NetAppSecretPassword secretPassword, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UserName = userName;
             Dns = dns;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public NetAppAccountActiveDirectoryStatus? ActiveDirectoryStatus { get; }
 
         /// <summary> Azure lifecycle management. </summary>
-        public NetAppVolumeQuotaRuleProvisioningState? ProvisioningState { get; }
+        public NetAppProvisioningState? ProvisioningState { get; }
 
         /// <summary> Name of the Active Directory domain. </summary>
         public string Domain { get; set; }

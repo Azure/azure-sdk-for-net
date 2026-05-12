@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetApp
         internal ElasticSnapshotProperties Properties { get; set; }
 
         /// <summary> Azure lifecycle management. </summary>
-        public NetAppVolumeQuotaRuleProvisioningState? ElasticSnapshotProvisioningState
+        public NetAppProvisioningState? ElasticSnapshotProvisioningState
         {
             get
             {

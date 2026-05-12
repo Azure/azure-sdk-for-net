@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="encryption"> Encryption settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticAccountProperties(NetAppVolumeQuotaRuleProvisioningState? provisioningState, ElasticEncryption encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticAccountProperties(NetAppProvisioningState? provisioningState, ElasticEncryption encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Encryption = encryption;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Azure lifecycle management. </summary>
-        public NetAppVolumeQuotaRuleProvisioningState? ProvisioningState { get; }
+        public NetAppProvisioningState? ProvisioningState { get; }
 
         /// <summary> Encryption settings. </summary>
         public ElasticEncryption Encryption { get; set; }

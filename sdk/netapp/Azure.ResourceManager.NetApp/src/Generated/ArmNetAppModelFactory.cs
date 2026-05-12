@@ -729,12 +729,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="volumeQuotaRuleProvisioningState"> Gets the status of the VolumeQuotaRule at the time the operation was called. </param>
+        /// <param name="provisioningState"> Gets the status of the VolumeQuotaRule at the time the operation was called. </param>
         /// <param name="quotaSizeInKiBs"> Size of quota. </param>
         /// <param name="quotaType"> Type of quota. </param>
         /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
         /// <returns> A new <see cref="NetApp.NetAppVolumeQuotaRuleData"/> instance for mocking. </returns>
-        public static NetAppVolumeQuotaRuleData NetAppVolumeQuotaRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetAppVolumeQuotaRuleProvisioningState? volumeQuotaRuleProvisioningState = default, long? quotaSizeInKiBs = default, NetAppVolumeQuotaType? quotaType = default, string quotaTarget = default)
+        public static NetAppVolumeQuotaRuleData NetAppVolumeQuotaRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetAppProvisioningState? provisioningState = default, long? quotaSizeInKiBs = default, NetAppVolumeQuotaType? quotaType = default, string quotaTarget = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -746,20 +746,20 @@ namespace Azure.ResourceManager.NetApp.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                volumeQuotaRuleProvisioningState is null && quotaSizeInKiBs is null && quotaType is null && quotaTarget is null ? default : new VolumeQuotaRulesProperties(volumeQuotaRuleProvisioningState, quotaSizeInKiBs, quotaType, quotaTarget, null));
+                provisioningState is null && quotaSizeInKiBs is null && quotaType is null && quotaTarget is null ? default : new VolumeQuotaRulesProperties(provisioningState, quotaSizeInKiBs, quotaType, quotaTarget, null));
         }
 
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="volumeQuotaRuleProvisioningState"> Gets the status of the VolumeQuotaRule at the time the operation was called. </param>
+        /// <param name="provisioningState"> Gets the status of the VolumeQuotaRule at the time the operation was called. </param>
         /// <param name="quotaSizeInKiBs"> Size of quota. </param>
         /// <param name="quotaType"> Type of quota. </param>
         /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeQuotaRulePatch"/> instance for mocking. </returns>
-        public static NetAppVolumeQuotaRulePatch NetAppVolumeQuotaRulePatch(IDictionary<string, string> tags = default, NetAppVolumeQuotaRuleProvisioningState? volumeQuotaRuleProvisioningState = default, long? quotaSizeInKiBs = default, NetAppVolumeQuotaType? quotaType = default, string quotaTarget = default)
+        public static NetAppVolumeQuotaRulePatch NetAppVolumeQuotaRulePatch(IDictionary<string, string> tags = default, NetAppProvisioningState? provisioningState = default, long? quotaSizeInKiBs = default, NetAppVolumeQuotaType? quotaType = default, string quotaTarget = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetAppVolumeQuotaRulePatch(tags, volumeQuotaRuleProvisioningState is null && quotaSizeInKiBs is null && quotaType is null && quotaTarget is null ? default : new VolumeQuotaRulesProperties(volumeQuotaRuleProvisioningState, quotaSizeInKiBs, quotaType, quotaTarget, null), additionalBinaryDataProperties: null);
+            return new NetAppVolumeQuotaRulePatch(tags, provisioningState is null && quotaSizeInKiBs is null && quotaType is null && quotaTarget is null ? default : new VolumeQuotaRulesProperties(provisioningState, quotaSizeInKiBs, quotaType, quotaTarget, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -902,7 +902,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <list type="number"><item><description>If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.</description></item><item><description>These properties are mutually exclusive with the server.certificateObject property.</description></item></list>
         /// </param>
         /// <returns> A new <see cref="NetApp.NetAppBucketData"/> instance for mocking. </returns>
-        public static NetAppBucketData NetAppBucketData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string path = default, NetAppFileSystemUser fileSystemUser = default, NetAppVolumeQuotaRuleProvisioningState? provisioningState = default, NetAppCredentialsStatus? status = default, NetAppBucketServerProperties server = default, NetAppBucketPermission? permissions = default, NetAppKeyVaultDetails keyVaultDetails = default)
+        public static NetAppBucketData NetAppBucketData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string path = default, NetAppFileSystemUser fileSystemUser = default, NetAppProvisioningState? provisioningState = default, NetAppCredentialsStatus? status = default, NetAppBucketServerProperties server = default, NetAppBucketPermission? permissions = default, NetAppKeyVaultDetails keyVaultDetails = default)
         {
             return new NetAppBucketData(
                 id,
@@ -963,7 +963,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <list type="number"><item><description>If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.</description></item><item><description>These properties are mutually exclusive with the server.certificateObject property.</description></item></list>
         /// </param>
         /// <returns> A new <see cref="Models.NetAppBucketPatch"/> instance for mocking. </returns>
-        public static NetAppBucketPatch NetAppBucketPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetAppFileSystemUser fileSystemUser = default, NetAppVolumeQuotaRuleProvisioningState? provisioningState = default, NetAppBucketServerPatchProperties server = default, NetAppBucketPatchPermission? permissions = default, NetAppKeyVaultDetails keyVaultDetails = default)
+        public static NetAppBucketPatch NetAppBucketPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetAppFileSystemUser fileSystemUser = default, NetAppProvisioningState? provisioningState = default, NetAppBucketServerPatchProperties server = default, NetAppBucketPatchPermission? permissions = default, NetAppKeyVaultDetails keyVaultDetails = default)
         {
             return new NetAppBucketPatch(
                 id,
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="encryption"> Encryption settings. </param>
         /// <returns> A new <see cref="Models.ElasticAccountProperties"/> instance for mocking. </returns>
-        public static ElasticAccountProperties ElasticAccountProperties(NetAppVolumeQuotaRuleProvisioningState? provisioningState = default, ElasticEncryption encryption = default)
+        public static ElasticAccountProperties ElasticAccountProperties(NetAppProvisioningState? provisioningState = default, ElasticEncryption encryption = default)
         {
             return new ElasticAccountProperties(provisioningState, encryption, additionalBinaryDataProperties: null);
         }
@@ -1255,7 +1255,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="availabilityStatus"> Current availability status of the resource. </param>
         /// <param name="activeDirectoryConfigResourceId"> The Azure Resource URI for an Active Directory configuration. This is used by all the SMB volumes within the pool. </param>
         /// <returns> A new <see cref="Models.ElasticCapacityPoolProperties"/> instance for mocking. </returns>
-        public static ElasticCapacityPoolProperties ElasticCapacityPoolProperties(long size = default, ElasticServiceLevel serviceLevel = default, NetAppVolumeQuotaRuleProvisioningState? provisioningState = default, ElasticEncryptionConfiguration encryption = default, double? totalThroughputMibps = default, ResourceIdentifier subnetResourceId = default, string currentZone = default, ElasticResourceAvailabilityStatus? availabilityStatus = default, ResourceIdentifier activeDirectoryConfigResourceId = default)
+        public static ElasticCapacityPoolProperties ElasticCapacityPoolProperties(long size = default, ElasticServiceLevel serviceLevel = default, NetAppProvisioningState? provisioningState = default, ElasticEncryptionConfiguration encryption = default, double? totalThroughputMibps = default, ResourceIdentifier subnetResourceId = default, string currentZone = default, ElasticResourceAvailabilityStatus? availabilityStatus = default, ResourceIdentifier activeDirectoryConfigResourceId = default)
         {
             return new ElasticCapacityPoolProperties(
                 size,
@@ -1350,7 +1350,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="backupResourceId"> Resource identifier used to identify the Elastic Backup. </param>
         /// <param name="restorationState"> The current state of the restoration process. </param>
         /// <returns> A new <see cref="Models.ElasticVolumeProperties"/> instance for mocking. </returns>
-        public static ElasticVolumeProperties ElasticVolumeProperties(string filePath = default, long size = default, IEnumerable<ElasticExportPolicyRule> exportRules = default, IEnumerable<ElasticProtocolType> protocolTypes = default, NetAppVolumeQuotaRuleProvisioningState? provisioningState = default, ElasticResourceAvailabilityStatus? availabilityStatus = default, ResourceIdentifier snapshotResourceId = default, IEnumerable<ElasticMountTargetProperties> mountTargets = default, ElasticVolumeDataProtectionProperties dataProtection = default, SnapshotDirectoryVisibility? snapshotDirectoryVisibility = default, ElasticSmbEncryption? smbEncryption = default, ResourceIdentifier backupResourceId = default, ElasticVolumeRestorationState? restorationState = default)
+        public static ElasticVolumeProperties ElasticVolumeProperties(string filePath = default, long size = default, IEnumerable<ElasticExportPolicyRule> exportRules = default, IEnumerable<ElasticProtocolType> protocolTypes = default, NetAppProvisioningState? provisioningState = default, ElasticResourceAvailabilityStatus? availabilityStatus = default, ResourceIdentifier snapshotResourceId = default, IEnumerable<ElasticMountTargetProperties> mountTargets = default, ElasticVolumeDataProtectionProperties dataProtection = default, SnapshotDirectoryVisibility? snapshotDirectoryVisibility = default, ElasticSmbEncryption? smbEncryption = default, ResourceIdentifier backupResourceId = default, ElasticVolumeRestorationState? restorationState = default)
         {
             protocolTypes ??= new ChangeTrackingList<ElasticProtocolType>();
             mountTargets ??= new ChangeTrackingList<ElasticMountTargetProperties>();
@@ -1420,7 +1420,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="elasticSnapshotProvisioningState"> Azure lifecycle management. </param>
         /// <returns> A new <see cref="NetApp.NetAppElasticSnapshotData"/> instance for mocking. </returns>
-        public static NetAppElasticSnapshotData NetAppElasticSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetAppVolumeQuotaRuleProvisioningState? elasticSnapshotProvisioningState = default)
+        public static NetAppElasticSnapshotData NetAppElasticSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetAppProvisioningState? elasticSnapshotProvisioningState = default)
         {
             return new NetAppElasticSnapshotData(
                 id,
@@ -1465,7 +1465,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="policyStatus"> Configures if the snapshot policy is enabled on the volumes connected to the policy. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <returns> A new <see cref="Models.ElasticSnapshotPolicyProperties"/> instance for mocking. </returns>
-        public static ElasticSnapshotPolicyProperties ElasticSnapshotPolicyProperties(ElasticSnapshotPolicyHourlySchedule hourlySchedule = default, ElasticSnapshotPolicyDailySchedule dailySchedule = default, ElasticSnapshotPolicyWeeklySchedule weeklySchedule = default, ElasticSnapshotPolicyMonthlySchedule monthlySchedule = default, ElasticSnapshotPolicyStatus? policyStatus = default, NetAppVolumeQuotaRuleProvisioningState? provisioningState = default)
+        public static ElasticSnapshotPolicyProperties ElasticSnapshotPolicyProperties(ElasticSnapshotPolicyHourlySchedule hourlySchedule = default, ElasticSnapshotPolicyDailySchedule dailySchedule = default, ElasticSnapshotPolicyWeeklySchedule weeklySchedule = default, ElasticSnapshotPolicyMonthlySchedule monthlySchedule = default, ElasticSnapshotPolicyStatus? policyStatus = default, NetAppProvisioningState? provisioningState = default)
         {
             return new ElasticSnapshotPolicyProperties(
                 hourlySchedule,
@@ -1523,7 +1523,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="elasticBackupVaultProvisioningState"> Azure lifecycle management. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="NetApp.NetAppElasticBackupVaultData"/> instance for mocking. </returns>
-        public static NetAppElasticBackupVaultData NetAppElasticBackupVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetAppVolumeQuotaRuleProvisioningState? elasticBackupVaultProvisioningState = default, ETag? eTag = default)
+        public static NetAppElasticBackupVaultData NetAppElasticBackupVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetAppProvisioningState? elasticBackupVaultProvisioningState = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1583,7 +1583,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="assignedVolumesCount"> The number of volumes currently using this Backup Policy. </param>
         /// <param name="policyState"> The property to identify whether Backup Policy is enabled or not. </param>
         /// <returns> A new <see cref="Models.ElasticBackupPolicyProperties"/> instance for mocking. </returns>
-        public static ElasticBackupPolicyProperties ElasticBackupPolicyProperties(NetAppVolumeQuotaRuleProvisioningState? provisioningState = default, int? dailyBackupsToKeep = default, int? weeklyBackupsToKeep = default, int? monthlyBackupsToKeep = default, int? assignedVolumesCount = default, ElasticBackupPolicyState? policyState = default)
+        public static ElasticBackupPolicyProperties ElasticBackupPolicyProperties(NetAppProvisioningState? provisioningState = default, int? dailyBackupsToKeep = default, int? weeklyBackupsToKeep = default, int? monthlyBackupsToKeep = default, int? assignedVolumesCount = default, ElasticBackupPolicyState? policyState = default)
         {
             return new ElasticBackupPolicyProperties(
                 provisioningState,
@@ -1639,7 +1639,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="elasticBackupPolicyResourceId"> ResourceId used to identify the elastic backup policy. </param>
         /// <param name="volumeSize"> Specifies if the backup is for a large volume. </param>
         /// <returns> A new <see cref="Models.ElasticBackupProperties"/> instance for mocking. </returns>
-        public static ElasticBackupProperties ElasticBackupProperties(DateTimeOffset? createdOn = default, DateTimeOffset? snapshotCreationOn = default, DateTimeOffset? completionOn = default, NetAppVolumeQuotaRuleProvisioningState? provisioningState = default, long? size = default, string label = default, ElasticBackupType? backupType = default, string failureReason = default, ResourceIdentifier elasticVolumeResourceId = default, ElasticBackupSnapshotUsage? snapshotUsage = default, ResourceIdentifier elasticSnapshotResourceId = default, ResourceIdentifier elasticBackupPolicyResourceId = default, ElasticBackupVolumeSize? volumeSize = default)
+        public static ElasticBackupProperties ElasticBackupProperties(DateTimeOffset? createdOn = default, DateTimeOffset? snapshotCreationOn = default, DateTimeOffset? completionOn = default, NetAppProvisioningState? provisioningState = default, long? size = default, string label = default, ElasticBackupType? backupType = default, string failureReason = default, ResourceIdentifier elasticVolumeResourceId = default, ElasticBackupSnapshotUsage? snapshotUsage = default, ResourceIdentifier elasticSnapshotResourceId = default, ResourceIdentifier elasticBackupPolicyResourceId = default, ElasticBackupVolumeSize? volumeSize = default)
         {
             return new ElasticBackupProperties(
                 createdOn,
@@ -1700,7 +1700,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="domain"> Name of the Active Directory domain. </param>
         /// <param name="secretPassword"> Access password from Azure KeyVault Secrets to connect Active Directory. </param>
         /// <returns> A new <see cref="Models.ActiveDirectoryConfigProperties"/> instance for mocking. </returns>
-        public static ActiveDirectoryConfigProperties ActiveDirectoryConfigProperties(string userName = default, IEnumerable<IPAddress> dns = default, string smbServerName = default, string organizationalUnit = default, string site = default, IEnumerable<string> backupOperators = default, IEnumerable<string> administrators = default, IEnumerable<string> securityOperators = default, NetAppAccountActiveDirectoryStatus? activeDirectoryStatus = default, NetAppVolumeQuotaRuleProvisioningState? provisioningState = default, string domain = default, NetAppSecretPassword secretPassword = default)
+        public static ActiveDirectoryConfigProperties ActiveDirectoryConfigProperties(string userName = default, IEnumerable<IPAddress> dns = default, string smbServerName = default, string organizationalUnit = default, string site = default, IEnumerable<string> backupOperators = default, IEnumerable<string> administrators = default, IEnumerable<string> securityOperators = default, NetAppAccountActiveDirectoryStatus? activeDirectoryStatus = default, NetAppProvisioningState? provisioningState = default, string domain = default, NetAppSecretPassword secretPassword = default)
         {
             dns ??= new ChangeTrackingList<IPAddress>();
             backupOperators ??= new ChangeTrackingList<string>();
@@ -2410,6 +2410,49 @@ namespace Azure.ResourceManager.NetApp.Models
                 additionalBinaryDataProperties: null,
                 name,
                 default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppVolumeQuotaRuleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="volumeQuotaRuleProvisioningState"> Gets the status of the VolumeQuotaRule at the time the operation was called. </param>
+        /// <param name="quotaSizeInKiBs"> Size of quota. </param>
+        /// <param name="quotaType"> Type of quota. </param>
+        /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
+        /// <returns> A new <see cref="NetApp.NetAppVolumeQuotaRuleData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeQuotaRuleData NetAppVolumeQuotaRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppVolumeQuotaRuleProvisioningState? volumeQuotaRuleProvisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetAppVolumeQuotaRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                quotaSizeInKiBs is null && quotaType is null && quotaTarget is null ? default : new VolumeQuotaRulesProperties(default, quotaSizeInKiBs, quotaType, quotaTarget, default));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeQuotaRulePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="volumeQuotaRuleProvisioningState"> Gets the status of the VolumeQuotaRule at the time the operation was called. </param>
+        /// <param name="quotaSizeInKiBs"> Size of quota. </param>
+        /// <param name="quotaType"> Type of quota. </param>
+        /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
+        /// <returns> A new <see cref="Models.NetAppVolumeQuotaRulePatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeQuotaRulePatch NetAppVolumeQuotaRulePatch(IDictionary<string, string> tags, NetAppVolumeQuotaRuleProvisioningState? volumeQuotaRuleProvisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetAppVolumeQuotaRulePatch(tags, quotaSizeInKiBs is null && quotaType is null && quotaTarget is null ? default : new VolumeQuotaRulesProperties(default, quotaSizeInKiBs, quotaType, quotaTarget, default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.SnapshotPolicyData"/>. </summary>

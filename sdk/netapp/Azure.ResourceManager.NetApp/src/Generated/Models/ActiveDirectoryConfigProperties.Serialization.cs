@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.NetApp.Models
             IList<string> administrators = default;
             IList<string> securityOperators = default;
             NetAppAccountActiveDirectoryStatus? activeDirectoryStatus = default;
-            NetAppVolumeQuotaRuleProvisioningState? provisioningState = default;
+            NetAppProvisioningState? provisioningState = default;
             string domain = default;
             NetAppSecretPassword secretPassword = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    provisioningState = new NetAppVolumeQuotaRuleProvisioningState(prop.Value.GetString());
+                    provisioningState = new NetAppProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("domain"u8))

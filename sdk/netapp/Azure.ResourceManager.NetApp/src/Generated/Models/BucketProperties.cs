@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <list type="number"><item><description>If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.</description></item><item><description>These properties are mutually exclusive with the server.certificateObject property.</description></item></list>
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BucketProperties(string path, NetAppFileSystemUser fileSystemUser, NetAppVolumeQuotaRuleProvisioningState? provisioningState, NetAppCredentialsStatus? status, NetAppBucketServerProperties server, NetAppBucketPermission? permissions, NetAppKeyVaultDetails keyVaultDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BucketProperties(string path, NetAppFileSystemUser fileSystemUser, NetAppProvisioningState? provisioningState, NetAppCredentialsStatus? status, NetAppBucketServerProperties server, NetAppBucketPermission? permissions, NetAppKeyVaultDetails keyVaultDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Path = path;
             FileSystemUser = fileSystemUser;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public NetAppFileSystemUser FileSystemUser { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
-        public NetAppVolumeQuotaRuleProvisioningState? ProvisioningState { get; }
+        public NetAppProvisioningState? ProvisioningState { get; }
 
         /// <summary>
         /// The bucket credentials status. There states:

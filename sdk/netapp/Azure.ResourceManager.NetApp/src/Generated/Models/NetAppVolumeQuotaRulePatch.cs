@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetApp.Models
         internal VolumeQuotaRulesProperties Properties { get; set; }
 
         /// <summary> Gets the status of the VolumeQuotaRule at the time the operation was called. </summary>
-        public NetAppVolumeQuotaRuleProvisioningState? VolumeQuotaRuleProvisioningState
+        public NetAppProvisioningState? VolumeQuotaRuleProvisioningState
         {
             get
             {
