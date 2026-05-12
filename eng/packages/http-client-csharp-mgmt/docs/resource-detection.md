@@ -99,11 +99,12 @@ from TypeSpec inputs.
 Detection runs in four stages:
 
 1. **Identify resource models** by their TypeSpec annotation.
-2. **Identify resource instance paths and CRUD operations** by finding,
-   for each resource model, the service `Read` that materializes it. The
-   `Read` fixes the resource's instance path; the other CRUD verbs on
-   the same path attach to the resource by **verb**, not by decorator.
-3. **Resolve parent relationships and scopes** among the resources by
+2. **Identify resource instance paths, scopes, and CRUD operations** by
+   finding, for each resource model, the service `Read` that
+   materializes it. The `Read` fixes the resource's instance path
+   (which also determines its scope); the other CRUD verbs on the same
+   path attach to the resource by **verb**, not by decorator.
+3. **Resolve parent relationships** among the detected resources by
    matching instance paths against each other.
 4. **Assign every remaining operation** to a resource as `List` or
    `Action` — or to the non-resource bucket — by matching path and
@@ -191,12 +192,21 @@ For each candidate resource model `M` from Step 1:
    5. Each **name** segment is either a literal (the resource is a
       singleton; the literal becomes its constant name) or a
       `{variable}` parameter (the resource has a parameterized name).
-   6. The scope prefix must match one of the recognized shapes —
-      empty (`Tenant`), `/subscriptions/{}/`, `/subscriptions/{}/resourceGroups/{}/`,
-      `/providers/Microsoft.Management/managementGroups/{}/`, or any
-      prefix that is itself another resource's instance path
-      (`Extension`); these are evaluated definitively in
-      [Step 3](#step-3--resolve-parent-relationships-and-scopes).
+   6. The scope prefix must match one of the recognized shapes:
+
+      | Scope prefix | Scope |
+      | --- | --- |
+      | empty / `/` | `Tenant` |
+      | `/subscriptions/{}/` | `Subscription` |
+      | `/subscriptions/{}/resourceGroups/{}/` | `ResourceGroup` |
+      | `/providers/Microsoft.Management/managementGroups/{}/` | `ManagementGroup` |
+      | any other prefix that contains at least one `/providers/<namespace>/<type>/<name>` pair (i.e. looks like another resource's instance path) | `Extension` |
+
+      Any prefix that doesn't fit one of these patterns is rejected.
+      The `Extension` case is only **provisionally** classified here —
+      [Step 3](#step-3--resolve-parent-relationships) verifies the
+      prefix is actually a detected resource's instance path and
+      identifies which resource the extension is anchored on.
 
    Any path that fails one of these checks is rejected with a
    diagnostic naming the offending segment, and the corresponding GET
@@ -216,11 +226,12 @@ For each candidate resource model `M` from Step 1:
    resource.** Apply
    [*Ground truth*](#ground-truth-arm-resources-are-defined-by-their-paths)
    to the instance path to obtain `resourceType`, the trailing `{name}`
-   parameter (or the literal singleton name), and the `apiVersion`. See
-   [*How a resource is named*](#how-a-resource-is-named). The
-   resource's `parent` and `scope` are resolved in
-   [Step 3](#step-3--resolve-parent-relationships-and-scopes) once the
-   full resource set is known.
+   parameter (or the literal singleton name), the `apiVersion`, and
+   the `scope` from the prefix as classified in sub-step 2.6 above.
+   See [*How a resource is named*](#how-a-resource-is-named). The
+   resource's `parent` is resolved in
+   [Step 3](#step-3--resolve-parent-relationships) once the full
+   resource set is known.
 
 5. **Attach CRUD operations by verb.** For every other operation in
    the service whose path equals the resource's instance path:
@@ -244,58 +255,43 @@ For each candidate resource model `M` from Step 1:
    wrongly annotated as a resource.
 
 After Step 2, the resource set is fixed: a list of resources each with
-`{ model, instance path, type, name, apiVersion,
+`{ model, instance path, type, name, apiVersion, scope,
 Read [, Create] [, Update] [, Delete] }`, where `type` is fully
-constant. Parent and scope are filled in by Step 3.
+constant. `parent` is filled in by Step 3.
 
-### Step 3 — Resolve parent relationships and scopes
+### Step 3 — Resolve parent relationships
 
-Parent and scope cannot be settled before Step 2 is complete, because
-both depend on whether *another* path in the set is a resource path:
-
-- A resource's **parent** is the resource at the next-shorter
-  `/type/{name}` prefix of its instance path. That prefix is a parent
-  only if it is itself a detected resource.
-- A resource's **scope** is determined by the path segment that
-  precedes the **last** `/providers/<namespace>/...` portion of its
-  instance path. An instance path can contain more than one
-  `/providers/<namespace>/` block — extension resources are anchored
-  on another resource whose own path already starts with
-  `/providers/...` — so the split point is always the *last*
-  `/providers/`. If the prefix before that last `/providers/` is itself
-  another resource's instance path, the scope is `Extension` (the
-  resource is anchored on whatever resource it extends); otherwise it
-  is `Tenant` / `Subscription` / `ResourceGroup` /
-  `ManagementGroup` as defined in
-  [*Ground truth*](#ground-truth-arm-resources-are-defined-by-their-paths).
+Parent cannot be settled before Step 2 is complete, because it depends
+on whether *another* path in the resource set is a resource instance
+path: the parent of `R` is the resource at the next-shorter
+`/type/{name}` prefix of `R`'s instance path, and that prefix is a
+parent only if it is itself a detected resource.
 
 For each resource `R` from Step 2:
 
-1. **Parent.** Take `R`'s instance path. Strip the trailing
-   `/<typeN>/<nameN>` pair. If the remaining path is the instance path
-   of some resource `P` in the set, `P` is `R`'s parent. Otherwise `R`
-   has no resource parent (it is top-level under its scope). See
-   [*How a resource's parent is determined*](#how-a-resources-parent-is-determined)
-   for additional rules covering dynamic parent expansion and the
-   shared-model / `@parentResource` decorator cases.
-2. **Scope.** Inspect the prefix of `R`'s instance path that precedes
-   the **last** `/providers/<namespace>/...` segment in the path (a
-   single path can contain more than one `/providers/<namespace>/`
-   block when the resource extends another resource):
-   - `/` → `Tenant`.
-   - `/subscriptions/{}/` → `Subscription`.
-   - `/subscriptions/{}/resourceGroups/{}/` → `ResourceGroup`.
-   - `/providers/Microsoft.Management/managementGroups/{}/` →
-     `ManagementGroup`.
-   - Any other prefix that is itself a resource instance path →
-     `Extension`, anchored on that resource.
+1. Take `R`'s instance path and strip the trailing `/<typeN>/<nameN>`
+   pair to get the *parent candidate path*.
+2. If the parent candidate path is the instance path of some resource
+   `P` in the set, then `P` is `R`'s parent.
+3. Otherwise `R` has no resource parent — it sits directly under its
+   scope (as classified in [Step 2](#step-2--identify-resource-paths-and-crud-operations)).
 
-   See [*How resource scope is determined*](#how-resource-scope-is-determined).
+A consistency check for `Extension`-scoped resources: when `R`.scope
+is `Extension`, the prefix before the last `/providers/` in `R`'s
+instance path must also be the instance path of some detected
+resource `A` (the resource `R` extends). If no such `A` exists, emit a
+diagnostic — `R` was provisionally classified as `Extension` in
+Step 2 but isn't actually anchored on any known resource.
+
+See [*How a resource's parent is determined*](#how-a-resources-parent-is-determined)
+for additional rules covering dynamic parent expansion and the
+shared-model / `@parentResource` decorator cases.
 
 `@parentResource(P)` and the scope-marker decorators
-(`@subscriptionResource`, `@resourceGroupResource`, etc.) are consulted
-only as fallback / disambiguation in the cases the per-aspect sections
-spell out; the path-derived parent and scope take precedence.
+(`@subscriptionResource`, `@resourceGroupResource`, etc.) are
+consulted only as fallback / disambiguation in the cases the
+per-aspect sections spell out; the path-derived parent and scope take
+precedence.
 
 ### Step 4 — Assign remaining operations
 
