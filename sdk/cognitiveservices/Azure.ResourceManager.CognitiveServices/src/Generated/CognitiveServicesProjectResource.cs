@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CognitiveServices
     /// <summary>
     /// A class representing a CognitiveServicesProject along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CognitiveServicesProjectResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesAccountResource"/> using the GetCognitiveServicesProjects method.
+    /// Otherwise you can get one from its parent resource <see cref="AccountResource"/> using the GetCognitiveServicesProjects method.
     /// </summary>
     public partial class CognitiveServicesProjectResource : ArmResource
     {
@@ -679,11 +679,11 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        /// <summary> Gets a collection of CognitiveServicesProjectConnections in the <see cref="CognitiveServicesProjectResource"/>. </summary>
-        /// <returns> An object representing collection of CognitiveServicesProjectConnections and their operations over a CognitiveServicesProjectConnectionResource. </returns>
-        public virtual CognitiveServicesProjectConnectionCollection GetCognitiveServicesProjectConnections()
+        /// <summary> Gets a collection of ProjectConnections in the <see cref="CognitiveServicesProjectResource"/>. </summary>
+        /// <returns> An object representing collection of ProjectConnections and their operations over a ProjectConnectionResource. </returns>
+        public virtual ProjectConnectionCollection GetProjectConnections()
         {
-            return GetCachedClient(client => new CognitiveServicesProjectConnectionCollection(client, Id));
+            return GetCachedClient(client => new ProjectConnectionCollection(client, Id));
         }
 
         /// <summary> Lists Cognitive Services project connection by name. </summary>
@@ -692,11 +692,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CognitiveServicesProjectConnectionResource>> GetCognitiveServicesProjectConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectConnectionResource>> GetProjectConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            return await GetCognitiveServicesProjectConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
+            return await GetProjectConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Lists Cognitive Services project connection by name. </summary>
@@ -705,11 +705,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CognitiveServicesProjectConnectionResource> GetCognitiveServicesProjectConnection(string connectionName, CancellationToken cancellationToken = default)
+        public virtual Response<ProjectConnectionResource> GetProjectConnection(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            return GetCognitiveServicesProjectConnections().Get(connectionName, cancellationToken);
+            return GetProjectConnections().Get(connectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CognitiveServicesProjectScopedCapabilityHosts in the <see cref="CognitiveServicesProjectResource"/>. </summary>

@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Advisor
     {
         private readonly ClientDiagnostics _suppressionContractsClientDiagnostics;
         private readonly SuppressionContracts _suppressionContractsRestClient;
+        private readonly ClientDiagnostics _suppressionsOperationGroupClientDiagnostics;
+        private readonly SuppressionsOperationGroup _suppressionsOperationGroupRestClient;
         private readonly AdvisorSuppressionContractData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Advisor/recommendations/suppressions";
@@ -51,6 +53,8 @@ namespace Azure.ResourceManager.Advisor
             TryGetApiVersion(ResourceType, out string advisorSuppressionContractApiVersion);
             _suppressionContractsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", ResourceType.Namespace, Diagnostics);
             _suppressionContractsRestClient = new SuppressionContracts(_suppressionContractsClientDiagnostics, Pipeline, Endpoint, advisorSuppressionContractApiVersion ?? "2025-05-01-preview");
+            _suppressionsOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", ResourceType.Namespace, Diagnostics);
+            _suppressionsOperationGroupRestClient = new SuppressionsOperationGroup(_suppressionsOperationGroupClientDiagnostics, Pipeline, Endpoint, advisorSuppressionContractApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 

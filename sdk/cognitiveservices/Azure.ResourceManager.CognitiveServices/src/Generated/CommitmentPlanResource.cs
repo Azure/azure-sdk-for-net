@@ -21,12 +21,14 @@ namespace Azure.ResourceManager.CognitiveServices
     /// <summary>
     /// A class representing a CommitmentPlan along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CommitmentPlanResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesAccountResource"/> using the GetCommitmentPlans method.
+    /// Otherwise you can get one from its parent resource <see cref="AccountResource"/> using the GetCommitmentPlans method.
     /// </summary>
     public partial class CommitmentPlanResource : ArmResource
     {
         private readonly ClientDiagnostics _commitmentPlansClientDiagnostics;
         private readonly CommitmentPlans _commitmentPlansRestClient;
+        private readonly ClientDiagnostics _commitmentPlanOperationGroupClientDiagnostics;
+        private readonly CommitmentPlanOperationGroup _commitmentPlanOperationGroupRestClient;
         private readonly CommitmentPlanData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts/commitmentPlans";
@@ -53,6 +55,8 @@ namespace Azure.ResourceManager.CognitiveServices
             TryGetApiVersion(ResourceType, out string commitmentPlanApiVersion);
             _commitmentPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
             _commitmentPlansRestClient = new CommitmentPlans(_commitmentPlansClientDiagnostics, Pipeline, Endpoint, commitmentPlanApiVersion ?? "2026-01-15-preview");
+            _commitmentPlanOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
+            _commitmentPlanOperationGroupRestClient = new CommitmentPlanOperationGroup(_commitmentPlanOperationGroupClientDiagnostics, Pipeline, Endpoint, commitmentPlanApiVersion ?? "2026-01-15-preview");
             ValidateResourceId(id);
         }
 

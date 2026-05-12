@@ -24,6 +24,8 @@ namespace Azure.ResourceManager.Advisor
     {
         private readonly ClientDiagnostics _suppressionContractsClientDiagnostics;
         private readonly SuppressionContracts _suppressionContractsRestClient;
+        private readonly ClientDiagnostics _suppressionsOperationGroupClientDiagnostics;
+        private readonly SuppressionsOperationGroup _suppressionsOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of AdvisorSuppressionContractCollection for mocking. </summary>
         protected AdvisorSuppressionContractCollection()
@@ -38,6 +40,8 @@ namespace Azure.ResourceManager.Advisor
             TryGetApiVersion(AdvisorSuppressionContractResource.ResourceType, out string advisorSuppressionContractApiVersion);
             _suppressionContractsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorSuppressionContractResource.ResourceType.Namespace, Diagnostics);
             _suppressionContractsRestClient = new SuppressionContracts(_suppressionContractsClientDiagnostics, Pipeline, Endpoint, advisorSuppressionContractApiVersion ?? "2025-05-01-preview");
+            _suppressionsOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorSuppressionContractResource.ResourceType.Namespace, Diagnostics);
+            _suppressionsOperationGroupRestClient = new SuppressionsOperationGroup(_suppressionsOperationGroupClientDiagnostics, Pipeline, Endpoint, advisorSuppressionContractApiVersion ?? "2025-05-01-preview");
         }
 
         /// <summary>

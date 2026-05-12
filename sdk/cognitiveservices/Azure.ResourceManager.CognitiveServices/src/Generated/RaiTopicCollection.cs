@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A class representing a collection of <see cref="RaiTopicResource"/> and their operations.
-    /// Each <see cref="RaiTopicResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource"/>.
-    /// To get a <see cref="RaiTopicCollection"/> instance call the GetRaiTopics method from an instance of <see cref="CognitiveServicesAccountResource"/>.
+    /// Each <see cref="RaiTopicResource"/> in the collection will belong to the same instance of <see cref="AccountResource"/>.
+    /// To get a <see cref="RaiTopicCollection"/> instance call the GetRaiTopics method from an instance of <see cref="AccountResource"/>.
     /// </summary>
     public partial class RaiTopicCollection : ArmCollection, IEnumerable<RaiTopicResource>, IAsyncEnumerable<RaiTopicResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.CognitiveServices
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != CognitiveServicesAccountResource.ResourceType)
+            if (id.ResourceType != AccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesAccountResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AccountResource.ResourceType), nameof(id));
             }
         }
 

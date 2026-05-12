@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.BillingBenefits
     {
         private readonly ClientDiagnostics _savingsPlanClientDiagnostics;
         private readonly SavingsPlan _savingsPlanRestClient;
+        private readonly ClientDiagnostics _savingsPlanOperationGroupClientDiagnostics;
+        private readonly SavingsPlanOperationGroup _savingsPlanOperationGroupRestClient;
         private readonly BillingBenefitsSavingsPlanData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.BillingBenefits/savingsPlanOrders/savingsPlans";
@@ -52,6 +54,8 @@ namespace Azure.ResourceManager.BillingBenefits
             TryGetApiVersion(ResourceType, out string billingBenefitsSavingsPlanApiVersion);
             _savingsPlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
             _savingsPlanRestClient = new SavingsPlan(_savingsPlanClientDiagnostics, Pipeline, Endpoint, billingBenefitsSavingsPlanApiVersion ?? "2025-12-01-preview");
+            _savingsPlanOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
+            _savingsPlanOperationGroupRestClient = new SavingsPlanOperationGroup(_savingsPlanOperationGroupClientDiagnostics, Pipeline, Endpoint, billingBenefitsSavingsPlanApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -210,12 +214,12 @@ namespace Azure.ResourceManager.BillingBenefits
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Request body for patching a savings plan order alias. </param>
+        /// <param name="content"> Request body for patching a savings plan order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<BillingBenefitsSavingsPlanResource>> UpdateAsync(WaitUntil waitUntil, BillingBenefitsSavingsPlanPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BillingBenefitsSavingsPlanResource>> UpdateAsync(WaitUntil waitUntil, SavingsPlanUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _savingsPlanClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanResource.Update");
             scope.Start();
@@ -225,7 +229,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingBenefitsSavingsPlanPatch.ToRequestContent(patch), context);
+                HttpMessage message = _savingsPlanRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, SavingsPlanUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<BillingBenefitsSavingsPlanResource> operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanResource>(
                     new BillingBenefitsSavingsPlanOperationSource(Client),
@@ -269,12 +273,12 @@ namespace Azure.ResourceManager.BillingBenefits
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Request body for patching a savings plan order alias. </param>
+        /// <param name="content"> Request body for patching a savings plan order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<BillingBenefitsSavingsPlanResource> Update(WaitUntil waitUntil, BillingBenefitsSavingsPlanPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BillingBenefitsSavingsPlanResource> Update(WaitUntil waitUntil, SavingsPlanUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _savingsPlanClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanResource.Update");
             scope.Start();
@@ -284,7 +288,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingBenefitsSavingsPlanPatch.ToRequestContent(patch), context);
+                HttpMessage message = _savingsPlanRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, SavingsPlanUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<BillingBenefitsSavingsPlanResource> operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanResource>(
                     new BillingBenefitsSavingsPlanOperationSource(Client),

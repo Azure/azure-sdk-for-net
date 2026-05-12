@@ -19,16 +19,6 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableBillingBenefitsArmClient : ArmResource
     {
-        private ClientDiagnostics _discountsClientDiagnostics;
-        private Discounts _discountsRestClient;
-        private ClientDiagnostics _contributorsClientDiagnostics;
-        private Contributors _contributorsRestClient;
-        private ClientDiagnostics _creditsClientDiagnostics;
-        private Credits _creditsRestClient;
-        private ClientDiagnostics _conditionalCreditsClientDiagnostics;
-        private ConditionalCredits _conditionalCreditsRestClient;
-        private ClientDiagnostics _conditionalCreditContributorsClientDiagnostics;
-        private ConditionalCreditContributors _conditionalCreditContributorsRestClient;
         private ClientDiagnostics _applicableMaccsClientDiagnostics;
         private ApplicableMaccs _applicableMaccsRestClient;
 
@@ -44,38 +34,9 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         {
         }
 
-        private ClientDiagnostics DiscountsClientDiagnostics => _discountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private Discounts DiscountsRestClient => _discountsRestClient ??= new Discounts(DiscountsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
-
-        private ClientDiagnostics ContributorsClientDiagnostics => _contributorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private Contributors ContributorsRestClient => _contributorsRestClient ??= new Contributors(ContributorsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
-
-        private ClientDiagnostics CreditsClientDiagnostics => _creditsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private Credits CreditsRestClient => _creditsRestClient ??= new Credits(CreditsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
-
-        private ClientDiagnostics ConditionalCreditsClientDiagnostics => _conditionalCreditsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ConditionalCredits ConditionalCreditsRestClient => _conditionalCreditsRestClient ??= new ConditionalCredits(ConditionalCreditsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
-
-        private ClientDiagnostics ConditionalCreditContributorsClientDiagnostics => _conditionalCreditContributorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ConditionalCreditContributors ConditionalCreditContributorsRestClient => _conditionalCreditContributorsRestClient ??= new ConditionalCreditContributors(ConditionalCreditContributorsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
-
         private ClientDiagnostics ApplicableMaccsClientDiagnostics => _applicableMaccsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private ApplicableMaccs ApplicableMaccsRestClient => _applicableMaccsRestClient ??= new ApplicableMaccs(ApplicableMaccsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
-
-        /// <summary> Gets an object representing a <see cref="DiscountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiscountResource"/> object. </returns>
-        public virtual DiscountResource GetDiscountResource(ResourceIdentifier id)
-        {
-            DiscountResource.ValidateResourceId(id);
-            return new DiscountResource(Client, id);
-        }
 
         /// <summary> Gets an object representing a <see cref="ContributorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -158,6 +119,15 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             return new BillingBenefitsReservationOrderAliasResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="DiscountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DiscountResource"/> object. </returns>
+        public virtual DiscountResource GetDiscountResource(ResourceIdentifier id)
+        {
+            DiscountResource.ValidateResourceId(id);
+            return new DiscountResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="CreditSourceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CreditSourceResource"/> object. </returns>
@@ -174,326 +144,6 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         {
             FreeServicesResource.ValidateResourceId(id);
             return new FreeServicesResource(Client, id);
-        }
-
-        /// <summary>
-        /// List discounts that are applicable for a given scope. Currently supported scopes: billing accounts
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.BillingBenefits/applicableDiscounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DiscountsOperationGroup_ScopeList. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="DiscountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DiscountResource> GetDiscountByScopeAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DiscountData, DiscountResource>(new DiscountsGetDiscountByScopeAsyncCollectionResultOfT(DiscountsRestClient, scope.ToString(), context, "MockableBillingBenefitsArmClient.GetDiscountByScope"), data => new DiscountResource(Client, data));
-        }
-
-        /// <summary>
-        /// List discounts that are applicable for a given scope. Currently supported scopes: billing accounts
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.BillingBenefits/applicableDiscounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DiscountsOperationGroup_ScopeList. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="DiscountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DiscountResource> GetDiscountByScope(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DiscountData, DiscountResource>(new DiscountsGetDiscountByScopeCollectionResultOfT(DiscountsRestClient, scope.ToString(), context, "MockableBillingBenefitsArmClient.GetDiscountByScope"), data => new DiscountResource(Client, data));
-        }
-
-        /// <summary>
-        /// List contributors under applicable MACCs for a given billing account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.BillingBenefits/applicableMaccs/{systemId}/providers/microsoft.BillingBenefits/applicableContributors. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContributorsOperationGroup_ListFromApplicableMacc. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="ContributorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContributorResource> GetFromApplicableMaccAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ContributorData, ContributorResource>(new ContributorsGetFromApplicableMaccAsyncCollectionResultOfT(ContributorsRestClient, scope.Parent.Name, scope.Name, context, "MockableBillingBenefitsArmClient.GetFromApplicableMacc"), data => new ContributorResource(Client, data));
-        }
-
-        /// <summary>
-        /// List contributors under applicable MACCs for a given billing account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.BillingBenefits/applicableMaccs/{systemId}/providers/microsoft.BillingBenefits/applicableContributors. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContributorsOperationGroup_ListFromApplicableMacc. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="ContributorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContributorResource> GetFromApplicableMacc(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ContributorData, ContributorResource>(new ContributorsGetFromApplicableMaccCollectionResultOfT(ContributorsRestClient, scope.Parent.Name, scope.Name, context, "MockableBillingBenefitsArmClient.GetFromApplicableMacc"), data => new ContributorResource(Client, data));
-        }
-
-        /// <summary>
-        /// List applicable credits for the provided scope. Currently supported scopes: BillingAccountResourceId
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.BillingBenefits/applicableCredits. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CreditsOperationGroup_ListApplicable. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="CreditResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CreditResource> GetApplicableAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<CreditData, CreditResource>(new CreditsGetApplicableAsyncCollectionResultOfT(CreditsRestClient, scope.ToString(), context, "MockableBillingBenefitsArmClient.GetApplicable"), data => new CreditResource(Client, data));
-        }
-
-        /// <summary>
-        /// List applicable credits for the provided scope. Currently supported scopes: BillingAccountResourceId
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.BillingBenefits/applicableCredits. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CreditsOperationGroup_ListApplicable. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="CreditResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CreditResource> GetApplicable(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<CreditData, CreditResource>(new CreditsGetApplicableCollectionResultOfT(CreditsRestClient, scope.ToString(), context, "MockableBillingBenefitsArmClient.GetApplicable"), data => new CreditResource(Client, data));
-        }
-
-        /// <summary>
-        /// List conditional credits that are applicable for a given scope. Currently supported scopes: billing accounts
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.BillingBenefits/applicableConditionalCredits. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConditionalCreditsOperationGroup_ScopeList. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="ConditionalCreditResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConditionalCreditResource> GetConditionalCreditByScopeAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ConditionalCreditData, ConditionalCreditResource>(new ConditionalCreditsGetConditionalCreditByScopeAsyncCollectionResultOfT(ConditionalCreditsRestClient, scope.ToString(), context, "MockableBillingBenefitsArmClient.GetConditionalCreditByScope"), data => new ConditionalCreditResource(Client, data));
-        }
-
-        /// <summary>
-        /// List conditional credits that are applicable for a given scope. Currently supported scopes: billing accounts
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.BillingBenefits/applicableConditionalCredits. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConditionalCreditsOperationGroup_ScopeList. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="ConditionalCreditResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConditionalCreditResource> GetConditionalCreditByScope(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ConditionalCreditData, ConditionalCreditResource>(new ConditionalCreditsGetConditionalCreditByScopeCollectionResultOfT(ConditionalCreditsRestClient, scope.ToString(), context, "MockableBillingBenefitsArmClient.GetConditionalCreditByScope"), data => new ConditionalCreditResource(Client, data));
-        }
-
-        /// <summary>
-        /// List contributors under applicable conditional credits for a given billing account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.BillingBenefits/applicableConditionalCredits/{systemId}/providers/microsoft.BillingBenefits/applicableContributors. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConditionalCreditContributorsOperationGroup_ListFromApplicableConditionalCredit. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="ConditionalCreditContributorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConditionalCreditContributorResource> GetFromApplicableConditionalCreditAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ConditionalCreditContributorData, ConditionalCreditContributorResource>(new ConditionalCreditContributorsGetFromApplicableConditionalCreditAsyncCollectionResultOfT(ConditionalCreditContributorsRestClient, scope.Parent.Name, scope.Name, context, "MockableBillingBenefitsArmClient.GetFromApplicableConditionalCredit"), data => new ConditionalCreditContributorResource(Client, data));
-        }
-
-        /// <summary>
-        /// List contributors under applicable conditional credits for a given billing account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.BillingBenefits/applicableConditionalCredits/{systemId}/providers/microsoft.BillingBenefits/applicableContributors. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConditionalCreditContributorsOperationGroup_ListFromApplicableConditionalCredit. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="ConditionalCreditContributorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConditionalCreditContributorResource> GetFromApplicableConditionalCredit(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ConditionalCreditContributorData, ConditionalCreditContributorResource>(new ConditionalCreditContributorsGetFromApplicableConditionalCreditCollectionResultOfT(ConditionalCreditContributorsRestClient, scope.Parent.Name, scope.Name, context, "MockableBillingBenefitsArmClient.GetFromApplicableConditionalCredit"), data => new ConditionalCreditContributorResource(Client, data));
         }
 
         /// <summary>

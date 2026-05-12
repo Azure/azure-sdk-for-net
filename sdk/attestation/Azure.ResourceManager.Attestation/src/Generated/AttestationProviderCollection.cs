@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,22 +13,19 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Attestation.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Attestation
 {
     /// <summary>
     /// A class representing a collection of <see cref="AttestationProviderResource"/> and their operations.
-    /// Each <see cref="AttestationProviderResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="AttestationProviderCollection"/> instance call the GetAttestationProviders method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="AttestationProviderResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="AttestationProviderCollection"/> instance call the GetAttestationProviders method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class AttestationProviderCollection : ArmCollection, IEnumerable<AttestationProviderResource>, IAsyncEnumerable<AttestationProviderResource>
+    public partial class AttestationProviderCollection : ArmCollection
     {
         private readonly ClientDiagnostics _attestationProvidersClientDiagnostics;
         private readonly AttestationProviders _attestationProvidersRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
 
         /// <summary> Initializes a new instance of AttestationProviderCollection for mocking. </summary>
         protected AttestationProviderCollection()
@@ -42,34 +37,32 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AttestationProviderCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AttestationProviderResource.ResourceType, out string attestationProviderApiVersion);
+            this.TryGetApiVersion(AttestationProviderResource.ResourceType, out string attestationProviderApiVersion);
             _attestationProvidersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Attestation", AttestationProviderResource.ResourceType.Namespace, Diagnostics);
             _attestationProvidersRestClient = new AttestationProviders(_attestationProvidersClientDiagnostics, Pipeline, Endpoint, attestationProviderApiVersion ?? "2021-06-01");
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Attestation", AttestationProviderResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, attestationProviderApiVersion ?? "2021-06-01");
-            ValidateResourceId(id);
+            AttestationProviderCollection.ValidateResourceId(id);
         }
 
         /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
         /// <summary>
-        /// Creates or updates an Attestation Provider.
+        /// Get the default provider by location.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AttestationProviders_Create. </description>
+        /// <description> AttestationProvidersOperationGroup_GetDefaultByLocation. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -77,124 +70,10 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="providerName"> Name of the attestation provider. </param>
-        /// <param name="content"> Client supplied parameters. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="providerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<AttestationProviderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string providerName, AttestationProviderCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AttestationProviderResource>> GetAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _attestationProvidersClientDiagnostics.CreateScope("AttestationProviderCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _attestationProvidersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, AttestationProviderCreateOrUpdateContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AttestationProviderData> response = Response.FromValue(AttestationProviderData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AttestationArmOperation<AttestationProviderResource> operation = new AttestationArmOperation<AttestationProviderResource>(Response.FromValue(new AttestationProviderResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates or updates an Attestation Provider.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AttestationProviders_Create. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2021-06-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="providerName"> Name of the attestation provider. </param>
-        /// <param name="content"> Client supplied parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="providerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<AttestationProviderResource> CreateOrUpdate(WaitUntil waitUntil, string providerName, AttestationProviderCreateOrUpdateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _attestationProvidersClientDiagnostics.CreateScope("AttestationProviderCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _attestationProvidersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, AttestationProviderCreateOrUpdateContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AttestationProviderData> response = Response.FromValue(AttestationProviderData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AttestationArmOperation<AttestationProviderResource> operation = new AttestationArmOperation<AttestationProviderResource>(Response.FromValue(new AttestationProviderResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the status of Attestation Provider.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AttestationProviders_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2021-06-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="providerName"> Name of the attestation provider. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="providerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AttestationProviderResource>> GetAsync(string providerName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-
             using DiagnosticScope scope = _attestationProvidersClientDiagnostics.CreateScope("AttestationProviderCollection.Get");
             scope.Start();
             try
@@ -203,7 +82,7 @@ namespace Azure.ResourceManager.Attestation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationProvidersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, context);
+                HttpMessage message = _attestationProvidersRestClient.CreateGetDefaultAttestationProviderByLocationRequest(Id.SubscriptionId, location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AttestationProviderData> response = Response.FromValue(AttestationProviderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,15 +99,15 @@ namespace Azure.ResourceManager.Attestation
         }
 
         /// <summary>
-        /// Get the status of Attestation Provider.
+        /// Get the default provider by location.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AttestationProviders_Get. </description>
+        /// <description> AttestationProvidersOperationGroup_GetDefaultByLocation. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -236,14 +115,10 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="providerName"> Name of the attestation provider. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="providerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AttestationProviderResource> Get(string providerName, CancellationToken cancellationToken = default)
+        public virtual Response<AttestationProviderResource> Get(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-
             using DiagnosticScope scope = _attestationProvidersClientDiagnostics.CreateScope("AttestationProviderCollection.Get");
             scope.Start();
             try
@@ -252,7 +127,7 @@ namespace Azure.ResourceManager.Attestation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationProvidersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, context);
+                HttpMessage message = _attestationProvidersRestClient.CreateGetDefaultAttestationProviderByLocationRequest(Id.SubscriptionId, location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AttestationProviderData> response = Response.FromValue(AttestationProviderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -266,62 +141,6 @@ namespace Azure.ResourceManager.Attestation
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Returns attestation providers list in a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AttestationProviders_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2021-06-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AttestationProviderResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetByResourceGroupAsyncCollectionResultOfT(_attestationProvidersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AttestationProviderCollection.GetAll"), data => new AttestationProviderResource(Client, data));
-        }
-
-        /// <summary>
-        /// Returns attestation providers list in a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AttestationProviders_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2021-06-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AttestationProviderResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetByResourceGroupCollectionResultOfT(_attestationProvidersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AttestationProviderCollection.GetAll"), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>
@@ -329,11 +148,11 @@ namespace Azure.ResourceManager.Attestation
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AttestationProviders_Get. </description>
+        /// <description> AttestationProvidersOperationGroup_GetDefaultByLocation. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -341,14 +160,10 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="providerName"> Name of the attestation provider. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="providerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string providerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-
             using DiagnosticScope scope = _attestationProvidersClientDiagnostics.CreateScope("AttestationProviderCollection.Exists");
             scope.Start();
             try
@@ -357,7 +172,7 @@ namespace Azure.ResourceManager.Attestation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationProvidersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, context);
+                HttpMessage message = _attestationProvidersRestClient.CreateGetDefaultAttestationProviderByLocationRequest(Id.SubscriptionId, location, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AttestationProviderData> response = default;
@@ -386,11 +201,11 @@ namespace Azure.ResourceManager.Attestation
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AttestationProviders_Get. </description>
+        /// <description> AttestationProvidersOperationGroup_GetDefaultByLocation. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -398,14 +213,10 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="providerName"> Name of the attestation provider. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="providerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string providerName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-
             using DiagnosticScope scope = _attestationProvidersClientDiagnostics.CreateScope("AttestationProviderCollection.Exists");
             scope.Start();
             try
@@ -414,7 +225,7 @@ namespace Azure.ResourceManager.Attestation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationProvidersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, context);
+                HttpMessage message = _attestationProvidersRestClient.CreateGetDefaultAttestationProviderByLocationRequest(Id.SubscriptionId, location, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AttestationProviderData> response = default;
@@ -443,11 +254,11 @@ namespace Azure.ResourceManager.Attestation
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AttestationProviders_Get. </description>
+        /// <description> AttestationProvidersOperationGroup_GetDefaultByLocation. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -455,14 +266,10 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="providerName"> Name of the attestation provider. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="providerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<AttestationProviderResource>> GetIfExistsAsync(string providerName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<AttestationProviderResource>> GetIfExistsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-
             using DiagnosticScope scope = _attestationProvidersClientDiagnostics.CreateScope("AttestationProviderCollection.GetIfExists");
             scope.Start();
             try
@@ -471,7 +278,7 @@ namespace Azure.ResourceManager.Attestation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationProvidersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, context);
+                HttpMessage message = _attestationProvidersRestClient.CreateGetDefaultAttestationProviderByLocationRequest(Id.SubscriptionId, location, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AttestationProviderData> response = default;
@@ -504,11 +311,11 @@ namespace Azure.ResourceManager.Attestation
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AttestationProviders_Get. </description>
+        /// <description> AttestationProvidersOperationGroup_GetDefaultByLocation. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -516,14 +323,10 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="providerName"> Name of the attestation provider. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="providerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<AttestationProviderResource> GetIfExists(string providerName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<AttestationProviderResource> GetIfExists(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-
             using DiagnosticScope scope = _attestationProvidersClientDiagnostics.CreateScope("AttestationProviderCollection.GetIfExists");
             scope.Start();
             try
@@ -532,7 +335,7 @@ namespace Azure.ResourceManager.Attestation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationProvidersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, context);
+                HttpMessage message = _attestationProvidersRestClient.CreateGetDefaultAttestationProviderByLocationRequest(Id.SubscriptionId, location, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AttestationProviderData> response = default;
@@ -558,22 +361,6 @@ namespace Azure.ResourceManager.Attestation
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<AttestationProviderResource> IEnumerable<AttestationProviderResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<AttestationProviderResource> IAsyncEnumerable<AttestationProviderResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

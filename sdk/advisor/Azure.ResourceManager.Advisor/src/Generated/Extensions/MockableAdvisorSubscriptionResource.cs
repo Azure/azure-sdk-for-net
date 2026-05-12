@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.Advisor.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableAdvisorSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _suppressionsOperationGroupClientDiagnostics;
+        private SuppressionsOperationGroup _suppressionsOperationGroupRestClient;
         private ClientDiagnostics _advisorClientClientDiagnostics;
         private AdvisorClient _advisorClientRestClient;
         private ClientDiagnostics _configurationsClientDiagnostics;
         private Configurations _configurationsRestClient;
         private ClientDiagnostics _recommendationsOperationGroupClientDiagnostics;
         private RecommendationsOperationGroup _recommendationsOperationGroupRestClient;
-        private ClientDiagnostics _suppressionsOperationGroupClientDiagnostics;
-        private SuppressionsOperationGroup _suppressionsOperationGroupRestClient;
         private ClientDiagnostics _assessmentTypesOperationGroupClientDiagnostics;
         private AssessmentTypesOperationGroup _assessmentTypesOperationGroupRestClient;
         private ClientDiagnostics _workloadsOperationGroupClientDiagnostics;
@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Advisor.Mocking
         {
         }
 
+        private ClientDiagnostics SuppressionsOperationGroupClientDiagnostics => _suppressionsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SuppressionsOperationGroup SuppressionsOperationGroupRestClient => _suppressionsOperationGroupRestClient ??= new SuppressionsOperationGroup(SuppressionsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+
         private ClientDiagnostics AdvisorClientClientDiagnostics => _advisorClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private AdvisorClient AdvisorClientRestClient => _advisorClientRestClient ??= new AdvisorClient(AdvisorClientClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
@@ -57,10 +61,6 @@ namespace Azure.ResourceManager.Advisor.Mocking
         private ClientDiagnostics RecommendationsOperationGroupClientDiagnostics => _recommendationsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private RecommendationsOperationGroup RecommendationsOperationGroupRestClient => _recommendationsOperationGroupRestClient ??= new RecommendationsOperationGroup(RecommendationsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
-
-        private ClientDiagnostics SuppressionsOperationGroupClientDiagnostics => _suppressionsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private SuppressionsOperationGroup SuppressionsOperationGroupRestClient => _suppressionsOperationGroupRestClient ??= new SuppressionsOperationGroup(SuppressionsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
 
         private ClientDiagnostics AssessmentTypesOperationGroupClientDiagnostics => _assessmentTypesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -263,6 +263,78 @@ namespace Azure.ResourceManager.Advisor.Mocking
             Argument.AssertNotNullOrEmpty(reviewId, nameof(reviewId));
 
             return GetAdvisorResiliencyReviews().Get(reviewId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieves the list of snoozed or dismissed suppressions for a subscription. The snoozed or dismissed attribute of a recommendation is referred to as a suppression.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SuppressionsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
+        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AdvisorSuppressionContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AdvisorSuppressionContractResource> GetAdvisorSuppressionContractsAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AdvisorSuppressionContractData, AdvisorSuppressionContractResource>(new SuppressionsOperationGroupGetAdvisorSuppressionContractsAsyncCollectionResultOfT(
+                SuppressionsOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableAdvisorSubscriptionResource.GetAdvisorSuppressionContracts"), data => new AdvisorSuppressionContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// Retrieves the list of snoozed or dismissed suppressions for a subscription. The snoozed or dismissed attribute of a recommendation is referred to as a suppression.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SuppressionsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
+        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AdvisorSuppressionContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AdvisorSuppressionContractResource> GetAdvisorSuppressionContracts(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AdvisorSuppressionContractData, AdvisorSuppressionContractResource>(new SuppressionsOperationGroupGetAdvisorSuppressionContractsCollectionResultOfT(
+                SuppressionsOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableAdvisorSubscriptionResource.GetAdvisorSuppressionContracts"), data => new AdvisorSuppressionContractResource(Client, data));
         }
 
         /// <summary>
@@ -671,78 +743,6 @@ namespace Azure.ResourceManager.Advisor.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Retrieves the list of snoozed or dismissed suppressions for a subscription. The snoozed or dismissed attribute of a recommendation is referred to as a suppression.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SuppressionsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
-        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AdvisorSuppressionContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AdvisorSuppressionContractResource> GetAdvisorSuppressionContractsAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<AdvisorSuppressionContractData, AdvisorSuppressionContractResource>(new SuppressionsOperationGroupGetAdvisorSuppressionContractsAsyncCollectionResultOfT(
-                SuppressionsOperationGroupRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                top,
-                skipToken,
-                context,
-                "MockableAdvisorSubscriptionResource.GetAdvisorSuppressionContracts"), data => new AdvisorSuppressionContractResource(Client, data));
-        }
-
-        /// <summary>
-        /// Retrieves the list of snoozed or dismissed suppressions for a subscription. The snoozed or dismissed attribute of a recommendation is referred to as a suppression.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SuppressionsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
-        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AdvisorSuppressionContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AdvisorSuppressionContractResource> GetAdvisorSuppressionContracts(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<AdvisorSuppressionContractData, AdvisorSuppressionContractResource>(new SuppressionsOperationGroupGetAdvisorSuppressionContractsCollectionResultOfT(
-                SuppressionsOperationGroupRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                top,
-                skipToken,
-                context,
-                "MockableAdvisorSubscriptionResource.GetAdvisorSuppressionContracts"), data => new AdvisorSuppressionContractResource(Client, data));
         }
 
         /// <summary>

@@ -660,6 +660,46 @@ namespace Azure.ResourceManager.Advisor
         }
 
         /// <summary>
+        /// Retrieves the list of snoozed or dismissed suppressions for a subscription. The snoozed or dismissed attribute of a recommendation is referred to as a suppression.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorSuppressionContractsAsync(int?, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
+        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AdvisorSuppressionContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AdvisorSuppressionContractResource> GetAdvisorSuppressionContractsAsync(this SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorSuppressionContractsAsync(top, skipToken, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieves the list of snoozed or dismissed suppressions for a subscription. The snoozed or dismissed attribute of a recommendation is referred to as a suppression.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorSuppressionContracts(int?, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
+        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AdvisorSuppressionContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AdvisorSuppressionContractResource> GetAdvisorSuppressionContracts(this SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorSuppressionContracts(top, skipToken, cancellationToken);
+        }
+
+        /// <summary>
         /// Predicts a recommendation.
         /// <item>
         /// <term> Mocking. </term>
@@ -837,46 +877,6 @@ namespace Azure.ResourceManager.Advisor
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetGenerateStatusRecommendation(operationId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieves the list of snoozed or dismissed suppressions for a subscription. The snoozed or dismissed attribute of a recommendation is referred to as a suppression.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorSuppressionContractsAsync(int?, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
-        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AdvisorSuppressionContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AdvisorSuppressionContractResource> GetAdvisorSuppressionContractsAsync(this SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorSuppressionContractsAsync(top, skipToken, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieves the list of snoozed or dismissed suppressions for a subscription. The snoozed or dismissed attribute of a recommendation is referred to as a suppression.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorSuppressionContracts(int?, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
-        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AdvisorSuppressionContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AdvisorSuppressionContractResource> GetAdvisorSuppressionContracts(this SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorSuppressionContracts(top, skipToken, cancellationToken);
         }
 
         /// <summary>

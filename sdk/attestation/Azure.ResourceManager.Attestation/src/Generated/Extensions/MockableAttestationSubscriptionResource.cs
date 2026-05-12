@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -38,6 +37,63 @@ namespace Azure.ResourceManager.Attestation.Mocking
         private ClientDiagnostics AttestationProvidersClientDiagnostics => _attestationProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Attestation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private AttestationProviders AttestationProvidersRestClient => _attestationProvidersRestClient ??= new AttestationProviders(AttestationProvidersClientDiagnostics, Pipeline, Endpoint, "2021-06-01");
+
+        /// <summary> Gets a collection of AttestationProviders in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of AttestationProviders and their operations over a AttestationProviderResource. </returns>
+        public virtual AttestationProviderCollection GetAttestationProviders()
+        {
+            return this.GetCachedClient(client => new AttestationProviderCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the default provider by location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AttestationProvidersOperationGroup_GetDefaultByLocation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AttestationProviderResource>> GetAttestationProviderAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return await GetAttestationProviders().GetAsync(location, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the default provider by location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AttestationProvidersOperationGroup_GetDefaultByLocation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<AttestationProviderResource> GetAttestationProvider(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetAttestationProviders().Get(location, cancellationToken);
+        }
 
         /// <summary>
         /// Returns a list of attestation providers in a subscription.
@@ -149,96 +205,6 @@ namespace Azure.ResourceManager.Attestation.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetDefaultAttestationProviderCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context, "MockableAttestationSubscriptionResource.GetDefaultAttestationProvider"), data => new AttestationProviderResource(Client, data));
-        }
-
-        /// <summary>
-        /// Get the default provider by location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AttestationProvidersOperationGroup_GetDefaultByLocation. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2021-06-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AttestationProviderResource>> GetDefaultAttestationProviderByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = AttestationProvidersClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefaultAttestationProviderByLocation");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = AttestationProvidersRestClient.CreateGetDefaultAttestationProviderByLocationRequest(Id.SubscriptionId, location, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AttestationProviderData> response = Response.FromValue(AttestationProviderData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new AttestationProviderResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the default provider by location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AttestationProvidersOperationGroup_GetDefaultByLocation. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2021-06-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AttestationProviderResource> GetDefaultAttestationProviderByLocation(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = AttestationProvidersClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefaultAttestationProviderByLocation");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = AttestationProvidersRestClient.CreateGetDefaultAttestationProviderByLocationRequest(Id.SubscriptionId, location, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AttestationProviderData> response = Response.FromValue(AttestationProviderData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new AttestationProviderResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

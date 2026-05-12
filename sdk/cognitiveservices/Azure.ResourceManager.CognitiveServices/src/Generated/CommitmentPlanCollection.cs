@@ -20,13 +20,15 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A class representing a collection of <see cref="CommitmentPlanResource"/> and their operations.
-    /// Each <see cref="CommitmentPlanResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource"/>.
-    /// To get a <see cref="CommitmentPlanCollection"/> instance call the GetCommitmentPlans method from an instance of <see cref="CognitiveServicesAccountResource"/>.
+    /// Each <see cref="CommitmentPlanResource"/> in the collection will belong to the same instance of <see cref="AccountResource"/>.
+    /// To get a <see cref="CommitmentPlanCollection"/> instance call the GetCommitmentPlans method from an instance of <see cref="AccountResource"/>.
     /// </summary>
     public partial class CommitmentPlanCollection : ArmCollection, IEnumerable<CommitmentPlanResource>, IAsyncEnumerable<CommitmentPlanResource>
     {
         private readonly ClientDiagnostics _commitmentPlansClientDiagnostics;
         private readonly CommitmentPlans _commitmentPlansRestClient;
+        private readonly ClientDiagnostics _commitmentPlanOperationGroupClientDiagnostics;
+        private readonly CommitmentPlanOperationGroup _commitmentPlanOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of CommitmentPlanCollection for mocking. </summary>
         protected CommitmentPlanCollection()
@@ -41,6 +43,8 @@ namespace Azure.ResourceManager.CognitiveServices
             TryGetApiVersion(CommitmentPlanResource.ResourceType, out string commitmentPlanApiVersion);
             _commitmentPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CommitmentPlanResource.ResourceType.Namespace, Diagnostics);
             _commitmentPlansRestClient = new CommitmentPlans(_commitmentPlansClientDiagnostics, Pipeline, Endpoint, commitmentPlanApiVersion ?? "2026-01-15-preview");
+            _commitmentPlanOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CommitmentPlanResource.ResourceType.Namespace, Diagnostics);
+            _commitmentPlanOperationGroupRestClient = new CommitmentPlanOperationGroup(_commitmentPlanOperationGroupClientDiagnostics, Pipeline, Endpoint, commitmentPlanApiVersion ?? "2026-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -48,9 +52,9 @@ namespace Azure.ResourceManager.CognitiveServices
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != CognitiveServicesAccountResource.ResourceType)
+            if (id.ResourceType != AccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesAccountResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AccountResource.ResourceType), nameof(id));
             }
         }
 

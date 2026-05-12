@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.BillingBenefits
     {
         private readonly ClientDiagnostics _savingsPlanClientDiagnostics;
         private readonly SavingsPlan _savingsPlanRestClient;
+        private readonly ClientDiagnostics _savingsPlanOperationGroupClientDiagnostics;
+        private readonly SavingsPlanOperationGroup _savingsPlanOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanCollection for mocking. </summary>
         protected BillingBenefitsSavingsPlanCollection()
@@ -41,6 +43,8 @@ namespace Azure.ResourceManager.BillingBenefits
             TryGetApiVersion(BillingBenefitsSavingsPlanResource.ResourceType, out string billingBenefitsSavingsPlanApiVersion);
             _savingsPlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", BillingBenefitsSavingsPlanResource.ResourceType.Namespace, Diagnostics);
             _savingsPlanRestClient = new SavingsPlan(_savingsPlanClientDiagnostics, Pipeline, Endpoint, billingBenefitsSavingsPlanApiVersion ?? "2025-12-01-preview");
+            _savingsPlanOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", BillingBenefitsSavingsPlanResource.ResourceType.Namespace, Diagnostics);
+            _savingsPlanOperationGroupRestClient = new SavingsPlanOperationGroup(_savingsPlanOperationGroupClientDiagnostics, Pipeline, Endpoint, billingBenefitsSavingsPlanApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 

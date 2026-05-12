@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// <returns> An object representing collection of AttestationProviders and their operations over a AttestationProviderResource. </returns>
         public virtual AttestationProviderCollection GetAttestationProviders()
         {
-            return GetCachedClient(client => new AttestationProviderCollection(client, Id));
+            return this.GetCachedClient(client => new AttestationProviderCollection(client, Id));
         }
 
         /// <summary>
