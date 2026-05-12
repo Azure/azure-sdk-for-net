@@ -263,25 +263,46 @@ constant. `parent` is filled in by Step 3.
 
 Parent cannot be settled before Step 2 is complete, because it depends
 on whether *another* path in the resource set is a resource instance
-path: the parent of `R` is the resource at the next-shorter
-`/type/{name}` prefix of `R`'s instance path, and that prefix is a
-parent only if it is itself a detected resource.
+path: a candidate is a parent only if it matches one of
 
-For each resource `R` from Step 2:
+- a resource detected in Step 2 (defined in the current library), or
+- a **predefined** ARM resource — `Microsoft.Resources/resourceGroups`,
+  `Microsoft.Resources/subscriptions`,
+  `Microsoft.Management/managementGroups`, or the tenant —
+  which the .NET mgmt SDK already provides as
+  `ResourceGroupResource` / `SubscriptionResource` /
+  `ManagementGroupResource` / `TenantResource`.
 
-1. Take `R`'s instance path and strip the trailing `/<typeN>/<nameN>`
-   pair to get the *parent candidate path*.
-2. If the parent candidate path is the instance path of some resource
-   `P` in the set, then `P` is `R`'s parent.
-3. Otherwise `R` has no resource parent — it sits directly under its
-   scope (as classified in [Step 2](#step-2--identify-resource-paths-and-crud-operations)).
+Call the union of these two sets the **known resource set**. For each
+resource `R` from Step 2, walk up the path until either a known
+resource is hit or the path is no longer a resource path:
 
-A consistency check for `Extension`-scoped resources: when `R`.scope
-is `Extension`, the prefix before the last `/providers/` in `R`'s
-instance path must also be the instance path of some detected
-resource `A` (the resource `R` extends). If no such `A` exists, emit a
-diagnostic — `R` was provisionally classified as `Extension` in
-Step 2 but isn't actually anchored on any known resource.
+1. Let `path = R.instancePath`.
+2. Trim the trailing `/<type>/<name>` pair from `path`.
+3. If the result matches some `P` in the known resource set, then `P`
+   is `R`'s parent — stop.
+4. Otherwise, if the result still contains a `/<type>/<name>` pair
+   *after* the last `/providers/<namespace>/` in the path (i.e. there
+   is at least one more type/name level we can strip while still
+   sitting inside the same provider's resource tree), set
+   `path` = result and go to step 2.
+5. If we have stripped everything down to (and including) the last
+   `/providers/<namespace>/`, stop: `R` has no resource parent. It
+   sits directly under its scope (as classified in
+   [Step 2](#step-2--identify-resource-paths-and-crud-operations)).
+
+This handles specs that skip intermediate resources in the chain: if
+`R`'s instance path is
+`/.../providers/Microsoft.Foo/a/{}/b/{}/c/{}` and only `a/{}` is
+detected as a resource (no resource defined for `a/{}/b/{}`), then
+`R`'s parent is `a/{}`, not nothing.
+
+A consistency check for `Extension`-scoped resources: when `R.scope`
+is `Extension`, the prefix before the **last** `/providers/` in `R`'s
+instance path must also match some known resource (the resource `R`
+extends). If no match is found, emit a diagnostic — `R` was
+provisionally classified as `Extension` in Step 2 but isn't actually
+anchored on any known resource.
 
 See [*How a resource's parent is determined*](#how-a-resources-parent-is-determined)
 for additional rules covering dynamic parent expansion and the
