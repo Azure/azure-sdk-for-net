@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppProvisioningState : IEquatable<NetAppProvisioningState>
     {
         private readonly string _value;
-        /// <summary> Resource has been Accepted. </summary>
+        /// <summary> The request has been accepted. </summary>
         private const string AcceptedValue = "Accepted";
-        /// <summary> Resource is being Created. </summary>
+        /// <summary> The resource is being created. </summary>
         private const string CreatingValue = "Creating";
-        /// <summary> Resource is being Patched. </summary>
+        /// <summary> The resource is being patched. </summary>
         private const string PatchingValue = "Patching";
-        /// <summary> Resource is updating. </summary>
+        /// <summary> The resource is being updated. </summary>
         private const string UpdatingValue = "Updating";
-        /// <summary> Resource is being Deleted. </summary>
+        /// <summary> The resource is being deleted. </summary>
         private const string DeletingValue = "Deleting";
-        /// <summary> Resource is being Moved. </summary>
+        /// <summary> The resource is being moved. </summary>
         private const string MovingValue = "Moving";
-        /// <summary> Resource has Failed. </summary>
+        /// <summary> The operation failed. </summary>
         private const string FailedValue = "Failed";
-        /// <summary> Resource has Succeeded. </summary>
+        /// <summary> The operation succeeded. </summary>
         private const string SucceededValue = "Succeeded";
 
         /// <summary> Initializes a new instance of <see cref="NetAppProvisioningState"/>. </summary>
@@ -42,28 +42,28 @@ namespace Azure.ResourceManager.NetApp.Models
             _value = value;
         }
 
-        /// <summary> Resource has been Accepted. </summary>
+        /// <summary> The request has been accepted. </summary>
         public static NetAppProvisioningState Accepted { get; } = new NetAppProvisioningState(AcceptedValue);
 
-        /// <summary> Resource is being Created. </summary>
+        /// <summary> The resource is being created. </summary>
         public static NetAppProvisioningState Creating { get; } = new NetAppProvisioningState(CreatingValue);
 
-        /// <summary> Resource is being Patched. </summary>
+        /// <summary> The resource is being patched. </summary>
         public static NetAppProvisioningState Patching { get; } = new NetAppProvisioningState(PatchingValue);
 
-        /// <summary> Resource is updating. </summary>
+        /// <summary> The resource is being updated. </summary>
         public static NetAppProvisioningState Updating { get; } = new NetAppProvisioningState(UpdatingValue);
 
-        /// <summary> Resource is being Deleted. </summary>
+        /// <summary> The resource is being deleted. </summary>
         public static NetAppProvisioningState Deleting { get; } = new NetAppProvisioningState(DeletingValue);
 
-        /// <summary> Resource is being Moved. </summary>
+        /// <summary> The resource is being moved. </summary>
         public static NetAppProvisioningState Moving { get; } = new NetAppProvisioningState(MovingValue);
 
-        /// <summary> Resource has Failed. </summary>
+        /// <summary> The operation failed. </summary>
         public static NetAppProvisioningState Failed { get; } = new NetAppProvisioningState(FailedValue);
 
-        /// <summary> Resource has Succeeded. </summary>
+        /// <summary> The operation succeeded. </summary>
         public static NetAppProvisioningState Succeeded { get; } = new NetAppProvisioningState(SucceededValue);
 
         /// <summary> Determines if two <see cref="NetAppProvisioningState"/> values are the same. </summary>
