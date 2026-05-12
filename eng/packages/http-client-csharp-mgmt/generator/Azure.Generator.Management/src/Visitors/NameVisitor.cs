@@ -4,7 +4,6 @@
 using Azure.Core;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
-using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
@@ -88,7 +87,7 @@ internal class NameVisitor : ScmLibraryVisitor
                 newName = $"{enclosingResourceName}CreateOrUpdateContent";
                 type.Update(name: newName);
             }
-            else if (!ClientNameOverrideHelper.HasUserProvidedClientName(model))
+            else if (!inputLibrary.ClientNameOverriddenModels.Contains(model))
             {
                 newName = $"{enclosingResourceName}Patch";
                 type.Update(name: newName);

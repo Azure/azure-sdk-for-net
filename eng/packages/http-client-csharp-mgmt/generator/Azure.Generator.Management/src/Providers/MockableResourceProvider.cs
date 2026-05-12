@@ -311,7 +311,7 @@ namespace Azure.Generator.Management.Providers
             // can be opted into in a follow-up.
             if (methodName != null
                 && resourceMethod.Kind == ResourceOperationKind.List
-                && ClientNameOverrideHelper.HasUserProvidedClientName(resourceMethod.InputMethod))
+                && ManagementClientGenerator.Instance.InputLibrary.ClientNameOverriddenMethods.Contains(resourceMethod.InputMethod))
             {
                 var baseName = resourceMethod.InputMethod.Name;
                 methodName = isAsync ? $"{baseName}Async" : baseName;
