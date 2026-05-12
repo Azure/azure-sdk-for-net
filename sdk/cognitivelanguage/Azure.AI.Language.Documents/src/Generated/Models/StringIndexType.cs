@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> Specifies the method used to interpret string offsets.  Defaults to documents Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/documents-analytics-offsets. </summary>
-    internal readonly partial struct StringIndexType : IEquatable<StringIndexType>
+    public readonly partial struct StringIndexType : IEquatable<StringIndexType>
     {
         private readonly string _value;
         /// <summary> Returned offset and length values will correspond to textElements (Graphemes and Grapheme clusters) conforming to the Unicode 8.0.0 standard. Use this option if your application is written in .NET Framework or .NET Core and you will be using StringInfo. </summary>

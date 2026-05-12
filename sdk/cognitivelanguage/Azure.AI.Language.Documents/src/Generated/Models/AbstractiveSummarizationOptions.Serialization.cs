@@ -12,52 +12,52 @@ using System.Text.Json;
 
 namespace Azure.AI.Language.Documents
 {
-    /// <summary> Supported parameters for an Extractive Summarization task. </summary>
-    public partial class ExtractiveSummarizationActionContent : IJsonModel<ExtractiveSummarizationActionContent>
+    /// <summary> Supported parameters for the pre-built Abstractive Summarization task. </summary>
+    public partial class AbstractiveSummarizationOptions : IJsonModel<AbstractiveSummarizationOptions>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExtractiveSummarizationActionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AbstractiveSummarizationOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtractiveSummarizationActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummarizationOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExtractiveSummarizationActionContent(document.RootElement, options);
+                        return DeserializeAbstractiveSummarizationOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExtractiveSummarizationActionContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AbstractiveSummarizationOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtractiveSummarizationActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummarizationOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExtractiveSummarizationActionContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AbstractiveSummarizationOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExtractiveSummarizationActionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AbstractiveSummarizationOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExtractiveSummarizationActionContent IPersistableModel<ExtractiveSummarizationActionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AbstractiveSummarizationOptions IPersistableModel<AbstractiveSummarizationOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExtractiveSummarizationActionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AbstractiveSummarizationOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExtractiveSummarizationActionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AbstractiveSummarizationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,15 +68,15 @@ namespace Azure.AI.Language.Documents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtractiveSummarizationActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummarizationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtractiveSummarizationActionContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AbstractiveSummarizationOptions)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(LoggingOptOut))
+            if (Optional.IsDefined(ShouldLog))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
-                writer.WriteBooleanValue(LoggingOptOut.Value);
+                writer.WriteBooleanValue(ShouldLog.Value);
             }
             if (Optional.IsDefined(ModelVersion))
             {
@@ -88,20 +88,20 @@ namespace Azure.AI.Language.Documents
                 writer.WritePropertyName("sentenceCount"u8);
                 writer.WriteNumberValue(SentenceCount.Value);
             }
-            if (Optional.IsDefined(OrderBy))
-            {
-                writer.WritePropertyName("sortBy"u8);
-                writer.WriteStringValue(OrderBy.Value.ToString());
-            }
             if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
-            if (Optional.IsDefined(Query))
+            if (Optional.IsDefined(SummaryLength))
             {
-                writer.WritePropertyName("query"u8);
-                writer.WriteStringValue(Query);
+                writer.WritePropertyName("summaryLength"u8);
+                writer.WriteStringValue(SummaryLength.Value.ToString());
+            }
+            if (Optional.IsDefined(Instruction))
+            {
+                writer.WritePropertyName("instruction"u8);
+                writer.WriteStringValue(Instruction);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -122,35 +122,35 @@ namespace Azure.AI.Language.Documents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExtractiveSummarizationActionContent IJsonModel<ExtractiveSummarizationActionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AbstractiveSummarizationOptions IJsonModel<AbstractiveSummarizationOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExtractiveSummarizationActionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AbstractiveSummarizationOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtractiveSummarizationActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummarizationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtractiveSummarizationActionContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AbstractiveSummarizationOptions)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExtractiveSummarizationActionContent(document.RootElement, options);
+            return DeserializeAbstractiveSummarizationOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExtractiveSummarizationActionContent DeserializeExtractiveSummarizationActionContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static AbstractiveSummarizationOptions DeserializeAbstractiveSummarizationOptions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? loggingOptOut = default;
+            bool? shouldLog = default;
             string modelVersion = default;
-            long? sentenceCount = default;
-            ExtractiveSummarizationOrder? orderBy = default;
+            int? sentenceCount = default;
             StringIndexType? stringIndexType = default;
-            string query = default;
+            SummarySize? summaryLength = default;
+            string instruction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,7 +160,7 @@ namespace Azure.AI.Language.Documents
                     {
                         continue;
                     }
-                    loggingOptOut = prop.Value.GetBoolean();
+                    shouldLog = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("modelVersion"u8))
@@ -174,16 +174,7 @@ namespace Azure.AI.Language.Documents
                     {
                         continue;
                     }
-                    sentenceCount = prop.Value.GetInt64();
-                    continue;
-                }
-                if (prop.NameEquals("sortBy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    orderBy = new ExtractiveSummarizationOrder(prop.Value.GetString());
+                    sentenceCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("stringIndexType"u8))
@@ -195,9 +186,18 @@ namespace Azure.AI.Language.Documents
                     stringIndexType = new StringIndexType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("query"u8))
+                if (prop.NameEquals("summaryLength"u8))
                 {
-                    query = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    summaryLength = new SummarySize(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("instruction"u8))
+                {
+                    instruction = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -205,13 +205,13 @@ namespace Azure.AI.Language.Documents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExtractiveSummarizationActionContent(
-                loggingOptOut,
+            return new AbstractiveSummarizationOptions(
+                shouldLog,
                 modelVersion,
                 sentenceCount,
-                orderBy,
                 stringIndexType,
-                query,
+                summaryLength,
+                instruction,
                 additionalBinaryDataProperties);
         }
     }

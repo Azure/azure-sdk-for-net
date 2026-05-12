@@ -11,12 +11,17 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> Supported parameters for an Extractive Summarization task. </summary>
-    public partial class ExtractiveSummarizationActionContent
+    public partial class ExtractiveSummarizationOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationOptions"/>. </summary>
+        public ExtractiveSummarizationOptions()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationOptions"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="sentenceCount"> Specifies the number of sentences in the extracted summary. </param>
@@ -24,7 +29,7 @@ namespace Azure.AI.Language.Documents
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. </param>
         /// <param name="query"> (Optional) If provided, the query will be used to extract most relevant sentences from the document. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtractiveSummarizationActionContent(bool? loggingOptOut, string modelVersion, long? sentenceCount, ExtractiveSummarizationOrder? orderBy, StringIndexType? stringIndexType, string query, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExtractiveSummarizationOptions(bool? loggingOptOut, string modelVersion, long? sentenceCount, ExtractiveSummarizationOrder? orderBy, StringIndexType? stringIndexType, string query, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;
@@ -46,6 +51,9 @@ namespace Azure.AI.Language.Documents
 
         /// <summary> Specifies how to sort the extracted summaries. </summary>
         public ExtractiveSummarizationOrder? OrderBy { get; set; }
+
+        /// <summary> Specifies the method used to interpret string offsets. </summary>
+        public StringIndexType? StringIndexType { get; set; }
 
         /// <summary> (Optional) If provided, the query will be used to extract most relevant sentences from the document. </summary>
         public string Query { get; set; }

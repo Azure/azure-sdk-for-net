@@ -89,18 +89,18 @@ namespace Azure.AI.Language.Documents
         /// <param name="failed"> Count of failed tasks. </param>
         /// <param name="inProgress"> Count of inprogress tasks. </param>
         /// <param name="total"> Count of total tasks. </param>
-        /// <param name="items"> Enumerable of Analyze documents job results. </param>
+        /// <param name="results"> Enumerable of Analyze documents job results. </param>
         /// <returns> A new <see cref="Documents.DocumentTasksState"/> instance for mocking. </returns>
-        public static DocumentTasksState DocumentTasksState(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<AnalyzeDocumentsOperationResult> items = default)
+        public static DocumentTasksState DocumentTasksState(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<AnalyzeDocumentsOperationResult> results = default)
         {
-            items ??= new ChangeTrackingList<AnalyzeDocumentsOperationResult>();
+            results ??= new ChangeTrackingList<AnalyzeDocumentsOperationResult>();
 
             return new DocumentTasksState(
                 completed,
                 failed,
                 inProgress,
                 total,
-                items.ToList(),
+                results.ToList(),
                 additionalBinaryDataProperties: null);
         }
 
@@ -518,7 +518,7 @@ namespace Azure.AI.Language.Documents
         /// <param name="name"> task name. </param>
         /// <param name="actionContent"> Parameters for the Extractive Summarization task. </param>
         /// <returns> A new <see cref="Documents.ExtractiveSummarizationOperationAction"/> instance for mocking. </returns>
-        public static ExtractiveSummarizationOperationAction ExtractiveSummarizationOperationAction(string name = default, ExtractiveSummarizationActionContent actionContent = default)
+        public static ExtractiveSummarizationOperationAction ExtractiveSummarizationOperationAction(string name = default, ExtractiveSummarizationOptions actionContent = default)
         {
             return new ExtractiveSummarizationOperationAction(name, AnalyzeDocumentsOperationActionKind.ExtractiveSummarization, additionalBinaryDataProperties: null, actionContent);
         }
@@ -530,10 +530,10 @@ namespace Azure.AI.Language.Documents
         /// <param name="orderBy"> Specifies how to sort the extracted summaries. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. </param>
         /// <param name="query"> (Optional) If provided, the query will be used to extract most relevant sentences from the document. </param>
-        /// <returns> A new <see cref="Documents.ExtractiveSummarizationActionContent"/> instance for mocking. </returns>
-        public static ExtractiveSummarizationActionContent ExtractiveSummarizationActionContent(bool? loggingOptOut = default, string modelVersion = default, long? sentenceCount = default, ExtractiveSummarizationOrder? orderBy = default, StringIndexType? stringIndexType = default, string query = default)
+        /// <returns> A new <see cref="Documents.ExtractiveSummarizationOptions"/> instance for mocking. </returns>
+        public static ExtractiveSummarizationOptions ExtractiveSummarizationOptions(bool? loggingOptOut = default, string modelVersion = default, long? sentenceCount = default, ExtractiveSummarizationOrder? orderBy = default, StringIndexType? stringIndexType = default, string query = default)
         {
-            return new ExtractiveSummarizationActionContent(
+            return new ExtractiveSummarizationOptions(
                 loggingOptOut,
                 modelVersion,
                 sentenceCount,
@@ -547,7 +547,7 @@ namespace Azure.AI.Language.Documents
         /// <param name="name"> task name. </param>
         /// <param name="actionContent"> Parameters for the Abstractive Summarization task. </param>
         /// <returns> A new <see cref="Documents.AbstractiveSummarizationOperationAction"/> instance for mocking. </returns>
-        public static AbstractiveSummarizationOperationAction AbstractiveSummarizationOperationAction(string name = default, AbstractiveSummarizationActionContent actionContent = default)
+        public static AbstractiveSummarizationOperationAction AbstractiveSummarizationOperationAction(string name = default, AbstractiveSummarizationOptions actionContent = default)
         {
             return new AbstractiveSummarizationOperationAction(name, AnalyzeDocumentsOperationActionKind.AbstractiveSummarization, additionalBinaryDataProperties: null, actionContent);
         }
@@ -559,10 +559,10 @@ namespace Azure.AI.Language.Documents
         /// <param name="stringIndexType"> String index type. </param>
         /// <param name="summaryLength"> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </param>
         /// <param name="instruction"> (Optional) If provided, the instruction will be used to generate the summary. </param>
-        /// <returns> A new <see cref="Documents.AbstractiveSummarizationActionContent"/> instance for mocking. </returns>
-        public static AbstractiveSummarizationActionContent AbstractiveSummarizationActionContent(bool? shouldLog = default, string modelVersion = default, int? sentenceCount = default, StringIndexType? stringIndexType = default, SummarySize? summaryLength = default, string instruction = default)
+        /// <returns> A new <see cref="Documents.AbstractiveSummarizationOptions"/> instance for mocking. </returns>
+        public static AbstractiveSummarizationOptions AbstractiveSummarizationOptions(bool? shouldLog = default, string modelVersion = default, int? sentenceCount = default, StringIndexType? stringIndexType = default, SummarySize? summaryLength = default, string instruction = default)
         {
-            return new AbstractiveSummarizationActionContent(
+            return new AbstractiveSummarizationOptions(
                 shouldLog,
                 modelVersion,
                 sentenceCount,

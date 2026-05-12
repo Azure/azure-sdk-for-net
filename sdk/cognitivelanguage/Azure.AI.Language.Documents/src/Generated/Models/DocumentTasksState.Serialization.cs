@@ -86,11 +86,11 @@ namespace Azure.AI.Language.Documents
             writer.WriteNumberValue(InProgress);
             writer.WritePropertyName("total"u8);
             writer.WriteNumberValue(Total);
-            if (Optional.IsCollectionDefined(Items))
+            if (Optional.IsCollectionDefined(Results))
             {
                 writer.WritePropertyName("items"u8);
                 writer.WriteStartArray();
-                foreach (AnalyzeDocumentsOperationResult item in Items)
+                foreach (AnalyzeDocumentsOperationResult item in Results)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -142,7 +142,7 @@ namespace Azure.AI.Language.Documents
             int failed = default;
             int inProgress = default;
             int total = default;
-            IList<AnalyzeDocumentsOperationResult> items = default;
+            IList<AnalyzeDocumentsOperationResult> results = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,7 +177,7 @@ namespace Azure.AI.Language.Documents
                     {
                         array.Add(AnalyzeDocumentsOperationResult.DeserializeAnalyzeDocumentsOperationResult(item, options));
                     }
-                    items = array;
+                    results = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -190,7 +190,7 @@ namespace Azure.AI.Language.Documents
                 failed,
                 inProgress,
                 total,
-                items ?? new ChangeTrackingList<AnalyzeDocumentsOperationResult>(),
+                results ?? new ChangeTrackingList<AnalyzeDocumentsOperationResult>(),
                 additionalBinaryDataProperties);
         }
     }

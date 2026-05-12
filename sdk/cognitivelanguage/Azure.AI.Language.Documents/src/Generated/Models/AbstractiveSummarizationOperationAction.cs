@@ -16,7 +16,7 @@ namespace Azure.AI.Language.Documents
         /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationOperationAction"/>. </summary>
         /// <param name="actionContent"> Parameters for the Abstractive Summarization task. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionContent"/> is null. </exception>
-        public AbstractiveSummarizationOperationAction(AbstractiveSummarizationActionContent actionContent) : base(AnalyzeDocumentsOperationActionKind.AbstractiveSummarization)
+        public AbstractiveSummarizationOperationAction(AbstractiveSummarizationOptions actionContent) : base(AnalyzeDocumentsOperationActionKind.AbstractiveSummarization)
         {
             Argument.AssertNotNull(actionContent, nameof(actionContent));
 
@@ -28,12 +28,12 @@ namespace Azure.AI.Language.Documents
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="actionContent"> Parameters for the Abstractive Summarization task. </param>
-        internal AbstractiveSummarizationOperationAction(string name, AnalyzeDocumentsOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AbstractiveSummarizationActionContent actionContent) : base(name, kind, additionalBinaryDataProperties)
+        internal AbstractiveSummarizationOperationAction(string name, AnalyzeDocumentsOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AbstractiveSummarizationOptions actionContent) : base(name, kind, additionalBinaryDataProperties)
         {
             ActionContent = actionContent;
         }
 
         /// <summary> Parameters for the Abstractive Summarization task. </summary>
-        public AbstractiveSummarizationActionContent ActionContent { get; }
+        public AbstractiveSummarizationOptions ActionContent { get; }
     }
 }

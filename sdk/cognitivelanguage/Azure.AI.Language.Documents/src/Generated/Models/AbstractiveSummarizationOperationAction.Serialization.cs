@@ -111,7 +111,7 @@ namespace Azure.AI.Language.Documents
             string name = default;
             AnalyzeDocumentsOperationActionKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AbstractiveSummarizationActionContent actionContent = default;
+            AbstractiveSummarizationOptions actionContent = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("taskName"u8))
@@ -126,7 +126,7 @@ namespace Azure.AI.Language.Documents
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    actionContent = AbstractiveSummarizationActionContent.DeserializeAbstractiveSummarizationActionContent(prop.Value, options);
+                    actionContent = AbstractiveSummarizationOptions.DeserializeAbstractiveSummarizationOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

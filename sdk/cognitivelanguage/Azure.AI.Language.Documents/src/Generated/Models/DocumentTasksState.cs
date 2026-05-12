@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Documents
             Failed = failed;
             InProgress = inProgress;
             Total = total;
-            Items = new ChangeTrackingList<AnalyzeDocumentsOperationResult>();
+            Results = new ChangeTrackingList<AnalyzeDocumentsOperationResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentTasksState"/>. </summary>
@@ -35,15 +35,15 @@ namespace Azure.AI.Language.Documents
         /// <param name="failed"> Count of failed tasks. </param>
         /// <param name="inProgress"> Count of inprogress tasks. </param>
         /// <param name="total"> Count of total tasks. </param>
-        /// <param name="items"> Enumerable of Analyze documents job results. </param>
+        /// <param name="results"> Enumerable of Analyze documents job results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentTasksState(int completed, int failed, int inProgress, int total, IList<AnalyzeDocumentsOperationResult> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentTasksState(int completed, int failed, int inProgress, int total, IList<AnalyzeDocumentsOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Completed = completed;
             Failed = failed;
             InProgress = inProgress;
             Total = total;
-            Items = items;
+            Results = results;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,6 +60,6 @@ namespace Azure.AI.Language.Documents
         public int Total { get; }
 
         /// <summary> Enumerable of Analyze documents job results. </summary>
-        public IList<AnalyzeDocumentsOperationResult> Items { get; }
+        public IList<AnalyzeDocumentsOperationResult> Results { get; }
     }
 }
