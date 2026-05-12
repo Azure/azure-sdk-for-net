@@ -12,8 +12,10 @@ using System.Text.Json;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
-    public partial class AvailabilitySetDataProxy : IJsonModel<AvailabilitySetData>
+    public partial class AvailabilitySetDataProxy : ModelProxy<AvailabilitySetData>, IJsonModel<AvailabilitySetData>
     {
+        public override bool CanHandle(AvailabilitySetData model) => true;
+
         void IJsonModel<AvailabilitySetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
@@ -235,7 +237,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             return new AvailabilitySetData(id, name, type, systemData.Value, OptionalProperty.ToDictionary(tags), location, sku.Value, OptionalProperty.ToNullable(platformUpdateDomainCount), OptionalProperty.ToNullable(platformFaultDomainCount), OptionalProperty.ToList(virtualMachines), proximityPlacementGroup, OptionalProperty.ToList(statuses), rawDataDictionary, default);
         }
 
-        AvailabilitySetData IPersistableModel<AvailabilitySetData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        public override AvailabilitySetData Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -251,13 +253,13 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             return DeserializeAvailabilitySetData(doc.RootElement, options);
         }
 
-        BinaryData IPersistableModel<AvailabilitySetData>.Write(ModelReaderWriterOptions options)
+        public override BinaryData Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<AvailabilitySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

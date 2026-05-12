@@ -108,9 +108,11 @@ internal class ModelReaderWriterSamples
     }
 
     #region Snippet:Readme_Read_Proxy_ClassStub
-    public class OutputModelProxy : IJsonModel<OutputModel>
+    public class OutputModelProxy : ModelProxy<OutputModel>, IJsonModel<OutputModel>
     #endregion
     {
+        public override bool CanHandle(OutputModel model) => true;
+
         void IJsonModel<OutputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
@@ -121,24 +123,26 @@ internal class ModelReaderWriterSamples
             throw new NotImplementedException();
         }
 
-        BinaryData IPersistableModel<OutputModel>.Write(ModelReaderWriterOptions options)
+        public override BinaryData Write(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        OutputModel IPersistableModel<OutputModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        public override OutputModel Create(BinaryData data, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        string IPersistableModel<OutputModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        public override string GetFormatFromOptions(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
     }
 
-    public class OutputModelProxyOverride : IJsonModel<OutputModel>
+    public class OutputModelProxyOverride : ModelProxy<OutputModel>, IJsonModel<OutputModel>
     {
+        public override bool CanHandle(OutputModel model) => true;
+
         void IJsonModel<OutputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
@@ -149,26 +153,28 @@ internal class ModelReaderWriterSamples
             throw new NotImplementedException();
         }
 
-        BinaryData IPersistableModel<OutputModel>.Write(ModelReaderWriterOptions options)
+        public override BinaryData Write(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        OutputModel IPersistableModel<OutputModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        public override OutputModel Create(BinaryData data, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        string IPersistableModel<OutputModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        public override string GetFormatFromOptions(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
     }
 
     #region Snippet:Readme_Write_Proxy_ClassStub
-    public class InputModelProxy : IJsonModel<InputModel>
+    public class InputModelProxy : ModelProxy<InputModel>, IJsonModel<InputModel>
     #endregion
     {
+        public override bool CanHandle(InputModel model) => true;
+
         void IJsonModel<InputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
@@ -179,17 +185,17 @@ internal class ModelReaderWriterSamples
             throw new NotImplementedException();
         }
 
-        BinaryData IPersistableModel<InputModel>.Write(ModelReaderWriterOptions options)
+        public override BinaryData Write(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        InputModel IPersistableModel<InputModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        public override InputModel Create(BinaryData data, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        string IPersistableModel<InputModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        public override string GetFormatFromOptions(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
@@ -256,7 +262,7 @@ internal class ModelReaderWriterSamples
         }
     }
 
-    private class OutputModel : IJsonModel<OutputModel>
+    internal class OutputModel : IJsonModel<OutputModel>
     {
         OutputModel IJsonModel<OutputModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
@@ -284,7 +290,7 @@ internal class ModelReaderWriterSamples
         }
     }
 
-    private class InputModel : IJsonModel<InputModel>
+    internal class InputModel : IJsonModel<InputModel>
     {
         void IJsonModel<InputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
