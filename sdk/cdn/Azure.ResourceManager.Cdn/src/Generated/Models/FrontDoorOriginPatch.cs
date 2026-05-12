@@ -13,20 +13,20 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> AFDOrigin properties needed for origin update. </summary>
-    public partial class FrontDoorOriginUpdateParameters
+    public partial class FrontDoorOriginPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginUpdateParameters"/>. </summary>
-        public FrontDoorOriginUpdateParameters()
+        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginPatch"/>. </summary>
+        public FrontDoorOriginPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginUpdateParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginPatch"/>. </summary>
         /// <param name="properties"> The JSON object that contains the properties of the origin. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorOriginUpdateParameters(FrontDoorOriginUpdatePropertiesParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorOriginPatch(FrontDoorOriginUpdatePropertiesParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

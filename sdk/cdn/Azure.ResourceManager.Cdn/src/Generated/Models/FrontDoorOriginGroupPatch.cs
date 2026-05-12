@@ -12,20 +12,20 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> AFDOrigin group properties needed for origin group creation or update. </summary>
-    public partial class FrontDoorOriginGroupUpdateParameters
+    public partial class FrontDoorOriginGroupPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginGroupUpdateParameters"/>. </summary>
-        public FrontDoorOriginGroupUpdateParameters()
+        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginGroupPatch"/>. </summary>
+        public FrontDoorOriginGroupPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginGroupUpdateParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginGroupPatch"/>. </summary>
         /// <param name="properties"> The JSON object that contains the properties of the origin group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorOriginGroupUpdateParameters(FrontDoorOriginGroupUpdatePropertiesParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorOriginGroupPatch(FrontDoorOriginGroupUpdatePropertiesParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

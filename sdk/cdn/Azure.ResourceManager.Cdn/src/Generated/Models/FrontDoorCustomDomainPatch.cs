@@ -13,20 +13,20 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The domain JSON object required for domain creation or update. </summary>
-    public partial class FrontDoorCustomDomainUpdateParameters
+    public partial class FrontDoorCustomDomainPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainUpdateParameters"/>. </summary>
-        public FrontDoorCustomDomainUpdateParameters()
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainPatch"/>. </summary>
+        public FrontDoorCustomDomainPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainUpdateParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainPatch"/>. </summary>
         /// <param name="properties"> The JSON object that contains the properties of the domain to create. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorCustomDomainUpdateParameters(FrontDoorCustomDomainUpdatePropertiesParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorCustomDomainPatch(FrontDoorCustomDomainUpdatePropertiesParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

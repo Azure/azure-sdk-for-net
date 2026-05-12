@@ -12,22 +12,22 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Properties required to create or update an endpoint. </summary>
-    public partial class FrontDoorEndpointUpdateParameters
+    public partial class FrontDoorEndpointPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointUpdateParameters"/>. </summary>
-        public FrontDoorEndpointUpdateParameters()
+        /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointPatch"/>. </summary>
+        public FrontDoorEndpointPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointUpdateParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointPatch"/>. </summary>
         /// <param name="tags"> Endpoint tags. </param>
         /// <param name="properties"> The JSON object containing endpoint update parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorEndpointUpdateParameters(IDictionary<string, string> tags, FrontDoorEndpointPropertiesUpdateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorEndpointPatch(IDictionary<string, string> tags, FrontDoorEndpointPropertiesUpdateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;

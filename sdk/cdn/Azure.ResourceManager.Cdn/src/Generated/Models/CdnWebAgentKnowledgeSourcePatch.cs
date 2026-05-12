@@ -12,20 +12,20 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Properties required to update a knowledge source. </summary>
-    public partial class WebAgentKnowledgeSourcePatch
+    public partial class CdnWebAgentKnowledgeSourcePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WebAgentKnowledgeSourcePatch"/>. </summary>
-        public WebAgentKnowledgeSourcePatch()
+        /// <summary> Initializes a new instance of <see cref="CdnWebAgentKnowledgeSourcePatch"/>. </summary>
+        public CdnWebAgentKnowledgeSourcePatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebAgentKnowledgeSourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnWebAgentKnowledgeSourcePatch"/>. </summary>
         /// <param name="properties"> Properties of the knowledge source to be updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebAgentKnowledgeSourcePatch(KnowledgeSourcePropertiesUpdateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CdnWebAgentKnowledgeSourcePatch(KnowledgeSourcePropertiesUpdateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

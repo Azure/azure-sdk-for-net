@@ -14,62 +14,62 @@ using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The domain JSON object required for domain creation or update. </summary>
-    public partial class FrontDoorCustomDomainUpdateParameters : IJsonModel<FrontDoorCustomDomainUpdateParameters>
+    /// <summary> Properties required to update a knowledge source. </summary>
+    public partial class CdnWebAgentKnowledgeSourcePatch : IJsonModel<CdnWebAgentKnowledgeSourcePatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FrontDoorCustomDomainUpdateParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CdnWebAgentKnowledgeSourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnWebAgentKnowledgeSourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFrontDoorCustomDomainUpdateParameters(document.RootElement, options);
+                        return DeserializeCdnWebAgentKnowledgeSourcePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainUpdateParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnWebAgentKnowledgeSourcePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnWebAgentKnowledgeSourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainUpdateParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnWebAgentKnowledgeSourcePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FrontDoorCustomDomainUpdateParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CdnWebAgentKnowledgeSourcePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FrontDoorCustomDomainUpdateParameters IPersistableModel<FrontDoorCustomDomainUpdateParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CdnWebAgentKnowledgeSourcePatch IPersistableModel<CdnWebAgentKnowledgeSourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FrontDoorCustomDomainUpdateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CdnWebAgentKnowledgeSourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="frontDoorCustomDomainUpdateParameters"> The <see cref="FrontDoorCustomDomainUpdateParameters"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(FrontDoorCustomDomainUpdateParameters frontDoorCustomDomainUpdateParameters)
+        /// <param name="cdnWebAgentKnowledgeSourcePatch"> The <see cref="CdnWebAgentKnowledgeSourcePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CdnWebAgentKnowledgeSourcePatch cdnWebAgentKnowledgeSourcePatch)
         {
-            if (frontDoorCustomDomainUpdateParameters == null)
+            if (cdnWebAgentKnowledgeSourcePatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(frontDoorCustomDomainUpdateParameters, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(cdnWebAgentKnowledgeSourcePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FrontDoorCustomDomainUpdateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CdnWebAgentKnowledgeSourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnWebAgentKnowledgeSourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorCustomDomainUpdateParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnWebAgentKnowledgeSourcePatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Properties))
             {
@@ -109,30 +109,30 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FrontDoorCustomDomainUpdateParameters IJsonModel<FrontDoorCustomDomainUpdateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CdnWebAgentKnowledgeSourcePatch IJsonModel<CdnWebAgentKnowledgeSourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FrontDoorCustomDomainUpdateParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CdnWebAgentKnowledgeSourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnWebAgentKnowledgeSourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorCustomDomainUpdateParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnWebAgentKnowledgeSourcePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFrontDoorCustomDomainUpdateParameters(document.RootElement, options);
+            return DeserializeCdnWebAgentKnowledgeSourcePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FrontDoorCustomDomainUpdateParameters DeserializeFrontDoorCustomDomainUpdateParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static CdnWebAgentKnowledgeSourcePatch DeserializeCdnWebAgentKnowledgeSourcePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            FrontDoorCustomDomainUpdatePropertiesParameters properties = default;
+            KnowledgeSourcePropertiesUpdateParameters properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    properties = FrontDoorCustomDomainUpdatePropertiesParameters.DeserializeFrontDoorCustomDomainUpdatePropertiesParameters(prop.Value, options);
+                    properties = KnowledgeSourcePropertiesUpdateParameters.DeserializeKnowledgeSourcePropertiesUpdateParameters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FrontDoorCustomDomainUpdateParameters(properties, additionalBinaryDataProperties);
+            return new CdnWebAgentKnowledgeSourcePatch(properties, additionalBinaryDataProperties);
         }
     }
 }
