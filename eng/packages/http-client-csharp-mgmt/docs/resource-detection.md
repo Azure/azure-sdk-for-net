@@ -210,8 +210,10 @@ For each candidate resource model `M` from Step 1:
 
    Any path that fails one of these checks is rejected with a
    diagnostic naming the offending segment, and the corresponding GET
-   does **not** make `M` a resource. If `M` has no other well-formed
-   `Read`, it falls through to step 5 below.
+   does **not** make `M` a resource. If every GET returning `M` is
+   rejected, `M` has no `Read` and falls through to the
+   [no-`Read` diagnostic](#step-2--identify-resource-paths-and-crud-operations)
+   in sub-step 6 below.
 
 3. **Expand dynamic resource types.** If any **type** segment of the
    validated path is a closed-enum `{variable}`, expand the path into
