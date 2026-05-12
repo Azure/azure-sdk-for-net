@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(AvailabilityStatus))
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.NetApp.Models
             long size = default;
             ElasticExportPolicy exportPolicy = default;
             IList<ElasticProtocolType> protocolTypes = default;
-            NetAppProvisioningState? provisioningState = default;
+            NetAppVolumeQuotaRuleProvisioningState? provisioningState = default;
             ElasticResourceAvailabilityStatus? availabilityStatus = default;
             ResourceIdentifier snapshotResourceId = default;
             IReadOnlyList<ElasticMountTargetProperties> mountTargets = default;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    provisioningState = prop.Value.GetString().ToNetAppProvisioningState();
+                    provisioningState = new NetAppVolumeQuotaRuleProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("availabilityStatus"u8))

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(Size))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.NetApp.Models
             DateTimeOffset? createdOn = default;
             DateTimeOffset? snapshotCreationOn = default;
             DateTimeOffset? completionOn = default;
-            NetAppProvisioningState? provisioningState = default;
+            NetAppVolumeQuotaRuleProvisioningState? provisioningState = default;
             long? size = default;
             string label = default;
             ElasticBackupType? backupType = default;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    provisioningState = prop.Value.GetString().ToNetAppProvisioningState();
+                    provisioningState = new NetAppVolumeQuotaRuleProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("size"u8))

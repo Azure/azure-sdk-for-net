@@ -11,7 +11,7 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Compatibility alias for NetApp volume quota rule provisioning state values. </summary>
+    /// <summary> C# extensible replacement for NetApp provisioning state values. </summary>
     public readonly partial struct NetAppVolumeQuotaRuleProvisioningState : IEquatable<NetAppVolumeQuotaRuleProvisioningState>
     {
         private readonly string _value;

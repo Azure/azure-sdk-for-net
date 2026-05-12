@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="backupResourceId"> Resource identifier used to identify the Elastic Backup. </param>
         /// <param name="restorationState"> The current state of the restoration process. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticVolumeProperties(string filePath, long size, ElasticExportPolicy exportPolicy, IList<ElasticProtocolType> protocolTypes, NetAppProvisioningState? provisioningState, ElasticResourceAvailabilityStatus? availabilityStatus, ResourceIdentifier snapshotResourceId, IReadOnlyList<ElasticMountTargetProperties> mountTargets, ElasticVolumeDataProtectionProperties dataProtection, SnapshotDirectoryVisibility? snapshotDirectoryVisibility, ElasticSmbProperties smbProperties, ResourceIdentifier backupResourceId, ElasticVolumeRestorationState? restorationState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticVolumeProperties(string filePath, long size, ElasticExportPolicy exportPolicy, IList<ElasticProtocolType> protocolTypes, NetAppVolumeQuotaRuleProvisioningState? provisioningState, ElasticResourceAvailabilityStatus? availabilityStatus, ResourceIdentifier snapshotResourceId, IReadOnlyList<ElasticMountTargetProperties> mountTargets, ElasticVolumeDataProtectionProperties dataProtection, SnapshotDirectoryVisibility? snapshotDirectoryVisibility, ElasticSmbProperties smbProperties, ResourceIdentifier backupResourceId, ElasticVolumeRestorationState? restorationState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FilePath = filePath;
             Size = size;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public IList<ElasticProtocolType> ProtocolTypes { get; }
 
         /// <summary> Azure lifecycle management. </summary>
-        public NetAppProvisioningState? ProvisioningState { get; }
+        public NetAppVolumeQuotaRuleProvisioningState? ProvisioningState { get; }
 
         /// <summary> Current availability status of the resource. </summary>
         public ElasticResourceAvailabilityStatus? AvailabilityStatus { get; }

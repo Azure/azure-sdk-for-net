@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(DailyBackupsToKeep))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            NetAppProvisioningState? provisioningState = default;
+            NetAppVolumeQuotaRuleProvisioningState? provisioningState = default;
             int? dailyBackupsToKeep = default;
             int? weeklyBackupsToKeep = default;
             int? monthlyBackupsToKeep = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    provisioningState = prop.Value.GetString().ToNetAppProvisioningState();
+                    provisioningState = new NetAppVolumeQuotaRuleProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dailyBackupsToKeep"u8))

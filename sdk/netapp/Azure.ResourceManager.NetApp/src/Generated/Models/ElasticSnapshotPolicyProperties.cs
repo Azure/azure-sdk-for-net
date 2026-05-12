@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="policyStatus"> Configures if the snapshot policy is enabled on the volumes connected to the policy. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSnapshotPolicyProperties(ElasticSnapshotPolicyHourlySchedule hourlySchedule, ElasticSnapshotPolicyDailySchedule dailySchedule, ElasticSnapshotPolicyWeeklySchedule weeklySchedule, ElasticSnapshotPolicyMonthlySchedule monthlySchedule, ElasticSnapshotPolicyStatus? policyStatus, NetAppProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticSnapshotPolicyProperties(ElasticSnapshotPolicyHourlySchedule hourlySchedule, ElasticSnapshotPolicyDailySchedule dailySchedule, ElasticSnapshotPolicyWeeklySchedule weeklySchedule, ElasticSnapshotPolicyMonthlySchedule monthlySchedule, ElasticSnapshotPolicyStatus? policyStatus, NetAppVolumeQuotaRuleProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HourlySchedule = hourlySchedule;
             DailySchedule = dailySchedule;
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public ElasticSnapshotPolicyStatus? PolicyStatus { get; set; }
 
         /// <summary> Azure lifecycle management. </summary>
-        public NetAppProvisioningState? ProvisioningState { get; }
+        public NetAppVolumeQuotaRuleProvisioningState? ProvisioningState { get; }
     }
 }

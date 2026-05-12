@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="assignedVolumesCount"> The number of volumes currently using this Backup Policy. </param>
         /// <param name="policyState"> The property to identify whether Backup Policy is enabled or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticBackupPolicyProperties(NetAppProvisioningState? provisioningState, int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, int? assignedVolumesCount, ElasticBackupPolicyState? policyState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticBackupPolicyProperties(NetAppVolumeQuotaRuleProvisioningState? provisioningState, int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, int? assignedVolumesCount, ElasticBackupPolicyState? policyState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DailyBackupsToKeep = dailyBackupsToKeep;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Azure lifecycle management. </summary>
-        public NetAppProvisioningState? ProvisioningState { get; }
+        public NetAppVolumeQuotaRuleProvisioningState? ProvisioningState { get; }
 
         /// <summary> Daily backups count to keep. </summary>
         public int? DailyBackupsToKeep { get; set; }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetApp
         public ETag? ETag { get; }
 
         /// <summary> Azure lifecycle management. </summary>
-        public NetAppProvisioningState? ElasticBackupVaultProvisioningState
+        public NetAppVolumeQuotaRuleProvisioningState? ElasticBackupVaultProvisioningState
         {
             get
             {

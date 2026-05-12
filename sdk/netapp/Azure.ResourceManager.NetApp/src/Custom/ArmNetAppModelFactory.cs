@@ -12,6 +12,7 @@ using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -20,10 +21,7 @@ namespace Azure.ResourceManager.NetApp.Models
     // switched generated overload dispatch to named arguments because NetApp also has a GA
     // compatibility overload with float? customThroughputMibps. Keep this one shim using
     // positional dispatch to target the generated primary overload unambiguously.
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CapacityPoolData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(ETag?), typeof(Guid?), typeof(long), typeof(NetAppFileServiceLevel), typeof(string), typeof(float?), typeof(float?), typeof(CapacityPoolQosType?), typeof(bool?), typeof(CapacityPoolEncryptionType?))]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("NetAppVolumeQuotaRuleData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(NetAppProvisioningState?), typeof(long?), typeof(NetAppVolumeQuotaType?), typeof(string))]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("NetAppVolumeQuotaRulePatch", typeof(IDictionary<string, string>), typeof(NetAppProvisioningState?), typeof(long?), typeof(NetAppVolumeQuotaType?), typeof(string))]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("BackupsMigrationContent", typeof(ResourceIdentifier))]
+    [CodeGenSuppress("CapacityPoolData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(ETag?), typeof(Guid?), typeof(long), typeof(NetAppFileServiceLevel), typeof(string), typeof(float?), typeof(float?), typeof(CapacityPoolQosType?), typeof(bool?), typeof(CapacityPoolEncryptionType?))]
     public static partial class ArmNetAppModelFactory
     {
         /// <summary> Source Cluster properties for a cluster peer request. </summary>
@@ -219,44 +217,6 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             return new NetAppSubscriptionQuotaItem(id, name, resourceType, systemData, current, @default, null);
         }
-
-        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppVolumeQuotaRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> Gets the status of the VolumeQuotaRule at the time the operation was called. </param>
-        /// <param name="quotaSizeInKiBs"> Size of quota. </param>
-        /// <param name="quotaType"> Type of quota. </param>
-        /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running 'id' or 'getent' command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
-        /// <returns> A new <see cref="NetApp.NetAppVolumeQuotaRuleData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeQuotaRuleData NetAppVolumeQuotaRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppProvisioningState? provisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return NetAppVolumeQuotaRuleData(id, name, resourceType, systemData, tags, location, ToVolumeQuotaRuleProvisioningState(provisioningState), quotaSizeInKiBs, quotaType, quotaTarget);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeQuotaRulePatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="provisioningState"> Gets the status of the VolumeQuotaRule at the time the operation was called. </param>
-        /// <param name="quotaSizeInKiBs"> Size of quota. </param>
-        /// <param name="quotaType"> Type of quota. </param>
-        /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running 'id' or 'getent' command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
-        /// <returns> A new <see cref="Models.NetAppVolumeQuotaRulePatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeQuotaRulePatch NetAppVolumeQuotaRulePatch(IDictionary<string, string> tags, NetAppProvisioningState? provisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return NetAppVolumeQuotaRulePatch(tags, ToVolumeQuotaRuleProvisioningState(provisioningState), quotaSizeInKiBs, quotaType, quotaTarget);
-        }
-
-        private static NetAppVolumeQuotaRuleProvisioningState? ToVolumeQuotaRuleProvisioningState(NetAppProvisioningState? provisioningState)
-            => provisioningState.HasValue ? new NetAppVolumeQuotaRuleProvisioningState(provisioningState.Value.ToString()) : null;
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeReplicationStatus"/>. </summary>
         /// <param name="isHealthy"> Replication health check. </param>

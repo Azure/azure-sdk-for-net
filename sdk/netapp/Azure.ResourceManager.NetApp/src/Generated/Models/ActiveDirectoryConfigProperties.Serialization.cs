@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("domain"u8);
             writer.WriteStringValue(Domain);
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.NetApp.Models
             IList<string> administrators = default;
             IList<string> securityOperators = default;
             NetAppAccountActiveDirectoryStatus? activeDirectoryStatus = default;
-            NetAppProvisioningState? provisioningState = default;
+            NetAppVolumeQuotaRuleProvisioningState? provisioningState = default;
             string domain = default;
             NetAppSecretPassword secretPassword = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    provisioningState = prop.Value.GetString().ToNetAppProvisioningState();
+                    provisioningState = new NetAppVolumeQuotaRuleProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("domain"u8))

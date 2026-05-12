@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(Encryption))
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             long size = default;
             ElasticServiceLevel serviceLevel = default;
-            NetAppProvisioningState? provisioningState = default;
+            NetAppVolumeQuotaRuleProvisioningState? provisioningState = default;
             ElasticEncryptionConfiguration encryption = default;
             double? totalThroughputMibps = default;
             ResourceIdentifier subnetResourceId = default;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    provisioningState = prop.Value.GetString().ToNetAppProvisioningState();
+                    provisioningState = new NetAppVolumeQuotaRuleProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("encryption"u8))

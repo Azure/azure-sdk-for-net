@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="ElasticSnapshotProperties"/>. </summary>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSnapshotProperties(NetAppProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticSnapshotProperties(NetAppVolumeQuotaRuleProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Azure lifecycle management. </summary>
-        public NetAppProvisioningState? ProvisioningState { get; }
+        public NetAppVolumeQuotaRuleProvisioningState? ProvisioningState { get; }
     }
 }
