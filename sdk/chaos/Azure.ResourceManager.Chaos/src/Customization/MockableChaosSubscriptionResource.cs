@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Mocking
@@ -91,6 +92,32 @@ namespace Azure.ResourceManager.Chaos.Mocking
         public virtual async Task<Response<ChaosTargetTypeResource>> GetChaosTargetTypeAsync(string locationName, string targetTypeName, CancellationToken cancellationToken = default)
         {
             return await GetChaosTargetTypes(locationName).GetAsync(targetTypeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        // Customization: Preserves shipped GetChaosExperiments / GetChaosExperimentsAsync names.
+        // The generator now emits these as GetExperiments / GetExperimentsAsync (due to the
+        // @@clientName(Experiments.listAll, "getExperiments") override in the spec). The spec
+        // fix has been applied in azure-rest-api-specs#43122; these wrappers can be removed
+        // and the generated names will line up once tsp-location.yaml is bumped to a commit
+        // that contains the fix.
+        /// <summary> Get a list of Experiment resources in a subscription. </summary>
+        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
+        /// <param name="continuationToken"> String that sets the continuation token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ChaosExperimentResource> GetChaosExperimentsAsync(bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        {
+            return GetExperimentsAsync(running, continuationToken, cancellationToken);
+        }
+
+        /// <summary> Get a list of Experiment resources in a subscription. </summary>
+        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
+        /// <param name="continuationToken"> String that sets the continuation token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ChaosExperimentResource> GetChaosExperiments(bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        {
+            return GetExperiments(running, continuationToken, cancellationToken);
         }
     }
 }
