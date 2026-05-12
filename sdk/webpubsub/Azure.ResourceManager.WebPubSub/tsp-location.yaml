@@ -1,4 +1,4 @@
 directory: specification/webpubsub/resource-manager/Microsoft.SignalRService/SignalRService
-commit: d38082b45d86acbfd275a841a0a01ee9239c5396
+commit: da92baf3b3a2a8ff09a977b44cb6f65f8d8d735b
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

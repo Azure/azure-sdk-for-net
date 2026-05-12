@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="patch"> The required parameters for updating a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<MySqlFlexibleServerResource>> UpdateAsync(WaitUntil waitUntil, MySqlFlexibleServerForUpdate patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MySqlFlexibleServerResource>> UpdateAsync(WaitUntil waitUntil, MySqlFlexibleServerPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerForUpdate.ToRequestContent(patch), context);
+                HttpMessage message = _serversRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServerResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(
                     new MySqlFlexibleServerOperationSource(Client),
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="patch"> The required parameters for updating a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<MySqlFlexibleServerResource> Update(WaitUntil waitUntil, MySqlFlexibleServerForUpdate patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MySqlFlexibleServerResource> Update(WaitUntil waitUntil, MySqlFlexibleServerPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerForUpdate.ToRequestContent(patch), context);
+                HttpMessage message = _serversRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServerResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(
                     new MySqlFlexibleServerOperationSource(Client),
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -1778,7 +1778,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 else
                 {
                     MySqlFlexibleServerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    MySqlFlexibleServerForUpdate patch = new MySqlFlexibleServerForUpdate();
+                    MySqlFlexibleServerPatch patch = new MySqlFlexibleServerPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1826,7 +1826,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 else
                 {
                     MySqlFlexibleServerData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    MySqlFlexibleServerForUpdate patch = new MySqlFlexibleServerForUpdate();
+                    MySqlFlexibleServerPatch patch = new MySqlFlexibleServerPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1873,7 +1873,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 else
                 {
                     MySqlFlexibleServerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    MySqlFlexibleServerForUpdate patch = new MySqlFlexibleServerForUpdate();
+                    MySqlFlexibleServerPatch patch = new MySqlFlexibleServerPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<MySqlFlexibleServerResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1916,7 +1916,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 else
                 {
                     MySqlFlexibleServerData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    MySqlFlexibleServerForUpdate patch = new MySqlFlexibleServerForUpdate();
+                    MySqlFlexibleServerPatch patch = new MySqlFlexibleServerPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<MySqlFlexibleServerResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1958,7 +1958,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 else
                 {
                     MySqlFlexibleServerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    MySqlFlexibleServerForUpdate patch = new MySqlFlexibleServerForUpdate();
+                    MySqlFlexibleServerPatch patch = new MySqlFlexibleServerPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -2004,7 +2004,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 else
                 {
                     MySqlFlexibleServerData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    MySqlFlexibleServerForUpdate patch = new MySqlFlexibleServerForUpdate();
+                    MySqlFlexibleServerPatch patch = new MySqlFlexibleServerPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

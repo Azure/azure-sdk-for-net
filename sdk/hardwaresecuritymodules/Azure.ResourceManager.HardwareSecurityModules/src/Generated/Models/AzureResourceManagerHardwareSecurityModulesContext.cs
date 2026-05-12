@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
     [ModelReaderWriterBuildable(typeof(CloudHsmClusterBackupResultProperties))]
     [ModelReaderWriterBuildable(typeof(CloudHsmClusterData))]
     [ModelReaderWriterBuildable(typeof(CloudHsmClusterListResult))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmClusterPatch))]
     [ModelReaderWriterBuildable(typeof(CloudHsmClusterPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(CloudHsmClusterPrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(CloudHsmClusterPrivateEndpointConnectionResource))]

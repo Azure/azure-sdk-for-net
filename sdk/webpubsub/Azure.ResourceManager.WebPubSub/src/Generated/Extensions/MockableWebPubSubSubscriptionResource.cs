@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebPubSubResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebPubSubResource> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebPubSubResource> GetWebPubSubsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebPubSubData, WebPubSubResource>(new WebPubSubResourcesGetBySubscriptionAsyncCollectionResultOfT(WebPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWebPubSubSubscriptionResource.GetBySubscription"), data => new WebPubSubResource(Client, data));
+            return new AsyncPageableWrapper<WebPubSubData, WebPubSubResource>(new WebPubSubResourcesGetBySubscriptionAsyncCollectionResultOfT(WebPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWebPubSubSubscriptionResource.GetWebPubSubs"), data => new WebPubSubResource(Client, data));
         }
 
         /// <summary>
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebPubSubResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebPubSubResource> GetBySubscription(CancellationToken cancellationToken = default)
+        public virtual Pageable<WebPubSubResource> GetWebPubSubs(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebPubSubData, WebPubSubResource>(new WebPubSubResourcesGetBySubscriptionCollectionResultOfT(WebPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWebPubSubSubscriptionResource.GetBySubscription"), data => new WebPubSubResource(Client, data));
+            return new PageableWrapper<WebPubSubData, WebPubSubResource>(new WebPubSubResourcesGetBySubscriptionCollectionResultOfT(WebPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWebPubSubSubscriptionResource.GetWebPubSubs"), data => new WebPubSubResource(Client, data));
         }
 
         /// <summary>

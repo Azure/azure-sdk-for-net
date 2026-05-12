@@ -17,61 +17,61 @@ using Azure.ResourceManager.Relay;
 namespace Azure.ResourceManager.Relay.Models
 {
     /// <summary> Description of a namespace resource. </summary>
-    public partial class RelayUpdateParameters : ResourceData, IJsonModel<RelayUpdateParameters>
+    public partial class RelayNamespacePatch : ResourceData, IJsonModel<RelayNamespacePatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RelayUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RelayNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRelayUpdateParameters(document.RootElement, options);
+                        return DeserializeRelayNamespacePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RelayUpdateParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RelayUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RelayNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRelayContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RelayUpdateParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RelayUpdateParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RelayNamespacePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RelayUpdateParameters IPersistableModel<RelayUpdateParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => (RelayUpdateParameters)PersistableModelCreateCore(data, options);
+        RelayNamespacePatch IPersistableModel<RelayNamespacePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (RelayNamespacePatch)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RelayUpdateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RelayNamespacePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="relayUpdateParameters"> The <see cref="RelayUpdateParameters"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RelayUpdateParameters relayUpdateParameters)
+        /// <param name="relayNamespacePatch"> The <see cref="RelayNamespacePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RelayNamespacePatch relayNamespacePatch)
         {
-            if (relayUpdateParameters == null)
+            if (relayNamespacePatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(relayUpdateParameters, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(relayNamespacePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RelayUpdateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RelayNamespacePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RelayUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RelayNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayUpdateParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Sku))
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.Relay.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RelayUpdateParameters IJsonModel<RelayUpdateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RelayUpdateParameters)JsonModelCreateCore(ref reader, options);
+        RelayNamespacePatch IJsonModel<RelayNamespacePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RelayNamespacePatch)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RelayUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RelayNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayUpdateParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRelayUpdateParameters(document.RootElement, options);
+            return DeserializeRelayNamespacePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RelayUpdateParameters DeserializeRelayUpdateParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static RelayNamespacePatch DeserializeRelayNamespacePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Relay.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RelayUpdateParameters(
+            return new RelayNamespacePatch(
                 id,
                 name,
                 resourceType,

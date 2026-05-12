@@ -8,68 +8,70 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.WorkloadsSapVirtualInstance;
+using Azure.ResourceManager.HardwareSecurityModules;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
+namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> Defines the request body for updating SAP Database Instance. </summary>
-    public partial class UpdateSapDatabaseInstanceRequest : IJsonModel<UpdateSapDatabaseInstanceRequest>
+    /// <summary> Patchable properties of the Cloud HSM Cluster. </summary>
+    public partial class CloudHsmClusterPatch : IJsonModel<CloudHsmClusterPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpdateSapDatabaseInstanceRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CloudHsmClusterPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateSapDatabaseInstanceRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUpdateSapDatabaseInstanceRequest(document.RootElement, options);
+                        return DeserializeCloudHsmClusterPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateSapDatabaseInstanceRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudHsmClusterPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateSapDatabaseInstanceRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateSapDatabaseInstanceRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudHsmClusterPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UpdateSapDatabaseInstanceRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CloudHsmClusterPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpdateSapDatabaseInstanceRequest IPersistableModel<UpdateSapDatabaseInstanceRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CloudHsmClusterPatch IPersistableModel<CloudHsmClusterPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UpdateSapDatabaseInstanceRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CloudHsmClusterPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="updateSapDatabaseInstanceRequest"> The <see cref="UpdateSapDatabaseInstanceRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(UpdateSapDatabaseInstanceRequest updateSapDatabaseInstanceRequest)
+        /// <param name="cloudHsmClusterPatch"> The <see cref="CloudHsmClusterPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CloudHsmClusterPatch cloudHsmClusterPatch)
         {
-            if (updateSapDatabaseInstanceRequest == null)
+            if (cloudHsmClusterPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(updateSapDatabaseInstanceRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(cloudHsmClusterPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UpdateSapDatabaseInstanceRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CloudHsmClusterPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +82,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateSapDatabaseInstanceRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateSapDatabaseInstanceRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudHsmClusterPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -100,6 +102,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -120,30 +127,31 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpdateSapDatabaseInstanceRequest IJsonModel<UpdateSapDatabaseInstanceRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CloudHsmClusterPatch IJsonModel<CloudHsmClusterPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpdateSapDatabaseInstanceRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CloudHsmClusterPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateSapDatabaseInstanceRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateSapDatabaseInstanceRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudHsmClusterPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUpdateSapDatabaseInstanceRequest(document.RootElement, options);
+            return DeserializeCloudHsmClusterPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UpdateSapDatabaseInstanceRequest DeserializeUpdateSapDatabaseInstanceRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static CloudHsmClusterPatch DeserializeCloudHsmClusterPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,12 +176,21 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerHardwareSecurityModulesContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UpdateSapDatabaseInstanceRequest(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new CloudHsmClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, additionalBinaryDataProperties);
         }
     }
 }

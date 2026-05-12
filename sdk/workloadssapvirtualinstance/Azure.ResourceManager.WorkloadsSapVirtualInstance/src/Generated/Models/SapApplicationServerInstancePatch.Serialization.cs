@@ -15,61 +15,61 @@ using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary> Defines the request body for updating SAP Application Instance. </summary>
-    public partial class UpdateSapApplicationInstanceRequest : IJsonModel<UpdateSapApplicationInstanceRequest>
+    public partial class SapApplicationServerInstancePatch : IJsonModel<SapApplicationServerInstancePatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpdateSapApplicationInstanceRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SapApplicationServerInstancePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateSapApplicationInstanceRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapApplicationServerInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUpdateSapApplicationInstanceRequest(document.RootElement, options);
+                        return DeserializeSapApplicationServerInstancePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateSapApplicationInstanceRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapApplicationServerInstancePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateSapApplicationInstanceRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapApplicationServerInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateSapApplicationInstanceRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapApplicationServerInstancePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UpdateSapApplicationInstanceRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SapApplicationServerInstancePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpdateSapApplicationInstanceRequest IPersistableModel<UpdateSapApplicationInstanceRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SapApplicationServerInstancePatch IPersistableModel<SapApplicationServerInstancePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UpdateSapApplicationInstanceRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SapApplicationServerInstancePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="updateSapApplicationInstanceRequest"> The <see cref="UpdateSapApplicationInstanceRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(UpdateSapApplicationInstanceRequest updateSapApplicationInstanceRequest)
+        /// <param name="sapApplicationServerInstancePatch"> The <see cref="SapApplicationServerInstancePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SapApplicationServerInstancePatch sapApplicationServerInstancePatch)
         {
-            if (updateSapApplicationInstanceRequest == null)
+            if (sapApplicationServerInstancePatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(updateSapApplicationInstanceRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(sapApplicationServerInstancePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UpdateSapApplicationInstanceRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SapApplicationServerInstancePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateSapApplicationInstanceRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapApplicationServerInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateSapApplicationInstanceRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SapApplicationServerInstancePatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -120,24 +120,24 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpdateSapApplicationInstanceRequest IJsonModel<UpdateSapApplicationInstanceRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SapApplicationServerInstancePatch IJsonModel<SapApplicationServerInstancePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpdateSapApplicationInstanceRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SapApplicationServerInstancePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateSapApplicationInstanceRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapApplicationServerInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateSapApplicationInstanceRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SapApplicationServerInstancePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUpdateSapApplicationInstanceRequest(document.RootElement, options);
+            return DeserializeSapApplicationServerInstancePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UpdateSapApplicationInstanceRequest DeserializeUpdateSapApplicationInstanceRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static SapApplicationServerInstancePatch DeserializeSapApplicationServerInstancePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UpdateSapApplicationInstanceRequest(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new SapApplicationServerInstancePatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

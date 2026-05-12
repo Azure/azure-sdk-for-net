@@ -13,24 +13,24 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Parameters allowed to update for a server. </summary>
-    public partial class MySqlFlexibleServerForUpdate
+    public partial class MySqlFlexibleServerPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerForUpdate"/>. </summary>
-        public MySqlFlexibleServerForUpdate()
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerPatch"/>. </summary>
+        public MySqlFlexibleServerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerForUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerPatch"/>. </summary>
         /// <param name="identity"> The cmk identity for the server. </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
         /// <param name="properties"> The properties that can be updated for a server. </param>
         /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerForUpdate(ManagedServiceIdentity identity, MySqlFlexibleServerSku sku, ServerPropertiesForUpdate properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MySqlFlexibleServerPatch(ManagedServiceIdentity identity, MySqlFlexibleServerSku sku, ServerPropertiesForUpdate properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Sku = sku;

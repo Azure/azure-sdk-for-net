@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Parameters for updating a namespace resource. </param>
+        /// <param name="patch"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<RelayNamespaceResource>> UpdateAsync(RelayUpdateParameters content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<RelayNamespaceResource>> UpdateAsync(RelayNamespacePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceResource.Update");
             scope.Start();
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, RelayUpdateParameters.ToRequestContent(content), context);
+                HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, RelayNamespacePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayNamespaceData> response = Response.FromValue(RelayNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -262,12 +262,12 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Parameters for updating a namespace resource. </param>
+        /// <param name="patch"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<RelayNamespaceResource> Update(RelayUpdateParameters content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<RelayNamespaceResource> Update(RelayNamespacePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("RelayNamespaceResource.Update");
             scope.Start();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, RelayUpdateParameters.ToRequestContent(content), context);
+                HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, RelayNamespacePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayNamespaceData> response = Response.FromValue(RelayNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Relay
                 else
                 {
                     RelayNamespaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    RelayUpdateParameters patch = new RelayUpdateParameters();
+                    RelayNamespacePatch patch = new RelayNamespacePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Relay
                 else
                 {
                     RelayNamespaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    RelayUpdateParameters patch = new RelayUpdateParameters();
+                    RelayNamespacePatch patch = new RelayNamespacePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Relay
                 else
                 {
                     RelayNamespaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    RelayUpdateParameters patch = new RelayUpdateParameters();
+                    RelayNamespacePatch patch = new RelayNamespacePatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<RelayNamespaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Relay
                 else
                 {
                     RelayNamespaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    RelayUpdateParameters patch = new RelayUpdateParameters();
+                    RelayNamespacePatch patch = new RelayNamespacePatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<RelayNamespaceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Relay
                 else
                 {
                     RelayNamespaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    RelayUpdateParameters patch = new RelayUpdateParameters();
+                    RelayNamespacePatch patch = new RelayNamespacePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.Relay
                 else
                 {
                     RelayNamespaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    RelayUpdateParameters patch = new RelayUpdateParameters();
+                    RelayNamespacePatch patch = new RelayNamespacePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

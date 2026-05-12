@@ -18,61 +18,61 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Parameters allowed to update for a server. </summary>
-    public partial class MySqlFlexibleServerForUpdate : IJsonModel<MySqlFlexibleServerForUpdate>
+    public partial class MySqlFlexibleServerPatch : IJsonModel<MySqlFlexibleServerPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MySqlFlexibleServerForUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MySqlFlexibleServerPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerForUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMySqlFlexibleServerForUpdate(document.RootElement, options);
+                        return DeserializeMySqlFlexibleServerPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerForUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerForUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerForUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MySqlFlexibleServerForUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MySqlFlexibleServerPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MySqlFlexibleServerForUpdate IPersistableModel<MySqlFlexibleServerForUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MySqlFlexibleServerPatch IPersistableModel<MySqlFlexibleServerPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MySqlFlexibleServerForUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MySqlFlexibleServerPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="mySqlFlexibleServerForUpdate"> The <see cref="MySqlFlexibleServerForUpdate"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MySqlFlexibleServerForUpdate mySqlFlexibleServerForUpdate)
+        /// <param name="mySqlFlexibleServerPatch"> The <see cref="MySqlFlexibleServerPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MySqlFlexibleServerPatch mySqlFlexibleServerPatch)
         {
-            if (mySqlFlexibleServerForUpdate == null)
+            if (mySqlFlexibleServerPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(mySqlFlexibleServerForUpdate, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(mySqlFlexibleServerPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MySqlFlexibleServerForUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MySqlFlexibleServerPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerForUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerForUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Identity))
             {
@@ -138,24 +138,24 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MySqlFlexibleServerForUpdate IJsonModel<MySqlFlexibleServerForUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MySqlFlexibleServerPatch IJsonModel<MySqlFlexibleServerPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MySqlFlexibleServerForUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MySqlFlexibleServerPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerForUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerForUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMySqlFlexibleServerForUpdate(document.RootElement, options);
+            return DeserializeMySqlFlexibleServerPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MySqlFlexibleServerForUpdate DeserializeMySqlFlexibleServerForUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static MySqlFlexibleServerPatch DeserializeMySqlFlexibleServerPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MySqlFlexibleServerForUpdate(identity, sku, properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new MySqlFlexibleServerPatch(identity, sku, properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

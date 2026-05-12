@@ -1,4 +1,4 @@
 directory: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/HardwareSecurityModules
 repo: Azure/azure-rest-api-specs
-commit: 29e6b95b528cb47ac0978cb7a41d1a320b9b7fc1
+commit: da92baf3b3a2a8ff09a977b44cb6f65f8d8d735b
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
