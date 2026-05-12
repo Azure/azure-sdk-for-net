@@ -9,12 +9,15 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Chaos.Mocking;
 using Azure.ResourceManager.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
     /// Partial class of customized ChaosExtensions
     /// </summary>
+    [CodeGenSuppress("GetExperimentsAsync", typeof(SubscriptionResource), typeof(bool?), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetExperiments", typeof(SubscriptionResource), typeof(bool?), typeof(string), typeof(CancellationToken))]
     public static partial class ChaosExtensions
     {
         // The newly generated code uses scope-based ArmClient extension methods instead of ResourceGroupResource extension methods.
@@ -217,7 +220,7 @@ namespace Azure.ResourceManager.Chaos
         public static AsyncPageable<ChaosExperimentResource> GetChaosExperimentsAsync(this SubscriptionResource subscriptionResource, bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return subscriptionResource.GetExperimentsAsync(running, continuationToken, cancellationToken);
+            return GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosExperimentsAsync(running, continuationToken, cancellationToken);
         }
 
         /// <summary> Get a list of Experiment resources in a subscription. </summary>
@@ -230,7 +233,7 @@ namespace Azure.ResourceManager.Chaos
         public static Pageable<ChaosExperimentResource> GetChaosExperiments(this SubscriptionResource subscriptionResource, bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return subscriptionResource.GetExperiments(running, continuationToken, cancellationToken);
+            return GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosExperiments(running, continuationToken, cancellationToken);
         }
     }
 }
