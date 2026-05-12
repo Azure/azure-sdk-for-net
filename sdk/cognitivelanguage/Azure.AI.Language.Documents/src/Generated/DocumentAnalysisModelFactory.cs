@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class LanguageDocumentsModelFactory
+    public static partial class DocumentAnalysisModelFactory
     {
         /// <summary> The object containing the analyze job LRO job state. </summary>
         /// <param name="displayName"> display name. </param>
