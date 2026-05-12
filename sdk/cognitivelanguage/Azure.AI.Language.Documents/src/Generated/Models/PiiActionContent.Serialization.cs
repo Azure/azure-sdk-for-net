@@ -132,7 +132,7 @@ namespace Azure.AI.Language.Documents
             {
                 writer.WritePropertyName("redactionPolicies"u8);
                 writer.WriteStartArray();
-                foreach (BaseRedactionPolicy item in RedactionPolicies)
+                foreach (RedactionPolicy item in RedactionPolicies)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -198,7 +198,7 @@ namespace Azure.AI.Language.Documents
             IList<PiiCategories> excludePiiCategories = default;
             ValueExclusionPolicy valueExclusionPolicy = default;
             IList<EntitySynonyms> entitySynonyms = default;
-            IList<BaseRedactionPolicy> redactionPolicies = default;
+            IList<RedactionPolicy> redactionPolicies = default;
             ConfidenceScoreThreshold confidenceScoreThreshold = default;
             bool? disableEntityValidation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -293,10 +293,10 @@ namespace Azure.AI.Language.Documents
                     {
                         continue;
                     }
-                    List<BaseRedactionPolicy> array = new List<BaseRedactionPolicy>();
+                    List<RedactionPolicy> array = new List<RedactionPolicy>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BaseRedactionPolicy.DeserializeBaseRedactionPolicy(item, options));
+                        array.Add(RedactionPolicy.DeserializeRedactionPolicy(item, options));
                     }
                     redactionPolicies = array;
                     continue;
@@ -333,7 +333,7 @@ namespace Azure.AI.Language.Documents
                 excludePiiCategories ?? new ChangeTrackingList<PiiCategories>(),
                 valueExclusionPolicy,
                 entitySynonyms ?? new ChangeTrackingList<EntitySynonyms>(),
-                redactionPolicies ?? new ChangeTrackingList<BaseRedactionPolicy>(),
+                redactionPolicies ?? new ChangeTrackingList<RedactionPolicy>(),
                 confidenceScoreThreshold,
                 disableEntityValidation,
                 additionalBinaryDataProperties);

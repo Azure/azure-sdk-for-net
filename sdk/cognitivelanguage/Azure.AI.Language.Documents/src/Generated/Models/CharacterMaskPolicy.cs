@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> Represents the policy of redacting with a redaction character. </summary>
-    public partial class CharacterMaskPolicy : BaseRedactionPolicy
+    public partial class CharacterMaskPolicy : RedactionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="CharacterMaskPolicy"/>. </summary>
         public CharacterMaskPolicy() : base(RedactionPolicyKind.CharacterMask)

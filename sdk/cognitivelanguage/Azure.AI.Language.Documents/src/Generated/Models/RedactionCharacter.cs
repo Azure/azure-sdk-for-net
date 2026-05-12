@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Documents
         /// <summary> Minus sign character. </summary>
         private const string MinusValue = "-";
         /// <summary> Equals sign character. </summary>
-        private const string EqualSignValue = "=";
+        private const string EqualsSignValue = "=";
         /// <summary> Question mark character. </summary>
         private const string QuestionMarkValue = "?";
         /// <summary> At sign character. </summary>
@@ -78,7 +78,7 @@ namespace Azure.AI.Language.Documents
         public static RedactionCharacter Minus { get; } = new RedactionCharacter(MinusValue);
 
         /// <summary> Equals sign character. </summary>
-        public static RedactionCharacter EqualSign { get; } = new RedactionCharacter(EqualSignValue);
+        public static RedactionCharacter EqualsSign { get; } = new RedactionCharacter(EqualsSignValue);
 
         /// <summary> Question mark character. </summary>
         public static RedactionCharacter QuestionMark { get; } = new RedactionCharacter(QuestionMarkValue);

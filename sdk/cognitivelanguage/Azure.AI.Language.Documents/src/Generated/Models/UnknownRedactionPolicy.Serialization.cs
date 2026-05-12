@@ -12,52 +12,56 @@ using System.Text.Json;
 
 namespace Azure.AI.Language.Documents
 {
-    /// <summary> Represents the policy of not redacting found PII. </summary>
-    public partial class NoMaskPolicy : BaseRedactionPolicy, IJsonModel<NoMaskPolicy>
+    internal partial class UnknownRedactionPolicy : RedactionPolicy, IJsonModel<RedactionPolicy>
     {
+        /// <summary> Initializes a new instance of <see cref="UnknownRedactionPolicy"/> for deserialization. </summary>
+        internal UnknownRedactionPolicy()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BaseRedactionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override RedactionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NoMaskPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedactionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNoMaskPolicy(document.RootElement, options);
+                        return DeserializeRedactionPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NoMaskPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedactionPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NoMaskPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedactionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NoMaskPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedactionPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NoMaskPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RedactionPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NoMaskPolicy IPersistableModel<NoMaskPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (NoMaskPolicy)PersistableModelCreateCore(data, options);
+        RedactionPolicy IPersistableModel<RedactionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NoMaskPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RedactionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NoMaskPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RedactionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,34 +72,34 @@ namespace Azure.AI.Language.Documents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NoMaskPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedactionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NoMaskPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RedactionPolicy)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NoMaskPolicy IJsonModel<NoMaskPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NoMaskPolicy)JsonModelCreateCore(ref reader, options);
+        RedactionPolicy IJsonModel<RedactionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BaseRedactionPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override RedactionPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NoMaskPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedactionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NoMaskPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RedactionPolicy)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNoMaskPolicy(document.RootElement, options);
+            return DeserializeRedactionPolicy(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NoMaskPolicy DeserializeNoMaskPolicy(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownRedactionPolicy DeserializeUnknownRedactionPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,7 +150,7 @@ namespace Azure.AI.Language.Documents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NoMaskPolicy(policyKind, entityTypes ?? new ChangeTrackingList<PiiCategories>(), policyName, isDefault, additionalBinaryDataProperties);
+            return new UnknownRedactionPolicy(policyKind, entityTypes ?? new ChangeTrackingList<PiiCategories>(), policyName, isDefault, additionalBinaryDataProperties);
         }
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> Represents the policy of redacting PII with marker style. </summary>
-    public partial class MarkerMaskPolicy : BaseRedactionPolicy
+    public partial class MarkerMaskPolicy : RedactionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="MarkerMaskPolicy"/>. </summary>
         public MarkerMaskPolicy() : base(RedactionPolicyKind.MarkerMask)

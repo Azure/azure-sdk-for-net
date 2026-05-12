@@ -97,10 +97,10 @@ namespace Azure.AI.Language.Documents
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Innererror))
+            if (Optional.IsDefined(InnerError))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror, options);
+                writer.WriteObjectValue(InnerError, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -148,7 +148,7 @@ namespace Azure.AI.Language.Documents
             string message = default;
             string target = default;
             IList<AnalyzeDocumentsError> details = default;
-            InnerErrorModel innererror = default;
+            InnerErrorModel innerError = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,7 +187,7 @@ namespace Azure.AI.Language.Documents
                     {
                         continue;
                     }
-                    innererror = InnerErrorModel.DeserializeInnerErrorModel(prop.Value, options);
+                    innerError = InnerErrorModel.DeserializeInnerErrorModel(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -200,7 +200,7 @@ namespace Azure.AI.Language.Documents
                 message,
                 target,
                 details ?? new ChangeTrackingList<AnalyzeDocumentsError>(),
-                innererror,
+                innerError,
                 additionalBinaryDataProperties);
         }
     }

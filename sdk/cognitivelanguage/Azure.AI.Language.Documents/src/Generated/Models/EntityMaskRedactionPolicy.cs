@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> Represents the policy of redacting PII with the entity type. </summary>
-    public partial class EntityMaskRedactionPolicy : BaseRedactionPolicy
+    public partial class EntityMaskRedactionPolicy : RedactionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="EntityMaskRedactionPolicy"/>. </summary>
         public EntityMaskRedactionPolicy() : base(RedactionPolicyKind.EntityMask)

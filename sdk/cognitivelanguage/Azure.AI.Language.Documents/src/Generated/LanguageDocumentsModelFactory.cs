@@ -49,9 +49,9 @@ namespace Azure.AI.Language.Documents
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="target"> The target of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
-        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
+        /// <param name="innerError"> An object containing more specific information than the current object about the error. </param>
         /// <returns> A new <see cref="Documents.AnalyzeDocumentsError"/> instance for mocking. </returns>
-        public static AnalyzeDocumentsError AnalyzeDocumentsError(AnalyzeDocumentsErrorCode code = default, string message = default, string target = default, IEnumerable<AnalyzeDocumentsError> details = default, InnerErrorModel innererror = default)
+        public static AnalyzeDocumentsError AnalyzeDocumentsError(AnalyzeDocumentsErrorCode code = default, string message = default, string target = default, IEnumerable<AnalyzeDocumentsError> details = default, InnerErrorModel innerError = default)
         {
             details ??= new ChangeTrackingList<AnalyzeDocumentsError>();
 
@@ -60,7 +60,7 @@ namespace Azure.AI.Language.Documents
                 message,
                 target,
                 details.ToList(),
-                innererror,
+                innerError,
                 additionalBinaryDataProperties: null);
         }
 
@@ -162,7 +162,7 @@ namespace Azure.AI.Language.Documents
         /// <param name="documentsCount"> Number of documents submitted in the request. </param>
         /// <param name="validDocumentsCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
         /// <param name="erroneousDocumentsCount"> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </param>
-        /// <param name="transactionsCount"> Number of transactions for the request. </param>
+        /// <param name="transactionsCount"> Number of billing or usage transactions for the request. </param>
         /// <returns> A new <see cref="Documents.DocumentRequestStatistics"/> instance for mocking. </returns>
         public static DocumentRequestStatistics DocumentRequestStatistics(int documentsCount = default, int validDocumentsCount = default, int erroneousDocumentsCount = default, long transactionsCount = default)
         {
@@ -350,12 +350,12 @@ namespace Azure.AI.Language.Documents
         /// <param name="confidenceScoreThreshold"> Confidence score threshold configuration for PII entity recognition. </param>
         /// <param name="disableEntityValidation"> Disable entity validation for PII entity recognition. </param>
         /// <returns> A new <see cref="Documents.PiiActionContent"/> instance for mocking. </returns>
-        public static PiiActionContent PiiActionContent(bool? loggingOptOut = default, string modelVersion = default, PiiDomain? domain = default, IEnumerable<PiiCategoriesExtended> piiCategories = default, StringIndexType? stringIndexType = default, IEnumerable<PiiCategories> excludePiiCategories = default, ValueExclusionPolicy valueExclusionPolicy = default, IEnumerable<EntitySynonyms> entitySynonyms = default, IEnumerable<BaseRedactionPolicy> redactionPolicies = default, ConfidenceScoreThreshold confidenceScoreThreshold = default, bool? disableEntityValidation = default)
+        public static PiiActionContent PiiActionContent(bool? loggingOptOut = default, string modelVersion = default, PiiDomain? domain = default, IEnumerable<PiiCategoriesExtended> piiCategories = default, StringIndexType? stringIndexType = default, IEnumerable<PiiCategories> excludePiiCategories = default, ValueExclusionPolicy valueExclusionPolicy = default, IEnumerable<EntitySynonyms> entitySynonyms = default, IEnumerable<RedactionPolicy> redactionPolicies = default, ConfidenceScoreThreshold confidenceScoreThreshold = default, bool? disableEntityValidation = default)
         {
             piiCategories ??= new ChangeTrackingList<PiiCategoriesExtended>();
             excludePiiCategories ??= new ChangeTrackingList<PiiCategories>();
             entitySynonyms ??= new ChangeTrackingList<EntitySynonyms>();
-            redactionPolicies ??= new ChangeTrackingList<BaseRedactionPolicy>();
+            redactionPolicies ??= new ChangeTrackingList<RedactionPolicy>();
 
             return new PiiActionContent(
                 loggingOptOut,
@@ -405,18 +405,18 @@ namespace Azure.AI.Language.Documents
 
         /// <summary>
         /// The abstract base class for RedactionPolicy.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Documents.SyntheticReplacementPolicyType"/>, <see cref="Documents.CharacterMaskPolicy"/>, <see cref="Documents.NoMaskPolicy"/>, <see cref="Documents.MarkerMaskPolicy"/>, and <see cref="Documents.EntityMaskRedactionPolicy"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Documents.SyntheticReplacementPolicyType"/>, <see cref="Documents.CharacterMaskPolicy"/>, <see cref="Documents.NoMaskRedactionPolicy"/>, <see cref="Documents.MarkerMaskPolicy"/>, and <see cref="Documents.EntityMaskRedactionPolicy"/>.
         /// </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
         /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
         /// <param name="isDefault"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
-        /// <returns> A new <see cref="Documents.BaseRedactionPolicy"/> instance for mocking. </returns>
-        public static BaseRedactionPolicy BaseRedactionPolicy(string policyKind = default, IEnumerable<PiiCategories> entityTypes = default, string policyName = default, bool? isDefault = default)
+        /// <returns> A new <see cref="Documents.RedactionPolicy"/> instance for mocking. </returns>
+        public static RedactionPolicy RedactionPolicy(string policyKind = default, IEnumerable<PiiCategories> entityTypes = default, string policyName = default, bool? isDefault = default)
         {
             entityTypes ??= new ChangeTrackingList<PiiCategories>();
 
-            return new UnknownBaseRedactionPolicy(new RedactionPolicyKind(policyKind), entityTypes.ToList(), policyName, isDefault, additionalBinaryDataProperties: null);
+            return new UnknownRedactionPolicy(new RedactionPolicyKind(policyKind), entityTypes.ToList(), policyName, isDefault, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the policy of replacing detected PII with synthetic values. </summary>
@@ -461,12 +461,12 @@ namespace Azure.AI.Language.Documents
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
         /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
         /// <param name="isDefault"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
-        /// <returns> A new <see cref="Documents.NoMaskPolicy"/> instance for mocking. </returns>
-        public static NoMaskPolicy NoMaskPolicy(IEnumerable<PiiCategories> entityTypes = default, string policyName = default, bool? isDefault = default)
+        /// <returns> A new <see cref="Documents.NoMaskRedactionPolicy"/> instance for mocking. </returns>
+        public static NoMaskRedactionPolicy NoMaskRedactionPolicy(IEnumerable<PiiCategories> entityTypes = default, string policyName = default, bool? isDefault = default)
         {
             entityTypes ??= new ChangeTrackingList<PiiCategories>();
 
-            return new NoMaskPolicy(RedactionPolicyKind.NoMask, entityTypes.ToList(), policyName, isDefault, additionalBinaryDataProperties: null);
+            return new NoMaskRedactionPolicy(RedactionPolicyKind.NoMask, entityTypes.ToList(), policyName, isDefault, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the policy of redacting PII with marker style. </summary>

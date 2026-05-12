@@ -13,11 +13,11 @@ using System.Text.Json;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> Represents the policy of redacting PII with the entity type. </summary>
-    public partial class EntityMaskRedactionPolicy : BaseRedactionPolicy, IJsonModel<EntityMaskRedactionPolicy>
+    public partial class EntityMaskRedactionPolicy : RedactionPolicy, IJsonModel<EntityMaskRedactionPolicy>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BaseRedactionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override RedactionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EntityMaskRedactionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -82,7 +82,7 @@ namespace Azure.AI.Language.Documents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BaseRedactionPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override RedactionPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EntityMaskRedactionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

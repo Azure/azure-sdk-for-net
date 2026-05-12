@@ -12,28 +12,28 @@ namespace Azure.AI.Language.Documents
 {
     /// <summary>
     /// The abstract base class for RedactionPolicy.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SyntheticReplacementPolicyType"/>, <see cref="CharacterMaskPolicy"/>, <see cref="NoMaskPolicy"/>, <see cref="MarkerMaskPolicy"/>, and <see cref="EntityMaskRedactionPolicy"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SyntheticReplacementPolicyType"/>, <see cref="CharacterMaskPolicy"/>, <see cref="NoMaskRedactionPolicy"/>, <see cref="MarkerMaskPolicy"/>, and <see cref="EntityMaskRedactionPolicy"/>.
     /// </summary>
-    public abstract partial class BaseRedactionPolicy
+    public abstract partial class RedactionPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BaseRedactionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedactionPolicy"/>. </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
-        private protected BaseRedactionPolicy(RedactionPolicyKind policyKind)
+        private protected RedactionPolicy(RedactionPolicyKind policyKind)
         {
             PolicyKind = policyKind;
             EntityTypes = new ChangeTrackingList<PiiCategories>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BaseRedactionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedactionPolicy"/>. </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
         /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
         /// <param name="isDefault"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BaseRedactionPolicy(RedactionPolicyKind policyKind, IList<PiiCategories> entityTypes, string policyName, bool? isDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedactionPolicy(RedactionPolicyKind policyKind, IList<PiiCategories> entityTypes, string policyName, bool? isDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyKind = policyKind;
             EntityTypes = entityTypes;

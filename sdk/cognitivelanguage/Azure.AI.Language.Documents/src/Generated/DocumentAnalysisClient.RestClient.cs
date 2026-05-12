@@ -21,7 +21,7 @@ namespace Azure.AI.Language.Documents
 
         private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
-        internal HttpMessage CreateGetAnalyzeDocumentsJobStatusRequest(Guid jobId, bool? showStats, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateGetAnalyzeDocumentsJobStateRequest(Guid jobId, bool? showStats, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

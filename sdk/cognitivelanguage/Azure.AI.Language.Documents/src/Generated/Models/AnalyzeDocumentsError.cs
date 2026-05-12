@@ -31,15 +31,15 @@ namespace Azure.AI.Language.Documents
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="target"> The target of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
-        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
+        /// <param name="innerError"> An object containing more specific information than the current object about the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeDocumentsError(AnalyzeDocumentsErrorCode code, string message, string target, IList<AnalyzeDocumentsError> details, InnerErrorModel innererror, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeDocumentsError(AnalyzeDocumentsErrorCode code, string message, string target, IList<AnalyzeDocumentsError> details, InnerErrorModel innerError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
-            Innererror = innererror;
+            InnerError = innerError;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -56,6 +56,6 @@ namespace Azure.AI.Language.Documents
         public IList<AnalyzeDocumentsError> Details { get; }
 
         /// <summary> An object containing more specific information than the current object about the error. </summary>
-        public InnerErrorModel Innererror { get; }
+        public InnerErrorModel InnerError { get; }
     }
 }

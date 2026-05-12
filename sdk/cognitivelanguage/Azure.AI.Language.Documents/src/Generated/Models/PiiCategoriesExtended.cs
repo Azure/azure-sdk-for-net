@@ -39,9 +39,9 @@ namespace Azure.AI.Language.Documents
         /// <summary> AT Value Added Tax Number. </summary>
         private const string AtValueAddedTaxNumberValue = "ATValueAddedTaxNumber";
         /// <summary> Azure Document DB Auth Key. </summary>
-        private const string AzureDocumentDbauthKeyValue = "AzureDocumentDBAuthKey";
+        private const string AzureDocumentDBAuthKeyValue = "AzureDocumentDBAuthKey";
         /// <summary> Azure IAAS Database Connection And SQL String. </summary>
-        private const string AzureIaasDatabaseConnectionAndSqlStringValue = "AzureIAASDatabaseConnectionAndSQLString";
+        private const string AzureIaasDBConnectionAndSqlStringValue = "AzureIAASDatabaseConnectionAndSQLString";
         /// <summary> Azure IoT Connection String. </summary>
         private const string AzureIoTConnectionStringValue = "AzureIoTConnectionString";
         /// <summary> Azure Publish Setting Password. </summary>
@@ -54,7 +54,7 @@ namespace Azure.AI.Language.Documents
         private const string AzureServiceBusStringValue = "AzureServiceBusString";
         /// <summary> Azure Storage Account Key. </summary>
         private const string AzureStorageAccountKeyValue = "AzureStorageAccountKey";
-        /// <summary> Azure Storage Account Generic. </summary>
+        /// <summary> Azure Storage account-related secrets or credentials that do not match a more specific Azure Storage category. </summary>
         private const string AzureStorageAccountGenericValue = "AzureStorageAccountGeneric";
         /// <summary> BE National Number. </summary>
         private const string BeNationalNumberValue = "BENationalNumber";
@@ -408,10 +408,10 @@ namespace Azure.AI.Language.Documents
         public static PiiCategoriesExtended AtValueAddedTaxNumber { get; } = new PiiCategoriesExtended(AtValueAddedTaxNumberValue);
 
         /// <summary> Azure Document DB Auth Key. </summary>
-        public static PiiCategoriesExtended AzureDocumentDbauthKey { get; } = new PiiCategoriesExtended(AzureDocumentDbauthKeyValue);
+        public static PiiCategoriesExtended AzureDocumentDBAuthKey { get; } = new PiiCategoriesExtended(AzureDocumentDBAuthKeyValue);
 
         /// <summary> Azure IAAS Database Connection And SQL String. </summary>
-        public static PiiCategoriesExtended AzureIaasDatabaseConnectionAndSqlString { get; } = new PiiCategoriesExtended(AzureIaasDatabaseConnectionAndSqlStringValue);
+        public static PiiCategoriesExtended AzureIaasDBConnectionAndSqlString { get; } = new PiiCategoriesExtended(AzureIaasDBConnectionAndSqlStringValue);
 
         /// <summary> Azure IoT Connection String. </summary>
         public static PiiCategoriesExtended AzureIoTConnectionString { get; } = new PiiCategoriesExtended(AzureIoTConnectionStringValue);
@@ -431,7 +431,7 @@ namespace Azure.AI.Language.Documents
         /// <summary> Azure Storage Account Key. </summary>
         public static PiiCategoriesExtended AzureStorageAccountKey { get; } = new PiiCategoriesExtended(AzureStorageAccountKeyValue);
 
-        /// <summary> Azure Storage Account Generic. </summary>
+        /// <summary> Azure Storage account-related secrets or credentials that do not match a more specific Azure Storage category. </summary>
         public static PiiCategoriesExtended AzureStorageAccountGeneric { get; } = new PiiCategoriesExtended(AzureStorageAccountGenericValue);
 
         /// <summary> BE National Number. </summary>

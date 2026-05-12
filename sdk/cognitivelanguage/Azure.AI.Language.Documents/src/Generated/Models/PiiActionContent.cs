@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Documents
         /// <param name="confidenceScoreThreshold"> Confidence score threshold configuration for PII entity recognition. </param>
         /// <param name="disableEntityValidation"> Disable entity validation for PII entity recognition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PiiActionContent(bool? loggingOptOut, string modelVersion, PiiDomain? domain, IList<PiiCategoriesExtended> piiCategories, StringIndexType? stringIndexType, IList<PiiCategories> excludePiiCategories, ValueExclusionPolicy valueExclusionPolicy, IList<EntitySynonyms> entitySynonyms, IList<BaseRedactionPolicy> redactionPolicies, ConfidenceScoreThreshold confidenceScoreThreshold, bool? disableEntityValidation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PiiActionContent(bool? loggingOptOut, string modelVersion, PiiDomain? domain, IList<PiiCategoriesExtended> piiCategories, StringIndexType? stringIndexType, IList<PiiCategories> excludePiiCategories, ValueExclusionPolicy valueExclusionPolicy, IList<EntitySynonyms> entitySynonyms, IList<RedactionPolicy> redactionPolicies, ConfidenceScoreThreshold confidenceScoreThreshold, bool? disableEntityValidation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;
@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Documents
         public IList<EntitySynonyms> EntitySynonyms { get; }
 
         /// <summary> List of RedactionPolicies to be used on the input. </summary>
-        public IList<BaseRedactionPolicy> RedactionPolicies { get; }
+        public IList<RedactionPolicy> RedactionPolicies { get; }
 
         /// <summary> Confidence score threshold configuration for PII entity recognition. </summary>
         public ConfidenceScoreThreshold ConfidenceScoreThreshold { get; set; }

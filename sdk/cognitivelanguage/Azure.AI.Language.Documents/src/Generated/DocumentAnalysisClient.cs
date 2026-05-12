@@ -121,13 +121,13 @@ namespace Azure.AI.Language.Documents
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetAnalyzeDocumentsJobStatus(Guid jobId, bool? showStats, int? top, int? skip, RequestContext context)
+        public virtual Response GetAnalyzeDocumentsJobState(Guid jobId, bool? showStats, int? top, int? skip, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentAnalysisClient.GetAnalyzeDocumentsJobStatus");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentAnalysisClient.GetAnalyzeDocumentsJobState");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAnalyzeDocumentsJobStatusRequest(jobId, showStats, top, skip, context);
+                using HttpMessage message = CreateGetAnalyzeDocumentsJobStateRequest(jobId, showStats, top, skip, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -152,13 +152,13 @@ namespace Azure.AI.Language.Documents
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAnalyzeDocumentsJobStatusAsync(Guid jobId, bool? showStats, int? top, int? skip, RequestContext context)
+        public virtual async Task<Response> GetAnalyzeDocumentsJobStateAsync(Guid jobId, bool? showStats, int? top, int? skip, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentAnalysisClient.GetAnalyzeDocumentsJobStatus");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentAnalysisClient.GetAnalyzeDocumentsJobState");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAnalyzeDocumentsJobStatusRequest(jobId, showStats, top, skip, context);
+                using HttpMessage message = CreateGetAnalyzeDocumentsJobStateRequest(jobId, showStats, top, skip, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -175,9 +175,9 @@ namespace Azure.AI.Language.Documents
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AnalyzeDocumentsJobState> GetAnalyzeDocumentsJobStatus(Guid jobId, bool? showStats = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual Response<AnalyzeDocumentsJobState> GetAnalyzeDocumentsJobState(Guid jobId, bool? showStats = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetAnalyzeDocumentsJobStatus(jobId, showStats, top, skip, cancellationToken.ToRequestContext());
+            Response result = GetAnalyzeDocumentsJobState(jobId, showStats, top, skip, cancellationToken.ToRequestContext());
             return Response.FromValue((AnalyzeDocumentsJobState)result, result);
         }
 
@@ -188,9 +188,9 @@ namespace Azure.AI.Language.Documents
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AnalyzeDocumentsJobState>> GetAnalyzeDocumentsJobStatusAsync(Guid jobId, bool? showStats = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalyzeDocumentsJobState>> GetAnalyzeDocumentsJobStateAsync(Guid jobId, bool? showStats = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetAnalyzeDocumentsJobStatusAsync(jobId, showStats, top, skip, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetAnalyzeDocumentsJobStateAsync(jobId, showStats, top, skip, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((AnalyzeDocumentsJobState)result, result);
         }
 

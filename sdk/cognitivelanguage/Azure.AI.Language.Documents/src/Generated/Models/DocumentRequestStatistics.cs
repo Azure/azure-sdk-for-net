@@ -20,7 +20,7 @@ namespace Azure.AI.Language.Documents
         /// <param name="documentsCount"> Number of documents submitted in the request. </param>
         /// <param name="validDocumentsCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
         /// <param name="erroneousDocumentsCount"> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </param>
-        /// <param name="transactionsCount"> Number of transactions for the request. </param>
+        /// <param name="transactionsCount"> Number of billing or usage transactions for the request. </param>
         internal DocumentRequestStatistics(int documentsCount, int validDocumentsCount, int erroneousDocumentsCount, long transactionsCount)
         {
             DocumentsCount = documentsCount;
@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Documents
         /// <param name="documentsCount"> Number of documents submitted in the request. </param>
         /// <param name="validDocumentsCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
         /// <param name="erroneousDocumentsCount"> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </param>
-        /// <param name="transactionsCount"> Number of transactions for the request. </param>
+        /// <param name="transactionsCount"> Number of billing or usage transactions for the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DocumentRequestStatistics(int documentsCount, int validDocumentsCount, int erroneousDocumentsCount, long transactionsCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -53,7 +53,7 @@ namespace Azure.AI.Language.Documents
         /// <summary> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </summary>
         public int ErroneousDocumentsCount { get; }
 
-        /// <summary> Number of transactions for the request. </summary>
+        /// <summary> Number of billing or usage transactions for the request. </summary>
         public long TransactionsCount { get; }
     }
 }

@@ -13,11 +13,11 @@ using System.Text.Json;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> Represents the policy of replacing detected PII with synthetic values. </summary>
-    public partial class SyntheticReplacementPolicyType : BaseRedactionPolicy, IJsonModel<SyntheticReplacementPolicyType>
+    public partial class SyntheticReplacementPolicyType : RedactionPolicy, IJsonModel<SyntheticReplacementPolicyType>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BaseRedactionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override RedactionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SyntheticReplacementPolicyType>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -87,7 +87,7 @@ namespace Azure.AI.Language.Documents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BaseRedactionPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override RedactionPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SyntheticReplacementPolicyType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
