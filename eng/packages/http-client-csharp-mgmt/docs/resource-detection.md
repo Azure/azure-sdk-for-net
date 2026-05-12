@@ -334,59 +334,57 @@ precedence.
 
 ### Step 4 — Assign remaining operations
 
-Every operation not consumed in Step 2 is now considered for attachment
-to one of the resources from Step 2. For each remaining operation, try
-the rules below in order. The first rule that matches both attaches the
-operation and chooses its kind.
+Every operation not consumed in Step 2 is now assigned to either a
+resource or a known scope, using two passes:
 
-1. **Collection `GET` → `List`.** A `GET` whose response is a paged
-   collection whose item type is some resource `R`'s model, and whose
-   path equals `R`'s **collection path** (`R`'s instance path with the
-   trailing `{name}` removed), attaches to `R` as `List`. This includes
-   list-by-parent variants whose paths walk a different ancestor chain
-   than `R`'s instance path.
-2. **`POST` returning a paged collection of `R`'s model → `List` on
-   `R`.** A `POST` whose path is `R`'s collection path and whose
-   response is paged-of-`R` is a `List` on `R`. This is the equivalent
-   of `autorest.bicep`'s `list*` POST handling. (`POST` ARM
-   `list*`-style operations frequently appear instead of `GET` because
-   the spec needs a request body to scope the list.)
-3. **Cross-resource list relocation.** If a `List`-shaped operation
-   (`GET` or `POST` returning paged-of-`R`-model) sits at `R`'s
-   collection path but was declared in a TypeSpec operation group bound
-   to a different resource `A`, the operation is moved off `A` and
-   attached to `R`. See [*Cross-resource list relocation*](#cross-resource-list-relocation).
-4. **Longest-prefix path match → `Action` on `R`.** An operation whose
-   path starts with some resource `R`'s instance path (plus extra
-   segments, typically a `POST` action verb) is an `Action` on `R`. The
-   trailing path segment(s) form the action name. When multiple
-   resources qualify, the longest match wins.
-5. **Model-id match → `List` on `R`.** A `GET` or `POST` whose return
-   model is `R`'s resource model and whose path takes `R`'s id-shape
-   parameters (but does not match `R`'s instance path) attaches to `R`
-   as `List`. This catches list-by-scope endpoints whose path doesn't
-   reach `R`'s usual parent — e.g. `listBySubscription` on a
-   resource-group-scoped resource.
-6. **Type-tail match → `List` on `R`.** A `GET` or `POST` whose path
-   ends with `R`'s resource-type tail and whose response is paged-of-
-   `R`'s model attaches to `R` as `List`.
+#### Pass 1 — Identify `List`s
 
-Any operation that matches none of the above is a **non-resource
-method** and is emitted as an extension on the appropriate scope
-resource (`SubscriptionResource` / `ResourceGroupResource` /
-`TenantResource` / `ManagementGroupResource` / `ArmResource`).
+For each remaining operation `O`:
+
+1. If `O`'s verb is not `GET`, skip — it cannot be a `List`.
+2. If `O`'s response is not a collection of some item model `T`,
+   skip — it cannot be a `List`.
+3. Otherwise, look for a resource `R` in the resource set such that
+   both:
+   - `O.path` is a prefix of `R.instancePath`, and
+   - `R.model == T`.
+
+   If at least one such `R` exists, attach `O` to the resource with
+   the **shortest** matching `instancePath` as `R.List`. (The shortest
+   match is the closest containing resource whose model is `T` — i.e.
+   `R` itself, not some deeper resource that happens to also be of
+   model `T`.)
+4. If no such `R` exists, `O` falls through to Pass 2.
+
+#### Pass 2 — Everything else is an `Action`
+
+Each remaining operation `O` (anything that didn't become a `List` in
+Pass 1) is treated as an `Action`. Find the **longest** instance path
+that is a prefix of `O.path` among:
+
+- all detected resources from Step 2, and
+- the predefined scope resources — `TenantResource`,
+  `SubscriptionResource`, `ResourceGroupResource`,
+  `ManagementGroupResource`.
+
+`O` attaches as an `Action` on whichever holder owns that longest
+prefix. The path tail past the prefix forms the action name. If no
+prefix matches at all — the operation lives entirely outside the
+known resource hierarchy — emit it as a non-resource method on the
+matching `ArmResource` extension or the appropriate scope resource,
+according to its scope prefix.
 
 > Notes on what is intentionally **not** considered in Step 4:
 >
 > - Operation-kind decorators such as `@armResourceList` or
->   `@armResourceAction`. The combination of verb, path relationship,
->   and response model is what classifies an operation.
+>   `@armResourceAction`. The combination of verb, response shape,
+>   and path relationship is what classifies an operation.
 > - `@armResourceOperations(R)` as authoritative ownership. The
 >   decorator is a useful starting hint (it tells us which operations
 >   the spec author meant to associate with `R`'s group), but Step 4
 >   does not require the operation to be in `R`'s group to attach it
->   to `R`. A list-of-containers operation declared inside the storage-
->   account group still ends up on the container resource.
+>   to `R`. A list-of-containers operation declared inside the
+>   storage-account group still ends up on the container resource.
 
 ---
 
@@ -488,23 +486,6 @@ extension on the appropriate scope resource).
 
 Each removal emits a diagnostic so the spec author sees why a model that
 looked like a resource did not become one.
-
----
-
-## Cross-resource list relocation
-
-Some operations are decorated as actions on resource A but actually return a
-paged list of resource B (e.g. `BlobContainer.list` declared on the storage
-account but returning containers). The relocation rule:
-
-- The operation's path must be exactly resource B's **collection path** —
-  i.e. B's instance path with the trailing `{name}` variable segment removed.
-- The page item type must be B's model (a known resource model) and differ
-  from A's model.
-
-When both conditions hold, the operation is moved off A and onto B as a
-`List`. This keeps list-of-B operations on B's collection regardless of
-where the spec chose to declare them.
 
 ---
 
