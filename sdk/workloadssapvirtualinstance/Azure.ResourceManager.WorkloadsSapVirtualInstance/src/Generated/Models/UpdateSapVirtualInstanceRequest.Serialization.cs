@@ -10,66 +10,66 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ServiceNetworking;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
-namespace Azure.ResourceManager.ServiceNetworking.Models
+namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
-    /// <summary> The type used for update operations of the Association. </summary>
-    public partial class TrafficControllerAssociationPatch : IJsonModel<TrafficControllerAssociationPatch>
+    /// <summary> Defines the request body for updating Virtual Instance for SAP. </summary>
+    public partial class UpdateSapVirtualInstanceRequest : IJsonModel<UpdateSapVirtualInstanceRequest>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TrafficControllerAssociationPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual UpdateSapVirtualInstanceRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficControllerAssociationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateSapVirtualInstanceRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTrafficControllerAssociationPatch(document.RootElement, options);
+                        return DeserializeUpdateSapVirtualInstanceRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrafficControllerAssociationPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateSapVirtualInstanceRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficControllerAssociationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateSapVirtualInstanceRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceNetworkingContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TrafficControllerAssociationPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateSapVirtualInstanceRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TrafficControllerAssociationPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<UpdateSapVirtualInstanceRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TrafficControllerAssociationPatch IPersistableModel<TrafficControllerAssociationPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        UpdateSapVirtualInstanceRequest IPersistableModel<UpdateSapVirtualInstanceRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TrafficControllerAssociationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UpdateSapVirtualInstanceRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="trafficControllerAssociationPatch"> The <see cref="TrafficControllerAssociationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(TrafficControllerAssociationPatch trafficControllerAssociationPatch)
+        /// <param name="updateSapVirtualInstanceRequest"> The <see cref="UpdateSapVirtualInstanceRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(UpdateSapVirtualInstanceRequest updateSapVirtualInstanceRequest)
         {
-            if (trafficControllerAssociationPatch == null)
+            if (updateSapVirtualInstanceRequest == null)
             {
                 return null;
             }
-            return RequestContent.Create(trafficControllerAssociationPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(updateSapVirtualInstanceRequest, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TrafficControllerAssociationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UpdateSapVirtualInstanceRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficControllerAssociationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateSapVirtualInstanceRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficControllerAssociationPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateSapVirtualInstanceRequest)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -100,6 +100,11 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -125,31 +130,32 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TrafficControllerAssociationPatch IJsonModel<TrafficControllerAssociationPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        UpdateSapVirtualInstanceRequest IJsonModel<UpdateSapVirtualInstanceRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TrafficControllerAssociationPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual UpdateSapVirtualInstanceRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficControllerAssociationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateSapVirtualInstanceRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficControllerAssociationPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateSapVirtualInstanceRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTrafficControllerAssociationPatch(document.RootElement, options);
+            return DeserializeUpdateSapVirtualInstanceRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TrafficControllerAssociationPatch DeserializeTrafficControllerAssociationPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static UpdateSapVirtualInstanceRequest DeserializeUpdateSapVirtualInstanceRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, string> tags = default;
-            AssociationUpdateProperties properties = default;
+            SapVirtualInstanceIdentity identity = default;
+            UpdateSapVirtualInstanceProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,13 +180,22 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = SapVirtualInstanceIdentity.DeserializeSapVirtualInstanceIdentity(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    properties = AssociationUpdateProperties.DeserializeAssociationUpdateProperties(prop.Value, options);
+                    properties = UpdateSapVirtualInstanceProperties.DeserializeUpdateSapVirtualInstanceProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -188,7 +203,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TrafficControllerAssociationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
+            return new UpdateSapVirtualInstanceRequest(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, additionalBinaryDataProperties);
         }
     }
 }

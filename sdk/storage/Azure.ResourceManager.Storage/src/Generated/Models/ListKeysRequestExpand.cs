@@ -6,30 +6,12 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary></summary>
     public readonly partial struct ListKeysRequestExpand : IEquatable<ListKeysRequestExpand>
     {
-        private readonly string _value;
-        private const string KerbValue = "kerb";
-
-        /// <summary> Initializes a new instance of <see cref="ListKeysRequestExpand"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ListKeysRequestExpand(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Kerb. </summary>
-        public static ListKeysRequestExpand Kerb { get; } = new ListKeysRequestExpand(KerbValue);
-
         /// <summary> Determines if two <see cref="ListKeysRequestExpand"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
@@ -47,19 +29,5 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Converts a string to a <see cref="ListKeysRequestExpand"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ListKeysRequestExpand?(string value) => value == null ? null : new ListKeysRequestExpand(value);
-
-        /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ListKeysRequestExpand other && this.Equals(other);
-
-        /// <inheritdoc/>
-        public bool Equals(ListKeysRequestExpand other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
-        public override string ToString() => _value;
     }
 }
