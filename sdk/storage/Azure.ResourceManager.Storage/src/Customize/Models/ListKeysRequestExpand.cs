@@ -14,12 +14,14 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct ListKeysRequestExpand
     {
         // Workaround for a regression in @typespec/http-client-csharp 1.0.0-alpha.20260506.3
-        // (introduced by microsoft/typespec#10584, tracked by microsoft/typespec#10649,
-        // picked up here via Azure/azure-sdk-for-net#59170): anonymous inline-union
-        // operation-parameter enums are emitted twice in tspCodeModel.json, causing the C#
-        // generator to drop the struct body partial (field/ctor/named values/Equals/GetHashCode/ToString)
-        // and emit only the operators/conversions partial, breaking the build. Re-declare the
-        // missing members here. Remove once the upstream fix lands in a new mgmt-emitter alpha.
+        // (introduced by https://github.com/microsoft/typespec/pull/10584,
+        // tracked by https://github.com/microsoft/typespec/issues/10649,
+        // picked up here via https://github.com/Azure/azure-sdk-for-net/pull/59170):
+        // anonymous inline-union operation-parameter enums are emitted twice in tspCodeModel.json,
+        // causing the C# generator to drop the struct body partial
+        // (field/ctor/named values/Equals/GetHashCode/ToString) and emit only the
+        // operators/conversions partial, breaking the build. Re-declare the missing members
+        // here. Remove once the upstream fix lands in a new mgmt-emitter alpha.
         private readonly string _value;
         private const string KerbValue = "kerb";
 
