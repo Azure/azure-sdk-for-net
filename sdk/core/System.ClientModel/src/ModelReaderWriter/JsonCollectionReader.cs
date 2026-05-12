@@ -57,7 +57,7 @@ internal class JsonCollectionReader : CollectionReader
         }
         else if (itemInstance is IJsonModel<object> iJsonModel)
         {
-            jsonModel = options.ResolveProxy(iJsonModel);
+            jsonModel = iJsonModel;
         }
         else
         {
@@ -78,7 +78,9 @@ internal class JsonCollectionReader : CollectionReader
                     }
                     else if (jsonModel is not null)
                     {
-                        collectionWrapper.AddItem(jsonModel!.Create(ref reader, options), propertyName);
+                        // Chain-of-responsibility per element: snapshot reader, try proxies,
+                        // restore on null (decline), fall back to model.
+                        collectionWrapper.AddItem(options.ReadWithChain(jsonModel.GetType(), jsonModel, ref reader), propertyName);
                     }
                     else
                     {
@@ -100,7 +102,7 @@ internal class JsonCollectionReader : CollectionReader
                     else
                     {
                         Debug.Assert(jsonModel != null);
-                        collectionWrapper.AddItem(jsonModel!.Create(ref reader, options), propertyName);
+                        collectionWrapper.AddItem(options.ReadWithChain(jsonModel!.GetType(), jsonModel, ref reader), propertyName);
                     }
                     break;
                 case JsonTokenType.EndArray:

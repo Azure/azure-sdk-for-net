@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 namespace System.ClientModel.Primitives;
 
@@ -221,5 +222,87 @@ public class ModelReaderWriterOptions
         // All proxies declined — model handles it
         ProxiedModel = null;
         return model.Create(data, this);
+    }
+
+    /// <summary>
+    /// Resolves a proxy for reading from a <see cref="Utf8JsonReader"/> by walking the chain of responsibility.
+    /// Uses the reader-snapshot technique: before each proxy attempt, the reader position is saved.
+    /// If a proxy returns <c>null</c>, the reader is restored to the snapshot and the next proxy is tried.
+    /// If all proxies decline, the model itself handles the read.
+    /// </summary>
+    /// <remarks>
+    /// This technique is based on the pattern used by System.Text.Json for polymorphic deserialization,
+    /// where a Utf8JsonReader (a value type) is copied to snapshot its position before a speculative read.
+    /// See: https://github.com/dotnet/runtime/blob/main/src/libraries/System.Text.Json/src/System/Text/Json/Serialization/Converters/Object/ObjectDefaultConverter.cs
+    /// </remarks>
+    /// <param name="model"> The <see cref="IJsonModel{T}"/> model instance (used as terminal fallback). </param>
+    /// <param name="reader"> The <see cref="Utf8JsonReader"/> positioned at the start of the JSON element. </param>
+    /// <returns> The deserialized instance of <typeparamref name="T"/>. </returns>
+    internal T? ReadWithChain<T>(IJsonModel<T> model, ref Utf8JsonReader reader)
+    {
+        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<object>? chain) || chain.Count == 0)
+        {
+            return model.Create(ref reader, this);
+        }
+
+        // Walk chain last-to-first. Snapshot the reader before each attempt;
+        // if proxy returns null (declines), restore the reader and try the next.
+        for (int i = chain.Count - 1; i >= 0; i--)
+        {
+            if (chain[i] is IJsonModel<T> proxy)
+            {
+                ProxiedModel = model;
+                Utf8JsonReader snapshot = reader;
+                T? result = proxy.Create(ref reader, this);
+                if (result is not null)
+                {
+                    return result;
+                }
+                // Proxy declined — restore reader position for next attempt
+                reader = snapshot;
+            }
+        }
+
+        // All proxies declined — model handles it
+        ProxiedModel = null;
+        return model.Create(ref reader, this);
+    }
+
+    /// <summary>
+    /// Resolves a proxy for reading from a <see cref="Utf8JsonReader"/> using a non-generic model reference,
+    /// walking the chain of responsibility with reader-snapshot semantics.
+    /// Used by <see cref="JsonModelConverter"/> and <see cref="JsonCollectionReader"/>.
+    /// </summary>
+    /// <param name="modelType"> The runtime type of the model to look up proxies for. </param>
+    /// <param name="model"> The <see cref="IJsonModel{T}"/> model instance (used as terminal fallback). </param>
+    /// <param name="reader"> The <see cref="Utf8JsonReader"/> positioned at the start of the JSON element. </param>
+    /// <returns> The deserialized instance, or null if deserialization failed. </returns>
+    internal object? ReadWithChain(Type modelType, IJsonModel<object> model, ref Utf8JsonReader reader)
+    {
+        if (_proxies is null || !_proxies.TryGetValue(modelType, out List<object>? chain) || chain.Count == 0)
+        {
+            return model.Create(ref reader, this);
+        }
+
+        // Walk chain last-to-first with reader-snapshot for each attempt.
+        for (int i = chain.Count - 1; i >= 0; i--)
+        {
+            if (chain[i] is IJsonModel<object> proxy)
+            {
+                ProxiedModel = model;
+                Utf8JsonReader snapshot = reader;
+                object? result = proxy.Create(ref reader, this);
+                if (result is not null)
+                {
+                    return result;
+                }
+                // Proxy declined — restore reader position
+                reader = snapshot;
+            }
+        }
+
+        // All proxies declined — model handles it
+        ProxiedModel = null;
+        return model.Create(ref reader, this);
     }
 }

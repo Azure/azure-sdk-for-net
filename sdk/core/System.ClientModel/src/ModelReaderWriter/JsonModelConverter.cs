@@ -86,16 +86,17 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
             return new ReflectionModelBuilder(typeToConvert).CreateObject() as IJsonModel<object>;
         }
 
-        if (!_options.TryGetProxy(typeToConvert, out IJsonModel<object>? iJsonModel))
-        {
-            iJsonModel = _context is null ? NonAotCompatActivate() : AotCompatActivate();
-        }
+        // Always activate the model instance — it's the terminal fallback for the chain.
+        IJsonModel<object>? iJsonModel = _context is null ? NonAotCompatActivate() : AotCompatActivate();
 
         if (iJsonModel is null)
         {
             throw new InvalidOperationException($"Either {typeToConvert.ToFriendlyName()} or the PersistableModelProxyAttribute defined needs to implement IJsonModel.");
         }
-        var result = iJsonModel.Create(ref reader, _options);
+
+        // Use chain-of-responsibility: snapshot reader before each proxy attempt,
+        // restore on null (decline). Falls back to model itself if all proxies decline.
+        var result = _options.ReadWithChain(typeToConvert, iJsonModel, ref reader);
         return (IJsonModel<object>?)result;
     }
 
