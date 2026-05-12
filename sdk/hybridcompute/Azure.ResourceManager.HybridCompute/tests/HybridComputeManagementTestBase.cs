@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         {
             HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
 
-            MachineInstallPatchesParameters content = new MachineInstallPatchesParameters(XmlConvert.ToTimeSpan("PT4H"), VmGuestPatchRebootSetting.IfRequired)
+            MachineInstallPatchesContent content = new MachineInstallPatchesContent(XmlConvert.ToTimeSpan("PT4H"), VmGuestPatchRebootSetting.IfRequired)
             {
                 WindowsParameters = new HybridComputeWindowsParameters()
                 {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
                 Properties = new MachineExtensionProperties()
                 {
                     Publisher = "Microsoft.Azure.NetworkWatcher",
-                    Type = "NetworkWatcherAgentWindows",
+                    MachineExtensionPropertiesType = "NetworkWatcherAgentWindows",
                     TypeHandlerVersion = "1.4.2798.3",
                     Settings =
                     {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             HybridComputeMachineExtensionPatch patch = new HybridComputeMachineExtensionPatch()
             {
                 Publisher = "Microsoft.Azure.NetworkWatcher",
-                Type = "NetworkWatcherAgentWindows",
+                MachineExtensionUpdatePropertiesType = "NetworkWatcherAgentWindows",
                 TypeHandlerVersion = "1.4.2798.3",
                 EnableAutomaticUpgrade = true,
                 Settings =
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             {
                 Properties = new HybridComputePrivateEndpointConnectionProperties()
                 {
-                    PrivateLinkServiceConnectionState = new HybridComputePrivateLinkServiceConnectionStateProperty("Approved", "Approved by johndoe@contoso.com"),
+                    ConnectionState = new HybridComputePrivateLinkServiceConnectionStateProperty("Approved", "Approved by johndoe@contoso.com"),
                 },
             };
             ArmOperation<HybridComputePrivateEndpointConnectionResource> lro = await hybridComputePrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -34,9 +35,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Indicates the current status of the hotpatch being enabled or disabled. </summary>
+        [WirePath("hotpatchEnablementStatus")]
         public HotpatchEnablementStatus? HotpatchEnablementStatus { get; }
 
         /// <summary> The errors that were encountered during the hotpatch capability enrollment or disenrollment. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }

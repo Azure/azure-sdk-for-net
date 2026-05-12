@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="content"> Input for InstallPatches as directly received by the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<MachineInstallPatchesResult>> InstallPatchesAsync(WaitUntil waitUntil, MachineInstallPatchesParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MachineInstallPatchesResult>> InstallPatchesAsync(WaitUntil waitUntil, MachineInstallPatchesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateInstallPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineInstallPatchesParameters.ToRequestContent(content), context);
+                HttpMessage message = _machinesRestClient.CreateInstallPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineInstallPatchesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridComputeArmOperation<MachineInstallPatchesResult> operation = new HybridComputeArmOperation<MachineInstallPatchesResult>(
                     new MachineInstallPatchesResultOperationSource(),
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="content"> Input for InstallPatches as directly received by the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<MachineInstallPatchesResult> InstallPatches(WaitUntil waitUntil, MachineInstallPatchesParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MachineInstallPatchesResult> InstallPatches(WaitUntil waitUntil, MachineInstallPatchesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateInstallPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineInstallPatchesParameters.ToRequestContent(content), context);
+                HttpMessage message = _machinesRestClient.CreateInstallPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineInstallPatchesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridComputeArmOperation<MachineInstallPatchesResult> operation = new HybridComputeArmOperation<MachineInstallPatchesResult>(
                     new MachineInstallPatchesResultOperationSource(),

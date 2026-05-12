@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this machine is assigned to, if any. </param>
         /// <param name="parentClusterResourceId"> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </param>
         /// <param name="hardwareResourceId"> Specifies the resource ID of the associated hardware device. Only settable by HCI RP. </param>
-        /// <param name="mssqlDiscovered"> Specifies whether any MS SQL instance is discovered on the machine. </param>
+        /// <param name="msSqlDiscovered"> Specifies whether any MS SQL instance is discovered on the machine. </param>
         /// <param name="detectedProperties"> Detected properties from the machine. </param>
         /// <param name="networkProfile"> Information about the network the machine is on. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineProperties(LocationData locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, HybridComputeHardwareProfile hardwareProfile, StorageProfile storageProfile, HybridComputeFirmwareProfile firmwareProfile, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, HybridComputeOSProfile osProfile, LicenseProfileMachineInstanceView licenseProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, string vmId, string displayName, string machineFqdn, string clientPublicKey, IdentityKeyStore? identityKeyStore, string tpmEkCertificate, string osName, string osVersion, string osType, string vmUuid, IList<MachineExtensionInstanceView> extensions, string osSku, string osEdition, string domainName, string adFqdn, string dnsFqdn, ResourceIdentifier privateLinkScopeResourceId, ResourceIdentifier parentClusterResourceId, string hardwareResourceId, string mssqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties, HybridComputeNetworkProfile networkProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineProperties(LocationData locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, HybridComputeHardwareProfile hardwareProfile, StorageProfile storageProfile, HybridComputeFirmwareProfile firmwareProfile, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, HybridComputeOSProfile osProfile, LicenseProfileMachineInstanceView licenseProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, IdentityKeyStore? identityKeyStore, string tpmEkCertificate, string osName, string osVersion, string osType, Guid? vmUuid, IList<MachineExtensionInstanceView> extensions, string osSku, string osEdition, string domainName, string adFqdn, string dnsFqdn, ResourceIdentifier privateLinkScopeResourceId, ResourceIdentifier parentClusterResourceId, string hardwareResourceId, string msSqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties, HybridComputeNetworkProfile networkProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LocationData = locationData;
             AgentConfiguration = agentConfiguration;
@@ -89,137 +89,175 @@ namespace Azure.ResourceManager.HybridCompute.Models
             ClientPublicKey = clientPublicKey;
             IdentityKeyStore = identityKeyStore;
             TpmEkCertificate = tpmEkCertificate;
-            OsName = osName;
-            OsVersion = osVersion;
-            OsType = osType;
+            OSName = osName;
+            OSVersion = osVersion;
+            OSType = osType;
             VmUuid = vmUuid;
             Extensions = extensions;
-            OsSku = osSku;
-            OsEdition = osEdition;
+            OSSku = osSku;
+            OSEdition = osEdition;
             DomainName = domainName;
-            AdFqdn = adFqdn;
+            ADFqdn = adFqdn;
             DnsFqdn = dnsFqdn;
             PrivateLinkScopeResourceId = privateLinkScopeResourceId;
             ParentClusterResourceId = parentClusterResourceId;
             HardwareResourceId = hardwareResourceId;
-            MssqlDiscovered = mssqlDiscovered;
+            MSSqlDiscovered = msSqlDiscovered;
             DetectedProperties = detectedProperties;
             NetworkProfile = networkProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
+        [WirePath("locationData")]
         public LocationData LocationData { get; set; }
 
         /// <summary> Configurable properties that the user can set locally via the azcmagent config command, or remotely via ARM. </summary>
+        [WirePath("agentConfiguration")]
         public AgentConfiguration AgentConfiguration { get; }
 
         /// <summary> Statuses of dependent services that are reported back to ARM. </summary>
+        [WirePath("serviceStatuses")]
         public HybridComputeServiceStatuses ServiceStatuses { get; set; }
 
         /// <summary> Information about the machine's hardware. </summary>
+        [WirePath("hardwareProfile")]
         public HybridComputeHardwareProfile HardwareProfile { get; }
 
         /// <summary> Information about the machine's storage. </summary>
+        [WirePath("storageProfile")]
         internal StorageProfile StorageProfile { get; }
 
         /// <summary> Information about the machine's firmware. </summary>
+        [WirePath("firmwareProfile")]
         public HybridComputeFirmwareProfile FirmwareProfile { get; }
 
         /// <summary> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </summary>
+        [WirePath("cloudMetadata")]
         internal HybridComputeCloudMetadata CloudMetadata { get; set; }
 
         /// <summary> The info of the machine w.r.t Agent Upgrade. </summary>
+        [WirePath("agentUpgrade")]
         public AgentUpgrade AgentUpgrade { get; set; }
 
         /// <summary> Specifies the operating system settings for the hybrid machine. </summary>
+        [WirePath("osProfile")]
         public HybridComputeOSProfile OSProfile { get; set; }
 
         /// <summary> Specifies the License related properties for a machine. </summary>
+        [WirePath("licenseProfile")]
         public LicenseProfileMachineInstanceView LicenseProfile { get; set; }
 
         /// <summary> The provisioning state, which only appears in the response. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> The status of the hybrid machine agent. </summary>
+        [WirePath("status")]
         public HybridComputeStatusType? Status { get; }
 
         /// <summary> The time of the last status change. </summary>
+        [WirePath("lastStatusChange")]
         public DateTimeOffset? LastStatusChange { get; }
 
         /// <summary> Details about the error state. </summary>
+        [WirePath("errorDetails")]
         public IReadOnlyList<ResponseError> ErrorDetails { get; } = new ChangeTrackingList<ResponseError>();
 
         /// <summary> The hybrid machine agent full version. </summary>
+        [WirePath("agentVersion")]
         public string AgentVersion { get; }
 
         /// <summary> Specifies the hybrid machine unique ID. </summary>
-        public string VmId { get; set; }
+        [WirePath("vmId")]
+        public Guid? VmId { get; set; }
 
         /// <summary> Specifies the hybrid machine display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
 
         /// <summary> Specifies the hybrid machine FQDN. </summary>
+        [WirePath("machineFqdn")]
         public string MachineFqdn { get; }
 
         /// <summary> Public Key that the client provides to be used during initial resource onboarding. </summary>
+        [WirePath("clientPublicKey")]
         public string ClientPublicKey { get; set; }
 
         /// <summary> Specifies the identity key store a machine is using. </summary>
+        [WirePath("identityKeyStore")]
         public IdentityKeyStore? IdentityKeyStore { get; set; }
 
         /// <summary> Endorsement Key Certificate of the Trusted Platform Module (TPM) that the client provides to be used during initial resource onboarding. </summary>
+        [WirePath("tpmEkCertificate")]
         public string TpmEkCertificate { get; set; }
 
         /// <summary> The Operating System running on the hybrid machine. </summary>
-        public string OsName { get; }
+        [WirePath("osName")]
+        public string OSName { get; }
 
         /// <summary> The version of Operating System running on the hybrid machine. </summary>
-        public string OsVersion { get; }
+        [WirePath("osVersion")]
+        public string OSVersion { get; }
 
         /// <summary> The type of Operating System (windows/linux). </summary>
-        public string OsType { get; set; }
+        [WirePath("osType")]
+        public string OSType { get; set; }
 
         /// <summary> Specifies the Arc Machine's unique SMBIOS ID. </summary>
-        public string VmUuid { get; }
+        [WirePath("vmUuid")]
+        public Guid? VmUuid { get; }
 
         /// <summary> Machine Extensions information (deprecated field). </summary>
+        [WirePath("extensions")]
         public IList<MachineExtensionInstanceView> Extensions { get; } = new ChangeTrackingList<MachineExtensionInstanceView>();
 
         /// <summary> Specifies the Operating System product SKU. </summary>
-        public string OsSku { get; }
+        [WirePath("osSku")]
+        public string OSSku { get; }
 
         /// <summary> The edition of the Operating System. </summary>
-        public string OsEdition { get; }
+        [WirePath("osEdition")]
+        public string OSEdition { get; }
 
         /// <summary> Specifies the Windows domain name. </summary>
+        [WirePath("domainName")]
         public string DomainName { get; }
 
         /// <summary> Specifies the AD fully qualified display name. </summary>
-        public string AdFqdn { get; }
+        [WirePath("adFqdn")]
+        public string ADFqdn { get; }
 
         /// <summary> Specifies the DNS fully qualified display name. </summary>
+        [WirePath("dnsFqdn")]
         public string DnsFqdn { get; }
 
         /// <summary> The resource id of the private link scope this machine is assigned to, if any. </summary>
+        [WirePath("privateLinkScopeResourceId")]
         public ResourceIdentifier PrivateLinkScopeResourceId { get; set; }
 
         /// <summary> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </summary>
+        [WirePath("parentClusterResourceId")]
         public ResourceIdentifier ParentClusterResourceId { get; set; }
 
         /// <summary> Specifies the resource ID of the associated hardware device. Only settable by HCI RP. </summary>
+        [WirePath("hardwareResourceId")]
         public string HardwareResourceId { get; set; }
 
         /// <summary> Specifies whether any MS SQL instance is discovered on the machine. </summary>
-        public string MssqlDiscovered { get; set; }
+        [WirePath("mssqlDiscovered")]
+        public string MSSqlDiscovered { get; set; }
 
         /// <summary> Detected properties from the machine. </summary>
+        [WirePath("detectedProperties")]
         public IReadOnlyDictionary<string, string> DetectedProperties { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> Information about the network the machine is on. </summary>
+        [WirePath("networkProfile")]
         internal HybridComputeNetworkProfile NetworkProfile { get; }
 
         /// <summary> The disks on the machine. </summary>
+        [WirePath("storageProfile.disks")]
         public IReadOnlyList<HybridComputeDisk> StorageDisks
         {
             get
@@ -229,6 +267,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>
+        [WirePath("cloudMetadata.provider")]
         public string CloudMetadataProvider
         {
             get
@@ -238,6 +277,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The list of network interfaces. </summary>
+        [WirePath("networkProfile.networkInterfaces")]
         public IReadOnlyList<HybridComputeNetworkInterface> NetworkInterfaces
         {
             get

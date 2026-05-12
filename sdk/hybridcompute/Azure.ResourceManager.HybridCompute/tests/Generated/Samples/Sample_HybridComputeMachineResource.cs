@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             HybridComputeMachineResource hybridComputeMachine = client.GetHybridComputeMachineResource(hybridComputeMachineResourceId);
 
             // invoke the operation
-            MachineInstallPatchesParameters content = new MachineInstallPatchesParameters(XmlConvert.ToTimeSpan("PT4H"), VmGuestPatchRebootSetting.IfRequired)
+            MachineInstallPatchesContent content = new MachineInstallPatchesContent(XmlConvert.ToTimeSpan("PT4H"), VmGuestPatchRebootSetting.IfRequired)
             {
                 WindowsParameters = new HybridComputeWindowsParameters
                 {

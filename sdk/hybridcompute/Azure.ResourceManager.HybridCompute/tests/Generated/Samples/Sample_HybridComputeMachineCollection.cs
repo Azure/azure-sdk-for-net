@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
                 {
                     WindowsConfiguration = new HybridComputeWindowsConfiguration(),
                 },
-                VmId = "b7a098cc-b0b8-46e8-a205-62f301a62a8f",
+                VmId = Guid.Parse("b7a098cc-b0b8-46e8-a205-62f301a62a8f"),
                 ClientPublicKey = "string",
                 PrivateLinkScopeResourceId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.HybridCompute/privateLinkScopes/privateLinkScopeName"),
                 ParentClusterResourceId = new ResourceIdentifier("{AzureStackHCIResourceId}"),

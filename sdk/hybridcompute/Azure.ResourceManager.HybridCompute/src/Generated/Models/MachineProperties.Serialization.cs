@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(VmId))
             {
                 writer.WritePropertyName("vmId"u8);
-                writer.WriteStringValue(VmId);
+                writer.WriteStringValue(VmId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
@@ -192,25 +192,25 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("tpmEkCertificate"u8);
                 writer.WriteStringValue(TpmEkCertificate);
             }
-            if (options.Format != "W" && Optional.IsDefined(OsName))
+            if (options.Format != "W" && Optional.IsDefined(OSName))
             {
                 writer.WritePropertyName("osName"u8);
-                writer.WriteStringValue(OsName);
+                writer.WriteStringValue(OSName);
             }
-            if (options.Format != "W" && Optional.IsDefined(OsVersion))
+            if (options.Format != "W" && Optional.IsDefined(OSVersion))
             {
                 writer.WritePropertyName("osVersion"u8);
-                writer.WriteStringValue(OsVersion);
+                writer.WriteStringValue(OSVersion);
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType);
+                writer.WriteStringValue(OSType);
             }
             if (options.Format != "W" && Optional.IsDefined(VmUuid))
             {
                 writer.WritePropertyName("vmUuid"u8);
-                writer.WriteStringValue(VmUuid);
+                writer.WriteStringValue(VmUuid.Value);
             }
             if (Optional.IsCollectionDefined(Extensions))
             {
@@ -222,25 +222,25 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(OsSku))
+            if (options.Format != "W" && Optional.IsDefined(OSSku))
             {
                 writer.WritePropertyName("osSku"u8);
-                writer.WriteStringValue(OsSku);
+                writer.WriteStringValue(OSSku);
             }
-            if (options.Format != "W" && Optional.IsDefined(OsEdition))
+            if (options.Format != "W" && Optional.IsDefined(OSEdition))
             {
                 writer.WritePropertyName("osEdition"u8);
-                writer.WriteStringValue(OsEdition);
+                writer.WriteStringValue(OSEdition);
             }
             if (options.Format != "W" && Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (options.Format != "W" && Optional.IsDefined(AdFqdn))
+            if (options.Format != "W" && Optional.IsDefined(ADFqdn))
             {
                 writer.WritePropertyName("adFqdn"u8);
-                writer.WriteStringValue(AdFqdn);
+                writer.WriteStringValue(ADFqdn);
             }
             if (options.Format != "W" && Optional.IsDefined(DnsFqdn))
             {
@@ -262,10 +262,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("hardwareResourceId"u8);
                 writer.WriteStringValue(HardwareResourceId);
             }
-            if (Optional.IsDefined(MssqlDiscovered))
+            if (Optional.IsDefined(MSSqlDiscovered))
             {
                 writer.WritePropertyName("mssqlDiscovered"u8);
-                writer.WriteStringValue(MssqlDiscovered);
+                writer.WriteStringValue(MSSqlDiscovered);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(DetectedProperties))
             {
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             DateTimeOffset? lastStatusChange = default;
             IReadOnlyList<ResponseError> errorDetails = default;
             string agentVersion = default;
-            string vmId = default;
+            Guid? vmId = default;
             string displayName = default;
             string machineFqdn = default;
             string clientPublicKey = default;
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             string osName = default;
             string osVersion = default;
             string osType = default;
-            string vmUuid = default;
+            Guid? vmUuid = default;
             IList<MachineExtensionInstanceView> extensions = default;
             string osSku = default;
             string osEdition = default;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             ResourceIdentifier privateLinkScopeResourceId = default;
             ResourceIdentifier parentClusterResourceId = default;
             string hardwareResourceId = default;
-            string mssqlDiscovered = default;
+            string msSqlDiscovered = default;
             IReadOnlyDictionary<string, string> detectedProperties = default;
             HybridComputeNetworkProfile networkProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -511,7 +511,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (prop.NameEquals("vmId"u8))
                 {
-                    vmId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
@@ -560,7 +564,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (prop.NameEquals("vmUuid"u8))
                 {
-                    vmUuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmUuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("extensions"u8))
@@ -627,7 +635,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (prop.NameEquals("mssqlDiscovered"u8))
                 {
-                    mssqlDiscovered = prop.Value.GetString();
+                    msSqlDiscovered = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("detectedProperties"u8))
@@ -700,7 +708,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 privateLinkScopeResourceId,
                 parentClusterResourceId,
                 hardwareResourceId,
-                mssqlDiscovered,
+                msSqlDiscovered,
                 detectedProperties ?? new ChangeTrackingDictionary<string, string>(),
                 networkProfile,
                 additionalBinaryDataProperties);

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -28,9 +29,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Describes Machine Extension Update Properties. </summary>
+        [WirePath("properties")]
         internal MachineExtensionUpdateProperties Properties { get; set; }
 
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>
+        [WirePath("properties.forceUpdateTag")]
         public string ForceUpdateTag
         {
             get
@@ -48,6 +51,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The name of the extension handler publisher. </summary>
+        [WirePath("properties.publisher")]
         public string Publisher
         {
             get
@@ -65,11 +69,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
-        public string Type
+        [WirePath("properties.type")]
+        public string MachineExtensionUpdatePropertiesType
         {
             get
             {
-                return Properties is null ? default : Properties.Type;
+                return Properties is null ? default : Properties.MachineExtensionUpdatePropertiesType;
             }
             set
             {
@@ -77,11 +82,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     Properties = new MachineExtensionUpdateProperties();
                 }
-                Properties.Type = value;
+                Properties.MachineExtensionUpdatePropertiesType = value;
             }
         }
 
         /// <summary> Specifies the version of the script handler. </summary>
+        [WirePath("properties.typeHandlerVersion")]
         public string TypeHandlerVersion
         {
             get
@@ -99,6 +105,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </summary>
+        [WirePath("properties.enableAutomaticUpgrade")]
         public bool? EnableAutomaticUpgrade
         {
             get
@@ -116,6 +123,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
+        [WirePath("properties.autoUpgradeMinorVersion")]
         public bool? AutoUpgradeMinorVersion
         {
             get
@@ -133,6 +141,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Json formatted public settings for the extension. </summary>
+        [WirePath("properties.settings")]
         public IDictionary<string, BinaryData> Settings
         {
             get
@@ -146,6 +155,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </summary>
+        [WirePath("properties.protectedSettings")]
         public IDictionary<string, BinaryData> ProtectedSettings
         {
             get

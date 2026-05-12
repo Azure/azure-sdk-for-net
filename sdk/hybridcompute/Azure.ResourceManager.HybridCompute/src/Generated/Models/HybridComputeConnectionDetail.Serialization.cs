@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIpAddress);
+                writer.WriteStringValue(PrivateIPAddress);
             }
             if (options.Format != "W" && Optional.IsDefined(LinkIdentifier))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            string privateIpAddress = default;
+            string privateIPAddress = default;
             string linkIdentifier = default;
             string groupId = default;
             string memberName = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (prop.NameEquals("privateIpAddress"u8))
                 {
-                    privateIpAddress = prop.Value.GetString();
+                    privateIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("linkIdentifier"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             return new HybridComputeConnectionDetail(
                 id,
-                privateIpAddress,
+                privateIPAddress,
                 linkIdentifier,
                 groupId,
                 memberName,

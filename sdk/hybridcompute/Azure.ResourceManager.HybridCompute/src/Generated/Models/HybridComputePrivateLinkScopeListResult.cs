@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The HybridComputePrivateLinkScope items on this page. </summary>
+        [WirePath("value")]
         public IList<HybridComputePrivateLinkScopeData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

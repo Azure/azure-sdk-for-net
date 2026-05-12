@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new SetupExtensionRequest(extensions.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Describes the properties of a Machine Extension. </summary>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="machineExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="licenseType"> The type of the license resource. </param>
         /// <param name="licenseDetails"> Describes the properties of a License. </param>
         /// <returns> A new <see cref="HybridCompute.HybridComputeLicenseData"/> instance for mocking. </returns>
-        public static HybridComputeLicenseData HybridComputeLicenseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = default, string tenantId = default, HybridComputeLicenseType? licenseType = default, HybridComputeLicenseDetails licenseDetails = default)
+        public static HybridComputeLicenseData HybridComputeLicenseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = default, Guid? tenantId = default, HybridComputeLicenseType? licenseType = default, HybridComputeLicenseDetails licenseDetails = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -212,7 +213,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this machine is assigned to, if any. </param>
         /// <param name="parentClusterResourceId"> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </param>
         /// <param name="hardwareResourceId"> Specifies the resource ID of the associated hardware device. Only settable by HCI RP. </param>
-        /// <param name="mssqlDiscovered"> Specifies whether any MS SQL instance is discovered on the machine. </param>
+        /// <param name="msSqlDiscovered"> Specifies whether any MS SQL instance is discovered on the machine. </param>
         /// <param name="detectedProperties"> Detected properties from the machine. </param>
         /// <param name="storageDisks"> The disks on the machine. </param>
         /// <param name="cloudMetadataProvider"> Specifies the cloud provider (Azure/AWS/GCP...). </param>
@@ -221,7 +222,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="kind"> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </param>
         /// <returns> A new <see cref="HybridCompute.HybridComputeMachineData"/> instance for mocking. </returns>
-        public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, LocationData locationData = default, AgentConfiguration agentConfiguration = default, HybridComputeServiceStatuses serviceStatuses = default, HybridComputeHardwareProfile hardwareProfile = default, HybridComputeFirmwareProfile firmwareProfile = default, AgentUpgrade agentUpgrade = default, HybridComputeOSProfile osProfile = default, LicenseProfileMachineInstanceView licenseProfile = default, string provisioningState = default, HybridComputeStatusType? status = default, DateTimeOffset? lastStatusChange = default, IEnumerable<ResponseError> errorDetails = default, string agentVersion = default, string vmId = default, string displayName = default, string machineFqdn = default, string clientPublicKey = default, IdentityKeyStore? identityKeyStore = default, string tpmEkCertificate = default, string osName = default, string osVersion = default, string osType = default, string vmUuid = default, IEnumerable<MachineExtensionInstanceView> extensions = default, string osSku = default, string osEdition = default, string domainName = default, string adFqdn = default, string dnsFqdn = default, ResourceIdentifier privateLinkScopeResourceId = default, ResourceIdentifier parentClusterResourceId = default, string hardwareResourceId = default, string mssqlDiscovered = default, IReadOnlyDictionary<string, string> detectedProperties = default, IEnumerable<HybridComputeDisk> storageDisks = default, string cloudMetadataProvider = default, IEnumerable<HybridComputeNetworkInterface> networkInterfaces = default, IEnumerable<HybridComputeMachineExtensionData> resources = default, ManagedServiceIdentity identity = default, ArcKindEnum? kind = default)
+        public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, LocationData locationData = default, AgentConfiguration agentConfiguration = default, HybridComputeServiceStatuses serviceStatuses = default, HybridComputeHardwareProfile hardwareProfile = default, HybridComputeFirmwareProfile firmwareProfile = default, AgentUpgrade agentUpgrade = default, HybridComputeOSProfile osProfile = default, LicenseProfileMachineInstanceView licenseProfile = default, string provisioningState = default, HybridComputeStatusType? status = default, DateTimeOffset? lastStatusChange = default, IEnumerable<ResponseError> errorDetails = default, string agentVersion = default, Guid? vmId = default, string displayName = default, string machineFqdn = default, string clientPublicKey = default, IdentityKeyStore? identityKeyStore = default, string tpmEkCertificate = default, string osName = default, string osVersion = default, string osType = default, Guid? vmUuid = default, IEnumerable<MachineExtensionInstanceView> extensions = default, string osSku = default, string osEdition = default, string domainName = default, string adFqdn = default, string dnsFqdn = default, ResourceIdentifier privateLinkScopeResourceId = default, ResourceIdentifier parentClusterResourceId = default, string hardwareResourceId = default, string msSqlDiscovered = default, IReadOnlyDictionary<string, string> detectedProperties = default, IEnumerable<HybridComputeDisk> storageDisks = default, string cloudMetadataProvider = default, IEnumerable<HybridComputeNetworkInterface> networkInterfaces = default, IEnumerable<HybridComputeMachineExtensionData> resources = default, ManagedServiceIdentity identity = default, ArcKindEnum? kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             resources ??= new ChangeTrackingList<HybridComputeMachineExtensionData>();
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                locationData is null && agentConfiguration is null && serviceStatuses is null && hardwareProfile is null && firmwareProfile is null && agentUpgrade is null && osProfile is null && licenseProfile is null && provisioningState is null && status is null && lastStatusChange is null && errorDetails is null && agentVersion is null && vmId is null && displayName is null && machineFqdn is null && clientPublicKey is null && identityKeyStore is null && tpmEkCertificate is null && osName is null && osVersion is null && osType is null && vmUuid is null && extensions is null && osSku is null && osEdition is null && domainName is null && adFqdn is null && dnsFqdn is null && privateLinkScopeResourceId is null && parentClusterResourceId is null && hardwareResourceId is null && mssqlDiscovered is null && detectedProperties is null && storageDisks is null && cloudMetadataProvider is null && networkInterfaces is null ? default : new MachineProperties(
+                locationData is null && agentConfiguration is null && serviceStatuses is null && hardwareProfile is null && firmwareProfile is null && agentUpgrade is null && osProfile is null && licenseProfile is null && provisioningState is null && status is null && lastStatusChange is null && errorDetails is null && agentVersion is null && vmId is null && displayName is null && machineFqdn is null && clientPublicKey is null && identityKeyStore is null && tpmEkCertificate is null && osName is null && osVersion is null && osType is null && vmUuid is null && extensions is null && osSku is null && osEdition is null && domainName is null && adFqdn is null && dnsFqdn is null && privateLinkScopeResourceId is null && parentClusterResourceId is null && hardwareResourceId is null && msSqlDiscovered is null && detectedProperties is null && storageDisks is null && cloudMetadataProvider is null && networkInterfaces is null ? default : new MachineProperties(
                     locationData,
                     agentConfiguration,
                     serviceStatuses,
@@ -269,7 +270,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     privateLinkScopeResourceId,
                     parentClusterResourceId,
                     hardwareResourceId,
-                    mssqlDiscovered,
+                    msSqlDiscovered,
                     detectedProperties,
                     new HybridComputeNetworkProfile((networkInterfaces ?? new ChangeTrackingList<HybridComputeNetworkInterface>()).ToList(), null),
                     null),
@@ -307,6 +308,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Describes properties that can identify extensions. </summary>
         /// <param name="publisher"> Publisher of the extension. </param>
         /// <param name="configurationExtensionType"> Type of the extension. </param>
         /// <returns> A new <see cref="Models.HybridComputeConfigurationExtension"/> instance for mocking. </returns>
@@ -367,6 +369,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeFirmwareProfile(serialNumber, @type, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The info w.r.t Agent Upgrade. </summary>
         /// <param name="desiredVersion"> Specifies the version info w.r.t AgentUpgrade for the machine. </param>
         /// <param name="correlationId"> The correlation ID associated with an agent upgrade operation. </param>
         /// <param name="isAutomaticUpgradeEnabled"> Specifies if the machine's agent should be upgraded. </param>
@@ -405,39 +408,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static HybridComputePatchSettingsStatus HybridComputePatchSettingsStatus(HotpatchEnablementStatus? hotpatchEnablementStatus = default, ResponseError error = default)
         {
             return new HybridComputePatchSettingsStatus(hotpatchEnablementStatus, error, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="licenseStatus"> Indicates the license status of the OS. </param>
-        /// <param name="licenseChannel"> Indicates the license channel. </param>
-        /// <param name="softwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
-        /// <param name="esuProfile"> Properties for the Machine ESU profile. </param>
-        /// <param name="subscriptionStatus"> Indicates the subscription status of the product. </param>
-        /// <param name="productType"> Indicates the product type of the license. </param>
-        /// <param name="enrollmentOn"> The timestamp in UTC when the user enrolls the feature. </param>
-        /// <param name="billingStartOn"> The timestamp in UTC when the billing starts. </param>
-        /// <param name="disenrollmentOn"> The timestamp in UTC when the user disenrolled the feature. </param>
-        /// <param name="billingEndOn"> The timestamp in UTC when the billing ends. </param>
-        /// <param name="error"> The errors that were encountered during the feature enrollment or disenrollment. </param>
-        /// <param name="productFeatures"> The list of product features. </param>
-        /// <returns> A new <see cref="Models.LicenseProfileMachineInstanceView"/> instance for mocking. </returns>
-        public static LicenseProfileMachineInstanceView LicenseProfileMachineInstanceView(HybridComputeLicenseStatus? licenseStatus = default, string licenseChannel = default, bool? softwareAssuranceCustomer = default, LicenseProfileMachineInstanceViewEsuProperties esuProfile = default, LicenseProfileSubscriptionStatus? subscriptionStatus = default, LicenseProfileProductType? productType = default, DateTimeOffset? enrollmentOn = default, DateTimeOffset? billingStartOn = default, DateTimeOffset? disenrollmentOn = default, DateTimeOffset? billingEndOn = default, ResponseError error = default, IEnumerable<HybridComputeProductFeature> productFeatures = default)
-        {
-            return new LicenseProfileMachineInstanceView(
-                licenseStatus,
-                licenseChannel,
-                softwareAssuranceCustomer is null ? default : new LicenseProfileMachineInstanceViewSoftwareAssurance(softwareAssuranceCustomer, null),
-                esuProfile,
-                subscriptionStatus is null && productType is null && enrollmentOn is null && billingStartOn is null && disenrollmentOn is null && billingEndOn is null && error is null && productFeatures is null ? default : new LicenseProfileArmProductProfileProperties(
-                    subscriptionStatus,
-                    productType,
-                    enrollmentOn,
-                    billingStartOn,
-                    disenrollmentOn,
-                    billingEndOn,
-                    error,
-                    (productFeatures ?? new ChangeTrackingList<HybridComputeProductFeature>()).ToList(),
-                    null),
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Properties for the Machine ESU profile. </summary>
@@ -610,6 +580,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 null));
         }
 
+        /// <summary> Describes the properties of an AssessPatches result. </summary>
         /// <param name="status"> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Unknown", "Failed", "Succeeded", or "CompletedWithWarnings.". </param>
         /// <param name="assessmentActivityId"> The activity ID of the operation that produced this result. </param>
         /// <param name="isRebootPending"> The overall reboot status of the VM. It will be true when partially installed patches require a reboot to complete installation but the reboot has not yet occurred. </param>
@@ -668,10 +639,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="rebootSetting"> Defines when it is acceptable to reboot a VM during a software update operation. </param>
         /// <param name="windowsParameters"> Input for InstallPatches on a Windows VM, as directly received by the API. </param>
         /// <param name="linuxParameters"> Input for InstallPatches on a Linux VM, as directly received by the API. </param>
-        /// <returns> A new <see cref="Models.MachineInstallPatchesParameters"/> instance for mocking. </returns>
-        public static MachineInstallPatchesParameters MachineInstallPatchesParameters(TimeSpan maximumDuration = default, VmGuestPatchRebootSetting rebootSetting = default, HybridComputeWindowsParameters windowsParameters = default, HybridComputeLinuxParameters linuxParameters = default)
+        /// <returns> A new <see cref="Models.MachineInstallPatchesContent"/> instance for mocking. </returns>
+        public static MachineInstallPatchesContent MachineInstallPatchesContent(TimeSpan maximumDuration = default, VmGuestPatchRebootSetting rebootSetting = default, HybridComputeWindowsParameters windowsParameters = default, HybridComputeLinuxParameters linuxParameters = default)
         {
-            return new MachineInstallPatchesParameters(maximumDuration, rebootSetting, windowsParameters, linuxParameters, additionalBinaryDataProperties: null);
+            return new MachineInstallPatchesContent(maximumDuration, rebootSetting, windowsParameters, linuxParameters, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Input for InstallPatches on a Windows VM, as directly received by the API. </summary>
@@ -793,21 +764,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="type"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="machineExtensionUpdatePropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
         /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="settings"> Json formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <returns> A new <see cref="Models.HybridComputeMachineExtensionPatch"/> instance for mocking. </returns>
-        public static HybridComputeMachineExtensionPatch HybridComputeMachineExtensionPatch(IDictionary<string, string> tags = default, string forceUpdateTag = default, string publisher = default, string @type = default, string typeHandlerVersion = default, bool? enableAutomaticUpgrade = default, bool? autoUpgradeMinorVersion = default, IDictionary<string, BinaryData> settings = default, IDictionary<string, BinaryData> protectedSettings = default)
+        public static HybridComputeMachineExtensionPatch HybridComputeMachineExtensionPatch(IDictionary<string, string> tags = default, string forceUpdateTag = default, string publisher = default, string machineExtensionUpdatePropertiesType = default, string typeHandlerVersion = default, bool? enableAutomaticUpgrade = default, bool? autoUpgradeMinorVersion = default, IDictionary<string, BinaryData> settings = default, IDictionary<string, BinaryData> protectedSettings = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HybridComputeMachineExtensionPatch(tags, additionalBinaryDataProperties: null, forceUpdateTag is null && publisher is null && @type is null && typeHandlerVersion is null && enableAutomaticUpgrade is null && autoUpgradeMinorVersion is null && settings is null && protectedSettings is null ? default : new MachineExtensionUpdateProperties(
+            return new HybridComputeMachineExtensionPatch(tags, additionalBinaryDataProperties: null, forceUpdateTag is null && publisher is null && machineExtensionUpdatePropertiesType is null && typeHandlerVersion is null && enableAutomaticUpgrade is null && autoUpgradeMinorVersion is null && settings is null && protectedSettings is null ? default : new MachineExtensionUpdateProperties(
                 forceUpdateTag,
                 publisher,
-                @type,
+                machineExtensionUpdatePropertiesType,
                 typeHandlerVersion,
                 enableAutomaticUpgrade,
                 autoUpgradeMinorVersion,
@@ -1002,15 +973,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <param name="privateEndpointId"> Resource id of the private endpoint. </param>
-        /// <param name="privateLinkServiceConnectionState"> Connection state of the private endpoint connection. </param>
+        /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
         /// <param name="groupIds"> List of group IDs. </param>
         /// <returns> A new <see cref="Models.HybridComputePrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static HybridComputePrivateEndpointConnectionProperties HybridComputePrivateEndpointConnectionProperties(string privateEndpointId = default, HybridComputePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default, string provisioningState = default, IEnumerable<string> groupIds = default)
+        public static HybridComputePrivateEndpointConnectionProperties HybridComputePrivateEndpointConnectionProperties(string privateEndpointId = default, HybridComputePrivateLinkServiceConnectionStateProperty connectionState = default, string provisioningState = default, IEnumerable<string> groupIds = default)
         {
             groupIds ??= new ChangeTrackingList<string>();
 
-            return new HybridComputePrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpointProperty(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, groupIds.ToList(), additionalBinaryDataProperties: null);
+            return new HybridComputePrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpointProperty(privateEndpointId, null), connectionState, provisioningState, groupIds.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> State of the private endpoint connection. </summary>
@@ -1137,6 +1108,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new PrivateLinkScopeValidationDetails(id, publicNetworkAccess, connectionDetails.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The HybridComputeConnectionDetail. </summary>
         /// <param name="id"> Azure resource Id. </param>
         /// <param name="privateIPAddress"> The private endpoint connection private ip address. </param>
         /// <param name="linkIdentifier"> The private endpoint connection link identifier. </param>
@@ -1362,7 +1334,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                name is null && agentConfiguration is null && serviceStatuses is null && cloudMetadataProvider is null && agentUpgrade is null && osProfile is null && licenseProfile is null && provisioningState is null && status is null && lastStatusChange is null && errorDetails is null && agentVersion is null && displayName is null && machineFqdn is null && clientPublicKey is null && osName is null && osVersion is null && osType is null && extensions is null && osSku is null && osEdition is null && domainName is null && adFqdn is null && dnsFqdn is null && privateLinkScopeResourceId is null && parentClusterResourceId is null && msSqlDiscovered is null && detectedProperties is null && networkInterfaces is null ? default : new MachineProperties(
+                name is null && agentConfiguration is null && serviceStatuses is null && cloudMetadataProvider is null && agentUpgrade is null && osProfile is null && licenseProfile is null && provisioningState is null && status is null && lastStatusChange is null && errorDetails is null && agentVersion is null && vmId is null && displayName is null && machineFqdn is null && clientPublicKey is null && osName is null && osVersion is null && osType is null && vmUuid is null && extensions is null && osSku is null && osEdition is null && domainName is null && adFqdn is null && dnsFqdn is null && privateLinkScopeResourceId is null && parentClusterResourceId is null && msSqlDiscovered is null && detectedProperties is null && networkInterfaces is null ? default : new MachineProperties(
                     new LocationData(name, default, default, default, default),
                     agentConfiguration,
                     serviceStatuses,
@@ -1378,7 +1350,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     lastStatusChange,
                     (errorDetails ?? new ChangeTrackingList<ResponseError>()).ToList(),
                     agentVersion,
-                    default,
+                    vmId,
                     displayName,
                     machineFqdn,
                     clientPublicKey,
@@ -1387,7 +1359,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     osName,
                     osVersion,
                     osType,
-                    default,
+                    vmUuid,
                     (extensions ?? new ChangeTrackingList<MachineExtensionInstanceView>()).ToList(),
                     osSku,
                     osEdition,
@@ -1415,7 +1387,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HybridComputeWindowsConfiguration HybridComputeWindowsConfiguration(AssessmentModeType? assessmentMode, PatchModeType? patchMode, bool? isHotpatchingEnabled, HybridComputePatchSettingsStatus status)
         {
-            return new HybridComputeWindowsConfiguration(assessmentMode is null && patchMode is null && status is null ? default : new PatchSettings(assessmentMode, patchMode, default, status, default), additionalBinaryDataProperties: null);
+            return new HybridComputeWindowsConfiguration(assessmentMode is null && patchMode is null && isHotpatchingEnabled is null && status is null ? default : new PatchSettings(assessmentMode, patchMode, isHotpatchingEnabled, status, default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HybridComputeLinuxConfiguration"/>. </summary>
@@ -1427,7 +1399,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HybridComputeLinuxConfiguration HybridComputeLinuxConfiguration(AssessmentModeType? assessmentMode, PatchModeType? patchMode, bool? isHotpatchingEnabled, HybridComputePatchSettingsStatus status)
         {
-            return new HybridComputeLinuxConfiguration(assessmentMode is null && patchMode is null && status is null ? default : new PatchSettings(assessmentMode, patchMode, default, status, default), additionalBinaryDataProperties: null);
+            return new HybridComputeLinuxConfiguration(assessmentMode is null && patchMode is null && isHotpatchingEnabled is null && status is null ? default : new PatchSettings(assessmentMode, patchMode, isHotpatchingEnabled, status, default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LicenseProfileMachineInstanceView"/>. </summary>
@@ -1444,25 +1416,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="productFeatures"> The list of product features. </param>
         /// <param name="isSoftwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
         /// <returns> A new <see cref="Models.LicenseProfileMachineInstanceView"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LicenseProfileMachineInstanceView LicenseProfileMachineInstanceView(HybridComputeLicenseStatus? licenseStatus, string licenseChannel, LicenseProfileMachineInstanceViewEsuProperties esuProfile, LicenseProfileSubscriptionStatus? subscriptionStatus, LicenseProfileProductType? productType, DateTimeOffset? enrollmentOn, DateTimeOffset? billingStartOn, DateTimeOffset? disenrollmentOn, DateTimeOffset? billingEndOn, ResponseError error, IEnumerable<HybridComputeProductFeature> productFeatures, bool? isSoftwareAssuranceCustomer)
+        public static LicenseProfileMachineInstanceView LicenseProfileMachineInstanceView(HybridComputeLicenseStatus? licenseStatus = default, string licenseChannel = default, LicenseProfileMachineInstanceViewEsuProperties esuProfile = default, LicenseProfileSubscriptionStatus? subscriptionStatus = default, LicenseProfileProductType? productType = default, DateTimeOffset? enrollmentOn = default, DateTimeOffset? billingStartOn = default, DateTimeOffset? disenrollmentOn = default, DateTimeOffset? billingEndOn = default, ResponseError error = default, IEnumerable<HybridComputeProductFeature> productFeatures = default, bool? isSoftwareAssuranceCustomer = default)
         {
+            productFeatures ??= new ChangeTrackingList<HybridComputeProductFeature>();
 
             return new LicenseProfileMachineInstanceView(
                 licenseStatus,
                 licenseChannel,
                 default,
                 esuProfile,
-                subscriptionStatus is null && productType is null && enrollmentOn is null && billingStartOn is null && disenrollmentOn is null && billingEndOn is null && error is null && productFeatures is null ? default : new LicenseProfileArmProductProfileProperties(
-                    subscriptionStatus,
-                    productType,
-                    enrollmentOn,
-                    billingStartOn,
-                    disenrollmentOn,
-                    billingEndOn,
-                    error,
-                    (productFeatures ?? new ChangeTrackingList<HybridComputeProductFeature>()).ToList(),
-                    default),
+                default,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1539,20 +1502,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static PrivateEndpointConnectionDataModel PrivateEndpointConnectionDataModel(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridComputePrivateEndpointConnectionProperties properties)
         {
             return new PrivateEndpointConnectionDataModel(id, name, default, properties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HybridComputePrivateEndpointConnectionProperties"/>. </summary>
-        /// <param name="privateEndpointId"> Private endpoint which the connection belongs to. </param>
-        /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
-        /// <param name="provisioningState"> State of the private endpoint connection. </param>
-        /// <param name="groupIds"> List of group IDs. </param>
-        /// <returns> A new <see cref="Models.HybridComputePrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HybridComputePrivateEndpointConnectionProperties HybridComputePrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId, HybridComputePrivateLinkServiceConnectionStateProperty connectionState, string provisioningState, IEnumerable<string> groupIds)
-        {
-            groupIds ??= new ChangeTrackingList<string>();
-
-            return new HybridComputePrivateEndpointConnectionProperties(default, default, provisioningState, groupIds.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }

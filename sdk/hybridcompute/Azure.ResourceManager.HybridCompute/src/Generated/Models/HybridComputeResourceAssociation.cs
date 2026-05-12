@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Name of the Resource Association. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The access mode. </summary>
+        [WirePath("accessMode")]
         public HybridComputeAccessMode? AccessMode { get; }
     }
 }

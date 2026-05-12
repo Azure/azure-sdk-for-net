@@ -41,18 +41,23 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Current state of this NetworkSecurityPerimeter: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> Provisioning issues. </summary>
+        [WirePath("provisioningIssues")]
         public IReadOnlyList<HybridComputeProvisioningIssue> ProvisioningIssues { get; } = new ChangeTrackingList<HybridComputeProvisioningIssue>();
 
         /// <summary> The Network Security Perimeter associated with this configuration. </summary>
+        [WirePath("networkSecurityPerimeter")]
         public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
 
         /// <summary> The Resource Association. </summary>
+        [WirePath("resourceAssociation")]
         public HybridComputeResourceAssociation ResourceAssociation { get; }
 
         /// <summary> Network Security Perimeter profile. </summary>
+        [WirePath("profile")]
         public NetworkSecurityPerimeterProfile Profile { get; }
     }
 }

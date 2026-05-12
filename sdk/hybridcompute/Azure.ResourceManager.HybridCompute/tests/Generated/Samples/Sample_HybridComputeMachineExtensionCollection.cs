@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
                 Properties = new MachineExtensionProperties
                 {
                     Publisher = "Microsoft.Compute",
-                    Type = "CustomScriptExtension",
+                    MachineExtensionPropertiesType = "CustomScriptExtension",
                     TypeHandlerVersion = "1.10",
                     Settings =
 {

@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("patchServiceUsed"u8);
                 writer.WriteStringValue(PatchServiceUsed.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(OsType))
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType.Value.ToString());
+                writer.WriteStringValue(OSType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -33,12 +34,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Name of the access rule. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Access rule properties. </summary>
+        [WirePath("properties")]
         internal AccessRuleProperties Properties { get; }
 
         /// <summary> Direction of the access rule. </summary>
+        [WirePath("properties.direction")]
         public HybridComputeAccessRuleDirection? Direction
         {
             get
@@ -48,6 +52,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Address prefixes that are allowed access. </summary>
+        [WirePath("properties.addressPrefixes")]
         public IReadOnlyList<string> AddressPrefixes
         {
             get

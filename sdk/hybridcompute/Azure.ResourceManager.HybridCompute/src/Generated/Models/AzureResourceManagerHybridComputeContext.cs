@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HybridCompute
     [ModelReaderWriterBuildable(typeof(MachineExtensionsListResult))]
     [ModelReaderWriterBuildable(typeof(MachineExtensionUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(MachineExtensionUpgrade))]
-    [ModelReaderWriterBuildable(typeof(MachineInstallPatchesParameters))]
+    [ModelReaderWriterBuildable(typeof(MachineInstallPatchesContent))]
     [ModelReaderWriterBuildable(typeof(MachineInstallPatchesResult))]
     [ModelReaderWriterBuildable(typeof(MachineListResult))]
     [ModelReaderWriterBuildable(typeof(MachineProperties))]

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The display name of the compute operation. </summary>
+        [WirePath("operation")]
         public string Operation { get; }
 
         /// <summary> The display name of the resource the operation applies to. </summary>
+        [WirePath("resource")]
         public string Resource { get; }
 
         /// <summary> The description of the operation. </summary>
+        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> The resource provider for the operation. </summary>
+        [WirePath("provider")]
         public string Provider { get; }
     }
 }

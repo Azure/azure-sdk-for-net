@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>
+        [WirePath("provider")]
         public string Provider { get; }
     }
 }

@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> WU. </summary>
         private const string WUValue = "WU";
         /// <summary> WU_WSUS. </summary>
-        private const string WUWSUSValue = "WU_WSUS";
+        private const string WUWsusValue = "WU_WSUS";
         /// <summary> YUM. </summary>
-        private const string YUMValue = "YUM";
+        private const string YumValue = "YUM";
         /// <summary> APT. </summary>
-        private const string APTValue = "APT";
+        private const string AptValue = "APT";
         /// <summary> Zypper. </summary>
         private const string ZypperValue = "Zypper";
 
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static PatchServiceUsed WU { get; } = new PatchServiceUsed(WUValue);
 
         /// <summary> WU_WSUS. </summary>
-        public static PatchServiceUsed WUWSUS { get; } = new PatchServiceUsed(WUWSUSValue);
+        public static PatchServiceUsed WUWsus { get; } = new PatchServiceUsed(WUWsusValue);
 
         /// <summary> YUM. </summary>
-        public static PatchServiceUsed YUM { get; } = new PatchServiceUsed(YUMValue);
+        public static PatchServiceUsed Yum { get; } = new PatchServiceUsed(YumValue);
 
         /// <summary> APT. </summary>
-        public static PatchServiceUsed APT { get; } = new PatchServiceUsed(APTValue);
+        public static PatchServiceUsed Apt { get; } = new PatchServiceUsed(AptValue);
 
         /// <summary> Zypper. </summary>
         public static PatchServiceUsed Zypper { get; } = new PatchServiceUsed(ZypperValue);

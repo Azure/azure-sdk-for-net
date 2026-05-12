@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -35,15 +36,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Gets or sets the SoftwareAssurance. </summary>
+        [WirePath("softwareAssurance")]
         internal LicenseProfileUpdatePropertiesSoftwareAssurance SoftwareAssurance { get; set; }
 
         /// <summary> Hybrid Compute ESU Profile Update properties. </summary>
+        [WirePath("esuProfile")]
         internal EsuProfileUpdateProperties EsuProfile { get; set; }
 
         /// <summary> Hybrid Compute Product Profile Update properties. </summary>
+        [WirePath("productProfile")]
         internal ProductProfileUpdateProperties ProductProfile { get; set; }
 
         /// <summary> Specifies if this machine is licensed as part of a Software Assurance agreement. </summary>
+        [WirePath("softwareAssurance.softwareAssuranceCustomer")]
         public bool? SoftwareAssuranceCustomer
         {
             get
@@ -61,6 +66,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The resource id of the license. </summary>
+        [WirePath("esuProfile.assignedLicense")]
         public string AssignedLicense
         {
             get
@@ -78,6 +84,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Indicates the subscription status of the product. </summary>
+        [WirePath("productProfile.subscriptionStatus")]
         public LicenseProfileSubscriptionStatusUpdate? SubscriptionStatus
         {
             get
@@ -95,6 +102,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Indicates the product type of the license. </summary>
+        [WirePath("productProfile.productType")]
         public LicenseProfileProductType? ProductType
         {
             get
@@ -112,6 +120,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The list of product feature updates. </summary>
+        [WirePath("productProfile.productFeatures")]
         public IList<HybridComputeProductFeatureUpdate> ProductFeatures
         {
             get

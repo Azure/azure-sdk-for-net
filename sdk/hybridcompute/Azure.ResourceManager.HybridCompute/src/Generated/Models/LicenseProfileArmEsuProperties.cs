@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The resource id of the license. </summary>
+        [WirePath("assignedLicense")]
         public string AssignedLicense { get; set; }
     }
 }

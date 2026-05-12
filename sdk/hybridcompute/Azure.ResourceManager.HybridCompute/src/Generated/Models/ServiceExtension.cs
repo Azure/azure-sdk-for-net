@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -69,9 +70,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("serviceExtensionType")]
         public BinaryData ServiceExtensionType { get; set; }
 
         /// <summary> The network access policy to determine if the specified Azure Arc Extension can use public Azure Arc Extension service endpoints. </summary>
+        [WirePath("serviceExtensionPublicNetworkAccess")]
         public ServiceExtensionPublicNetworkAccess? ServiceExtensionPublicNetworkAccess { get; set; }
     }
 }

@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The total physical memory on the machine. </summary>
+        [WirePath("totalPhysicalMemoryInBytes")]
         public long? TotalPhysicalMemoryInBytes { get; }
 
         /// <summary> The total number of CPU sockets available on the machine. </summary>
+        [WirePath("numberOfCpuSockets")]
         public int? NumberOfCpuSockets { get; }
 
         /// <summary> The physical processors of the machine. </summary>
+        [WirePath("processors")]
         public IReadOnlyList<HybridComputeProcessor> Processors { get; }
     }
 }

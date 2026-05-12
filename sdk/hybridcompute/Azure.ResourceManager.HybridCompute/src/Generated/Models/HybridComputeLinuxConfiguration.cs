@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Specifies the patch settings. </summary>
+        [WirePath("patchSettings")]
         internal PatchSettings PatchSettings { get; set; }
 
         /// <summary> Specifies the assessment mode. </summary>
+        [WirePath("patchSettings.assessmentMode")]
         public AssessmentModeType? AssessmentMode
         {
             get
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Specifies the patch mode. </summary>
+        [WirePath("patchSettings.patchMode")]
         public PatchModeType? PatchMode
         {
             get
@@ -68,11 +72,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </summary>
-        public bool? EnableHotpatching
+        [WirePath("patchSettings.enableHotpatching")]
+        public bool? IsHotpatchingEnabled
         {
             get
             {
-                return PatchSettings is null ? default : PatchSettings.EnableHotpatching;
+                return PatchSettings is null ? default : PatchSettings.IsHotpatchingEnabled;
             }
             set
             {
@@ -80,11 +85,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     PatchSettings = new PatchSettings();
                 }
-                PatchSettings.EnableHotpatching = value;
+                PatchSettings.IsHotpatchingEnabled = value;
             }
         }
 
         /// <summary> Status of the hotpatch capability enrollment or disenrollment. </summary>
+        [WirePath("patchSettings.status")]
         public HybridComputePatchSettingsStatus Status
         {
             get

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The ID of the extension type. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> The name of the extension type. </summary>
+        [WirePath("name")]
         public string Name { get; }
     }
 }

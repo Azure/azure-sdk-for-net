@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             HybridComputeMachineExtensionPatch patch = new HybridComputeMachineExtensionPatch
             {
                 Publisher = "Microsoft.Compute",
-                Type = "CustomScriptExtension",
+                MachineExtensionUpdatePropertiesType = "CustomScriptExtension",
                 TypeHandlerVersion = "1.10",
                 EnableAutomaticUpgrade = true,
                 Settings =

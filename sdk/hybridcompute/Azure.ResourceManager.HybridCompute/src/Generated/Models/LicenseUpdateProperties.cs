@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -33,12 +34,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The type of the license resource. </summary>
+        [WirePath("licenseType")]
         public HybridComputeLicenseType? LicenseType { get; set; }
 
         /// <summary> Gets or sets the LicenseDetails. </summary>
+        [WirePath("licenseDetails")]
         internal LicenseUpdatePropertiesLicenseDetails LicenseDetails { get; set; }
 
         /// <summary> Describes the state of the license. </summary>
+        [WirePath("licenseDetails.state")]
         public HybridComputeLicenseState? State
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Describes the license target server. </summary>
+        [WirePath("licenseDetails.target")]
         public HybridComputeLicenseTarget? Target
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Describes the edition of the license. The values are either Standard or Datacenter. </summary>
+        [WirePath("licenseDetails.edition")]
         public HybridComputeLicenseEdition? Edition
         {
             get
@@ -90,6 +96,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Describes the license core type (pCore or vCore). </summary>
+        [WirePath("licenseDetails.type")]
         public LicenseCoreType? Type
         {
             get
@@ -107,6 +114,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Describes the number of processors. </summary>
+        [WirePath("licenseDetails.processors")]
         public int? Processors
         {
             get

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -24,15 +25,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeConnectionDetail"/>. </summary>
         /// <param name="id"> Azure resource Id. </param>
-        /// <param name="privateIpAddress"> The private endpoint connection private ip address. </param>
+        /// <param name="privateIPAddress"> The private endpoint connection private ip address. </param>
         /// <param name="linkIdentifier"> The private endpoint connection link identifier. </param>
         /// <param name="groupId"> The private endpoint connection group id. </param>
         /// <param name="memberName"> The private endpoint connection member name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeConnectionDetail(ResourceIdentifier id, string privateIpAddress, string linkIdentifier, string groupId, string memberName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HybridComputeConnectionDetail(ResourceIdentifier id, string privateIPAddress, string linkIdentifier, string groupId, string memberName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            PrivateIpAddress = privateIpAddress;
+            PrivateIPAddress = privateIPAddress;
             LinkIdentifier = linkIdentifier;
             GroupId = groupId;
             MemberName = memberName;
@@ -40,18 +41,23 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Azure resource Id. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
 
         /// <summary> The private endpoint connection private ip address. </summary>
-        public string PrivateIpAddress { get; }
+        [WirePath("privateIpAddress")]
+        public string PrivateIPAddress { get; }
 
         /// <summary> The private endpoint connection link identifier. </summary>
+        [WirePath("linkIdentifier")]
         public string LinkIdentifier { get; }
 
         /// <summary> The private endpoint connection group id. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; }
 
         /// <summary> The private endpoint connection member name. </summary>
+        [WirePath("memberName")]
         public string MemberName { get; }
     }
 }

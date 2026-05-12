@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -33,12 +34,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The type of the Esu servers. </summary>
+        [WirePath("serverType")]
         public EsuServerType? ServerType { get; }
 
         /// <summary> Indicates the eligibility state of Esu. </summary>
+        [WirePath("esuEligibility")]
         public EsuEligibility? EsuEligibility { get; }
 
         /// <summary> Indicates whether there is an ESU Key currently active for the machine. </summary>
+        [WirePath("esuKeyState")]
         public EsuKeyState? EsuKeyState { get; }
     }
 }

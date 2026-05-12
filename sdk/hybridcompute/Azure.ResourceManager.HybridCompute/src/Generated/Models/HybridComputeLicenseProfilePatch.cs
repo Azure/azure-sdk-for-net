@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -28,9 +29,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Describe the Update properties of a license profile. </summary>
+        [WirePath("properties")]
         internal LicenseProfileUpdateProperties Properties { get; set; }
 
         /// <summary> Specifies if this machine is licensed as part of a Software Assurance agreement. </summary>
+        [WirePath("properties.softwareAssurance.softwareAssuranceCustomer")]
         public bool? SoftwareAssuranceCustomer
         {
             get
@@ -48,6 +51,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The resource id of the license. </summary>
+        [WirePath("properties.esuProfile.assignedLicense")]
         public string AssignedLicense
         {
             get
@@ -65,6 +69,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Indicates the subscription status of the product. </summary>
+        [WirePath("properties.productProfile.subscriptionStatus")]
         public LicenseProfileSubscriptionStatusUpdate? SubscriptionStatus
         {
             get
@@ -82,6 +87,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Indicates the product type of the license. </summary>
+        [WirePath("properties.productProfile.productType")]
         public LicenseProfileProductType? ProductType
         {
             get
@@ -99,6 +105,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The list of product feature updates. </summary>
+        [WirePath("properties.productProfile.productFeatures")]
         public IList<HybridComputeProductFeatureUpdate> ProductFeatures
         {
             get

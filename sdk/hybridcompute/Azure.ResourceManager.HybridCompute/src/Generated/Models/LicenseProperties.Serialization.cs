@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             HybridComputeProvisioningState? provisioningState = default;
-            string tenantId = default;
+            Guid? tenantId = default;
             HybridComputeLicenseType? licenseType = default;
             HybridComputeLicenseDetails licenseDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -154,7 +154,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("licenseType"u8))

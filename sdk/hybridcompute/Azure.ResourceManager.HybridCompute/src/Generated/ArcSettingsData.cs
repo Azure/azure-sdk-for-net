@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Settings properties. </summary>
+        [WirePath("properties")]
         internal SettingsProperties Properties { get; set; }
 
         /// <summary> Azure resource tenant Id. </summary>
+        [WirePath("properties.tenantId")]
         public string TenantId
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Associated Gateway Resource Id. </summary>
+        [WirePath("properties.gatewayProperties.gatewayResourceId")]
         public ResourceIdentifier GatewayResourceId
         {
             get

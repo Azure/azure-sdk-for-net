@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The serial number of the firmware. </summary>
+        [WirePath("serialNumber")]
         public string SerialNumber { get; }
 
         /// <summary> The type of the firmware. </summary>
+        [WirePath("type")]
         public string Type { get; }
     }
 }

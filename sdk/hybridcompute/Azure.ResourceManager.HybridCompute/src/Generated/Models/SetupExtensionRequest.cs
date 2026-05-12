@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The list of extensions. </summary>
+        [WirePath("extensions")]
         public IList<MachineExtensionProperties> Extensions { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Product feature name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Indicates the new status of the product feature. </summary>
+        [WirePath("subscriptionStatus")]
         public LicenseProfileSubscriptionStatusUpdate? SubscriptionStatus { get; set; }
     }
 }

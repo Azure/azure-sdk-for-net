@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The name of the processor. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The total number of physical cores on the processor. </summary>
+        [WirePath("numberOfCores")]
         public int? NumberOfCores { get; }
     }
 }

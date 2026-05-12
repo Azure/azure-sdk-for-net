@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The URL of the resource used to check the status of the asynchronous operation. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }

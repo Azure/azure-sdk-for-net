@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewSoftwareAssurance)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SoftwareAssuranceCustomer))
+            if (Optional.IsDefined(IsSoftwareAssuranceCustomer))
             {
                 writer.WritePropertyName("softwareAssuranceCustomer"u8);
-                writer.WriteBooleanValue(SoftwareAssuranceCustomer.Value);
+                writer.WriteBooleanValue(IsSoftwareAssuranceCustomer.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            bool? softwareAssuranceCustomer = default;
+            bool? isSoftwareAssuranceCustomer = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    softwareAssuranceCustomer = prop.Value.GetBoolean();
+                    isSoftwareAssuranceCustomer = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LicenseProfileMachineInstanceViewSoftwareAssurance(softwareAssuranceCustomer, additionalBinaryDataProperties);
+            return new LicenseProfileMachineInstanceViewSoftwareAssurance(isSoftwareAssuranceCustomer, additionalBinaryDataProperties);
         }
     }
 }

@@ -25,32 +25,37 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Initializes a new instance of <see cref="HybridComputePrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
-        /// <param name="privateLinkServiceConnectionState"> Connection state of the private endpoint connection. </param>
+        /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
         /// <param name="groupIds"> List of group IDs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputePrivateEndpointConnectionProperties(PrivateEndpointProperty privateEndpoint, HybridComputePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, string provisioningState, IReadOnlyList<string> groupIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HybridComputePrivateEndpointConnectionProperties(PrivateEndpointProperty privateEndpoint, HybridComputePrivateLinkServiceConnectionStateProperty connectionState, string provisioningState, IReadOnlyList<string> groupIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             ProvisioningState = provisioningState;
             GroupIds = groupIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Private endpoint which the connection belongs to. </summary>
+        [WirePath("privateEndpoint")]
         internal PrivateEndpointProperty PrivateEndpoint { get; set; }
 
         /// <summary> Connection state of the private endpoint connection. </summary>
-        public HybridComputePrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; set; }
+        [WirePath("privateLinkServiceConnectionState")]
+        public HybridComputePrivateLinkServiceConnectionStateProperty ConnectionState { get; set; }
 
         /// <summary> State of the private endpoint connection. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> List of group IDs. </summary>
+        [WirePath("groupIds")]
         public IReadOnlyList<string> GroupIds { get; }
 
         /// <summary> Resource id of the private endpoint. </summary>
+        [WirePath("privateEndpoint.id")]
         public string PrivateEndpointId
         {
             get

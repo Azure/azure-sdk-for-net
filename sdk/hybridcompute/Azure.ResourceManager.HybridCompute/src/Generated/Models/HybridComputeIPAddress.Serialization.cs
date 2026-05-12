@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (Optional.IsDefined(IpAddressVersion))
+            if (Optional.IsDefined(IPAddressVersion))
             {
                 writer.WritePropertyName("ipAddressVersion"u8);
-                writer.WriteStringValue(IpAddressVersion);
+                writer.WriteStringValue(IPAddressVersion);
             }
             if (options.Format != "W" && Optional.IsDefined(Subnet))
             {

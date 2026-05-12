@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="HybridComputeNetworkInterface"/>. </summary>
         internal HybridComputeNetworkInterface()
         {
-            IpAddresses = new ChangeTrackingList<HybridComputeIPAddress>();
+            IPAddresses = new ChangeTrackingList<HybridComputeIPAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeNetworkInterface"/>. </summary>
@@ -34,20 +34,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
             MacAddress = macAddress;
             Id = id;
             Name = name;
-            IpAddresses = ipAddresses;
+            IPAddresses = ipAddresses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents MAC address of the network interface. </summary>
+        [WirePath("macAddress")]
         public string MacAddress { get; }
 
         /// <summary> Represents the ID of the network interface. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Represents the name of the network interface. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The list of IP addresses in this interface. </summary>
-        public IReadOnlyList<HybridComputeIPAddress> IpAddresses { get; }
+        [WirePath("ipAddresses")]
+        public IReadOnlyList<HybridComputeIPAddress> IPAddresses { get; }
     }
 }

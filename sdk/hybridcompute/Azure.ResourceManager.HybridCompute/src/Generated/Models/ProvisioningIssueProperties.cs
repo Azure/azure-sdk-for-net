@@ -42,18 +42,23 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Issue type. </summary>
+        [WirePath("issueType")]
         public HybridComputeProvisioningIssueType? IssueType { get; }
 
         /// <summary> Severity of the provisioning issue. </summary>
+        [WirePath("severity")]
         public HybridComputeProvisioningIssueSeverity? Severity { get; }
 
         /// <summary> Description of the provisioning issue. </summary>
+        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> ARM Ids of the resources that can be associated to the same perimeter to remediate the issue. </summary>
+        [WirePath("suggestedResourceIds")]
         public IReadOnlyList<string> SuggestedResourceIds { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Access rules that can be added to the perimeter to remediate the issue. </summary>
+        [WirePath("suggestedAccessRules")]
         public IReadOnlyList<HybridComputeAccessRule> SuggestedAccessRules { get; } = new ChangeTrackingList<HybridComputeAccessRule>();
     }
 }

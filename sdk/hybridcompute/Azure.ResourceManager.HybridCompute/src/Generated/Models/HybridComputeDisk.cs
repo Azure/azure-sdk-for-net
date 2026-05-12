@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -43,24 +44,31 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The path of the disk. </summary>
+        [WirePath("path")]
         public string Path { get; }
 
         /// <summary> The type of the disk. </summary>
+        [WirePath("diskType")]
         public string DiskType { get; }
 
         /// <summary> The generated ID of the disk. </summary>
+        [WirePath("generatedId")]
         public string GeneratedId { get; }
 
         /// <summary> The ID of the disk. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> The name of the disk. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The size of the disk, in bytes. </summary>
+        [WirePath("maxSizeInBytes")]
         public long? MaxSizeInBytes { get; }
 
         /// <summary> The amount of space used on the disk, in bytes. </summary>
+        [WirePath("usedSpaceInBytes")]
         public long? UsedSpaceInBytes { get; }
     }
 }

@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The single extension based on search criteria. </summary>
+        [WirePath("properties")]
         internal ExtensionValueV2Properties Properties { get; }
 
         /// <summary> The version of the Extension being received. </summary>
+        [WirePath("properties.version")]
         public string Version
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The type of the Extension being received. </summary>
+        [WirePath("properties.extensionType")]
         public string ExtensionType
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The publisher of the Extension being received. </summary>
+        [WirePath("properties.publisher")]
         public string Publisher
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> A list of locations where the extension packages can be found. </summary>
+        [WirePath("properties.extensionUris")]
         public IReadOnlyList<Uri> ExtensionUris
         {
             get
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Location of the signature files for the extension. </summary>
+        [WirePath("properties.extensionSignatureUri")]
         public Uri ExtensionSignatureUri
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The operating system (Windows, Linux, etc.) this extension supports. </summary>
+        [WirePath("properties.operatingSystem")]
         public string OperatingSystem
         {
             get
@@ -95,6 +102,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Architectures (x64, arms64, etc.) that this extension supports. </summary>
+        [WirePath("properties.architecture")]
         public IReadOnlyList<string> Architecture
         {
             get

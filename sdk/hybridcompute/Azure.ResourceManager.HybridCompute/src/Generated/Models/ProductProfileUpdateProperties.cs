@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Indicates the subscription status of the product. </summary>
+        [WirePath("subscriptionStatus")]
         public LicenseProfileSubscriptionStatusUpdate? SubscriptionStatus { get; set; }
 
         /// <summary> Indicates the product type of the license. </summary>
+        [WirePath("productType")]
         public LicenseProfileProductType? ProductType { get; set; }
 
         /// <summary> The list of product feature updates. </summary>
+        [WirePath("productFeatures")]
         public IList<HybridComputeProductFeatureUpdate> ProductFeatures { get; } = new ChangeTrackingList<HybridComputeProductFeatureUpdate>();
     }
 }

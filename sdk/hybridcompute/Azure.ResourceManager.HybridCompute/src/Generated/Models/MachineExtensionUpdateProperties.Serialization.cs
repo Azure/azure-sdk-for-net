@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(MachineExtensionUpdatePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(MachineExtensionUpdatePropertiesType);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             string forceUpdateTag = default;
             string publisher = default;
-            string @type = default;
+            string machineExtensionUpdatePropertiesType = default;
             string typeHandlerVersion = default;
             bool? enableAutomaticUpgrade = default;
             bool? autoUpgradeMinorVersion = default;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    machineExtensionUpdatePropertiesType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("typeHandlerVersion"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new MachineExtensionUpdateProperties(
                 forceUpdateTag,
                 publisher,
-                @type,
+                machineExtensionUpdatePropertiesType,
                 typeHandlerVersion,
                 enableAutomaticUpgrade,
                 autoUpgradeMinorVersion,

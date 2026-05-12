@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Properties that define a Network Security Perimeter resource. </summary>
+        [WirePath("properties")]
         internal NetworkSecurityPerimeterConfigurationProperties Properties { get; }
 
         /// <summary> Current state of this NetworkSecurityPerimeter: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Provisioning issues. </summary>
+        [WirePath("properties.provisioningIssues")]
         public IReadOnlyList<HybridComputeProvisioningIssue> ProvisioningIssues
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The Network Security Perimeter associated with this configuration. </summary>
+        [WirePath("properties.networkSecurityPerimeter")]
         public NetworkSecurityPerimeter NetworkSecurityPerimeter
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The Resource Association. </summary>
+        [WirePath("properties.resourceAssociation")]
         public HybridComputeResourceAssociation ResourceAssociation
         {
             get
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Network Security Perimeter profile. </summary>
+        [WirePath("properties.profile")]
         public NetworkSecurityPerimeterProfile Profile
         {
             get

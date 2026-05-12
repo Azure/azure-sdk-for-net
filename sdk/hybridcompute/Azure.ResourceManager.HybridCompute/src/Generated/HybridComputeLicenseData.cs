@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Hybrid Compute License properties. </summary>
+        [WirePath("properties")]
         internal LicenseProperties Properties { get; set; }
 
         /// <summary> The provisioning state, which only appears in the response. </summary>
+        [WirePath("properties.provisioningState")]
         public HybridComputeProvisioningState? ProvisioningState
         {
             get
@@ -53,7 +55,8 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Describes the tenant id. </summary>
-        public string TenantId
+        [WirePath("properties.tenantId")]
+        public Guid? TenantId
         {
             get
             {
@@ -70,6 +73,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The type of the license resource. </summary>
+        [WirePath("properties.licenseType")]
         public HybridComputeLicenseType? LicenseType
         {
             get
@@ -87,6 +91,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Describes the properties of a License. </summary>
+        [WirePath("properties.licenseDetails")]
         public HybridComputeLicenseDetails LicenseDetails
         {
             get

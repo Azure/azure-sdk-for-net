@@ -41,18 +41,23 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The provisioning state, which only appears in the response. </summary>
+        [WirePath("provisioningState")]
         public HybridComputeProvisioningState? ProvisioningState { get; }
 
         /// <summary> A unique, immutable, identifier for the Gateway. </summary>
+        [WirePath("gatewayId")]
         public string GatewayId { get; }
 
         /// <summary> The type of the Gateway resource. </summary>
+        [WirePath("gatewayType")]
         public ArcGatewayType? GatewayType { get; set; }
 
         /// <summary> The endpoint fqdn for the Gateway. </summary>
+        [WirePath("gatewayEndpoint")]
         public string GatewayEndpoint { get; }
 
         /// <summary> Specifies the list of features that are enabled for this Gateway. </summary>
+        [WirePath("allowedFeatures")]
         public IList<string> AllowedFeatures { get; } = new ChangeTrackingList<string>();
     }
 }

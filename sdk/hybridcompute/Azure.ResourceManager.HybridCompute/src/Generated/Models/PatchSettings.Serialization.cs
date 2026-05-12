@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("patchMode"u8);
                 writer.WriteStringValue(PatchMode.Value.ToString());
             }
-            if (Optional.IsDefined(EnableHotpatching))
+            if (Optional.IsDefined(IsHotpatchingEnabled))
             {
                 writer.WritePropertyName("enableHotpatching"u8);
-                writer.WriteBooleanValue(EnableHotpatching.Value);
+                writer.WriteBooleanValue(IsHotpatchingEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             AssessmentModeType? assessmentMode = default;
             PatchModeType? patchMode = default;
-            bool? enableHotpatching = default;
+            bool? isHotpatchingEnabled = default;
             HybridComputePatchSettingsStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    enableHotpatching = prop.Value.GetBoolean();
+                    isHotpatchingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PatchSettings(assessmentMode, patchMode, enableHotpatching, status, additionalBinaryDataProperties);
+            return new PatchSettings(assessmentMode, patchMode, isHotpatchingEnabled, status, additionalBinaryDataProperties);
         }
     }
 }

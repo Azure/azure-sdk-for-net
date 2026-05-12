@@ -84,20 +84,20 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId.Value);
             }
-            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            if (Optional.IsDefined(IsAutomaticUpgradeEnabled))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
-                writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
+                writer.WriteBooleanValue(IsAutomaticUpgradeEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(LastAttemptDesiredVersion))
             {
                 writer.WritePropertyName("lastAttemptDesiredVersion"u8);
                 writer.WriteStringValue(LastAttemptDesiredVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastAttemptTimestamp))
+            if (options.Format != "W" && Optional.IsDefined(LastAttemptedOn))
             {
                 writer.WritePropertyName("lastAttemptTimestamp"u8);
-                writer.WriteStringValue(LastAttemptTimestamp.Value, "O");
+                writer.WriteStringValue(LastAttemptedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastAttemptStatus))
             {
@@ -153,9 +153,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             string desiredVersion = default;
             Guid? correlationId = default;
-            bool? enableAutomaticUpgrade = default;
+            bool? isAutomaticUpgradeEnabled = default;
             string lastAttemptDesiredVersion = default;
-            DateTimeOffset? lastAttemptTimestamp = default;
+            DateTimeOffset? lastAttemptedOn = default;
             LastAttemptStatusEnum? lastAttemptStatus = default;
             string lastAttemptMessage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    enableAutomaticUpgrade = prop.Value.GetBoolean();
+                    isAutomaticUpgradeEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("lastAttemptDesiredVersion"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    lastAttemptTimestamp = prop.Value.GetDateTimeOffset("O");
+                    lastAttemptedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastAttemptStatus"u8))
@@ -220,9 +220,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new AgentUpgrade(
                 desiredVersion,
                 correlationId,
-                enableAutomaticUpgrade,
+                isAutomaticUpgradeEnabled,
                 lastAttemptDesiredVersion,
-                lastAttemptTimestamp,
+                lastAttemptedOn,
                 lastAttemptStatus,
                 lastAttemptMessage,
                 additionalBinaryDataProperties);

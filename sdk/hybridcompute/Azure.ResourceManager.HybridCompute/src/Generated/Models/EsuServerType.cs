@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Standard. </summary>
         private const string StandardValue = "Standard";
         /// <summary> Datacenter. </summary>
-        private const string DatacenterValue = "Datacenter";
+        private const string DataCenterValue = "Datacenter";
 
         /// <summary> Initializes a new instance of <see cref="EsuServerType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static EsuServerType Standard { get; } = new EsuServerType(StandardValue);
 
         /// <summary> Datacenter. </summary>
-        public static EsuServerType Datacenter { get; } = new EsuServerType(DatacenterValue);
+        public static EsuServerType DataCenter { get; } = new EsuServerType(DataCenterValue);
 
         /// <summary> Determines if two <see cref="EsuServerType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

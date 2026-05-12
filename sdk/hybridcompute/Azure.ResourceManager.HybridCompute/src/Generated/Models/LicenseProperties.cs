@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="licenseType"> The type of the license resource. </param>
         /// <param name="licenseDetails"> Describes the properties of a License. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LicenseProperties(HybridComputeProvisioningState? provisioningState, string tenantId, HybridComputeLicenseType? licenseType, HybridComputeLicenseDetails licenseDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LicenseProperties(HybridComputeProvisioningState? provisioningState, Guid? tenantId, HybridComputeLicenseType? licenseType, HybridComputeLicenseDetails licenseDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             TenantId = tenantId;
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The provisioning state, which only appears in the response. </summary>
+        [WirePath("provisioningState")]
         public HybridComputeProvisioningState? ProvisioningState { get; }
 
         /// <summary> Describes the tenant id. </summary>
-        public string TenantId { get; set; }
+        [WirePath("tenantId")]
+        public Guid? TenantId { get; set; }
 
         /// <summary> The type of the license resource. </summary>
+        [WirePath("licenseType")]
         public HybridComputeLicenseType? LicenseType { get; set; }
 
         /// <summary> Describes the properties of a License. </summary>
+        [WirePath("licenseDetails")]
         public HybridComputeLicenseDetails LicenseDetails { get; set; }
     }
 }

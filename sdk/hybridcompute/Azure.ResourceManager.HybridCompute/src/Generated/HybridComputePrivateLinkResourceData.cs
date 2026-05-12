@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
         public HybridComputePrivateLinkResourceProperties Properties { get; }
     }
 }

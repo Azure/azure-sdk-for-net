@@ -28,18 +28,18 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="MachineExtensionUpdateProperties"/>. </summary>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="type"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="machineExtensionUpdatePropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
         /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="settings"> Json formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineExtensionUpdateProperties(string forceUpdateTag, string publisher, string @type, string typeHandlerVersion, bool? enableAutomaticUpgrade, bool? autoUpgradeMinorVersion, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> protectedSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineExtensionUpdateProperties(string forceUpdateTag, string publisher, string machineExtensionUpdatePropertiesType, string typeHandlerVersion, bool? enableAutomaticUpgrade, bool? autoUpgradeMinorVersion, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> protectedSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
-            Type = @type;
+            MachineExtensionUpdatePropertiesType = machineExtensionUpdatePropertiesType;
             TypeHandlerVersion = typeHandlerVersion;
             EnableAutomaticUpgrade = enableAutomaticUpgrade;
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
@@ -49,21 +49,27 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>
+        [WirePath("forceUpdateTag")]
         public string ForceUpdateTag { get; set; }
 
         /// <summary> The name of the extension handler publisher. </summary>
+        [WirePath("publisher")]
         public string Publisher { get; set; }
 
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
-        public string Type { get; set; }
+        [WirePath("type")]
+        public string MachineExtensionUpdatePropertiesType { get; set; }
 
         /// <summary> Specifies the version of the script handler. </summary>
+        [WirePath("typeHandlerVersion")]
         public string TypeHandlerVersion { get; set; }
 
         /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </summary>
+        [WirePath("enableAutomaticUpgrade")]
         public bool? EnableAutomaticUpgrade { get; set; }
 
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
+        [WirePath("autoUpgradeMinorVersion")]
         public bool? AutoUpgradeMinorVersion { get; set; }
 
         /// <summary>
@@ -92,6 +98,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("settings")]
         public IDictionary<string, BinaryData> Settings { get; } = new ChangeTrackingDictionary<string, BinaryData>();
 
         /// <summary>
@@ -120,6 +127,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("protectedSettings")]
         public IDictionary<string, BinaryData> ProtectedSettings { get; } = new ChangeTrackingDictionary<string, BinaryData>();
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -46,30 +47,39 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
+        [WirePath("locationData")]
         public LocationData LocationData { get; set; }
 
         /// <summary> Specifies the operating system settings for the hybrid machine. </summary>
+        [WirePath("osProfile")]
         public HybridComputeOSProfile OSProfile { get; set; }
 
         /// <summary> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </summary>
+        [WirePath("cloudMetadata")]
         internal HybridComputeCloudMetadata CloudMetadata { get; set; }
 
         /// <summary> The info of the machine w.r.t Agent Upgrade. </summary>
+        [WirePath("agentUpgrade")]
         public AgentUpgrade AgentUpgrade { get; set; }
 
         /// <summary> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </summary>
+        [WirePath("parentClusterResourceId")]
         public ResourceIdentifier ParentClusterResourceId { get; set; }
 
         /// <summary> The resource id of the private link scope this machine is assigned to, if any. </summary>
+        [WirePath("privateLinkScopeResourceId")]
         public ResourceIdentifier PrivateLinkScopeResourceId { get; set; }
 
         /// <summary> Identity key store type of the machine. </summary>
+        [WirePath("identityKeyStore")]
         public string IdentityKeyStore { get; set; }
 
         /// <summary> Endorsement Key Certificate of the Trusted Platform Module (TPM) that the client provides to be used during initial resource onboarding. </summary>
+        [WirePath("tpmEkCertificate")]
         public string TpmEkCertificate { get; set; }
 
         /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>
+        [WirePath("cloudMetadata.provider")]
         public string CloudMetadataProvider
         {
             get

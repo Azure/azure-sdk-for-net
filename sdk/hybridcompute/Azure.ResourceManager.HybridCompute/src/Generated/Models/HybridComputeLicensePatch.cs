@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -28,9 +29,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> License Update properties. </summary>
+        [WirePath("properties")]
         internal LicenseUpdateProperties Properties { get; set; }
 
         /// <summary> The type of the license resource. </summary>
+        [WirePath("properties.licenseType")]
         public HybridComputeLicenseType? LicenseType
         {
             get
@@ -48,6 +51,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Describes the state of the license. </summary>
+        [WirePath("properties.licenseDetails.state")]
         public HybridComputeLicenseState? State
         {
             get
@@ -65,6 +69,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Describes the license target server. </summary>
+        [WirePath("properties.licenseDetails.target")]
         public HybridComputeLicenseTarget? Target
         {
             get
@@ -82,6 +87,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Describes the edition of the license. The values are either Standard or Datacenter. </summary>
+        [WirePath("properties.licenseDetails.edition")]
         public HybridComputeLicenseEdition? Edition
         {
             get
@@ -99,6 +105,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Describes the license core type (pCore or vCore). </summary>
+        [WirePath("properties.licenseDetails.type")]
         public LicenseCoreType? Type
         {
             get
@@ -116,6 +123,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Describes the number of processors. </summary>
+        [WirePath("properties.licenseDetails.processors")]
         public int? Processors
         {
             get

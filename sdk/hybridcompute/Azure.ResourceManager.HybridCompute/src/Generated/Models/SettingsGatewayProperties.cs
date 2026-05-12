@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Associated Gateway Resource Id. </summary>
+        [WirePath("gatewayResourceId")]
         public ResourceIdentifier GatewayResourceId { get; set; }
     }
 }

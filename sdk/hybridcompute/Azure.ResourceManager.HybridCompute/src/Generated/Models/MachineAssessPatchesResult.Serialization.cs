@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("assessmentActivityId"u8);
                 writer.WriteStringValue(AssessmentActivityId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RebootPending))
+            if (options.Format != "W" && Optional.IsDefined(IsRebootPending))
             {
                 writer.WritePropertyName("rebootPending"u8);
-                writer.WriteBooleanValue(RebootPending.Value);
+                writer.WriteBooleanValue(IsRebootPending.Value);
             }
             if (Optional.IsDefined(AvailablePatchCountByClassification))
             {
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("patchServiceUsed"u8);
                 writer.WriteStringValue(PatchServiceUsed.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(OsType))
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType.Value.ToString());
+                writer.WriteStringValue(OSType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             MachineOperationStatus? status = default;
             Guid? assessmentActivityId = default;
-            bool? rebootPending = default;
+            bool? isRebootPending = default;
             AvailablePatchCountByClassification availablePatchCountByClassification = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? lastModifiedOn = default;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    rebootPending = prop.Value.GetBoolean();
+                    isRebootPending = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("availablePatchCountByClassification"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new MachineAssessPatchesResult(
                 status,
                 assessmentActivityId,
-                rebootPending,
+                isRebootPending,
                 availablePatchCountByClassification,
                 startOn,
                 lastModifiedOn,

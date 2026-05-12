@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -34,15 +35,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Identity for the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </summary>
+        [WirePath("kind")]
         public ArcKindEnum? Kind { get; set; }
 
         /// <summary> Hybrid Compute Machine properties. </summary>
+        [WirePath("properties")]
         internal MachineUpdateProperties Properties { get; set; }
 
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
+        [WirePath("properties.locationData")]
         public LocationData LocationData
         {
             get
@@ -60,6 +65,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Specifies the operating system settings for the hybrid machine. </summary>
+        [WirePath("properties.osProfile")]
         public HybridComputeOSProfile OSProfile
         {
             get
@@ -77,6 +83,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The info of the machine w.r.t Agent Upgrade. </summary>
+        [WirePath("properties.agentUpgrade")]
         public AgentUpgrade AgentUpgrade
         {
             get
@@ -94,6 +101,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </summary>
+        [WirePath("properties.parentClusterResourceId")]
         public ResourceIdentifier ParentClusterResourceId
         {
             get
@@ -111,6 +119,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The resource id of the private link scope this machine is assigned to, if any. </summary>
+        [WirePath("properties.privateLinkScopeResourceId")]
         public ResourceIdentifier PrivateLinkScopeResourceId
         {
             get
@@ -128,6 +137,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Identity key store type of the machine. </summary>
+        [WirePath("properties.identityKeyStore")]
         public string IdentityKeyStore
         {
             get
@@ -145,6 +155,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Endorsement Key Certificate of the Trusted Platform Module (TPM) that the client provides to be used during initial resource onboarding. </summary>
+        [WirePath("properties.tpmEkCertificate")]
         public string TpmEkCertificate
         {
             get
@@ -162,6 +173,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>
+        [WirePath("properties.cloudMetadata.provider")]
         public string CloudMetadataProvider
         {
             get

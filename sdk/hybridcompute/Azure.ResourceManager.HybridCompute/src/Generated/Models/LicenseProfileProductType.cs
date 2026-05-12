@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> WindowsServer. </summary>
         private const string WindowsServerValue = "WindowsServer";
         /// <summary> WindowsIoTEnterprise. </summary>
-        private const string WindowsIoTEnterpriseValue = "WindowsIoTEnterprise";
+        private const string WindowsIotEnterpriseValue = "WindowsIoTEnterprise";
 
         /// <summary> Initializes a new instance of <see cref="LicenseProfileProductType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static LicenseProfileProductType WindowsServer { get; } = new LicenseProfileProductType(WindowsServerValue);
 
         /// <summary> WindowsIoTEnterprise. </summary>
-        public static LicenseProfileProductType WindowsIoTEnterprise { get; } = new LicenseProfileProductType(WindowsIoTEnterpriseValue);
+        public static LicenseProfileProductType WindowsIotEnterprise { get; } = new LicenseProfileProductType(WindowsIotEnterpriseValue);
 
         /// <summary> Determines if two <see cref="LicenseProfileProductType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

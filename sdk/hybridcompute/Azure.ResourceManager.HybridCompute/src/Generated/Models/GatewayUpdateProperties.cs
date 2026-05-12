@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Specifies the list of features that are enabled for this Gateway. </summary>
+        [WirePath("allowedFeatures")]
         public IList<string> AllowedFeatures { get; } = new ChangeTrackingList<string>();
     }
 }

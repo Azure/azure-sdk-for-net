@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Describes the Extension Target Properties. </summary>
+        [WirePath("extensionTargets")]
         public IDictionary<string, ExtensionTargetProperties> ExtensionTargets { get; }
     }
 }

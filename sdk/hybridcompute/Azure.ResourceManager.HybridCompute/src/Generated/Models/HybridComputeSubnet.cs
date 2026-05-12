@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Represents address prefix. </summary>
+        [WirePath("addressPrefix")]
         public string AddressPrefix { get; }
     }
 }

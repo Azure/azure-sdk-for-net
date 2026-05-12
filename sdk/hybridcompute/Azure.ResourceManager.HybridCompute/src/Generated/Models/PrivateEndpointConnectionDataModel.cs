@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The ARM Resource Id of the Private Endpoint. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> The Name of the Private Endpoint. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Azure resource type. </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> The Private Endpoint Connection properties. </summary>
+        [WirePath("properties")]
         public HybridComputePrivateEndpointConnectionProperties Properties { get; }
     }
 }

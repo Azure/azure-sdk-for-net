@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Licensed. </summary>
         private const string LicensedValue = "Licensed";
         /// <summary> OOBGrace. </summary>
-        private const string OOBGraceValue = "OOBGrace";
+        private const string OobGraceValue = "OOBGrace";
         /// <summary> OOTGrace. </summary>
-        private const string OOTGraceValue = "OOTGrace";
+        private const string OotGraceValue = "OOTGrace";
         /// <summary> NonGenuineGrace. </summary>
         private const string NonGenuineGraceValue = "NonGenuineGrace";
         /// <summary> Notification. </summary>
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static HybridComputeLicenseStatus Licensed { get; } = new HybridComputeLicenseStatus(LicensedValue);
 
         /// <summary> OOBGrace. </summary>
-        public static HybridComputeLicenseStatus OOBGrace { get; } = new HybridComputeLicenseStatus(OOBGraceValue);
+        public static HybridComputeLicenseStatus OobGrace { get; } = new HybridComputeLicenseStatus(OobGraceValue);
 
         /// <summary> OOTGrace. </summary>
-        public static HybridComputeLicenseStatus OOTGrace { get; } = new HybridComputeLicenseStatus(OOTGraceValue);
+        public static HybridComputeLicenseStatus OotGrace { get; } = new HybridComputeLicenseStatus(OotGraceValue);
 
         /// <summary> NonGenuineGrace. </summary>
         public static HybridComputeLicenseStatus NonGenuineGrace { get; } = new HybridComputeLicenseStatus(NonGenuineGraceValue);

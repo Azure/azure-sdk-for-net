@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -23,19 +24,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeConfigurationExtension"/>. </summary>
         /// <param name="publisher"> Publisher of the extension. </param>
-        /// <param name="type"> Type of the extension. </param>
+        /// <param name="configurationExtensionType"> Type of the extension. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeConfigurationExtension(string publisher, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HybridComputeConfigurationExtension(string publisher, string configurationExtensionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Publisher = publisher;
-            Type = @type;
+            ConfigurationExtensionType = configurationExtensionType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Publisher of the extension. </summary>
+        [WirePath("publisher")]
         public string Publisher { get; }
 
         /// <summary> Type of the extension. </summary>
-        public string Type { get; }
+        [WirePath("type")]
+        public string ConfigurationExtensionType { get; }
     }
 }

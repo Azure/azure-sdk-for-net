@@ -39,15 +39,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> A list of locations where the extension packages can be found. </summary>
+        [WirePath("extensionUris")]
         public IReadOnlyList<Uri> ExtensionUris { get; } = new ChangeTrackingList<Uri>();
 
         /// <summary> Location of the signature files for the extension. </summary>
+        [WirePath("extensionSignatureUri")]
         public Uri ExtensionSignatureUri { get; }
 
         /// <summary> The operating system (Windows, Linux, etc.) this extension supports. </summary>
+        [WirePath("operatingSystem")]
         public string OperatingSystem { get; }
 
         /// <summary> Architectures (x64, arms64, etc.) that this extension supports. </summary>
+        [WirePath("architecture")]
         public IReadOnlyList<string> Architecture { get; } = new ChangeTrackingList<string>();
     }
 }

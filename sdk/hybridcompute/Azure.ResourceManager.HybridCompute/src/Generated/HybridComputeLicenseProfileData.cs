@@ -42,9 +42,11 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Describe the properties of a license profile. </summary>
+        [WirePath("properties")]
         internal LicenseProfileProperties Properties { get; set; }
 
         /// <summary> The provisioning state, which only appears in the response. </summary>
+        [WirePath("properties.provisioningState")]
         public HybridComputeProvisioningState? ProvisioningState
         {
             get
@@ -54,6 +56,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Specifies if this machine is licensed as part of a Software Assurance agreement. </summary>
+        [WirePath("properties.softwareAssurance.softwareAssuranceCustomer")]
         public bool? SoftwareAssuranceCustomer
         {
             get
@@ -71,6 +74,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The guid id of the license. </summary>
+        [WirePath("properties.esuProfile.assignedLicenseImmutableId")]
         public Guid? AssignedLicenseImmutableId
         {
             get
@@ -80,6 +84,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The list of ESU keys. </summary>
+        [WirePath("properties.esuProfile.esuKeys")]
         public IReadOnlyList<EsuKey> EsuKeys
         {
             get
@@ -93,6 +98,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The type of the Esu servers. </summary>
+        [WirePath("properties.esuProfile.serverType")]
         public EsuServerType? ServerType
         {
             get
@@ -102,6 +108,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Indicates the eligibility state of Esu. </summary>
+        [WirePath("properties.esuProfile.esuEligibility")]
         public EsuEligibility? EsuEligibility
         {
             get
@@ -111,6 +118,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Indicates whether there is an ESU Key currently active for the machine. </summary>
+        [WirePath("properties.esuProfile.esuKeyState")]
         public EsuKeyState? EsuKeyState
         {
             get
@@ -120,6 +128,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The resource id of the license. </summary>
+        [WirePath("properties.esuProfile.assignedLicense")]
         public string AssignedLicense
         {
             get
@@ -137,6 +146,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Indicates the subscription status of the product. </summary>
+        [WirePath("properties.productProfile.subscriptionStatus")]
         public LicenseProfileSubscriptionStatus? SubscriptionStatus
         {
             get
@@ -154,6 +164,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Indicates the product type of the license. </summary>
+        [WirePath("properties.productProfile.productType")]
         public LicenseProfileProductType? ProductType
         {
             get
@@ -171,6 +182,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The timestamp in UTC when the user enrolls the feature. </summary>
+        [WirePath("properties.productProfile.enrollmentDate")]
         public DateTimeOffset? EnrollmentOn
         {
             get
@@ -180,6 +192,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The timestamp in UTC when the billing starts. </summary>
+        [WirePath("properties.productProfile.billingStartDate")]
         public DateTimeOffset? BillingStartOn
         {
             get
@@ -189,6 +202,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The timestamp in UTC when the user disenrolled the feature. </summary>
+        [WirePath("properties.productProfile.disenrollmentDate")]
         public DateTimeOffset? DisenrollmentOn
         {
             get
@@ -198,6 +212,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The timestamp in UTC when the billing ends. </summary>
+        [WirePath("properties.productProfile.billingEndDate")]
         public DateTimeOffset? BillingEndOn
         {
             get
@@ -207,6 +222,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The errors that were encountered during the feature enrollment or disenrollment. </summary>
+        [WirePath("properties.productProfile.error")]
         public ResponseError Error
         {
             get
@@ -216,6 +232,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The list of product features. </summary>
+        [WirePath("properties.productProfile.productFeatures")]
         public IList<HybridComputeProductFeature> ProductFeatures
         {
             get

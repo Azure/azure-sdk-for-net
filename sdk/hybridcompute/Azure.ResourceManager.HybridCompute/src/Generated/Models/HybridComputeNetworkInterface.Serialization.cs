@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IpAddresses))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
-                foreach (HybridComputeIPAddress item in IpAddresses)
+                foreach (HybridComputeIPAddress item in IPAddresses)
                 {
                     writer.WriteObjectValue(item, options);
                 }

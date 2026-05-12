@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -34,12 +35,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Azure resource tenant Id. </summary>
+        [WirePath("tenantId")]
         public string TenantId { get; }
 
         /// <summary> Settings Gateway properties. </summary>
+        [WirePath("gatewayProperties")]
         internal SettingsGatewayProperties GatewayProperties { get; set; }
 
         /// <summary> Associated Gateway Resource Id. </summary>
+        [WirePath("gatewayProperties.gatewayResourceId")]
         public ResourceIdentifier GatewayResourceId
         {
             get

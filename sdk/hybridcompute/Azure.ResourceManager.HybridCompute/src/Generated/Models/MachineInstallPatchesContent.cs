@@ -7,31 +7,32 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Input for InstallPatches as directly received by the API. </summary>
-    public partial class MachineInstallPatchesParameters
+    public partial class MachineInstallPatchesContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MachineInstallPatchesParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineInstallPatchesContent"/>. </summary>
         /// <param name="maximumDuration"> Specifies the maximum amount of time that the operation will run. It must be an ISO 8601-compliant duration string such as PT4H (4 hours). </param>
         /// <param name="rebootSetting"> Defines when it is acceptable to reboot a VM during a software update operation. </param>
-        public MachineInstallPatchesParameters(TimeSpan maximumDuration, VmGuestPatchRebootSetting rebootSetting)
+        public MachineInstallPatchesContent(TimeSpan maximumDuration, VmGuestPatchRebootSetting rebootSetting)
         {
             MaximumDuration = maximumDuration;
             RebootSetting = rebootSetting;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineInstallPatchesParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineInstallPatchesContent"/>. </summary>
         /// <param name="maximumDuration"> Specifies the maximum amount of time that the operation will run. It must be an ISO 8601-compliant duration string such as PT4H (4 hours). </param>
         /// <param name="rebootSetting"> Defines when it is acceptable to reboot a VM during a software update operation. </param>
         /// <param name="windowsParameters"> Input for InstallPatches on a Windows VM, as directly received by the API. </param>
         /// <param name="linuxParameters"> Input for InstallPatches on a Linux VM, as directly received by the API. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineInstallPatchesParameters(TimeSpan maximumDuration, VmGuestPatchRebootSetting rebootSetting, HybridComputeWindowsParameters windowsParameters, HybridComputeLinuxParameters linuxParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineInstallPatchesContent(TimeSpan maximumDuration, VmGuestPatchRebootSetting rebootSetting, HybridComputeWindowsParameters windowsParameters, HybridComputeLinuxParameters linuxParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaximumDuration = maximumDuration;
             RebootSetting = rebootSetting;
@@ -41,15 +42,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Specifies the maximum amount of time that the operation will run. It must be an ISO 8601-compliant duration string such as PT4H (4 hours). </summary>
+        [WirePath("maximumDuration")]
         public TimeSpan MaximumDuration { get; }
 
         /// <summary> Defines when it is acceptable to reboot a VM during a software update operation. </summary>
+        [WirePath("rebootSetting")]
         public VmGuestPatchRebootSetting RebootSetting { get; }
 
         /// <summary> Input for InstallPatches on a Windows VM, as directly received by the API. </summary>
+        [WirePath("windowsParameters")]
         public HybridComputeWindowsParameters WindowsParameters { get; set; }
 
         /// <summary> Input for InstallPatches on a Linux VM, as directly received by the API. </summary>
+        [WirePath("linuxParameters")]
         public HybridComputeLinuxParameters LinuxParameters { get; set; }
     }
 }

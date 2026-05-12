@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Hybrid Compute Gateway properties. </summary>
+        [WirePath("properties")]
         internal GatewayProperties Properties { get; set; }
 
         /// <summary> The provisioning state, which only appears in the response. </summary>
+        [WirePath("properties.provisioningState")]
         public HybridComputeProvisioningState? ProvisioningState
         {
             get
@@ -53,6 +55,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> A unique, immutable, identifier for the Gateway. </summary>
+        [WirePath("properties.gatewayId")]
         public string GatewayId
         {
             get
@@ -62,6 +65,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The type of the Gateway resource. </summary>
+        [WirePath("properties.gatewayType")]
         public ArcGatewayType? GatewayType
         {
             get
@@ -79,6 +83,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The endpoint fqdn for the Gateway. </summary>
+        [WirePath("properties.gatewayEndpoint")]
         public string GatewayEndpoint
         {
             get
@@ -88,6 +93,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Specifies the list of features that are enabled for this Gateway. </summary>
+        [WirePath("properties.allowedFeatures")]
         public IList<string> AllowedFeatures
         {
             get

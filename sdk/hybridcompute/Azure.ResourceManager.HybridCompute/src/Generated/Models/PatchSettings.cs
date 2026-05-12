@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -24,28 +25,32 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="PatchSettings"/>. </summary>
         /// <param name="assessmentMode"> Specifies the assessment mode. </param>
         /// <param name="patchMode"> Specifies the patch mode. </param>
-        /// <param name="enableHotpatching"> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </param>
+        /// <param name="isHotpatchingEnabled"> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </param>
         /// <param name="status"> Status of the hotpatch capability enrollment or disenrollment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PatchSettings(AssessmentModeType? assessmentMode, PatchModeType? patchMode, bool? enableHotpatching, HybridComputePatchSettingsStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PatchSettings(AssessmentModeType? assessmentMode, PatchModeType? patchMode, bool? isHotpatchingEnabled, HybridComputePatchSettingsStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AssessmentMode = assessmentMode;
             PatchMode = patchMode;
-            EnableHotpatching = enableHotpatching;
+            IsHotpatchingEnabled = isHotpatchingEnabled;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the assessment mode. </summary>
+        [WirePath("assessmentMode")]
         public AssessmentModeType? AssessmentMode { get; set; }
 
         /// <summary> Specifies the patch mode. </summary>
+        [WirePath("patchMode")]
         public PatchModeType? PatchMode { get; set; }
 
         /// <summary> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </summary>
-        public bool? EnableHotpatching { get; set; }
+        [WirePath("enableHotpatching")]
+        public bool? IsHotpatchingEnabled { get; set; }
 
         /// <summary> Status of the hotpatch capability enrollment or disenrollment. </summary>
+        [WirePath("status")]
         public HybridComputePatchSettingsStatus Status { get; }
     }
 }

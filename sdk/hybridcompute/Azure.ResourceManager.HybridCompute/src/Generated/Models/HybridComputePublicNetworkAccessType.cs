@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         private const string EnabledValue = "Enabled";
         /// <summary> Does not allow Azure Arc agents to communicate with Azure Arc services over public (internet) endpoints. The agents must use the private link. </summary>
         private const string DisabledValue = "Disabled";
+        /// <summary> Azure Arc agent communication with Azure Arc services over public (internet) is enforced by Network Security Perimeter (NSP). </summary>
+        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
         /// <summary> Initializes a new instance of <see cref="HybridComputePublicNetworkAccessType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,6 +37,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Does not allow Azure Arc agents to communicate with Azure Arc services over public (internet) endpoints. The agents must use the private link. </summary>
         public static HybridComputePublicNetworkAccessType Disabled { get; } = new HybridComputePublicNetworkAccessType(DisabledValue);
+
+        /// <summary> Azure Arc agent communication with Azure Arc services over public (internet) is enforced by Network Security Perimeter (NSP). </summary>
+        public static HybridComputePublicNetworkAccessType SecuredByPerimeter { get; } = new HybridComputePublicNetworkAccessType(SecuredByPerimeterValue);
 
         /// <summary> Determines if two <see cref="HybridComputePublicNetworkAccessType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

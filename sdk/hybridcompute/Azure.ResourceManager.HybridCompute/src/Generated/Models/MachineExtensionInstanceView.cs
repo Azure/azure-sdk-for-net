@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -23,29 +24,33 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineExtensionInstanceView"/>. </summary>
         /// <param name="name"> The machine extension name. </param>
-        /// <param name="type"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="machineExtensionInstanceViewType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="status"> Instance view status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineExtensionInstanceView(string name, string @type, string typeHandlerVersion, MachineExtensionInstanceViewStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineExtensionInstanceView(string name, string machineExtensionInstanceViewType, string typeHandlerVersion, MachineExtensionInstanceViewStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            MachineExtensionInstanceViewType = machineExtensionInstanceViewType;
             TypeHandlerVersion = typeHandlerVersion;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The machine extension name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
-        public string Type { get; set; }
+        [WirePath("type")]
+        public string MachineExtensionInstanceViewType { get; set; }
 
         /// <summary> Specifies the version of the script handler. </summary>
+        [WirePath("typeHandlerVersion")]
         public string TypeHandlerVersion { get; set; }
 
         /// <summary> Instance view status. </summary>
+        [WirePath("status")]
         public MachineExtensionInstanceViewStatus Status { get; set; }
     }
 }

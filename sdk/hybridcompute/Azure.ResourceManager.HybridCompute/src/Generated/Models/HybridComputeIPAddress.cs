@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -29,21 +30,25 @@ namespace Azure.ResourceManager.HybridCompute.Models
         internal HybridComputeIPAddress(string address, string ipAddressVersion, HybridComputeSubnet subnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Address = address;
-            IpAddressVersion = ipAddressVersion;
+            IPAddressVersion = ipAddressVersion;
             Subnet = subnet;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents the IP Address. </summary>
+        [WirePath("address")]
         public string Address { get; }
 
         /// <summary> Represents the Ip Address Version. </summary>
-        public string IpAddressVersion { get; }
+        [WirePath("ipAddressVersion")]
+        public string IPAddressVersion { get; }
 
         /// <summary> The subnet to which this IP address belongs. </summary>
+        [WirePath("subnet")]
         internal HybridComputeSubnet Subnet { get; }
 
         /// <summary> Represents address prefix. </summary>
+        [WirePath("subnet.addressPrefix")]
         public string SubnetAddressPrefix
         {
             get

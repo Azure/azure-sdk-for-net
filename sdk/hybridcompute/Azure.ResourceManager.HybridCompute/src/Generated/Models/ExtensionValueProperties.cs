@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The version of the Extension being received. </summary>
+        [WirePath("version")]
         public string Version { get; }
 
         /// <summary> The type of the Extension being received. </summary>
+        [WirePath("extensionType")]
         public string ExtensionType { get; }
 
         /// <summary> The publisher of the Extension being received. </summary>
+        [WirePath("publisher")]
         public string Publisher { get; }
     }
 }

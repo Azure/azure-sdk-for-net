@@ -49,18 +49,23 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Hybrid Compute Machine properties. </summary>
+        [WirePath("properties")]
         internal MachineProperties Properties { get; set; }
 
         /// <summary> The list of extensions affiliated to the machine. </summary>
+        [WirePath("resources")]
         public IReadOnlyList<HybridComputeMachineExtensionData> Resources { get; }
 
         /// <summary> Identity for the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </summary>
+        [WirePath("kind")]
         public ArcKindEnum? Kind { get; set; }
 
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
+        [WirePath("properties.locationData")]
         public LocationData LocationData
         {
             get
@@ -78,6 +83,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Configurable properties that the user can set locally via the azcmagent config command, or remotely via ARM. </summary>
+        [WirePath("properties.agentConfiguration")]
         public AgentConfiguration AgentConfiguration
         {
             get
@@ -87,6 +93,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Statuses of dependent services that are reported back to ARM. </summary>
+        [WirePath("properties.serviceStatuses")]
         public HybridComputeServiceStatuses ServiceStatuses
         {
             get
@@ -104,6 +111,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Information about the machine's hardware. </summary>
+        [WirePath("properties.hardwareProfile")]
         public HybridComputeHardwareProfile HardwareProfile
         {
             get
@@ -113,6 +121,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Information about the machine's firmware. </summary>
+        [WirePath("properties.firmwareProfile")]
         public HybridComputeFirmwareProfile FirmwareProfile
         {
             get
@@ -122,6 +131,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The info of the machine w.r.t Agent Upgrade. </summary>
+        [WirePath("properties.agentUpgrade")]
         public AgentUpgrade AgentUpgrade
         {
             get
@@ -139,6 +149,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Specifies the operating system settings for the hybrid machine. </summary>
+        [WirePath("properties.osProfile")]
         public HybridComputeOSProfile OSProfile
         {
             get
@@ -156,6 +167,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Specifies the License related properties for a machine. </summary>
+        [WirePath("properties.licenseProfile")]
         public LicenseProfileMachineInstanceView LicenseProfile
         {
             get
@@ -173,6 +185,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The provisioning state, which only appears in the response. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -182,6 +195,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The status of the hybrid machine agent. </summary>
+        [WirePath("properties.status")]
         public HybridComputeStatusType? Status
         {
             get
@@ -191,6 +205,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The time of the last status change. </summary>
+        [WirePath("properties.lastStatusChange")]
         public DateTimeOffset? LastStatusChange
         {
             get
@@ -200,6 +215,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Details about the error state. </summary>
+        [WirePath("properties.errorDetails")]
         public IReadOnlyList<ResponseError> ErrorDetails
         {
             get
@@ -213,6 +229,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The hybrid machine agent full version. </summary>
+        [WirePath("properties.agentVersion")]
         public string AgentVersion
         {
             get
@@ -222,7 +239,8 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Specifies the hybrid machine unique ID. </summary>
-        public string VmId
+        [WirePath("properties.vmId")]
+        public Guid? VmId
         {
             get
             {
@@ -239,6 +257,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Specifies the hybrid machine display name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -248,6 +267,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Specifies the hybrid machine FQDN. </summary>
+        [WirePath("properties.machineFqdn")]
         public string MachineFqdn
         {
             get
@@ -257,6 +277,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Public Key that the client provides to be used during initial resource onboarding. </summary>
+        [WirePath("properties.clientPublicKey")]
         public string ClientPublicKey
         {
             get
@@ -274,6 +295,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Specifies the identity key store a machine is using. </summary>
+        [WirePath("properties.identityKeyStore")]
         public IdentityKeyStore? IdentityKeyStore
         {
             get
@@ -291,6 +313,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Endorsement Key Certificate of the Trusted Platform Module (TPM) that the client provides to be used during initial resource onboarding. </summary>
+        [WirePath("properties.tpmEkCertificate")]
         public string TpmEkCertificate
         {
             get
@@ -308,29 +331,32 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The Operating System running on the hybrid machine. </summary>
-        public string OsName
+        [WirePath("properties.osName")]
+        public string OSName
         {
             get
             {
-                return Properties is null ? default : Properties.OsName;
+                return Properties is null ? default : Properties.OSName;
             }
         }
 
         /// <summary> The version of Operating System running on the hybrid machine. </summary>
-        public string OsVersion
+        [WirePath("properties.osVersion")]
+        public string OSVersion
         {
             get
             {
-                return Properties is null ? default : Properties.OsVersion;
+                return Properties is null ? default : Properties.OSVersion;
             }
         }
 
         /// <summary> The type of Operating System (windows/linux). </summary>
-        public string OsType
+        [WirePath("properties.osType")]
+        public string OSType
         {
             get
             {
-                return Properties is null ? default : Properties.OsType;
+                return Properties is null ? default : Properties.OSType;
             }
             set
             {
@@ -338,12 +364,13 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     Properties = new MachineProperties();
                 }
-                Properties.OsType = value;
+                Properties.OSType = value;
             }
         }
 
         /// <summary> Specifies the Arc Machine's unique SMBIOS ID. </summary>
-        public string VmUuid
+        [WirePath("properties.vmUuid")]
+        public Guid? VmUuid
         {
             get
             {
@@ -352,6 +379,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Machine Extensions information (deprecated field). </summary>
+        [WirePath("properties.extensions")]
         public IList<MachineExtensionInstanceView> Extensions
         {
             get
@@ -365,24 +393,27 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Specifies the Operating System product SKU. </summary>
-        public string OsSku
+        [WirePath("properties.osSku")]
+        public string OSSku
         {
             get
             {
-                return Properties is null ? default : Properties.OsSku;
+                return Properties is null ? default : Properties.OSSku;
             }
         }
 
         /// <summary> The edition of the Operating System. </summary>
-        public string OsEdition
+        [WirePath("properties.osEdition")]
+        public string OSEdition
         {
             get
             {
-                return Properties is null ? default : Properties.OsEdition;
+                return Properties is null ? default : Properties.OSEdition;
             }
         }
 
         /// <summary> Specifies the Windows domain name. </summary>
+        [WirePath("properties.domainName")]
         public string DomainName
         {
             get
@@ -392,15 +423,17 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Specifies the AD fully qualified display name. </summary>
-        public string AdFqdn
+        [WirePath("properties.adFqdn")]
+        public string ADFqdn
         {
             get
             {
-                return Properties is null ? default : Properties.AdFqdn;
+                return Properties is null ? default : Properties.ADFqdn;
             }
         }
 
         /// <summary> Specifies the DNS fully qualified display name. </summary>
+        [WirePath("properties.dnsFqdn")]
         public string DnsFqdn
         {
             get
@@ -410,6 +443,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The resource id of the private link scope this machine is assigned to, if any. </summary>
+        [WirePath("properties.privateLinkScopeResourceId")]
         public ResourceIdentifier PrivateLinkScopeResourceId
         {
             get
@@ -427,6 +461,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </summary>
+        [WirePath("properties.parentClusterResourceId")]
         public ResourceIdentifier ParentClusterResourceId
         {
             get
@@ -444,6 +479,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Specifies the resource ID of the associated hardware device. Only settable by HCI RP. </summary>
+        [WirePath("properties.hardwareResourceId")]
         public string HardwareResourceId
         {
             get
@@ -461,11 +497,12 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Specifies whether any MS SQL instance is discovered on the machine. </summary>
-        public string MssqlDiscovered
+        [WirePath("properties.mssqlDiscovered")]
+        public string MSSqlDiscovered
         {
             get
             {
-                return Properties is null ? default : Properties.MssqlDiscovered;
+                return Properties is null ? default : Properties.MSSqlDiscovered;
             }
             set
             {
@@ -473,11 +510,12 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     Properties = new MachineProperties();
                 }
-                Properties.MssqlDiscovered = value;
+                Properties.MSSqlDiscovered = value;
             }
         }
 
         /// <summary> Detected properties from the machine. </summary>
+        [WirePath("properties.detectedProperties")]
         public IReadOnlyDictionary<string, string> DetectedProperties
         {
             get
@@ -491,6 +529,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The disks on the machine. </summary>
+        [WirePath("properties.storageProfile.disks")]
         public IReadOnlyList<HybridComputeDisk> StorageDisks
         {
             get
@@ -504,6 +543,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>
+        [WirePath("properties.cloudMetadata.provider")]
         public string CloudMetadataProvider
         {
             get
@@ -513,6 +553,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The list of network interfaces. </summary>
+        [WirePath("properties.networkProfile.networkInterfaces")]
         public IReadOnlyList<HybridComputeNetworkInterface> NetworkInterfaces
         {
             get

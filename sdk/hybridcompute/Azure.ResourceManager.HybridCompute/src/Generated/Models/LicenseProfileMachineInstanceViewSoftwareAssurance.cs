@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -22,15 +23,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LicenseProfileMachineInstanceViewSoftwareAssurance"/>. </summary>
-        /// <param name="softwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
+        /// <param name="isSoftwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LicenseProfileMachineInstanceViewSoftwareAssurance(bool? softwareAssuranceCustomer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LicenseProfileMachineInstanceViewSoftwareAssurance(bool? isSoftwareAssuranceCustomer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SoftwareAssuranceCustomer = softwareAssuranceCustomer;
+            IsSoftwareAssuranceCustomer = isSoftwareAssuranceCustomer;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies if this machine is licensed as part of a Software Assurance agreement. </summary>
-        public bool? SoftwareAssuranceCustomer { get; }
+        [WirePath("softwareAssuranceCustomer")]
+        public bool? IsSoftwareAssuranceCustomer { get; }
     }
 }

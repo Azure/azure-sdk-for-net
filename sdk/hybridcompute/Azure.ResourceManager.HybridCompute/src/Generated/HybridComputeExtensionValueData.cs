@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The single extension based on search criteria. </summary>
+        [WirePath("properties")]
         internal ExtensionValueProperties Properties { get; }
 
         /// <summary> The version of the Extension being received. </summary>
+        [WirePath("properties.version")]
         public string Version
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The type of the Extension being received. </summary>
+        [WirePath("properties.extensionType")]
         public string ExtensionType
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The publisher of the Extension being received. </summary>
+        [WirePath("properties.publisher")]
         public string Publisher
         {
             get

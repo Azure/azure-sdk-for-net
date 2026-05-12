@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(MachineExtensionInstanceViewType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(MachineExtensionInstanceViewType);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             string name = default;
-            string @type = default;
+            string machineExtensionInstanceViewType = default;
             string typeHandlerVersion = default;
             MachineExtensionInstanceViewStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    machineExtensionInstanceViewType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("typeHandlerVersion"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MachineExtensionInstanceView(name, @type, typeHandlerVersion, status, additionalBinaryDataProperties);
+            return new MachineExtensionInstanceView(name, machineExtensionInstanceViewType, typeHandlerVersion, status, additionalBinaryDataProperties);
         }
     }
 }

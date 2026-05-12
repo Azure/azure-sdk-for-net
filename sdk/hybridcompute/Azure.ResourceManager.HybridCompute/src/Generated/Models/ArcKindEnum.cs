@@ -16,19 +16,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         private readonly string _value;
         /// <summary> AVS. </summary>
-        private const string AVSValue = "AVS";
+        private const string AvsValue = "AVS";
         /// <summary> HCI. </summary>
-        private const string HCIValue = "HCI";
+        private const string HciValue = "HCI";
         /// <summary> SCVMM. </summary>
-        private const string SCVMMValue = "SCVMM";
+        private const string ScVmmValue = "SCVMM";
         /// <summary> VMware. </summary>
         private const string VMwareValue = "VMware";
         /// <summary> EPS. </summary>
-        private const string EPSValue = "EPS";
+        private const string EpsValue = "EPS";
         /// <summary> GCP. </summary>
-        private const string GCPValue = "GCP";
+        private const string GcpValue = "GCP";
         /// <summary> AWS. </summary>
-        private const string AWSValue = "AWS";
+        private const string AwsValue = "AWS";
 
         /// <summary> Initializes a new instance of <see cref="ArcKindEnum"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -41,25 +41,25 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> AVS. </summary>
-        public static ArcKindEnum AVS { get; } = new ArcKindEnum(AVSValue);
+        public static ArcKindEnum Avs { get; } = new ArcKindEnum(AvsValue);
 
         /// <summary> HCI. </summary>
-        public static ArcKindEnum HCI { get; } = new ArcKindEnum(HCIValue);
+        public static ArcKindEnum Hci { get; } = new ArcKindEnum(HciValue);
 
         /// <summary> SCVMM. </summary>
-        public static ArcKindEnum SCVMM { get; } = new ArcKindEnum(SCVMMValue);
+        public static ArcKindEnum ScVmm { get; } = new ArcKindEnum(ScVmmValue);
 
         /// <summary> VMware. </summary>
         public static ArcKindEnum VMware { get; } = new ArcKindEnum(VMwareValue);
 
         /// <summary> EPS. </summary>
-        public static ArcKindEnum EPS { get; } = new ArcKindEnum(EPSValue);
+        public static ArcKindEnum Eps { get; } = new ArcKindEnum(EpsValue);
 
         /// <summary> GCP. </summary>
-        public static ArcKindEnum GCP { get; } = new ArcKindEnum(GCPValue);
+        public static ArcKindEnum Gcp { get; } = new ArcKindEnum(GcpValue);
 
         /// <summary> AWS. </summary>
-        public static ArcKindEnum AWS { get; } = new ArcKindEnum(AWSValue);
+        public static ArcKindEnum Aws { get; } = new ArcKindEnum(AwsValue);
 
         /// <summary> Determines if two <see cref="ArcKindEnum"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

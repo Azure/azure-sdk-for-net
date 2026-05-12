@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -28,9 +29,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Gateway Update properties. </summary>
+        [WirePath("properties")]
         internal GatewayUpdateProperties Properties { get; set; }
 
         /// <summary> Specifies the list of features that are enabled for this Gateway. </summary>
+        [WirePath("properties.allowedFeatures")]
         public IList<string> AllowedFeatures
         {
             get

@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The list of extension metadata. </summary>
+        [WirePath("value")]
         public IReadOnlyList<HybridComputeExtensionValueData> Value { get; }
 
         /// <summary> The URL to get the next set of results. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -36,12 +37,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Azure resource Id. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Guid of the Network Security Perimeter. </summary>
+        [WirePath("perimeterGuid")]
         public string PerimeterGuid { get; }
 
         /// <summary> Regional location of the perimeter. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }
