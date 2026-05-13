@@ -38,6 +38,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="evaluatorType"> The type of the evaluator. </param>
         /// <param name="categories"> The categories of the evaluator. </param>
         /// <param name="definition"> Definition of the evaluator. </param>
+        /// <param name="generationArtifacts"> Provenance artifacts from the generation pipeline. Read-only; present only on evaluator versions created via an EvaluatorGenerationJob. Each artifact resolves to a versioned Foundry Dataset. </param>
         /// <param name="createdBy"> Creator of the evaluator. </param>
         /// <param name="createdAt"> Creation date/time of the evaluator. </param>
         /// <param name="modifiedAt"> Last modified date/time of the evaluator. </param>
@@ -47,13 +48,14 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IList<EvaluatorCategory> categories, EvaluatorDefinition definition, string createdBy, string createdAt, string modifiedAt, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IList<EvaluatorCategory> categories, EvaluatorDefinition definition, EvaluatorGenerationArtifacts generationArtifacts, string createdBy, string createdAt, string modifiedAt, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Metadata = metadata;
             EvaluatorType = evaluatorType;
             Categories = categories;
             Definition = definition;
+            GenerationArtifacts = generationArtifacts;
             CreatedBy = createdBy;
             CreatedAt = createdAt;
             ModifiedAt = modifiedAt;
@@ -79,6 +81,9 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Definition of the evaluator. </summary>
         public EvaluatorDefinition Definition { get; set; }
+
+        /// <summary> Provenance artifacts from the generation pipeline. Read-only; present only on evaluator versions created via an EvaluatorGenerationJob. Each artifact resolves to a versioned Foundry Dataset. </summary>
+        public EvaluatorGenerationArtifacts GenerationArtifacts { get; }
 
         /// <summary> Creator of the evaluator. </summary>
         public string CreatedBy { get; }

@@ -8,7 +8,11 @@
 - Added `Name` and `Description` properties to tool classes (`A2APreviewTool`, `AzureAISearchTool`, `BingCustomSearchPreviewTool`, `BingGroundingTool`, `BrowserAutomationPreviewTool`, `MemorySearchPreviewTool`, `MicrosoftFabricPreviewTool`, `SharepointPreviewTool`).
 
 ### Breaking Changes
-- Renamed `AgentEndpoint` to `AgentEndpointConfig`.
+- `AgentEndpoint` was renamed to `AgentEndpointConfiguration`.
+- `TelemetryEndpointAuth` was renamed to `TelemetryEndpointAuthentication`.
+- `TelemetryEndpoint` property `Auth` was renamed to `Authentication`.
+- `TelemetryEndpoint` property `Data` was renamed to `ExportedDataTypes`.
+- `isolationKey` was removed from `CreateSession` and `DeleteSession` operations.
 
 ### Bugs Fixed
 

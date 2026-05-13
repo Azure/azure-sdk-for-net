@@ -41,7 +41,9 @@ namespace Azure.Core.Tests.Identity
                 TenantId = TenantId,
                 ClientId = ClientId,
                 TokenFilePath = "/fake/path/token",
+#pragma warning disable AZID0002 // IsAzureProxyEnabled is experimental
                 IsAzureProxyEnabled = isAzureProxyEnabled,
+#pragma warning restore AZID0002
                 MsalClient = mockConfidentialMsalClient,
                 Pipeline = CredentialPipeline.GetInstance(null)
             });
