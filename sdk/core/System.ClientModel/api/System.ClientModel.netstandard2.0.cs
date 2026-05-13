@@ -260,6 +260,7 @@ namespace System.ClientModel.Primitives
         public CredentialSettings(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         public Microsoft.Extensions.Configuration.IConfigurationSection? AdditionalProperties { get { throw null; } set { } }
         public string? CredentialSource { get { throw null; } set { } }
+        public string? this[string key] { get { throw null; } }
         public string? Key { get { throw null; } set { } }
     }
     public partial class GetTokenOptions

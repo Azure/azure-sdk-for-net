@@ -2126,7 +2126,7 @@ namespace Azure.ResourceManager.Storage.Models
                 additionalBinaryDataProperties: null,
                 lastModifiedOn is null && metadata is null && shareQuota is null && enabledProtocol is null && rootSquash is null && version is null && isDeleted is null && deletedOn is null && remainingRetentionDays is null && accessTier is null && accessTierChangeOn is null && accessTierStatus is null && shareUsageBytes is null && leaseStatus is null && leaseState is null && leaseDuration is null && signedIdentifiers is null && snapshotOn is null ? default : new FileShareProperties(
                     lastModifiedOn,
-                    metadata,
+                    metadata ?? new ChangeTrackingDictionary<string, string>(),
                     shareQuota,
                     default,
                     default,
