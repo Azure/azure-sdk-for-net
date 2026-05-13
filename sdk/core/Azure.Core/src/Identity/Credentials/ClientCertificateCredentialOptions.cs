@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -36,9 +37,8 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get; set; }
 
         /// <inheritdoc/>
-#pragma warning disable AZID0003 // TokenRequestCallbackContext is experimental
-        Func<TokenRequestCallbackContext, Task> ISupportsTokenRequestCallback.TokenRequestCallback { get; set; }
-#pragma warning restore AZID0003
+        [Experimental("AZID0003")]
+        public Func<TokenRequestCallbackContext, Task> TokenRequestCallback { get; set; }
     }
 #pragma warning restore AZC0034
 }

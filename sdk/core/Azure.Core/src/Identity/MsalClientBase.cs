@@ -62,7 +62,7 @@ namespace Azure.Identity
                 : null;
 #pragma warning restore AZID0001
 #pragma warning disable AZID0003 // TokenRequestCallback is experimental
-            _onBeforeTokenRequestCallback = options?.TokenRequestCallback;
+            _onBeforeTokenRequestCallback = (options as ISupportsTokenRequestCallback)?.TokenRequestCallback;
 #pragma warning restore AZID0003
             Pipeline = pipeline;
             TenantId = tenantId;

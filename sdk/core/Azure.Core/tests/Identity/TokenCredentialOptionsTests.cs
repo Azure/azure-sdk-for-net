@@ -167,7 +167,10 @@ namespace Azure.Core.Tests.Identity
 #pragma warning restore AZID0001
 
 #pragma warning disable AZID0003 // TokenRequestCallback is experimental
-            Assert.AreEqual(original.TokenRequestCallback, clone.TokenRequestCallback, "TokenRequestCallback should be copied to the clone.");
+            if (original is ISupportsTokenRequestCallback origCallback && clone is ISupportsTokenRequestCallback cloneCallback)
+            {
+                Assert.AreEqual(origCallback.TokenRequestCallback, cloneCallback.TokenRequestCallback, "TokenRequestCallback should be copied to the clone.");
+            }
 #pragma warning restore AZID0003
 
             if (original is ISupportsAdditionallyAllowedTenants && clone is ISupportsAdditionallyAllowedTenants)
@@ -239,13 +242,17 @@ namespace Azure.Core.Tests.Identity
 
         public class SupportsTokenCachePersistenceOptions : CloneTestOptions, ISupportsTokenCachePersistenceOptions { }
 
-        public class CloneTestOptions : TokenCredentialOptions
+        public class CloneTestOptions : TokenCredentialOptions, ISupportsTokenRequestCallback
         {
             public IList<string> AdditionallyAllowedTenants { get; } = new List<string>();
 
             public bool DisableInstanceDiscovery { get; set; }
 
             public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
+
+#pragma warning disable AZID0003 // TokenRequestCallbackContext is experimental
+            public Func<TokenRequestCallbackContext, Task> TokenRequestCallback { get; set; }
+#pragma warning restore AZID0003
 
             public static T CreatePopulatedOptions<T>(bool setTransport)
                 where T : CloneTestOptions, new()

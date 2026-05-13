@@ -74,9 +74,8 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get; set; }
 
         /// <inheritdoc/>
-#pragma warning disable AZID0003 // TokenRequestCallbackContext is experimental
-        Func<TokenRequestCallbackContext, Task> ISupportsTokenRequestCallback.TokenRequestCallback { get; set; }
-#pragma warning restore AZID0003
+        [Experimental("AZID0003")]
+        public Func<TokenRequestCallbackContext, Task> TokenRequestCallback { get; set; }
 
         /// <summary>
         /// The options for customizing the browser for interactive authentication.
