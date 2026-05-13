@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -558,6 +559,7 @@ namespace Azure.Storage.DataMovement
                         // This will block until all pending progress reports have gone out
                         await _progressTracker.CleanUpAsync().ConfigureAwait(false);
                     }
+
                     await OnJobPartStatusChangedAsync().ConfigureAwait(false);
                     await SetCheckpointerStatusAsync().ConfigureAwait(false);
                 }
