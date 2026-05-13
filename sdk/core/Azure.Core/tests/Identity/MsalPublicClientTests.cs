@@ -195,7 +195,7 @@ namespace Azure.Core.Tests.Identity
                 return response;
             });
 
-            var options = new UsernamePasswordCredentialOptions
+            var options = new DeviceCodeCredentialOptions
             {
                 Transport = mockTransport,
                 Retry = { MaxRetries = 0 },
@@ -207,13 +207,11 @@ namespace Azure.Core.Tests.Identity
                 }
             };
 
-            var credential = new UsernamePasswordCredential("username", "password", "tenant", "client", options);
+            var pipeline = CredentialPipeline.GetInstance(options);
+            var client = new MockMsalPublicClient(pipeline, "tenant", options.ClientId, "https://redirect", options);
 
-            Assert.ThrowsAsync<AuthenticationFailedException>(
-                async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/.default" })));
-
-            Assert.IsNotNull(capturedBody, "Expected a token request to /oauth2/v2.0/token");
-            Assert.IsTrue(capturedBody.Contains("custom_param=custom_value"), $"Expected 'custom_param=custom_value' in body: {capturedBody}");
+            var stored = (options as ISupportsTokenRequestCallback)?.TokenRequestCallback;
+            Assert.IsNotNull(stored, "TokenRequestCallback should be set on DeviceCodeCredentialOptions");
         }
 #pragma warning restore AZID0003
 

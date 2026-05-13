@@ -1681,7 +1681,6 @@ namespace Azure.Identity
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
-        public System.Func<Azure.Identity.TokenRequestCallbackContext, System.Threading.Tasks.Task> TokenRequestCallback { get { throw null; } set { } }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class VisualStudioCodeCredential : Azure.Identity.InteractiveBrowserCredential
