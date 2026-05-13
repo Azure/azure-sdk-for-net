@@ -859,6 +859,269 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         #endregion
 
+        #region JsonModelConverter chain-of-responsibility tests
+
+        [Test]
+        public void JsonModelConverter_Read_ChainSecondProxyHandlesAfterFirstDeclines()
+        {
+            var mrwOptions = new ModelReaderWriterOptions("J");
+            var proxy1 = new ChainProxy(handleRead: false);  // declines via CanHandle
+            var proxy2 = new ChainProxy(handleRead: true);   // handles
+
+            mrwOptions.AddProxy<SimpleModel>(proxy1);
+            mrwOptions.AddProxy<SimpleModel>(proxy2);
+
+            var stjOptions = new JsonSerializerOptions();
+            stjOptions.Converters.Add(new JsonModelConverter(mrwOptions));
+
+            var result = JsonSerializer.Deserialize<SimpleModel>("{}", stjOptions);
+
+            Assert.IsNotNull(result);
+            Assert.IsFalse(proxy1.CreateWasCalled,
+                "proxy1 should have declined via CanHandle and not had Create called.");
+            Assert.IsTrue(proxy2.CreateWasCalled,
+                "proxy2 should have handled the read after proxy1 declined.");
+        }
+
+        [Test]
+        public void JsonModelConverter_Read_AllProxiesDecline_ModelHandles()
+        {
+            var mrwOptions = new ModelReaderWriterOptions("J");
+            var proxy1 = new ChainProxy(handleRead: false);
+            var proxy2 = new ChainProxy(handleRead: false);
+
+            mrwOptions.AddProxy<SimpleModel>(proxy1);
+            mrwOptions.AddProxy<SimpleModel>(proxy2);
+
+            var stjOptions = new JsonSerializerOptions();
+            stjOptions.Converters.Add(new JsonModelConverter(mrwOptions));
+
+            var result = JsonSerializer.Deserialize<SimpleModel>("{}", stjOptions);
+
+            Assert.IsNotNull(result);
+            Assert.IsFalse(proxy1.CreateWasCalled);
+            Assert.IsFalse(proxy2.CreateWasCalled);
+        }
+
+        [Test]
+        public void JsonModelConverter_Read_DiscriminatorPattern()
+        {
+            var mrwOptions = new ModelReaderWriterOptions("J");
+            var discriminatorProxy = new DiscriminatorProxy("special");
+            var defaultProxy = new ChainProxy(handleRead: true);
+
+            mrwOptions.AddProxy<SimpleModel>(discriminatorProxy);
+            mrwOptions.AddProxy<SimpleModel>(defaultProxy);
+
+            var stjOptions = new JsonSerializerOptions();
+            stjOptions.Converters.Add(new JsonModelConverter(mrwOptions));
+
+            // Discriminator matches — first proxy handles
+            var specialResult = JsonSerializer.Deserialize<SimpleModel>("{\"type\":\"special\"}", stjOptions);
+            Assert.IsNotNull(specialResult);
+            Assert.IsTrue(discriminatorProxy.CreateWasCalled);
+            Assert.IsFalse(defaultProxy.CreateWasCalled);
+
+            discriminatorProxy.Reset();
+            defaultProxy.Reset();
+
+            // Discriminator doesn't match — first declines, second handles
+            var normalResult = JsonSerializer.Deserialize<SimpleModel>("{\"type\":\"other\"}", stjOptions);
+            Assert.IsNotNull(normalResult);
+            Assert.IsFalse(discriminatorProxy.CreateWasCalled);
+            Assert.IsTrue(defaultProxy.CreateWasCalled);
+        }
+
+        [Test]
+        public void JsonModelConverter_Write_UsesChainCanHandle()
+        {
+            var mrwOptions = new ModelReaderWriterOptions("J");
+            var proxy1 = new SelectiveWriteProxy(canWrite: false); // declines
+            var proxy2 = new SelectiveWriteProxy(canWrite: true);  // handles
+
+            mrwOptions.AddProxy<SimpleModel>(proxy1);
+            mrwOptions.AddProxy<SimpleModel>(proxy2);
+
+            var stjOptions = new JsonSerializerOptions();
+            stjOptions.Converters.Add(new JsonModelConverter(mrwOptions));
+
+            var model = new SimpleModel();
+            string json = JsonSerializer.Serialize<IJsonModel<object>>((IJsonModel<object>)(object)model, stjOptions);
+
+            Assert.IsFalse(proxy1.WriteWasCalled,
+                "proxy1 should have declined via CanHandle(model) on the write path.");
+            Assert.IsTrue(proxy2.WriteWasCalled,
+                "proxy2 should have handled the write after proxy1 declined.");
+        }
+
+        #endregion
+
+        #region ResolveProxy write path with CanHandle declining
+
+        [Test]
+        public void ResolveProxy_Write_FirstDeclinesSecondHandles()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy1 = new SelectiveWriteProxy(canWrite: false);  // CanHandle(model) = false
+            var proxy2 = new SelectiveWriteProxy(canWrite: true);   // CanHandle(model) = true
+
+            options.AddProxy<SimpleModel>(proxy1);
+            options.AddProxy<SimpleModel>(proxy2);
+
+            var model = new SimpleModel();
+            var resolved = options.ResolveProxy<SimpleModel>((IPersistableModel<SimpleModel>)model);
+
+            Assert.AreSame(proxy2, resolved,
+                "ResolveProxy should skip proxy1 (CanHandle=false) and return proxy2.");
+        }
+
+        [Test]
+        public void ResolveProxy_Write_AllDecline_ReturnsSelf()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy1 = new SelectiveWriteProxy(canWrite: false);
+            var proxy2 = new SelectiveWriteProxy(canWrite: false);
+
+            options.AddProxy<SimpleModel>(proxy1);
+            options.AddProxy<SimpleModel>(proxy2);
+
+            var model = new SimpleModel();
+            var resolved = options.ResolveProxy<SimpleModel>((IPersistableModel<SimpleModel>)model);
+
+            Assert.AreSame(model, resolved,
+                "ResolveProxy should return the model itself when all proxies decline.");
+        }
+
+        [Test]
+        public void ResolveProxy_IJsonModel_FirstDeclinesSecondHandles()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy1 = new SelectiveWriteProxy(canWrite: false);
+            var proxy2 = new SelectiveWriteProxy(canWrite: true);
+
+            options.AddProxy<SimpleModel>(proxy1);
+            options.AddProxy<SimpleModel>(proxy2);
+
+            var model = new SimpleModel();
+            var resolved = options.ResolveProxy<SimpleModel>((IJsonModel<SimpleModel>)model);
+
+            Assert.AreSame(proxy2, resolved,
+                "IJsonModel ResolveProxy should skip proxy1 (CanHandle=false) and return proxy2.");
+        }
+
+        #endregion
+
+        #region Non-generic ReadWithChain (Type overload)
+
+        [Test]
+        public void ReadWithChain_NonGeneric_SecondProxyHandles()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy1 = new ChainProxy(handleRead: false);
+            var proxy2 = new ChainProxy(handleRead: true);
+
+            options.AddProxy<SimpleModel>(proxy1);
+            options.AddProxy<SimpleModel>(proxy2);
+
+            var model = new SimpleModel();
+            var jsonBytes = Text.Encoding.UTF8.GetBytes("{}");
+            var reader = new Utf8JsonReader(jsonBytes);
+            reader.Read();
+
+            var result = options.ReadWithChain(typeof(SimpleModel), (IJsonModel<object>)(object)model, ref reader);
+
+            Assert.IsNotNull(result);
+            Assert.IsFalse(proxy1.CreateWasCalled);
+            Assert.IsTrue(proxy2.CreateWasCalled);
+        }
+
+        [Test]
+        public void ReadWithChain_NonGeneric_AllDecline_ModelHandles()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy1 = new ChainProxy(handleRead: false);
+            var proxy2 = new ChainProxy(handleRead: false);
+
+            options.AddProxy<SimpleModel>(proxy1);
+            options.AddProxy<SimpleModel>(proxy2);
+
+            var model = new SimpleModel();
+            var jsonBytes = Text.Encoding.UTF8.GetBytes("{}");
+            var reader = new Utf8JsonReader(jsonBytes);
+            reader.Read();
+
+            var result = options.ReadWithChain(typeof(SimpleModel), (IJsonModel<object>)(object)model, ref reader);
+
+            Assert.IsNotNull(result);
+            Assert.IsFalse(proxy1.CreateWasCalled);
+            Assert.IsFalse(proxy2.CreateWasCalled);
+        }
+
+        #endregion
+
+        #region Collection read with chain
+
+        [Test]
+        public void CollectionRead_WithChain_PerElementDiscrimination()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var discriminatorProxy = new DiscriminatorProxy("special");
+            var defaultProxy = new ChainProxy(handleRead: true);
+
+            options.AddProxy<SimpleModel>(discriminatorProxy);
+            options.AddProxy<SimpleModel>(defaultProxy);
+
+            // Read a list where elements differ — the chain should route per-element
+            var json = "[{\"type\":\"special\"},{\"type\":\"other\"},{\"type\":\"special\"}]";
+            var result = ModelReaderWriter.Read<List<SimpleModel>>(BinaryData.FromString(json), options);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(3, result!.Count);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// A proxy that can be configured to accept or decline write via CanHandle(model).
+        /// Used to test the write-path chain-of-responsibility where first proxy declines.
+        /// </summary>
+        private class SelectiveWriteProxy : ModelProxy<SimpleModel>, IJsonModel<SimpleModel>
+        {
+            private readonly bool _canWrite;
+            public bool WriteWasCalled { get; private set; }
+
+            public SelectiveWriteProxy(bool canWrite)
+            {
+                _canWrite = canWrite;
+            }
+
+            public override bool CanHandle(SimpleModel model) => _canWrite;
+
+            void IJsonModel<SimpleModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                WriteWasCalled = true;
+                writer.WriteStartObject();
+                writer.WriteEndObject();
+            }
+
+            SimpleModel IJsonModel<SimpleModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            {
+                using var doc = JsonDocument.ParseValue(ref reader);
+                return new SimpleModel();
+            }
+
+            public override SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
+                => new SimpleModel();
+
+            public override BinaryData Write(ModelReaderWriterOptions options)
+            {
+                WriteWasCalled = true;
+                return BinaryData.FromString("{}");
+            }
+
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        }
+
         #endregion
     }
 }
