@@ -326,5 +326,32 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(signature.Parameters.Any(p => p.Type.Equals(typeof(WaitUntil))), Is.False,
                 "GetIfExistsAsync should not have a WaitUntil parameter even when Get is an LRO");
         }
+
+        [TestCase]
+        public void Verify_NonPageableList_DoesNotEmitEnumerableInterfaces()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceAndNonPageableList();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceCollectionClientProvider) as ResourceCollectionClientProvider;
+            Assert.That(resourceProvider, Is.Not.Null);
+
+            // Implements list must not include IEnumerable<T> / IAsyncEnumerable<T> because GetAll
+            // returns Response<TList> (a single-response wrapper), which is not iterable.
+            foreach (var implemented in resourceProvider!.Implements)
+            {
+                Assert.That(implemented.FrameworkType, Is.Not.EqualTo(typeof(IEnumerable<>)),
+                    "Resource collection should not implement IEnumerable<T> when GetAll returns Response<T>.");
+                Assert.That(implemented.FrameworkType, Is.Not.EqualTo(typeof(IAsyncEnumerable<>)),
+                    "Resource collection should not implement IAsyncEnumerable<T> when GetAll returns Response<T>.");
+            }
+
+            // The generator should also not emit any explicit interface GetEnumerator/GetAsyncEnumerator
+            // methods, since they would call GetAll().GetEnumerator() on a Response<T> and fail to compile.
+            var enumeratorMethods = resourceProvider.Methods
+                .Where(m => m.Signature.Name == "GetEnumerator" || m.Signature.Name == "GetAsyncEnumerator")
+                .ToList();
+            Assert.That(enumeratorMethods, Is.Empty,
+                "Resource collection should not emit GetEnumerator/GetAsyncEnumerator methods when GetAll returns Response<T>.");
+        }
     }
 }

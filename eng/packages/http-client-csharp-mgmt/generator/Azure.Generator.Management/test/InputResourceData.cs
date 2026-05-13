@@ -498,6 +498,72 @@ namespace Azure.Generator.Management.Tests.Common
         }
 
         /// <summary>
+        /// Creates a client with a resource whose List operation returns a non-paginated wrapper model
+        /// (i.e. <c>Response&lt;TList&gt;</c>) rather than a pageable collection. The wrapper model has a
+        /// <c>value</c> array property but is not itself an array type, so the generator falls back to
+        /// emitting a single-response operation for GetAll. The resource collection must not implement
+        /// IEnumerable/IAsyncEnumerable in this case, because <c>Response&lt;TList&gt;</c> is not enumerable.
+        /// </summary>
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResourceAndNonPageableList()
+        {
+            const string TestClientName = "TestClient";
+            const string ResourceModelName = "ResponseType";
+            var responseModel = InputFactory.Model(ResourceModelName,
+                        usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                        properties:
+                        [
+                            InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                        ],
+                        decorators: []);
+            var listResponseModel = InputFactory.Model("ResponseTypeList",
+                        usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                        properties:
+                        [
+                            InputFactory.Property("value", InputFactory.Array(responseModel)),
+                        ],
+                        decorators: []);
+            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
+            var listResponseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: listResponseModel);
+            var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
+
+            var subsIdOpParameter = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
+            var rgOpParameter = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
+            var testNameOpParameter = InputFactory.PathParameter("testName", InputPrimitiveType.String, isRequired: true);
+            var dataOpParameter = InputFactory.BodyParameter("data", responseModel, isRequired: true);
+            const string resourcePath = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
+            const string collectionPath = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests";
+            var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: resourcePath);
+            var createOperation = InputFactory.Operation(name: "createTest", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: resourcePath, httpMethod: "PUT");
+            var listOperation = InputFactory.Operation(name: "list", responses: [listResponseType], parameters: [subsIdOpParameter, rgOpParameter], path: collectionPath);
+
+            var subscriptionIdParameter = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
+            var resourceGroupParameter = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var dataParameter = InputFactory.MethodParameter("data", responseModel, location: InputRequestLocation.Body, isRequired: true);
+            var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            // Non-paging (basic) list method whose response body is a wrapper model rather than a list/array.
+            var listMethod = InputFactory.BasicServiceMethod("list", listOperation, parameters: [subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+
+            var resourceIdPattern = new RequestPathPattern(resourcePath);
+            var armProviderDecorator = BuildArmProviderSchema(responseModel, [
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.List, listMethod, new RequestPathPattern(listMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!)
+            ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [getMethod, createMethod, listMethod],
+                decorators: [armProviderDecorator],
+                crossLanguageDefinitionId: $"Test.{TestClientName}");
+
+            return (client, [responseModel, listResponseModel]);
+        }
+
+        /// <summary>
         /// Creates a parent resource with a nested child resource that has an extra path parameter.
         /// This tests that BuildGetChildResourceMethods correctly forwards path parameters
         /// to the child collection constructor and Get methods.

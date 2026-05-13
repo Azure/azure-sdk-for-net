@@ -198,7 +198,22 @@ namespace Azure.Generator.Management.Providers
 
         private bool ShouldSkipIEnumerableImplementation()
         {
-            return _getAllSyncMethodProvider is null || _getAllSyncMethodProvider.Signature.Parameters.Any(p => p.DefaultValue is null);
+            if (_getAllSyncMethodProvider is null || _getAllSyncMethodProvider.Signature.Parameters.Any(p => p.DefaultValue is null))
+            {
+                return true;
+            }
+
+            // If GetAll does not return a pageable result (e.g. it returns Response<T> for a single
+            // non-paginated list response that is not exposed as a list directly), we cannot generate
+            // the IEnumerable/IAsyncEnumerable boilerplate that calls GetAll().GetEnumerator().
+            if (_getAll is not null
+                && _getAll.InputMethod is not InputPagingServiceMethod
+                && _getAll.InputMethod.GetResponseBodyType() is { IsList: false })
+            {
+                return true;
+            }
+
+            return false;
         }
 
         protected override PropertyProvider[] BuildProperties()
