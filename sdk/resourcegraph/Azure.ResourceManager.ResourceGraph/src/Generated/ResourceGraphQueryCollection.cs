@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.ResourceGraph
     /// </summary>
     public partial class ResourceGraphQueryCollection : ArmCollection, IEnumerable<ResourceGraphQueryResource>, IAsyncEnumerable<ResourceGraphQueryResource>
     {
-        private readonly ClientDiagnostics _graphQueryResourcesClientDiagnostics;
-        private readonly GraphQueryResources _graphQueryResourcesRestClient;
+        private readonly ClientDiagnostics _graphQueryClientDiagnostics;
+        private readonly GraphQuery _graphQueryRestClient;
 
         /// <summary> Initializes a new instance of ResourceGraphQueryCollection for mocking. </summary>
         protected ResourceGraphQueryCollection()
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ResourceGraph
         internal ResourceGraphQueryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceGraphQueryResource.ResourceType, out string resourceGraphQueryApiVersion);
-            _graphQueryResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceGraph", ResourceGraphQueryResource.ResourceType.Namespace, Diagnostics);
-            _graphQueryResourcesRestClient = new GraphQueryResources(_graphQueryResourcesClientDiagnostics, Pipeline, Endpoint, resourceGraphQueryApiVersion ?? "2024-04-01");
+            _graphQueryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceGraph", ResourceGraphQueryResource.ResourceType.Namespace, Diagnostics);
+            _graphQueryRestClient = new GraphQuery(_graphQueryClientDiagnostics, Pipeline, Endpoint, resourceGraphQueryApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ResourceGraph
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ResourceGraph
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQueryResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, ResourceGraphQueryData.ToRequestContent(data), context);
+                HttpMessage message = _graphQueryRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, ResourceGraphQueryData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceGraphQueryData> response = Response.FromValue(ResourceGraphQueryData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ResourceGraph
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ResourceGraph
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQueryResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, ResourceGraphQueryData.ToRequestContent(data), context);
+                HttpMessage message = _graphQueryRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, ResourceGraphQueryData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceGraphQueryData> response = Response.FromValue(ResourceGraphQueryData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryCollection.Get");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryCollection.Get");
             scope.Start();
             try
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ResourceGraph
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQueryResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                HttpMessage message = _graphQueryRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceGraphQueryData> response = Response.FromValue(ResourceGraphQueryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryCollection.Get");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryCollection.Get");
             scope.Start();
             try
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ResourceGraph
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQueryResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                HttpMessage message = _graphQueryRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceGraphQueryData> response = Response.FromValue(ResourceGraphQueryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ResourceGraph
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new GraphQueryResourcesGetAllAsyncCollectionResultOfT(_graphQueryResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ResourceGraphQueryCollection.GetAll"), data => new ResourceGraphQueryResource(Client, data));
+            return new AsyncPageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new GraphQueryGetAllAsyncCollectionResultOfT(_graphQueryRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ResourceGraphQueryCollection.GetAll"), data => new ResourceGraphQueryResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ResourceGraph
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new GraphQueryResourcesGetAllCollectionResultOfT(_graphQueryResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ResourceGraphQueryCollection.GetAll"), data => new ResourceGraphQueryResource(Client, data));
+            return new PageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new GraphQueryGetAllCollectionResultOfT(_graphQueryRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ResourceGraphQueryCollection.GetAll"), data => new ResourceGraphQueryResource(Client, data));
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryCollection.Exists");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryCollection.Exists");
             scope.Start();
             try
             {
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ResourceGraph
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQueryResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                HttpMessage message = _graphQueryRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceGraphQueryData> response = default;
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryCollection.Exists");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryCollection.Exists");
             scope.Start();
             try
             {
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.ResourceGraph
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQueryResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                HttpMessage message = _graphQueryRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceGraphQueryData> response = default;
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryCollection.GetIfExists");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.ResourceGraph
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQueryResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                HttpMessage message = _graphQueryRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceGraphQueryData> response = default;
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryCollection.GetIfExists");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.ResourceGraph
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQueryResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                HttpMessage message = _graphQueryRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceGraphQueryData> response = default;

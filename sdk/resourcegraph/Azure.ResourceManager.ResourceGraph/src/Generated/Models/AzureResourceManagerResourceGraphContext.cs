@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.ResourceGraph
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(DateTimeInterval))]
     [ModelReaderWriterBuildable(typeof(Facet))]
     [ModelReaderWriterBuildable(typeof(FacetError))]
     [ModelReaderWriterBuildable(typeof(FacetErrorDetails))]
@@ -24,12 +25,23 @@ namespace Azure.ResourceManager.ResourceGraph
     [ModelReaderWriterBuildable(typeof(GraphQueryListResult))]
     [ModelReaderWriterBuildable(typeof(GraphQueryProperties))]
     [ModelReaderWriterBuildable(typeof(GraphQueryPropertiesUpdateParameters))]
+    [ModelReaderWriterBuildable(typeof(ResourceChangeData))]
+    [ModelReaderWriterBuildable(typeof(ResourceChangeDataAfterSnapshot))]
+    [ModelReaderWriterBuildable(typeof(ResourceChangeDataBeforeSnapshot))]
+    [ModelReaderWriterBuildable(typeof(ResourceChangeDetailsRequestParameters))]
+    [ModelReaderWriterBuildable(typeof(ResourceChangeList))]
+    [ModelReaderWriterBuildable(typeof(ResourceChangesRequestParameters))]
+    [ModelReaderWriterBuildable(typeof(ResourceChangesRequestParametersInterval))]
     [ModelReaderWriterBuildable(typeof(ResourceGraphQueryData))]
     [ModelReaderWriterBuildable(typeof(ResourceGraphQueryPatch))]
     [ModelReaderWriterBuildable(typeof(ResourceGraphQueryResource))]
+    [ModelReaderWriterBuildable(typeof(ResourcePropertyChange))]
     [ModelReaderWriterBuildable(typeof(ResourceQueryContent))]
     [ModelReaderWriterBuildable(typeof(ResourceQueryRequestOptions))]
     [ModelReaderWriterBuildable(typeof(ResourceQueryResult))]
+    [ModelReaderWriterBuildable(typeof(ResourcesHistoryRequest))]
+    [ModelReaderWriterBuildable(typeof(ResourcesHistoryRequestOptions))]
+    [ModelReaderWriterBuildable(typeof(ResourceSnapshotData))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownFacet))]
     public partial class AzureResourceManagerResourceGraphContext : ModelReaderWriterContext

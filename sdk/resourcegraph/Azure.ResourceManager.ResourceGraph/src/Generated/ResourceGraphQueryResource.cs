@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.ResourceGraph
     /// </summary>
     public partial class ResourceGraphQueryResource : ArmResource
     {
-        private readonly ClientDiagnostics _graphQueryResourcesClientDiagnostics;
-        private readonly GraphQueryResources _graphQueryResourcesRestClient;
+        private readonly ClientDiagnostics _graphQueryClientDiagnostics;
+        private readonly GraphQuery _graphQueryRestClient;
         private readonly ResourceGraphQueryData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ResourceGraph/queries";
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ResourceGraph
         internal ResourceGraphQueryResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string resourceGraphQueryApiVersion);
-            _graphQueryResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceGraph", ResourceType.Namespace, Diagnostics);
-            _graphQueryResourcesRestClient = new GraphQueryResources(_graphQueryResourcesClientDiagnostics, Pipeline, Endpoint, resourceGraphQueryApiVersion ?? "2024-04-01");
+            _graphQueryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceGraph", ResourceType.Namespace, Diagnostics);
+            _graphQueryRestClient = new GraphQuery(_graphQueryClientDiagnostics, Pipeline, Endpoint, resourceGraphQueryApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ResourceGraphQueryResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryResource.Get");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryResource.Get");
             scope.Start();
             try
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ResourceGraph
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQueryResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _graphQueryRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceGraphQueryData> response = Response.FromValue(ResourceGraphQueryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ResourceGraphQueryResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryResource.Get");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryResource.Get");
             scope.Start();
             try
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ResourceGraph
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQueryResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _graphQueryRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceGraphQueryData> response = Response.FromValue(ResourceGraphQueryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryResource.Update");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryResource.Update");
             scope.Start();
             try
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ResourceGraph
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQueryResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceGraphQueryPatch.ToRequestContent(patch), context);
+                HttpMessage message = _graphQueryRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceGraphQueryPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceGraphQueryData> response = Response.FromValue(ResourceGraphQueryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryResource.Update");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryResource.Update");
             scope.Start();
             try
             {
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ResourceGraph
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQueryResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceGraphQueryPatch.ToRequestContent(patch), context);
+                HttpMessage message = _graphQueryRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceGraphQueryPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceGraphQueryData> response = Response.FromValue(ResourceGraphQueryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryResource.Delete");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryResource.Delete");
             scope.Start();
             try
             {
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ResourceGraph
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQueryResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _graphQueryRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryResource.Delete");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryResource.Delete");
             scope.Start();
             try
             {
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ResourceGraph
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQueryResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _graphQueryRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.ResourceGraph
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryResource.AddTag");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryResource.AddTag");
             scope.Start();
             try
             {
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ResourceGraph
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _graphQueryResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _graphQueryRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ResourceGraphQueryData> response = Response.FromValue(ResourceGraphQueryData.FromResponse(result), result);
                     return Response.FromValue(new ResourceGraphQueryResource(Client, response.Value), response.GetRawResponse());
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.ResourceGraph
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryResource.AddTag");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryResource.AddTag");
             scope.Start();
             try
             {
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.ResourceGraph
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _graphQueryResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _graphQueryRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ResourceGraphQueryData> response = Response.FromValue(ResourceGraphQueryData.FromResponse(result), result);
                     return Response.FromValue(new ResourceGraphQueryResource(Client, response.Value), response.GetRawResponse());
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryResource.SetTags");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryResource.SetTags");
             scope.Start();
             try
             {
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.ResourceGraph
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _graphQueryResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _graphQueryRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ResourceGraphQueryData> response = Response.FromValue(ResourceGraphQueryData.FromResponse(result), result);
                     return Response.FromValue(new ResourceGraphQueryResource(Client, response.Value), response.GetRawResponse());
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryResource.SetTags");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryResource.SetTags");
             scope.Start();
             try
             {
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.ResourceGraph
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _graphQueryResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _graphQueryRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ResourceGraphQueryData> response = Response.FromValue(ResourceGraphQueryData.FromResponse(result), result);
                     return Response.FromValue(new ResourceGraphQueryResource(Client, response.Value), response.GetRawResponse());
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryResource.RemoveTag");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryResource.RemoveTag");
             scope.Start();
             try
             {
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.ResourceGraph
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _graphQueryResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _graphQueryRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ResourceGraphQueryData> response = Response.FromValue(ResourceGraphQueryData.FromResponse(result), result);
                     return Response.FromValue(new ResourceGraphQueryResource(Client, response.Value), response.GetRawResponse());
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _graphQueryResourcesClientDiagnostics.CreateScope("ResourceGraphQueryResource.RemoveTag");
+            using DiagnosticScope scope = _graphQueryClientDiagnostics.CreateScope("ResourceGraphQueryResource.RemoveTag");
             scope.Start();
             try
             {
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.ResourceGraph
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _graphQueryResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _graphQueryRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ResourceGraphQueryData> response = Response.FromValue(ResourceGraphQueryData.FromResponse(result), result);
                     return Response.FromValue(new ResourceGraphQueryResource(Client, response.Value), response.GetRawResponse());

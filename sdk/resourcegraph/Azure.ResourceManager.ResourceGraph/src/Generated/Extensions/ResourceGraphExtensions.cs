@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -154,6 +155,80 @@ namespace Azure.ResourceManager.ResourceGraph
         }
 
         /// <summary>
+        /// List changes to a resource for a given time interval.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphTenantResource.ResourceChangesAsync(ResourceChangesRequestParameters, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<ResourceChangeList>> ResourceChangesAsync(this TenantResource tenantResource, ResourceChangesRequestParameters content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableResourceGraphTenantResource(tenantResource).ResourceChangesAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List changes to a resource for a given time interval.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphTenantResource.ResourceChanges(ResourceChangesRequestParameters, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<ResourceChangeList> ResourceChanges(this TenantResource tenantResource, ResourceChangesRequestParameters content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableResourceGraphTenantResource(tenantResource).ResourceChanges(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get resource change details.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphTenantResource.ResourceChangeDetailsAsync(ResourceChangeDetailsRequestParameters, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ResourceChangeData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourceChangeData> ResourceChangeDetailsAsync(this TenantResource tenantResource, ResourceChangeDetailsRequestParameters content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableResourceGraphTenantResource(tenantResource).ResourceChangeDetailsAsync(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get resource change details.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphTenantResource.ResourceChangeDetails(ResourceChangeDetailsRequestParameters, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ResourceChangeData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourceChangeData> ResourceChangeDetails(this TenantResource tenantResource, ResourceChangeDetailsRequestParameters content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableResourceGraphTenantResource(tenantResource).ResourceChangeDetails(content, cancellationToken);
+        }
+
+        /// <summary>
         /// Queries the resources managed by Azure Resource Manager for scopes specified in the request.
         /// <item>
         /// <term> Mocking. </term>
@@ -187,6 +262,42 @@ namespace Azure.ResourceManager.ResourceGraph
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableResourceGraphTenantResource(tenantResource).GetResources(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all snapshots of a resource for a given time interval.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphTenantResource.ResourcesHistoryAsync(ResourcesHistoryRequest, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<IDictionary<string, BinaryData>>> ResourcesHistoryAsync(this TenantResource tenantResource, ResourcesHistoryRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableResourceGraphTenantResource(tenantResource).ResourcesHistoryAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List all snapshots of a resource for a given time interval.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceGraphTenantResource.ResourcesHistory(ResourcesHistoryRequest, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<IDictionary<string, BinaryData>> ResourcesHistory(this TenantResource tenantResource, ResourcesHistoryRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableResourceGraphTenantResource(tenantResource).ResourcesHistory(content, cancellationToken);
         }
     }
 }

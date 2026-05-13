@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <param name="startOn"> The inclusive/closed start of the time interval. </param>
         /// <param name="endOn"> The exclusive/open end of the time interval. </param>
         /// <returns> A new <see cref="Models.DateTimeInterval"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DateTimeInterval DateTimeInterval(DateTimeOffset startOn = default, DateTimeOffset endOn = default)
         {
             return new DateTimeInterval(startOn, endOn);
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <param name="skipToken"> Continuation token for pagination. </param>
         /// <param name="resultFormat"> Defines in which format query result returned. </param>
         /// <returns> A new <see cref="Models.ResourcesHistoryRequestOptions"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourcesHistoryRequestOptions ResourcesHistoryRequestOptions(DateTimeInterval interval = null, int? top = default, int? skip = default, string skipToken = null, ResultFormat? resultFormat = default)
         {
             return new ResourcesHistoryRequestOptions(interval, top, skip, skipToken, resultFormat, serializedAdditionalRawData: null);

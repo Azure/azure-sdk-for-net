@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.ResourceGraph
 {
-    internal partial class GraphQueryResources
+    internal partial class GraphQuery
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of GraphQueryResources for mocking. </summary>
-        protected GraphQueryResources()
+        /// <summary> Initializes a new instance of GraphQuery for mocking. </summary>
+        protected GraphQuery()
         {
         }
 
-        /// <summary> Initializes a new instance of GraphQueryResources. </summary>
+        /// <summary> Initializes a new instance of GraphQuery. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal GraphQueryResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal GraphQuery(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
