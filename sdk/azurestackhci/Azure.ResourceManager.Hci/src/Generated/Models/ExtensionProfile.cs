@@ -12,7 +12,7 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Extensions details for edge device. </summary>
-    internal partial class ExtensionProfile
+    public partial class ExtensionProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
