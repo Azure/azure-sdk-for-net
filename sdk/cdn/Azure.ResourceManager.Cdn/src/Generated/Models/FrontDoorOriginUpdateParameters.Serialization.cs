@@ -10,66 +10,66 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.BillingBenefits;
+using Azure.ResourceManager.Cdn;
 
-namespace Azure.ResourceManager.BillingBenefits.Models
+namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Savings plan patch request. </summary>
-    public partial class BillingBenefitsSavingsPlanPatch : IJsonModel<BillingBenefitsSavingsPlanPatch>
+    /// <summary> AFDOrigin properties needed for origin update. </summary>
+    public partial class FrontDoorOriginUpdateParameters : IJsonModel<FrontDoorOriginUpdateParameters>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BillingBenefitsSavingsPlanPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FrontDoorOriginUpdateParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsSavingsPlanPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBillingBenefitsSavingsPlanPatch(document.RootElement, options);
+                        return DeserializeFrontDoorOriginUpdateParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorOriginUpdateParameters)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsSavingsPlanPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingBenefitsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorOriginUpdateParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BillingBenefitsSavingsPlanPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FrontDoorOriginUpdateParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BillingBenefitsSavingsPlanPatch IPersistableModel<BillingBenefitsSavingsPlanPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FrontDoorOriginUpdateParameters IPersistableModel<FrontDoorOriginUpdateParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BillingBenefitsSavingsPlanPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FrontDoorOriginUpdateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="billingBenefitsSavingsPlanPatch"> The <see cref="BillingBenefitsSavingsPlanPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(BillingBenefitsSavingsPlanPatch billingBenefitsSavingsPlanPatch)
+        /// <param name="frontDoorOriginUpdateParameters"> The <see cref="FrontDoorOriginUpdateParameters"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(FrontDoorOriginUpdateParameters frontDoorOriginUpdateParameters)
         {
-            if (billingBenefitsSavingsPlanPatch == null)
+            if (frontDoorOriginUpdateParameters == null)
             {
                 return null;
             }
-            return RequestContent.Create(billingBenefitsSavingsPlanPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(frontDoorOriginUpdateParameters, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BillingBenefitsSavingsPlanPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FrontDoorOriginUpdateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsSavingsPlanPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorOriginUpdateParameters)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Properties))
             {
@@ -109,30 +109,30 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BillingBenefitsSavingsPlanPatch IJsonModel<BillingBenefitsSavingsPlanPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FrontDoorOriginUpdateParameters IJsonModel<FrontDoorOriginUpdateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BillingBenefitsSavingsPlanPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FrontDoorOriginUpdateParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsSavingsPlanPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorOriginUpdateParameters)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBillingBenefitsSavingsPlanPatch(document.RootElement, options);
+            return DeserializeFrontDoorOriginUpdateParameters(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BillingBenefitsSavingsPlanPatch DeserializeBillingBenefitsSavingsPlanPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static FrontDoorOriginUpdateParameters DeserializeFrontDoorOriginUpdateParameters(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            BillingBenefitsSavingsPlanPatchProperties properties = default;
+            FrontDoorOriginUpdatePropertiesParameters properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    properties = BillingBenefitsSavingsPlanPatchProperties.DeserializeBillingBenefitsSavingsPlanPatchProperties(prop.Value, options);
+                    properties = FrontDoorOriginUpdatePropertiesParameters.DeserializeFrontDoorOriginUpdatePropertiesParameters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BillingBenefitsSavingsPlanPatch(properties, additionalBinaryDataProperties);
+            return new FrontDoorOriginUpdateParameters(properties, additionalBinaryDataProperties);
         }
     }
 }
