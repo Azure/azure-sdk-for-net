@@ -1771,329 +1771,6 @@ namespace Azure.Storage.Blobs.Test
             await blob.DownloadToAsync(resultStream, options);
         }
 
-        [LiveOnly]
-        [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task DownloadToAsync_EnableDataLocality_WithRequestAsserts()
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            long size = 20 * Constants.MB;
-            var data = GetRandomBuffer(size);
-            int blockSize = 4 * Constants.MB;
-            var blockIds = new List<string>();
-            for (int offset = 0; offset < data.Length; offset += blockSize)
-            {
-                int count = Math.Min(blockSize, data.Length - offset);
-                string blockId = Convert.ToBase64String(
-                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
-                blockIds.Add(blockId);
-                using var blockStream = new MemoryStream(data, offset, count);
-                await blob.StageBlockAsync(blockId, blockStream);
-            }
-            await blob.CommitBlockListAsync(blockIds);
-
-            // Add a tracking policy that sits after DataLocalityPolicy in the pipeline
-            // to capture the rewritten host/port and Host header on each request.
-            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
-            BlobClientOptions options = GetOptions();
-            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
-
-            var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
-            BlockBlobClient downloadBlob = InstrumentClient(new BlockBlobClient(blob.Uri, credential, options));
-
-            string originalHost = blob.Uri.Host;
-
-            using (var resultStream = new MemoryStream())
-            {
-                BlobDownloadToOptions downloadOptions = new()
-                {
-                    EnableDataLocality = true,
-                    TransferOptions = new StorageTransferOptions
-                    {
-                        MaximumConcurrency = 10,
-                        InitialTransferSize = 3 * Constants.MB,
-                        MaximumTransferSize = 5 * Constants.MB
-                    },
-                };
-                await downloadBlob.DownloadToAsync(resultStream, downloadOptions);
-                Assert.AreEqual(data.Length, resultStream.Length);
-                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
-            }
-
-            // Filter to requests where DataLocalityPolicy rewrote the host
-            // (indicated by the presence of a Host header).
-            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests =
-                trackingPolicy.TrackedRequests.Where(r => r.HasHostHeader).ToList();
-
-            // When the service returns a download hint, subsequent chunk requests
-            // should be rewritten. Given 3MB of initial transfer size and 5MB of max
-            // transfer size, the 20MB blob should be downloaded in 1 + 4 subsequent
-            // chunks, which should be 4 rewrites.
-            Assert.AreEqual(4, rewrittenRequests.Count,
-                "Expected DataLocalityPolicy to rewrite the host on subsequent chunk requests.");
-
-            foreach (DataLocalityTrackingPolicy.RequestInfo req in rewrittenRequests)
-            {
-                // The URI host and port should have been rewritten to the layout endpoint
-                Assert.AreNotEqual(originalHost, req.RequestHost,
-                    $"Request URI host should be rewritten to layout endpoint, not '{originalHost}'");
-                Assert.Greater(req.RequestPort, 0,
-                    "Request URI port should be set by DataLocalityPolicy");
-
-                // The Host header must preserve the original host
-                Assert.AreEqual(originalHost, req.HostHeaderValue,
-                    $"Host header should be the original host '{originalHost}', not the layout endpoint");
-                Assert.AreNotEqual(req.RequestHost, req.HostHeaderValue,
-                    "Host header should differ from the rewritten URI host");
-            }
-        }
-
-        [LiveOnly]
-        [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task DownloadStreamingAsync_LayoutEndpoint_FromGetLayout()
-        {
-            // This is the customer-facing feature for Data Locality:
-            //   1. Calls GetLayoutAsync,
-            //   2. Picks the endpoint whose layout range covers the offset they
-            //      want from the returned BlobLayoutInfo pages,
-            //   3. Passes it through BlobDownloadOptions.LayoutEndpoint to
-            //      DownloadStreamingAsync.
-            // We verify the same on-the-wire effect: DataLocalityPolicy
-            // rewrites the URI host/port while preserving the original Host
-            // header for authentication.
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange - upload a blob large enough that the service is willing
-            // to return locality information.
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            long size = 20 * Constants.MB;
-            var data = GetRandomBuffer(size);
-            int blockSize = 4 * Constants.MB;
-            var blockIds = new List<string>();
-            for (int offset = 0; offset < data.Length; offset += blockSize)
-            {
-                int count = Math.Min(blockSize, data.Length - offset);
-                string blockId = Convert.ToBase64String(
-                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
-                blockIds.Add(blockId);
-                using var blockStream = new MemoryStream(data, offset, count);
-                await blob.StageBlockAsync(blockId, blockStream);
-            }
-            await blob.CommitBlockListAsync(blockIds);
-
-            // Build a tracking-instrumented client so we can observe what
-            // DataLocalityPolicy did to the outgoing request.
-            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
-            BlobClientOptions options = GetOptions();
-            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
-
-            var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
-            BlockBlobClient downloadBlob = InstrumentClient(new BlockBlobClient(blob.Uri, credential, options));
-
-            string originalHost = blob.Uri.Host;
-            int downloadOffset = 0;
-            int downloadLength = 4 * Constants.MB;
-
-            // Act - customer code: enumerate layout pages and pick the endpoint
-            // whose range covers downloadOffset, then route a single-shot
-            // download through it.
-            string LayoutEndpoint = null;
-            await foreach (BlobLayoutInfo page in downloadBlob.GetLayoutAsync())
-            {
-                BlobLayoutRangesRangeItem coveringRange = page.Ranges?.Range
-                    ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
-                if (coveringRange == null)
-                {
-                    continue;
-                }
-
-                LayoutEndpoint = page.Endpoints?.Endpoint
-                    ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
-                if (LayoutEndpoint != null)
-                {
-                    break;
-                }
-            }
-
-            Assert.IsNotNull(
-                LayoutEndpoint,
-                "Service should return a layout entry covering offset 0 for a 20 MB blob.");
-
-            BlobDownloadOptions downloadOptions = new()
-            {
-                Range = new HttpRange(downloadOffset, downloadLength),
-                LayoutEndpoint = LayoutEndpoint,
-            };
-
-            int rewrittenBefore = trackingPolicy.TrackedRequests.Count(r => r.HasHostHeader);
-            Response<BlobDownloadStreamingResult> response =
-                await downloadBlob.DownloadStreamingAsync(downloadOptions);
-
-            // Drain so we exercise the response body too.
-            using (var resultStream = new MemoryStream())
-            {
-                await response.Value.Content.CopyToAsync(resultStream);
-                Assert.AreEqual(downloadLength, resultStream.Length);
-                TestHelper.AssertSequenceEqual(
-                    new ArraySegment<byte>(data, downloadOffset, downloadLength).ToArray(),
-                    resultStream.ToArray());
-            }
-
-            // Assert - exactly one new request was rewritten by DataLocalityPolicy
-            // (the single-shot download issued above), and that rewrite matches
-            // the endpoint the customer supplied.
-            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests = trackingPolicy.TrackedRequests
-                .Where(r => r.HasHostHeader)
-                .Skip(rewrittenBefore)
-                .ToList();
-
-            Assert.AreEqual(
-                1,
-                rewrittenRequests.Count,
-                "Expected exactly one DownloadStreaming request to be rewritten by DataLocalityPolicy.");
-
-            DataLocalityTrackingPolicy.RequestInfo rewritten = rewrittenRequests[0];
-
-            string expectedHost = LayoutEndpoint.Split(':')[0];
-
-            Assert.Greater(
-                rewritten.RequestPort,
-                0,
-                "Request URI port should be set by DataLocalityPolicy.");
-            Assert.AreEqual(
-                originalHost,
-                rewritten.HostHeaderValue,
-                "Host header should preserve the original host for authentication.");
-            Assert.AreNotEqual(
-                rewritten.RequestHost,
-                rewritten.HostHeaderValue,
-                "Host header should differ from the rewritten URI host.");
-        }
-
-        [LiveOnly]
-        [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task DownloadContentAsync_LayoutEndpoint_FromGetLayout()
-        {
-            // This is the customer-facing feature for Data Locality:
-            //   1. Calls GetLayoutAsync,
-            //   2. Picks the endpoint whose layout range covers the offset they
-            //      want from the returned BlobLayoutInfo pages,
-            //   3. Passes it through BlobDownloadOptions.LayoutEndpoint to
-            //      DownloadContentAsync.
-            // We verify the same on-the-wire effect: DataLocalityPolicy
-            // rewrites the URI host/port while preserving the original Host
-            // header for authentication.
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange - upload a blob large enough that the service is willing
-            // to return locality information.
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            long size = 20 * Constants.MB;
-            var data = GetRandomBuffer(size);
-            int blockSize = 4 * Constants.MB;
-            var blockIds = new List<string>();
-            for (int offset = 0; offset < data.Length; offset += blockSize)
-            {
-                int count = Math.Min(blockSize, data.Length - offset);
-                string blockId = Convert.ToBase64String(
-                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
-                blockIds.Add(blockId);
-                using var blockStream = new MemoryStream(data, offset, count);
-                await blob.StageBlockAsync(blockId, blockStream);
-            }
-            await blob.CommitBlockListAsync(blockIds);
-
-            // Build a tracking-instrumented client so we can observe what
-            // DataLocalityPolicy did to the outgoing request.
-            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
-            BlobClientOptions options = GetOptions();
-            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
-
-            var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
-            BlockBlobClient downloadBlob = InstrumentClient(new BlockBlobClient(blob.Uri, credential, options));
-
-            string originalHost = blob.Uri.Host;
-            int downloadOffset = 0;
-            int downloadLength = 4 * Constants.MB;
-
-            // Act - customer code: enumerate layout pages and pick the endpoint
-            // whose range covers downloadOffset, then route a single-shot
-            // download through it.
-            string LayoutEndpoint = null;
-            await foreach (BlobLayoutInfo page in downloadBlob.GetLayoutAsync())
-            {
-                BlobLayoutRangesRangeItem coveringRange = page.Ranges?.Range
-                    ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
-                if (coveringRange == null)
-                {
-                    continue;
-                }
-
-                LayoutEndpoint = page.Endpoints?.Endpoint
-                    ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
-                if (LayoutEndpoint != null)
-                {
-                    break;
-                }
-            }
-
-            Assert.IsNotNull(
-                LayoutEndpoint,
-                "Service should return a layout entry covering offset 0 for a 20 MB blob.");
-
-            BlobDownloadOptions downloadOptions = new()
-            {
-                Range = new HttpRange(downloadOffset, downloadLength),
-                LayoutEndpoint = LayoutEndpoint,
-            };
-
-            int rewrittenBefore = trackingPolicy.TrackedRequests.Count(r => r.HasHostHeader);
-            Response<BlobDownloadResult> response =
-                await downloadBlob.DownloadContentAsync(downloadOptions);
-
-            // Verify the response body matches the requested range.
-            byte[] responseBytes = response.Value.Content.ToArray();
-            Assert.AreEqual(downloadLength, responseBytes.Length);
-            TestHelper.AssertSequenceEqual(
-                new ArraySegment<byte>(data, downloadOffset, downloadLength).ToArray(),
-                responseBytes);
-
-            // Assert - exactly one new request was rewritten by DataLocalityPolicy
-            // (the single-shot download issued above), and that rewrite matches
-            // the endpoint the customer supplied.
-            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests = trackingPolicy.TrackedRequests
-                .Where(r => r.HasHostHeader)
-                .Skip(rewrittenBefore)
-                .ToList();
-
-            Assert.AreEqual(
-                1,
-                rewrittenRequests.Count,
-                "Expected exactly one DownloadContent request to be rewritten by DataLocalityPolicy.");
-
-            DataLocalityTrackingPolicy.RequestInfo rewritten = rewrittenRequests[0];
-
-            string expectedHost = LayoutEndpoint.Split(':')[0];
-
-            Assert.Greater(
-                rewritten.RequestPort,
-                0,
-                "Request URI port should be set by DataLocalityPolicy.");
-            Assert.AreEqual(
-                originalHost,
-                rewritten.HostHeaderValue,
-                "Host header should preserve the original host for authentication.");
-            Assert.AreNotEqual(
-                rewritten.RequestHost,
-                rewritten.HostHeaderValue,
-                "Host header should differ from the rewritten URI host.");
-        }
-
         [RecordedTest]
         [Ignore("Don't want to record 300 MB of data in the tests")]
         public async Task DownloadToAsync_LargeStream()
@@ -9498,6 +9175,773 @@ namespace Azure.Storage.Blobs.Test
         }
         #endregion
 
+        #region DataLocalityTests
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task DownloadToAsync_EnableDataLocality_WithRequestAsserts()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            // Add a tracking policy that sits after DataLocalityPolicy in the pipeline
+            // to capture the rewritten host/port and Host header on each request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            BlobClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            BlockBlobClient downloadBlob = InstrumentClient(new BlockBlobClient(blob.Uri, credential, options));
+
+            string originalHost = blob.Uri.Host;
+
+            using (var resultStream = new MemoryStream())
+            {
+                BlobDownloadToOptions downloadOptions = new()
+                {
+                    EnableDataLocality = true,
+                    TransferOptions = new StorageTransferOptions
+                    {
+                        MaximumConcurrency = 10,
+                        InitialTransferSize = 3 * Constants.MB,
+                        MaximumTransferSize = 5 * Constants.MB
+                    },
+                };
+                await downloadBlob.DownloadToAsync(resultStream, downloadOptions);
+                Assert.AreEqual(data.Length, resultStream.Length);
+                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+            }
+
+            // Filter to requests where DataLocalityPolicy rewrote the host
+            // (indicated by the presence of a Host header).
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests =
+                trackingPolicy.TrackedRequests.Where(r => r.HasHostHeader).ToList();
+
+            // When the service returns a download hint, subsequent chunk requests
+            // should be rewritten. Given 3MB of initial transfer size and 5MB of max
+            // transfer size, the 20MB blob should be downloaded in 1 + 4 subsequent
+            // chunks, which should be 4 rewrites.
+            Assert.AreEqual(4, rewrittenRequests.Count,
+                "Expected DataLocalityPolicy to rewrite the host on subsequent chunk requests.");
+
+            foreach (DataLocalityTrackingPolicy.RequestInfo req in rewrittenRequests)
+            {
+                // The URI host and port should have been rewritten to the layout endpoint
+                Assert.AreNotEqual(originalHost, req.RequestHost,
+                    $"Request URI host should be rewritten to layout endpoint, not '{originalHost}'");
+                Assert.Greater(req.RequestPort, 0,
+                    "Request URI port should be set by DataLocalityPolicy");
+
+                // The Host header must preserve the original host
+                Assert.AreEqual(originalHost, req.HostHeaderValue,
+                    $"Host header should be the original host '{originalHost}', not the layout endpoint");
+                Assert.AreNotEqual(req.RequestHost, req.HostHeaderValue,
+                    "Host header should differ from the rewritten URI host");
+            }
+        }
+
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task OpenReadAsync_EnableDataLocality_WithRequestAsserts()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            // Add a tracking policy that sits after DataLocalityPolicy in the pipeline
+            // to capture the rewritten host/port and Host header on each request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            BlobClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            BlockBlobClient downloadBlob = InstrumentClient(new BlockBlobClient(blob.Uri, credential, options));
+
+            string originalHost = blob.Uri.Host;
+
+            // Use a 5 MB buffer so a 20 MB blob requires 4 buffer fills total,
+            // all of which should be routed to layout endpoints because the
+            // layout cache is built upfront when EnableDataLocality is true.
+            int bufferSize = 5 * Constants.MB;
+            BlobOpenReadOptions readOptions = new(allowModifications: false)
+            {
+                EnableDataLocality = true,
+                BufferSize = bufferSize,
+            };
+
+            using (var resultStream = new MemoryStream())
+            {
+                using Stream readStream = await downloadBlob.OpenReadAsync(readOptions);
+                await readStream.CopyToAsync(resultStream);
+                Assert.AreEqual(data.Length, resultStream.Length);
+                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+            }
+
+            // Filter to requests where DataLocalityPolicy rewrote the host
+            // (indicated by the presence of a Host header).
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests =
+                trackingPolicy.TrackedRequests.Where(r => r.HasHostHeader).ToList();
+
+            // With EnableDataLocality, the layout cache is constructed upfront,
+            // so every buffer-fill request should be routed to a layout endpoint.
+            // With a 5 MB buffer and a 20 MB blob, OpenRead issues 4 range downloads,
+            // all of which should be rewritten.
+            Assert.AreEqual(4, rewrittenRequests.Count,
+                "Expected DataLocalityPolicy to rewrite the host on every buffer-fill request.");
+
+            foreach (DataLocalityTrackingPolicy.RequestInfo req in rewrittenRequests)
+            {
+                // The URI host and port should have been rewritten to the layout endpoint
+                Assert.AreNotEqual(originalHost, req.RequestHost,
+                    $"Request URI host should be rewritten to layout endpoint, not '{originalHost}'");
+                Assert.Greater(req.RequestPort, 0,
+                    "Request URI port should be set by DataLocalityPolicy");
+
+                // The Host header must preserve the original host
+                Assert.AreEqual(originalHost, req.HostHeaderValue,
+                    $"Host header should be the original host '{originalHost}', not the layout endpoint");
+                Assert.AreNotEqual(req.RequestHost, req.HostHeaderValue,
+                    "Host header should differ from the rewritten URI host");
+            }
+        }
+
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task OpenReadAsync_EnableDataLocality_WithPosition_WithRequestAsserts()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            // Add a tracking policy that sits after DataLocalityPolicy in the pipeline
+            // to capture the rewritten host/port, Host header, and range on each request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            BlobClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            BlockBlobClient downloadBlob = InstrumentClient(new BlockBlobClient(blob.Uri, credential, options));
+
+            string originalHost = blob.Uri.Host;
+
+            // With a 5 MB buffer and 20 MB blob, opening at 8 MB leaves 12 MB to download
+            // ⇒ 3 buffer-fill requests instead of 4. The first request's range will
+            // start at exactly the user's Position, and no request may start earlier.
+            long position = 8 * Constants.MB;
+            int bufferSize = 5 * Constants.MB;
+            BlobOpenReadOptions readOptions = new(allowModifications: false)
+            {
+                EnableDataLocality = true,
+                BufferSize = bufferSize,
+                Position = position,
+            };
+
+            using (var resultStream = new MemoryStream())
+            {
+                using Stream readStream = await downloadBlob.OpenReadAsync(readOptions);
+                await readStream.CopyToAsync(resultStream);
+
+                // Stream length reflects the full blob, but only the bytes from
+                // `position` onward should have been delivered to the caller.
+                Assert.AreEqual(data.Length, readStream.Length);
+                Assert.AreEqual(data.Length - position, resultStream.Length);
+
+                byte[] expected = new byte[data.Length - position];
+                Array.Copy(data, position, expected, 0, expected.Length);
+                TestHelper.AssertSequenceEqual(expected, resultStream.ToArray());
+            }
+
+            // Filter to requests where DataLocalityPolicy rewrote the host
+            // (indicated by the presence of a Host header).
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests =
+                trackingPolicy.TrackedRequests.Where(r => r.HasHostHeader).ToList();
+
+            // With EnableDataLocality, every buffer-fill request should be rewritten.
+            // Opening at 8 MB into a 20 MB blob with a 5 MB buffer ⇒ 3 buffer fills.
+            Assert.AreEqual(3, rewrittenRequests.Count,
+                "Expected DataLocalityPolicy to rewrite the host on every buffer-fill request when opening at a non-zero Position.");
+
+            foreach (DataLocalityTrackingPolicy.RequestInfo req in rewrittenRequests)
+            {
+                // The URI host and port should have been rewritten to the layout endpoint.
+                Assert.AreNotEqual(originalHost, req.RequestHost,
+                    $"Request URI host should be rewritten to layout endpoint, not '{originalHost}'");
+                Assert.Greater(req.RequestPort, 0,
+                    "Request URI port should be set by DataLocalityPolicy");
+
+                // The Host header must preserve the original host.
+                Assert.AreEqual(originalHost, req.HostHeaderValue,
+                    $"Host header should be the original host '{originalHost}', not the layout endpoint");
+                Assert.AreNotEqual(req.RequestHost, req.HostHeaderValue,
+                    "Host header should differ from the rewritten URI host");
+
+                // The position-respecting invariant: no buffer-fill request may
+                // start before the caller's Position.
+                long? rangeStart = req.RangeStartOffset;
+                Assert.IsNotNull(rangeStart,
+                    "Buffer-fill requests should carry a range header; OpenRead should never request the entire blob.");
+                Assert.GreaterOrEqual(rangeStart.Value, position,
+                    $"Buffer-fill request started at offset {rangeStart.Value}, which is before the caller's Position {position}.");
+            }
+
+            // The very first buffer-fill must start exactly at the user's Position.
+            // (Subsequent fills will be at position + bufferSize, position + 2*bufferSize, ...)
+            Assert.AreEqual(position, rewrittenRequests[0].RangeStartOffset,
+                "First buffer-fill request should start exactly at the caller's Position.");
+        }
+
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task DownloadStreamingAsync_LayoutEndpoint_FromGetLayout()
+        {
+            // This is the customer-facing feature for Data Locality:
+            //   1. Calls GetLayoutAsync,
+            //   2. Picks the endpoint whose layout range covers the offset they
+            //      want from the returned BlobLayoutInfo pages,
+            //   3. Passes it through BlobDownloadOptions.LayoutEndpoint to
+            //      DownloadStreamingAsync.
+            // We verify the same on-the-wire effect: DataLocalityPolicy
+            // rewrites the URI host/port while preserving the original Host
+            // header for authentication.
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange - upload a blob large enough that the service is willing
+            // to return locality information.
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            // Build a tracking-instrumented client so we can observe what
+            // DataLocalityPolicy did to the outgoing request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            BlobClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            BlockBlobClient downloadBlob = InstrumentClient(new BlockBlobClient(blob.Uri, credential, options));
+
+            string originalHost = blob.Uri.Host;
+            int downloadOffset = 0;
+            int downloadLength = 4 * Constants.MB;
+
+            // Act - customer code: enumerate layout pages and pick the endpoint
+            // whose range covers downloadOffset, then route a single-shot
+            // download through it.
+            string layoutEndpoint = null;
+            await foreach (BlobLayoutInfo page in downloadBlob.GetLayoutAsync())
+            {
+                BlobLayoutRangesRangeItem coveringRange = page.Ranges?.Range
+                    ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
+                if (coveringRange == null)
+                {
+                    continue;
+                }
+
+                layoutEndpoint = page.Endpoints?.Endpoint
+                    ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
+                if (layoutEndpoint != null)
+                {
+                    break;
+                }
+            }
+
+            Assert.IsNotNull(
+                layoutEndpoint,
+                "Service should return a layout entry covering offset 0 for a 20 MB blob.");
+
+            BlobDownloadOptions downloadOptions = new()
+            {
+                Range = new HttpRange(downloadOffset, downloadLength),
+                LayoutEndpoint = layoutEndpoint,
+            };
+
+            int rewrittenBefore = trackingPolicy.TrackedRequests.Count(r => r.HasHostHeader);
+            Response<BlobDownloadStreamingResult> response =
+                await downloadBlob.DownloadStreamingAsync(downloadOptions);
+
+            // Drain so we exercise the response body too.
+            using (var resultStream = new MemoryStream())
+            {
+                await response.Value.Content.CopyToAsync(resultStream);
+                Assert.AreEqual(downloadLength, resultStream.Length);
+                TestHelper.AssertSequenceEqual(
+                    new ArraySegment<byte>(data, downloadOffset, downloadLength).ToArray(),
+                    resultStream.ToArray());
+            }
+
+            // Assert - exactly one new request was rewritten by DataLocalityPolicy
+            // (the single-shot download issued above), and that rewrite matches
+            // the endpoint the customer supplied.
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests = trackingPolicy.TrackedRequests
+                .Where(r => r.HasHostHeader)
+                .Skip(rewrittenBefore)
+                .ToList();
+
+            Assert.AreEqual(
+                1,
+                rewrittenRequests.Count,
+                "Expected exactly one DownloadStreaming request to be rewritten by DataLocalityPolicy.");
+
+            DataLocalityTrackingPolicy.RequestInfo rewritten = rewrittenRequests[0];
+
+            string expectedHost = layoutEndpoint.Split(':')[0];
+
+            Assert.Greater(
+                rewritten.RequestPort,
+                0,
+                "Request URI port should be set by DataLocalityPolicy.");
+            Assert.AreEqual(
+                originalHost,
+                rewritten.HostHeaderValue,
+                "Host header should preserve the original host for authentication.");
+            Assert.AreNotEqual(
+                rewritten.RequestHost,
+                rewritten.HostHeaderValue,
+                "Host header should differ from the rewritten URI host.");
+        }
+
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task DownloadStreamingAsync_LayoutEndpoint_FromGetLayout_WithRange()
+        {
+            // Verifies two things on top of the baseline:
+            //   1. The customer endpoint-selection loop still works for a mid-blob
+            //      offset (not just offset 0, which the first segment always covers).
+            //   2. The on-the-wire range header actually carries the requested offset,
+            //      so the rewritten layout-endpoint request is fetching the right bytes.
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange - upload a blob large enough that the service is willing
+            // to return locality information.
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            // Build a tracking-instrumented client so we can observe what
+            // DataLocalityPolicy did to the outgoing request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            BlobClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            BlockBlobClient downloadBlob = InstrumentClient(new BlockBlobClient(blob.Uri, credential, options));
+
+            string originalHost = blob.Uri.Host;
+
+            // Pick a non-zero offset that lands well into the blob so the customer's
+            // segment-selection loop has to actually walk past the first range.
+            int downloadOffset = 12 * Constants.MB;
+            int downloadLength = 4 * Constants.MB;
+
+            // Act - customer code: enumerate layout pages and pick the endpoint
+            // whose range covers downloadOffset, then route a single-shot
+            // download through it.
+            string layoutEndpoint = null;
+            await foreach (BlobLayoutInfo page in downloadBlob.GetLayoutAsync())
+            {
+                BlobLayoutRangesRangeItem coveringRange = page.Ranges?.Range
+                    ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
+                if (coveringRange == null)
+                {
+                    continue;
+                }
+
+                layoutEndpoint = page.Endpoints?.Endpoint
+                    ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
+                if (layoutEndpoint != null)
+                {
+                    break;
+                }
+            }
+
+            Assert.IsNotNull(
+                layoutEndpoint,
+                $"Service should return a layout entry covering offset {downloadOffset} for a 20 MB blob.");
+
+            BlobDownloadOptions downloadOptions = new()
+            {
+                Range = new HttpRange(downloadOffset, downloadLength),
+                LayoutEndpoint = layoutEndpoint,
+            };
+
+            int rewrittenBefore = trackingPolicy.TrackedRequests.Count(r => r.HasHostHeader);
+            Response<BlobDownloadStreamingResult> response =
+                await downloadBlob.DownloadStreamingAsync(downloadOptions);
+
+            // Drain so we exercise the response body too. The bytes must match the
+            // requested range exactly - this catches any regression that would
+            // accidentally route a mid-blob range request to a host that doesn't
+            // serve those bytes (which would manifest as a content mismatch, not
+            // an HTTP-level error).
+            using (var resultStream = new MemoryStream())
+            {
+                await response.Value.Content.CopyToAsync(resultStream);
+                Assert.AreEqual(downloadLength, resultStream.Length);
+                TestHelper.AssertSequenceEqual(
+                    new ArraySegment<byte>(data, downloadOffset, downloadLength).ToArray(),
+                    resultStream.ToArray());
+            }
+
+            // Assert - exactly one new request was rewritten by DataLocalityPolicy
+            // (the single-shot download issued above), and that rewrite matches
+            // the endpoint the customer supplied.
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests = trackingPolicy.TrackedRequests
+                .Where(r => r.HasHostHeader)
+                .Skip(rewrittenBefore)
+                .ToList();
+
+            Assert.AreEqual(
+                1,
+                rewrittenRequests.Count,
+                "Expected exactly one DownloadStreaming request to be rewritten by DataLocalityPolicy.");
+
+            DataLocalityTrackingPolicy.RequestInfo rewritten = rewrittenRequests[0];
+
+            Assert.Greater(
+                rewritten.RequestPort,
+                0,
+                "Request URI port should be set by DataLocalityPolicy.");
+            Assert.AreEqual(
+                originalHost,
+                rewritten.HostHeaderValue,
+                "Host header should preserve the original host for authentication.");
+            Assert.AreNotEqual(
+                rewritten.RequestHost,
+                rewritten.HostHeaderValue,
+                "Host header should differ from the rewritten URI host.");
+
+            // The on-the-wire range header must carry the requested offset.
+            // This locks in that BlobDownloadOptions.Range is plumbed through to the
+            // x-ms-range header on the layout-endpoint-rewritten request.
+            Assert.AreEqual(
+                downloadOffset,
+                rewritten.RangeStartOffset,
+                $"Rewritten DownloadStreaming request should carry x-ms-range starting at offset {downloadOffset}.");
+        }
+
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task DownloadContentAsync_LayoutEndpoint_FromGetLayout()
+        {
+            // This is the customer-facing feature for Data Locality:
+            //   1. Calls GetLayoutAsync,
+            //   2. Picks the endpoint whose layout range covers the offset they
+            //      want from the returned BlobLayoutInfo pages,
+            //   3. Passes it through BlobDownloadOptions.LayoutEndpoint to
+            //      DownloadContentAsync.
+            // We verify the same on-the-wire effect: DataLocalityPolicy
+            // rewrites the URI host/port while preserving the original Host
+            // header for authentication.
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange - upload a blob large enough that the service is willing
+            // to return locality information.
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            // Build a tracking-instrumented client so we can observe what
+            // DataLocalityPolicy did to the outgoing request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            BlobClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            BlockBlobClient downloadBlob = InstrumentClient(new BlockBlobClient(blob.Uri, credential, options));
+
+            string originalHost = blob.Uri.Host;
+            int downloadOffset = 0;
+            int downloadLength = 4 * Constants.MB;
+
+            // Act - customer code: enumerate layout pages and pick the endpoint
+            // whose range covers downloadOffset, then route a single-shot
+            // download through it.
+            string layoutEndpoint = null;
+            await foreach (BlobLayoutInfo page in downloadBlob.GetLayoutAsync())
+            {
+                BlobLayoutRangesRangeItem coveringRange = page.Ranges?.Range
+                    ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
+                if (coveringRange == null)
+                {
+                    continue;
+                }
+
+                layoutEndpoint = page.Endpoints?.Endpoint
+                    ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
+                if (layoutEndpoint != null)
+                {
+                    break;
+                }
+            }
+
+            Assert.IsNotNull(
+                layoutEndpoint,
+                "Service should return a layout entry covering offset 0 for a 20 MB blob.");
+
+            BlobDownloadOptions downloadOptions = new()
+            {
+                Range = new HttpRange(downloadOffset, downloadLength),
+                LayoutEndpoint = layoutEndpoint,
+            };
+
+            int rewrittenBefore = trackingPolicy.TrackedRequests.Count(r => r.HasHostHeader);
+            Response<BlobDownloadResult> response =
+                await downloadBlob.DownloadContentAsync(downloadOptions);
+
+            // Verify the response body matches the requested range.
+            byte[] responseBytes = response.Value.Content.ToArray();
+            Assert.AreEqual(downloadLength, responseBytes.Length);
+            TestHelper.AssertSequenceEqual(
+                new ArraySegment<byte>(data, downloadOffset, downloadLength).ToArray(),
+                responseBytes);
+
+            // Assert - exactly one new request was rewritten by DataLocalityPolicy
+            // (the single-shot download issued above), and that rewrite matches
+            // the endpoint the customer supplied.
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests = trackingPolicy.TrackedRequests
+                .Where(r => r.HasHostHeader)
+                .Skip(rewrittenBefore)
+                .ToList();
+
+            Assert.AreEqual(
+                1,
+                rewrittenRequests.Count,
+                "Expected exactly one DownloadContent request to be rewritten by DataLocalityPolicy.");
+
+            DataLocalityTrackingPolicy.RequestInfo rewritten = rewrittenRequests[0];
+
+            string expectedHost = layoutEndpoint.Split(':')[0];
+
+            Assert.Greater(
+                rewritten.RequestPort,
+                0,
+                "Request URI port should be set by DataLocalityPolicy.");
+            Assert.AreEqual(
+                originalHost,
+                rewritten.HostHeaderValue,
+                "Host header should preserve the original host for authentication.");
+            Assert.AreNotEqual(
+                rewritten.RequestHost,
+                rewritten.HostHeaderValue,
+                "Host header should differ from the rewritten URI host.");
+        }
+
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task DownloadContentAsync_LayoutEndpoint_FromGetLayout_WithRange()
+        {
+            // Verifies two things on top of the baseline:
+            //   1. The customer endpoint-selection loop still works for a mid-blob
+            //      offset (not just offset 0, which the first segment always covers).
+            //   2. The on-the-wire range header actually carries the requested offset,
+            //      so the rewritten layout-endpoint request is fetching the right bytes.
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange - upload a blob large enough that the service is willing
+            // to return locality information.
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            // Build a tracking-instrumented client so we can observe what
+            // DataLocalityPolicy did to the outgoing request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            BlobClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            BlockBlobClient downloadBlob = InstrumentClient(new BlockBlobClient(blob.Uri, credential, options));
+
+            string originalHost = blob.Uri.Host;
+
+            // Pick a non-zero offset that lands well into the blob so the customer's
+            // segment-selection loop has to actually walk past the first range.
+            int downloadOffset = 12 * Constants.MB;
+            int downloadLength = 4 * Constants.MB;
+
+            // Act - customer code: enumerate layout pages and pick the endpoint
+            // whose range covers downloadOffset, then route a single-shot
+            // download through it.
+            string layoutEndpoint = null;
+            await foreach (BlobLayoutInfo page in downloadBlob.GetLayoutAsync())
+            {
+                BlobLayoutRangesRangeItem coveringRange = page.Ranges?.Range
+                    ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
+                if (coveringRange == null)
+                {
+                    continue;
+                }
+
+                layoutEndpoint = page.Endpoints?.Endpoint
+                    ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
+                if (layoutEndpoint != null)
+                {
+                    break;
+                }
+            }
+
+            Assert.IsNotNull(
+                layoutEndpoint,
+                $"Service should return a layout entry covering offset {downloadOffset} for a 20 MB blob.");
+
+            BlobDownloadOptions downloadOptions = new()
+            {
+                Range = new HttpRange(downloadOffset, downloadLength),
+                LayoutEndpoint = layoutEndpoint,
+            };
+
+            int rewrittenBefore = trackingPolicy.TrackedRequests.Count(r => r.HasHostHeader);
+            Response<BlobDownloadResult> response =
+                await downloadBlob.DownloadContentAsync(downloadOptions);
+
+            // Verify the response body matches the requested range. The bytes must
+            // match exactly - this catches any regression that would accidentally
+            // route a mid-blob range request to a host that doesn't serve those bytes
+            // (which would manifest as a content mismatch, not an HTTP-level error).
+            byte[] responseBytes = response.Value.Content.ToArray();
+            Assert.AreEqual(downloadLength, responseBytes.Length);
+            TestHelper.AssertSequenceEqual(
+                new ArraySegment<byte>(data, downloadOffset, downloadLength).ToArray(),
+                responseBytes);
+
+            // Assert - exactly one new request was rewritten by DataLocalityPolicy
+            // (the single-shot download issued above), and that rewrite matches
+            // the endpoint the customer supplied.
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests = trackingPolicy.TrackedRequests
+                .Where(r => r.HasHostHeader)
+                .Skip(rewrittenBefore)
+                .ToList();
+
+            Assert.AreEqual(
+                1,
+                rewrittenRequests.Count,
+                "Expected exactly one DownloadContent request to be rewritten by DataLocalityPolicy.");
+
+            DataLocalityTrackingPolicy.RequestInfo rewritten = rewrittenRequests[0];
+
+            Assert.Greater(
+                rewritten.RequestPort,
+                0,
+                "Request URI port should be set by DataLocalityPolicy.");
+            Assert.AreEqual(
+                originalHost,
+                rewritten.HostHeaderValue,
+                "Host header should preserve the original host for authentication.");
+            Assert.AreNotEqual(
+                rewritten.RequestHost,
+                rewritten.HostHeaderValue,
+                "Host header should differ from the rewritten URI host.");
+
+            // The on-the-wire range header must carry the requested offset.
+            // This locks in that BlobDownloadOptions.Range is plumbed through to the
+            // x-ms-range header on the layout-endpoint-rewritten request.
+            Assert.AreEqual(
+                downloadOffset,
+                rewritten.RangeStartOffset,
+                $"Rewritten DownloadContent request should carry x-ms-range starting at offset {downloadOffset}.");
+        }
+        #endregion
+
         [Test]
         [TestCase(null, false)]
         [TestCase("ContainerNotFound", true)]
@@ -10062,6 +10506,12 @@ namespace Azure.Storage.Blobs.Test
             {
                 bool hasHostHeader = message.Request.Headers.TryGetValue("Host", out string hostValue);
 
+                // Storage uses x-ms-range for Get Blob; fall back to standard Range for safety.
+                if (!message.Request.Headers.TryGetValue("x-ms-range", out string rangeValue))
+                {
+                    message.Request.Headers.TryGetValue("Range", out rangeValue);
+                }
+
                 lock (TrackedRequests)
                 {
                     TrackedRequests.Add(new RequestInfo
@@ -10070,6 +10520,7 @@ namespace Azure.Storage.Blobs.Test
                         RequestPort = message.Request.Uri.Port,
                         HasHostHeader = hasHostHeader,
                         HostHeaderValue = hostValue ?? string.Empty,
+                        RangeHeaderValue = rangeValue,
                     });
                 }
             }
@@ -10080,6 +10531,33 @@ namespace Azure.Storage.Blobs.Test
                 public int RequestPort { get; set; }
                 public bool HasHostHeader { get; set; }
                 public string HostHeaderValue { get; set; }
+                public string RangeHeaderValue { get; set; }
+
+                /// <summary>
+                /// Parses the range header value (e.g. "bytes=8388608-13631487" or
+                /// "bytes=8388608-") and returns the starting byte offset, or null
+                /// if no range header was present or the value couldn't be parsed.
+                /// </summary>
+                public long? RangeStartOffset
+                {
+                    get
+                    {
+                        if (string.IsNullOrEmpty(RangeHeaderValue))
+                        {
+                            return null;
+                        }
+
+                        const string prefix = "bytes=";
+                        string value = RangeHeaderValue.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)
+                            ? RangeHeaderValue.Substring(prefix.Length)
+                            : RangeHeaderValue;
+
+                        int dashIndex = value.IndexOf('-');
+                        string startToken = dashIndex < 0 ? value : value.Substring(0, dashIndex);
+
+                        return long.TryParse(startToken, out long start) ? start : (long?)null;
+                    }
+                }
             }
         }
 

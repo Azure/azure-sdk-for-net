@@ -964,6 +964,7 @@ namespace Azure.Storage.Blobs.Models
         public BlobOpenReadOptions(bool allowModifications) { }
         public int? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
+        public bool EnableDataLocality { get { throw null; } set { } }
         public long Position { get { throw null; } set { } }
         public Azure.Storage.DownloadTransferValidationOptions TransferValidation { get { throw null; } set { } }
     }

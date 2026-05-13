@@ -44,9 +44,7 @@ namespace Azure.Storage.Blobs.Models
         public BlobLayoutSegmentCacheValue(BlobLayoutSegment[] segments)
         {
             Segments = segments;
-
-            DateTimeOffset now = DateTimeOffset.UtcNow;
-            ExpiresOn = now + LayoutLifetime;
+            ExpiresOn = DateTimeOffset.UtcNow + LayoutLifetime;
             RefreshOn = ExpiresOn - RefreshBuffer;
         }
 

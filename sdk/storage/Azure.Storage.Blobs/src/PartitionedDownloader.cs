@@ -294,9 +294,8 @@ namespace Azure.Storage.Blobs
                         acquire: async (acquireAsync, ct) =>
                         {
 #pragma warning disable AZC0108 // 'async' parameter for the 'FetchLayoutInternal' method call should be 'true'.
-                            BlobLayoutSegment[] segments = await FetchLayoutInternal(
-                                initialLength,
-                                totalLength,
+                            (_, BlobLayoutSegment[] segments) = await _client.FetchLayoutInternal(
+                                new HttpRange(initialLength, totalLength - initialLength),
                                 conditionsWithEtag,
                                 acquireAsync,
                                 ct).ConfigureAwait(false);
@@ -534,61 +533,6 @@ namespace Azure.Storage.Blobs
             {
                 yield return new HttpRange(offset, Math.Min(totalLength - offset, _rangeSize));
             }
-        }
-
-        /// <summary>
-        /// Fetches the blob layout for the range using
-        /// <see cref="BlobBaseClient.GetLayout"/> or <see cref="BlobBaseClient.GetLayoutAsync"/>.
-        /// Eagerly materializes all layout items into a sorted array.
-        /// Returns null on a soft failure (400/5xx), or an empty array
-        /// when the service explicitly indicates the blob has no layout (204).
-        /// </summary>
-        private async Task<BlobLayoutSegment[]> FetchLayoutInternal(
-            long initialLength,
-            long totalLength,
-            BlobRequestConditions conditions,
-            bool async,
-            CancellationToken cancellationToken)
-        {
-            HttpRange range = new HttpRange(initialLength, totalLength - initialLength);
-            List<BlobLayoutSegment> allSegments = new();
-            try
-            {
-                if (async)
-                {
-                    await foreach (BlobLayoutInfo layoutInfo in _client.GetLayoutAsync(range, conditions, cancellationToken).ConfigureAwait(false))
-                    {
-                        BlobLayoutSegment[] segments = layoutInfo.ToBlobLayoutSegments();
-                        allSegments.AddRange(segments);
-                    }
-                }
-                else
-                {
-                    foreach (BlobLayoutInfo layoutInfo in _client.GetLayout(range, conditions, cancellationToken))
-                    {
-                        BlobLayoutSegment[] segments = layoutInfo.ToBlobLayoutSegments();
-                        allSegments.AddRange(segments);
-                    }
-                }
-            }
-            catch (RequestFailedException ex)
-                when (ex.Status == 400 || ex.Status >= 500)
-            {
-                // Soft failure: return null so the cache treats this as a
-                // "no locality available" answer and caches it for the full TTL,
-                // avoiding repeated calls to a degraded layout endpoint.
-                return null;
-            }
-
-            // 204: service explicitly responded that this blob has no layout.
-            // Return an empty array so the cache treats it as a valid answer
-            // and caches it for the full TTL.
-            if (allSegments.Count == 0)
-            {
-                return Array.Empty<BlobLayoutSegment>();
-            }
-
-            return allSegments.ToArray();
         }
 
         /// <summary>
