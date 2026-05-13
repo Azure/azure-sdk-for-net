@@ -1082,6 +1082,11 @@ interface Employees {
       (m: any) => m.kind === "Action"
     );
     ok(listByParentEntry);
+
+    // TODO: Restore schema comparison with resolveArmResources after the
+    // standardized resolver models list-only child resources the same way.
+    // Employee has no Read, so it is not a detected resource; listByParent
+    // should be an Action on EmployeeParent rather than a List of Employee.
   });
 
   it("resource scope as ManagementGroup", async () => {
