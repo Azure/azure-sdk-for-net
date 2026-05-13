@@ -2410,6 +2410,86 @@ namespace Azure.Messaging.EventGrid
             return new AcsMessageInteractiveListReplyContent(listItemId, title, description, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Compute.VirtualMachineScaleSets.LifecycleHookEvents preview event. </summary>
+        /// <param name="name"> The name of the Lifecycle Hook event. This is a unique identifier for the Lifecycle Hook event. </param>
+        /// <param name="id"> The ARM resource ID of the Lifecycle Hook event entity created by the platform for this event. Customers can use this ARM resource ID to query more details about the event through Azure Resource Manager APIs. </param>
+        /// <param name="properties"> The properties of the Virtual Machine Scale Set Lifecycle Hook event. </param>
+        /// <param name="operationalInfo"> Operational information related to the Lifecycle Hook event. </param>
+        /// <returns> A new <see cref="SystemEvents.LifecycleHookEventsEventData"/> instance for mocking. </returns>
+        public static LifecycleHookEventsEventData LifecycleHookEventsEventData(string name = default, string id = default, VirtualMachineScaleSetLifecycleHookEventProperties properties = default, OperationalInfo operationalInfo = default)
+        {
+            return new LifecycleHookEventsEventData(name, id, properties, operationalInfo, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Defines the Virtual Machine Scale Set Lifecycle Hook event properties. </summary>
+        /// <param name="type"> Defines the type or scenario for sending a Virtual Machine Scale Set Lifecycle Hook event to the customer. </param>
+        /// <param name="waitUntil"> Specifies the exact UTC timestamp in ISO 8601 format till which the event would remain in the current lifecycle state waiting for an action from the customer. Beyond this timestamp, the platform will apply the defaultAction for the event. </param>
+        /// <param name="maxWaitUntil"> Specifies the exact UTC timestamp in ISO 8601 format till when the customer can delay the Lifecycle Hook event. The customer will not be allowed to delay the event to a timestamp beyond this. </param>
+        /// <param name="timeCreated"> The UTC timestamp in ISO 8601 format at which the platform creates the Virtual Machine Scale Set Lifecycle Hook event entity. </param>
+        /// <param name="defaultAction"> Specify the action that will be applied on the a target resource in the Virtual Machine Scale Set Lifecycle Hook event if the platform does not get a response from the customer for the target resource before waitUntil. </param>
+        /// <param name="targetResources"> List of target resources which are getting processed in the Virtual Machine Scale Set Lifecycle Hook event. </param>
+        /// <param name="additionalContext">
+        /// Additional key-value pairs set on the Lifecycle Hook event that gives customer some useful context/data.
+        /// The keys in this dictionary are specific to the Lifecycle Hook type. Different Lifecycle Hook events can have different sets of keys in the additional context depending on the Lifecycle Hook type.
+        /// For example, for a Lifecycle Hook event with UpgradeAutoOSScheduling type,
+        /// the additional context can contain the key "priority" that helps customer identify the priority of the Auto OS Upgrade operation triggered on the Virtual Machine Scale Set.
+        /// </param>
+        /// <param name="state"> Specifies the state of the Virtual Machine Scale Set Lifecycle Hook event. </param>
+        /// <returns> A new <see cref="SystemEvents.VirtualMachineScaleSetLifecycleHookEventProperties"/> instance for mocking. </returns>
+        public static VirtualMachineScaleSetLifecycleHookEventProperties VirtualMachineScaleSetLifecycleHookEventProperties(VirtualMachineScaleSetLifecycleHookEventType @type = default, string waitUntil = default, string maxWaitUntil = default, string timeCreated = default, LifecycleHookAction defaultAction = default, IEnumerable<VirtualMachineScaleSetLifecycleHookEventTargetResource> targetResources = default, VirtualMachineScaleSetLifecycleHookEventAdditionalContext additionalContext = default, VirtualMachineScaleSetLifecycleHookEventState state = default)
+        {
+            targetResources ??= new ChangeTrackingList<VirtualMachineScaleSetLifecycleHookEventTargetResource>();
+
+            return new VirtualMachineScaleSetLifecycleHookEventProperties(
+                @type,
+                waitUntil,
+                maxWaitUntil,
+                timeCreated,
+                defaultAction,
+                targetResources.ToList(),
+                additionalContext,
+                state,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Define a single target ARM resource in a Virtual Machine Scale Set Lifecycle Hook event. Currently, this can be a Virtual Machine Scale Set resource or an individual virtual machine resource within a VirtualMachineScaleSet. </summary>
+        /// <param name="resource"> Specifies the target ARM resource. Currently, this can be a Virtual Machine Scale Set resource or an individual virtual machine resource within a VirtualMachineScaleSet. </param>
+        /// <param name="actionState"> State of the Lifecycle Hook for the target resource. The customer can patch this property to move the Lifecycle Hook to a terminal state. </param>
+        /// <returns> A new <see cref="SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource"/> instance for mocking. </returns>
+        public static VirtualMachineScaleSetLifecycleHookEventTargetResource VirtualMachineScaleSetLifecycleHookEventTargetResource(ApiEntityReference resource = default, LifecycleHookActionState actionState = default)
+        {
+            return new VirtualMachineScaleSetLifecycleHookEventTargetResource(resource, actionState, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The API entity reference. </summary>
+        /// <param name="id"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
+        /// <returns> A new <see cref="SystemEvents.ApiEntityReference"/> instance for mocking. </returns>
+        public static ApiEntityReference ApiEntityReference(string id = default)
+        {
+            return new ApiEntityReference(id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Additional key-value pairs set on the Lifecycle Hook event that gives customer some useful context/data.
+        /// The keys in this dictionary are specific to the Lifecycle Hook type. Different Lifecycle Hook events can have different sets of keys in the additional context depending on the Lifecycle Hook type.
+        /// For example, for a Lifecycle Hook event with UpgradeAutoOSScheduling type,
+        /// the additional context can contain the key "priority" that helps customer identify the priority of the Auto OS Upgrade operation triggered on the Virtual Machine Scale Set.
+        /// </summary>
+        /// <param name="priority"> Can only be present for a Lifecycle Hook event of type "UpgradeAutoOSScheduling". Denotes the priority of the Virtual Machine Scale Set Lifecycle Hook event for the Auto OS Upgrade scheduled on the Virtual Machine Scale Set. </param>
+        /// <returns> A new <see cref="SystemEvents.VirtualMachineScaleSetLifecycleHookEventAdditionalContext"/> instance for mocking. </returns>
+        public static VirtualMachineScaleSetLifecycleHookEventAdditionalContext VirtualMachineScaleSetLifecycleHookEventAdditionalContext(string priority = default)
+        {
+            return new VirtualMachineScaleSetLifecycleHookEventAdditionalContext(priority, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Operational information for a Virtual Machine Scale Set Lifecycle Hook event. </summary>
+        /// <param name="activityId"> The activity ID associated with the operation generating the Lifecycle Hook event. </param>
+        /// <returns> A new <see cref="SystemEvents.OperationalInfo"/> instance for mocking. </returns>
+        public static OperationalInfo OperationalInfo(string activityId = default)
+        {
+            return new OperationalInfo(activityId, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The content of the event request message. </summary>
         /// <param name="id"> The event ID. </param>
         /// <param name="timestamp"> The time at which the event occurred. </param>
