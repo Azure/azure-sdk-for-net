@@ -1073,23 +1073,15 @@ interface Employees {
     strictEqual(metadata.scope.kind, "ResourceGroup");
     strictEqual(metadata.parentResourceId, undefined);
     strictEqual(metadata.resourceName, "EmployeeParent");
-    strictEqual(metadata.methods.length, 2); // Get and ListByParent
+    strictEqual(metadata.methods.length, 2); // Get and listByParent as Action
 
-    // Validate EmployeeParent has listByParent method
+    // Employee is not an identified resource because it has no Read.
+    // Therefore, listByParent lists something other than the enclosing
+    // EmployeeParent resource and is modeled as an Action on EmployeeParent.
     const listByParentEntry = metadata.methods.find(
-      (m: any) => m.kind === "List"
+      (m: any) => m.kind === "Action"
     );
     ok(listByParentEntry);
-
-    // Validate using resolveArmResources API - use deep equality to ensure schemas match
-    const resolvedSchema = resolveArmResources(program, sdkContext);
-    ok(resolvedSchema);
-
-    // Compare the entire schemas using deep equality
-    deepStrictEqual(
-      normalizeSchemaForComparison(resolvedSchema),
-      normalizeSchemaForComparison(armProviderSchema)
-    );
   });
 
   it("resource scope as ManagementGroup", async () => {

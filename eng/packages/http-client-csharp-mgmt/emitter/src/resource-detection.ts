@@ -163,7 +163,7 @@ function detectResourcesByPath(
       operationPath: RequestPath;
     }>;
   };
-  const entriesByPath = new Map<string, ResourceEntry>();
+  const resourceEntries: ResourceEntry[] = [];
   const consumedMethodIds = new Set<string>();
 
   for (const { client, method } of allEntries) {
@@ -182,7 +182,7 @@ function detectResourcesByPath(
       client,
       methods: []
     };
-    entriesByPath.set(path.path, entry);
+    resourceEntries.push(entry);
     entry.methods.push({
       methodId: method.crossLanguageDefinitionId,
       kind: ResourceOperationKind.Read,
@@ -191,29 +191,9 @@ function detectResourcesByPath(
     consumedMethodIds.add(method.crossLanguageDefinitionId);
   }
 
-  // Step 2a': fallback bootstrap — resources without a GET still need an
-  // entry for lifecycle classification to work and for Step 7 of the post-
-  // process step to filter them as no-Read and move methods to the parent
-  // as Action. For each PUT whose direct response is a resource model and
-  // no entry yet exists at that path, create one (without adding the PUT
-  // to the methods list — Step 2b will classify it).
-  for (const { client, method } of allEntries) {
-    if (consumedMethodIds.has(method.crossLanguageDefinitionId)) continue;
-    const sdkMethod = serviceMethods.get(method.crossLanguageDefinitionId);
-    if (!sdkMethod) continue;
-    if (sdkMethod.operation?.verb !== "put") continue;
-    const respModelId = getDirectResponseModelId(sdkMethod);
-    if (!respModelId || !resourceModelIds.has(respModelId)) continue;
-
-    const path = new RequestPath(method.operation.path);
-    if (entriesByPath.has(path.path)) continue;
-    entriesByPath.set(path.path, {
-      modelId: respModelId,
-      instancePath: path,
-      client,
-      methods: []
-    });
-  }
+  const identifiedResourceModelIds = new Set(
+    resourceEntries.map((entry) => entry.modelId)
+  );
 
   // Step 2b: classify lifecycle methods (PUT/PATCH/DELETE) whose path equals
   // an instance path. Verb-based, no decorator consultation.
@@ -241,7 +221,7 @@ function detectResourcesByPath(
     // multiple models share a path (rare), prefer the one whose model is the
     // request body or response.
     let matched: ResourceEntry | undefined;
-    for (const entry of entriesByPath.values()) {
+    for (const entry of resourceEntries) {
       if (!entry.instancePath.equals(opPath)) continue;
       if (!matched) {
         matched = entry;
@@ -276,11 +256,11 @@ function detectResourcesByPath(
     const sdkMethod = serviceMethods.get(method.crossLanguageDefinitionId);
     if (!sdkMethod) continue;
     const itemModelId = getPagingItemModelIdLocal(sdkMethod);
-    if (!itemModelId || !resourceModelIds.has(itemModelId)) continue;
+    if (!itemModelId || !identifiedResourceModelIds.has(itemModelId)) continue;
 
     const opPath = new RequestPath(method.operation.path);
     let best: ResourceEntry | undefined;
-    for (const entry of entriesByPath.values()) {
+    for (const entry of resourceEntries) {
       if (entry.modelId !== itemModelId) continue;
       if (!opPath.isPrefixOf(entry.instancePath)) continue;
       if (!best || entry.instancePath.length < best.instancePath.length) {
@@ -296,46 +276,12 @@ function detectResourcesByPath(
     consumedMethodIds.add(method.crossLanguageDefinitionId);
   }
 
-  // Step 2d (Pass 2 of List/Action assignment): list-by-parent fallback —
-  // paging methods returning resource model T whose path is rooted at some
-  // other resource's instance path attach to that rooted (parent) resource
-  // as List. This covers child resources that have no direct GET (e.g.
-  // ArmResourceListByParent without ArmResourceRead) — the list operation
-  // still belongs on the parent's resource entry.
-  for (const { method } of allEntries) {
-    if (consumedMethodIds.has(method.crossLanguageDefinitionId)) continue;
-    const sdkMethod = serviceMethods.get(method.crossLanguageDefinitionId);
-    if (!sdkMethod) continue;
-    const itemModelId = getPagingItemModelIdLocal(sdkMethod);
-    if (!itemModelId || !resourceModelIds.has(itemModelId)) continue;
-
-    const opPath = new RequestPath(method.operation.path);
-    let best: ResourceEntry | undefined;
-    for (const entry of entriesByPath.values()) {
-      if (!entry.instancePath.isPrefixOf(opPath)) continue;
-      if (entry.instancePath.equals(opPath)) continue;
-      if (
-        !best ||
-        entry.instancePath.length > best.instancePath.length
-      ) {
-        best = entry;
-      }
-    }
-    if (!best) continue;
-    best.methods.push({
-      methodId: method.crossLanguageDefinitionId,
-      kind: ResourceOperationKind.List,
-      operationPath: opPath
-    });
-    consumedMethodIds.add(method.crossLanguageDefinitionId);
-  }
-
   // Build the ArmResourceSchema list from collected entries.
   const resources: ArmResourceSchema[] = [];
   const resourcePathToClientName = new Map<string, string>();
-  for (const [path, entry] of entriesByPath) {
+  for (const entry of resourceEntries) {
     const model = resourceModelMap.get(entry.modelId);
-    resourcePathToClientName.set(path, entry.client.name);
+    resourcePathToClientName.set(entry.instancePath.path, entry.client.name);
 
     const methods: ResourceMethod[] = entry.methods.map((m) => ({
       methodId: m.methodId,
@@ -380,7 +326,7 @@ function detectResourcesByPath(
     let resourceModelIdForNonRes: string | undefined;
     if (sdkMethod) {
       const itemModelId = getPagingItemModelIdLocal(sdkMethod);
-      if (itemModelId && resourceModelIds.has(itemModelId)) {
+      if (itemModelId && identifiedResourceModelIds.has(itemModelId)) {
         resourceModelIdForNonRes = itemModelId;
       }
     }
@@ -434,7 +380,7 @@ function detectResourcesByPath(
     if (list.length > 1) {
       for (const resource of list) {
         const clientName = resourcePathToClientName.get(
-          resource.metadata.resourceIdPattern.path
+          resource.metadata.resourceIdPattern!.path
         );
         if (clientName) {
           resource.metadata.resourceName = pluralize.singular(clientName);

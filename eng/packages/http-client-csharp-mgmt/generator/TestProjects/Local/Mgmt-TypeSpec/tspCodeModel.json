@@ -26921,7 +26921,7 @@
                   {
                     "$id": "2117",
                     "methodId": "MgmtTypeSpec.Employees.listByParent",
-                    "kind": "List",
+                    "kind": "Action",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/employees",
                     "scope": {
                       "$id": "2118",

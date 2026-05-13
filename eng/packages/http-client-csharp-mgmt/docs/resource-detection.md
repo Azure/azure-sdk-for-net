@@ -110,6 +110,29 @@ Detection runs in four stages:
    `Action` — or to the non-resource bucket — by matching path and
    model.
 
+### Resource operation kinds
+
+`ResourceOperationKind` is defined relative to the resource that owns the
+method. Each kind describes an operation on the **enclosing resource**, not
+just the HTTP shape of the operation:
+
+| Kind | Meaning |
+| --- | --- |
+| `Read` | Gets the enclosing resource. This operation materializes the SDK resource instance. |
+| `Create` | Creates or replaces the enclosing resource. |
+| `Update` | Updates the enclosing resource. |
+| `Delete` | Deletes the enclosing resource. |
+| `List` | Lists all available instances of the enclosing resource under a scope or parent collection. |
+| `Action` | Invokes an action on the enclosing resource. This includes operations that are HTTP `GET`/pageable in protocol terms but are not listing the enclosing resource itself. |
+
+For example, an operation on `ParentResource` that returns a collection of
+`Sku` models is not `ParentResource.List`; it is an `Action` on
+`ParentResource` because it lists something other than parent resources.
+Likewise, an operation declared in an `Employees` interface that returns
+`Employee[]` is not a `List` unless `Employee` is a detected resource in the
+schema. If `Employee` has no `Read`, then `Employee` is not a resource and
+that operation attaches to the nearest detected holder as an `Action`.
+
 ### Design principles
 
 1. **A resource must have a Read.** A model without a corresponding
@@ -346,7 +369,7 @@ For each remaining operation `O`:
 1. If `O`'s verb is not `GET`, skip — it cannot be a `List`.
 2. If `O`'s response is not a collection of some item model `T`,
    skip — it cannot be a `List`.
-3. Otherwise, look for a resource `R` in the resource set such that
+3. Otherwise, look for a resource `R` in the **detected resource set** such that
    both:
    - `O.path` is a prefix of `R.instancePath`, and
    - `R.model == T`.
