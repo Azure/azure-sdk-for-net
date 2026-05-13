@@ -12,7 +12,9 @@ import {
   setHasClientNameOverride
 } from "./sdk-context-options.js";
 import { updateClients } from "./resource-detection.js";
-import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
+import {
+  DecoratorInfo
+} from "@azure-tools/typespec-client-generator-core";
 import {
   AzureMgmtEmitterOptions,
   filterSuppressedDiagnostics

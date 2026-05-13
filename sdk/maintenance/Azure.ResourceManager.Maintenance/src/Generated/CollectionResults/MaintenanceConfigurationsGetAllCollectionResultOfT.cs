@@ -14,19 +14,19 @@ using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    internal partial class MaintenanceConfigurationsMaintenanceConfigurationsListCollectionResultOfT : Pageable<MaintenanceConfigurationData>
+    internal partial class MaintenanceConfigurationsGetAllCollectionResultOfT : Pageable<MaintenanceConfigurationData>
     {
         private readonly MaintenanceConfigurations _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationsMaintenanceConfigurationsListCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of MaintenanceConfigurationsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The MaintenanceConfigurations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MaintenanceConfigurationsMaintenanceConfigurationsListCollectionResultOfT(MaintenanceConfigurations client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public MaintenanceConfigurationsGetAllCollectionResultOfT(MaintenanceConfigurations client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Maintenance
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MaintenanceConfigurationsMaintenanceConfigurationsListCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MaintenanceConfigurationsGetAllCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MaintenanceConfigurationsMaintenanceConfigurationsListCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of MaintenanceConfigurationsGetAllCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<MaintenanceConfigurationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextMaintenanceConfigurationsListRequest(nextLink, _subscriptionId, _context) : _client.CreateMaintenanceConfigurationsListRequest(_subscriptionId, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _context) : _client.CreateGetAllRequest(_subscriptionId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

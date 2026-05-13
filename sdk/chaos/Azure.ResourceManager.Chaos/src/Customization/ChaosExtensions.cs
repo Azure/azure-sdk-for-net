@@ -5,19 +5,15 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Chaos.Mocking;
 using Azure.ResourceManager.Resources;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
     /// Partial class of customized ChaosExtensions
     /// </summary>
-    [CodeGenSuppress("GetExperimentsAsync", typeof(SubscriptionResource), typeof(bool?), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetExperiments", typeof(SubscriptionResource), typeof(bool?), typeof(string), typeof(CancellationToken))]
     public static partial class ChaosExtensions
     {
         // The newly generated code uses scope-based ArmClient extension methods instead of ResourceGroupResource extension methods.
@@ -202,38 +198,6 @@ namespace Azure.ResourceManager.Chaos
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableChaosArmClient(client).GetChaosCapabilityTypeResource(id);
-        }
-
-        // Customization: Preserves shipped GetChaosExperiments / GetChaosExperimentsAsync names.
-        // The generator now emits these as GetExperiments / GetExperimentsAsync (due to the
-        // @@clientName(Experiments.listAll, "getExperiments") override in the spec). The spec
-        // fix has been applied in azure-rest-api-specs#43122; these wrappers can be removed
-        // and the generated names will line up once tsp-location.yaml is bumped to a commit
-        // that contains the fix.
-        /// <summary> Get a list of Experiment resources in a subscription. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
-        /// <param name="continuationToken"> String that sets the continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ChaosExperimentResource> GetChaosExperimentsAsync(this SubscriptionResource subscriptionResource, bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosExperimentsAsync(running, continuationToken, cancellationToken);
-        }
-
-        /// <summary> Get a list of Experiment resources in a subscription. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
-        /// <param name="continuationToken"> String that sets the continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ChaosExperimentResource> GetChaosExperiments(this SubscriptionResource subscriptionResource, bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosExperiments(running, continuationToken, cancellationToken);
         }
     }
 }

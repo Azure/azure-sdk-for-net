@@ -13,40 +13,6 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public readonly partial struct FailoverRequestFailoverType
     {
-        // Workaround for a regression in @typespec/http-client-csharp 1.0.0-alpha.20260506.3
-        // (introduced by https://github.com/microsoft/typespec/pull/10584,
-        // tracked by https://github.com/microsoft/typespec/issues/10649,
-        // picked up here via https://github.com/Azure/azure-sdk-for-net/pull/59170):
-        // anonymous inline-union operation-parameter enums are emitted twice in tspCodeModel.json,
-        // causing the C# generator to drop the struct body partial
-        // (field/ctor/named values/Equals/GetHashCode/ToString) and emit only the
-        // operators/conversions partial, breaking the build. Re-declare the missing members
-        // here. Remove once the upstream fix lands in a new mgmt-emitter alpha.
-        private readonly string _value;
-        private const string PlannedValue = "Planned";
-
-        /// <summary> Initializes a new instance of <see cref="FailoverRequestFailoverType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FailoverRequestFailoverType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        /// <summary> Planned. </summary>
-        public static FailoverRequestFailoverType Planned { get; } = new FailoverRequestFailoverType(PlannedValue);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is FailoverRequestFailoverType other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(FailoverRequestFailoverType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
-
         // Backward-compatible: Converts to StorageAccountFailoverType.
         public static implicit operator StorageAccountFailoverType(FailoverRequestFailoverType value) => new StorageAccountFailoverType(value._value);
         // Backward-compatible: Converts from StorageAccountFailoverType.
