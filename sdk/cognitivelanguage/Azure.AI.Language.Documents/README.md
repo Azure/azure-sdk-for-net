@@ -267,7 +267,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [nuget]: https://www.nuget.org/
 
-[languagedocuments_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Documents/src/Generated/AnalyzeDocumentsClient.cs
+[languagedocuments_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Documents/src/Generated/DocumentAnalysisClient.cs
 [languagedocuments_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Documents/src/
 [languagedocuments_docs]: https://learn.microsoft.com/azure/cognitive-services/language-service/overview
 <!-- [languagedocuments_nuget_package]: https://www.nuget.org/packages/Azure.AI.Language.Documents/ -->
