@@ -144,13 +144,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 return new JsonModel();
             }
 
-            public JsonModel Create(BinaryData data, ModelReaderWriterOptions options)
+            public override JsonModel Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 AssertOptions(this, options);
                 return new JsonModel();
             }
 
-            public string GetFormatFromOptions(ModelReaderWriterOptions options)
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options)
             {
                 return "J";
             }
@@ -163,7 +163,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 writer.WriteEndObject();
             }
 
-            public BinaryData Write(ModelReaderWriterOptions options)
+            public override BinaryData Write(ModelReaderWriterOptions options)
             {
                 AssertOptions(this, options);
 
@@ -540,7 +540,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 CapturedProxiedModelOnCreate = null;
             }
 
-            public SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
+            public override SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 CreateWasCalled = true;
                 CapturedProxiedModelOnCreate = options.ProxiedModel;
@@ -561,10 +561,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 writer.WriteEndObject();
             }
 
-            public BinaryData Write(ModelReaderWriterOptions options)
+            public override BinaryData Write(ModelReaderWriterOptions options)
                 => ModelReaderWriter.Write(this, options);
 
-            public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
 
         /// <summary>
@@ -593,7 +593,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 CreateWasCalled = false;
             }
 
-            public SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
+            public override SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 CreateWasCalled = true;
                 return new SimpleModel();
@@ -612,10 +612,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 writer.WriteEndObject();
             }
 
-            public BinaryData Write(ModelReaderWriterOptions options)
+            public override BinaryData Write(ModelReaderWriterOptions options)
                 => ModelReaderWriter.Write(this, options);
 
-            public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
 
         /// <summary>
@@ -646,7 +646,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 writer.WriteEndObject();
             }
 
-            public SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
+            public override SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 CapturedOnCreateBinaryData = options.ProxiedModel;
                 return new SimpleModel();
@@ -660,13 +660,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 return new SimpleModel();
             }
 
-            public BinaryData Write(ModelReaderWriterOptions options)
+            public override BinaryData Write(ModelReaderWriterOptions options)
             {
                 CapturedOnWrite = options.ProxiedModel;
                 return BinaryData.FromString("{}");
             }
 
-            public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
 
         #region ProxiedModel Contract Tests
