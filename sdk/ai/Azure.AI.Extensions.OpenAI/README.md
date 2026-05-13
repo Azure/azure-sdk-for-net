@@ -59,6 +59,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Using A2A Tool](#using-a2a-tool)
   - [Memory search tool](#memory-search-tool)
   - [Azure Function tool](#azure-function-tool)
+  - [Work IQ tool](#work-iq-tool)
 - [Tracing](#tracing)
   - [Enabling GenAI Tracing](#enabling-genai-tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
@@ -1911,6 +1912,15 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
+```
+
+### Work IQ tool
+
+Work IQ tool allows Agent to access data from [Microsoft 365 Copilot](https://learn.microsoft.com/microsoft-agent-365/tooling-servers-overview).
+To create the Agent, capable of returning the responses grounded by these data, create the `WorkIQPreviewTool` using the ID of connection to Work IQ Teams
+as shown below.
+
+```C# Snippet:Sample_CreateAgent_WorkIQ_Async
 ```
 
 ## Tracing
