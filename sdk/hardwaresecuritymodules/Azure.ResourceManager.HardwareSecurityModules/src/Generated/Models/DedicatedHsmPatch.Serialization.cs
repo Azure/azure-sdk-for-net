@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDedicatedHsmPatch(document.RootElement, options);
+                        return DedicatedHsmPatch.DeserializeDedicatedHsmPatch(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DedicatedHsmPatch)} does not support reading '{options.Format}' format.");
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DedicatedHsmPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DedicatedHsmPatch>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DedicatedHsmPatch IPersistableModel<DedicatedHsmPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DedicatedHsmPatch IPersistableModel<DedicatedHsmPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DedicatedHsmPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         void IJsonModel<DedicatedHsmPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DedicatedHsmPatch IJsonModel<DedicatedHsmPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DedicatedHsmPatch IJsonModel<DedicatedHsmPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 throw new FormatException($"The model {nameof(DedicatedHsmPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDedicatedHsmPatch(document.RootElement, options);
+            return DedicatedHsmPatch.DeserializeDedicatedHsmPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>

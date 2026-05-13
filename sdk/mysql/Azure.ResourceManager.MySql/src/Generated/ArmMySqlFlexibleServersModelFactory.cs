@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="network"> Network related properties of a server. </param>
         /// <param name="maintenancePatchStrategy"> The patch strategy of this server. </param>
         /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
-        /// <returns> A new <see cref="Models.MySqlFlexibleServerPatch"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerPatch MySqlFlexibleServerPatch(ManagedServiceIdentity identity = default, MySqlFlexibleServerSku sku = default, string administratorLoginPassword = default, MySqlFlexibleServerVersion? version = default, MySqlFlexibleServerStorage storage = default, MySqlFlexibleServerBackupProperties backup = default, MySqlFlexibleServerHighAvailability highAvailability = default, MySqlFlexibleServerMaintenanceWindow maintenanceWindow = default, MySqlFlexibleServerReplicationRole? replicationRole = default, MySqlFlexibleServerDataEncryption dataEncryption = default, MySqlFlexibleServerNetwork network = default, MySqlFlexibleServerPatchStrategy? maintenancePatchStrategy = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.MySqlFlexibleServerForUpdate"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerForUpdate MySqlFlexibleServerForUpdate(ManagedServiceIdentity identity = default, MySqlFlexibleServerSku sku = default, string administratorLoginPassword = default, MySqlFlexibleServerVersion? version = default, MySqlFlexibleServerStorage storage = default, MySqlFlexibleServerBackupProperties backup = default, MySqlFlexibleServerHighAvailability highAvailability = default, MySqlFlexibleServerMaintenanceWindow maintenanceWindow = default, MySqlFlexibleServerReplicationRole? replicationRole = default, MySqlFlexibleServerDataEncryption dataEncryption = default, MySqlFlexibleServerNetwork network = default, MySqlFlexibleServerPatchStrategy? maintenancePatchStrategy = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new MySqlFlexibleServerPatch(identity, sku, administratorLoginPassword is null && version is null && storage is null && backup is null && highAvailability is null && maintenanceWindow is null && replicationRole is null && dataEncryption is null && network is null && maintenancePatchStrategy is null ? default : new ServerPropertiesForUpdate(
+            return new MySqlFlexibleServerForUpdate(identity, sku, administratorLoginPassword is null && version is null && storage is null && backup is null && highAvailability is null && maintenanceWindow is null && replicationRole is null && dataEncryption is null && network is null && maintenancePatchStrategy is null ? default : new ServerPropertiesForUpdate(
                 administratorLoginPassword,
                 version,
                 storage,
