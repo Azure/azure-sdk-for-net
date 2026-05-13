@@ -53,24 +53,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             return new ManagedClusterUpgradeProfileResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="GuardrailsAvailableVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GuardrailsAvailableVersionResource"/> object. </returns>
-        public virtual GuardrailsAvailableVersionResource GetGuardrailsAvailableVersionResource(ResourceIdentifier id)
-        {
-            GuardrailsAvailableVersionResource.ValidateResourceId(id);
-            return new GuardrailsAvailableVersionResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="SafeguardsAvailableVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SafeguardsAvailableVersionResource"/> object. </returns>
-        public virtual SafeguardsAvailableVersionResource GetSafeguardsAvailableVersionResource(ResourceIdentifier id)
-        {
-            SafeguardsAvailableVersionResource.ValidateResourceId(id);
-            return new SafeguardsAvailableVersionResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="MeshRevisionProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MeshRevisionProfileResource"/> object. </returns>
@@ -143,15 +125,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             return new AgentPoolSnapshotResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ManagedClusterSnapshotResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedClusterSnapshotResource"/> object. </returns>
-        public virtual ManagedClusterSnapshotResource GetManagedClusterSnapshotResource(ResourceIdentifier id)
-        {
-            ManagedClusterSnapshotResource.ValidateResourceId(id);
-            return new ManagedClusterSnapshotResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> object. </returns>
@@ -159,42 +132,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         {
             ContainerServiceTrustedAccessRoleBindingResource.ValidateResourceId(id);
             return new ContainerServiceTrustedAccessRoleBindingResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ManagedClusterLoadBalancerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedClusterLoadBalancerResource"/> object. </returns>
-        public virtual ManagedClusterLoadBalancerResource GetManagedClusterLoadBalancerResource(ResourceIdentifier id)
-        {
-            ManagedClusterLoadBalancerResource.ValidateResourceId(id);
-            return new ManagedClusterLoadBalancerResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ManagedClusterIdentityBindingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedClusterIdentityBindingResource"/> object. </returns>
-        public virtual ManagedClusterIdentityBindingResource GetManagedClusterIdentityBindingResource(ResourceIdentifier id)
-        {
-            ManagedClusterIdentityBindingResource.ValidateResourceId(id);
-            return new ManagedClusterIdentityBindingResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ManagedClusterJwtAuthenticatorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedClusterJwtAuthenticatorResource"/> object. </returns>
-        public virtual ManagedClusterJwtAuthenticatorResource GetManagedClusterJwtAuthenticatorResource(ResourceIdentifier id)
-        {
-            ManagedClusterJwtAuthenticatorResource.ValidateResourceId(id);
-            return new ManagedClusterJwtAuthenticatorResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ManagedClusterMeshMembershipResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedClusterMeshMembershipResource"/> object. </returns>
-        public virtual ManagedClusterMeshMembershipResource GetManagedClusterMeshMembershipResource(ResourceIdentifier id)
-        {
-            ManagedClusterMeshMembershipResource.ValidateResourceId(id);
-            return new ManagedClusterMeshMembershipResource(Client, id);
         }
     }
 }
