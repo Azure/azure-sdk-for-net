@@ -30,10 +30,10 @@ safe-outputs:
   noop:
     report-as-issue: false
   messages:
-    footer: "> Analyzed by [{workflow_name}]({run_url})"
-    run-started: "[{workflow_name}]({run_url}) is reviewing this .NET management SDK PR..."
-    run-success: "[{workflow_name}]({run_url}) completed the .NET management SDK PR review."
-    run-failure: "[{workflow_name}]({run_url}) {status}."
+    footer: "> Analyzed by {workflow_name}: {run_url}"
+    run-started: "{workflow_name} is reviewing this .NET management SDK PR: {run_url}"
+    run-success: "{workflow_name} completed the .NET management SDK PR review: {run_url}"
+    run-failure: "{workflow_name} {status}: {run_url}"
 tools:
   github:
     toolsets: [context, repos, pull_requests, actions]
