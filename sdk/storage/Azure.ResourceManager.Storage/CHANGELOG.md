@@ -1,14 +1,14 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.7.0 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+    - Upgraded api-version from `2025-06-01` to `2025-08-01`. Tag details available at https://github.com/Azure/azure-rest-api-specs/tree/dddcb1f2f0131aa15cc761624959063f2e197b57/specification/storage/Storage.Management.
+    - Supported new `StorageAccountAccessTier.Smart` access tier (requires zone-redundant storage).
+    - Supported new `AllowedCopyScope.All` value.
+    - Supported new property `TagsReplicationEnabled` on `ObjectReplicationPolicyData`.
+    - Supported new `StaticWebsite` property on `BlobServiceData` with `DefaultIndexDocumentPath`.
 
 ## 1.6.2 (2026-04-02)
 
