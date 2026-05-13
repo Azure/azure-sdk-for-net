@@ -1027,7 +1027,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 location,
-                provisioningState is null && appPackageUri is null && defaultParameterList is null ? default : new ApplicationTypeVersionResourceProperties(provisioningState, appPackageUri, defaultParameterList, default),
+                provisioningState is null && appPackageUri is null && defaultParameterList is null ? default : new ApplicationTypeVersionResourceProperties(provisioningState, appPackageUri, defaultParameterList ?? new ChangeTrackingDictionary<string, string>(), default),
                 tags,
                 etag);
         }
@@ -1066,7 +1066,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 location,
                 typeVersion is null && parameters is null && upgradePolicy is null && minimumNodes is null && maximumNodes is null && removeApplicationCapacity is null && metrics is null && managedIdentities is null && provisioningState is null && typeName is null ? default : new ApplicationResourceProperties(
                     typeVersion,
-                    parameters,
+                    parameters ?? new ChangeTrackingDictionary<string, string>(),
                     upgradePolicy,
                     minimumNodes,
                     maximumNodes,
@@ -1113,7 +1113,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 location,
                 typeVersion is null && parameters is null && upgradePolicy is null && minimumNodes is null && maximumNodes is null && removeApplicationCapacity is null && metrics is null && managedIdentities is null ? default : new ApplicationResourceUpdateProperties(
                     typeVersion,
-                    parameters,
+                    parameters ?? new ChangeTrackingDictionary<string, string>(),
                     upgradePolicy,
                     minimumNodes,
                     maximumNodes,
