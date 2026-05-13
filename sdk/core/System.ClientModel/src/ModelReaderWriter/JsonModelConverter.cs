@@ -73,10 +73,6 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
     public override IJsonModel<object>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
-        // Create a per-call copy when proxies are registered to isolate ProxiedModel
-        // mutations from concurrent calls through the same converter instance.
-        var callOptions = GetCallOptions();
-
         IJsonModel<object>? AotCompatActivate()
         {
             return _context.GetTypeBuilder(typeToConvert).CreateObject() as IJsonModel<object>;
@@ -90,17 +86,16 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
             return new ReflectionModelBuilder(typeToConvert).CreateObject() as IJsonModel<object>;
         }
 
-        // Always activate the model instance — it's the terminal fallback for the chain.
-        IJsonModel<object>? iJsonModel = _context is null ? NonAotCompatActivate() : AotCompatActivate();
+        if (!_options.TryGetProxy(typeToConvert, out IJsonModel<object>? iJsonModel))
+        {
+            iJsonModel = _context is null ? NonAotCompatActivate() : AotCompatActivate();
+        }
 
         if (iJsonModel is null)
         {
             throw new InvalidOperationException($"Either {typeToConvert.ToFriendlyName()} or the PersistableModelProxyAttribute defined needs to implement IJsonModel.");
         }
-
-        // Use chain-of-responsibility: snapshot reader before each proxy attempt,
-        // restore on null (decline). Falls back to model itself if all proxies decline.
-        var result = callOptions.ReadWithChain(typeToConvert, iJsonModel, ref reader);
+        var result = iJsonModel.Create(ref reader, _options);
         return (IJsonModel<object>?)result;
     }
 
@@ -109,16 +104,6 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
     public override void Write(Utf8JsonWriter writer, IJsonModel<object> value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
-        // Create a per-call copy when proxies are registered to isolate ProxiedModel.
-        var callOptions = GetCallOptions();
-        callOptions.ResolveProxy(value).Write(writer, callOptions);
+        _options.ResolveProxy(value).Write(writer, _options);
     }
-
-    /// <summary>
-    /// Returns a per-call copy of the options when proxies are registered, matching
-    /// the isolation behavior of <see cref="ModelReaderWriter"/>. Without this, concurrent
-    /// calls through the same converter would share ProxiedModel state.
-    /// </summary>
-    private ModelReaderWriterOptions GetCallOptions()
-        => _options.HasProxies ? new ModelReaderWriterOptions(_options) : _options;
 }

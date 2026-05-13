@@ -446,6 +446,21 @@ namespace System.ClientModel.Primitives
         public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
+    public abstract partial class ModelProxy
+    {
+        protected ModelProxy() { }
+        public virtual bool CanHandle(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        internal abstract bool CanHandleObject(object model);
+        internal abstract object CreateFromData(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
+    }
+    public abstract partial class ModelProxy<T> : System.ClientModel.Primitives.ModelProxy, System.ClientModel.Primitives.IPersistableModel<T>
+    {
+        protected ModelProxy() { }
+        public abstract bool CanHandle(T model);
+        public abstract T Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
+        public abstract string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
+        public abstract System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
+    }
     public static partial class ModelReaderWriter
     {
         public static object? Read(System.BinaryData data, System.Type returnType, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
@@ -481,11 +496,11 @@ namespace System.ClientModel.Primitives
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public object? ProxiedModel { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
-        public void AddProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> proxy) { }
+        public void AddProxy<T>(System.ClientModel.Primitives.ModelProxy<T> proxy) { }
         public System.ClientModel.Primitives.IJsonModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IJsonModel<T> model) { throw null; }
         public System.ClientModel.Primitives.IPersistableModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> model) { throw null; }
         public bool TryGetProxy<T>(out System.ClientModel.Primitives.IJsonModel<T>? proxy) { throw null; }
-        public bool TryGetProxy<T>(out System.ClientModel.Primitives.IPersistableModel<T>? proxy) { throw null; }
+        public bool TryGetProxy<T>(out System.ClientModel.Primitives.ModelProxy<T>? proxy) { throw null; }
     }
     public abstract partial class ModelReaderWriterTypeBuilder
     {
