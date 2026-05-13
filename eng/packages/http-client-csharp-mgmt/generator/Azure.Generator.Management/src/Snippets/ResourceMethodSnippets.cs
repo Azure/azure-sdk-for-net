@@ -113,12 +113,17 @@ namespace Azure.Generator.Management.Snippets
             statements.Add(resultDeclaration);
 
             // For enum/extensible enum types: Response<T> response = Response.FromValue(new T(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString()), result);
+            // For string types: read the JSON string directly to avoid the context-less ModelReaderWriter.Read<T>(BinaryData) overload.
             // For framework/system types (e.g. OperationStatusResult): use ModelReaderWriter.Read<T>(result.Content) since they don't have a FromResponse method
             // For model types: Response<T> response = Response.FromValue(T.FromResponse(result), result);
             ValueExpression deserializedValue;
             if (responseGenericType.IsEnum)
             {
                 deserializedValue = New.Instance(responseGenericType, Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.Parse), [resultVariable.Property("Content"), Static<ModelSerializationExtensionsDefinition>().Property("JsonDocumentOptions")]).Property(nameof(JsonDocument.RootElement)).Invoke(nameof(JsonElement.GetString)));
+            }
+            else if (responseGenericType.IsFrameworkType && responseGenericType.FrameworkType == typeof(string))
+            {
+                deserializedValue = Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.Parse), [resultVariable.Property("Content"), Static(new ModelSerializationExtensionsDefinition().Type).Property("JsonDocumentOptions")]).Property(nameof(JsonDocument.RootElement)).Invoke(nameof(JsonElement.GetString));
             }
             else if (responseGenericType.IsFrameworkType)
             {
