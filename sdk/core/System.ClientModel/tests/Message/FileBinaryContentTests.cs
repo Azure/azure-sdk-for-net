@@ -285,17 +285,15 @@ internal class FileBinaryContentTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void Ctor_Path_DoesNotOpenFileEagerly()
+    public void Ctor_Path_Throws_WhenFileMissing()
     {
-        // A path that does not exist should not throw at construction time.
+        // A path that does not exist should fail fast at construction time.
         string path = CreateTempFile();
         Assert.IsFalse(File.Exists(path));
 
-        using FileBinaryContent content = new(path);
-
-        // Constructor succeeds even though the file does not exist.
-        Assert.AreEqual(Path.GetFileName(path), content.Filename);
-        Assert.AreEqual("application/octet-stream", content.MediaType);
+        FileNotFoundException ex = Assert.Throws<FileNotFoundException>(
+            () => new FileBinaryContent(path))!;
+        Assert.AreEqual(path, ex.FileName);
     }
 
     [Test]
@@ -308,16 +306,6 @@ internal class FileBinaryContentTests : SyncAsyncTestBase
 
         Assert.AreEqual(Path.GetFileName(path), content.Filename);
         Assert.AreEqual("text/plain", content.MediaType);
-    }
-
-    [Test]
-    public void Ctor_Path_Filename_IsNull_WhenPathHasNoFileNameComponent()
-    {
-        string rootLikePath = Path.DirectorySeparatorChar.ToString();
-
-        using FileBinaryContent content = new(rootLikePath);
-
-        Assert.IsNull(content.Filename);
     }
 
     [Test]
@@ -373,30 +361,33 @@ internal class FileBinaryContentTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void TryComputeLength_Path_ReturnsFalse_WhenFileMissing()
+    public void TryComputeLength_Path_ReturnsFalse_WhenFileDeletedAfterCtor()
     {
-        string path = CreateTempFile();
+        string path = CreateTempFile(Array.Empty<byte>());
         using FileBinaryContent content = new(path);
+        File.Delete(path);
 
         Assert.IsFalse(content.TryComputeLength(out long length));
         Assert.AreEqual(0, length);
     }
 
     [Test]
-    public void WriteTo_Path_PropagatesIOException_WhenFileMissing()
+    public void WriteTo_Path_PropagatesIOException_WhenFileDeletedAfterCtor()
     {
-        string path = CreateTempFile();
+        string path = CreateTempFile(Array.Empty<byte>());
         using FileBinaryContent content = new(path);
+        File.Delete(path);
 
         using MemoryStream destination = new();
         Assert.Throws<FileNotFoundException>(() => content.WriteTo(destination));
     }
 
     [Test]
-    public void WriteToAsync_Path_PropagatesIOException_WhenFileMissing()
+    public void WriteToAsync_Path_PropagatesIOException_WhenFileDeletedAfterCtor()
     {
-        string path = CreateTempFile();
+        string path = CreateTempFile(Array.Empty<byte>());
         using FileBinaryContent content = new(path);
+        File.Delete(path);
 
         using MemoryStream destination = new();
         Assert.ThrowsAsync<FileNotFoundException>(() => content.WriteToAsync(destination));
@@ -423,7 +414,7 @@ internal class FileBinaryContentTests : SyncAsyncTestBase
     [Test]
     public void Dispose_Path_NeverOpened_DoesNotThrow()
     {
-        string path = CreateTempFile();
+        string path = CreateTempFile(Array.Empty<byte>());
         FileBinaryContent content = new(path);
 
         Assert.DoesNotThrow(() => content.Dispose());

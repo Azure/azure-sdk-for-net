@@ -56,15 +56,21 @@ public sealed class FileBinaryContent : BinaryContent
     /// the bytes held in the file at the provided path.
     /// </summary>
     /// <remarks>
-    /// The file is opened on the first call to <see cref="WriteTo"/>,
-    /// <see cref="WriteToAsync"/>, or <see cref="TryComputeLength"/>.
+    /// The file's existence is verified eagerly so that an invalid path fails
+    /// fast at construction time.
     /// </remarks>
     /// <param name="path">The path to the file containing the bytes
     /// this <see cref="FileBinaryContent"/> will hold.</param>
     /// <param name="mediaType">The media type of the content.</param>
+    /// <exception cref="FileNotFoundException">No file exists at <paramref name="path"/>.</exception>
     public FileBinaryContent(string path, string? mediaType = DefaultMediaType)
     {
         Argument.AssertNotNullOrEmpty(path, nameof(path));
+
+        if (!File.Exists(path))
+        {
+            throw new FileNotFoundException($"The file '{path}' was not found.", path);
+        }
 
         _content = new FileFromPathContent(path);
         MediaType = mediaType;
