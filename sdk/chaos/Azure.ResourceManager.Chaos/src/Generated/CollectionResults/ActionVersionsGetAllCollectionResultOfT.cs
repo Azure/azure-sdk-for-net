@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,48 +14,51 @@ using Azure.ResourceManager.Chaos.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
-    internal partial class ExperimentsGetExperimentsAsyncCollectionResultOfT : AsyncPageable<ChaosExperimentData>
+    internal partial class ActionVersionsGetAllCollectionResultOfT : Pageable<ChaosActionVersionData>
     {
-        private readonly Experiments _client;
+        private readonly ActionVersions _client;
         private readonly Guid _subscriptionId;
-        private readonly bool? _running;
+        private readonly AzureLocation _location;
+        private readonly string _actionName;
         private readonly string _continuationToken;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ExperimentsGetExperimentsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Experiments client used to send requests. </param>
+        /// <summary> Initializes a new instance of ActionVersionsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ActionVersions client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="actionName"> String that represents an Action resource name. </param>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ExperimentsGetExperimentsAsyncCollectionResultOfT(Experiments client, Guid subscriptionId, bool? running, string continuationToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ActionVersionsGetAllCollectionResultOfT(ActionVersions client, Guid subscriptionId, AzureLocation location, string actionName, string continuationToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _running = running;
+            _location = location;
+            _actionName = actionName;
             _continuationToken = continuationToken;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ExperimentsGetExperimentsAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ActionVersionsGetAllCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ExperimentsGetExperimentsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ChaosExperimentData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ActionVersionsGetAllCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ChaosActionVersionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                ExperimentListResult result = ExperimentListResult.FromResponse(response);
-                yield return Page<ChaosExperimentData>.FromValues((IReadOnlyList<ChaosExperimentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                ActionVersionListResult result = ActionVersionListResult.FromResponse(response);
+                yield return Page<ChaosActionVersionData>.FromValues((IReadOnlyList<ChaosActionVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -68,14 +70,14 @@ namespace Azure.ResourceManager.Chaos
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetExperimentsRequest(nextLink, _subscriptionId, _running, _continuationToken, _context) : _client.CreateGetExperimentsRequest(_subscriptionId, _running, _continuationToken, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _location, _actionName, _continuationToken, _context) : _client.CreateGetAllRequest(_subscriptionId, _location, _actionName, _continuationToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {
