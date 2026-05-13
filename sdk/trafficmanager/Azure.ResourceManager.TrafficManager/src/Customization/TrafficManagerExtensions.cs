@@ -3,8 +3,8 @@
 
 using System.ComponentModel;
 using Azure.Core;
-using Azure.ResourceManager.TrafficManager.Mocking;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.TrafficManager.Mocking;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.TrafficManager
