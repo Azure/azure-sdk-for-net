@@ -256,6 +256,52 @@ interface Employees2 {
     );
   });
 
+  it("uses clientName-adjusted model name as default resource wrapper name", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Container app job properties */
+model JobProperties {
+  /** Display name */
+  displayName?: string;
+}
+
+/** Container app job resource */
+@@clientName(Job, "ContainerAppJob", "csharp");
+model Job is TrackedResource<JobProperties> {
+  ...ResourceNameParameter<Job>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Jobs {
+  get is ArmResourceRead<Job>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Job>;
+  delete is ArmResourceDeleteWithoutOkAsync<Job>;
+  listByResourceGroup is ArmResourceListByParent<Job>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    const jobResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/jobs"
+    );
+    ok(jobResource, "Job resource should be detected");
+    strictEqual(jobResource.metadata.resourceName, "ContainerAppJob");
+
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    const resolvedJobResource = resolvedSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/jobs"
+    );
+    ok(resolvedJobResource, "Job resource should be resolved");
+    strictEqual(resolvedJobResource.metadata.resourceName, "ContainerAppJob");
+  });
+
   it("singleton resource", async () => {
     const program = await typeSpecCompile(
       `
