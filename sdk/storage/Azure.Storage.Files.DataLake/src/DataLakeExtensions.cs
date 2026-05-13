@@ -579,7 +579,8 @@ namespace Azure.Storage.Files.DataLake
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 Position = options.Position,
-                TransferValidation = options.TransferValidation
+                TransferValidation = options.TransferValidation,
+                EnableDataLocality = options.EnableDataLocality
             };
         }
 

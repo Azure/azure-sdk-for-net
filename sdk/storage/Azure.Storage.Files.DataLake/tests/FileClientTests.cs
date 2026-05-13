@@ -4907,6 +4907,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
+        #region DataLocalityTests
         [LiveOnly]
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
@@ -4986,6 +4987,187 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task OpenReadAsync_EnableDataLocality_WithRequestAsserts()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            long size = 20 * Constants.MB;
+            byte[] data = GetRandomBuffer(size);
+
+            // Upload the file in chunks via Append/Flush.
+            int chunkSize = 4 * Constants.MB;
+            for (int offset = 0; offset < data.Length; offset += chunkSize)
+            {
+                int count = Math.Min(chunkSize, data.Length - offset);
+                using var chunk = new MemoryStream(data, offset, count);
+                await file.AppendAsync(chunk, offset);
+            }
+            await file.FlushAsync(size);
+
+            // Add a tracking policy that sits after DataLocalityPolicy in the pipeline
+            // to capture the rewritten host/port and Host header on each request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            DataLakeClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            DataLakeFileClient downloadFile = InstrumentClient(new DataLakeFileClient(
+                file.Uri,
+                Tenants.GetNewHnsSharedKeyCredentials(),
+                options));
+
+            string originalHost = file.Uri.Host;
+
+            // Use a 5 MB buffer so a 20 MB file requires 4 buffer fills total,
+            // all of which should be routed to layout endpoints because the
+            // layout cache is built upfront when EnableDataLocality is true.
+            int bufferSize = 5 * Constants.MB;
+            DataLakeOpenReadOptions readOptions = new(allowModifications: false)
+            {
+                EnableDataLocality = true,
+                BufferSize = bufferSize,
+            };
+
+            using (var resultStream = new MemoryStream())
+            {
+                using Stream readStream = await downloadFile.OpenReadAsync(readOptions);
+                await readStream.CopyToAsync(resultStream);
+                Assert.AreEqual(data.Length, resultStream.Length);
+                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+            }
+
+            // Filter to requests where DataLocalityPolicy rewrote the host
+            // (indicated by the presence of a Host header).
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests =
+                trackingPolicy.TrackedRequests.Where(r => r.HasHostHeader).ToList();
+
+            // With EnableDataLocality, the layout cache is constructed upfront,
+            // so every buffer-fill request should be routed to a layout endpoint.
+            // With a 5 MB buffer and a 20 MB file, OpenRead issues 4 range downloads,
+            // all of which should be rewritten.
+            Assert.AreEqual(4, rewrittenRequests.Count,
+                "Expected DataLocalityPolicy to rewrite the host on every buffer-fill request.");
+
+            foreach (DataLocalityTrackingPolicy.RequestInfo req in rewrittenRequests)
+            {
+                // The URI host and port should have been rewritten to the layout endpoint
+                Assert.AreNotEqual(originalHost, req.RequestHost,
+                    $"Request URI host should be rewritten to layout endpoint, not '{originalHost}'");
+                Assert.Greater(req.RequestPort, 0,
+                    "Request URI port should be set by DataLocalityPolicy");
+
+                // The Host header must preserve the original host
+                Assert.AreEqual(originalHost, req.HostHeaderValue,
+                    $"Host header should be the original host '{originalHost}', not the layout endpoint");
+                Assert.AreNotEqual(req.RequestHost, req.HostHeaderValue,
+                    "Host header should differ from the rewritten URI host");
+            }
+        }
+
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task OpenReadAsync_EnableDataLocality_WithPosition_WithRequestAsserts()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            long size = 20 * Constants.MB;
+            byte[] data = GetRandomBuffer(size);
+
+            // Upload the file in chunks via Append/Flush.
+            int chunkSize = 4 * Constants.MB;
+            for (int offset = 0; offset < data.Length; offset += chunkSize)
+            {
+                int count = Math.Min(chunkSize, data.Length - offset);
+                using var chunk = new MemoryStream(data, offset, count);
+                await file.AppendAsync(chunk, offset);
+            }
+            await file.FlushAsync(size);
+
+            // Add a tracking policy that sits after DataLocalityPolicy in the pipeline
+            // to capture the rewritten host/port, Host header, and range on each request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            DataLakeClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            DataLakeFileClient downloadFile = InstrumentClient(new DataLakeFileClient(
+                file.Uri,
+                Tenants.GetNewHnsSharedKeyCredentials(),
+                options));
+
+            string originalHost = file.Uri.Host;
+
+            // With a 5 MB buffer and 20 MB file, opening at 8 MB leaves 12 MB to download
+            // ⇒ 3 buffer-fill requests instead of 4. The first request's range will
+            // start at exactly the user's Position, and no request may start earlier.
+            long position = 8 * Constants.MB;
+            int bufferSize = 5 * Constants.MB;
+            DataLakeOpenReadOptions readOptions = new(allowModifications: false)
+            {
+                EnableDataLocality = true,
+                BufferSize = bufferSize,
+                Position = position,
+            };
+
+            using (var resultStream = new MemoryStream())
+            {
+                using Stream readStream = await downloadFile.OpenReadAsync(readOptions);
+                await readStream.CopyToAsync(resultStream);
+
+                // Stream length reflects the full file, but only the bytes from
+                // `position` onward should have been delivered to the caller.
+                Assert.AreEqual(data.Length, readStream.Length);
+                Assert.AreEqual(data.Length - position, resultStream.Length);
+
+                byte[] expected = new byte[data.Length - position];
+                Array.Copy(data, position, expected, 0, expected.Length);
+                TestHelper.AssertSequenceEqual(expected, resultStream.ToArray());
+            }
+
+            // Filter to requests where DataLocalityPolicy rewrote the host
+            // (indicated by the presence of a Host header).
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests =
+                trackingPolicy.TrackedRequests.Where(r => r.HasHostHeader).ToList();
+
+            // With EnableDataLocality, every buffer-fill request should be rewritten.
+            // Opening at 8 MB into a 20 MB file with a 5 MB buffer ⇒ 3 buffer fills.
+            Assert.AreEqual(3, rewrittenRequests.Count,
+                "Expected DataLocalityPolicy to rewrite the host on every buffer-fill request when opening at a non-zero Position.");
+
+            foreach (DataLocalityTrackingPolicy.RequestInfo req in rewrittenRequests)
+            {
+                // The URI host and port should have been rewritten to the layout endpoint.
+                Assert.AreNotEqual(originalHost, req.RequestHost,
+                    $"Request URI host should be rewritten to layout endpoint, not '{originalHost}'");
+                Assert.Greater(req.RequestPort, 0,
+                    "Request URI port should be set by DataLocalityPolicy");
+
+                // The Host header must preserve the original host.
+                Assert.AreEqual(originalHost, req.HostHeaderValue,
+                    $"Host header should be the original host '{originalHost}', not the layout endpoint");
+                Assert.AreNotEqual(req.RequestHost, req.HostHeaderValue,
+                    "Host header should differ from the rewritten URI host");
+
+                // The position-respecting invariant: no buffer-fill request may
+                // start before the caller's Position.
+                long? rangeStart = req.RangeStartOffset;
+                Assert.IsNotNull(rangeStart,
+                    "Buffer-fill requests should carry a range header; OpenRead should never request the entire file.");
+                Assert.GreaterOrEqual(rangeStart.Value, position,
+                    $"Buffer-fill request started at offset {rangeStart.Value}, which is before the caller's Position {position}.");
+            }
+
+            // The very first buffer-fill must start exactly at the user's Position.
+            // (Subsequent fills will be at position + bufferSize, position + 2*bufferSize, ...)
+            Assert.AreEqual(position, rewrittenRequests[0].RangeStartOffset,
+                "First buffer-fill request should start exactly at the caller's Position.");
+        }
+        #endregion
+
         /// <summary>
         /// Pipeline policy that records the host/port and Host header of each
         /// outgoing request. Added as PerCall after DataLocalityPolicy to observe
@@ -4999,6 +5181,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 bool hasHostHeader = message.Request.Headers.TryGetValue("Host", out string hostValue);
 
+                // Storage uses x-ms-range for Get Blob; fall back to standard Range for safety.
+                if (!message.Request.Headers.TryGetValue("x-ms-range", out string rangeValue))
+                {
+                    message.Request.Headers.TryGetValue("Range", out rangeValue);
+                }
+
                 lock (TrackedRequests)
                 {
                     TrackedRequests.Add(new RequestInfo
@@ -5007,6 +5195,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                         RequestPort = message.Request.Uri.Port,
                         HasHostHeader = hasHostHeader,
                         HostHeaderValue = hostValue ?? string.Empty,
+                        RangeHeaderValue = rangeValue,
                     });
                 }
             }
@@ -5017,6 +5206,33 @@ namespace Azure.Storage.Files.DataLake.Tests
                 public int RequestPort { get; set; }
                 public bool HasHostHeader { get; set; }
                 public string HostHeaderValue { get; set; }
+                public string RangeHeaderValue { get; set; }
+
+                /// <summary>
+                /// Parses the range header value (e.g. "bytes=8388608-13631487" or
+                /// "bytes=8388608-") and returns the starting byte offset, or null
+                /// if no range header was present or the value couldn't be parsed.
+                /// </summary>
+                public long? RangeStartOffset
+                {
+                    get
+                    {
+                        if (string.IsNullOrEmpty(RangeHeaderValue))
+                        {
+                            return null;
+                        }
+
+                        const string prefix = "bytes=";
+                        string value = RangeHeaderValue.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)
+                            ? RangeHeaderValue.Substring(prefix.Length)
+                            : RangeHeaderValue;
+
+                        int dashIndex = value.IndexOf('-');
+                        string startToken = dashIndex < 0 ? value : value.Substring(0, dashIndex);
+
+                        return long.TryParse(startToken, out long start) ? start : (long?)null;
+                    }
+                }
             }
         }
 
