@@ -146,11 +146,6 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.Providers
 
             foreach (var p in method.Operation.Parameters)
             {
-                if (p.IsApiVersion)
-                {
-                    continue;
-                }
-
                 var bindingAttr = BuildBindingAttribute(p);
                 if (bindingAttr is null)
                 {

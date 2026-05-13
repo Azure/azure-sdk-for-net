@@ -17,17 +17,19 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
     {
         /// <inheritdoc/>
         public override Task<ActionResult<Database>> GetAsync(
+            string apiVersion,
             string subscriptionId,
             string resourceGroupName,
             string databaseName,
             CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return Task.FromResult<ActionResult<Database>>(Ok(CreateDatabase(subscriptionId, resourceGroupName, databaseName)));
+            return Task.FromResult<ActionResult<Database>>(Ok(CreateDatabase(apiVersion, subscriptionId, resourceGroupName, databaseName)));
         }
 
         /// <inheritdoc/>
         public override Task<ActionResult<Database>> CreateOrUpdateAsync(
+            string apiVersion,
             string subscriptionId,
             string resourceGroupName,
             string databaseName,
@@ -39,12 +41,15 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
             resource.Id = BuildDatabaseId(subscriptionId, resourceGroupName, databaseName);
             resource.Name = databaseName;
             resource.Type = "Microsoft.Sql/databases";
+            resource.Tags ??= new Dictionary<string, string>();
+            resource.Tags["api-version"] = apiVersion;
 
             return Task.FromResult<ActionResult<Database>>(Ok(resource));
         }
 
         /// <inheritdoc/>
         public override Task<IActionResult> DeleteAsync(
+            string apiVersion,
             string subscriptionId,
             string resourceGroupName,
             string databaseName,
@@ -56,6 +61,7 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
 
         /// <inheritdoc/>
         public override Task<ActionResult<Database>> UpdateAsync(
+            string apiVersion,
             string subscriptionId,
             string resourceGroupName,
             string databaseName,
@@ -64,8 +70,9 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var database = CreateDatabase(subscriptionId, resourceGroupName, databaseName);
+            var database = CreateDatabase(apiVersion, subscriptionId, resourceGroupName, databaseName);
             database.Tags = properties.Tags ?? database.Tags;
+            database.Tags["api-version"] = apiVersion;
             database.Properties.Collation = properties.Properties?.Collation ?? database.Properties.Collation;
             database.Properties.MaxSizeBytes = properties.Properties?.MaxSizeBytes ?? database.Properties.MaxSizeBytes;
             database.Properties.ElasticPoolId = properties.Properties?.ElasticPoolId ?? database.Properties.ElasticPoolId;
@@ -75,6 +82,7 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
 
         /// <inheritdoc/>
         public override Task<ActionResult<DatabaseListResult>> ListByResourceGroupAsync(
+            string apiVersion,
             string subscriptionId,
             string resourceGroupName,
             CancellationToken cancellationToken = default)
@@ -85,15 +93,15 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
             {
                 Value =
                 [
-                    CreateDatabase(subscriptionId, resourceGroupName, "database1"),
-                    CreateDatabase(subscriptionId, resourceGroupName, "database2")
+                    CreateDatabase(apiVersion, subscriptionId, resourceGroupName, "database1"),
+                    CreateDatabase(apiVersion, subscriptionId, resourceGroupName, "database2")
                 ]
             };
 
             return Task.FromResult<ActionResult<DatabaseListResult>>(Ok(result));
         }
 
-        private static Database CreateDatabase(string subscriptionId, string resourceGroupName, string databaseName)
+        private static Database CreateDatabase(string apiVersion, string subscriptionId, string resourceGroupName, string databaseName)
         {
             return new Database
             {
@@ -103,6 +111,7 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
                 Location = "westus",
                 Tags = new Dictionary<string, string>
                 {
+                    ["api-version"] = apiVersion,
                     ["scenario"] = "existing-project"
                 },
                 Properties = new DatabaseProperties

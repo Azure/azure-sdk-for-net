@@ -15,6 +15,7 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
     {
         /// <summary> List the operations for the provider. </summary>
         [HttpGet("providers/Microsoft.Sql/operations")]
-        public abstract Task<ActionResult<OperationListResult>> ListAsync(CancellationToken cancellationToken = default);
+        public abstract Task<ActionResult<OperationListResult>> ListAsync([FromQuery(Name = "api-version")]
+        string apiVersion, CancellationToken cancellationToken = default);
     }
 }

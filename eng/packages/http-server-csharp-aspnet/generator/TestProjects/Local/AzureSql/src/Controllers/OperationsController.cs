@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.ResourceManager.CommonTypes;
@@ -15,12 +16,13 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
     public sealed class OperationsController : OperationsControllerBase
     {
         /// <inheritdoc/>
-        public override Task<ActionResult<OperationListResult>> ListAsync(CancellationToken cancellationToken = default)
+        public override Task<ActionResult<OperationListResult>> ListAsync(string apiVersion, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
             var result = new OperationListResult
             {
+                NextLink = new Uri($"https://example.com/providers/Microsoft.Sql/operations?api-version={apiVersion}"),
                 Value =
                 [
                     new Operation
