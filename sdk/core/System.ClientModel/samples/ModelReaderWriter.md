@@ -64,7 +64,7 @@ Unlike the `PersistableModelProxy` attribute the proxy is only valid for a singl
 Using a proxy with the following definition
 
 ```C# Snippet:Readme_Read_Proxy_ClassStub
-public class OutputModelProxy : IJsonModel<OutputModel>
+public class OutputModelProxy : ModelProxy<OutputModel>, IJsonModel<OutputModel>
 ```
 
 The example below shows how to read JSON to create a strongly-typed model instance using a proxy.
@@ -85,7 +85,7 @@ OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(j
 Using a proxy with the following definition
 
 ```C# Snippet:Readme_Write_Proxy_ClassStub
-public class InputModelProxy : IJsonModel<InputModel>
+public class InputModelProxy : ModelProxy<InputModel>, IJsonModel<InputModel>
 ```
 
 The example below shows how to write a persistable model using a proxy to `BinaryData`
