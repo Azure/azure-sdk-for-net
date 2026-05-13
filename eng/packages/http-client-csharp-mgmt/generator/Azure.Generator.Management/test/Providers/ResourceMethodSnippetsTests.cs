@@ -36,5 +36,24 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(code, Does.Contain("ModelReaderWriter"),
                 "Framework/system types should be deserialized using ModelReaderWriter.Read<T>.");
         }
+
+        [Test]
+        public void CreateGenericResponsePipelineProcessing_WithStringType_DoesNotUseContextlessModelReaderWriterRead()
+        {
+            var messageVar = new VariableExpression(typeof(Azure.Core.HttpMessage), "message");
+            var contextVar = new VariableExpression(typeof(Azure.RequestContext), "context");
+            CSharpType responseType = typeof(string);
+
+            var statements = ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
+                messageVar,
+                contextVar,
+                responseType,
+                isAsync: false,
+                out _);
+
+            var code = string.Join("\n", statements.Select(s => s.ToDisplayString()));
+            Assert.That(code, Does.Not.Contain("ModelReaderWriter.Read<string>(result.Content)"));
+            Assert.That(code, Does.Contain("JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString()"));
+        }
     }
 }
