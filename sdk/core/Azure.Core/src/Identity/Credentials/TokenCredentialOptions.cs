@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Azure.Core;
 using Microsoft.Extensions.Configuration;
 
@@ -75,6 +76,13 @@ namespace Azure.Identity
         public IDictionary<string, (string Value, bool IncludeInCacheKey)> AdditionalQueryParameters { get; } = new Dictionary<string, (string Value, bool IncludeInCacheKey)>();
 
         /// <summary>
+        /// Gets or sets an optional callback that is invoked before each token request is sent to the identity provider.
+        /// This callback can be used to customize the token request by adding custom body parameters.
+        /// </summary>
+        [Experimental("AZID0002")]
+        public Func<TokenRequestCallbackContext, Task> TokenRequestCallback { get; set; }
+
+        /// <summary>
         /// Gets or sets whether this credential is part of a chained credential.
         /// </summary>
         internal bool IsChainedCredential { get; set; }
@@ -95,6 +103,11 @@ namespace Azure.Identity
 #pragma warning disable AZID0001 // AdditionalQueryParameters is experimental
             CloneListItems(AdditionalQueryParameters, clone.AdditionalQueryParameters);
 #pragma warning restore AZID0001
+
+            // copy TokenRequestCallback callback
+#pragma warning disable AZID0002 // TokenRequestCallback is experimental
+            clone.TokenRequestCallback = TokenRequestCallback;
+#pragma warning restore AZID0002
 
             // copy TokenCredentialDiagnosticsOptions specific options
             clone.Diagnostics.IsAccountIdentifierLoggingEnabled = Diagnostics.IsAccountIdentifierLoggingEnabled;
