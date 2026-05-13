@@ -102,12 +102,14 @@ BinaryData data = ModelReaderWriter.Write(model, options);
 ### Proxy Chain of Responsibility
 
 Multiple proxies can be registered for the same model type to form a chain of responsibility.
-The chain resolution differs for reading and writing:
+Proxies are stored in FIFO order — the **first registered** proxy has the highest priority.
 
-**Write path:** The most recently registered proxy wins unconditionally (last-added-wins).
+**Write path:** Proxies are consulted first-to-last. Each proxy's `CanHandle(model)` method
+is called — the first proxy that returns `true` handles the write. If all proxies decline,
+the model serializes itself.
 
-**Read path:** Proxies are consulted from most recently registered to first. Each proxy's
-`Create` method is called — if it returns `null`, it declines and the next proxy is tried.
+**Read path:** Proxies are consulted first-to-last. Each proxy's `CanHandle(BinaryData, options)`
+method is called — the first proxy that returns `true` handles the read via `Create`.
 If all proxies decline, the model itself handles the read as a terminal fallback.
 
 This enables advanced scenarios such as discriminator-based routing, where a proxy can
@@ -121,11 +123,11 @@ string json = @"{
     }";
 ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
 
-// Base library registers a proxy
-options.AddProxy(new OutputModelProxy());
-
-// Consumer registers a higher-priority proxy — this one is used
+// Higher-priority proxy registered first — consulted first in the chain
 options.AddProxy(new OutputModelProxyOverride());
+
+// Base library registers a fallback proxy
+options.AddProxy(new OutputModelProxy());
 
 OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
 ```

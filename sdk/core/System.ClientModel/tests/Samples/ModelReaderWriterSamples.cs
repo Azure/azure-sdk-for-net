@@ -97,11 +97,11 @@ internal class ModelReaderWriterSamples
             }";
         ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
 
-        // Base library registers a proxy
-        options.AddProxy(new OutputModelProxy());
-
-        // Consumer registers a higher-priority proxy — this one is used
+        // Higher-priority proxy registered first — consulted first in the chain
         options.AddProxy(new OutputModelProxyOverride());
+
+        // Base library registers a fallback proxy
+        options.AddProxy(new OutputModelProxy());
 
         OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
         #endregion
