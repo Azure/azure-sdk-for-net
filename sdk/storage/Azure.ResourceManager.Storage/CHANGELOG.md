@@ -4,7 +4,7 @@
 
 ### Features Added
 
-    - Upgraded api-version from `2025-06-01` to `2025-08-01`. Tag details available at https://github.com/Azure/azure-rest-api-specs/tree/dddcb1f2f0131aa15cc761624959063f2e197b57/specification/storage/Storage.Management.
+- Upgraded api-version from `2025-06-01` to `2025-08-01`. Tag details available at https://github.com/Azure/azure-rest-api-specs/tree/dddcb1f2f0131aa15cc761624959063f2e197b57/specification/storage/Storage.Management.
     - Supported new `StorageAccountAccessTier.Smart` access tier (requires zone-redundant storage).
     - Supported new `AllowedCopyScope.All` value.
     - Supported new property `TagsReplicationEnabled` on `ObjectReplicationPolicyData`.
