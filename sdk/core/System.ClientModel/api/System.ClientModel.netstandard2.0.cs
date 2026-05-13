@@ -446,20 +446,17 @@ namespace System.ClientModel.Primitives
         public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
-    public abstract partial class ModelProxy
+    public abstract partial class ModelProxy<T> : System.ClientModel.Primitives.IPersistableModel<T>
     {
         protected ModelProxy() { }
         public virtual bool CanHandle(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        internal abstract bool CanHandleObject(object model);
-        internal abstract object CreateFromData(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
-    }
-    public abstract partial class ModelProxy<T> : System.ClientModel.Primitives.ModelProxy, System.ClientModel.Primitives.IPersistableModel<T>
-    {
-        protected ModelProxy() { }
         public abstract bool CanHandle(T model);
-        public abstract T Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
-        public abstract string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
-        public abstract System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
+        protected abstract T PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
+        protected abstract string PersistableModelGetFormatFromOptionsCore(System.ClientModel.Primitives.ModelReaderWriterOptions options);
+        protected abstract System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options);
+        T System.ClientModel.Primitives.IPersistableModel<T>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<T>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<T>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ModelReaderWriter
     {

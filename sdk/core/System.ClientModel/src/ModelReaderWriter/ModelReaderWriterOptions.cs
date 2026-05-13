@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -132,7 +132,7 @@ public class ModelReaderWriterOptions
 
         for (int i = 0; i < chain.Count; i++)
         {
-            if (chain[i] is ModelProxy and IJsonModel<object> jsonResult)
+            if (chain[i] is IModelProxy and IJsonModel<object> jsonResult)
             {
                 proxy = jsonResult;
                 return true;
@@ -161,7 +161,7 @@ public class ModelReaderWriterOptions
         // Write path: walk chain first-to-last (FIFO), return the first that CanHandle.
         for (int i = 0; i < chain.Count; i++)
         {
-            if (chain[i] is ModelProxy proxyBase && proxyBase.CanHandleObject(model) && chain[i] is IPersistableModel<T> typedProxy)
+            if (chain[i] is IModelProxy proxyBase && proxyBase.CanHandleObject(model) && chain[i] is IPersistableModel<T> typedProxy)
             {
                 ProxiedModel = model;
                 return typedProxy;
@@ -189,7 +189,7 @@ public class ModelReaderWriterOptions
         // Write path: walk chain first-to-last (FIFO), return the first IJsonModel<T> that CanHandle.
         for (int i = 0; i < chain.Count; i++)
         {
-            if (chain[i] is ModelProxy proxyBase && proxyBase.CanHandleObject(model) && chain[i] is IJsonModel<T> jsonProxy)
+            if (chain[i] is IModelProxy proxyBase && proxyBase.CanHandleObject(model) && chain[i] is IJsonModel<T> jsonProxy)
             {
                 ProxiedModel = model;
                 return jsonProxy;
@@ -201,7 +201,7 @@ public class ModelReaderWriterOptions
 
     /// <summary>
     /// Resolves a proxy for reading by walking the chain of responsibility in FIFO order.
-    /// Each proxy's <see cref="ModelProxy.CanHandle(BinaryData, ModelReaderWriterOptions)"/> is called
+    /// Each proxy's <see cref="ModelProxy{T}.CanHandle(BinaryData, ModelReaderWriterOptions)"/> is called
     /// from first registered to last. If a proxy returns <c>true</c>, its
     /// <see cref="IPersistableModel{T}.Create(BinaryData, ModelReaderWriterOptions)"/> is called.
     /// If all proxies decline, the model itself handles the read.
@@ -219,7 +219,7 @@ public class ModelReaderWriterOptions
         // Walk chain first-to-last (FIFO), check CanHandle on each proxy.
         for (int i = 0; i < chain.Count; i++)
         {
-            if (chain[i] is ModelProxy proxyBase && proxyBase.CanHandle(data, this))
+            if (chain[i] is IModelProxy proxyBase && proxyBase.CanHandleData(data, this))
             {
                 ProxiedModel = model;
                 return (T?)proxyBase.CreateFromData(data, this);
@@ -235,7 +235,7 @@ public class ModelReaderWriterOptions
     /// Resolves a proxy for reading from a <see cref="Utf8JsonReader"/> by walking the chain of responsibility
     /// in FIFO order (first registered is consulted first).
     /// When proxies exist, the JSON element is read into <see cref="BinaryData"/> once for
-    /// <see cref="ModelProxy.CanHandle(BinaryData, ModelReaderWriterOptions)"/> checks. If a proxy handles it,
+    /// <see cref="ModelProxy{T}.CanHandle(BinaryData, ModelReaderWriterOptions)"/> checks. If a proxy handles it,
     /// <see cref="IPersistableModel{T}.Create(BinaryData, ModelReaderWriterOptions)"/> is called.
     /// If all proxies decline, the model itself handles the read using the original reader.
     /// </summary>
@@ -257,7 +257,7 @@ public class ModelReaderWriterOptions
         // Walk chain first-to-last (FIFO), check CanHandle with the BinaryData.
         for (int i = 0; i < chain.Count; i++)
         {
-            if (chain[i] is ModelProxy proxyBase && proxyBase.CanHandle(data, this))
+            if (chain[i] is IModelProxy proxyBase && proxyBase.CanHandleData(data, this))
             {
                 ProxiedModel = model;
                 return (T?)proxyBase.CreateFromData(data, this);
@@ -272,7 +272,7 @@ public class ModelReaderWriterOptions
     /// <summary>
     /// Resolves a proxy for reading from a <see cref="Utf8JsonReader"/> using a non-generic model reference,
     /// walking the chain of responsibility in FIFO order with
-    /// <see cref="ModelProxy.CanHandle(BinaryData, ModelReaderWriterOptions)"/> semantics.
+    /// <see cref="ModelProxy{T}.CanHandle(BinaryData, ModelReaderWriterOptions)"/> semantics.
     /// Used by <see cref="JsonModelConverter"/> and <see cref="JsonCollectionReader"/>.
     /// </summary>
     /// <param name="modelType"> The runtime type of the model to look up proxies for. </param>
@@ -294,7 +294,7 @@ public class ModelReaderWriterOptions
         // Walk chain first-to-last (FIFO) with CanHandle.
         for (int i = 0; i < chain.Count; i++)
         {
-            if (chain[i] is ModelProxy proxyBase && proxyBase.CanHandle(data, this))
+            if (chain[i] is IModelProxy proxyBase && proxyBase.CanHandleData(data, this))
             {
                 ProxiedModel = model;
                 return proxyBase.CreateFromData(data, this);

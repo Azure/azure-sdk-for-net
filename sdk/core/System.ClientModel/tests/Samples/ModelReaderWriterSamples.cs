@@ -123,17 +123,17 @@ internal class ModelReaderWriterSamples
             throw new NotImplementedException();
         }
 
-        public override BinaryData Write(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override OutputModel Create(BinaryData data, ModelReaderWriterOptions options)
+        protected override OutputModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override string GetFormatFromOptions(ModelReaderWriterOptions options)
+        protected override string PersistableModelGetFormatFromOptionsCore(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
@@ -153,17 +153,17 @@ internal class ModelReaderWriterSamples
             throw new NotImplementedException();
         }
 
-        public override BinaryData Write(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override OutputModel Create(BinaryData data, ModelReaderWriterOptions options)
+        protected override OutputModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override string GetFormatFromOptions(ModelReaderWriterOptions options)
+        protected override string PersistableModelGetFormatFromOptionsCore(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
@@ -185,17 +185,17 @@ internal class ModelReaderWriterSamples
             throw new NotImplementedException();
         }
 
-        public override BinaryData Write(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override InputModel Create(BinaryData data, ModelReaderWriterOptions options)
+        protected override InputModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override string GetFormatFromOptions(ModelReaderWriterOptions options)
+        protected override string PersistableModelGetFormatFromOptionsCore(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
