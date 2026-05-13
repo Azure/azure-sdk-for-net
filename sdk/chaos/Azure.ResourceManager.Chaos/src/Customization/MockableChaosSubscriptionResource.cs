@@ -120,9 +120,10 @@ namespace Azure.ResourceManager.Chaos.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsGetExperimentsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsListAsyncCollectionResultOfT(
                 ExperimentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
+                null,
                 running,
                 continuationToken,
                 context,
@@ -140,9 +141,10 @@ namespace Azure.ResourceManager.Chaos.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsGetExperimentsCollectionResultOfT(
+            return new PageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsListCollectionResultOfT(
                 ExperimentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
+                null,
                 running,
                 continuationToken,
                 context,
