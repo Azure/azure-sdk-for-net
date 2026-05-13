@@ -5,6 +5,8 @@ using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
@@ -42,6 +44,20 @@ namespace Azure.Generator.Management
 
         /// <inheritdoc/>
         public override ManagementTypeFactory TypeFactory { get; }
+
+        /// <inheritdoc/>
+        public override TypeProviderWriter GetWriter(TypeProvider provider)
+        {
+            if (provider is ModelFactoryProvider modelFactory)
+            {
+                // Model factory back-compat overloads can be synthesized from LastContractView
+                // after normal visitors run. Repair them here so the final methods being written
+                // preserve arguments that were moved into flattened model properties.
+                ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+            }
+
+            return base.GetWriter(provider);
+        }
 
         /// <summary>
         /// Customize the generation output for Azure client SDK.

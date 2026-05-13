@@ -8,14 +8,14 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Header-based secret authentication for a telemetry endpoint. The resolved secret value is injected as an HTTP header. </summary>
-    public partial class HeaderTelemetryEndpointAuth : TelemetryEndpointAuth
+    public partial class HeaderTelemetryEndpointAuth : TelemetryEndpointAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="HeaderTelemetryEndpointAuth"/>. </summary>
         /// <param name="headerName"> The name of the HTTP header to inject the secret value into. </param>
         /// <param name="secretId"> The identifier of the secret store or connection. </param>
         /// <param name="secretKey"> The key within the secret to retrieve the authentication value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headerName"/>, <paramref name="secretId"/> or <paramref name="secretKey"/> is null. </exception>
-        public HeaderTelemetryEndpointAuth(string headerName, string secretId, string secretKey) : base(TelemetryEndpointAuthType.Header)
+        public HeaderTelemetryEndpointAuth(string headerName, string secretId, string secretKey) : base(TelemetryEndpointAuthenticationKind.Header)
         {
             Argument.AssertNotNull(headerName, nameof(headerName));
             Argument.AssertNotNull(secretId, nameof(secretId));
@@ -32,7 +32,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="headerName"> The name of the HTTP header to inject the secret value into. </param>
         /// <param name="secretId"> The identifier of the secret store or connection. </param>
         /// <param name="secretKey"> The key within the secret to retrieve the authentication value. </param>
-        internal HeaderTelemetryEndpointAuth(TelemetryEndpointAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string headerName, string secretId, string secretKey) : base(@type, additionalBinaryDataProperties)
+        internal HeaderTelemetryEndpointAuth(TelemetryEndpointAuthenticationKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string headerName, string secretId, string secretKey) : base(@type, additionalBinaryDataProperties)
         {
             HeaderName = headerName;
             SecretId = secretId;

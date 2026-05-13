@@ -941,6 +941,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.FunctionCall)]
     [TestCase(ToolType.MCP)]
     [TestCase(ToolType.MCPConnection)]
+    [TestCase(ToolType.MCPToolbox)]
     public async Task TestInterativeTools(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -984,9 +985,9 @@ public class AgentsTests : AgentsTestBase
                     funcionCalled = true;
                     functionWasCalled = true;
                 }
-                else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
+                else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection || toolType == ToolType.MCPToolbox) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
                 {
-                    Assert.That(mcpToolCall.ServerLabel, Is.EqualTo("api-specs"));
+                    Assert.That(mcpToolCall.ServerLabel, Is.EqualTo(toolType == ToolType.MCPToolbox? "search-tool" : "api-specs"));
                     responseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
                     funcionCalled = true;
                     functionWasCalled = true;
@@ -1475,7 +1476,7 @@ public class AgentsTests : AgentsTestBase
             agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         }
         Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
-        AgentEndpointConfig config = new()
+        AgentEndpointConfiguration config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
             Protocols = { AgentEndpointProtocol.Responses }

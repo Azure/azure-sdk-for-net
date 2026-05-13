@@ -353,7 +353,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         {
             if (provider is MrwSerializationTypeDefinition serializationTypeDefinition)
             {
-                bool returnTypeChanged = false;
                 foreach (var method in serializationTypeDefinition.Methods.Where(
                     m => _methodNamesToFixReturnType.Contains(m.Signature.Name)
                          && m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override)))
@@ -362,25 +361,28 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
                     if (currentReturnType is not null && !currentReturnType.Equals(systemBaseType))
                     {
                         method.Signature.Update(returnType: systemBaseType);
-                        returnTypeChanged = true;
                     }
                 }
 
-                // When the *Core methods' return type was changed to the system base type,
-                // the explicit interface implementations that call them need a cast to the
-                // model type (e.g., (PolyDeviceData)JsonModelCreateCore(ref reader, options)).
-                if (returnTypeChanged)
-                {
-                    FixExplicitInterfaceCreateMethods(serializationTypeDefinition);
-                }
+                // The *Core methods return the system base type (e.g., ResourceData), so the
+                // explicit interface implementations that call them need a cast to the
+                // discriminator base (the method's declared return type, e.g., PolyDeviceData).
+                // Always run regardless of whether we changed the *Core return type, because
+                // newer MTG versions may already emit the Core methods returning the system
+                // base directly while still emitting the IPersistableModel<T>.Create body with
+                // an incorrect cast to the containing unknown class (e.g., (UnknownPolyDevice)).
+                FixExplicitInterfaceCreateMethods(serializationTypeDefinition);
             }
         }
     }
 
     /// <summary>
-    /// Adds a cast to the explicit interface Create methods (IJsonModel&lt;T&gt;.Create,
-    /// IPersistableModel&lt;T&gt;.Create) when their body expressions return the system base
-    /// type (e.g., ResourceData) instead of the expected model type (e.g., PolyDeviceData).
+    /// Ensures the explicit interface Create methods (IJsonModel&lt;T&gt;.Create,
+    /// IPersistableModel&lt;T&gt;.Create) cast the result of *Core to the method's declared
+    /// return type T (the discriminated base, e.g., PolyDeviceData). MTG may emit no cast
+    /// or an incorrect cast to the containing class (e.g., (UnknownPolyDevice)); the latter
+    /// throws InvalidCastException at runtime when the discriminator dispatch returns a
+    /// different concrete subtype.
     /// </summary>
     private static void FixExplicitInterfaceCreateMethods(MrwSerializationTypeDefinition serializationTypeDefinition)
     {
@@ -389,14 +391,25 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
                  && m.Signature.ExplicitInterface is not null
                  && m.BodyExpression is not null))
         {
-            // Cast to the method's declared return type (the discriminated base, e.g., PolyDeviceData)
-            // rather than the model type (e.g., UnknownPolyDevice), because the deserialization
-            // factory can return any derived type.
             var returnType = method.Signature.ReturnType;
-            if (returnType is not null)
+            if (returnType is null)
             {
-                method.Update(bodyExpression: method.BodyExpression!.CastTo(returnType));
+                continue;
             }
+
+            // Strip any existing cast on the body before applying the correct one to avoid
+            // double-casts and to overwrite an MTG-emitted (UnknownXxx) cast.
+            var inner = method.BodyExpression is CastExpression existingCast
+                ? existingCast.Inner
+                : method.BodyExpression!;
+
+            // Skip if already cast to the right type.
+            if (method.BodyExpression is CastExpression { } cast && cast.Type.Equals(returnType))
+            {
+                continue;
+            }
+
+            method.Update(bodyExpression: inner.CastTo(returnType));
         }
     }
 

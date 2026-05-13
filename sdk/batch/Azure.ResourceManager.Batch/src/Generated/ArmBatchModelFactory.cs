@@ -683,7 +683,6 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchPrivateEndpointConnectionData BatchPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, BatchPrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId, IEnumerable<string> groupIds, BatchPrivateLinkServiceConnectionState connectionState)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            groupIds ??= new ChangeTrackingList<string>();
 
             return new BatchPrivateEndpointConnectionData(
                 id,
@@ -691,8 +690,8 @@ namespace Azure.ResourceManager.Batch.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
-                default,
+                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
+                etag,
                 tags);
         }
 
@@ -766,8 +765,14 @@ namespace Azure.ResourceManager.Batch.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
-                default,
+                state is null && format is null && storageUri is null && storageUriExpireOn is null && lastActivatedOn is null ? default : new ApplicationPackageProperties(
+                    state,
+                    format,
+                    storageUri,
+                    storageUriExpireOn,
+                    lastActivatedOn,
+                    default),
+                etag,
                 tags);
         }
 
@@ -842,10 +847,6 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ETag? etag, IDictionary<string, string> tags, string displayName, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, BatchAccountPoolProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountPoolAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, string vmSize, BatchVmConfiguration deploymentVmConfiguration, int? currentDedicatedNodes, int? currentLowPriorityNodes, BatchAccountPoolScaleSettings scaleSettings, BatchAccountPoolAutoScaleRun autoScaleRun, InterNodeCommunicationState? interNodeCommunication, BatchNetworkConfiguration networkConfiguration, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, IEnumerable<BatchUserAccount> userAccounts, IEnumerable<BatchAccountPoolMetadataItem> metadata, BatchAccountPoolStartTask startTask, IEnumerable<BatchApplicationPackageReference> applicationPackages, BatchResizeOperationStatus resizeOperationStatus, IEnumerable<BatchMountConfiguration> mountConfiguration, UpgradePolicy upgradePolicy)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            userAccounts ??= new ChangeTrackingList<BatchUserAccount>();
-            metadata ??= new ChangeTrackingList<BatchAccountPoolMetadataItem>();
-            applicationPackages ??= new ChangeTrackingList<BatchApplicationPackageReference>();
-            mountConfiguration ??= new ChangeTrackingList<BatchMountConfiguration>();
 
             return new BatchAccountPoolData(
                 id,
@@ -853,9 +854,34 @@ namespace Azure.ResourceManager.Batch.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
+                displayName is null && lastModifiedOn is null && createdOn is null && provisioningState is null && provisioningStateTransitOn is null && allocationState is null && allocationStateTransitionOn is null && vmSize is null && deploymentVmConfiguration is null && currentDedicatedNodes is null && currentLowPriorityNodes is null && scaleSettings is null && autoScaleRun is null && interNodeCommunication is null && networkConfiguration is null && taskSlotsPerNode is null && taskSchedulingPolicy is null && userAccounts is null && metadata is null && startTask is null && applicationPackages is null && resizeOperationStatus is null && mountConfiguration is null && upgradePolicy is null ? default : new PoolProperties(
+                    displayName,
+                    lastModifiedOn,
+                    createdOn,
+                    provisioningState,
+                    provisioningStateTransitOn,
+                    allocationState,
+                    allocationStateTransitionOn,
+                    vmSize,
+                    new BatchDeploymentConfiguration(deploymentVmConfiguration, default),
+                    currentDedicatedNodes,
+                    currentLowPriorityNodes,
+                    scaleSettings,
+                    autoScaleRun,
+                    interNodeCommunication,
+                    networkConfiguration,
+                    taskSlotsPerNode,
+                    taskSchedulingPolicy,
+                    (userAccounts ?? new ChangeTrackingList<BatchUserAccount>()).ToList(),
+                    (metadata ?? new ChangeTrackingList<BatchAccountPoolMetadataItem>()).ToList(),
+                    startTask,
+                    (applicationPackages ?? new ChangeTrackingList<BatchApplicationPackageReference>()).ToList(),
+                    resizeOperationStatus,
+                    (mountConfiguration ?? new ChangeTrackingList<BatchMountConfiguration>()).ToList(),
+                    upgradePolicy,
+                    default),
                 identity,
-                default,
+                etag,
                 tags);
         }
 
