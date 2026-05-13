@@ -123,7 +123,7 @@ namespace Azure.Generator.Management.Snippets
             }
             else if (responseGenericType.IsFrameworkType && responseGenericType.FrameworkType == typeof(string))
             {
-                deserializedValue = Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.Parse), [resultVariable.Property("Content"), new MemberExpression(null, "ModelSerializationExtensions").Property("JsonDocumentOptions")]).Property(nameof(JsonDocument.RootElement)).Invoke(nameof(JsonElement.GetString));
+                deserializedValue = Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.Parse), [resultVariable.Property("Content"), Static(new ModelSerializationExtensionsDefinition().Type).Property("JsonDocumentOptions")]).Property(nameof(JsonDocument.RootElement)).Invoke(nameof(JsonElement.GetString));
             }
             else if (responseGenericType.IsFrameworkType)
             {

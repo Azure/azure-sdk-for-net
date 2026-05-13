@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Snippets;
+using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -11,6 +12,12 @@ namespace Azure.Generator.Management.Tests.Providers
 {
     internal class ResourceMethodSnippetsTests
     {
+        [SetUp]
+        public void SetUp()
+        {
+            ManagementMockHelpers.LoadMockPlugin();
+        }
+
         [Test]
         public void CreateGenericResponsePipelineProcessing_WithFrameworkType_DoesNotUseFromResponse()
         {
@@ -53,7 +60,9 @@ namespace Azure.Generator.Management.Tests.Providers
 
             var code = string.Join("\n", statements.Select(s => s.ToDisplayString()));
             Assert.That(code, Does.Not.Contain("ModelReaderWriter.Read<string>(result.Content)"));
-            Assert.That(code, Does.Contain("JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString()"));
+            Assert.That(code, Does.Contain("JsonDocument.Parse(result.Content"));
+            Assert.That(code, Does.Contain("ModelSerializationExtensions.JsonDocumentOptions"));
+            Assert.That(code, Does.Contain("RootElement.GetString()"));
         }
     }
 }
