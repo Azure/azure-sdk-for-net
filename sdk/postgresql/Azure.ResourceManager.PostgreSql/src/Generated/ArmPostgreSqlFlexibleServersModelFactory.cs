@@ -1064,5 +1064,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             return new PostgreSqlFlexibleServerDelegatedSubnetUsage(subnetName, usage, additionalBinaryDataProperties: null);
         }
+
+        /// <summary> Backup properties of a server. </summary>
+        /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
+        /// <param name="geoRedundantBackup"> Indicates if the server is configured to create geographically redundant backups. </param>
+        /// <param name="earliestRestoreOn"> Earliest restore point time (ISO8601 format) for a server. </param>
+        /// <returns> A new <see cref="Models.BackupForPatch"/> instance for mocking. </returns>
+        public static BackupForPatch BackupForPatch(int? backupRetentionDays = default, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup = default, DateTimeOffset? earliestRestoreOn = default)
+        {
+            return new BackupForPatch(backupRetentionDays, geoRedundantBackup, earliestRestoreOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> High availability properties of a server. </summary>
+        /// <param name="mode"> High availability mode for a server. </param>
+        /// <param name="state"> Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant. </param>
+        /// <param name="standbyAvailabilityZone"> Availability zone associated to the standby server created when high availability is set to SameZone or ZoneRedundant. </param>
+        /// <returns> A new <see cref="Models.HighAvailabilityForPatch"/> instance for mocking. </returns>
+        public static HighAvailabilityForPatch HighAvailabilityForPatch(PostgreSqlFlexibleServerHighAvailabilityMode? mode = default, PostgreSqlFlexibleServerHAState? state = default, string standbyAvailabilityZone = default)
+        {
+            return new HighAvailabilityForPatch(mode, state, standbyAvailabilityZone, additionalBinaryDataProperties: null);
+        }
     }
 }

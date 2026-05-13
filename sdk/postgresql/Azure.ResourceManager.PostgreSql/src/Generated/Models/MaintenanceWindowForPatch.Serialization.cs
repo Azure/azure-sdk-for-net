@@ -15,7 +15,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Maintenance window properties of a server. </summary>
-    internal partial class MaintenanceWindowForPatch : IJsonModel<MaintenanceWindowForPatch>
+    public partial class MaintenanceWindowForPatch : IJsonModel<MaintenanceWindowForPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
