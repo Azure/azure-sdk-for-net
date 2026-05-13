@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         private static readonly TimeSpan _actionTimeout = Debugger.IsAttached ? TimeSpan.FromMinutes(15) : TimeSpan.FromSeconds(15);
         private static readonly TimeSpan _testTimeout = Debugger.IsAttached ? TimeSpan.FromMinutes(60) : TimeSpan.FromSeconds(60);
 
-        private CancellationToken _timeoutToken = new CancellationTokenSource(_testTimeout).Token;
+        private readonly CancellationToken _timeoutToken = new CancellationTokenSource(_testTimeout).Token;
 
         protected TimeOutTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {

@@ -34,12 +34,31 @@ namespace Azure.AI.VoiceLive.Tests
     /// </summary>
     public class McpApprovalWorkflowTests : VoiceLiveTestBase
     {
+        // Shadow base TimeoutToken so each MCP test gets its own 3-minute budget,
+        // independent of how long sibling tests ran on the shared class instance.
+        private CancellationTokenSource? _testCts;
+        protected new CancellationToken TimeoutToken => _testCts?.Token ?? base.TimeoutToken;
+
         public McpApprovalWorkflowTests() : base(true)
         {
         }
 
         public McpApprovalWorkflowTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        [SetUp]
+        public void ResetMcpTestTimeout()
+        {
+            _testCts?.Dispose();
+            _testCts = new CancellationTokenSource(TimeSpan.FromMinutes(3));
+        }
+
+        [TearDown]
+        public void CleanupMcpTestTimeout()
+        {
+            _testCts?.Dispose();
+            _testCts = null;
         }
 
         private VoiceLiveMcpServerDefinition CreateMicrosoftLearnMcpServer(MCPApprovalType? requireApproval = null)
