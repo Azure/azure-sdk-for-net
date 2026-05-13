@@ -102,17 +102,19 @@ namespace Azure.Storage.DataMovement
         internal bool SetTransferStateChange(TransferState state)
         {
             // Use compare-and-swap to prevent invalid state transitions.
-            // Once a part is in Pausing/Stopping, only the cancellation flow
-            // should move it to Paused/Completed respectively.
+            // Once a transfer is in Pausing/Stopping, only specific terminal
+            // transitions are allowed (see guards below).
             while (true)
             {
                 int currentValue = Volatile.Read(ref _stateValue);
                 TransferState currentState = (TransferState)currentValue;
 
                 // Reject transitions that would skip the cancellation flow:
-                // - Pausing can only go to Paused (via CheckAndUpdateCancellationStateAsync)
-                // - Stopping can only go to Completed (via CheckAndUpdateCancellationStateAsync)
-                if ((currentState == TransferState.Pausing && state != TransferState.Paused) ||
+                // - Pausing can only go to Paused or Completed (e.g. all parts may finish before pause takes effect)
+                // - Stopping can only go to Completed
+                if ((currentState == TransferState.Pausing &&
+                         state != TransferState.Paused &&
+                         state != TransferState.Completed) ||
                     (currentState == TransferState.Stopping && state != TransferState.Completed))
                 {
                     return false;

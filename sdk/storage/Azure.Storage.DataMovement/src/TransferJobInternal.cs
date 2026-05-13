@@ -114,6 +114,17 @@ namespace Azure.Storage.DataMovement
         private int _pendingJobParts;
         private bool _jobPartPaused;
 
+        /// <summary>
+        /// Test-only: sets <see cref="_pendingJobParts"/> directly, bypassing the
+        /// normal <see cref="Interlocked"/> increment/decrement path.
+        /// </summary>
+        internal void SetPendingJobPartsForTest(int value) => _pendingJobParts = value;
+
+        /// <summary>
+        /// Test-only: sets <see cref="_jobPartPaused"/> directly.
+        /// </summary>
+        internal void SetJobPartPausedForTest(bool value) => _jobPartPaused = value;
+
         public CancellationToken _cancellationToken { get; internal set; }
 
         /// <summary>

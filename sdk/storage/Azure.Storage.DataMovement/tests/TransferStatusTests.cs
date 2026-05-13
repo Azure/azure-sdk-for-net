@@ -4,10 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Moq;
 using NUnit.Framework;
 
@@ -15,7 +13,7 @@ namespace Azure.Storage.DataMovement.Tests;
 
 /// <summary>
 /// Unit tests for <see cref="TransferStatus"/> state transition logic,
-/// particularly the CAS-based <c>SetTransferStateChange</c> method that
+/// particularly the CAS-based `SetTransferStateChange` method that
 /// prevents invalid concurrent transitions such as multiple pause requests.
 /// </summary>
 public class TransferStatusTests
@@ -85,13 +83,15 @@ public class TransferStatusTests
     }
 
     [Test]
-    public void SetTransferStateChange_PausingToCompleted_Rejected()
+    public void SetTransferStateChange_PausingToCompleted_Succeeds()
     {
+        // Pausing -> Completed is valid: when all parts finish before
+        // the pause takes effect, the transfer should complete normally.
         TransferStatus status = new(TransferState.Pausing, false, false);
         bool changed = status.SetTransferStateChange(TransferState.Completed);
 
-        Assert.IsFalse(changed);
-        Assert.That(status.State, Is.EqualTo(TransferState.Pausing));
+        Assert.IsTrue(changed);
+        Assert.That(status.State, Is.EqualTo(TransferState.Completed));
     }
 
     [Test]
@@ -164,6 +164,26 @@ public class TransferStatusTests
 
         Assert.IsTrue(changed);
         Assert.That(status.State, Is.EqualTo(TransferState.Queued));
+    }
+
+    [Test]
+    public void SetTransferStateChange_PausingToQueued_Rejected()
+    {
+        TransferStatus status = new(TransferState.Pausing, false, false);
+        bool changed = status.SetTransferStateChange(TransferState.Queued);
+
+        Assert.IsFalse(changed);
+        Assert.That(status.State, Is.EqualTo(TransferState.Pausing));
+    }
+
+    [Test]
+    public void SetTransferStateChange_StoppingToQueued_Rejected()
+    {
+        TransferStatus status = new(TransferState.Stopping, false, false);
+        bool changed = status.SetTransferStateChange(TransferState.Queued);
+
+        Assert.IsFalse(changed);
+        Assert.That(status.State, Is.EqualTo(TransferState.Stopping));
     }
 
     [Test]
@@ -286,6 +306,10 @@ public class TransferStatusTests
                 status.SetTransferStateChange(TransferState.Pausing);
                 status.SetTransferStateChange(TransferState.Paused);
                 status.SetTransferStateChange(TransferState.Queued);
+                status.SetTransferStateChange(TransferState.InProgress);
+                status.SetTransferStateChange(TransferState.Stopping);
+                status.SetTransferStateChange(TransferState.Completed);
+                status.SetTransferStateChange(TransferState.Queued);
             }
         })).ToArray();
 
@@ -327,18 +351,8 @@ public class TransferStatusTests
     #region Integration Tests - CheckAndUpdateStatusAsync Race Condition
 
     /// <summary>
-    /// Helper: sets a private field on an object via reflection.
-    /// </summary>
-    private static void SetPrivateField(object obj, string fieldName, object value)
-    {
-        FieldInfo field = obj.GetType().GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
-        Assert.IsNotNull(field, $"Field '{fieldName}' not found on {obj.GetType().Name}");
-        field.SetValue(obj, value);
-    }
-
-    /// <summary>
     /// Creates a minimal <see cref="TransferJobInternal"/> wired up enough to
-    /// call <c>CheckAndUpdateStatusAsync</c> and <c>JobPartStatusEventAsync</c>.
+    /// call `CheckAndUpdateStatusAsync` and `JobPartStatusEventAsync`.
     /// </summary>
     private static TransferJobInternal CreateMinimalJob(TransferState initialJobState)
     {
@@ -356,41 +370,21 @@ public class TransferStatusTests
         job._checkpointer = new Mock<ITransferCheckpointer>().Object;
         job._cancellationToken = CancellationToken.None;
 
-        // Wire up the event handler (normally done in the private constructor)
-        // Use reflection to invoke the event handler add since it's set up internally
-        typeof(TransferJobInternal)
-            .GetMethod("JobPartStatusEventAsync", BindingFlags.Public | BindingFlags.Instance)
-            ?.GetType(); // just to verify it exists
-
         return job;
     }
 
     /// <summary>
-    /// Directly reproduces the race condition from the log.
+    /// Verifies that when a job is in `Pausing` state but all parts have
+    /// already completed (no part was actually paused), the job transitions
+    /// to `Completed` rather than getting stuck in `Pausing` forever.
     ///
-    /// Setup: Job is in <c>Pausing</c> state with 2 pending parts and
-    /// <c>_enumerationComplete = true</c>. Two threads concurrently call
-    /// <c>JobPartStatusEventAsync</c>:
-    ///   - Thread A: part reports <c>Completed</c> (finished before pause)
-    ///   - Thread B: part reports <c>Paused</c> (was cancelled by pause)
-    ///
-    /// The race: Thread A's <c>JobPartStatusEventAsync</c> decrements
-    /// <c>_pendingJobParts</c> to 0, then calls <c>CheckAndUpdateStatusAsync</c>.
-    /// If Thread B's <c>_jobPartPaused = true</c> hasn't executed yet,
-    /// <c>CheckAndUpdateStatusAsync</c> sees <c>_pendingJobParts == 0</c> and
-    /// <c>_jobPartPaused == false</c>, so it calls
-    /// <c>OnJobStateChangedAsync(Completed)</c>.
-    ///
-    /// Without the CAS guard: <c>Pausing ? Completed</c> succeeds — the bug.
-    /// With the CAS guard: <c>Pausing ? Completed</c> is rejected, and
-    /// Thread B's subsequent call correctly transitions to <c>Paused</c>.
-    ///
-    /// Since the StepProcessor serializes all work and prevents the race from
-    /// occurring in mocked tests, this test calls <c>CheckAndUpdateStatusAsync</c>
-    /// directly after setting up the exact interleaving that causes the bug.
+    /// This scenario occurs when a pause is requested but all parts finish
+    /// before the cancellation is observed. Since no part will ever report
+    /// `Paused`, the `_jobPartPaused` flag remains false and
+    /// `CheckAndUpdateStatusAsync` must allow `Pausing -> Completed`.
     /// </summary>
     [Test]
-    public async Task CheckAndUpdateStatusAsync_PausingJob_CompletedPartsOnly_DoesNotPrematurelyComplete()
+    public async Task CheckAndUpdateStatusAsync_PausingJob_CompletedPartsOnly_CompletesNormally()
     {
         // Build a TransferJobInternal in Pausing state with 2 parts, both "completed"
         // and _jobPartPaused still false — the exact interleaving from the bug.
@@ -406,38 +400,30 @@ public class TransferStatusTests
         job.AppendJobPart(part2.Object);
         // _pendingJobParts is now 2
 
-        // Simulate: both parts finished. Decrement _pendingJobParts to 0 via reflection
+        // Simulate: both parts finished. Set _pendingJobParts to 0
         // (normally this happens in JobPartStatusEventAsync, but we're isolating
         //  CheckAndUpdateStatusAsync to test just the decision logic)
-        SetPrivateField(job, "_pendingJobParts", 0);
+        job.SetPendingJobPartsForTest(0);
 
         // _jobPartPaused is still false — this is the crux of the race.
         // In the real race, Thread B hasn't set _jobPartPaused = true yet
         // when Thread A calls CheckAndUpdateStatusAsync.
 
-        // Call CheckAndUpdateStatusAsync — this is where the bug manifests.
-        // Without CAS: sees _pendingJobParts == 0, _jobPartPaused == false
-        //   ? calls OnJobStateChangedAsync(Completed)
-        //   ? Pausing ? Completed succeeds (BUG)
-        // With CAS: OnJobStateChangedAsync(Completed) is rejected because
-        //   Pausing can only go to Paused.
+        // Call CheckAndUpdateStatusAsync — all parts completed before pause took effect.
+        // Pausing -> Completed is now allowed to prevent the transfer from getting
+        // stuck in Pausing state when no paused-part signal will ever arrive.
         await job.CheckAndUpdateStatusAsync();
 
-        // CRITICAL: The job must NOT be Completed. It should still be Pausing
-        // because the CAS guard rejected the Pausing ? Completed transition.
-        Assert.That(job._transferOperation.Status.State, Is.Not.EqualTo(TransferState.Completed),
-            "Job in Pausing state must NOT transition to Completed. " +
-            "This is the exact race condition from the log where " +
-            "'Transfer completed' was emitted instead of pausing.");
-
-        Assert.That(job._transferOperation.Status.State, Is.EqualTo(TransferState.Pausing),
-            "Job should remain in Pausing state since Pausing ? Completed was rejected by CAS");
+        // The job should complete normally since all parts finished.
+        Assert.That(job._transferOperation.Status.State, Is.EqualTo(TransferState.Completed),
+            "Job in Pausing state should transition to Completed when all parts " +
+            "finished before the pause took effect.");
     }
 
     /// <summary>
-    /// Verifies the correct path: when <c>_jobPartPaused</c> is true and
-    /// <c>_pendingJobParts == 0</c>, <c>CheckAndUpdateStatusAsync</c> correctly
-    /// transitions the job from <c>Pausing ? Paused</c>.
+    /// Verifies the correct path: when `_jobPartPaused` is true and
+    /// `_pendingJobParts == 0`, `CheckAndUpdateStatusAsync` correctly
+    /// transitions the job from `Pausing -> Paused`.
     /// </summary>
     [Test]
     public async Task CheckAndUpdateStatusAsync_PausingJob_WithPausedParts_TransitionsToPaused()
@@ -449,8 +435,8 @@ public class TransferStatusTests
         job.AppendJobPart(part1.Object);
 
         // Simulate: part finished and was paused
-        SetPrivateField(job, "_pendingJobParts", 0);
-        SetPrivateField(job, "_jobPartPaused", true);
+        job.SetPendingJobPartsForTest(0);
+        job.SetJobPartPausedForTest(true);
 
         await job.CheckAndUpdateStatusAsync();
 
@@ -459,18 +445,18 @@ public class TransferStatusTests
     }
 
     /// <summary>
-    /// Concurrent version: fires <c>JobPartStatusEventAsync</c> from multiple
+    /// Concurrent version: fires `JobPartStatusEventAsync` from multiple
     /// threads simultaneously — one with Completed status, one with Paused status —
     /// while the job is in Pausing state. This is the closest reproduction of
     /// the production race where serialized processing does not occur.
     /// </summary>
     [Test]
     [Repeat(10)]
-    public async Task ConcurrentJobPartStatusEvents_PausingJob_NeverReachesCompleted()
+    public async Task ConcurrentJobPartStatusEvents_PausingJob_ReachesValidFinalState()
     {
         TransferJobInternal job = CreateMinimalJob(TransferState.Pausing);
 
-        // Add 2 parts (InProgress ? _pendingJobParts = 2)
+        // Add 2 parts (InProgress -> _pendingJobParts = 2)
         Mock<JobPartInternal> part1 = new();
         part1.Object.JobPartStatus = new TransferStatus(TransferState.InProgress, false, false);
         Mock<JobPartInternal> part2 = new();
@@ -505,12 +491,14 @@ public class TransferStatusTests
         gate.Set();
         await Task.WhenAll(task1, task2);
 
-        // The job must never end up Completed when it was Pausing.
-        // It should be either Paused (correct) or still Pausing (if neither
-        // thread's CheckAndUpdateStatusAsync triggered the final transition yet).
-        Assert.That(job._transferOperation.Status.State, Is.Not.EqualTo(TransferState.Completed),
-            "Job in Pausing state must NOT reach Completed via concurrent part events. " +
-            "This reproduces the race condition from the production log.");
+        // After both JobPartStatusEventAsync calls complete, _pendingJobParts
+        // is 0 and CheckAndUpdateStatusAsync has been called. The job should
+        // be in a terminal state: Completed (all parts finished before pause)
+        // or Paused (at least one part reported Paused).
+        TransferState finalState = job._transferOperation.Status.State;
+        Assert.That(finalState, Is.AnyOf(
+            TransferState.Completed, TransferState.Paused),
+            "Job should reach a terminal state after all part events are processed.");
     }
 
     #endregion
