@@ -39,38 +39,15 @@ public abstract class ModelProxy<T> : IModelProxy, IPersistableModel<T>
     /// <returns>True if this proxy can handle the data; otherwise, false.</returns>
     public virtual bool CanHandle(BinaryData data, ModelReaderWriterOptions options) => true;
 
-    /// <summary>
-    /// Creates a model instance from the specified binary data.
-    /// </summary>
-    /// <param name="data">The data to deserialize.</param>
-    /// <param name="options">The options for reading.</param>
-    /// <returns>The deserialized model instance.</returns>
-    protected abstract T PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options);
+    /// <inheritdoc/>
+    public abstract T Create(BinaryData data, ModelReaderWriterOptions options);
 
-    /// <summary>
-    /// Writes the model to binary data.
-    /// </summary>
-    /// <param name="options">The options for writing.</param>
-    /// <returns>The serialized binary data.</returns>
-    protected abstract BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options);
+    /// <inheritdoc/>
+    public abstract BinaryData Write(ModelReaderWriterOptions options);
 
-    /// <summary>
-    /// Gets the format for this model from the specified options.
-    /// </summary>
-    /// <param name="options">The options.</param>
-    /// <returns>The format string.</returns>
-    protected abstract string PersistableModelGetFormatFromOptionsCore(ModelReaderWriterOptions options);
+    /// <inheritdoc/>
+    public abstract string GetFormatFromOptions(ModelReaderWriterOptions options);
 
-    T IPersistableModel<T>.Create(BinaryData data, ModelReaderWriterOptions options)
-        => PersistableModelCreateCore(data, options);
-
-    BinaryData IPersistableModel<T>.Write(ModelReaderWriterOptions options)
-        => PersistableModelWriteCore(options);
-
-    string IPersistableModel<T>.GetFormatFromOptions(ModelReaderWriterOptions options)
-        => PersistableModelGetFormatFromOptionsCore(options);
-
-    // Explicit IModelProxy implementation for non-generic resolution paths.
     bool IModelProxy.CanHandleData(BinaryData data, ModelReaderWriterOptions options)
         => CanHandle(data, options);
 
@@ -78,5 +55,5 @@ public abstract class ModelProxy<T> : IModelProxy, IPersistableModel<T>
         => model is T typed && CanHandle(typed);
 
     object IModelProxy.CreateFromData(BinaryData data, ModelReaderWriterOptions options)
-        => PersistableModelCreateCore(data, options)!;
+        => Create(data, options)!;
 }

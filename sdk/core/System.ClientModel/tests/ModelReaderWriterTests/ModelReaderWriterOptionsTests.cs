@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
@@ -144,13 +144,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 return new JsonModel();
             }
 
-            protected override JsonModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+            public override JsonModel Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 AssertOptions(this, options);
                 return new JsonModel();
             }
 
-            protected override string PersistableModelGetFormatFromOptionsCore(ModelReaderWriterOptions options)
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options)
             {
                 return "J";
             }
@@ -163,11 +163,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 writer.WriteEndObject();
             }
 
-            protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+            public override BinaryData Write(ModelReaderWriterOptions options)
             {
                 AssertOptions(this, options);
 
-                var format = options.Format == "W" ? PersistableModelGetFormatFromOptionsCore(options) : options.Format;
+                var format = options.Format == "W" ? GetFormatFromOptions(options) : options.Format;
 
                 switch (format)
                 {
@@ -540,7 +540,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 CapturedProxiedModelOnCreate = null;
             }
 
-            protected override SimpleModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+            public override SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 CreateWasCalled = true;
                 CapturedProxiedModelOnCreate = options.ProxiedModel;
@@ -561,10 +561,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 writer.WriteEndObject();
             }
 
-            protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+            public override BinaryData Write(ModelReaderWriterOptions options)
                 => ModelReaderWriter.Write(this, options);
 
-            protected override string PersistableModelGetFormatFromOptionsCore(ModelReaderWriterOptions options) => "J";
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
 
         /// <summary>
@@ -593,7 +593,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 CreateWasCalled = false;
             }
 
-            protected override SimpleModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+            public override SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 CreateWasCalled = true;
                 return new SimpleModel();
@@ -612,10 +612,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 writer.WriteEndObject();
             }
 
-            protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+            public override BinaryData Write(ModelReaderWriterOptions options)
                 => ModelReaderWriter.Write(this, options);
 
-            protected override string PersistableModelGetFormatFromOptionsCore(ModelReaderWriterOptions options) => "J";
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
 
         /// <summary>
@@ -646,7 +646,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 writer.WriteEndObject();
             }
 
-            protected override SimpleModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+            public override SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 CapturedOnCreateBinaryData = options.ProxiedModel;
                 return new SimpleModel();
@@ -660,13 +660,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 return new SimpleModel();
             }
 
-            protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+            public override BinaryData Write(ModelReaderWriterOptions options)
             {
                 CapturedOnWrite = options.ProxiedModel;
                 return BinaryData.FromString("{}");
             }
 
-            protected override string PersistableModelGetFormatFromOptionsCore(ModelReaderWriterOptions options) => "J";
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
 
         #region ProxiedModel Contract Tests

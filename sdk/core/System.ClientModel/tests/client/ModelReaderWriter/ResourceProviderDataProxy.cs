@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
@@ -116,17 +116,17 @@ namespace System.ClientModel.Tests.Client
             return DeserializeResourceProviderData(doc.RootElement, options);
         }
 
-        protected override ResourceProviderData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        public override ResourceProviderData Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeResourceProviderData(doc.RootElement, options);
         }
 
-        protected override string PersistableModelGetFormatFromOptionsCore(ModelReaderWriterOptions options) => "J";
+        public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         void IJsonModel<ResourceProviderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Write((ResourceProviderData)options.ProxiedModel!, writer, options);
 
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        public override BinaryData Write(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }

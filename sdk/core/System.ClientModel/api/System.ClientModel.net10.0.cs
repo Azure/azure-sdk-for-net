@@ -463,12 +463,9 @@ namespace System.ClientModel.Primitives
         protected ModelProxy() { }
         public virtual bool CanHandle(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public abstract bool CanHandle(T model);
-        protected abstract T PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
-        protected abstract string PersistableModelGetFormatFromOptionsCore(System.ClientModel.Primitives.ModelReaderWriterOptions options);
-        protected abstract System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options);
-        T System.ClientModel.Primitives.IPersistableModel<T>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<T>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<T>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public abstract T Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
+        public abstract string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
+        public abstract System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
     }
     public static partial class ModelReaderWriter
     {
