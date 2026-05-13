@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="gatewayEndpoint"> The endpoint fqdn for the Gateway. </param>
         /// <param name="allowedFeatures"> Specifies the list of features that are enabled for this Gateway. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GatewayProperties(HybridComputeProvisioningState? provisioningState, string gatewayId, ArcGatewayType? gatewayType, string gatewayEndpoint, IList<string> allowedFeatures, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GatewayProperties(HybridComputeProvisioningState? provisioningState, ResourceIdentifier gatewayId, ArcGatewayType? gatewayType, string gatewayEndpoint, IList<string> allowedFeatures, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             GatewayId = gatewayId;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> A unique, immutable, identifier for the Gateway. </summary>
         [WirePath("gatewayId")]
-        public string GatewayId { get; }
+        public ResourceIdentifier GatewayId { get; }
 
         /// <summary> The type of the Gateway resource. </summary>
         [WirePath("gatewayType")]

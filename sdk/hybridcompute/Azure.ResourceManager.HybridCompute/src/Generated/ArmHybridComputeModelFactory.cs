@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="gatewayEndpoint"> The endpoint fqdn for the Gateway. </param>
         /// <param name="allowedFeatures"> Specifies the list of features that are enabled for this Gateway. </param>
         /// <returns> A new <see cref="HybridCompute.ArcGatewayData"/> instance for mocking. </returns>
-        public static ArcGatewayData ArcGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = default, string gatewayId = default, ArcGatewayType? gatewayType = default, string gatewayEndpoint = default, IEnumerable<string> allowedFeatures = default)
+        public static ArcGatewayData ArcGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = default, ResourceIdentifier gatewayId = default, ArcGatewayType? gatewayType = default, string gatewayEndpoint = default, IEnumerable<string> allowedFeatures = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

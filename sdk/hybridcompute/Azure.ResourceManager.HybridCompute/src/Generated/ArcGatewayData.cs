@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> A unique, immutable, identifier for the Gateway. </summary>
         [WirePath("properties.gatewayId")]
-        public string GatewayId
+        public ResourceIdentifier GatewayId
         {
             get
             {

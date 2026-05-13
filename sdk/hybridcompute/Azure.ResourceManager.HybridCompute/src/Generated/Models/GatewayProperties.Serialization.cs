@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             HybridComputeProvisioningState? provisioningState = default;
-            string gatewayId = default;
+            ResourceIdentifier gatewayId = default;
             ArcGatewayType? gatewayType = default;
             string gatewayEndpoint = default;
             IList<string> allowedFeatures = default;
@@ -170,7 +171,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (prop.NameEquals("gatewayId"u8))
                 {
-                    gatewayId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    gatewayId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("gatewayType"u8))
