@@ -1,4 +1,6 @@
 directory: specification/chaos/resource-manager/Microsoft.Chaos/Chaos
-commit: 37052dfa3f738009a881d3d49469e3c46e45b1f6
+commit: fba0ddc48535c777a154e285a0708f27c188f081
 repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

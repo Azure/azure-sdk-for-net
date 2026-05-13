@@ -89,5 +89,22 @@ namespace Azure.ResourceManager.Chaos
                 return Properties.Selectors;
             }
         }
+
+        /// <summary> Optional customer-managed Storage account where Experiment schema will be stored. </summary>
+        public CustomerDataStorageProperties CustomerDataStorage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomerDataStorage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExperimentProperties();
+                }
+                Properties.CustomerDataStorage = value;
+            }
+        }
     }
 }

@@ -98,6 +98,11 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(CustomerDataStorage))
+            {
+                writer.WritePropertyName("customerDataStorage"u8);
+                writer.WriteObjectValue(CustomerDataStorage, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -143,6 +148,7 @@ namespace Azure.ResourceManager.Chaos.Models
             ChaosProvisioningState? provisioningState = default;
             IList<ChaosExperimentStep> steps = default;
             IList<ChaosTargetSelector> selectors = default;
+            CustomerDataStorageProperties customerDataStorage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,12 +181,21 @@ namespace Azure.ResourceManager.Chaos.Models
                     selectors = array;
                     continue;
                 }
+                if (prop.NameEquals("customerDataStorage"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customerDataStorage = CustomerDataStorageProperties.DeserializeCustomerDataStorageProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExperimentProperties(provisioningState, steps, selectors, additionalBinaryDataProperties);
+            return new ExperimentProperties(provisioningState, steps, selectors, customerDataStorage, additionalBinaryDataProperties);
         }
     }
 }
