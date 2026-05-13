@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Contains debugging information specific to query rewrites. </summary>
-    internal partial class QueryRewritesValuesDebugInfo : IJsonModel<QueryRewritesValuesDebugInfo>
+    public partial class QueryRewritesValuesDebugInfo : IJsonModel<QueryRewritesValuesDebugInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

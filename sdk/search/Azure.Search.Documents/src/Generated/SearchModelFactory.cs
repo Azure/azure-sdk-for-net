@@ -61,6 +61,36 @@ namespace Azure.Search.Documents.Models
             return new QueryAnswerResult(score, key, text, highlights, additionalProperties);
         }
 
+        /// <summary> Contains debugging information that can be used to further explore your search results. </summary>
+        /// <param name="queryRewrites"> Contains debugging information specific to query rewrites. </param>
+        /// <returns> A new <see cref="Models.DebugInfo"/> instance for mocking. </returns>
+        public static DebugInfo DebugInfo(QueryRewritesDebugInfo queryRewrites = default)
+        {
+            return new DebugInfo(queryRewrites, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Contains debugging information specific to query rewrites. </summary>
+        /// <param name="text"> List of query rewrites generated for the text query. </param>
+        /// <param name="vectors"> List of query rewrites generated for the vectorizable text queries. </param>
+        /// <returns> A new <see cref="Models.QueryRewritesDebugInfo"/> instance for mocking. </returns>
+        public static QueryRewritesDebugInfo QueryRewritesDebugInfo(QueryRewritesValuesDebugInfo text = default, IEnumerable<QueryRewritesValuesDebugInfo> vectors = default)
+        {
+            vectors ??= new ChangeTrackingList<QueryRewritesValuesDebugInfo>();
+
+            return new QueryRewritesDebugInfo(text, vectors.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Contains debugging information specific to query rewrites. </summary>
+        /// <param name="inputQuery"> The input text to the generative query rewriting model. There may be cases where the user query and the input to the generative model are not identical. </param>
+        /// <param name="rewrites"> List of query rewrites. </param>
+        /// <returns> A new <see cref="Models.QueryRewritesValuesDebugInfo"/> instance for mocking. </returns>
+        public static QueryRewritesValuesDebugInfo QueryRewritesValuesDebugInfo(string inputQuery = default, IEnumerable<string> rewrites = default)
+        {
+            rewrites ??= new ChangeTrackingList<string>();
+
+            return new QueryRewritesValuesDebugInfo(inputQuery, rewrites.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Parameters for filtering, sorting, faceting, paging, and other search query behaviors. </summary>
         /// <param name="includeTotalCount"> A value that specifies whether to fetch the total count of results. Default is false. Setting this value to true may have a performance impact. Note that the count returned is an approximation. </param>
         /// <param name="facets"> The list of facet expressions to apply to the search query. Each facet expression contains a field name, optionally followed by a comma-separated list of name:value pairs. </param>
@@ -2441,7 +2471,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Represents a single tool within an MCP server knowledge source. </summary>
         /// <param name="name"> The name of the MCP tool to invoke. </param>
         /// <param name="outputParsing"> Optional configuration for parsing the tool's output. </param>
-        /// <param name="inclusionMode"> Controls how the parsed results from this tool are integrated into the final result set. Defaults to 'always' when not specified. </param>
+        /// <param name="inclusionMode"> Controls how the parsed results from this tool are integrated into the final result set. Defaults to 'reranked' when not specified. </param>
         /// <param name="maxOutputTokens"> Optional post-parsing token cap for this tool's output. Must be greater than 0 when specified. </param>
         /// <returns> A new <see cref="Indexes.Models.McpServerTool"/> instance for mocking. </returns>
         public static McpServerTool McpServerTool(string name = default, McpServerOutputParsing outputParsing = default, McpServerToolInclusionMode? inclusionMode = default, int? maxOutputTokens = default)

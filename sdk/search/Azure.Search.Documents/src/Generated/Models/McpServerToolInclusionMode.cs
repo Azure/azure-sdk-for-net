@@ -15,9 +15,9 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct McpServerToolInclusionMode : IEquatable<McpServerToolInclusionMode>
     {
         private readonly string _value;
-        /// <summary> Tool results go through the reranking and aggregation pipeline alongside results from other knowledge sources. </summary>
+        /// <summary> Tool results go through the reranking and aggregation pipeline alongside results from other knowledge sources. This is the default behavior. </summary>
         private const string RerankedValue = "reranked";
-        /// <summary> Tool results bypass reranking and are always included in the agent context. This is the default behavior. </summary>
+        /// <summary> Tool results bypass reranking and are always included in the agent context. </summary>
         private const string AlwaysValue = "always";
 
         /// <summary> Initializes a new instance of <see cref="McpServerToolInclusionMode"/>. </summary>
@@ -30,10 +30,10 @@ namespace Azure.Search.Documents.Indexes.Models
             _value = value;
         }
 
-        /// <summary> Tool results go through the reranking and aggregation pipeline alongside results from other knowledge sources. </summary>
+        /// <summary> Tool results go through the reranking and aggregation pipeline alongside results from other knowledge sources. This is the default behavior. </summary>
         public static McpServerToolInclusionMode Reranked { get; } = new McpServerToolInclusionMode(RerankedValue);
 
-        /// <summary> Tool results bypass reranking and are always included in the agent context. This is the default behavior. </summary>
+        /// <summary> Tool results bypass reranking and are always included in the agent context. </summary>
         public static McpServerToolInclusionMode Always { get; } = new McpServerToolInclusionMode(AlwaysValue);
 
         /// <summary> Determines if two <see cref="McpServerToolInclusionMode"/> values are the same. </summary>

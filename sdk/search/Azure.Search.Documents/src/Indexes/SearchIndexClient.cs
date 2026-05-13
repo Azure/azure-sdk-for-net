@@ -2,19 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 using Azure.Search.Documents.Indexes.Models;
-using Azure.Search.Documents.Utilities;
+using Typespec = Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -445,6 +443,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context">The request context.</param>
         /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="BinaryData"/>.</returns>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<BinaryData> GetIndexes(
             RequestContext context) =>
             GetIndexes(top: null, skip: null, count: null, context);
@@ -455,6 +454,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context">The request context.</param>
         /// <returns>The <see cref="AsyncPageable{T}"/> from the server containing a list of <see cref="BinaryData"/>.</returns>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<BinaryData> GetIndexesAsync(
             RequestContext context) =>
             GetIndexesAsync(top: null, skip: null, count: null, context);
@@ -466,6 +466,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context">The request context.</param>
         /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="BinaryData"/>.</returns>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<BinaryData> GetIndexesWithSelectedProperties(
             IEnumerable<string> @select,
             RequestContext context) =>
@@ -478,38 +479,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context">The request context.</param>
         /// <returns>The <see cref="AsyncPageable{T}"/> from the server containing a list of <see cref="BinaryData"/>.</returns>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<BinaryData> GetIndexesWithSelectedPropertiesAsync(
             IEnumerable<string> @select,
             RequestContext context) =>
             GetIndexesWithSelectedPropertiesAsync(@select, top: null, skip: null, count: null, context);
-
-        /// <summary>
-        /// Gets a list of all indexes with selected properties.
-        /// </summary>
-        /// <param name="select">Selects which top-level properties to retrieve.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="SearchIndexResponse"/>.</returns>
-        [ForwardsClientCalls]
-#pragma warning disable AZC0002 // Backward compat overload; CancellationToken must be required to avoid ambiguity with generated overload
-        public virtual Pageable<SearchIndexResponse> GetIndexesWithSelectedProperties(
-            IEnumerable<string> @select,
-            CancellationToken cancellationToken) =>
-            GetIndexesWithSelectedProperties(@select, top: null, skip: null, count: null, cancellationToken);
-#pragma warning restore AZC0002
-
-        /// <summary>
-        /// Gets a list of all indexes with selected properties.
-        /// </summary>
-        /// <param name="select">Selects which top-level properties to retrieve.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="AsyncPageable{T}"/> from the server containing a list of <see cref="SearchIndexResponse"/>.</returns>
-        [ForwardsClientCalls]
-#pragma warning disable AZC0002 // Backward compat overload; CancellationToken must be required to avoid ambiguity with generated overload
-        public virtual AsyncPageable<SearchIndexResponse> GetIndexesWithSelectedPropertiesAsync(
-            IEnumerable<string> @select,
-            CancellationToken cancellationToken) =>
-            GetIndexesWithSelectedPropertiesAsync(@select, top: null, skip: null, count: null, cancellationToken);
-#pragma warning restore AZC0002
 
         #endregion
 

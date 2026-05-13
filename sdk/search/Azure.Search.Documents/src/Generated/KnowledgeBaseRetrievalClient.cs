@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -169,5 +170,27 @@ namespace Azure.Search.Documents.KnowledgeBases
             Response result = await RetrieveAsync(retrievalRequest, querySourceAuthorization, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((KnowledgeBaseRetrievalResponse)result, result);
         }
+
+        /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
+        /// <param name="retrievalRequest"> The retrieval request to process. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken)
+        {
+            return Retrieve(retrievalRequest: retrievalRequest, querySourceAuthorization: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
+        /// <param name="retrievalRequest"> The retrieval request to process. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken)
+        {
+            return RetrieveAsync(retrievalRequest: retrievalRequest, querySourceAuthorization: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

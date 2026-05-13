@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Contains debugging information specific to query rewrites. </summary>
-    internal partial class QueryRewritesValuesDebugInfo
+    public partial class QueryRewritesValuesDebugInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

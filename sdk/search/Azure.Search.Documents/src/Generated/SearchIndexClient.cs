@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -2585,5 +2586,27 @@ namespace Azure.Search.Documents.Indexes
                 cancellationToken.ToRequestContext(),
                 "SearchIndexClient.GetIndexStatsSummary");
         }
+
+        /// <summary> Lists all indexes available for a search service. </summary>
+        /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<SearchIndexResponse> GetIndexesWithSelectedProperties(IEnumerable<string> @select, CancellationToken cancellationToken)
+        {
+            return GetIndexesWithSelectedProperties(@select: @select, top: default, skip: default, count: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary> Lists all indexes available for a search service. </summary>
+        /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<SearchIndexResponse> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select, CancellationToken cancellationToken)
+        {
+            return GetIndexesWithSelectedPropertiesAsync(@select: @select, top: default, skip: default, count: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }
