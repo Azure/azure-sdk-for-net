@@ -1,14 +1,14 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
+## 1.12.0 (2026-05-12)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added `CredentialSettings.this[string key]` indexer for reading custom properties from the credential configuration section.
 
 ### Other Changes
+
+- `AuthenticationPolicy.Create` no longer throws when an ApiKey credential section carries a `Scope` value; `Scope` is ignored for ApiKey auth.
 
 ## 1.11.0 (2026-05-05)
 

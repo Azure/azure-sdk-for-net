@@ -70,20 +70,20 @@ namespace Azure.AI.Projects
             {
                 throw new FormatException($"The model {nameof(DataGenerationTokenUsage)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(PromptTokens))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("prompt_tokens"u8);
-                writer.WriteNumberValue(PromptTokens.Value);
+                writer.WriteNumberValue(PromptTokens);
             }
-            if (options.Format != "W" && Optional.IsDefined(CompletionTokens))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("completion_tokens"u8);
-                writer.WriteNumberValue(CompletionTokens.Value);
+                writer.WriteNumberValue(CompletionTokens);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalTokens))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("total_tokens"u8);
-                writer.WriteNumberValue(TotalTokens.Value);
+                writer.WriteNumberValue(TotalTokens);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,36 +127,24 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            long? promptTokens = default;
-            long? completionTokens = default;
-            long? totalTokens = default;
+            long promptTokens = default;
+            long completionTokens = default;
+            long totalTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("prompt_tokens"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     promptTokens = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("completion_tokens"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     completionTokens = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("total_tokens"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     totalTokens = prop.Value.GetInt64();
                     continue;
                 }

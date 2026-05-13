@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
     /// <summary> ClusterProfile represents a cluster profile. </summary>
     public partial class OpenShiftClusterProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftClusterProfile"/>. </summary>
         public OpenShiftClusterProfile()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="resourceGroupId"> The ID of the cluster resource group. </param>
         /// <param name="fipsValidatedModules"> If FIPS validated crypto modules are used. </param>
         /// <param name="oidcIssuer"> The URL of the managed OIDC issuer in a workload identity cluster. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenShiftClusterProfile(string pullSecret, string domain, string version, ResourceIdentifier resourceGroupId, OpenShiftFipsValidatedModule? fipsValidatedModules, string oidcIssuer, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OpenShiftClusterProfile(string pullSecret, string domain, string version, ResourceIdentifier resourceGroupId, OpenShiftFipsValidatedModule? fipsValidatedModules, string oidcIssuer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PullSecret = pullSecret;
             Domain = domain;
@@ -67,19 +38,24 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             ResourceGroupId = resourceGroupId;
             FipsValidatedModules = fipsValidatedModules;
             OidcIssuer = oidcIssuer;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The pull secret for the cluster. </summary>
         public string PullSecret { get; set; }
+
         /// <summary> The domain for the cluster. </summary>
         public string Domain { get; set; }
+
         /// <summary> The version of the cluster. </summary>
         public string Version { get; set; }
+
         /// <summary> The ID of the cluster resource group. </summary>
         public ResourceIdentifier ResourceGroupId { get; set; }
+
         /// <summary> If FIPS validated crypto modules are used. </summary>
         public OpenShiftFipsValidatedModule? FipsValidatedModules { get; set; }
+
         /// <summary> The URL of the managed OIDC issuer in a workload identity cluster. </summary>
         public string OidcIssuer { get; }
     }
