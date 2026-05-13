@@ -77,7 +77,7 @@ namespace Azure.Identity
 
         /// <summary>
         /// Gets or sets an optional callback that is invoked before each token request is sent to the identity provider.
-        /// This callback can be used to customize the token request by adding custom body parameters.
+        /// This callback can be used to customize the token request.
         /// </summary>
         [Experimental("AZID0002")]
         public Func<TokenRequestCallbackContext, Task> TokenRequestCallback { get; set; }

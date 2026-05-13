@@ -12,7 +12,6 @@ namespace Azure.Identity
     /// <summary>
     /// Provides access to customize the token request before it is sent.
     /// </summary>
-#pragma warning disable AZC0034 // Type in Azure.Identity namespace defined in Azure.Core assembly
     [Experimental("AZID0002")]
     public class TokenRequestCallbackContext
     {
@@ -29,5 +28,4 @@ namespace Azure.Identity
         /// </summary>
         public IDictionary<string, string> BodyParameters => _data.BodyParameters;
     }
-#pragma warning restore AZC0034
 }
