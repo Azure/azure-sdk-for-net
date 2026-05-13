@@ -12,7 +12,7 @@ using NAudio.Wave;
 namespace Azure.AI.VoiceLive.Samples
 {
     /// <summary>
-    /// FILE: SampleProgram.cs
+    /// FILE: Program.cs
     /// </summary>
     /// <remarks>
     /// DESCRIPTION:
@@ -43,7 +43,7 @@ namespace Azure.AI.VoiceLive.Samples
     ///     - Microsoft.Extensions.Configuration
     ///     - System.CommandLine
     /// </remarks>
-    public class SampleProgram
+    public class Program
     {
         public static async Task<int> Main(string[] args)
         {
@@ -154,7 +154,7 @@ namespace Azure.AI.VoiceLive.Samples
                 builder.SetMinimumLevel(verbose ? LogLevel.Debug : LogLevel.Information);
             });
 
-            var logger = loggerFactory.CreateLogger<SampleProgram>();
+            var logger = loggerFactory.CreateLogger<Program>();
 
             if (!CheckAudioSystem(logger))
                 return 1;
