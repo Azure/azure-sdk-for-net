@@ -1,6 +1,6 @@
 # Release History
 
-## 1.56.0-beta.1 (Unreleased)
+## 1.56.0 (2026-05-14)
 
 ### Features Added
 
