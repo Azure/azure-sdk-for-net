@@ -1637,6 +1637,12 @@ namespace Azure.Identity
         public System.Uri AuthorityHost { get { throw null; } set { } }
         public new Azure.Identity.TokenCredentialDiagnosticsOptions Diagnostics { get { throw null; } }
         public bool IsUnsafeSupportLoggingEnabled { get { throw null; } set { } }
+        public System.Func<Azure.Identity.TokenRequestCallbackContext, System.Threading.Tasks.Task> TokenRequestCallback { get { throw null; } set { } }
+    }
+    public partial class TokenRequestCallbackContext
+    {
+        internal TokenRequestCallbackContext() { }
+        public System.Collections.Generic.IDictionary<string, string> BodyParameters { get { throw null; } }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public abstract partial class UnsafeTokenCacheOptions : Azure.Identity.TokenCachePersistenceOptions
