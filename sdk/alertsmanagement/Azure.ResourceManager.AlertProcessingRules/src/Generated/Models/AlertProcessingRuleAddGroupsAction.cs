@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.AlertProcessingRules;
 
 namespace Azure.ResourceManager.AlertProcessingRules.Models
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleAddGroupsAction"/>. </summary>
         /// <param name="actionGroupIds"> List of action group Ids to add to alert processing rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupIds"/> is null. </exception>
-        public AlertProcessingRuleAddGroupsAction(IEnumerable<string> actionGroupIds) : base(ActionType.AddActionGroups)
+        public AlertProcessingRuleAddGroupsAction(IEnumerable<ResourceIdentifier> actionGroupIds) : base(ActionType.AddActionGroups)
         {
             Argument.AssertNotNull(actionGroupIds, nameof(actionGroupIds));
 
@@ -29,12 +30,12 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <param name="actionType"> Action that should be applied. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="actionGroupIds"> List of action group Ids to add to alert processing rule. </param>
-        internal AlertProcessingRuleAddGroupsAction(ActionType actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> actionGroupIds) : base(actionType, additionalBinaryDataProperties)
+        internal AlertProcessingRuleAddGroupsAction(ActionType actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ResourceIdentifier> actionGroupIds) : base(actionType, additionalBinaryDataProperties)
         {
             ActionGroupIds = actionGroupIds;
         }
 
         /// <summary> List of action group Ids to add to alert processing rule. </summary>
-        public IList<string> ActionGroupIds { get; }
+        public IList<ResourceIdentifier> ActionGroupIds { get; }
     }
 }

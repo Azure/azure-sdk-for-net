@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <summary> Equals. </summary>
         private const string EqualToValue = "Equals";
         /// <summary> NotEquals. </summary>
-        private const string NotEqualToValue = "NotEquals";
+        private const string NotEqualsValue = "NotEquals";
         /// <summary> Contains. </summary>
         private const string ContainsValue = "Contains";
         /// <summary> DoesNotContain. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         public static AlertProcessingRuleOperator EqualTo { get; } = new AlertProcessingRuleOperator(EqualToValue);
 
         /// <summary> NotEquals. </summary>
-        public static AlertProcessingRuleOperator NotEqualTo { get; } = new AlertProcessingRuleOperator(NotEqualToValue);
+        public static AlertProcessingRuleOperator NotEquals { get; } = new AlertProcessingRuleOperator(NotEqualsValue);
 
         /// <summary> Contains. </summary>
         public static AlertProcessingRuleOperator Contains { get; } = new AlertProcessingRuleOperator(ContainsValue);

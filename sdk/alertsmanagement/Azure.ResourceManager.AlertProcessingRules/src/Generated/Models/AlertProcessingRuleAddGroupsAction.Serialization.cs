@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.AlertProcessingRules;
 
 namespace Azure.ResourceManager.AlertProcessingRules.Models
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("actionGroupIds"u8);
             writer.WriteStartArray();
-            foreach (string item in ActionGroupIds)
+            foreach (ResourceIdentifier item in ActionGroupIds)
             {
                 if (item == null)
                 {
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             }
             ActionType actionType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<string> actionGroupIds = default;
+            IList<ResourceIdentifier> actionGroupIds = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("actionType"u8))
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                 }
                 if (prop.NameEquals("actionGroupIds"u8))
                 {
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
                     actionGroupIds = array;

@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <summary> Add action groups to alert processing rule. </summary>
         /// <param name="actionGroupIds"> List of action group Ids to add to alert processing rule. </param>
         /// <returns> A new <see cref="Models.AlertProcessingRuleAddGroupsAction"/> instance for mocking. </returns>
-        public static AlertProcessingRuleAddGroupsAction AlertProcessingRuleAddGroupsAction(IEnumerable<string> actionGroupIds = default)
+        public static AlertProcessingRuleAddGroupsAction AlertProcessingRuleAddGroupsAction(IEnumerable<ResourceIdentifier> actionGroupIds = default)
         {
-            actionGroupIds ??= new ChangeTrackingList<string>();
+            actionGroupIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new AlertProcessingRuleAddGroupsAction(ActionType.AddActionGroups, additionalBinaryDataProperties: null, actionGroupIds.ToList());
         }
