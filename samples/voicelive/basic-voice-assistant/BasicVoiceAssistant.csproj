@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\sdk\voicelive\Azure.AI.VoiceLive\src\Azure.AI.VoiceLive.csproj" />
+    <PackageReference Include="Azure.AI.VoiceLive" Version="1.1.0-beta.4" />
   </ItemGroup>
 
   <ItemGroup>
