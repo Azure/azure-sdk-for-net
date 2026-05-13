@@ -62,10 +62,10 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(CustomToolParamFormat))]
     [ModelReaderWriterBuildable(typeof(DeclarativeAgentDefinition))]
     [ModelReaderWriterBuildable(typeof(DeleteSkillResponse))]
+    [ModelReaderWriterBuildable(typeof(EmptyModelParam))]
     [ModelReaderWriterBuildable(typeof(EntraAuthorizationScheme))]
     [ModelReaderWriterBuildable(typeof(FabricDataAgentToolOptions))]
     [ModelReaderWriterBuildable(typeof(FabricIQPreviewTool))]
-    [ModelReaderWriterBuildable(typeof(FabricIQPreviewToolParameters))]
     [ModelReaderWriterBuildable(typeof(FixedRatioVersionSelectionRule))]
     [ModelReaderWriterBuildable(typeof(FoundryOpenAIError))]
     [ModelReaderWriterBuildable(typeof(FunctionShellToolParamEnvironment))]
@@ -88,7 +88,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(OpenAI.InternalComputerUsePreviewTool))]
     [ModelReaderWriterBuildable(typeof(InternalCreateAgentRequest))]
     [ModelReaderWriterBuildable(typeof(InternalCustomToolParam))]
-    [ModelReaderWriterBuildable(typeof(InternalEmptyModelParam))]
     [ModelReaderWriterBuildable(typeof(OpenAI.InternalFileSearchTool))]
     [ModelReaderWriterBuildable(typeof(InternalFunctionShellToolParam))]
     [ModelReaderWriterBuildable(typeof(OpenAI.InternalFunctionTool))]
@@ -102,7 +101,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(InternalNamespaceToolParam))]
     [ModelReaderWriterBuildable(typeof(InternalRankingOptions))]
     [ModelReaderWriterBuildable(typeof(InternalToolChoiceParam))]
-    [ModelReaderWriterBuildable(typeof(InternalToolSearchToolParam))]
     [ModelReaderWriterBuildable(typeof(InternalUpdateAgentRequest))]
     [ModelReaderWriterBuildable(typeof(InternalWebSearchPreviewTool))]
     [ModelReaderWriterBuildable(typeof(InternalWebSearchTool))]
@@ -161,6 +159,7 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(ToolChoiceWebSearchPreview))]
     [ModelReaderWriterBuildable(typeof(ToolChoiceWebSearchPreview20250311))]
     [ModelReaderWriterBuildable(typeof(ToolProjectConnection))]
+    [ModelReaderWriterBuildable(typeof(ToolSearchTool))]
     [ModelReaderWriterBuildable(typeof(UnknownAgentBlueprintReference))]
     [ModelReaderWriterBuildable(typeof(UnknownAgentDefinition))]
     [ModelReaderWriterBuildable(typeof(UnknownAgentEndpointAuthorizationScheme))]
@@ -187,7 +186,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(WorkflowAgentDefinition))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.WorkflowAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WorkIQPreviewTool))]
-    [ModelReaderWriterBuildable(typeof(WorkIQPreviewToolParameters))]
     public partial class AzureAIProjectsAgentsContext : ModelReaderWriterContext
     {
     }
