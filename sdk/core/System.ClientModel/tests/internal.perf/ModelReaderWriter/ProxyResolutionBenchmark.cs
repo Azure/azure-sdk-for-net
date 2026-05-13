@@ -1,0 +1,171 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using BenchmarkDotNet.Attributes;
+using System.ClientModel.Primitives;
+using System.Text.Json;
+
+namespace System.ClientModel.Tests.Internal.Perf
+{
+    /// <summary>
+    /// Benchmarks that measure the overhead of proxy resolution on read/write paths.
+    /// Compares: no proxy vs 1 proxy vs 10 proxies (where the last one handles).
+    /// The model is intentionally simple so the benchmark isolates proxy lookup cost.
+    /// </summary>
+    public class ProxyResolutionBenchmark
+    {
+        private BenchmarkModel _model;
+        private BinaryData _data;
+
+        private ModelReaderWriterOptions _noProxyOptions;
+        private ModelReaderWriterOptions _oneProxyOptions;
+        private ModelReaderWriterOptions _tenProxiesLastWinsOptions;
+
+        [GlobalSetup]
+        public void Setup()
+        {
+            _model = new BenchmarkModel { Value = "hello" };
+            _data = BinaryData.FromString("{\"value\":\"hello\"}");
+
+            // No proxies
+            _noProxyOptions = new ModelReaderWriterOptions("J");
+
+            // 1 proxy that always handles
+            _oneProxyOptions = new ModelReaderWriterOptions("J");
+            _oneProxyOptions.AddProxy<BenchmarkModel>(new BenchmarkProxy(canHandle: true));
+
+            // 10 proxies where only the last one handles (worst case chain walk)
+            _tenProxiesLastWinsOptions = new ModelReaderWriterOptions("J");
+            for (int i = 0; i < 9; i++)
+            {
+                _tenProxiesLastWinsOptions.AddProxy<BenchmarkModel>(new BenchmarkProxy(canHandle: false));
+            }
+            _tenProxiesLastWinsOptions.AddProxy<BenchmarkModel>(new BenchmarkProxy(canHandle: true));
+        }
+
+        // ── Write benchmarks ──
+
+        [Benchmark(Baseline = true)]
+        [BenchmarkCategory("Write")]
+        public BinaryData Write_NoProxy()
+        {
+            return ModelReaderWriter.Write(_model, _noProxyOptions);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("Write")]
+        public BinaryData Write_OneProxy()
+        {
+            return ModelReaderWriter.Write(_model, _oneProxyOptions);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("Write")]
+        public BinaryData Write_TenProxies_LastWins()
+        {
+            return ModelReaderWriter.Write(_model, _tenProxiesLastWinsOptions);
+        }
+
+        // ── Read benchmarks ──
+
+        [Benchmark]
+        [BenchmarkCategory("Read")]
+        public BenchmarkModel Read_NoProxy()
+        {
+            return ModelReaderWriter.Read<BenchmarkModel>(_data, _noProxyOptions);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("Read")]
+        public BenchmarkModel Read_OneProxy()
+        {
+            return ModelReaderWriter.Read<BenchmarkModel>(_data, _oneProxyOptions);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("Read")]
+        public BenchmarkModel Read_TenProxies_LastWins()
+        {
+            return ModelReaderWriter.Read<BenchmarkModel>(_data, _tenProxiesLastWinsOptions);
+        }
+
+        // ── Minimal model for benchmarking ──
+
+        public class BenchmarkModel : IJsonModel<BenchmarkModel>
+        {
+            public string Value { get; set; } = string.Empty;
+
+            void IJsonModel<BenchmarkModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                writer.WriteStartObject();
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
+                writer.WriteEndObject();
+            }
+
+            BenchmarkModel IJsonModel<BenchmarkModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            {
+                using var doc = JsonDocument.ParseValue(ref reader);
+                string val = doc.RootElement.TryGetProperty("value", out var v) ? v.GetString()! : "";
+                return new BenchmarkModel { Value = val };
+            }
+
+            BinaryData IPersistableModel<BenchmarkModel>.Write(ModelReaderWriterOptions options)
+                => ModelReaderWriter.Write(this, options);
+
+            BenchmarkModel IPersistableModel<BenchmarkModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            {
+                using var doc = JsonDocument.Parse(data);
+                string val = doc.RootElement.TryGetProperty("value", out var v) ? v.GetString()! : "";
+                return new BenchmarkModel { Value = val };
+            }
+
+            string IPersistableModel<BenchmarkModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        }
+
+        // ── Proxy that can be configured to handle or decline ──
+
+        private class BenchmarkProxy : ModelProxy<BenchmarkModel>, IJsonModel<BenchmarkModel>
+        {
+            private readonly bool _canHandle;
+
+            public BenchmarkProxy(bool canHandle)
+            {
+                _canHandle = canHandle;
+            }
+
+            public override bool CanHandle(BenchmarkModel model) => _canHandle;
+            public override bool CanHandle(BinaryData data, ModelReaderWriterOptions options) => _canHandle;
+
+            void IJsonModel<BenchmarkModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                var model = (BenchmarkModel)options.ProxiedModel!;
+                writer.WriteStartObject();
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(model.Value);
+                writer.WritePropertyName("proxied"u8);
+                writer.WriteBooleanValue(true);
+                writer.WriteEndObject();
+            }
+
+            BenchmarkModel IJsonModel<BenchmarkModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            {
+                using var doc = JsonDocument.ParseValue(ref reader);
+                string val = doc.RootElement.TryGetProperty("value", out var v) ? v.GetString()! : "";
+                return new BenchmarkModel { Value = val };
+            }
+
+            public override BenchmarkModel Create(BinaryData data, ModelReaderWriterOptions options)
+            {
+                using var doc = JsonDocument.Parse(data);
+                string val = doc.RootElement.TryGetProperty("value", out var v) ? v.GetString()! : "";
+                return new BenchmarkModel { Value = val };
+            }
+
+            public override BinaryData Write(ModelReaderWriterOptions options)
+                => ModelReaderWriter.Write(this, options);
+
+            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        }
+    }
+}
