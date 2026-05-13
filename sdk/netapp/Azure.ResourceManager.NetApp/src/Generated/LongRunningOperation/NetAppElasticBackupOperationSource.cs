@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal class NetAppElasticBackupOperationSource : IOperationSource<NetAppElasticBackupResource>
+    /// <summary></summary>
+    internal partial class NetAppElasticBackupOperationSource : IOperationSource<NetAppElasticBackupResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NetAppElasticBackupOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NetAppElasticBackupResource IOperationSource<NetAppElasticBackupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetAppElasticBackupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetAppElasticBackupData data = NetAppElasticBackupData.DeserializeNetAppElasticBackupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetAppElasticBackupResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetAppElasticBackupResource> IOperationSource<NetAppElasticBackupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetAppElasticBackupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
-            return await Task.FromResult(new NetAppElasticBackupResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetAppElasticBackupData data = NetAppElasticBackupData.DeserializeNetAppElasticBackupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetAppElasticBackupResource(_client, data);
         }
     }
 }

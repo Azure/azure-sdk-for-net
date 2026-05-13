@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal class NetAppElasticBackupPolicyOperationSource : IOperationSource<NetAppElasticBackupPolicyResource>
+    /// <summary></summary>
+    internal partial class NetAppElasticBackupPolicyOperationSource : IOperationSource<NetAppElasticBackupPolicyResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NetAppElasticBackupPolicyOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NetAppElasticBackupPolicyResource IOperationSource<NetAppElasticBackupPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetAppElasticBackupPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetAppElasticBackupPolicyData data = NetAppElasticBackupPolicyData.DeserializeNetAppElasticBackupPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetAppElasticBackupPolicyResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetAppElasticBackupPolicyResource> IOperationSource<NetAppElasticBackupPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetAppElasticBackupPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
-            return await Task.FromResult(new NetAppElasticBackupPolicyResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetAppElasticBackupPolicyData data = NetAppElasticBackupPolicyData.DeserializeNetAppElasticBackupPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetAppElasticBackupPolicyResource(_client, data);
         }
     }
 }

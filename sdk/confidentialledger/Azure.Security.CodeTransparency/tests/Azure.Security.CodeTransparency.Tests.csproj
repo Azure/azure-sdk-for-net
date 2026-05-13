@@ -20,11 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- TODO: Revert to PackageReference after Azure.Core 1.52 ships with Identity types -->
-    <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="SessionRecords\" />
     <EmbeddedResource Include="TestFiles\**" LinkBase="EmbeddedTestFiles" />
   </ItemGroup>

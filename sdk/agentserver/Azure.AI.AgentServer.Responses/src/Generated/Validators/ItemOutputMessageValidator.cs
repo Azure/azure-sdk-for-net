@@ -54,13 +54,20 @@ internal static partial class ItemOutputMessageValidator
             }
         }
 
-        // Required: id
-        if (!element.TryGetProperty("id", out var idProp))
-            errors.Add(new ValidationError("$.id", "Required property 'id' is missing"));
-        else
+        // Optional: id
+        if (element.TryGetProperty("id", out var idProp) && idProp.ValueKind != JsonValueKind.Null)
         {
             if (idProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.id", $"Expected string, got {idProp.ValueKind}"));
+        }
+
+        // Optional: phase
+        if (element.TryGetProperty("phase", out var phaseProp) && phaseProp.ValueKind != JsonValueKind.Null)
+        {
+            if (phaseProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.phase", $"Expected string, got {phaseProp.ValueKind}"));
+            else if (phaseProp.GetString() is not ("commentary" or "final_answer"))
+                errors.Add(new ValidationError("$.phase", $"Value '{phaseProp.GetString()}' is not valid. Allowed: commentary, final_answer"));
         }
 
         // Required: role

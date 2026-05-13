@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new DeploymentSettingsProperties();
                 }
-                Properties.DeploymentMode = value.Value;
+                Properties.DeploymentMode = value;
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new DeploymentSettingsProperties();
                 }
-                Properties.OperationType = value.Value;
+                Properties.OperationType = value;
             }
         }
 

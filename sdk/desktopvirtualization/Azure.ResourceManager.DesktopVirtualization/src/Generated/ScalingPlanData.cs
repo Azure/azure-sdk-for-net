@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ScalingPlanProperties();
                 }
-                Properties.ScalingHostPoolType = value.Value;
+                Properties.ScalingHostPoolType = value;
             }
         }
 

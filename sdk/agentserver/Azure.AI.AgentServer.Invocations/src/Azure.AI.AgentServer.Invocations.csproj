@@ -3,7 +3,7 @@
     <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.AI.AgentServer.Invocations</RootNamespace>
-    <Version>1.0.0-beta.3</Version>
+    <Version>1.0.0-beta.4</Version>
     <Description>Invocations protocol implementation for Azure AI Agent Server — provides InvocationHandler, endpoint routing, and distributed tracing.</Description>
     <PackageTags>Microsoft Azure AI Agent Server Invocations Protocol Handler</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

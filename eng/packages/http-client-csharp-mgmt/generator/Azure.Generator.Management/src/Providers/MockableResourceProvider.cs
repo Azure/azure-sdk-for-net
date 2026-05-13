@@ -304,6 +304,19 @@ namespace Azure.Generator.Management.Providers
         {
             var methodName = ResourceHelpers.GetExtensionOperationMethodName(resourceMethod.Kind, resource.ResourceName, isAsync);
 
+            // If the user provided a @@clientName(.., "csharp") on the underlying tsp method,
+            // honor it instead of fabricating from (kind, ResourceName). The TCGC name on
+            // resourceMethod.InputMethod.Name already reflects the override.
+            // Scope: only List operations for now. Other kinds (Read/Create/Update/Delete/Action)
+            // can be opted into in a follow-up.
+            if (methodName != null
+                && resourceMethod.Kind == ResourceOperationKind.List
+                && ManagementClientGenerator.Instance.InputLibrary.ClientNameOverriddenMethods.Contains(resourceMethod.InputMethod))
+            {
+                var baseName = resourceMethod.InputMethod.Name;
+                methodName = isAsync ? $"{baseName}Async" : baseName;
+            }
+
             // Only fall back to the raw SDK method name when no standard name was generated.
             // This handles non-CRUD operations (e.g., GetReports, GetReport) that don't map to
             // standard CRUD method naming patterns.

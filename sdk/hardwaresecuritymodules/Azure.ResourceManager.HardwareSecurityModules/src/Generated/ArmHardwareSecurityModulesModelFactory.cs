@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 tags,
                 location,
                 properties,
-                skuName is null ? default : new DedicatedHsmSku(skuName, null),
+                new DedicatedHsmSku(skuName, null),
                 zones.ToList());
         }
 

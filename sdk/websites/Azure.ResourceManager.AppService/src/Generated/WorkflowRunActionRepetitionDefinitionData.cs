@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the WorkflowRunActionRepetitionDefinition data model.
     /// The workflow run action repetition definition.
+    /// Serialized Name: WorkflowRunActionRepetitionDefinition
     /// </summary>
     public partial class WorkflowRunActionRepetitionDefinitionData : TrackedResourceData
     {
@@ -66,21 +67,63 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="startOn"> The start time of the workflow scope repetition. </param>
-        /// <param name="endOn"> The end time of the workflow scope repetition. </param>
-        /// <param name="correlation"> The correlation properties. </param>
-        /// <param name="status"> The status of the workflow scope repetition. </param>
-        /// <param name="code"> The workflow scope repetition code. </param>
-        /// <param name="error"> Anything. </param>
-        /// <param name="trackingId"> Gets the tracking id. </param>
-        /// <param name="inputs"> Gets the inputs. </param>
-        /// <param name="inputsLink"> Gets the link to inputs. </param>
-        /// <param name="outputs"> Gets the outputs. </param>
-        /// <param name="outputsLink"> Gets the link to outputs. </param>
-        /// <param name="trackedProperties"> Gets the tracked properties. </param>
-        /// <param name="retryHistory"> Gets the retry histories. </param>
-        /// <param name="iterationCount"></param>
-        /// <param name="repetitionIndexes"> The repetition indexes. </param>
+        /// <param name="startOn">
+        /// The start time of the workflow scope repetition.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// The end time of the workflow scope repetition.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.endTime
+        /// </param>
+        /// <param name="correlation">
+        /// The correlation properties.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.correlation
+        /// </param>
+        /// <param name="status">
+        /// The status of the workflow scope repetition.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.status
+        /// </param>
+        /// <param name="code">
+        /// The workflow scope repetition code.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.code
+        /// </param>
+        /// <param name="error">
+        /// Anything
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.error
+        /// </param>
+        /// <param name="trackingId">
+        /// Gets the tracking id.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.trackingId
+        /// </param>
+        /// <param name="inputs">
+        /// Gets the inputs.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.inputs
+        /// </param>
+        /// <param name="inputsLink">
+        /// Gets the link to inputs.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.inputsLink
+        /// </param>
+        /// <param name="outputs">
+        /// Gets the outputs.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.outputs
+        /// </param>
+        /// <param name="outputsLink">
+        /// Gets the link to outputs.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.outputsLink
+        /// </param>
+        /// <param name="trackedProperties">
+        /// Gets the tracked properties.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.trackedProperties
+        /// </param>
+        /// <param name="retryHistory">
+        /// Gets the retry histories.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.retryHistory
+        /// </param>
+        /// <param name="iterationCount"> Serialized Name: WorkflowRunActionRepetitionDefinition.properties.iterationCount. </param>
+        /// <param name="repetitionIndexes">
+        /// The repetition indexes.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.repetitionIndexes
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? startOn, DateTimeOffset? endOn, WebAppRunActionCorrelation correlation, WorkflowStatus? status, string code, BinaryData error, string trackingId, BinaryData inputs, WebAppContentLink inputsLink, BinaryData outputs, WebAppContentLink outputsLink, BinaryData trackedProperties, IList<WebAppRetryHistory> retryHistory, int? iterationCount, IList<WorkflowRunActionRepetitionIndex> repetitionIndexes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -107,23 +150,39 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> The start time of the workflow scope repetition. </summary>
+        /// <summary>
+        /// The start time of the workflow scope repetition.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.startTime
+        /// </summary>
         [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary> The end time of the workflow scope repetition. </summary>
+        /// <summary>
+        /// The end time of the workflow scope repetition.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.endTime
+        /// </summary>
         [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary> The correlation properties. </summary>
+        /// <summary>
+        /// The correlation properties.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.correlation
+        /// </summary>
         [WirePath("properties.correlation")]
         public WebAppRunActionCorrelation Correlation { get; set; }
-        /// <summary> The status of the workflow scope repetition. </summary>
+        /// <summary>
+        /// The status of the workflow scope repetition.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.status
+        /// </summary>
         [WirePath("properties.status")]
         public WorkflowStatus? Status { get; set; }
-        /// <summary> The workflow scope repetition code. </summary>
+        /// <summary>
+        /// The workflow scope repetition code.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.code
+        /// </summary>
         [WirePath("properties.code")]
         public string Code { get; set; }
         /// <summary>
         /// Anything
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.error
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -154,11 +213,15 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         [WirePath("properties.error")]
         public BinaryData Error { get; set; }
-        /// <summary> Gets the tracking id. </summary>
+        /// <summary>
+        /// Gets the tracking id.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.trackingId
+        /// </summary>
         [WirePath("properties.trackingId")]
         public string TrackingId { get; }
         /// <summary>
         /// Gets the inputs.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.inputs
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -189,11 +252,15 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         [WirePath("properties.inputs")]
         public BinaryData Inputs { get; }
-        /// <summary> Gets the link to inputs. </summary>
+        /// <summary>
+        /// Gets the link to inputs.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.inputsLink
+        /// </summary>
         [WirePath("properties.inputsLink")]
         public WebAppContentLink InputsLink { get; }
         /// <summary>
         /// Gets the outputs.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.outputs
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -224,11 +291,15 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         [WirePath("properties.outputs")]
         public BinaryData Outputs { get; }
-        /// <summary> Gets the link to outputs. </summary>
+        /// <summary>
+        /// Gets the link to outputs.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.outputsLink
+        /// </summary>
         [WirePath("properties.outputsLink")]
         public WebAppContentLink OutputsLink { get; }
         /// <summary>
         /// Gets the tracked properties.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.trackedProperties
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -259,13 +330,19 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         [WirePath("properties.trackedProperties")]
         public BinaryData TrackedProperties { get; }
-        /// <summary> Gets the retry histories. </summary>
+        /// <summary>
+        /// Gets the retry histories.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.retryHistory
+        /// </summary>
         [WirePath("properties.retryHistory")]
         public IList<WebAppRetryHistory> RetryHistory { get; }
-        /// <summary> Gets or sets the iteration count. </summary>
+        /// <summary> Serialized Name: WorkflowRunActionRepetitionDefinition.properties.iterationCount. </summary>
         [WirePath("properties.iterationCount")]
         public int? IterationCount { get; set; }
-        /// <summary> The repetition indexes. </summary>
+        /// <summary>
+        /// The repetition indexes.
+        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.repetitionIndexes
+        /// </summary>
         [WirePath("properties.repetitionIndexes")]
         public IList<WorkflowRunActionRepetitionIndex> RepetitionIndexes { get; }
     }

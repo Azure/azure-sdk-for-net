@@ -41,19 +41,22 @@ namespace Azure.ResourceManager.ArtifactSigning
         internal CertificateProfileProperties Properties { get; set; }
 
         /// <summary> Profile type of the certificate. </summary>
-        public CertificateProfileType ProfileType
+        public CertificateProfileType? CertificateProfileType
         {
             get
             {
-                return Properties is null ? default : Properties.ProfileType;
+                return Properties is null ? default : Properties.CertificateProfileType;
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new CertificateProfileProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new CertificateProfileProperties();
+                    }
+                    Properties.CertificateProfileType = value.Value;
                 }
-                Properties.ProfileType = value;
             }
         }
 
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     Properties = new CertificateProfileProperties();
                 }
-                Properties.IncludeStreetAddress = value.Value;
+                Properties.IncludeStreetAddress = value;
             }
         }
 
@@ -87,7 +90,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     Properties = new CertificateProfileProperties();
                 }
-                Properties.IncludeCity = value.Value;
+                Properties.IncludeCity = value;
             }
         }
 
@@ -104,7 +107,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     Properties = new CertificateProfileProperties();
                 }
-                Properties.IncludeState = value.Value;
+                Properties.IncludeState = value;
             }
         }
 
@@ -121,7 +124,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     Properties = new CertificateProfileProperties();
                 }
-                Properties.IncludeCountry = value.Value;
+                Properties.IncludeCountry = value;
             }
         }
 
@@ -138,7 +141,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     Properties = new CertificateProfileProperties();
                 }
-                Properties.IncludePostalCode = value.Value;
+                Properties.IncludePostalCode = value;
             }
         }
 

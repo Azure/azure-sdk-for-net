@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the platform of App Service Authentication/Authorization. </summary>
+    /// <summary>
+    /// The configuration settings of the platform of App Service Authentication/Authorization.
+    /// Serialized Name: AuthPlatform
+    /// </summary>
     public partial class AuthPlatform
     {
         /// <summary>
@@ -51,14 +54,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthPlatform"/>. </summary>
-        /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isEnabled">
+        /// &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: AuthPlatform.enabled
+        /// </param>
         /// <param name="runtimeVersion">
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of certain features in the Authentication / Authorization module.
+        /// Serialized Name: AuthPlatform.runtimeVersion
         /// </param>
         /// <param name="configFilePath">
         /// The path of the config file containing auth settings if they come from a file.
         /// If the path is relative, base will the site's root directory.
+        /// Serialized Name: AuthPlatform.configFilePath
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AuthPlatform(bool? isEnabled, string runtimeVersion, string configFilePath, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -69,18 +77,23 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: AuthPlatform.enabled
+        /// </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary>
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of certain features in the Authentication / Authorization module.
+        /// Serialized Name: AuthPlatform.runtimeVersion
         /// </summary>
         [WirePath("runtimeVersion")]
         public string RuntimeVersion { get; set; }
         /// <summary>
         /// The path of the config file containing auth settings if they come from a file.
         /// If the path is relative, base will the site's root directory.
+        /// Serialized Name: AuthPlatform.configFilePath
         /// </summary>
         [WirePath("configFilePath")]
         public string ConfigFilePath { get; set; }

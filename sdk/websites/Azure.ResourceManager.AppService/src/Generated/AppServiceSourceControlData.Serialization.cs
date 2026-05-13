@@ -176,11 +176,11 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 token,
                 tokenSecret,
                 refreshToken,
                 expirationTime,
-                kind,
                 serializedAdditionalRawData);
         }
 

@@ -90,20 +90,20 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetApplications(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, RequestContext context)
+        public virtual Pageable<BinaryData> GetApplications(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, RequestContext context)
         {
             return new BatchClientGetApplicationsCollectionResult(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 context,
                 "BatchClient.GetApplications");
         }
@@ -126,20 +126,20 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetApplicationsAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetApplicationsAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, RequestContext context)
         {
             return new BatchClientGetApplicationsAsyncCollectionResult(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 context,
                 "BatchClient.GetApplications");
         }
@@ -157,19 +157,19 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<BatchApplication> GetApplications(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchApplication> GetApplications(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, CancellationToken cancellationToken = default)
         {
             return new BatchClientGetApplicationsCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 cancellationToken.ToRequestContext(),
                 "BatchClient.GetApplications");
         }
@@ -187,19 +187,19 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<BatchApplication> GetApplicationsAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchApplication> GetApplicationsAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, CancellationToken cancellationToken = default)
         {
             return new BatchClientGetApplicationsAsyncCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 cancellationToken.ToRequestContext(),
                 "BatchClient.GetApplications");
         }
@@ -359,7 +359,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -380,13 +380,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetPoolUsageMetrics(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
+        public virtual Pageable<BinaryData> GetPoolUsageMetrics(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
             return new BatchClientGetPoolUsageMetricsCollectionResult(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 starttime,
                 endtime,
                 filter,
@@ -413,7 +413,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -434,13 +434,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetPoolUsageMetricsAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetPoolUsageMetricsAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
             return new BatchClientGetPoolUsageMetricsAsyncCollectionResult(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 starttime,
                 endtime,
                 filter,
@@ -462,7 +462,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -482,13 +482,13 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<BatchPoolUsageMetrics> GetPoolUsageMetrics(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, DateTimeOffset? starttime = default, DateTimeOffset? endtime = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchPoolUsageMetrics> GetPoolUsageMetrics(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, DateTimeOffset? starttime = default, DateTimeOffset? endtime = default, string filter = default, CancellationToken cancellationToken = default)
         {
             return new BatchClientGetPoolUsageMetricsCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 starttime,
                 endtime,
                 filter,
@@ -510,7 +510,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -530,13 +530,13 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<BatchPoolUsageMetrics> GetPoolUsageMetricsAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, DateTimeOffset? starttime = default, DateTimeOffset? endtime = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchPoolUsageMetrics> GetPoolUsageMetricsAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, DateTimeOffset? starttime = default, DateTimeOffset? endtime = default, string filter = default, CancellationToken cancellationToken = default)
         {
             return new BatchClientGetPoolUsageMetricsAsyncCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 starttime,
                 endtime,
                 filter,
@@ -680,7 +680,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -693,13 +693,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetPools(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        public virtual Pageable<BinaryData> GetPools(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             return new BatchClientGetPoolsCollectionResult(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
@@ -721,7 +721,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -734,13 +734,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetPoolsAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetPoolsAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             return new BatchClientGetPoolsAsyncCollectionResult(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
@@ -755,7 +755,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -767,13 +767,13 @@ namespace Azure.Compute.Batch
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<BatchPool> GetPools(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchPool> GetPools(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
         {
             return new BatchClientGetPoolsCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
@@ -788,7 +788,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -800,13 +800,13 @@ namespace Azure.Compute.Batch
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<BatchPool> GetPoolsAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchPool> GetPoolsAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
         {
             return new BatchClientGetPoolsAsyncCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
@@ -2178,7 +2178,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -2189,13 +2189,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetSupportedImages(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, RequestContext context)
+        public virtual Pageable<BinaryData> GetSupportedImages(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
         {
             return new BatchClientGetSupportedImagesCollectionResult(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 context,
                 "BatchClient.GetSupportedImages");
@@ -2215,7 +2215,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -2226,13 +2226,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetSupportedImagesAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetSupportedImagesAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
         {
             return new BatchClientGetSupportedImagesAsyncCollectionResult(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 context,
                 "BatchClient.GetSupportedImages");
@@ -2245,7 +2245,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -2255,13 +2255,13 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<BatchSupportedImage> GetSupportedImages(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchSupportedImage> GetSupportedImages(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, CancellationToken cancellationToken = default)
         {
             return new BatchClientGetSupportedImagesCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 cancellationToken.ToRequestContext(),
                 "BatchClient.GetSupportedImages");
@@ -2274,7 +2274,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -2284,13 +2284,13 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<BatchSupportedImage> GetSupportedImagesAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchSupportedImage> GetSupportedImagesAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, CancellationToken cancellationToken = default)
         {
             return new BatchClientGetSupportedImagesAsyncCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 cancellationToken.ToRequestContext(),
                 "BatchClient.GetSupportedImages");
@@ -2312,7 +2312,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -2323,13 +2323,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetPoolNodeCounts(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, RequestContext context)
+        public virtual Pageable<BinaryData> GetPoolNodeCounts(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
         {
             return new BatchClientGetPoolNodeCountsCollectionResult(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 context,
                 "BatchClient.GetPoolNodeCounts");
@@ -2351,7 +2351,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -2362,13 +2362,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetPoolNodeCountsAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetPoolNodeCountsAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
         {
             return new BatchClientGetPoolNodeCountsAsyncCollectionResult(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 context,
                 "BatchClient.GetPoolNodeCounts");
@@ -2385,7 +2385,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -2395,13 +2395,13 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<BatchPoolNodeCounts> GetPoolNodeCounts(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchPoolNodeCounts> GetPoolNodeCounts(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, CancellationToken cancellationToken = default)
         {
             return new BatchClientGetPoolNodeCountsCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 cancellationToken.ToRequestContext(),
                 "BatchClient.GetPoolNodeCounts");
@@ -2418,7 +2418,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -2428,13 +2428,13 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<BatchPoolNodeCounts> GetPoolNodeCountsAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchPoolNodeCounts> GetPoolNodeCountsAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, CancellationToken cancellationToken = default)
         {
             return new BatchClientGetPoolNodeCountsAsyncCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 cancellationToken.ToRequestContext(),
                 "BatchClient.GetPoolNodeCounts");
@@ -3488,7 +3488,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -3501,13 +3501,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetJobs(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        public virtual Pageable<BinaryData> GetJobs(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             return new BatchClientGetJobsCollectionResult(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
@@ -3529,7 +3529,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -3542,13 +3542,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetJobsAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetJobsAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             return new BatchClientGetJobsAsyncCollectionResult(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
@@ -3563,7 +3563,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -3575,13 +3575,13 @@ namespace Azure.Compute.Batch
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<BatchJob> GetJobs(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchJob> GetJobs(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
         {
             return new BatchClientGetJobsCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
@@ -3596,7 +3596,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -3608,13 +3608,13 @@ namespace Azure.Compute.Batch
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<BatchJob> GetJobsAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchJob> GetJobsAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
         {
             return new BatchClientGetJobsAsyncCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
@@ -3637,7 +3637,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -3652,21 +3652,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetJobsFromSchedules(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        public virtual Pageable<BinaryData> GetJobsFromSchedule(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            return new BatchClientGetJobsFromSchedulesCollectionResult(
+            return new BatchClientGetJobsFromScheduleCollectionResult(
                 this,
                 jobScheduleId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
                 context,
-                "BatchClient.GetJobsFromSchedules");
+                "BatchClient.GetJobsFromSchedule");
         }
 
         /// <summary>
@@ -3684,7 +3684,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -3699,21 +3699,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetJobsFromSchedulesAsync(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetJobsFromScheduleAsync(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            return new BatchClientGetJobsFromSchedulesAsyncCollectionResult(
+            return new BatchClientGetJobsFromScheduleAsyncCollectionResult(
                 this,
                 jobScheduleId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
                 context,
-                "BatchClient.GetJobsFromSchedules");
+                "BatchClient.GetJobsFromSchedule");
         }
 
         /// <summary> Lists the Jobs that have been created under the specified Job Schedule. </summary>
@@ -3724,7 +3724,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -3738,21 +3738,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<BatchJob> GetJobsFromSchedules(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchJob> GetJobsFromSchedule(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            return new BatchClientGetJobsFromSchedulesCollectionResultOfT(
+            return new BatchClientGetJobsFromScheduleCollectionResultOfT(
                 this,
                 jobScheduleId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
                 cancellationToken.ToRequestContext(),
-                "BatchClient.GetJobsFromSchedules");
+                "BatchClient.GetJobsFromSchedule");
         }
 
         /// <summary> Lists the Jobs that have been created under the specified Job Schedule. </summary>
@@ -3763,7 +3763,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -3777,21 +3777,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<BatchJob> GetJobsFromSchedulesAsync(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchJob> GetJobsFromScheduleAsync(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            return new BatchClientGetJobsFromSchedulesAsyncCollectionResultOfT(
+            return new BatchClientGetJobsFromScheduleAsyncCollectionResultOfT(
                 this,
                 jobScheduleId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
                 cancellationToken.ToRequestContext(),
-                "BatchClient.GetJobsFromSchedules");
+                "BatchClient.GetJobsFromSchedule");
         }
 
         /// <summary>
@@ -3814,7 +3814,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -3828,7 +3828,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetJobPreparationAndReleaseTaskStatuses(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
+        public virtual Pageable<BinaryData> GetJobPreparationAndReleaseTaskStatuses(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -3837,7 +3837,7 @@ namespace Azure.Compute.Batch
                 jobId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 context,
@@ -3864,7 +3864,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -3878,7 +3878,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetJobPreparationAndReleaseTaskStatusesAsync(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetJobPreparationAndReleaseTaskStatusesAsync(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -3887,7 +3887,7 @@ namespace Azure.Compute.Batch
                 jobId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 context,
@@ -3909,7 +3909,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -3922,7 +3922,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<BatchJobPreparationAndReleaseTaskStatus> GetJobPreparationAndReleaseTaskStatuses(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchJobPreparationAndReleaseTaskStatus> GetJobPreparationAndReleaseTaskStatuses(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -3931,7 +3931,7 @@ namespace Azure.Compute.Batch
                 jobId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 cancellationToken.ToRequestContext(),
@@ -3953,7 +3953,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -3966,7 +3966,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<BatchJobPreparationAndReleaseTaskStatus> GetJobPreparationAndReleaseTaskStatusesAsync(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchJobPreparationAndReleaseTaskStatus> GetJobPreparationAndReleaseTaskStatusesAsync(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -3975,7 +3975,7 @@ namespace Azure.Compute.Batch
                 jobId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 cancellationToken.ToRequestContext(),
@@ -5140,7 +5140,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -5153,13 +5153,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetJobSchedules(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        public virtual Pageable<BinaryData> GetJobSchedules(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             return new BatchClientGetJobSchedulesCollectionResult(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
@@ -5181,7 +5181,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -5194,13 +5194,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetJobSchedulesAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetJobSchedulesAsync(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             return new BatchClientGetJobSchedulesAsyncCollectionResult(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
@@ -5215,7 +5215,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -5227,13 +5227,13 @@ namespace Azure.Compute.Batch
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<BatchJobSchedule> GetJobSchedules(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchJobSchedule> GetJobSchedules(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
         {
             return new BatchClientGetJobSchedulesCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
@@ -5248,7 +5248,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -5260,13 +5260,13 @@ namespace Azure.Compute.Batch
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<BatchJobSchedule> GetJobSchedulesAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchJobSchedule> GetJobSchedulesAsync(TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
         {
             return new BatchClientGetJobSchedulesAsyncCollectionResultOfT(
                 this,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
@@ -5425,7 +5425,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -5440,7 +5440,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetTasks(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        public virtual Pageable<BinaryData> GetTasks(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -5449,7 +5449,7 @@ namespace Azure.Compute.Batch
                 jobId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
@@ -5474,7 +5474,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -5489,7 +5489,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetTasksAsync(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetTasksAsync(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -5498,7 +5498,7 @@ namespace Azure.Compute.Batch
                 jobId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
@@ -5518,7 +5518,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -5532,7 +5532,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<BatchTask> GetTasks(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchTask> GetTasks(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -5541,7 +5541,7 @@ namespace Azure.Compute.Batch
                 jobId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
@@ -5561,7 +5561,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -5575,7 +5575,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<BatchTask> GetTasksAsync(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchTask> GetTasksAsync(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -5584,7 +5584,7 @@ namespace Azure.Compute.Batch
                 jobId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 expand,
@@ -7096,7 +7096,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -7113,7 +7113,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetTaskFiles(string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        public virtual Pageable<BinaryData> GetTaskFiles(string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -7124,7 +7124,7 @@ namespace Azure.Compute.Batch
                 taskId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 recursive,
                 context,
@@ -7147,7 +7147,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -7164,7 +7164,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetTaskFilesAsync(string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetTaskFilesAsync(string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -7175,7 +7175,7 @@ namespace Azure.Compute.Batch
                 taskId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 recursive,
                 context,
@@ -7191,7 +7191,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -7207,7 +7207,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="taskId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<BatchNodeFile> GetTaskFiles(string jobId, string taskId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, bool? recursive = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchNodeFile> GetTaskFiles(string jobId, string taskId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, bool? recursive = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -7218,7 +7218,7 @@ namespace Azure.Compute.Batch
                 taskId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 recursive,
                 cancellationToken.ToRequestContext(),
@@ -7234,7 +7234,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -7250,7 +7250,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="taskId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<BatchNodeFile> GetTaskFilesAsync(string jobId, string taskId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, bool? recursive = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchNodeFile> GetTaskFilesAsync(string jobId, string taskId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, bool? recursive = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -7261,7 +7261,7 @@ namespace Azure.Compute.Batch
                 taskId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 recursive,
                 cancellationToken.ToRequestContext(),
@@ -8825,7 +8825,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -8839,7 +8839,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetNodes(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
+        public virtual Pageable<BinaryData> GetNodes(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
@@ -8848,7 +8848,7 @@ namespace Azure.Compute.Batch
                 poolId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 context,
@@ -8870,7 +8870,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -8884,7 +8884,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetNodesAsync(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetNodesAsync(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
@@ -8893,7 +8893,7 @@ namespace Azure.Compute.Batch
                 poolId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 context,
@@ -8908,7 +8908,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -8921,7 +8921,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<BatchNode> GetNodes(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchNode> GetNodes(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
@@ -8930,7 +8930,7 @@ namespace Azure.Compute.Batch
                 poolId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 cancellationToken.ToRequestContext(),
@@ -8945,7 +8945,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -8958,7 +8958,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<BatchNode> GetNodesAsync(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchNode> GetNodesAsync(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
@@ -8967,7 +8967,7 @@ namespace Azure.Compute.Batch
                 poolId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 @select,
                 cancellationToken.ToRequestContext(),
@@ -9126,7 +9126,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -9136,7 +9136,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetNodeExtensions(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, IEnumerable<string> @select, RequestContext context)
+        public virtual Pageable<BinaryData> GetNodeExtensions(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, IEnumerable<string> @select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -9147,7 +9147,7 @@ namespace Azure.Compute.Batch
                 nodeId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 @select,
                 context,
                 "BatchClient.GetNodeExtensions");
@@ -9169,7 +9169,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -9179,7 +9179,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetNodeExtensionsAsync(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, IEnumerable<string> @select, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetNodeExtensionsAsync(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, IEnumerable<string> @select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -9190,7 +9190,7 @@ namespace Azure.Compute.Batch
                 nodeId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 @select,
                 context,
                 "BatchClient.GetNodeExtensions");
@@ -9205,7 +9205,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -9214,7 +9214,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<BatchNodeVMExtension> GetNodeExtensions(string poolId, string nodeId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchNodeVMExtension> GetNodeExtensions(string poolId, string nodeId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -9225,7 +9225,7 @@ namespace Azure.Compute.Batch
                 nodeId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 @select,
                 cancellationToken.ToRequestContext(),
                 "BatchClient.GetNodeExtensions");
@@ -9240,7 +9240,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -9249,7 +9249,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<BatchNodeVMExtension> GetNodeExtensionsAsync(string poolId, string nodeId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchNodeVMExtension> GetNodeExtensionsAsync(string poolId, string nodeId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -9260,7 +9260,7 @@ namespace Azure.Compute.Batch
                 nodeId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 @select,
                 cancellationToken.ToRequestContext(),
                 "BatchClient.GetNodeExtensions");
@@ -9734,7 +9734,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -9748,7 +9748,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetNodeFiles(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        public virtual Pageable<BinaryData> GetNodeFiles(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -9759,7 +9759,7 @@ namespace Azure.Compute.Batch
                 nodeId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 recursive,
                 context,
@@ -9782,7 +9782,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -9796,7 +9796,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetNodeFilesAsync(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetNodeFilesAsync(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -9807,7 +9807,7 @@ namespace Azure.Compute.Batch
                 nodeId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 recursive,
                 context,
@@ -9823,7 +9823,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -9836,7 +9836,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<BatchNodeFile> GetNodeFiles(string poolId, string nodeId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, bool? recursive = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchNodeFile> GetNodeFiles(string poolId, string nodeId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, bool? recursive = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -9847,7 +9847,7 @@ namespace Azure.Compute.Batch
                 nodeId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 recursive,
                 cancellationToken.ToRequestContext(),
@@ -9863,7 +9863,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -9876,7 +9876,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<BatchNodeFile> GetNodeFilesAsync(string poolId, string nodeId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, bool? recursive = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchNodeFile> GetNodeFilesAsync(string poolId, string nodeId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxResults = default, string filter = default, bool? recursive = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -9887,7 +9887,7 @@ namespace Azure.Compute.Batch
                 nodeId,
                 timeout,
                 requestDate,
-                maxresults,
+                maxResults,
                 filter,
                 recursive,
                 cancellationToken.ToRequestContext(),

@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -15,10 +16,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="DoubleClickAction"/>. </summary>
         /// <param name="x"> The x-coordinate where the double click occurred. </param>
         /// <param name="y"> The y-coordinate where the double click occurred. </param>
-        public DoubleClickAction(long x, long y) : base(ComputerActionType.DoubleClick)
+        /// <param name="keys"></param>
+        public DoubleClickAction(long x, long y, IEnumerable<string> keys) : base(ComputerActionType.DoubleClick)
         {
             X = x;
             Y = y;
+            Keys = keys?.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="DoubleClickAction"/>. </summary>
@@ -26,10 +29,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="x"> The x-coordinate where the double click occurred. </param>
         /// <param name="y"> The y-coordinate where the double click occurred. </param>
-        internal DoubleClickAction(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long x, long y) : base(@type, additionalBinaryDataProperties)
+        /// <param name="keys"></param>
+        internal DoubleClickAction(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long x, long y, IList<string> keys) : base(@type, additionalBinaryDataProperties)
         {
             X = x;
             Y = y;
+            Keys = keys;
         }
 
         /// <summary> The x-coordinate where the double click occurred. </summary>
@@ -37,5 +42,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> The y-coordinate where the double click occurred. </summary>
         public long Y { get; set; }
+
+        /// <summary> Gets or sets the Keys. </summary>
+        public IList<string> Keys { get; set; }
     }
 }

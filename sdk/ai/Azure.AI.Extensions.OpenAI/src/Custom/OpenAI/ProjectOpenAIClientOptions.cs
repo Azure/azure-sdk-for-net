@@ -23,4 +23,6 @@ public partial class ProjectOpenAIClientOptions : OpenAIClientOptions
     {
         _apiVersion = "v1";
     }
+
+    public string AgentName { get; set; } = null;
 }

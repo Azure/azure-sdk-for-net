@@ -196,11 +196,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="DiscountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiscountResource> GetDiscountByScopeAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -229,11 +228,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="DiscountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiscountResource> GetDiscountByScope(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -260,21 +258,18 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="systemId"> System ID of the primary MACC. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="systemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="systemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ContributorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContributorResource> GetFromApplicableMaccAsync(ResourceIdentifier scope, string systemId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ContributorResource> GetFromApplicableMaccAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(systemId, nameof(systemId));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContributorData, ContributorResource>(new ContributorsGetFromApplicableMaccAsyncCollectionResultOfT(ContributorsRestClient, scope.ToString(), systemId, context, "MockableBillingBenefitsArmClient.GetFromApplicableMacc"), data => new ContributorResource(Client, data));
+            return new AsyncPageableWrapper<ContributorData, ContributorResource>(new ContributorsGetFromApplicableMaccAsyncCollectionResultOfT(ContributorsRestClient, scope.Parent.Name, scope.Name, context, "MockableBillingBenefitsArmClient.GetFromApplicableMacc"), data => new ContributorResource(Client, data));
         }
 
         /// <summary>
@@ -295,21 +290,18 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="systemId"> System ID of the primary MACC. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="systemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="systemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ContributorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContributorResource> GetFromApplicableMacc(ResourceIdentifier scope, string systemId, CancellationToken cancellationToken = default)
+        public virtual Pageable<ContributorResource> GetFromApplicableMacc(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(systemId, nameof(systemId));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContributorData, ContributorResource>(new ContributorsGetFromApplicableMaccCollectionResultOfT(ContributorsRestClient, scope.ToString(), systemId, context, "MockableBillingBenefitsArmClient.GetFromApplicableMacc"), data => new ContributorResource(Client, data));
+            return new PageableWrapper<ContributorData, ContributorResource>(new ContributorsGetFromApplicableMaccCollectionResultOfT(ContributorsRestClient, scope.Parent.Name, scope.Name, context, "MockableBillingBenefitsArmClient.GetFromApplicableMacc"), data => new ContributorResource(Client, data));
         }
 
         /// <summary>
@@ -332,11 +324,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CreditResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CreditResource> GetApplicableAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -365,11 +356,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CreditResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CreditResource> GetApplicable(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -398,11 +388,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConditionalCreditResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConditionalCreditResource> GetConditionalCreditByScopeAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -431,11 +420,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConditionalCreditResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConditionalCreditResource> GetConditionalCreditByScope(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -462,21 +450,18 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="systemId"> System ID of the primary MACC. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="systemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="systemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ConditionalCreditContributorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConditionalCreditContributorResource> GetFromApplicableConditionalCreditAsync(ResourceIdentifier scope, string systemId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConditionalCreditContributorResource> GetFromApplicableConditionalCreditAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(systemId, nameof(systemId));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConditionalCreditContributorData, ConditionalCreditContributorResource>(new ConditionalCreditContributorsGetFromApplicableConditionalCreditAsyncCollectionResultOfT(ConditionalCreditContributorsRestClient, scope.ToString(), systemId, context, "MockableBillingBenefitsArmClient.GetFromApplicableConditionalCredit"), data => new ConditionalCreditContributorResource(Client, data));
+            return new AsyncPageableWrapper<ConditionalCreditContributorData, ConditionalCreditContributorResource>(new ConditionalCreditContributorsGetFromApplicableConditionalCreditAsyncCollectionResultOfT(ConditionalCreditContributorsRestClient, scope.Parent.Name, scope.Name, context, "MockableBillingBenefitsArmClient.GetFromApplicableConditionalCredit"), data => new ConditionalCreditContributorResource(Client, data));
         }
 
         /// <summary>
@@ -497,21 +482,18 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="systemId"> System ID of the primary MACC. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="systemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="systemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ConditionalCreditContributorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConditionalCreditContributorResource> GetFromApplicableConditionalCredit(ResourceIdentifier scope, string systemId, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConditionalCreditContributorResource> GetFromApplicableConditionalCredit(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(systemId, nameof(systemId));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConditionalCreditContributorData, ConditionalCreditContributorResource>(new ConditionalCreditContributorsGetFromApplicableConditionalCreditCollectionResultOfT(ConditionalCreditContributorsRestClient, scope.ToString(), systemId, context, "MockableBillingBenefitsArmClient.GetFromApplicableConditionalCredit"), data => new ConditionalCreditContributorResource(Client, data));
+            return new PageableWrapper<ConditionalCreditContributorData, ConditionalCreditContributorResource>(new ConditionalCreditContributorsGetFromApplicableConditionalCreditCollectionResultOfT(ConditionalCreditContributorsRestClient, scope.Parent.Name, scope.Name, context, "MockableBillingBenefitsArmClient.GetFromApplicableConditionalCredit"), data => new ConditionalCreditContributorResource(Client, data));
         }
 
         /// <summary>
@@ -534,17 +516,16 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ApplicableMacc"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicableMacc> GetAllAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ApplicableMaccsGetAllAsyncCollectionResultOfT(ApplicableMaccsRestClient, scope.ToString(), context, "MockableBillingBenefitsArmClient.GetAll");
+            return new ApplicableMaccsGetAllAsyncCollectionResultOfT(ApplicableMaccsRestClient, scope.Name, context, "MockableBillingBenefitsArmClient.GetAll");
         }
 
         /// <summary>
@@ -567,17 +548,16 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ApplicableMacc"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicableMacc> GetAll(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ApplicableMaccsGetAllCollectionResultOfT(ApplicableMaccsRestClient, scope.ToString(), context, "MockableBillingBenefitsArmClient.GetAll");
+            return new ApplicableMaccsGetAllCollectionResultOfT(ApplicableMaccsRestClient, scope.Name, context, "MockableBillingBenefitsArmClient.GetAll");
         }
     }
 }

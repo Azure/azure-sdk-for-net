@@ -81,11 +81,11 @@ namespace Azure.Compute.Batch
             {
                 throw new FormatException($"The model {nameof(BatchCreateTaskCollectionResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (Optional.IsCollectionDefined(Results))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (BatchTaskCreateResult item in Values)
+                foreach (BatchTaskCreateResult item in Results)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -133,7 +133,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            IList<BatchTaskCreateResult> values = default;
+            IList<BatchTaskCreateResult> results = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +148,7 @@ namespace Azure.Compute.Batch
                     {
                         array.Add(BatchTaskCreateResult.DeserializeBatchTaskCreateResult(item, options));
                     }
-                    values = array;
+                    results = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchCreateTaskCollectionResult(values ?? new ChangeTrackingList<BatchTaskCreateResult>(), additionalBinaryDataProperties);
+            return new BatchCreateTaskCollectionResult(results ?? new ChangeTrackingList<BatchTaskCreateResult>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -1187,6 +1187,14 @@ namespace Azure.Analytics.PlanetaryComputer
         public virtual Azure.Analytics.PlanetaryComputer.ManagedStorageSharedAccessSignatureClient GetManagedStorageSharedAccessSignatureClient() { throw null; }
         public virtual Azure.Analytics.PlanetaryComputer.StacClient GetStacClient() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class PlanetaryComputerProClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedPlanetaryComputerProClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedPlanetaryComputerProClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddPlanetaryComputerProClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddPlanetaryComputerProClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientSettings> configureSettings) { throw null; }
+    }
     public partial class PlanetaryComputerProClientOptions : Azure.Core.ClientOptions
     {
         public PlanetaryComputerProClientOptions(Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientOptions.ServiceVersion version = Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientOptions.ServiceVersion.V2025_04_30_Preview) { }

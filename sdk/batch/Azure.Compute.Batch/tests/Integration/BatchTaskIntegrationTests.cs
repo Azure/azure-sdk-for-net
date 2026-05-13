@@ -115,7 +115,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 Assert.IsNotNull(batchTaskAddCollectionResult);
                 BatchTaskCreateResult batchTaskAddResult = null;
-                foreach (BatchTaskCreateResult item in batchTaskAddCollectionResult.Values)
+                foreach (BatchTaskCreateResult item in batchTaskAddCollectionResult.Results)
                 {
                     batchTaskAddResult = item;
                 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Routing rules in production experiments. </summary>
+    /// <summary>
+    /// Routing rules in production experiments.
+    /// Serialized Name: Experiments
+    /// </summary>
     internal partial class RoutingRuleExperiments
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RoutingRuleExperiments"/>. </summary>
-        /// <param name="rampUpRules"> List of ramp-up rules. </param>
+        /// <param name="rampUpRules">
+        /// List of ramp-up rules.
+        /// Serialized Name: Experiments.rampUpRules
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RoutingRuleExperiments(IList<RampUpRule> rampUpRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of ramp-up rules. </summary>
+        /// <summary>
+        /// List of ramp-up rules.
+        /// Serialized Name: Experiments.rampUpRules
+        /// </summary>
         [WirePath("rampUpRules")]
         public IList<RampUpRule> RampUpRules { get; }
     }

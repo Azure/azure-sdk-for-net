@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> This class represent a single filter object that defines a multidimensional set. The dimensions of this set are Regions, ClusterFlavors, NodeTypes and ClusterVersions. The constraint should be defined based on the following: FilterMode (Exclude vs Include), VMSizes (the vm sizes in affect of exclusion/inclusion) and the ordering of the Filters. Later filters override previous settings if conflicted. </summary>
     public partial class HDInsightVmSizeCompatibilityFilterV2
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HDInsightVmSizeCompatibilityFilterV2"/>. </summary>
         internal HDInsightVmSizeCompatibilityFilterV2()
@@ -66,8 +38,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="vmSizes"> The list of virtual machine sizes to include or exclude. </param>
         /// <param name="espApplied"> Whether apply for ESP cluster. 'true' means only for ESP, 'false' means only for non-ESP, null or empty string or others mean for both. </param>
         /// <param name="isComputeIsolationSupported"> Whether support compute isolation. 'true' means only for ComputeIsolationEnabled, 'false' means only for regular cluster. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightVmSizeCompatibilityFilterV2(HDInsightFilterMode? filterMode, IReadOnlyList<string> regions, IReadOnlyList<string> clusterFlavors, IReadOnlyList<string> nodeTypes, IReadOnlyList<string> clusterVersions, IReadOnlyList<HDInsightOSType> osType, IReadOnlyList<string> vmSizes, string espApplied, string isComputeIsolationSupported, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightVmSizeCompatibilityFilterV2(HDInsightFilterMode? filterMode, IReadOnlyList<string> regions, IReadOnlyList<string> clusterFlavors, IReadOnlyList<string> nodeTypes, IReadOnlyList<string> clusterVersions, IReadOnlyList<HDInsightOSType> osType, IReadOnlyList<string> vmSizes, string espApplied, string isComputeIsolationSupported, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FilterMode = filterMode;
             Regions = regions;
@@ -78,25 +50,33 @@ namespace Azure.ResourceManager.HDInsight.Models
             VmSizes = vmSizes;
             EspApplied = espApplied;
             IsComputeIsolationSupported = isComputeIsolationSupported;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The filtering mode. Effectively this can enabling or disabling the VM sizes in a particular set. </summary>
         public HDInsightFilterMode? FilterMode { get; }
+
         /// <summary> The list of regions under the effect of the filter. </summary>
         public IReadOnlyList<string> Regions { get; }
+
         /// <summary> The list of cluster flavors under the effect of the filter. </summary>
         public IReadOnlyList<string> ClusterFlavors { get; }
+
         /// <summary> The list of node types affected by the filter. </summary>
         public IReadOnlyList<string> NodeTypes { get; }
+
         /// <summary> The list of cluster versions affected in Major.Minor format. </summary>
         public IReadOnlyList<string> ClusterVersions { get; }
+
         /// <summary> The OSType affected, Windows or Linux. </summary>
         public IReadOnlyList<HDInsightOSType> OSType { get; }
+
         /// <summary> The list of virtual machine sizes to include or exclude. </summary>
         public IReadOnlyList<string> VmSizes { get; }
+
         /// <summary> Whether apply for ESP cluster. 'true' means only for ESP, 'false' means only for non-ESP, null or empty string or others mean for both. </summary>
         public string EspApplied { get; }
+
         /// <summary> Whether support compute isolation. 'true' means only for ComputeIsolationEnabled, 'false' means only for regular cluster. </summary>
         public string IsComputeIsolationSupported { get; }
     }

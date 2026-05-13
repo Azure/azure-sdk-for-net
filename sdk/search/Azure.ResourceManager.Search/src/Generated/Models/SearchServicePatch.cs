@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     Properties = new SearchServiceProperties();
                 }
-                Properties.ReplicaCount = value.Value;
+                Properties.ReplicaCount = value;
             }
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     Properties = new SearchServiceProperties();
                 }
-                Properties.PartitionCount = value.Value;
+                Properties.PartitionCount = value;
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     Properties = new SearchServiceProperties();
                 }
-                Properties.HostingMode = value.Value;
+                Properties.HostingMode = value;
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     Properties = new SearchServiceProperties();
                 }
-                Properties.ComputeType = value.Value;
+                Properties.ComputeType = value;
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     Properties = new SearchServiceProperties();
                 }
-                Properties.PublicInternetAccess = value.Value;
+                Properties.PublicInternetAccess = value;
             }
         }
 
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     Properties = new SearchServiceProperties();
                 }
-                Properties.IsLocalAuthDisabled = value.Value;
+                Properties.IsLocalAuthDisabled = value;
             }
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     Properties = new SearchServiceProperties();
                 }
-                Properties.SemanticSearch = value.Value;
+                Properties.SemanticSearch = value;
             }
         }
 
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     Properties = new SearchServiceProperties();
                 }
-                Properties.KnowledgeRetrieval = value.Value;
+                Properties.KnowledgeRetrieval = value;
             }
         }
 
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     Properties = new SearchServiceProperties();
                 }
-                Properties.IsUpgradeAvailable = value.Value;
+                Properties.IsUpgradeAvailable = value;
             }
         }
 
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     Sku = new SearchSku();
                 }
-                Sku.SearchSkuName = value.Value;
+                Sku.SearchSkuName = value;
             }
         }
     }

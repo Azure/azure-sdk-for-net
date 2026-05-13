@@ -1,0 +1,20 @@
+id: sdk-local-update-changelog-001
+name: Update SDK Package Changelog
+description: |
+  Test that the skill triggers changelog update for a generated SDK package.
+tags:
+  - metadata
+  - changelog
+inputs:
+  prompt: "Update the changelog for the Python SDK package at sdk/compute/azure-mgmt-compute."
+expected:
+  output_contains:
+    - "changelog"
+  output_excludes:
+    - "cannot help"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_package_update_changelog_content
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 30000

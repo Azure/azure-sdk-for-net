@@ -1,0 +1,23 @@
+skill: azsdk-common-pipeline-troubleshooting
+should_trigger_prompts:
+  - prompt: "my CI pipeline is failing"
+    reason: "Should activate skill"
+  - prompt: "debug pipeline build error"
+    reason: "Should activate skill"
+  - prompt: "pipeline troubleshooting help"
+    reason: "Should activate skill"
+  - prompt: "fix failing SDK pipeline"
+    reason: "Should activate skill"
+  - prompt: "CI build broke after my change"
+    reason: "Should activate skill"
+should_not_trigger_prompts:
+  - prompt: "write a TypeSpec definition"
+    reason: "Unrelated to skill scope"
+  - prompt: "create a new skill"
+    reason: "Unrelated to skill scope"
+  - prompt: "optimize markdown tokens"
+    reason: "Unrelated to skill scope"
+  - prompt: "how do I release an SDK package"
+    reason: "Unrelated to skill scope"
+  - prompt: "resolve APIView feedback"
+    reason: "Unrelated to skill scope"

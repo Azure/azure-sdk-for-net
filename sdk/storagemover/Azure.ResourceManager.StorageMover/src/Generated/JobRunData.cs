@@ -94,6 +94,24 @@ namespace Azure.ResourceManager.StorageMover
             }
         }
 
+        /// <summary> Trigger type for the job run. Default is manual. </summary>
+        public StorageMoverJobTriggerType? TriggerType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TriggerType;
+            }
+        }
+
+        /// <summary> Scheduled execution time. Null if Trigger type is manual. </summary>
+        public DateTimeOffset? ScheduledExecutionOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScheduledExecutionOn;
+            }
+        }
+
         /// <summary> The last updated time of the Job Run. </summary>
         public DateTimeOffset? LastStatusUpdate
         {

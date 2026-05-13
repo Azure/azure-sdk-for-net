@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -15,32 +16,26 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of <see cref="CacheKeyQueryStringActionProperties"/>. </summary>
         /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>
-        public CacheKeyQueryStringActionProperties(QueryStringBehavior queryStringBehavior)
+        public CacheKeyQueryStringActionProperties(QueryStringBehavior queryStringBehavior) : base(DeliveryRuleActionParametersType.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters)
         {
             QueryStringBehavior = queryStringBehavior;
-            TypeName = DeliveryRuleActionParametersType.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="CacheKeyQueryStringActionProperties"/>. </summary>
         /// <param name="typeName"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>
         /// <param name="queryParameters"> query parameters to include or exclude (comma separated). </param>
-        internal CacheKeyQueryStringActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, QueryStringBehavior queryStringBehavior, string queryParameters) : base(typeName, serializedAdditionalRawData)
+        internal CacheKeyQueryStringActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, QueryStringBehavior queryStringBehavior, string queryParameters) : base(typeName, additionalBinaryDataProperties)
         {
             QueryStringBehavior = queryStringBehavior;
             QueryParameters = queryParameters;
-            TypeName = typeName;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CacheKeyQueryStringActionProperties"/> for deserialization. </summary>
-        internal CacheKeyQueryStringActionProperties()
-        {
         }
 
         /// <summary> Caching behavior for the requests. </summary>
         [WirePath("queryStringBehavior")]
         public QueryStringBehavior QueryStringBehavior { get; set; }
+
         /// <summary> query parameters to include or exclude (comma separated). </summary>
         [WirePath("queryParameters")]
         public string QueryParameters { get; set; }

@@ -15,7 +15,7 @@ namespace Azure.AI.AgentServer.Invocations.Internal;
 internal sealed class InvocationEndpointHandler
 {
     private const string InvocationIdResponseHeader = "x-agent-invocation-id";
-    private const string SessionIdResponseHeader = "x-agent-session-id";
+    private const string SessionIdResponseHeader = PlatformHeaders.SessionId;
 
     private readonly InvocationsActivitySource _activitySource;
     private readonly ILogger<InvocationEndpointHandler> _logger;

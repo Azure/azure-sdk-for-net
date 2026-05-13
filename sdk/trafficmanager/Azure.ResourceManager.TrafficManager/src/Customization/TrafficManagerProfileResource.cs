@@ -14,6 +14,23 @@ namespace Azure.ResourceManager.TrafficManager
 {
     public partial class TrafficManagerProfileResource
     {
+        /// <summary> Gets a collection of TrafficManagerEndpoints in the <see cref="TrafficManagerProfileResource"/>. </summary>
+        /// <returns> An object representing collection of TrafficManagerEndpoints and their operations over a TrafficManagerEndpointResource. </returns>
+        public virtual TrafficManagerEndpointCollection GetTrafficManagerEndpoints()
+        {
+            return GetCachedClient(client => new TrafficManagerEndpointCollection(client, Id, HasData ? Data : null));
+        }
+
+        /// <summary> Gets a Traffic Manager endpoint. </summary>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TrafficManagerEndpointResource>> GetTrafficManagerEndpointAsync(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        {
+            return await GetTrafficManagerEndpoints().GetAsync(endpointType, endpointName, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets a Traffic Manager endpoint. </summary>
         /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
@@ -23,6 +40,16 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual async Task<Response<TrafficManagerEndpointResource>> GetTrafficManagerEndpointAsync(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             return await GetTrafficManagerEndpointAsync((TrafficManagerEndpointType)Enum.Parse(typeof(TrafficManagerEndpointType), endpointType, true), endpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a Traffic Manager endpoint. </summary>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<TrafficManagerEndpointResource> GetTrafficManagerEndpoint(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        {
+            return GetTrafficManagerEndpoints().Get(endpointType, endpointName, cancellationToken);
         }
 
         /// <summary> Gets a Traffic Manager endpoint. </summary>

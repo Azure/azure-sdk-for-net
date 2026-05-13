@@ -7,62 +7,43 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Properties of key vault to get the secrets for password. </summary>
     public partial class NetAppSecretPasswordKeyVaultPatchProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetAppSecretPasswordKeyVaultPatchProperties"/>. </summary>
-        public NetAppSecretPasswordKeyVaultPatchProperties()
+        /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
+        /// <param name="secretName"> The name of KeyVault password secret. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultUri"/> or <paramref name="secretName"/> is null. </exception>
+        public NetAppSecretPasswordKeyVaultPatchProperties(Uri keyVaultUri, string secretName)
         {
+            Argument.AssertNotNull(keyVaultUri, nameof(keyVaultUri));
+            Argument.AssertNotNull(secretName, nameof(secretName));
+
+            KeyVaultUri = keyVaultUri;
+            SecretName = secretName;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppSecretPasswordKeyVaultPatchProperties"/>. </summary>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
         /// <param name="secretName"> The name of KeyVault password secret. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppSecretPasswordKeyVaultPatchProperties(Uri keyVaultUri, string secretName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppSecretPasswordKeyVaultPatchProperties(Uri keyVaultUri, string secretName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyVaultUri = keyVaultUri;
             SecretName = secretName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Uri of KeyVault. </summary>
         public Uri KeyVaultUri { get; set; }
+
         /// <summary> The name of KeyVault password secret. </summary>
         public string SecretName { get; set; }
     }

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 managementType is null ? default : new IdentityManagement(managementType, null),
                 metadata,
                 requiredFeatures.ToList(),
-                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.Value, null),
+                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.GetValueOrDefault(), null),
                 subscriptionStateRules.ToList(),
                 serviceTreeInfos.ToList(),
                 requestHeaderOptions,
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 endpointUri,
                 locations.ToList(),
                 requiredFeatures.ToList(),
-                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.Value, null),
+                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.GetValueOrDefault(), null),
                 timeout,
                 endpointType,
                 skuLink,
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 loggingRules.ToList(),
                 throttlingRules.ToList(),
                 requiredFeatures.ToList(),
-                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.Value, null),
+                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.GetValueOrDefault(), null),
                 isAsyncOperationEnabled,
                 provisioningState,
                 isThirdPartyS2SEnabled,
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 apiVersions.ToList(),
                 locations.ToList(),
                 requiredFeatures.ToList(),
-                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.Value, null),
+                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.GetValueOrDefault(), null),
                 extensions.ToList(),
                 timeout,
                 endpointType,
@@ -1065,7 +1065,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 serviceFeatureFlag,
                 includeResourceTypes.ToList(),
                 excludeResourceTypes.ToList(),
-                overrideManifestLevelFieldsResourceHydrationAccounts is null ? default : new ManifestLevelPropertyBag((overrideManifestLevelFieldsResourceHydrationAccounts ?? new ChangeTrackingList<ResourceHydrationAccount>()).ToList(), null),
+                new ManifestLevelPropertyBag((overrideManifestLevelFieldsResourceHydrationAccounts ?? new ChangeTrackingList<ResourceHydrationAccount>()).ToList(), null),
                 overrideEndpointLevelFields,
                 ignoreFields.ToList(),
                 additionalBinaryDataProperties: null);
@@ -1094,7 +1094,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="apiVersion"> The api version. </param>
         /// <param name="zones"> The zones. </param>
         /// <returns> A new <see cref="Models.ResourceTypeEndpointBase"/> instance for mocking. </returns>
-        public static ResourceTypeEndpointBase ResourceTypeEndpointBase(bool enabled = default, IEnumerable<string> apiVersions = default, Uri endpointUri = default, IEnumerable<string> locations = default, IEnumerable<string> requiredFeatures = default, FeaturesPolicy? requiredFeaturesPolicy = default, TimeSpan timeout = default, ProviderEndpointType endpointType = default, ProviderDstsConfiguration dstsConfiguration = default, string skuLink = default, string apiVersion = default, IEnumerable<string> zones = default)
+        public static ResourceTypeEndpointBase ResourceTypeEndpointBase(bool enabled = default, IEnumerable<string> apiVersions = default, Uri endpointUri = default, IEnumerable<string> locations = default, IEnumerable<string> requiredFeatures = default, FeaturesPolicy requiredFeaturesPolicy = default, TimeSpan timeout = default, ProviderEndpointType endpointType = default, ProviderDstsConfiguration dstsConfiguration = default, string skuLink = default, string apiVersion = default, IEnumerable<string> zones = default)
         {
             apiVersions ??= new ChangeTrackingList<string>();
             locations ??= new ChangeTrackingList<string>();
@@ -1107,7 +1107,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 endpointUri,
                 locations.ToList(),
                 requiredFeatures.ToList(),
-                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.Value, null),
+                new ProviderFeaturesRule(requiredFeaturesPolicy, null),
                 timeout,
                 endpointType,
                 dstsConfiguration,
@@ -1373,7 +1373,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static LinkedOperationRule LinkedOperationRule(LinkedOperation linkedOperation, LinkedAction linkedAction)
         {
-            return LinkedOperationRule(linkedOperation, linkedAction, dependsOnTypes: default);
+            return LinkedOperationRule(linkedOperation: linkedOperation, linkedAction: linkedAction, dependsOnTypes: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProviderResourceType"/>. </summary>
@@ -1433,13 +1433,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 throttlingRules.ToList(),
                 endpoints.ToList(),
                 marketplaceType,
-                default,
+                managementType is null ? default : new IdentityManagement(managementType, default),
                 metadata,
                 requiredFeatures.ToList(),
-                default,
+                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.GetValueOrDefault(), default),
                 subscriptionStateRules.ToList(),
                 serviceTreeInfos.ToList(),
-                default,
+                optInHeaders is null ? default : new ProviderRequestHeaderOptions(optInHeaders, default, default),
                 skuLink,
                 disallowedActionVerbs.ToList(),
                 templateDeploymentPolicy,
@@ -1465,7 +1465,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourceProviderEndpoint ResourceProviderEndpoint(bool? isEnabled, IEnumerable<string> apiVersions, Uri endpointUri, IEnumerable<AzureLocation> locations, IEnumerable<string> requiredFeatures, FeaturesPolicy? requiredFeaturesPolicy, TimeSpan? timeout)
         {
-            return ResourceProviderEndpoint(isEnabled, apiVersions, endpointUri, locations, requiredFeatures, requiredFeaturesPolicy, timeout, endpointType: default, skuLink: default);
+            return ResourceProviderEndpoint(isEnabled: isEnabled, apiVersions: apiVersions, endpointUri: endpointUri, locations: locations, requiredFeatures: requiredFeatures, requiredFeaturesPolicy: requiredFeaturesPolicy, timeout: timeout, endpointType: default, skuLink: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TemplateDeploymentPolicy"/>. </summary>
@@ -1510,7 +1510,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProviderRegistrationData ProviderRegistrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProviderRegistrationProperties properties)
         {
-            return ProviderRegistrationData(id, name, resourceType, systemData, properties, kind: default);
+            return ProviderRegistrationData(id: id, name: name, resourceType: resourceType, systemData: systemData, properties: properties, kind: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderHub.ResourceTypeRegistrationData"/>. </summary>
@@ -1523,7 +1523,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourceTypeRegistrationData ResourceTypeRegistrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceTypeRegistrationProperties properties)
         {
-            return ResourceTypeRegistrationData(id, name, resourceType, systemData, properties, kind: default);
+            return ResourceTypeRegistrationData(id: id, name: name, resourceType: resourceType, systemData: systemData, properties: properties, kind: default);
         }
     }
 }

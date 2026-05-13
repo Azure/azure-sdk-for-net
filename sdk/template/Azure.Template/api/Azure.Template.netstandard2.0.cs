@@ -97,6 +97,13 @@ namespace Azure.Template
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Template.AzureWidgets GetAzureWidgetsClient() { throw null; }
     }
+    public static partial class WidgetAnalyticsClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedWidgetAnalyticsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedWidgetAnalyticsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Template.WidgetAnalyticsClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddWidgetAnalyticsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddWidgetAnalyticsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Template.WidgetAnalyticsClientSettings> configureSettings) { throw null; }
+    }
     public partial class WidgetAnalyticsClientOptions : Azure.Core.ClientOptions
     {
         public WidgetAnalyticsClientOptions(Azure.Template.WidgetAnalyticsClientOptions.ServiceVersion version = Azure.Template.WidgetAnalyticsClientOptions.ServiceVersion.V2022_12_01) { }

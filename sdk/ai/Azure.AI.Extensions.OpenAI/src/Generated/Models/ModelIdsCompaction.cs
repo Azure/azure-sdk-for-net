@@ -11,6 +11,12 @@ namespace Azure.AI.Extensions.OpenAI
     internal readonly partial struct ModelIdsCompaction : IEquatable<ModelIdsCompaction>
     {
         private readonly string _value;
+        private const string Gpt54Value = "gpt-5.4";
+        private const string Gpt54MiniValue = "gpt-5.4-mini";
+        private const string Gpt54NanoValue = "gpt-5.4-nano";
+        private const string Gpt54Mini20260317Value = "gpt-5.4-mini-2026-03-17";
+        private const string Gpt54Nano20260317Value = "gpt-5.4-nano-2026-03-17";
+        private const string Gpt53ChatLatestValue = "gpt-5.3-chat-latest";
         private const string Gpt52Value = "gpt-5.2";
         private const string Gpt5220251211Value = "gpt-5.2-2025-12-11";
         private const string Gpt52ChatLatestValue = "gpt-5.2-chat-latest";
@@ -107,6 +113,24 @@ namespace Azure.AI.Extensions.OpenAI
 
             _value = value;
         }
+
+        /// <summary> Gets the Gpt54. </summary>
+        public static ModelIdsCompaction Gpt54 { get; } = new ModelIdsCompaction(Gpt54Value);
+
+        /// <summary> Gets the Gpt54Mini. </summary>
+        public static ModelIdsCompaction Gpt54Mini { get; } = new ModelIdsCompaction(Gpt54MiniValue);
+
+        /// <summary> Gets the Gpt54Nano. </summary>
+        public static ModelIdsCompaction Gpt54Nano { get; } = new ModelIdsCompaction(Gpt54NanoValue);
+
+        /// <summary> Gets the Gpt54Mini20260317. </summary>
+        public static ModelIdsCompaction Gpt54Mini20260317 { get; } = new ModelIdsCompaction(Gpt54Mini20260317Value);
+
+        /// <summary> Gets the Gpt54Nano20260317. </summary>
+        public static ModelIdsCompaction Gpt54Nano20260317 { get; } = new ModelIdsCompaction(Gpt54Nano20260317Value);
+
+        /// <summary> Gets the Gpt53ChatLatest. </summary>
+        public static ModelIdsCompaction Gpt53ChatLatest { get; } = new ModelIdsCompaction(Gpt53ChatLatestValue);
 
         /// <summary> Gets the Gpt52. </summary>
         public static ModelIdsCompaction Gpt52 { get; } = new ModelIdsCompaction(Gpt52Value);

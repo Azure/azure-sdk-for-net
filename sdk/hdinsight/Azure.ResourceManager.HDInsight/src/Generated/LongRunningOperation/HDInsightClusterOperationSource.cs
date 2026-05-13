@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HDInsight
 {
-    internal class HDInsightClusterOperationSource : IOperationSource<HDInsightClusterResource>
+    /// <summary></summary>
+    internal partial class HDInsightClusterOperationSource : IOperationSource<HDInsightClusterResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal HDInsightClusterOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         HDInsightClusterResource IOperationSource<HDInsightClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HDInsightClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHDInsightContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            HDInsightClusterData data = HDInsightClusterData.DeserializeHDInsightClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new HDInsightClusterResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<HDInsightClusterResource> IOperationSource<HDInsightClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HDInsightClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHDInsightContext.Default);
-            return await Task.FromResult(new HDInsightClusterResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            HDInsightClusterData data = HDInsightClusterData.DeserializeHDInsightClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HDInsightClusterResource(_client, data);
         }
     }
 }
