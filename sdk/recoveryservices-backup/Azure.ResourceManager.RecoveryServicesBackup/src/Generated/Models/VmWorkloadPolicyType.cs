@@ -15,9 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct VmWorkloadPolicyType : IEquatable<VmWorkloadPolicyType>
     {
         private readonly string _value;
+        /// <summary> Invalid policy type. </summary>
         private const string InvalidValue = "Invalid";
+        /// <summary> Snapshot V1 policy type. </summary>
         private const string SnapshotV1Value = "SnapshotV1";
+        /// <summary> Snapshot V2 policy type. </summary>
         private const string SnapshotV2Value = "SnapshotV2";
+        /// <summary> Streaming policy type. </summary>
         private const string StreamingValue = "Streaming";
 
         /// <summary> Initializes a new instance of <see cref="VmWorkloadPolicyType"/>. </summary>
@@ -30,16 +34,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             _value = value;
         }
 
-        /// <summary> Gets the Invalid. </summary>
+        /// <summary> Invalid policy type. </summary>
         public static VmWorkloadPolicyType Invalid { get; } = new VmWorkloadPolicyType(InvalidValue);
 
-        /// <summary> Gets the SnapshotV1. </summary>
+        /// <summary> Snapshot V1 policy type. </summary>
         public static VmWorkloadPolicyType SnapshotV1 { get; } = new VmWorkloadPolicyType(SnapshotV1Value);
 
-        /// <summary> Gets the SnapshotV2. </summary>
+        /// <summary> Snapshot V2 policy type. </summary>
         public static VmWorkloadPolicyType SnapshotV2 { get; } = new VmWorkloadPolicyType(SnapshotV2Value);
 
-        /// <summary> Gets the Streaming. </summary>
+        /// <summary> Streaming policy type. </summary>
         public static VmWorkloadPolicyType Streaming { get; } = new VmWorkloadPolicyType(StreamingValue);
 
         /// <summary> Determines if two <see cref="VmWorkloadPolicyType"/> values are the same. </summary>

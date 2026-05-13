@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Advanced Ransomware Protection reports (ARP) settings. </summary>
     public partial class RansomwareProtectionSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RansomwareProtectionSettings"/>. </summary>
         public RansomwareProtectionSettings()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="RansomwareProtectionSettings"/>. </summary>
         /// <param name="desiredRansomwareProtectionState"> The desired value of the Advanced Ransomware Protection feature state available to the volume. </param>
         /// <param name="actualRansomwareProtectionState"> The actual state of the Advanced Ransomware Protection feature currently active on the volume. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RansomwareProtectionSettings(DesiredRansomwareProtectionState? desiredRansomwareProtectionState, ActualRansomwareProtectionState? actualRansomwareProtectionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RansomwareProtectionSettings(DesiredRansomwareProtectionState? desiredRansomwareProtectionState, ActualRansomwareProtectionState? actualRansomwareProtectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DesiredRansomwareProtectionState = desiredRansomwareProtectionState;
             ActualRansomwareProtectionState = actualRansomwareProtectionState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The desired value of the Advanced Ransomware Protection feature state available to the volume. </summary>
         public DesiredRansomwareProtectionState? DesiredRansomwareProtectionState { get; set; }
+
         /// <summary> The actual state of the Advanced Ransomware Protection feature currently active on the volume. </summary>
         public ActualRansomwareProtectionState? ActualRansomwareProtectionState { get; }
     }
