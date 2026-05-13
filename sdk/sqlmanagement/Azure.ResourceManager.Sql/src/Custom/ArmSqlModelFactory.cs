@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -11,6 +11,7 @@ using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
+#pragma warning disable CS1591
 namespace Azure.ResourceManager.Sql.Models
 {
     public static partial class ArmSqlModelFactory
@@ -48,43 +49,36 @@ namespace Azure.ResourceManager.Sql.Models
         /// <returns> A new <see cref="Sql.RecommendedActionData"/> instance for mocking. </returns>
         public static RecommendedActionData RecommendedActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, string recommendationReason = null, DateTimeOffset? validSince = null, DateTimeOffset? lastRefresh = null, RecommendedActionStateInfo state = null, bool? isExecutableAction = null, bool? isRevertableAction = null, bool? isArchivedAction = null, DateTimeOffset? executeActionStartOn = null, TimeSpan? executeActionDuration = null, DateTimeOffset? revertActionStartOn = null, TimeSpan? revertActionDuration = null, RecommendedActionInitiatedBy? executeActionInitiatedBy = null, DateTimeOffset? executeActionInitiatedOn = null, RecommendedActionInitiatedBy? revertActionInitiatedBy = null, DateTimeOffset? revertActionInitiatedOn = null, int? score = null, RecommendedActionImplementationInfo implementationDetails = null, RecommendedActionErrorInfo errorDetails = null, IEnumerable<RecommendedActionImpactRecord> estimatedImpact = null, IEnumerable<RecommendedActionImpactRecord> observedImpact = null, IEnumerable<RecommendedActionMetricInfo> timeSeries = null, IEnumerable<string> linkedObjects = null, IReadOnlyDictionary<string, string> additionalDetails = null)
         {
-            estimatedImpact ??= new List<RecommendedActionImpactRecord>();
-            observedImpact ??= new List<RecommendedActionImpactRecord>();
-            timeSeries ??= new List<RecommendedActionMetricInfo>();
-            linkedObjects ??= new List<string>();
-            additionalDetails ??= new Dictionary<string, string>();
-
-            return new RecommendedActionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                kind,
-                location,
-                recommendationReason,
-                validSince,
-                lastRefresh,
-                state,
-                isExecutableAction,
-                isRevertableAction,
-                isArchivedAction,
-                executeActionStartOn,
-                executeActionDuration,
-                revertActionStartOn,
-                revertActionDuration,
-                executeActionInitiatedBy,
-                executeActionInitiatedOn,
-                revertActionInitiatedBy,
-                revertActionInitiatedOn,
-                score,
-                implementationDetails,
-                errorDetails,
-                estimatedImpact?.ToList(),
-                observedImpact?.ToList(),
-                timeSeries?.ToList(),
-                linkedObjects?.ToList(),
-                additionalDetails,
-                serializedAdditionalRawData: null);
+            return RecommendedActionData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                recommendationReason: recommendationReason,
+                validSince: validSince,
+                lastRefresh: lastRefresh,
+                state: state,
+                isExecutableAction: isExecutableAction,
+                isRevertableAction: isRevertableAction,
+                isArchivedAction: isArchivedAction,
+                executeActionStartOn: executeActionStartOn,
+                executeActionDuration: executeActionDuration,
+                revertActionStartOn: revertActionStartOn,
+                revertActionDuration: revertActionDuration,
+                executeActionInitiatedBy: executeActionInitiatedBy,
+                executeActionInitiatedOn: executeActionInitiatedOn,
+                revertActionInitiatedBy: revertActionInitiatedBy,
+                revertActionInitiatedOn: revertActionInitiatedOn,
+                score: score,
+                implementationDetails: implementationDetails,
+                errorDetails: errorDetails,
+                estimatedImpact: estimatedImpact,
+                observedImpact: observedImpact,
+                timeSeries: timeSeries,
+                linkedObjects: linkedObjects,
+                details: additionalDetails,
+                kind: kind,
+                location: location);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedInstanceVcoresCapability"/>. </summary>

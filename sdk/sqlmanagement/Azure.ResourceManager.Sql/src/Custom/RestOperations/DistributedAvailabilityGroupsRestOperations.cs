@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -11,10 +11,22 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Sql.Models;
 
+#pragma warning disable CS1591
 namespace Azure.ResourceManager.Sql
 {
     internal partial class DistributedAvailabilityGroupsRestOperations
     {
+        private readonly TelemetryDetails _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+
+        public DistributedAvailabilityGroupsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        {
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
         internal RequestUriBuilder CreateOriginalGetRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string distributedAvailabilityGroupName)
         {
             var uri = new RawRequestUriBuilder();
@@ -114,6 +126,64 @@ namespace Azure.ResourceManager.Sql
                     }
                 case 404:
                     return Response.FromValue((DistributedAvailabilityGroupData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        public Task<Response<DistributedAvailabilityGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
+            => GetOriginalAsync(subscriptionId, resourceGroupName, managedInstanceName, distributedAvailabilityGroupName, cancellationToken);
+
+        public Response<DistributedAvailabilityGroupData> Get(string subscriptionId, string resourceGroupName, string managedInstanceName, string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
+            => GetOriginal(subscriptionId, resourceGroupName, managedInstanceName, distributedAvailabilityGroupName, cancellationToken);
+
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string distributedAvailabilityGroupName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/distributedAvailabilityGroups/", false);
+            uri.AppendPath(distributedAvailabilityGroupName, true);
+            uri.AppendQuery("api-version", "2021-11-01-preview", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, managedInstanceName, distributedAvailabilityGroupName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        public Response Delete(string subscriptionId, string resourceGroupName, string managedInstanceName, string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, managedInstanceName, distributedAvailabilityGroupName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -378,7 +448,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         DistributedAvailabilityGroupsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DistributedAvailabilityGroupsListResult.DeserializeDistributedAvailabilityGroupsListResult(document.RootElement);
+                        value = DistributedAvailabilityGroupsListResult.DeserializeDistributedAvailabilityGroupsListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -407,7 +477,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         DistributedAvailabilityGroupsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DistributedAvailabilityGroupsListResult.DeserializeDistributedAvailabilityGroupsListResult(document.RootElement);
+                        value = DistributedAvailabilityGroupsListResult.DeserializeDistributedAvailabilityGroupsListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -460,7 +530,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         DistributedAvailabilityGroupsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DistributedAvailabilityGroupsListResult.DeserializeDistributedAvailabilityGroupsListResult(document.RootElement);
+                        value = DistributedAvailabilityGroupsListResult.DeserializeDistributedAvailabilityGroupsListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -491,7 +561,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         DistributedAvailabilityGroupsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DistributedAvailabilityGroupsListResult.DeserializeDistributedAvailabilityGroupsListResult(document.RootElement);
+                        value = DistributedAvailabilityGroupsListResult.DeserializeDistributedAvailabilityGroupsListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

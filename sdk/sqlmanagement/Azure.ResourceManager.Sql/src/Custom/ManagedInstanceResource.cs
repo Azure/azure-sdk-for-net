@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Sql.Models;
 
+#pragma warning disable CS1591
 namespace Azure.ResourceManager.Sql
 {
     public partial class ManagedInstanceResource
@@ -38,16 +39,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="TopQueries" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TopQueries> GetTopQueriesAsync(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, SqlMetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
-            ManagedInstanceResourceGetTopQueriesOptions options = new ManagedInstanceResourceGetTopQueriesOptions();
-            options.NumberOfQueries = numberOfQueries;
-            options.Databases = databases;
-            options.StartTime = startTime;
-            options.EndTime = endTime;
-            options.Interval = interval;
-            options.AggregationFunction = aggregationFunction;
-            options.ObservationMetric = observationMetric;
-
-            return GetTopQueriesAsync(options, cancellationToken);
+            return GetByManagedInstanceAsync(numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, cancellationToken);
         }
 
         /// <summary>
@@ -74,16 +66,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="TopQueries" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TopQueries> GetTopQueries(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, SqlMetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
-            ManagedInstanceResourceGetTopQueriesOptions options = new ManagedInstanceResourceGetTopQueriesOptions();
-            options.NumberOfQueries = numberOfQueries;
-            options.Databases = databases;
-            options.StartTime = startTime;
-            options.EndTime = endTime;
-            options.Interval = interval;
-            options.AggregationFunction = aggregationFunction;
-            options.ObservationMetric = observationMetric;
-
-            return GetTopQueries(options, cancellationToken);
+            return GetByManagedInstance(numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, cancellationToken);
         }
 
         /// <summary> Gets a collection of DistributedAvailabilityGroupResources in the ManagedInstance. </summary>

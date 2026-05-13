@@ -1,0 +1,19 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+// Backward-compat type aliases: the TypeSpec generator renames some REST operations classes
+// and the Custom/ files reference the old names. Global using aliases resolve these at compile time.
+
+global using DatabaseSqlVulnerabilityAssessmentBaselinesRestOperations = Azure.ResourceManager.Sql.DatabaseSqlVulnerabilityAssessmentBaselines;
+global using LongTermRetentionBackupsRestOperations = Azure.ResourceManager.Sql.LongTermRetentionBackups;
+global using LongTermRetentionManagedInstanceBackupsRestOperations = Azure.ResourceManager.Sql.LongTermRetentionManagedInstanceBackups;
+global using SqlVulnerabilityAssessmentScanListResult = Azure.ResourceManager.Sql.Models.SQLVulnerabilityAssessmentScanListResult;
+
+global using ResourceGroupLongTermRetentionBackupResource = Azure.ResourceManager.Sql.LongTermRetentionBackupResource;
+global using ResourceGroupLongTermRetentionBackupCollection = Azure.ResourceManager.Sql.LongTermRetentionBackupCollection;
+global using SubscriptionLongTermRetentionBackupResource = Azure.ResourceManager.Sql.LongTermRetentionBackupResource;
+global using SubscriptionLongTermRetentionBackupCollection = Azure.ResourceManager.Sql.LongTermRetentionBackupCollection;
+global using ResourceGroupLongTermRetentionManagedInstanceBackupResource = Azure.ResourceManager.Sql.LongTermRetentionManagedInstanceBackupResource;
+global using ResourceGroupLongTermRetentionManagedInstanceBackupCollection = Azure.ResourceManager.Sql.LongTermRetentionManagedInstanceBackupCollection;
+global using SubscriptionLongTermRetentionManagedInstanceBackupResource = Azure.ResourceManager.Sql.LongTermRetentionManagedInstanceBackupResource;
+global using SubscriptionLongTermRetentionManagedInstanceBackupCollection = Azure.ResourceManager.Sql.LongTermRetentionManagedInstanceBackupCollection;

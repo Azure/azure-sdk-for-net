@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
+#pragma warning disable CS1591
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>

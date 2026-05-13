@@ -7,6 +7,7 @@ using System;
 using System.ComponentModel;
 using Azure.Core;
 
+#pragma warning disable CS1591
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the VirtualCluster data model. </summary>

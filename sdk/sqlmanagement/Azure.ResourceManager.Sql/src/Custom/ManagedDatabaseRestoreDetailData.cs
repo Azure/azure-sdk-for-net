@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Linq;
 using Azure.ResourceManager.Sql.Models;
 
+#pragma warning disable CS1591
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ManagedDatabaseRestoreDetail data model. </summary>
@@ -17,40 +18,16 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Percent completed. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public double? PercentCompleted
-        {
-            get
-            {
-                if (CompletedPercent.HasValue)
-                {
-                    return Convert.ToDouble(CompletedPercent.Value);
-                }
-                else
-                {
-                    return default;
-                }
-            }
-        }
+        public double? PercentCompleted => Properties?.PercentCompleted;
+
         /// <summary> Number of files detected. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public long? NumberOfFilesDetected
-        {
-            get
-            {
-                if (NumberOfFilesFound.HasValue)
-                {
-                    return Convert.ToInt64(NumberOfFilesFound.Value);
-                }
-                else
-                {
-                    return default;
-                }
-            }
-        }
+        public long? NumberOfFilesDetected => Properties?.NumberOfFilesDetected;
+
         /// <summary> List of unrestorable files. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyList<string> UnrestorableFiles { get => UnrestorableFileList.Select(f => f.Name).ToList().AsReadOnly(); }
+        public IReadOnlyList<string> UnrestorableFiles => Properties?.UnrestorableFiles?.Select(f => f.Name).ToList().AsReadOnly();
     }
 }

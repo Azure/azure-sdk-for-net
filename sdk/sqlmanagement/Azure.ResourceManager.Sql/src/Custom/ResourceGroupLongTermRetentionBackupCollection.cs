@@ -1,0 +1,20 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Core;
+using Azure.ResourceManager;
+
+#pragma warning disable CS1591
+namespace Azure.ResourceManager.Sql
+{
+    public partial class ResourceGroupLongTermRetentionBackupCollection : LongTermRetentionBackupCollection
+    {
+        protected ResourceGroupLongTermRetentionBackupCollection()
+        {
+        }
+
+        internal ResourceGroupLongTermRetentionBackupCollection(ArmClient client, ResourceIdentifier id, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName) : base(client, id, locationName, longTermRetentionServerName, longTermRetentionDatabaseName)
+        {
+        }
+    }
+}

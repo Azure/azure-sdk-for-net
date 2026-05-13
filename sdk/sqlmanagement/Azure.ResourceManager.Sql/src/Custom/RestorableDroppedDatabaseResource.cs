@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
+#pragma warning disable CS1591
 namespace Azure.ResourceManager.Sql
 {
     public partial class RestorableDroppedDatabaseResource
@@ -37,15 +38,14 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _restorableDroppedDatabaseClientDiagnostics.CreateScope("RestorableDroppedDatabaseResource.AddTag");
+            using var scope = _restorableDroppedDatabasesClientDiagnostics.CreateScope("RestorableDroppedDatabaseResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restorableDroppedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RestorableDroppedDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return await GetAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -78,15 +78,14 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _restorableDroppedDatabaseClientDiagnostics.CreateScope("RestorableDroppedDatabaseResource.AddTag");
+            using var scope = _restorableDroppedDatabasesClientDiagnostics.CreateScope("RestorableDroppedDatabaseResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restorableDroppedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                return Response.FromValue(new RestorableDroppedDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Get(cancellationToken);
             }
             catch (Exception e)
             {
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _restorableDroppedDatabaseClientDiagnostics.CreateScope("RestorableDroppedDatabaseResource.SetTags");
+            using var scope = _restorableDroppedDatabasesClientDiagnostics.CreateScope("RestorableDroppedDatabaseResource.SetTags");
             scope.Start();
             try
             {
@@ -125,8 +124,7 @@ namespace Azure.ResourceManager.Sql
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restorableDroppedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RestorableDroppedDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return await GetAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -157,7 +155,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _restorableDroppedDatabaseClientDiagnostics.CreateScope("RestorableDroppedDatabaseResource.SetTags");
+            using var scope = _restorableDroppedDatabasesClientDiagnostics.CreateScope("RestorableDroppedDatabaseResource.SetTags");
             scope.Start();
             try
             {
@@ -165,8 +163,7 @@ namespace Azure.ResourceManager.Sql
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restorableDroppedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                return Response.FromValue(new RestorableDroppedDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Get(cancellationToken);
             }
             catch (Exception e)
             {
@@ -197,15 +194,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _restorableDroppedDatabaseClientDiagnostics.CreateScope("RestorableDroppedDatabaseResource.RemoveTag");
+            using var scope = _restorableDroppedDatabasesClientDiagnostics.CreateScope("RestorableDroppedDatabaseResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _restorableDroppedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RestorableDroppedDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return await GetAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -236,15 +232,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _restorableDroppedDatabaseClientDiagnostics.CreateScope("RestorableDroppedDatabaseResource.RemoveTag");
+            using var scope = _restorableDroppedDatabasesClientDiagnostics.CreateScope("RestorableDroppedDatabaseResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _restorableDroppedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                return Response.FromValue(new RestorableDroppedDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Get(cancellationToken);
             }
             catch (Exception e)
             {
