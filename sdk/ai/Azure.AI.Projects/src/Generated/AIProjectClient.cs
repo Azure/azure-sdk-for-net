@@ -28,26 +28,17 @@ namespace Azure.AI.Projects
         private AIProjectConnectionsOperations _cachedAIProjectConnectionsOperations;
         private AIProjectDatasetsOperations _cachedAIProjectDatasetsOperations;
         private AIProjectIndexesOperations _cachedAIProjectIndexesOperations;
-        private Models _cachedModels;
         private AIProjectDeploymentsOperations _cachedAIProjectDeploymentsOperations;
         private RedTeams _cachedRedTeams;
         private EvaluationRules _cachedEvaluationRules;
         private EvaluationTaxonomies _cachedEvaluationTaxonomies;
         private ProjectEvaluators _cachedProjectEvaluators;
-        private EvaluatorGenerationJobs _cachedEvaluatorGenerationJobs;
         private ProjectInsights _cachedProjectInsights;
         private ProjectSchedules _cachedProjectSchedules;
         private AIProjectMemoryStores _cachedAIProjectMemoryStores;
-        private DataGenerationJobs _cachedDataGenerationJobs;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
-
-        /// <summary> Initializes a new instance of Models. </summary>
-        public virtual Models GetModelsClient()
-        {
-            return Volatile.Read(ref _cachedModels) ?? Interlocked.CompareExchange(ref _cachedModels, new Models(Pipeline, _endpoint, _apiVersion), null) ?? _cachedModels;
-        }
 
         /// <summary> Initializes a new instance of AIProjectMemoryStores. </summary>
         public virtual AIProjectMemoryStores GetAIProjectMemoryStoresClient()

@@ -13,6 +13,8 @@ namespace Azure.AI.Projects
         private readonly string _value;
         /// <summary> No pending upload. </summary>
         private const string NoneValue = "None";
+        /// <summary> Deprecated: the service never read this value and silently ignored it. Use TemporaryBlobReference instead. </summary>
+        private const string BlobReferenceValue = "BlobReference";
         /// <summary> Temporary blob reference. </summary>
         private const string TemporaryBlobReferenceValue = "TemporaryBlobReference";
 
@@ -28,6 +30,9 @@ namespace Azure.AI.Projects
 
         /// <summary> No pending upload. </summary>
         public static PendingUploadType None { get; } = new PendingUploadType(NoneValue);
+
+        /// <summary> Deprecated: the service never read this value and silently ignored it. Use TemporaryBlobReference instead. </summary>
+        public static PendingUploadType BlobReference { get; } = new PendingUploadType(BlobReferenceValue);
 
         /// <summary> Temporary blob reference. </summary>
         public static PendingUploadType TemporaryBlobReference { get; } = new PendingUploadType(TemporaryBlobReferenceValue);
