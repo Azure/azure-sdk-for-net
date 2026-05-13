@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.4 (2026-05-12)
+## 1.1.0-beta.4 (2026-05-13)
 
 ### Features Added
 - Replaced `BinaryData` with new `RequireApprovalOption` typed property on `VoiceLiveMcpServerDefinition.RequireApproval`. Customers can now set approval directly (`server.RequireApproval = MCPApprovalType.Never`) instead of using `BinaryData.FromObjectAsJson()`.
