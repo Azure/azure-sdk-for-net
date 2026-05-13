@@ -146,6 +146,10 @@ namespace Azure.Core.Tests.Identity
                     dict[Guid.NewGuid().ToString()] = (Guid.NewGuid().ToString(), true);
                     dict[Guid.NewGuid().ToString()] = (Guid.NewGuid().ToString(), false);
                 }
+                else if (typeof(Delegate).IsAssignableFrom(propInfo.PropertyType))
+                {
+                    // Skip delegate properties during setup — they default to null and are tested via reference equality below
+                }
                 else
                 {
                     Assert.Fail($"test doesn't support property type {propInfo.PropertyType} for property {propInfo.Name}");

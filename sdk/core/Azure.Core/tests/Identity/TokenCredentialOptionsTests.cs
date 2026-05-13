@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -165,6 +166,10 @@ namespace Azure.Core.Tests.Identity
             Assert.AreNotSame(original.AdditionalQueryParameters, clone.AdditionalQueryParameters, "AdditionalQueryParameters should be deep-copied, not shared.");
 #pragma warning restore AZID0001
 
+#pragma warning disable AZID0002 // TokenRequestCallback is experimental
+            Assert.AreEqual(original.TokenRequestCallback, clone.TokenRequestCallback, "TokenRequestCallback should be copied to the clone.");
+#pragma warning restore AZID0002
+
             if (original is ISupportsAdditionallyAllowedTenants && clone is ISupportsAdditionallyAllowedTenants)
             {
                 CollectionAssert.AreEqual(original.AdditionallyAllowedTenants, clone.AdditionallyAllowedTenants);
@@ -259,6 +264,13 @@ namespace Azure.Core.Tests.Identity
                         ["session_id"] = (Guid.NewGuid().ToString(), true)
                     },
 #pragma warning restore AZID0001
+#pragma warning disable AZID0002 // TokenRequestCallback is experimental
+                    TokenRequestCallback = data =>
+                    {
+                        data.BodyParameters["test"] = "value";
+                        return Task.CompletedTask;
+                    },
+#pragma warning restore AZID0002
                     Retry =
                     {
                         MaxRetries = 15,
