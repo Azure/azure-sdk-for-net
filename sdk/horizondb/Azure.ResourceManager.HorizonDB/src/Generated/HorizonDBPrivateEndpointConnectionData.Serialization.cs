@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HorizonDB
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            PrivateEndpointConnectionProperties properties = default;
+            HorizonDBPrivateEndpointConnectionProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HorizonDB
                     {
                         continue;
                     }
-                    properties = PrivateEndpointConnectionProperties.DeserializePrivateEndpointConnectionProperties(prop.Value, options);
+                    properties = HorizonDBPrivateEndpointConnectionProperties.DeserializeHorizonDBPrivateEndpointConnectionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

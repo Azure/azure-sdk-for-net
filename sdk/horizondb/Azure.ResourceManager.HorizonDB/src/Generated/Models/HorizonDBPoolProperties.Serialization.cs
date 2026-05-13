@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             HorizonDBClusterState? state = default;
             int? replicaCount = default;
             string version = default;
-            HorizonDBCreateModePool? createMode = default;
+            HorizonDBPoolCreateMode? createMode = default;
             HorizonDBProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    createMode = new HorizonDBCreateModePool(prop.Value.GetString());
+                    createMode = new HorizonDBPoolCreateMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

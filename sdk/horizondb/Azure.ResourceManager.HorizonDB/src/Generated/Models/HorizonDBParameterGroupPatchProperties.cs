@@ -12,27 +12,27 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> Properties of a HorizonDb parameter group for update operations. </summary>
-    public partial class HorizonDBParameterGroupPropertiesForPatchUpdate
+    public partial class HorizonDBParameterGroupPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupPropertiesForPatchUpdate"/>. </summary>
-        public HorizonDBParameterGroupPropertiesForPatchUpdate()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupPatchProperties"/>. </summary>
+        public HorizonDBParameterGroupPatchProperties()
         {
             Parameters = new ChangeTrackingList<HorizonDBParameterProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupPropertiesForPatchUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupPatchProperties"/>. </summary>
         /// <param name="parameters"> Parameters in the parameter group. </param>
         /// <param name="description"> Description of the parameter group. </param>
-        /// <param name="applyImmediately"> Indicates whether the parameters should be applied immediately. </param>
+        /// <param name="shouldApplyImmediately"> Indicates whether the parameters should be applied immediately. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBParameterGroupPropertiesForPatchUpdate(IList<HorizonDBParameterProperties> parameters, string description, bool? applyImmediately, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBParameterGroupPatchProperties(IList<HorizonDBParameterProperties> parameters, string description, bool? shouldApplyImmediately, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Parameters = parameters;
             Description = description;
-            ApplyImmediately = applyImmediately;
+            ShouldApplyImmediately = shouldApplyImmediately;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public string Description { get; set; }
 
         /// <summary> Indicates whether the parameters should be applied immediately. </summary>
-        public bool? ApplyImmediately { get; set; }
+        public bool? ShouldApplyImmediately { get; set; }
     }
 }

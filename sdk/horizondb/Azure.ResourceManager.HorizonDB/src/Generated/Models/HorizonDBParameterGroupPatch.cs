@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The properties that can be updated for a HorizonDb parameter group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBParameterGroupPatch(IDictionary<string, string> tags, HorizonDBParameterGroupPropertiesForPatchUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBParameterGroupPatch(IDictionary<string, string> tags, HorizonDBParameterGroupPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The properties that can be updated for a HorizonDb parameter group. </summary>
-        public HorizonDBParameterGroupPropertiesForPatchUpdate Properties { get; set; }
+        public HorizonDBParameterGroupPatchProperties Properties { get; set; }
     }
 }

@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> Properties of a HorizonDb cluster for update operations. </summary>
-    public partial class HorizonDBClusterPropertiesForPatchUpdate
+    public partial class HorizonDBClusterPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterPropertiesForPatchUpdate"/>. </summary>
-        public HorizonDBClusterPropertiesForPatchUpdate()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterPatchProperties"/>. </summary>
+        public HorizonDBClusterPatchProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterPropertiesForPatchUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterPatchProperties"/>. </summary>
         /// <param name="administratorLoginPassword"> The administrator login password. </param>
         /// <param name="vCores"> Number of vCores. </param>
         /// <param name="parameterGroup"> Defines connection to a parameter group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBClusterPropertiesForPatchUpdate(string administratorLoginPassword, int? vCores, HorizonDBClusterParameterGroupConnectionProperties parameterGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBClusterPatchProperties(string administratorLoginPassword, int? vCores, HorizonDBClusterParameterGroupConnectionProperties parameterGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdministratorLoginPassword = administratorLoginPassword;
             VCores = vCores;

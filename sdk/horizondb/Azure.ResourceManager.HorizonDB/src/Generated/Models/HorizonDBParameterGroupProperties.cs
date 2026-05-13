@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="description"> Description of the parameter group. </param>
         /// <param name="pgVersion"> PostgreSQL version for the parameter group. </param>
         /// <param name="version"> Current version of the parameter group. </param>
-        /// <param name="applyImmediately"> Indicates whether the parameters should be applied immediately. </param>
+        /// <param name="shouldApplyImmediately"> Indicates whether the parameters should be applied immediately. </param>
         /// <param name="provisioningState"> The provisioning state of the parameter group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBParameterGroupProperties(IList<HorizonDBParameterProperties> parameters, string description, int? pgVersion, int? version, bool? applyImmediately, HorizonDBProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBParameterGroupProperties(IList<HorizonDBParameterProperties> parameters, string description, int? pgVersion, int? version, bool? shouldApplyImmediately, HorizonDBProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Parameters = parameters;
             Description = description;
             PgVersion = pgVersion;
             Version = version;
-            ApplyImmediately = applyImmediately;
+            ShouldApplyImmediately = shouldApplyImmediately;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public int? Version { get; }
 
         /// <summary> Indicates whether the parameters should be applied immediately. </summary>
-        public bool? ApplyImmediately { get; set; }
+        public bool? ShouldApplyImmediately { get; set; }
 
         /// <summary> The provisioning state of the parameter group. </summary>
         public HorizonDBProvisioningState? ProvisioningState { get; }

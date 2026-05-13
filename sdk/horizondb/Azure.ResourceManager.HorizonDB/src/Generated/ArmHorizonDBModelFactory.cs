@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="administratorLoginPassword"> The administrator login password. </param>
         /// <param name="version"> The version of the HorizonDb cluster. </param>
         /// <param name="createMode"> The mode to create a new HorizonDb cluster. </param>
-        /// <param name="pointInTimeUTC"> Restore point creation time specifying the time to restore from. </param>
+        /// <param name="pointInTimeUtcOn"> Restore point creation time specifying the time to restore from. </param>
         /// <param name="sourceClusterResourceId"> The source cluster resource ID for restore or replica creation. </param>
         /// <param name="poolName"> The pool name for restore or replica operations. </param>
         /// <param name="replicaCount"> Number of replicas. </param>
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="zonePlacementPolicy"> Defines how replicas are placed across availability zones. </param>
         /// <param name="parameterGroup"> Defines connection to a parameter group. </param>
         /// <returns> A new <see cref="Models.HorizonDBClusterProperties"/> instance for mocking. </returns>
-        public static HorizonDBClusterProperties HorizonDBClusterProperties(string administratorLogin = default, string administratorLoginPassword = default, string version = default, HorizonDBCreateModeCluster? createMode = default, DateTimeOffset? pointInTimeUTC = default, ResourceIdentifier sourceClusterResourceId = default, string poolName = default, int? replicaCount = default, int? vCores = default, string processorType = default, HorizonDBPublicNetworkAccessState? publicNetworkAccess = default, HorizonDBClusterState? state = default, string fullyQualifiedDomainName = default, string readonlyEndpoint = default, HorizonDBProvisioningState? provisioningState = default, HorizonDBZonePlacementPolicy? zonePlacementPolicy = default, HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default)
+        public static HorizonDBClusterProperties HorizonDBClusterProperties(string administratorLogin = default, string administratorLoginPassword = default, string version = default, HorizonDBClusterCreateMode? createMode = default, DateTimeOffset? pointInTimeUtcOn = default, ResourceIdentifier sourceClusterResourceId = default, string poolName = default, int? replicaCount = default, int? vCores = default, string processorType = default, HorizonDBPublicNetworkAccessState? publicNetworkAccess = default, HorizonDBClusterState? state = default, string fullyQualifiedDomainName = default, string readonlyEndpoint = default, HorizonDBProvisioningState? provisioningState = default, HorizonDBZonePlacementPolicy? zonePlacementPolicy = default, HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default)
         {
             return new HorizonDBClusterProperties(
                 administratorLogin,
                 administratorLoginPassword,
                 version,
                 createMode,
-                pointInTimeUTC,
+                pointInTimeUtcOn,
                 sourceClusterResourceId,
                 poolName,
                 replicaCount,
@@ -87,18 +87,18 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Connection information for HorizonDb parameter group. </summary>
         /// <param name="id"> The resource ID of the connected parameter group. </param>
         /// <param name="syncStatus"> Indication of if parameter group is applied on HorizonDb resource. </param>
-        /// <param name="applyImmediately"> Indicates whether the parameters should be applied immediately. </param>
+        /// <param name="shouldApplyImmediately"> Indicates whether the parameters should be applied immediately. </param>
         /// <returns> A new <see cref="Models.HorizonDBClusterParameterGroupConnectionProperties"/> instance for mocking. </returns>
-        public static HorizonDBClusterParameterGroupConnectionProperties HorizonDBClusterParameterGroupConnectionProperties(ResourceIdentifier id = default, string syncStatus = default, bool? applyImmediately = default)
+        public static HorizonDBClusterParameterGroupConnectionProperties HorizonDBClusterParameterGroupConnectionProperties(ResourceIdentifier id = default, string syncStatus = default, bool? shouldApplyImmediately = default)
         {
-            return new HorizonDBClusterParameterGroupConnectionProperties(id, syncStatus, applyImmediately, additionalBinaryDataProperties: null);
+            return new HorizonDBClusterParameterGroupConnectionProperties(id, syncStatus, shouldApplyImmediately, additionalBinaryDataProperties: null);
         }
 
         /// <summary> HorizonDb cluster for update operations. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The properties that can be updated for a HorizonDb cluster. </param>
         /// <returns> A new <see cref="Models.HorizonDBClusterPatch"/> instance for mocking. </returns>
-        public static HorizonDBClusterPatch HorizonDBClusterPatch(IDictionary<string, string> tags = default, HorizonDBClusterPropertiesForPatchUpdate properties = default)
+        public static HorizonDBClusterPatch HorizonDBClusterPatch(IDictionary<string, string> tags = default, HorizonDBClusterPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="createMode"> The create mode for the pool. </param>
         /// <param name="provisioningState"> The provisioning state of the pool. </param>
         /// <returns> A new <see cref="Models.HorizonDBPoolProperties"/> instance for mocking. </returns>
-        public static HorizonDBPoolProperties HorizonDBPoolProperties(AzureLocation? location = default, HorizonDBClusterState? state = default, int? replicaCount = default, string version = default, HorizonDBCreateModePool? createMode = default, HorizonDBProvisioningState? provisioningState = default)
+        public static HorizonDBPoolProperties HorizonDBPoolProperties(AzureLocation? location = default, HorizonDBClusterState? state = default, int? replicaCount = default, string version = default, HorizonDBPoolCreateMode? createMode = default, HorizonDBProvisioningState? provisioningState = default)
         {
             return new HorizonDBPoolProperties(
                 location,
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
         /// <returns> A new <see cref="HorizonDB.HorizonDBPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static HorizonDBPrivateEndpointConnectionData HorizonDBPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
+        public static HorizonDBPrivateEndpointConnectionData HorizonDBPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBPrivateEndpointConnectionProperties properties = default)
         {
             return new HorizonDBPrivateEndpointConnectionData(
                 id,
@@ -234,12 +234,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default, HorizonDBPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, HorizonDBPrivateEndpointConnectionProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.HorizonDBPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
+        public static HorizonDBPrivateEndpointConnectionProperties HorizonDBPrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default, HorizonDBPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, HorizonDBPrivateEndpointConnectionProvisioningState? provisioningState = default)
         {
             groupIds ??= new ChangeTrackingList<string>();
 
-            return new PrivateEndpointConnectionProperties(groupIds.ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
+            return new HorizonDBPrivateEndpointConnectionProperties(groupIds.ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The private endpoint connection resource. </summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
         /// <returns> A new <see cref="Models.HorizonDBPrivateEndpointConnection"/> instance for mocking. </returns>
-        public static HorizonDBPrivateEndpointConnection HorizonDBPrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
+        public static HorizonDBPrivateEndpointConnection HorizonDBPrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBPrivateEndpointConnectionProperties properties = default)
         {
             return new HorizonDBPrivateEndpointConnection(
                 id,
@@ -320,10 +320,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="description"> Description of the parameter group. </param>
         /// <param name="pgVersion"> PostgreSQL version for the parameter group. </param>
         /// <param name="version"> Current version of the parameter group. </param>
-        /// <param name="applyImmediately"> Indicates whether the parameters should be applied immediately. </param>
+        /// <param name="shouldApplyImmediately"> Indicates whether the parameters should be applied immediately. </param>
         /// <param name="provisioningState"> The provisioning state of the parameter group. </param>
         /// <returns> A new <see cref="Models.HorizonDBParameterGroupProperties"/> instance for mocking. </returns>
-        public static HorizonDBParameterGroupProperties HorizonDBParameterGroupProperties(IEnumerable<HorizonDBParameterProperties> parameters = default, string description = default, int? pgVersion = default, int? version = default, bool? applyImmediately = default, HorizonDBProvisioningState? provisioningState = default)
+        public static HorizonDBParameterGroupProperties HorizonDBParameterGroupProperties(IEnumerable<HorizonDBParameterProperties> parameters = default, string description = default, int? pgVersion = default, int? version = default, bool? shouldApplyImmediately = default, HorizonDBProvisioningState? provisioningState = default)
         {
             parameters ??= new ChangeTrackingList<HorizonDBParameterProperties>();
 
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 description,
                 pgVersion,
                 version,
-                applyImmediately,
+                shouldApplyImmediately,
                 provisioningState,
                 additionalBinaryDataProperties: null);
         }
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The properties that can be updated for a HorizonDb parameter group. </param>
         /// <returns> A new <see cref="Models.HorizonDBParameterGroupPatch"/> instance for mocking. </returns>
-        public static HorizonDBParameterGroupPatch HorizonDBParameterGroupPatch(IDictionary<string, string> tags = default, HorizonDBParameterGroupPropertiesForPatchUpdate properties = default)
+        public static HorizonDBParameterGroupPatch HorizonDBParameterGroupPatch(IDictionary<string, string> tags = default, HorizonDBParameterGroupPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -377,13 +377,13 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Properties of a HorizonDb parameter group for update operations. </summary>
         /// <param name="parameters"> Parameters in the parameter group. </param>
         /// <param name="description"> Description of the parameter group. </param>
-        /// <param name="applyImmediately"> Indicates whether the parameters should be applied immediately. </param>
-        /// <returns> A new <see cref="Models.HorizonDBParameterGroupPropertiesForPatchUpdate"/> instance for mocking. </returns>
-        public static HorizonDBParameterGroupPropertiesForPatchUpdate HorizonDBParameterGroupPropertiesForPatchUpdate(IEnumerable<HorizonDBParameterProperties> parameters = default, string description = default, bool? applyImmediately = default)
+        /// <param name="shouldApplyImmediately"> Indicates whether the parameters should be applied immediately. </param>
+        /// <returns> A new <see cref="Models.HorizonDBParameterGroupPatchProperties"/> instance for mocking. </returns>
+        public static HorizonDBParameterGroupPatchProperties HorizonDBParameterGroupPatchProperties(IEnumerable<HorizonDBParameterProperties> parameters = default, string description = default, bool? shouldApplyImmediately = default)
         {
             parameters ??= new ChangeTrackingList<HorizonDBParameterProperties>();
 
-            return new HorizonDBParameterGroupPropertiesForPatchUpdate(parameters.ToList(), description, applyImmediately, additionalBinaryDataProperties: null);
+            return new HorizonDBParameterGroupPatchProperties(parameters.ToList(), description, shouldApplyImmediately, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Connection information for HorizonDb parameter group. </summary>

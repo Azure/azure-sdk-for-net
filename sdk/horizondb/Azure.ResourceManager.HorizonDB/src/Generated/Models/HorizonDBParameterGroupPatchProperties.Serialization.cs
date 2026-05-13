@@ -14,51 +14,51 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> Properties of a HorizonDb parameter group for update operations. </summary>
-    public partial class HorizonDBParameterGroupPropertiesForPatchUpdate : IJsonModel<HorizonDBParameterGroupPropertiesForPatchUpdate>
+    public partial class HorizonDBParameterGroupPatchProperties : IJsonModel<HorizonDBParameterGroupPatchProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDBParameterGroupPropertiesForPatchUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HorizonDBParameterGroupPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBParameterGroupPropertiesForPatchUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBParameterGroupPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHorizonDBParameterGroupPropertiesForPatchUpdate(document.RootElement, options);
+                        return DeserializeHorizonDBParameterGroupPatchProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDBParameterGroupPropertiesForPatchUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBParameterGroupPatchProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBParameterGroupPropertiesForPatchUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBParameterGroupPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHorizonDBContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDBParameterGroupPropertiesForPatchUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBParameterGroupPatchProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDBParameterGroupPropertiesForPatchUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HorizonDBParameterGroupPatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDBParameterGroupPropertiesForPatchUpdate IPersistableModel<HorizonDBParameterGroupPropertiesForPatchUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HorizonDBParameterGroupPatchProperties IPersistableModel<HorizonDBParameterGroupPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDBParameterGroupPropertiesForPatchUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HorizonDBParameterGroupPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDBParameterGroupPropertiesForPatchUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HorizonDBParameterGroupPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBParameterGroupPropertiesForPatchUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBParameterGroupPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDBParameterGroupPropertiesForPatchUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBParameterGroupPatchProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ApplyImmediately))
+            if (Optional.IsDefined(ShouldApplyImmediately))
             {
                 writer.WritePropertyName("applyImmediately"u8);
-                writer.WriteBooleanValue(ApplyImmediately.Value);
+                writer.WriteBooleanValue(ShouldApplyImmediately.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -113,24 +113,24 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDBParameterGroupPropertiesForPatchUpdate IJsonModel<HorizonDBParameterGroupPropertiesForPatchUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HorizonDBParameterGroupPatchProperties IJsonModel<HorizonDBParameterGroupPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDBParameterGroupPropertiesForPatchUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HorizonDBParameterGroupPatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBParameterGroupPropertiesForPatchUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBParameterGroupPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDBParameterGroupPropertiesForPatchUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBParameterGroupPatchProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHorizonDBParameterGroupPropertiesForPatchUpdate(document.RootElement, options);
+            return DeserializeHorizonDBParameterGroupPatchProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HorizonDBParameterGroupPropertiesForPatchUpdate DeserializeHorizonDBParameterGroupPropertiesForPatchUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static HorizonDBParameterGroupPatchProperties DeserializeHorizonDBParameterGroupPatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             IList<HorizonDBParameterProperties> parameters = default;
             string description = default;
-            bool? applyImmediately = default;
+            bool? shouldApplyImmediately = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    applyImmediately = prop.Value.GetBoolean();
+                    shouldApplyImmediately = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDBParameterGroupPropertiesForPatchUpdate(parameters ?? new ChangeTrackingList<HorizonDBParameterProperties>(), description, applyImmediately, additionalBinaryDataProperties);
+            return new HorizonDBParameterGroupPatchProperties(parameters ?? new ChangeTrackingList<HorizonDBParameterProperties>(), description, shouldApplyImmediately, additionalBinaryDataProperties);
         }
     }
 }

@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (Optional.IsDefined(ApplyImmediately))
+            if (Optional.IsDefined(ShouldApplyImmediately))
             {
                 writer.WritePropertyName("applyImmediately"u8);
-                writer.WriteBooleanValue(ApplyImmediately.Value);
+                writer.WriteBooleanValue(ShouldApplyImmediately.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             string description = default;
             int? pgVersion = default;
             int? version = default;
-            bool? applyImmediately = default;
+            bool? shouldApplyImmediately = default;
             HorizonDBProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    applyImmediately = prop.Value.GetBoolean();
+                    shouldApplyImmediately = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 description,
                 pgVersion,
                 version,
-                applyImmediately,
+                shouldApplyImmediately,
                 provisioningState,
                 additionalBinaryDataProperties);
         }

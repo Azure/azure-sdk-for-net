@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 writer.WritePropertyName("syncStatus"u8);
                 writer.WriteStringValue(SyncStatus);
             }
-            if (Optional.IsDefined(ApplyImmediately))
+            if (Optional.IsDefined(ShouldApplyImmediately))
             {
                 writer.WritePropertyName("applyImmediately"u8);
-                writer.WriteBooleanValue(ApplyImmediately.Value);
+                writer.WriteBooleanValue(ShouldApplyImmediately.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             ResourceIdentifier id = default;
             string syncStatus = default;
-            bool? applyImmediately = default;
+            bool? shouldApplyImmediately = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    applyImmediately = prop.Value.GetBoolean();
+                    shouldApplyImmediately = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDBClusterParameterGroupConnectionProperties(id, syncStatus, applyImmediately, additionalBinaryDataProperties);
+            return new HorizonDBClusterParameterGroupConnectionProperties(id, syncStatus, shouldApplyImmediately, additionalBinaryDataProperties);
         }
     }
 }

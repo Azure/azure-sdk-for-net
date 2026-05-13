@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="administratorLoginPassword"> The administrator login password. </param>
         /// <param name="version"> The version of the HorizonDb cluster. </param>
         /// <param name="createMode"> The mode to create a new HorizonDb cluster. </param>
-        /// <param name="pointInTimeUTC"> Restore point creation time specifying the time to restore from. </param>
+        /// <param name="pointInTimeUtcOn"> Restore point creation time specifying the time to restore from. </param>
         /// <param name="sourceClusterResourceId"> The source cluster resource ID for restore or replica creation. </param>
         /// <param name="poolName"> The pool name for restore or replica operations. </param>
         /// <param name="replicaCount"> Number of replicas. </param>
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="zonePlacementPolicy"> Defines how replicas are placed across availability zones. </param>
         /// <param name="parameterGroup"> Defines connection to a parameter group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBClusterProperties(string administratorLogin, string administratorLoginPassword, string version, HorizonDBCreateModeCluster? createMode, DateTimeOffset? pointInTimeUTC, ResourceIdentifier sourceClusterResourceId, string poolName, int? replicaCount, int? vCores, string processorType, Network network, HorizonDBClusterState? state, string fullyQualifiedDomainName, string readonlyEndpoint, HorizonDBProvisioningState? provisioningState, HorizonDBZonePlacementPolicy? zonePlacementPolicy, HorizonDBClusterParameterGroupConnectionProperties parameterGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBClusterProperties(string administratorLogin, string administratorLoginPassword, string version, HorizonDBClusterCreateMode? createMode, DateTimeOffset? pointInTimeUtcOn, ResourceIdentifier sourceClusterResourceId, string poolName, int? replicaCount, int? vCores, string processorType, Network network, HorizonDBClusterState? state, string fullyQualifiedDomainName, string readonlyEndpoint, HorizonDBProvisioningState? provisioningState, HorizonDBZonePlacementPolicy? zonePlacementPolicy, HorizonDBClusterParameterGroupConnectionProperties parameterGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
             Version = version;
             CreateMode = createMode;
-            PointInTimeUTC = pointInTimeUTC;
+            PointInTimeUtcOn = pointInTimeUtcOn;
             SourceClusterResourceId = sourceClusterResourceId;
             PoolName = poolName;
             ReplicaCount = replicaCount;
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public string Version { get; set; }
 
         /// <summary> The mode to create a new HorizonDb cluster. </summary>
-        public HorizonDBCreateModeCluster? CreateMode { get; set; }
+        public HorizonDBClusterCreateMode? CreateMode { get; set; }
 
         /// <summary> Restore point creation time specifying the time to restore from. </summary>
-        public DateTimeOffset? PointInTimeUTC { get; set; }
+        public DateTimeOffset? PointInTimeUtcOn { get; set; }
 
         /// <summary> The source cluster resource ID for restore or replica creation. </summary>
         public ResourceIdentifier SourceClusterResourceId { get; set; }

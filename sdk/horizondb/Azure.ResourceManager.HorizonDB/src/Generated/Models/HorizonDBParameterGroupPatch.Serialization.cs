@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            HorizonDBParameterGroupPropertiesForPatchUpdate properties = default;
+            HorizonDBParameterGroupPatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    properties = HorizonDBParameterGroupPropertiesForPatchUpdate.DeserializeHorizonDBParameterGroupPropertiesForPatchUpdate(prop.Value, options);
+                    properties = HorizonDBParameterGroupPatchProperties.DeserializeHorizonDBParameterGroupPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Optional.IsDefined(PointInTimeUTC))
+            if (Optional.IsDefined(PointInTimeUtcOn))
             {
                 writer.WritePropertyName("pointInTimeUTC"u8);
-                writer.WriteStringValue(PointInTimeUTC.Value, "O");
+                writer.WriteStringValue(PointInTimeUtcOn.Value, "O");
             }
             if (Optional.IsDefined(SourceClusterResourceId))
             {
@@ -207,8 +207,8 @@ namespace Azure.ResourceManager.HorizonDB.Models
             string administratorLogin = default;
             string administratorLoginPassword = default;
             string version = default;
-            HorizonDBCreateModeCluster? createMode = default;
-            DateTimeOffset? pointInTimeUTC = default;
+            HorizonDBClusterCreateMode? createMode = default;
+            DateTimeOffset? pointInTimeUtcOn = default;
             ResourceIdentifier sourceClusterResourceId = default;
             string poolName = default;
             int? replicaCount = default;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    createMode = new HorizonDBCreateModeCluster(prop.Value.GetString());
+                    createMode = new HorizonDBClusterCreateMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("pointInTimeUTC"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    pointInTimeUTC = prop.Value.GetDateTimeOffset("O");
+                    pointInTimeUtcOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sourceClusterResourceId"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 administratorLoginPassword,
                 version,
                 createMode,
-                pointInTimeUTC,
+                pointInTimeUtcOn,
                 sourceClusterResourceId,
                 poolName,
                 replicaCount,
