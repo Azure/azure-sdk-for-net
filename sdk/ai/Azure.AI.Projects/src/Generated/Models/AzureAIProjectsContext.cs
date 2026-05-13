@@ -122,7 +122,6 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(EvaluatorVersion))]
     [ModelReaderWriterBuildable(typeof(FabricDataAgentToolParameters))]
     [ModelReaderWriterBuildable(typeof(FabricIQPreviewTool))]
-    [ModelReaderWriterBuildable(typeof(FabricIQPreviewToolParameters))]
     [ModelReaderWriterBuildable(typeof(FileCitationBody))]
     [ModelReaderWriterBuildable(typeof(FileDataGenerationJobOutput))]
     [ModelReaderWriterBuildable(typeof(FileDataGenerationJobSource))]
@@ -381,7 +380,6 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(WebSearchToolFilters))]
     [ModelReaderWriterBuildable(typeof(WeeklyRecurrenceSchedule))]
     [ModelReaderWriterBuildable(typeof(WorkIQPreviewTool))]
-    [ModelReaderWriterBuildable(typeof(WorkIQPreviewToolParameters))]
     public partial class AzureAIProjectsContext : ModelReaderWriterContext
     {
     }
