@@ -123,17 +123,17 @@ internal class ModelReaderWriterSamples
             throw new NotImplementedException();
         }
 
-        public override BinaryData Write(ModelReaderWriterOptions options)
+        public BinaryData Write(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override OutputModel Create(BinaryData data, ModelReaderWriterOptions options)
+        public OutputModel Create(BinaryData data, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override string GetFormatFromOptions(ModelReaderWriterOptions options)
+        public string GetFormatFromOptions(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
@@ -153,17 +153,17 @@ internal class ModelReaderWriterSamples
             throw new NotImplementedException();
         }
 
-        public override BinaryData Write(ModelReaderWriterOptions options)
+        public BinaryData Write(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override OutputModel Create(BinaryData data, ModelReaderWriterOptions options)
+        public OutputModel Create(BinaryData data, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override string GetFormatFromOptions(ModelReaderWriterOptions options)
+        public string GetFormatFromOptions(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
@@ -185,17 +185,17 @@ internal class ModelReaderWriterSamples
             throw new NotImplementedException();
         }
 
-        public override BinaryData Write(ModelReaderWriterOptions options)
+        public BinaryData Write(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override InputModel Create(BinaryData data, ModelReaderWriterOptions options)
+        public InputModel Create(BinaryData data, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override string GetFormatFromOptions(ModelReaderWriterOptions options)
+        public string GetFormatFromOptions(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }

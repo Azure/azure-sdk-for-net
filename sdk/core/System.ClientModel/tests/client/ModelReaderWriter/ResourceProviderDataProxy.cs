@@ -116,17 +116,17 @@ namespace System.ClientModel.Tests.Client
             return DeserializeResourceProviderData(doc.RootElement, options);
         }
 
-        public override ResourceProviderData Create(BinaryData data, ModelReaderWriterOptions options)
+        public ResourceProviderData Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeResourceProviderData(doc.RootElement, options);
         }
 
-        public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         void IJsonModel<ResourceProviderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Write((ResourceProviderData)options.ProxiedModel!, writer, options);
 
-        public override BinaryData Write(ModelReaderWriterOptions options)
+        public BinaryData Write(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }

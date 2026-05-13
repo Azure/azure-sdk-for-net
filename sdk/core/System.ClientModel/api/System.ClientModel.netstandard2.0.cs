@@ -446,14 +446,11 @@ namespace System.ClientModel.Primitives
         public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
-    public abstract partial class ModelProxy<T> : System.ClientModel.Primitives.IPersistableModel<T>
+    public abstract partial class ModelProxy<T>
     {
         protected ModelProxy() { }
         public virtual bool CanHandle(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public abstract bool CanHandle(T model);
-        public abstract T Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
-        public abstract string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
-        public abstract System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
     }
     public static partial class ModelReaderWriter
     {
