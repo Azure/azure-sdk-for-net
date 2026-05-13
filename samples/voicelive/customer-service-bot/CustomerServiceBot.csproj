@@ -10,15 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NAudio" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
-    <PackageReference Include="Microsoft.Extensions.Logging" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" />
-    <PackageReference Include="System.CommandLine" />
-    <PackageReference Include="System.Threading.Channels" />
-
+    <PackageReference Include="Azure.Identity" Version="1.13.2" />
+    <PackageReference Include="NAudio" Version="2.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.7" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.7" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.7" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.7" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.7" />
+    <PackageReference Include="System.CommandLine" Version="2.0.7" />
   </ItemGroup>
 
   <ItemGroup>
