@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.AI.Language.Documents
 {
     /// <summary></summary>
-    public partial class DocumentAnalysisClient
+    public partial class DocumentsServiceClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier202;

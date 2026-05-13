@@ -12,14 +12,14 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Language.Documents
 {
-    /// <summary> Client options for <see cref="DocumentAnalysisClient"/>. </summary>
-    public partial class DocumentAnalysisClientOptions : ClientOptions
+    /// <summary> Client options for <see cref="DocumentsServiceClient"/>. </summary>
+    public partial class DocumentsServiceClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2026_05_15_Preview;
 
-        /// <summary> Initializes a new instance of DocumentAnalysisClientOptions. </summary>
+        /// <summary> Initializes a new instance of DocumentsServiceClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public DocumentAnalysisClientOptions(ServiceVersion version = LatestVersion)
+        public DocumentsServiceClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
@@ -31,10 +31,10 @@ namespace Azure.AI.Language.Documents
             ConfigureLogging();
         }
 
-        /// <summary> Initializes a new instance of DocumentAnalysisClientOptions from configuration. </summary>
+        /// <summary> Initializes a new instance of DocumentsServiceClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
         [Experimental("SCME0002")]
-        internal DocumentAnalysisClientOptions(IConfigurationSection section) : base(section, null)
+        internal DocumentsServiceClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2026-05-15-preview";
             if (section is null || !section.Exists())

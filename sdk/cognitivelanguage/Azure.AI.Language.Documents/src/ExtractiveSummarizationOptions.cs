@@ -7,10 +7,10 @@ namespace Azure.AI.Language.Documents
 {
     [CodeGenSuppress("StringIndexType")]
     [CodeGenSuppress(".ctor")]
-    public partial class ExtractiveSummarizationActionContent
+    public partial class ExtractiveSummarizationOptions
     {
-        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationActionContent"/>. </summary>
-        public ExtractiveSummarizationActionContent()
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationOptions"/>. </summary>
+        public ExtractiveSummarizationOptions()
         {
             StringIndexType = Azure.AI.Language.Documents.StringIndexType.TextElementsV8;
         }

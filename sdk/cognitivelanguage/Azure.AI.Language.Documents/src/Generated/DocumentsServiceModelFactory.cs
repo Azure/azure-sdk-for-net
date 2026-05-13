@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class DocumentAnalysisModelFactory
+    public static partial class DocumentsServiceModelFactory
     {
         /// <summary> The object containing the analyze job LRO job state. </summary>
         /// <param name="displayName"> display name. </param>
@@ -337,41 +337,6 @@ namespace Azure.AI.Language.Documents
             return new PiiEntityRecognitionAction(name, AnalyzeDocumentsOperationActionKind.PiiEntityRecognition, additionalBinaryDataProperties: null, parameters);
         }
 
-        /// <summary> Supported parameters for a PII Entities Recognition task. </summary>
-        /// <param name="loggingOptOut"> logging opt out. </param>
-        /// <param name="modelVersion"> model version. </param>
-        /// <param name="domain"> Domain for PII task. </param>
-        /// <param name="piiCategories"> Enumeration of PII categories to be returned in the response. </param>
-        /// <param name="stringIndexType"> StringIndexType to be used for analysis. </param>
-        /// <param name="excludePiiCategories"> Enumeration of PII categories to be excluded in the response. </param>
-        /// <param name="valueExclusionPolicy"> Policy for specific words and terms that should be excluded from detection by the PII detection service. </param>
-        /// <param name="entitySynonyms"> (Optional) request parameter that allows the user to provide synonyms for context words that to enhance pii entity detection. </param>
-        /// <param name="redactionPolicies"> List of RedactionPolicies to be used on the input. </param>
-        /// <param name="confidenceScoreThreshold"> Confidence score threshold configuration for PII entity recognition. </param>
-        /// <param name="disableEntityValidation"> Disable entity validation for PII entity recognition. </param>
-        /// <returns> A new <see cref="Documents.PiiActionContent"/> instance for mocking. </returns>
-        public static PiiActionContent PiiActionContent(bool? loggingOptOut = default, string modelVersion = default, PiiDomain? domain = default, IEnumerable<PiiCategoriesExtended> piiCategories = default, StringIndexType? stringIndexType = default, IEnumerable<PiiCategories> excludePiiCategories = default, ValueExclusionPolicy valueExclusionPolicy = default, IEnumerable<EntitySynonyms> entitySynonyms = default, IEnumerable<RedactionPolicy> redactionPolicies = default, ConfidenceScoreThreshold confidenceScoreThreshold = default, bool? disableEntityValidation = default)
-        {
-            piiCategories ??= new ChangeTrackingList<PiiCategoriesExtended>();
-            excludePiiCategories ??= new ChangeTrackingList<PiiCategories>();
-            entitySynonyms ??= new ChangeTrackingList<EntitySynonyms>();
-            redactionPolicies ??= new ChangeTrackingList<RedactionPolicy>();
-
-            return new PiiActionContent(
-                loggingOptOut,
-                modelVersion,
-                domain,
-                piiCategories.ToList(),
-                stringIndexType,
-                excludePiiCategories.ToList(),
-                valueExclusionPolicy,
-                entitySynonyms.ToList(),
-                redactionPolicies.ToList(),
-                confidenceScoreThreshold,
-                disableEntityValidation,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Policy for specific words and terms that should be excluded from detection by the PII detection service. </summary>
         /// <param name="caseSensitive"> Option to make the values excluded values case sensitive. </param>
         /// <param name="excludedValues"> List of words and terms that should be excluded from detection by the PII detection service. </param>
@@ -523,26 +488,6 @@ namespace Azure.AI.Language.Documents
             return new ExtractiveSummarizationOperationAction(name, AnalyzeDocumentsOperationActionKind.ExtractiveSummarization, additionalBinaryDataProperties: null, actionContent);
         }
 
-        /// <summary> Supported parameters for an Extractive Summarization task. </summary>
-        /// <param name="loggingOptOut"> logging opt out. </param>
-        /// <param name="modelVersion"> model version. </param>
-        /// <param name="sentenceCount"> Specifies the number of sentences in the extracted summary. </param>
-        /// <param name="orderBy"> Specifies how to sort the extracted summaries. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. </param>
-        /// <param name="query"> (Optional) If provided, the query will be used to extract most relevant sentences from the document. </param>
-        /// <returns> A new <see cref="Documents.ExtractiveSummarizationOptions"/> instance for mocking. </returns>
-        public static ExtractiveSummarizationOptions ExtractiveSummarizationOptions(bool? loggingOptOut = default, string modelVersion = default, long? sentenceCount = default, ExtractiveSummarizationOrder? orderBy = default, StringIndexType? stringIndexType = default, string query = default)
-        {
-            return new ExtractiveSummarizationOptions(
-                loggingOptOut,
-                modelVersion,
-                sentenceCount,
-                orderBy,
-                stringIndexType,
-                query,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> An object representing the task definition for an Abstractive Summarization task. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="actionContent"> Parameters for the Abstractive Summarization task. </param>
@@ -550,26 +495,6 @@ namespace Azure.AI.Language.Documents
         public static AbstractiveSummarizationOperationAction AbstractiveSummarizationOperationAction(string name = default, AbstractiveSummarizationOptions actionContent = default)
         {
             return new AbstractiveSummarizationOperationAction(name, AnalyzeDocumentsOperationActionKind.AbstractiveSummarization, additionalBinaryDataProperties: null, actionContent);
-        }
-
-        /// <summary> Supported parameters for the pre-built Abstractive Summarization task. </summary>
-        /// <param name="shouldLog"> logging opt out. </param>
-        /// <param name="modelVersion"> model version. </param>
-        /// <param name="sentenceCount"> Controls the approximate number of sentences in the output summaries. </param>
-        /// <param name="stringIndexType"> String index type. </param>
-        /// <param name="summaryLength"> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </param>
-        /// <param name="instruction"> (Optional) If provided, the instruction will be used to generate the summary. </param>
-        /// <returns> A new <see cref="Documents.AbstractiveSummarizationOptions"/> instance for mocking. </returns>
-        public static AbstractiveSummarizationOptions AbstractiveSummarizationOptions(bool? shouldLog = default, string modelVersion = default, int? sentenceCount = default, StringIndexType? stringIndexType = default, SummarySize? summaryLength = default, string instruction = default)
-        {
-            return new AbstractiveSummarizationOptions(
-                shouldLog,
-                modelVersion,
-                sentenceCount,
-                stringIndexType,
-                summaryLength,
-                instruction,
-                additionalBinaryDataProperties: null);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.AI.Language.Documents
             PiiCategories = new ChangeTrackingList<PiiCategoriesExtended>();
             ExcludePiiCategories = new ChangeTrackingList<PiiCategories>();
             EntitySynonyms = new ChangeTrackingList<EntitySynonyms>();
-            RedactionPolicies = new ChangeTrackingList<BaseRedactionPolicy>();
+            RedactionPolicies = new ChangeTrackingList<RedactionPolicy>();
             StringIndexType = Azure.AI.Language.Documents.StringIndexType.TextElementsV8;
         }
 

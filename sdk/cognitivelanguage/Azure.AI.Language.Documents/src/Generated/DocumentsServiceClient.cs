@@ -20,45 +20,45 @@ namespace Azure.AI.Language.Documents
     /// The API can be used to analyze unstructured text for tasks such as sentiment analysis, key phrase extraction, language detection and question answering.
     /// Further documentation can be found in &lt;a href=\"https://learn.microsoft.com/azure/cognitive-services/language-service/overview\"&gt;https://learn.microsoft.com/azure/cognitive-services/language-service/overview&lt;/a&gt;.0
     /// </summary>
-    public partial class DocumentAnalysisClient
+    public partial class DocumentsServiceClient
     {
         private readonly Uri _endpoint;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of DocumentAnalysisClient for mocking. </summary>
-        protected DocumentAnalysisClient()
+        /// <summary> Initializes a new instance of DocumentsServiceClient for mocking. </summary>
+        protected DocumentsServiceClient()
         {
         }
 
-        /// <summary> Initializes a new instance of DocumentAnalysisClient. </summary>
+        /// <summary> Initializes a new instance of DocumentsServiceClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
-        public DocumentAnalysisClient(string endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentAnalysisClientOptions())
+        public DocumentsServiceClient(string endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentsServiceClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of DocumentAnalysisClient. </summary>
+        /// <summary> Initializes a new instance of DocumentsServiceClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
-        public DocumentAnalysisClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentAnalysisClientOptions())
+        public DocumentsServiceClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentsServiceClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of DocumentAnalysisClient. </summary>
+        /// <summary> Initializes a new instance of DocumentsServiceClient. </summary>
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal DocumentAnalysisClient(HttpPipelinePolicy authenticationPolicy, string endpoint, DocumentAnalysisClientOptions options)
+        internal DocumentsServiceClient(HttpPipelinePolicy authenticationPolicy, string endpoint, DocumentsServiceClientOptions options)
         {
             Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
 
-            options ??= new DocumentAnalysisClientOptions();
+            options ??= new DocumentsServiceClientOptions();
 
             _endpoint = new Uri($"{endpoint}/language");
             if (authenticationPolicy != null)
@@ -73,30 +73,30 @@ namespace Azure.AI.Language.Documents
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> Initializes a new instance of DocumentAnalysisClient. </summary>
+        /// <summary> Initializes a new instance of DocumentsServiceClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
-        public DocumentAnalysisClient(string endpoint, AzureKeyCredential credential, DocumentAnalysisClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
+        public DocumentsServiceClient(string endpoint, AzureKeyCredential credential, DocumentsServiceClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
         {
         }
 
-        /// <summary> Initializes a new instance of DocumentAnalysisClient. </summary>
+        /// <summary> Initializes a new instance of DocumentsServiceClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
-        public DocumentAnalysisClient(string endpoint, TokenCredential credential, DocumentAnalysisClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        public DocumentsServiceClient(string endpoint, TokenCredential credential, DocumentsServiceClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
-        /// <summary> Initializes a new instance of DocumentAnalysisClient from a <see cref="DocumentAnalysisClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for DocumentAnalysisClient. </param>
+        /// <summary> Initializes a new instance of DocumentsServiceClient from a <see cref="DocumentsServiceClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for DocumentsServiceClient. </param>
         [Experimental("SCME0002")]
-        public DocumentAnalysisClient(DocumentAnalysisClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        public DocumentsServiceClient(DocumentsServiceClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
 
@@ -123,7 +123,7 @@ namespace Azure.AI.Language.Documents
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetAnalyzeDocumentsJobState(Guid jobId, bool? showStats, int? top, int? skip, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentAnalysisClient.GetAnalyzeDocumentsJobState");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentsServiceClient.GetAnalyzeDocumentsJobState");
             scope.Start();
             try
             {
@@ -154,7 +154,7 @@ namespace Azure.AI.Language.Documents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetAnalyzeDocumentsJobStateAsync(Guid jobId, bool? showStats, int? top, int? skip, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentAnalysisClient.GetAnalyzeDocumentsJobState");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentsServiceClient.GetAnalyzeDocumentsJobState");
             scope.Start();
             try
             {
@@ -202,14 +202,14 @@ namespace Azure.AI.Language.Documents
         /// <returns> The response returned from the service. </returns>
         public virtual Operation AnalyzeDocumentsSubmitOperation(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentAnalysisClient.AnalyzeDocumentsSubmitOperation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentsServiceClient.AnalyzeDocumentsSubmitOperation");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateAnalyzeDocumentsSubmitOperationRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DocumentAnalysisClient.AnalyzeDocumentsSubmitOperation", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DocumentsServiceClient.AnalyzeDocumentsSubmitOperation", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -226,14 +226,14 @@ namespace Azure.AI.Language.Documents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Operation> AnalyzeDocumentsSubmitOperationAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentAnalysisClient.AnalyzeDocumentsSubmitOperation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentsServiceClient.AnalyzeDocumentsSubmitOperation");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateAnalyzeDocumentsSubmitOperationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DocumentAnalysisClient.AnalyzeDocumentsSubmitOperationAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DocumentsServiceClient.AnalyzeDocumentsSubmitOperationAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -273,12 +273,12 @@ namespace Azure.AI.Language.Documents
         /// <returns> The response returned from the service. </returns>
         public virtual Operation AnalyzeDocumentsCancelOperation(WaitUntil waitUntil, Guid jobId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentAnalysisClient.AnalyzeDocumentsCancelOperation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentsServiceClient.AnalyzeDocumentsCancelOperation");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAnalyzeDocumentsCancelOperationRequest(jobId, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DocumentAnalysisClient.AnalyzeDocumentsCancelOperation", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DocumentsServiceClient.AnalyzeDocumentsCancelOperation", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -294,12 +294,12 @@ namespace Azure.AI.Language.Documents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Operation> AnalyzeDocumentsCancelOperationAsync(WaitUntil waitUntil, Guid jobId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentAnalysisClient.AnalyzeDocumentsCancelOperation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentsServiceClient.AnalyzeDocumentsCancelOperation");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAnalyzeDocumentsCancelOperationRequest(jobId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DocumentAnalysisClient.AnalyzeDocumentsCancelOperationAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DocumentsServiceClient.AnalyzeDocumentsCancelOperationAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {

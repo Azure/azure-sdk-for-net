@@ -6,8 +6,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> Model factory for models. </summary>
-    [CodeGenType("LanguageDocumentsModelFactory")]
-    public static partial class DocumentAnalysisModelFactory
+    [CodeGenType("LanguageDocumentsClientBuilderExtensions")]
+    public static partial class DocumentsServiceClientExtensions
     {
     }
 }
