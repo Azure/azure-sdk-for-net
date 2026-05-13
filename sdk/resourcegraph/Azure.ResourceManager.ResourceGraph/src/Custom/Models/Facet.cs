@@ -5,7 +5,10 @@
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
-    // Backward compatibility: GA SDK exposed a protected ctor(string expression) on Facet.
+    // Backward compatibility: GA SDK (1.1.0) exposed a protected ctor Facet(string expression).
+    // The new TypeSpec-based generator only produces a two-parameter ctor Facet(string, IDictionary).
+    // This single-parameter overload is retained so that existing derived classes compiled against
+    // the GA package continue to work without recompilation.
     public abstract partial class Facet
     {
         /// <summary> Initializes a new instance of <see cref="Facet"/>. </summary>
