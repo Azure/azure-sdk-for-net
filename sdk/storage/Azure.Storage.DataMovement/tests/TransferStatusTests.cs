@@ -368,6 +368,7 @@ public class TransferStatusTests
         job._jobParts = new List<JobPartInternal>();
         job._enumerationComplete = true;
         job._checkpointer = new Mock<ITransferCheckpointer>().Object;
+        job._progressTracker = new TransferProgressTracker(options: null);
         job._cancellationToken = CancellationToken.None;
 
         return job;
@@ -492,13 +493,14 @@ public class TransferStatusTests
         await Task.WhenAll(task1, task2);
 
         // After both JobPartStatusEventAsync calls complete, _pendingJobParts
-        // is 0 and CheckAndUpdateStatusAsync has been called. The job should
-        // be in a terminal state: Completed (all parts finished before pause)
-        // or Paused (at least one part reported Paused).
+        // is 0 and CheckAndUpdateStatusAsync has been called. Because the Paused
+        // thread always sets _jobPartPaused = true before its Interlocked.Decrement
+        // (which is a full fence), whichever thread's decrement reaches 0 is
+        // guaranteed to see _jobPartPaused == true. The outcome is always Paused.
         TransferState finalState = job._transferOperation.Status.State;
-        Assert.That(finalState, Is.AnyOf(
-            TransferState.Completed, TransferState.Paused),
-            "Job should reach a terminal state after all part events are processed.");
+        Assert.That(finalState, Is.EqualTo(TransferState.Paused),
+            "Job should always reach Paused when at least one part reported Paused, " +
+            "because _jobPartPaused is set before the decrement fence.");
     }
 
     #endregion
