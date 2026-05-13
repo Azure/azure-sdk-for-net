@@ -3,8 +3,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
@@ -13,7 +15,7 @@ namespace Azure.Identity
     /// </summary>
 #pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     [TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
-    public class ClientAssertionCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTokenCachePersistenceOptions
+    public class ClientAssertionCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTokenCachePersistenceOptions, ISupportsTokenRequestCallback
     {
         internal CredentialPipeline Pipeline { get; set; }
 
@@ -29,6 +31,11 @@ namespace Azure.Identity
 
         /// <inheritdoc/>
         public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
+
+        /// <inheritdoc/>
+#pragma warning disable AZID0003 // TokenRequestCallbackContext is experimental
+        Func<TokenRequestCallbackContext, Task> ISupportsTokenRequestCallback.TokenRequestCallback { get; set; }
+#pragma warning restore AZID0003
     }
 #pragma warning restore AZC0034
 }

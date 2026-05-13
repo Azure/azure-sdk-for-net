@@ -79,7 +79,7 @@ namespace Azure.Identity
         /// Gets or sets an optional callback that is invoked before each token request is sent to the identity provider.
         /// This callback can be used to customize the token request.
         /// </summary>
-        [Experimental("AZID0002")]
+        [Experimental("AZID0003")]
         public Func<TokenRequestCallbackContext, Task> TokenRequestCallback { get; set; }
 
         /// <summary>
@@ -105,9 +105,9 @@ namespace Azure.Identity
 #pragma warning restore AZID0001
 
             // copy TokenRequestCallback callback
-#pragma warning disable AZID0002 // TokenRequestCallback is experimental
+#pragma warning disable AZID0003 // TokenRequestCallback is experimental
             clone.TokenRequestCallback = TokenRequestCallback;
-#pragma warning restore AZID0002
+#pragma warning restore AZID0003
 
             // copy TokenCredentialDiagnosticsOptions specific options
             clone.Diagnostics.IsAccountIdentifierLoggingEnabled = Diagnostics.IsAccountIdentifierLoggingEnabled;

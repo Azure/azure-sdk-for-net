@@ -173,7 +173,7 @@ namespace Azure.Core.Tests.Identity
         }
 #pragma warning restore AZID0001
 
-#pragma warning disable AZID0002 // TokenRequestCallback is experimental
+#pragma warning disable AZID0003 // TokenRequestCallback is experimental
         [Test]
         public async Task TokenRequestCallbackBodyParametersAreIncludedInRequests()
         {
@@ -215,7 +215,7 @@ namespace Azure.Core.Tests.Identity
             Assert.IsNotNull(capturedBody, "Expected a token request to /oauth2/v2.0/token");
             Assert.IsTrue(capturedBody.Contains("custom_param=custom_value"), $"Expected 'custom_param=custom_value' in body: {capturedBody}");
         }
-#pragma warning restore AZID0002
+#pragma warning restore AZID0003
 
         public class TestCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions
         {

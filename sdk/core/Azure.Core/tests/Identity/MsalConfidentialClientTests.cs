@@ -173,7 +173,7 @@ namespace Azure.Core.Tests.Identity
         }
 #pragma warning restore AZID0001
 
-#pragma warning disable AZID0002 // TokenRequestCallback is experimental
+#pragma warning disable AZID0003 // TokenRequestCallback is experimental
         [Test]
         public async Task TokenRequestCallbackBodyParametersAreIncludedInRequests()
         {
@@ -228,7 +228,7 @@ namespace Azure.Core.Tests.Identity
 
             Assert.DoesNotThrowAsync(async () => await client.CallCreateClientAsync(false, true, default));
         }
-#pragma warning restore AZID0002
+#pragma warning restore AZID0003
 
         public class TestCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions
         {

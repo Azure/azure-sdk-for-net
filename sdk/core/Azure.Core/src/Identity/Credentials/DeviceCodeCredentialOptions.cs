@@ -16,7 +16,7 @@ namespace Azure.Identity
     /// </summary>
 #pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     [TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
-    public class DeviceCodeCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTenantId
+    public class DeviceCodeCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTenantId, ISupportsTokenRequestCallback
     {
         private string _tenantId;
 
@@ -66,6 +66,11 @@ namespace Azure.Identity
 
         /// <inheritdoc/>
         public bool DisableInstanceDiscovery { get; set; }
+
+        /// <inheritdoc/>
+#pragma warning disable AZID0003 // TokenRequestCallbackContext is experimental
+        Func<TokenRequestCallbackContext, Task> ISupportsTokenRequestCallback.TokenRequestCallback { get; set; }
+#pragma warning restore AZID0003
     }
 #pragma warning restore AZC0034
 }

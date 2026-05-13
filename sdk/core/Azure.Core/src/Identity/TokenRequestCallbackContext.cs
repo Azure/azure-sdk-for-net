@@ -12,7 +12,7 @@ namespace Azure.Identity
     /// <summary>
     /// Provides access to customize the token request before it is sent.
     /// </summary>
-    [Experimental("AZID0002")]
+    [Experimental("AZID0003")]
     public class TokenRequestCallbackContext
     {
         private readonly OnBeforeTokenRequestData _data;
