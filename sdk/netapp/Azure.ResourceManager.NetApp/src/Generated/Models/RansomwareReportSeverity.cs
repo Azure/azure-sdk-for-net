@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct RansomwareReportSeverity : IEquatable<RansomwareReportSeverity>
     {
         private readonly string _value;
+        /// <summary> No data is suspected for ransomware activity. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Low attack probability. </summary>
+        private const string LowValue = "Low";
+        /// <summary> Moderate attack probability. </summary>
+        private const string ModerateValue = "Moderate";
+        /// <summary> High amount of data is suspected for ransomware activity. </summary>
+        private const string HighValue = "High";
 
         /// <summary> Initializes a new instance of <see cref="RansomwareReportSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RansomwareReportSeverity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string LowValue = "Low";
-        private const string ModerateValue = "Moderate";
-        private const string HighValue = "High";
+            _value = value;
+        }
 
         /// <summary> No data is suspected for ransomware activity. </summary>
         public static RansomwareReportSeverity None { get; } = new RansomwareReportSeverity(NoneValue);
+
         /// <summary> Low attack probability. </summary>
         public static RansomwareReportSeverity Low { get; } = new RansomwareReportSeverity(LowValue);
+
         /// <summary> Moderate attack probability. </summary>
         public static RansomwareReportSeverity Moderate { get; } = new RansomwareReportSeverity(ModerateValue);
+
         /// <summary> High amount of data is suspected for ransomware activity. </summary>
         public static RansomwareReportSeverity High { get; } = new RansomwareReportSeverity(HighValue);
+
         /// <summary> Determines if two <see cref="RansomwareReportSeverity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RansomwareReportSeverity left, RansomwareReportSeverity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RansomwareReportSeverity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RansomwareReportSeverity left, RansomwareReportSeverity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RansomwareReportSeverity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RansomwareReportSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RansomwareReportSeverity(string value) => new RansomwareReportSeverity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RansomwareReportSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RansomwareReportSeverity?(string value) => value == null ? null : new RansomwareReportSeverity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RansomwareReportSeverity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RansomwareReportSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
