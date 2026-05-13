@@ -315,7 +315,8 @@ namespace Azure.Core.Tests.Identity
             typeof(ISupportsAdditionallyAllowedTenants),
             typeof(ISupportsDisableInstanceDiscovery),
             typeof(ISupportsTokenCachePersistenceOptions),
-            typeof(ISupportsTenantId)
+            typeof(ISupportsTenantId),
+            typeof(ISupportsTokenRequestCallback)
         };
 
         public static IEnumerable<TestCaseData> CredentialOptionsCloneTypeTestMatrix()
