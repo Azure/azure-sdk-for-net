@@ -43,7 +43,7 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Tests
             var root = payload.RootElement;
             Assert.That(root.GetProperty("name").GetString(), Is.EqualTo("db"));
             Assert.That(root.GetProperty("type").GetString(), Is.EqualTo("Microsoft.Sql/databases"));
-            Assert.That(root.GetProperty("tags").GetProperty("api-version").GetString(), Is.EqualTo(ApiVersion));
+            Assert.That(root.GetProperty("tags").GetProperty("scenario").GetString(), Is.EqualTo("existing-project"));
             Assert.That(root.GetProperty("properties").GetProperty("status").GetString(), Is.EqualTo("Online"));
         }
 
@@ -58,7 +58,7 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Tests
             var values = payload.RootElement.GetProperty("value");
             Assert.That(values.GetArrayLength(), Is.EqualTo(2));
             Assert.That(values[0].GetProperty("name").GetString(), Is.EqualTo("database1"));
-            Assert.That(values[0].GetProperty("tags").GetProperty("api-version").GetString(), Is.EqualTo(ApiVersion));
+            Assert.That(values[0].GetProperty("tags").GetProperty("scenario").GetString(), Is.EqualTo("existing-project"));
             Assert.That(values[1].GetProperty("name").GetString(), Is.EqualTo("database2"));
         }
 
@@ -89,7 +89,6 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Tests
             var root = payload.RootElement;
             Assert.That(root.GetProperty("id").GetString(), Is.EqualTo("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Sql/databases/db"));
             Assert.That(root.GetProperty("name").GetString(), Is.EqualTo("db"));
-            Assert.That(root.GetProperty("tags").GetProperty("api-version").GetString(), Is.EqualTo(ApiVersion));
             Assert.That(root.GetProperty("tags").GetProperty("environment").GetString(), Is.EqualTo("test"));
             Assert.That(root.GetProperty("properties").GetProperty("collation").GetString(), Is.EqualTo("Latin1_General_100_CI_AS"));
         }
@@ -112,9 +111,16 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Tests
             using var payload = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
             var values = payload.RootElement.GetProperty("value");
             Assert.That(values.GetArrayLength(), Is.EqualTo(2));
-            Assert.That(payload.RootElement.GetProperty("nextLink").GetString(), Does.Contain($"api-version={ApiVersion}"));
             Assert.That(values[0].GetProperty("name").GetString(), Is.EqualTo("Microsoft.Sql/databases/read"));
             Assert.That(values[1].GetProperty("name").GetString(), Is.EqualTo("Microsoft.Sql/databases/write"));
+        }
+
+        [Test]
+        public async Task UnsupportedApiVersionIsRejected()
+        {
+            using var response = await _client.GetAsync("/providers/Microsoft.Sql/operations?api-version=2025-01-01");
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         private static string WithApiVersion(string path) => $"{path}?api-version={ApiVersion}";

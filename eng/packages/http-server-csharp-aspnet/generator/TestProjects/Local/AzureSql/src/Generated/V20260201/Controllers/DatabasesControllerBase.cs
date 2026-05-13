@@ -4,27 +4,27 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.TypeSpec.Generator.AspNetServer.AzureSql.Models;
+using Asp.Versioning;
+using Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Controllers
 {
     /// <summary> Database resource operations. </summary>
     [ApiController]
+    [ApiVersion("2026-02-01")]
     public abstract partial class DatabasesControllerBase : ControllerBase
     {
         /// <summary> Gets a database. </summary>
         [HttpGet("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/databases/{databaseName}")]
-        public abstract Task<ActionResult<Database>> GetAsync([FromQuery(Name = "api-version")]
-        string apiVersion, [FromRoute(Name = "subscriptionId")]
+        public abstract Task<ActionResult<Database>> GetAsync([FromRoute(Name = "subscriptionId")]
         string subscriptionId, [FromRoute(Name = "resourceGroupName")]
         string resourceGroupName, [FromRoute(Name = "databaseName")]
         string databaseName, CancellationToken cancellationToken = default);
 
         /// <summary> Creates or updates a database (long-running operation). </summary>
         [HttpPut("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/databases/{databaseName}")]
-        public abstract Task<ActionResult<Database>> CreateOrUpdateAsync([FromQuery(Name = "api-version")]
-        string apiVersion, [FromRoute(Name = "subscriptionId")]
+        public abstract Task<ActionResult<Database>> CreateOrUpdateAsync([FromRoute(Name = "subscriptionId")]
         string subscriptionId, [FromRoute(Name = "resourceGroupName")]
         string resourceGroupName, [FromRoute(Name = "databaseName")]
         string databaseName, [FromBody]
@@ -32,16 +32,14 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
 
         /// <summary> Deletes a database (long-running operation). </summary>
         [HttpDelete("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/databases/{databaseName}")]
-        public abstract Task<IActionResult> DeleteAsync([FromQuery(Name = "api-version")]
-        string apiVersion, [FromRoute(Name = "subscriptionId")]
+        public abstract Task<IActionResult> DeleteAsync([FromRoute(Name = "subscriptionId")]
         string subscriptionId, [FromRoute(Name = "resourceGroupName")]
         string resourceGroupName, [FromRoute(Name = "databaseName")]
         string databaseName, CancellationToken cancellationToken = default);
 
         /// <summary> Updates a database. Added in 2025-12-01. </summary>
         [HttpPatch("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/databases/{databaseName}")]
-        public abstract Task<ActionResult<Database>> UpdateAsync([FromQuery(Name = "api-version")]
-        string apiVersion, [FromRoute(Name = "subscriptionId")]
+        public abstract Task<ActionResult<Database>> UpdateAsync([FromRoute(Name = "subscriptionId")]
         string subscriptionId, [FromRoute(Name = "resourceGroupName")]
         string resourceGroupName, [FromRoute(Name = "databaseName")]
         string databaseName, [FromBody]
@@ -49,8 +47,7 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
 
         /// <summary> Lists databases under a server. Added in 2025-12-01. </summary>
         [HttpGet("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/databases")]
-        public abstract Task<ActionResult<DatabaseListResult>> ListByResourceGroupAsync([FromQuery(Name = "api-version")]
-        string apiVersion, [FromRoute(Name = "subscriptionId")]
+        public abstract Task<ActionResult<DatabaseListResult>> ListByResourceGroupAsync([FromRoute(Name = "subscriptionId")]
         string subscriptionId, [FromRoute(Name = "resourceGroupName")]
         string resourceGroupName, CancellationToken cancellationToken = default);
     }

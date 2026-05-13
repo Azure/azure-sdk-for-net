@@ -4,18 +4,19 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.TypeSpec.Generator.AspNetServer.AzureSql.Models;
+using Asp.Versioning;
+using Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Controllers
 {
     /// <summary> ARM operations endpoint. </summary>
     [ApiController]
+    [ApiVersion("2026-02-01")]
     public abstract partial class OperationsControllerBase : ControllerBase
     {
         /// <summary> List the operations for the provider. </summary>
         [HttpGet("providers/Microsoft.Sql/operations")]
-        public abstract Task<ActionResult<OperationListResult>> ListAsync([FromQuery(Name = "api-version")]
-        string apiVersion, CancellationToken cancellationToken = default);
+        public abstract Task<ActionResult<OperationListResult>> ListAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -6,9 +6,10 @@ priority, but priorities will shift as we onboard pilot services.
 
 ## ✅ Implemented today
 
-- POCO models per TypeSpec model (`src/Generated/Models/`)
+- POCO models per TypeSpec model in the current API version folder
+  (`src/Generated/V<YYYYMMDD>/Models/`)
 - Abstract `<Name>ControllerBase` per TypeSpec interface, decorated with
-  `[ApiController]`, inheriting `ControllerBase`
+  `[ApiController]` / `[ApiVersion]`, inheriting `ControllerBase`
 - One abstract `Task<ActionResult<T>> <Name>Async(...)` method per operation
   with the correct `[Http*("route")]` attribute
 - Per-parameter binding attributes
@@ -22,13 +23,16 @@ priority, but priorities will shift as we onboard pilot services.
 - ASP.NET Core integration tests for the AzureSql scenario using
   `WebApplicationFactory<Program>` and real HTTP requests against generated
   routes
+- Current-version output layout: until incremental versioning exists, all
+  operations and generated POCO models are emitted under the latest
+  `InputNamespace.ApiVersions` value (for example `Generated/V20260201/`)
 
 ## 🔜 Planned
 
 ### 1. Versioning (largest gap)
 
-Today every operation lands in a single non-versioned `ControllerBase`. Real
-ARM services need:
+Today every operation lands in the latest version's `ControllerBase`. Real ARM
+services need:
 
 - **Version registry generation.** Walk `@versioned` enums and emit a
   per-service `ApiVersion` enum (or equivalent registry) with category

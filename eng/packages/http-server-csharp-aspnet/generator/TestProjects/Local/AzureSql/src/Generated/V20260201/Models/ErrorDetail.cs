@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Models
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Models
 {
     /// <summary> The error detail. </summary>
     public partial class ErrorDetail

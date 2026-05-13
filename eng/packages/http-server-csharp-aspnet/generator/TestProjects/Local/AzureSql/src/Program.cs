@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Asp.Versioning;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +17,14 @@ public partial class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.AddApiVersioning(options =>
+        {
+            options.ApiVersionReader = new QueryStringApiVersionReader("api-version");
+            options.AssumeDefaultVersionWhenUnspecified = false;
+            options.ReportApiVersions = true;
+        })
+        .AddMvc();
 
         builder.Services.AddControllers();
 
