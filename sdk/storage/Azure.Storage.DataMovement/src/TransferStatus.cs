@@ -101,7 +101,39 @@ namespace Azure.Storage.DataMovement
         /// <returns>True if <see cref="State"/> was changed from its original state. False otherwise.</returns>
         internal bool SetTransferStateChange(TransferState state)
         {
-            return Interlocked.Exchange(ref _stateValue, (int)state) != (int)state;
+            // Use compare-and-swap to prevent invalid state transitions.
+            // Once a part is in Pausing/Stopping, only the cancellation flow
+            // should move it to Paused/Completed respectively.
+            while (true)
+            {
+                int currentValue = Volatile.Read(ref _stateValue);
+                TransferState currentState = (TransferState)currentValue;
+
+                // Reject transitions that would skip the cancellation flow:
+                // - Pausing can only go to Paused (via CheckAndUpdateCancellationStateAsync)
+                // - Stopping can only go to Completed (via CheckAndUpdateCancellationStateAsync)
+                if ((currentState == TransferState.Pausing && state != TransferState.Paused) ||
+                    (currentState == TransferState.Stopping && state != TransferState.Completed))
+                {
+                    return false;
+                }
+
+                // Don't transition backwards from a final state
+                if ((currentState == TransferState.Paused || currentState == TransferState.Completed) &&
+                    state != TransferState.Queued)
+                {
+                    return false;
+                }
+
+                if (currentValue == (int)state)
+                {
+                    return false;
+                }
+
+                if (Interlocked.CompareExchange(ref _stateValue, (int)state, currentValue) == currentValue)
+                {
+                    return true;
+                }
         }
 
         /// <inheritdoc/>
