@@ -134,6 +134,7 @@ namespace Azure.Storage.DataMovement
                 {
                     return true;
                 }
+            }
         }
 
         /// <inheritdoc/>
