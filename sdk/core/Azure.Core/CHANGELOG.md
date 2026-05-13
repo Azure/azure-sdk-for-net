@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added experimental `TokenRequestCallback` property to `TokenCredentialOptions` and `TokenRequestCallbackContext` type to allow customizing token request body parameters before they are sent to the identity provider.
+
 ### Breaking Changes
 
 ### Bugs Fixed
