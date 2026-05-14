@@ -12,7 +12,7 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Properties of the PrivateEndpointConnectProperties. </summary>
-    internal partial class StoragePrivateEndpointConnectionProperties
+    public partial class StoragePrivateEndpointConnectionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

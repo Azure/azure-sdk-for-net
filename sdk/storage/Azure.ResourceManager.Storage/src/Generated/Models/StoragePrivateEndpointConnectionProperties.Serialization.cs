@@ -14,7 +14,7 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Properties of the PrivateEndpointConnectProperties. </summary>
-    internal partial class StoragePrivateEndpointConnectionProperties : IJsonModel<StoragePrivateEndpointConnectionProperties>
+    public partial class StoragePrivateEndpointConnectionProperties : IJsonModel<StoragePrivateEndpointConnectionProperties>
     {
         /// <summary> Initializes a new instance of <see cref="StoragePrivateEndpointConnectionProperties"/> for deserialization. </summary>
         internal StoragePrivateEndpointConnectionProperties()
