@@ -435,10 +435,15 @@ function convertResolvedResourceToMetadata(
   // Build resource type string
   const resourceType = formatResourceType(resolvedResource.resourceType);
 
+  const sdkModel = getClientType(
+    sdkContext,
+    resolvedResource.type
+  ) as SdkModelType;
+
   // Use the explicit ResourceName if provided via the OverrideResourceName template parameter.
   // The spec should always define unique resource names for extension resources targeting
   // different parent types — the emitter should not auto-generate disambiguated names.
-  let resourceName = resolvedResource.resourceName;
+  let resourceName = sdkModel?.name ?? resolvedResource.resourceName;
   const explicitName = getExplicitResourceNameFromOperations(resolvedResource);
   if (explicitName) {
     resourceName = explicitName;
@@ -459,10 +464,6 @@ function convertResolvedResourceToMetadata(
   const apiVersions: string[] = [];
 
   // Extract RBAC roles and name constraint overrides from @@clientOption decorator
-  const sdkModel = getClientType(
-    sdkContext,
-    resolvedResource.type
-  ) as SdkModelType;
   const rbacRoles = extractRbacRoles(sdkModel);
 
   // Override name constraints from @@clientOption decorator if present
