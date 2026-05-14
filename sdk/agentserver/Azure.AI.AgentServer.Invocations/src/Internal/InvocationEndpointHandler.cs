@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
 using Azure.AI.AgentServer.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -51,8 +52,9 @@ internal sealed class InvocationEndpointHandler
         // Construct context
         var context = new InvocationContext(invocationId, sessionId, clientHeaders, queryParams, isolation);
 
-        // Start tracing span
-        using var activity = _activitySource.StartInvocationActivity(context, request.Headers);
+        // Propagate baggage for downstream correlation (no invoke_agent span —
+        // W3C context propagation is handled by ASP.NET Core automatically)
+        _activitySource.PropagateInvocationBaggage(context, request.Headers);
 
         // Structured log scope
         using var logScope = _logger.BeginScope(new Dictionary<string, object>
@@ -79,7 +81,7 @@ internal sealed class InvocationEndpointHandler
         }
         catch (Exception ex)
         {
-            InvocationsExceptionFilter.RecordException(activity, ex);
+            InvocationsExceptionFilter.RecordException(Activity.Current, ex);
             throw;
         }
     }

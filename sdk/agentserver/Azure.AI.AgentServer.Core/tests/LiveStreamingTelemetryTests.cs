@@ -29,8 +29,8 @@ namespace Azure.AI.AgentServer.Core.Tests
     /// sends a request, and verifies traces arrive in Application Insights with
     /// correct parent-child hierarchy through the streaming pipeline.
     ///
-    /// This specifically tests the SseResult span parenting fix — ensuring that
-    /// handler-created spans are children of the invoke_agent span even when
+    /// This specifically tests span parenting through the streaming pipeline — ensuring that
+    /// handler-created spans are children of the ASP.NET Core request span even when
     /// events are streamed via SSE.
     ///
     /// Required environment variables (provisioned by test-resources.bicep):
@@ -195,8 +195,9 @@ namespace Azure.AI.AgentServer.Core.Tests
 
                 var logsTable = result.Value.Table;
 
-                // We expect at least 3 spans: HTTP request, invoke_agent, HandleStreaming
-                if (logsTable.Rows.Count >= 3)
+                // We expect at least 2 spans: HTTP request + HandleStreaming
+                // (invoke_agent span was removed — framework spans parent under ASP.NET Core request)
+                if (logsTable.Rows.Count >= 2)
                 {
                     var rows = logsTable.Rows;
                     var columns = logsTable.Columns;
@@ -206,15 +207,16 @@ namespace Azure.AI.AgentServer.Core.Tests
                     int parentIdx = columns.ToList().FindIndex(c => c.Name == "operation_ParentId");
                     int genAiOpIdx = columns.ToList().FindIndex(c => c.Name == "genAiOp");
 
-                    // invoke_agent span — identified by gen_ai.operation.name custom dimension
-                    var invokeAgentRow = rows.FirstOrDefault(r =>
-                        r[genAiOpIdx]?.ToString() == "invoke_agent");
+                    // HTTP request span (Server span from ASP.NET Core)
+                    var requestRow = rows.FirstOrDefault(r =>
+                        r[nameIdx]?.ToString()?.Contains("/responses") == true ||
+                        r[nameIdx]?.ToString() == "POST /responses");
 
-                    Assert.That(invokeAgentRow, Is.Not.Null,
-                        "invoke_agent span not found in App Insights. " +
+                    Assert.That(requestRow, Is.Not.Null,
+                        "HTTP request span not found in App Insights. " +
                         $"Found spans: {string.Join(", ", rows.Select(r => $"{r[nameIdx]} (genAiOp={r[genAiOpIdx]})"))}");
 
-                    // HandleStreaming span (child of invoke_agent — created inside handler during SSE streaming)
+                    // HandleStreaming span — created inside handler during SSE streaming
                     var handlerRow = rows.FirstOrDefault(r =>
                         r[nameIdx]?.ToString() == "HandleStreaming");
 
@@ -222,13 +224,30 @@ namespace Azure.AI.AgentServer.Core.Tests
                         "HandleStreaming child span not found in App Insights. " +
                         $"Found spans: {string.Join(", ", rows.Select(r => r[nameIdx]?.ToString()))}");
 
-                    // Verify parent-child: HandleStreaming's parent == invoke_agent's id
-                    // This confirms the SseResult span parenting fix is working — that
-                    // Activity.Current is restored before iterating handler events.
-                    Assert.That(handlerRow![parentIdx]?.ToString(),
-                        Is.EqualTo(invokeAgentRow![idIdx]?.ToString()),
-                        "HandleStreaming should be a child of invoke_agent. " +
-                        "If this fails, the SseResult Activity.Current fix is not propagating correctly.");
+                    // Verify HandleStreaming is a descendant of the request span.
+                    // In the SSE streaming pipeline, there may be intermediate spans
+                    // between the request and the handler, so we walk the parent chain.
+                    var spanMap = rows.ToDictionary(
+                        r => r[idIdx]?.ToString() ?? "",
+                        r => r[parentIdx]?.ToString() ?? "");
+
+                    string? current = handlerRow![parentIdx]?.ToString();
+                    string requestId = requestRow![idIdx]?.ToString()!;
+                    bool isDescendant = false;
+                    int maxDepth = 10;
+                    while (current != null && maxDepth-- > 0)
+                    {
+                        if (current == requestId)
+                        {
+                            isDescendant = true;
+                            break;
+                        }
+                        spanMap.TryGetValue(current, out current);
+                    }
+
+                    Assert.That(isDescendant, Is.True,
+                        "HandleStreaming should be a descendant of the HTTP request span. " +
+                        $"Found spans: {string.Join(", ", rows.Select(r => $"{r[nameIdx]}(id={r[idIdx]},parent={r[parentIdx]})"))}");
 
                     return;
                 }
@@ -236,7 +255,7 @@ namespace Azure.AI.AgentServer.Core.Tests
 
             Assert.Fail($"Traces for operation_Id '{traceId}' did not appear in " +
                         $"App Insights within {s_maxIngestionWait.TotalMinutes} minutes. " +
-                        "Expected at least 3 spans (HTTP request + invoke_agent + HandleStreaming).");
+                        "Expected at least 2 spans (HTTP request + HandleStreaming).");
         }
 
         // ═══════════════════════════════════════════════════════════════════════
@@ -245,8 +264,8 @@ namespace Azure.AI.AgentServer.Core.Tests
 
         /// <summary>
         /// Streaming handler that creates a child span during SSE event generation.
-        /// This verifies that the SseResult span parenting fix works — the child span
-        /// should be nested under invoke_agent, not under the HTTP request.
+        /// This verifies that span parenting works through SSE streaming — the child span
+        /// should be nested under the ASP.NET Core request span.
         /// </summary>
         public sealed class StreamingTelemetryTestHandler : ResponseHandler
         {
@@ -260,10 +279,10 @@ namespace Azure.AI.AgentServer.Core.Tests
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
-                // Capture trace ID from the current activity (set by invoke_agent span)
+                // Capture trace ID from the current activity (set by ASP.NET Core request span)
                 CapturedTraceId = Activity.Current?.TraceId.ToString();
 
-                // Create a child span — this should be a child of invoke_agent
+                // Create a child span — this should be a child of the request span
                 using var activity = s_activitySource.StartActivity("HandleStreaming");
                 activity?.SetTag("test.marker", UniqueMarker);
 

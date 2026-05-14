@@ -111,8 +111,7 @@ internal sealed class FoundryEnrichmentProcessor : BaseProcessor<Activity>
             activity.SetTag("microsoft.tenant.id", _tenantId);
         }
 
-        if (_agentType is not null
-            && string.Equals(activity.GetTagItem("gen_ai.operation.name") as string, "invoke_agent", StringComparison.Ordinal))
+        if (_agentType is not null)
         {
             activity.SetTag("microsoft.foundry.agent.type", _agentType);
         }

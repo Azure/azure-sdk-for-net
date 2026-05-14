@@ -192,9 +192,9 @@ namespace Azure.AI.AgentServer.Core.Tests
 
                 var logsTable = result.Value.Table;
 
-                // We expect at least 3 spans: HTTP request, invoke_agent, HandleInvocation
-                // (plus possibly outgoing HTTP dependency from in-process HttpClient)
-                if (logsTable.Rows.Count >= 3)
+                // We expect at least 2 spans: HTTP request + HandleInvocation
+                // (invoke_agent span was removed — framework spans parent under ASP.NET Core request)
+                if (logsTable.Rows.Count >= 2)
                 {
                     var rows = logsTable.Rows;
                     var columns = logsTable.Columns;
@@ -203,15 +203,16 @@ namespace Azure.AI.AgentServer.Core.Tests
                     int idIdx = columns.ToList().FindIndex(c => c.Name == "id");
                     int parentIdx = columns.ToList().FindIndex(c => c.Name == "operation_ParentId");
 
-                    // invoke_agent span (Server span from InvocationsActivitySource)
-                    var invokeAgentRow = rows.FirstOrDefault(r =>
-                        r[nameIdx]?.ToString() == "invoke_agent");
+                    // HTTP request span (Server span from ASP.NET Core)
+                    var requestRow = rows.FirstOrDefault(r =>
+                        r[nameIdx]?.ToString()?.Contains("/invocations") == true ||
+                        r[nameIdx]?.ToString() == "POST /invocations");
 
-                    Assert.That(invokeAgentRow, Is.Not.Null,
-                        "invoke_agent span not found in App Insights. " +
+                    Assert.That(requestRow, Is.Not.Null,
+                        "HTTP request span not found in App Insights. " +
                         $"Found spans: {string.Join(", ", rows.Select(r => r[nameIdx]?.ToString()))}");
 
-                    // HandleInvocation span (child of invoke_agent)
+                    // HandleInvocation span (child of HTTP request)
                     var handlerRow = rows.FirstOrDefault(r =>
                         r[nameIdx]?.ToString() == "HandleInvocation");
 
@@ -219,10 +220,10 @@ namespace Azure.AI.AgentServer.Core.Tests
                         "HandleInvocation child span not found in App Insights. " +
                         $"Found spans: {string.Join(", ", rows.Select(r => r[nameIdx]?.ToString()))}");
 
-                    // Verify parent-child: HandleInvocation's parent == invoke_agent's id
+                    // Verify parent-child: HandleInvocation's parent == request span's id
                     Assert.That(handlerRow![parentIdx]?.ToString(),
-                        Is.EqualTo(invokeAgentRow![idIdx]?.ToString()),
-                        "HandleInvocation should be a child of invoke_agent");
+                        Is.EqualTo(requestRow![idIdx]?.ToString()),
+                        "HandleInvocation should be a child of the HTTP request span");
 
                     return;
                 }
@@ -230,7 +231,7 @@ namespace Azure.AI.AgentServer.Core.Tests
 
             Assert.Fail($"Traces for operation_Id '{traceId}' did not appear in " +
                         $"App Insights within {s_maxIngestionWait.TotalMinutes} minutes. " +
-                        "Expected at least 3 spans (HTTP request + invoke_agent + HandleInvocation).");
+                        "Expected at least 2 spans (HTTP request + HandleInvocation).");
         }
 
         // ═══════════════════════════════════════════════════════════════════════

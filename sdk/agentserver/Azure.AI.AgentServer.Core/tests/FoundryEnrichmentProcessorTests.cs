@@ -427,7 +427,9 @@ public class FoundryEnrichmentProcessorTests
         activity.SetTag("gen_ai.operation.name", "chat");
         activity.Stop();
 
-        Assert.That(activity.GetTagItem("microsoft.foundry.agent.type"), Is.Null);
+        // With the invoke_agent span removed, agent.type is set on ALL spans
+        // because the hosting identity applies to the entire process.
+        Assert.That(activity.GetTagItem("microsoft.foundry.agent.type"), Is.EqualTo("hosted"));
     }
 
     [Test]
