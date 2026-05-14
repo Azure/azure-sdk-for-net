@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.RedHatOpenShift;
 
 namespace Azure.ResourceManager.RedHatOpenShift.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableRedHatOpenShiftArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableRedHatOpenShiftArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableRedHatOpenShiftArmClient for mocking. </summary>
         protected MockableRedHatOpenShiftArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableRedHatOpenShiftArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableRedHatOpenShiftArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableRedHatOpenShiftArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableRedHatOpenShiftArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="OpenShiftVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OpenShiftVersionResource.CreateResourceIdentifier" /> to create an <see cref="OpenShiftVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="OpenShiftVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="OpenShiftVersionResource"/> object. </returns>
         public virtual OpenShiftVersionResource GetOpenShiftVersionResource(ResourceIdentifier id)
@@ -46,28 +35,22 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
             return new OpenShiftVersionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource.CreateResourceIdentifier" /> to create an <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> object. </returns>
-        public virtual OpenShiftPlatformWorkloadIdentityRoleSetResource GetOpenShiftPlatformWorkloadIdentityRoleSetResource(ResourceIdentifier id)
-        {
-            OpenShiftPlatformWorkloadIdentityRoleSetResource.ValidateResourceId(id);
-            return new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="OpenShiftClusterResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OpenShiftClusterResource.CreateResourceIdentifier" /> to create an <see cref="OpenShiftClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="OpenShiftClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="OpenShiftClusterResource"/> object. </returns>
         public virtual OpenShiftClusterResource GetOpenShiftClusterResource(ResourceIdentifier id)
         {
             OpenShiftClusterResource.ValidateResourceId(id);
             return new OpenShiftClusterResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> object. </returns>
+        public virtual OpenShiftPlatformWorkloadIdentityRoleSetResource GetOpenShiftPlatformWorkloadIdentityRoleSetResource(ResourceIdentifier id)
+        {
+            OpenShiftPlatformWorkloadIdentityRoleSetResource.ValidateResourceId(id);
+            return new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, id);
         }
     }
 }

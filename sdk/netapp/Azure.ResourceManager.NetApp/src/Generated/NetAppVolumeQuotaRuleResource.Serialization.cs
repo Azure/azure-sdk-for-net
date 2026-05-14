@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetApp
 {
+    /// <summary></summary>
     public partial class NetAppVolumeQuotaRuleResource : IJsonModel<NetAppVolumeQuotaRuleData>
     {
-        private static NetAppVolumeQuotaRuleData s_dataDeserializationInstance;
-        private static NetAppVolumeQuotaRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetAppVolumeQuotaRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetAppVolumeQuotaRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppVolumeQuotaRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetAppVolumeQuotaRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeQuotaRuleData>)Data).Write(writer, options);
 
-        NetAppVolumeQuotaRuleData IJsonModel<NetAppVolumeQuotaRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeQuotaRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetAppVolumeQuotaRuleData IJsonModel<NetAppVolumeQuotaRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetAppVolumeQuotaRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppVolumeQuotaRuleData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetAppVolumeQuotaRuleData IPersistableModel<NetAppVolumeQuotaRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppVolumeQuotaRuleData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<NetAppVolumeQuotaRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppVolumeQuotaRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetAppVolumeQuotaRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

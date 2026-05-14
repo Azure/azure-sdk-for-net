@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedHatOpenShift;
 
 namespace Azure.ResourceManager.RedHatOpenShift.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
     public readonly partial struct OpenShiftVisibility : IEquatable<OpenShiftVisibility>
     {
         private readonly string _value;
+        /// <summary> Private. </summary>
+        private const string PrivateValue = "Private";
+        /// <summary> Public. </summary>
+        private const string PublicValue = "Public";
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftVisibility"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OpenShiftVisibility(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PrivateValue = "Private";
-        private const string PublicValue = "Public";
+            _value = value;
+        }
 
         /// <summary> Private. </summary>
         public static OpenShiftVisibility Private { get; } = new OpenShiftVisibility(PrivateValue);
+
         /// <summary> Public. </summary>
         public static OpenShiftVisibility Public { get; } = new OpenShiftVisibility(PublicValue);
+
         /// <summary> Determines if two <see cref="OpenShiftVisibility"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OpenShiftVisibility left, OpenShiftVisibility right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OpenShiftVisibility"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OpenShiftVisibility left, OpenShiftVisibility right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OpenShiftVisibility"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OpenShiftVisibility"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OpenShiftVisibility(string value) => new OpenShiftVisibility(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OpenShiftVisibility"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OpenShiftVisibility?(string value) => value == null ? null : new OpenShiftVisibility(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OpenShiftVisibility other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OpenShiftVisibility other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
