@@ -9,124 +9,161 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A server operation. </summary>
     public partial class ServerOperationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServerOperationData"/>. </summary>
-        public ServerOperationData()
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
+        internal ServerOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServerOperationProperties properties) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerOperationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="operation"> The name of operation. </param>
-        /// <param name="operationFriendlyName"> The friendly name of operation. </param>
-        /// <param name="percentComplete"> The percentage of the operation completed. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="startOn"> The operation start time. </param>
-        /// <param name="state"> The operation state. </param>
-        /// <param name="errorCode"> The operation error code. </param>
-        /// <param name="errorDescription"> The operation error description. </param>
-        /// <param name="errorSeverity"> The operation error severity. </param>
-        /// <param name="isUserError"> Whether or not the error is a user error. </param>
-        /// <param name="estimatedCompleteOn"> The estimated completion time of the operation. </param>
-        /// <param name="description"> The operation description. </param>
-        /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            Operation = operation;
-            OperationFriendlyName = operationFriendlyName;
-            PercentComplete = percentComplete;
-            ServerName = serverName;
-            StartOn = startOn;
-            State = state;
-            ErrorCode = errorCode;
-            ErrorDescription = errorDescription;
-            ErrorSeverity = errorSeverity;
-            IsUserError = isUserError;
-            EstimatedCompleteOn = estimatedCompleteOn;
-            Description = description;
-            IsCancellable = isCancellable;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal ServerOperationProperties Properties { get; }
 
         /// <summary> The name of operation. </summary>
         [WirePath("properties.operation")]
-        public string Operation { get; }
+        public string Operation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Operation;
+            }
+        }
+
         /// <summary> The friendly name of operation. </summary>
         [WirePath("properties.operationFriendlyName")]
-        public string OperationFriendlyName { get; }
+        public string OperationFriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OperationFriendlyName;
+            }
+        }
+
         /// <summary> The percentage of the operation completed. </summary>
         [WirePath("properties.percentComplete")]
-        public int? PercentComplete { get; }
+        public int? PercentComplete
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PercentComplete;
+            }
+        }
+
         /// <summary> The name of the server. </summary>
         [WirePath("properties.serverName")]
-        public string ServerName { get; }
+        public string ServerName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerName;
+            }
+        }
+
         /// <summary> The operation start time. </summary>
         [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+        }
+
         /// <summary> The operation state. </summary>
         [WirePath("properties.state")]
-        public ManagementOperationState? State { get; }
+        public ManagementOperationState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+        }
+
         /// <summary> The operation error code. </summary>
         [WirePath("properties.errorCode")]
-        public int? ErrorCode { get; }
+        public int? ErrorCode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ErrorCode;
+            }
+        }
+
         /// <summary> The operation error description. </summary>
         [WirePath("properties.errorDescription")]
-        public string ErrorDescription { get; }
+        public string ErrorDescription
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ErrorDescription;
+            }
+        }
+
         /// <summary> The operation error severity. </summary>
         [WirePath("properties.errorSeverity")]
-        public int? ErrorSeverity { get; }
+        public int? ErrorSeverity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ErrorSeverity;
+            }
+        }
+
         /// <summary> Whether or not the error is a user error. </summary>
         [WirePath("properties.isUserError")]
-        public bool? IsUserError { get; }
+        public bool? IsUserError
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsUserError;
+            }
+        }
+
         /// <summary> The estimated completion time of the operation. </summary>
         [WirePath("properties.estimatedCompletionTime")]
-        public DateTimeOffset? EstimatedCompleteOn { get; }
+        public DateTimeOffset? EstimatedCompletionOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EstimatedCompletionOn;
+            }
+        }
+
         /// <summary> The operation description. </summary>
         [WirePath("properties.description")]
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+        }
+
         /// <summary> Whether the operation can be cancelled. </summary>
         [WirePath("properties.isCancellable")]
-        public bool? IsCancellable { get; }
+        public bool? IsCancellable
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsCancellable;
+            }
+        }
     }
 }

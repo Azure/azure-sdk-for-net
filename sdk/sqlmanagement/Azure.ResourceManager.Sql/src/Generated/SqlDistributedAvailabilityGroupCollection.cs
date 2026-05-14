@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlDistributedAvailabilityGroupCollection : ArmCollection, IEnumerable<SqlDistributedAvailabilityGroupResource>, IAsyncEnumerable<SqlDistributedAvailabilityGroupResource>
     {
-        private readonly ClientDiagnostics _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics;
-        private readonly DistributedAvailabilityGroupsRestOperations _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient;
+        private readonly ClientDiagnostics _sqlDistributedAvailabilityGroupsClientDiagnostics;
+        private readonly SqlDistributedAvailabilityGroups _sqlDistributedAvailabilityGroupsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SqlDistributedAvailabilityGroupCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SqlDistributedAvailabilityGroupCollection for mocking. </summary>
         protected SqlDistributedAvailabilityGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SqlDistributedAvailabilityGroupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDistributedAvailabilityGroupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlDistributedAvailabilityGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDistributedAvailabilityGroupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SqlDistributedAvailabilityGroupResource.ResourceType, out string sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsApiVersion);
-            _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient = new DistributedAvailabilityGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SqlDistributedAvailabilityGroupResource.ResourceType, out string sqlDistributedAvailabilityGroupApiVersion);
+            _sqlDistributedAvailabilityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDistributedAvailabilityGroupResource.ResourceType.Namespace, Diagnostics);
+            _sqlDistributedAvailabilityGroupsRestClient = new SqlDistributedAvailabilityGroups(_sqlDistributedAvailabilityGroupsClientDiagnostics, Pipeline, Endpoint, sqlDistributedAvailabilityGroupApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ManagedInstanceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstanceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstanceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates a distributed availability group between Sql On-Prem and Sql Managed Instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DistributedAvailabilityGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DistributedAvailabilityGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.Sql
         /// <param name="distributedAvailabilityGroupName"> The distributed availability group name. </param>
         /// <param name="data"> The distributed availability group info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SqlDistributedAvailabilityGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string distributedAvailabilityGroupName, SqlDistributedAvailabilityGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(distributedAvailabilityGroupName, nameof(distributedAvailabilityGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _sqlDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlDistributedAvailabilityGroupResource>(new SqlDistributedAvailabilityGroupOperationSource(Client), _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics, Pipeline, _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlDistributedAvailabilityGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, SqlDistributedAvailabilityGroupData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SqlArmOperation<SqlDistributedAvailabilityGroupResource> operation = new SqlArmOperation<SqlDistributedAvailabilityGroupResource>(
+                    new SqlDistributedAvailabilityGroupOperationSource(Client),
+                    _sqlDistributedAvailabilityGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.Sql
         /// Creates a distributed availability group between Sql On-Prem and Sql Managed Instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DistributedAvailabilityGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DistributedAvailabilityGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.Sql
         /// <param name="distributedAvailabilityGroupName"> The distributed availability group name. </param>
         /// <param name="data"> The distributed availability group info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SqlDistributedAvailabilityGroupResource> CreateOrUpdate(WaitUntil waitUntil, string distributedAvailabilityGroupName, SqlDistributedAvailabilityGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(distributedAvailabilityGroupName, nameof(distributedAvailabilityGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _sqlDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlDistributedAvailabilityGroupResource>(new SqlDistributedAvailabilityGroupOperationSource(Client), _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics, Pipeline, _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlDistributedAvailabilityGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, SqlDistributedAvailabilityGroupData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SqlArmOperation<SqlDistributedAvailabilityGroupResource> operation = new SqlArmOperation<SqlDistributedAvailabilityGroupResource>(
+                    new SqlDistributedAvailabilityGroupOperationSource(Client),
+                    _sqlDistributedAvailabilityGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.Sql
         /// Gets a distributed availability group info.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DistributedAvailabilityGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DistributedAvailabilityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="distributedAvailabilityGroupName"> The distributed availability group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SqlDistributedAvailabilityGroupResource>> GetAsync(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(distributedAvailabilityGroupName, nameof(distributedAvailabilityGroupName));
 
-            using var scope = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupCollection.Get");
+            using DiagnosticScope scope = _sqlDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlDistributedAvailabilityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SqlDistributedAvailabilityGroupData> response = Response.FromValue(SqlDistributedAvailabilityGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlDistributedAvailabilityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.Sql
         /// Gets a distributed availability group info.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DistributedAvailabilityGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DistributedAvailabilityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="distributedAvailabilityGroupName"> The distributed availability group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SqlDistributedAvailabilityGroupResource> Get(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(distributedAvailabilityGroupName, nameof(distributedAvailabilityGroupName));
 
-            using var scope = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupCollection.Get");
+            using DiagnosticScope scope = _sqlDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlDistributedAvailabilityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SqlDistributedAvailabilityGroupData> response = Response.FromValue(SqlDistributedAvailabilityGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlDistributedAvailabilityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.Sql
         /// Gets a list of a distributed availability groups in instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DistributedAvailabilityGroups_ListByInstance</description>
+        /// <term> Operation Id. </term>
+        /// <description> DistributedAvailabilityGroups_ListByInstance. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlDistributedAvailabilityGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlDistributedAvailabilityGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlDistributedAvailabilityGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDistributedAvailabilityGroupResource(Client, SqlDistributedAvailabilityGroupData.DeserializeSqlDistributedAvailabilityGroupData(e)), _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics, Pipeline, "SqlDistributedAvailabilityGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SqlDistributedAvailabilityGroupData, SqlDistributedAvailabilityGroupResource>(new SqlDistributedAvailabilityGroupsGetByInstanceAsyncCollectionResultOfT(
+                _sqlDistributedAvailabilityGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SqlDistributedAvailabilityGroupCollection.GetAll"), data => new SqlDistributedAvailabilityGroupResource(Client, data));
         }
 
         /// <summary>
         /// Gets a list of a distributed availability groups in instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DistributedAvailabilityGroups_ListByInstance</description>
+        /// <term> Operation Id. </term>
+        /// <description> DistributedAvailabilityGroups_ListByInstance. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlDistributedAvailabilityGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlDistributedAvailabilityGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDistributedAvailabilityGroupResource(Client, SqlDistributedAvailabilityGroupData.DeserializeSqlDistributedAvailabilityGroupData(e)), _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics, Pipeline, "SqlDistributedAvailabilityGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SqlDistributedAvailabilityGroupData, SqlDistributedAvailabilityGroupResource>(new SqlDistributedAvailabilityGroupsGetByInstanceCollectionResultOfT(
+                _sqlDistributedAvailabilityGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SqlDistributedAvailabilityGroupCollection.GetAll"), data => new SqlDistributedAvailabilityGroupResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DistributedAvailabilityGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DistributedAvailabilityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="distributedAvailabilityGroupName"> The distributed availability group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(distributedAvailabilityGroupName, nameof(distributedAvailabilityGroupName));
 
-            using var scope = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupCollection.Exists");
+            using DiagnosticScope scope = _sqlDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlDistributedAvailabilityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SqlDistributedAvailabilityGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlDistributedAvailabilityGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlDistributedAvailabilityGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.Sql
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DistributedAvailabilityGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DistributedAvailabilityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="distributedAvailabilityGroupName"> The distributed availability group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(distributedAvailabilityGroupName, nameof(distributedAvailabilityGroupName));
 
-            using var scope = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupCollection.Exists");
+            using DiagnosticScope scope = _sqlDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlDistributedAvailabilityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SqlDistributedAvailabilityGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlDistributedAvailabilityGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlDistributedAvailabilityGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DistributedAvailabilityGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DistributedAvailabilityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="distributedAvailabilityGroupName"> The distributed availability group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SqlDistributedAvailabilityGroupResource>> GetIfExistsAsync(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(distributedAvailabilityGroupName, nameof(distributedAvailabilityGroupName));
 
-            using var scope = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _sqlDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlDistributedAvailabilityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SqlDistributedAvailabilityGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlDistributedAvailabilityGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlDistributedAvailabilityGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SqlDistributedAvailabilityGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlDistributedAvailabilityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DistributedAvailabilityGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DistributedAvailabilityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="distributedAvailabilityGroupName"> The distributed availability group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SqlDistributedAvailabilityGroupResource> GetIfExists(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(distributedAvailabilityGroupName, nameof(distributedAvailabilityGroupName));
 
-            using var scope = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _sqlDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlDistributedAvailabilityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SqlDistributedAvailabilityGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlDistributedAvailabilityGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlDistributedAvailabilityGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SqlDistributedAvailabilityGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlDistributedAvailabilityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SqlDistributedAvailabilityGroupResource> IAsyncEnumerable<SqlDistributedAvailabilityGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

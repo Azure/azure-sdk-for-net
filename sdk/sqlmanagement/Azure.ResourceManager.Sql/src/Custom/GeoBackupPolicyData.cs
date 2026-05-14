@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.Sql
     {
         /// <summary> The state of the geo backup policy. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public GeoBackupPolicyState State
+        public Azure.ResourceManager.Sql.Models.GeoBackupPolicyState State
         {
-            get => Properties?.State ?? GeoBackupPolicyState.Disabled;
+            get => Properties?.State ?? Azure.ResourceManager.Sql.Models.GeoBackupPolicyState.Disabled;
             set
             {
                 if (Properties == null)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of <see cref="GeoBackupPolicyData"/>. </summary>
         /// <param name="state"> The state of the geo backup policy. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public GeoBackupPolicyData(GeoBackupPolicyState state)
+        public GeoBackupPolicyData(Azure.ResourceManager.Sql.Models.GeoBackupPolicyState state)
         {
             Properties = new GeoBackupPolicyProperties(state);
         }

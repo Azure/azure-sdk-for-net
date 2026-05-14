@@ -13,43 +13,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the DataMaskingPolicy data model.
-    /// A database data masking policy.
-    /// </summary>
+    /// <summary> A database data masking policy. </summary>
     public partial class DataMaskingPolicyData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataMaskingPolicyData"/>. </summary>
         public DataMaskingPolicyData()
@@ -57,45 +25,91 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMaskingPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="location"> The location of the data masking policy. </param>
         /// <param name="kind"> The kind of Data Masking Policy. Metadata, used for Azure portal. </param>
-        /// <param name="dataMaskingState"> The state of the data masking policy. </param>
-        /// <param name="exemptPrincipals"> The list of the exempt principals. Specifies the semicolon-separated list of database users for which the data masking policy does not apply. The specified users receive data results without masking for all of the database queries. </param>
-        /// <param name="applicationPrincipals"> The list of the application principals. This is a legacy parameter and is no longer used. </param>
-        /// <param name="maskingLevel"> The masking level. This is a legacy parameter and is no longer used. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMaskingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, DataMaskingState? dataMaskingState, string exemptPrincipals, string applicationPrincipals, string maskingLevel, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DataMaskingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataMaskingPolicyProperties properties, AzureLocation? location, string kind) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Location = location;
             Kind = kind;
-            DataMaskingState = dataMaskingState;
-            ExemptPrincipals = exemptPrincipals;
-            ApplicationPrincipals = applicationPrincipals;
-            MaskingLevel = maskingLevel;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal DataMaskingPolicyProperties Properties { get; set; }
 
         /// <summary> The location of the data masking policy. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
+
         /// <summary> The kind of Data Masking Policy. Metadata, used for Azure portal. </summary>
         [WirePath("kind")]
         public string Kind { get; }
+
         /// <summary> The state of the data masking policy. </summary>
         [WirePath("properties.dataMaskingState")]
-        public DataMaskingState? DataMaskingState { get; set; }
+        public DataMaskingState? DataMaskingState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataMaskingState;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new DataMaskingPolicyProperties();
+                    }
+                    Properties.DataMaskingState = value.Value;
+                }
+            }
+        }
+
         /// <summary> The list of the exempt principals. Specifies the semicolon-separated list of database users for which the data masking policy does not apply. The specified users receive data results without masking for all of the database queries. </summary>
         [WirePath("properties.exemptPrincipals")]
-        public string ExemptPrincipals { get; set; }
+        public string ExemptPrincipals
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExemptPrincipals;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataMaskingPolicyProperties();
+                }
+                Properties.ExemptPrincipals = value;
+            }
+        }
+
         /// <summary> The list of the application principals. This is a legacy parameter and is no longer used. </summary>
         [WirePath("properties.applicationPrincipals")]
-        public string ApplicationPrincipals { get; }
+        public string ApplicationPrincipals
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApplicationPrincipals;
+            }
+        }
+
         /// <summary> The masking level. This is a legacy parameter and is no longer used. </summary>
         [WirePath("properties.maskingLevel")]
-        public string MaskingLevel { get; }
+        public string MaskingLevel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaskingLevel;
+            }
+        }
     }
 }

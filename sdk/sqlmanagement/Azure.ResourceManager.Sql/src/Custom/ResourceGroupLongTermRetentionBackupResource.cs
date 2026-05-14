@@ -9,6 +9,8 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class ResourceGroupLongTermRetentionBackupResource : LongTermRetentionBackupResource
     {
+        public static new readonly ResourceType ResourceType = LongTermRetentionBackupResource.ResourceType;
+
         protected ResourceGroupLongTermRetentionBackupResource()
         {
         }

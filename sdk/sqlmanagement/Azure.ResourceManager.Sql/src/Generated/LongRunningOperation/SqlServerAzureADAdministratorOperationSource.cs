@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class SqlServerAzureADAdministratorOperationSource : IOperationSource<SqlServerAzureADAdministratorResource>
+    /// <summary></summary>
+    internal partial class SqlServerAzureADAdministratorOperationSource : IOperationSource<SqlServerAzureADAdministratorResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SqlServerAzureADAdministratorOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SqlServerAzureADAdministratorResource IOperationSource<SqlServerAzureADAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerAzureADAdministratorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SqlServerAzureADAdministratorData data = SqlServerAzureADAdministratorData.DeserializeSqlServerAzureADAdministratorData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SqlServerAzureADAdministratorResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SqlServerAzureADAdministratorResource> IOperationSource<SqlServerAzureADAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerAzureADAdministratorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
-            return await Task.FromResult(new SqlServerAzureADAdministratorResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SqlServerAzureADAdministratorData data = SqlServerAzureADAdministratorData.DeserializeSqlServerAzureADAdministratorData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SqlServerAzureADAdministratorResource(_client, data);
         }
     }
 }

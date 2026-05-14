@@ -9,43 +9,15 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A database data masking rule. </summary>
     public partial class DataMaskingRule : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataMaskingRule"/>. </summary>
         public DataMaskingRule()
@@ -53,85 +25,243 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMaskingRule"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> The location of the data masking rule. </param>
         /// <param name="kind"> The kind of Data Masking Rule. Metadata, used for Azure portal. </param>
-        /// <param name="ruleId"> The rule Id. </param>
-        /// <param name="ruleState"> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </param>
-        /// <param name="schemaName"> The schema name on which the data masking rule is applied. </param>
-        /// <param name="tableName"> The table name on which the data masking rule is applied. </param>
-        /// <param name="columnName"> The column name on which the data masking rule is applied. </param>
-        /// <param name="aliasName"> The alias name. This is a legacy parameter and is no longer used. </param>
-        /// <param name="maskingFunction"> The masking function that is used for the data masking rule. </param>
-        /// <param name="numberFrom"> The numberFrom property of the masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </param>
-        /// <param name="numberTo"> The numberTo property of the data masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </param>
-        /// <param name="prefixSize"> If maskingFunction is set to Text, the number of characters to show unmasked in the beginning of the string. Otherwise, this parameter will be ignored. </param>
-        /// <param name="suffixSize"> If maskingFunction is set to Text, the number of characters to show unmasked at the end of the string. Otherwise, this parameter will be ignored. </param>
-        /// <param name="replacementString"> If maskingFunction is set to Text, the character to use for masking the unexposed part of the string. Otherwise, this parameter will be ignored. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMaskingRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string ruleId, DataMaskingRuleState? ruleState, string schemaName, string tableName, string columnName, string aliasName, DataMaskingFunction? maskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Resource properties. </param>
+        internal DataMaskingRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? location, string kind, DataMaskingRuleProperties properties) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Location = location;
             Kind = kind;
-            RuleId = ruleId;
-            RuleState = ruleState;
-            SchemaName = schemaName;
-            TableName = tableName;
-            ColumnName = columnName;
-            AliasName = aliasName;
-            MaskingFunction = maskingFunction;
-            NumberFrom = numberFrom;
-            NumberTo = numberTo;
-            PrefixSize = prefixSize;
-            SuffixSize = suffixSize;
-            ReplacementString = replacementString;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
         }
 
         /// <summary> The location of the data masking rule. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
+
         /// <summary> The kind of Data Masking Rule. Metadata, used for Azure portal. </summary>
         [WirePath("kind")]
         public string Kind { get; }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal DataMaskingRuleProperties Properties { get; set; }
+
         /// <summary> The rule Id. </summary>
         [WirePath("properties.id")]
-        public string RuleId { get; }
+        public string RuleId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuleId;
+            }
+        }
+
         /// <summary> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </summary>
         [WirePath("properties.ruleState")]
-        public DataMaskingRuleState? RuleState { get; set; }
+        public DataMaskingRuleState? RuleState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuleState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataMaskingRuleProperties();
+                }
+                Properties.RuleState = value;
+            }
+        }
+
         /// <summary> The schema name on which the data masking rule is applied. </summary>
         [WirePath("properties.schemaName")]
-        public string SchemaName { get; set; }
+        public string SchemaName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SchemaName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataMaskingRuleProperties();
+                }
+                Properties.SchemaName = value;
+            }
+        }
+
         /// <summary> The table name on which the data masking rule is applied. </summary>
         [WirePath("properties.tableName")]
-        public string TableName { get; set; }
+        public string TableName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TableName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataMaskingRuleProperties();
+                }
+                Properties.TableName = value;
+            }
+        }
+
         /// <summary> The column name on which the data masking rule is applied. </summary>
         [WirePath("properties.columnName")]
-        public string ColumnName { get; set; }
+        public string ColumnName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ColumnName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataMaskingRuleProperties();
+                }
+                Properties.ColumnName = value;
+            }
+        }
+
         /// <summary> The alias name. This is a legacy parameter and is no longer used. </summary>
         [WirePath("properties.aliasName")]
-        public string AliasName { get; set; }
+        public string AliasName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AliasName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataMaskingRuleProperties();
+                }
+                Properties.AliasName = value;
+            }
+        }
+
         /// <summary> The masking function that is used for the data masking rule. </summary>
         [WirePath("properties.maskingFunction")]
-        public DataMaskingFunction? MaskingFunction { get; set; }
+        public DataMaskingFunction? MaskingFunction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaskingFunction;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new DataMaskingRuleProperties();
+                    }
+                    Properties.MaskingFunction = value.Value;
+                }
+            }
+        }
+
         /// <summary> The numberFrom property of the masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </summary>
         [WirePath("properties.numberFrom")]
-        public string NumberFrom { get; set; }
+        public string NumberFrom
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NumberFrom;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataMaskingRuleProperties();
+                }
+                Properties.NumberFrom = value;
+            }
+        }
+
         /// <summary> The numberTo property of the data masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </summary>
         [WirePath("properties.numberTo")]
-        public string NumberTo { get; set; }
+        public string NumberTo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NumberTo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataMaskingRuleProperties();
+                }
+                Properties.NumberTo = value;
+            }
+        }
+
         /// <summary> If maskingFunction is set to Text, the number of characters to show unmasked in the beginning of the string. Otherwise, this parameter will be ignored. </summary>
         [WirePath("properties.prefixSize")]
-        public string PrefixSize { get; set; }
+        public string PrefixSize
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrefixSize;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataMaskingRuleProperties();
+                }
+                Properties.PrefixSize = value;
+            }
+        }
+
         /// <summary> If maskingFunction is set to Text, the number of characters to show unmasked at the end of the string. Otherwise, this parameter will be ignored. </summary>
         [WirePath("properties.suffixSize")]
-        public string SuffixSize { get; set; }
+        public string SuffixSize
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SuffixSize;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataMaskingRuleProperties();
+                }
+                Properties.SuffixSize = value;
+            }
+        }
+
         /// <summary> If maskingFunction is set to Text, the character to use for masking the unexposed part of the string. Otherwise, this parameter will be ignored. </summary>
         [WirePath("properties.replacementString")]
-        public string ReplacementString { get; set; }
+        public string ReplacementString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReplacementString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataMaskingRuleProperties();
+                }
+                Properties.ReplacementString = value;
+            }
+        }
     }
 }

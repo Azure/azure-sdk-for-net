@@ -41,10 +41,20 @@ namespace Azure.ResourceManager.Sql
     public partial class RecoverableManagedDatabaseData { public RecoverableManagedDatabaseData() { } }
 
     [CodeGenSuppress("RestorableDroppedDatabaseData")]
-    public partial class RestorableDroppedDatabaseData { public RestorableDroppedDatabaseData() { } }
+    [CodeGenSuppress("RestorableDroppedDatabaseData", typeof(Azure.Core.AzureLocation))]
+    public partial class RestorableDroppedDatabaseData
+    {
+        public RestorableDroppedDatabaseData() { }
+        public RestorableDroppedDatabaseData(Azure.Core.AzureLocation location) : base(location) { }
+    }
 
     [CodeGenSuppress("RestorableDroppedManagedDatabaseData")]
-    public partial class RestorableDroppedManagedDatabaseData { public RestorableDroppedManagedDatabaseData() { } }
+    [CodeGenSuppress("RestorableDroppedManagedDatabaseData", typeof(Azure.Core.AzureLocation))]
+    public partial class RestorableDroppedManagedDatabaseData
+    {
+        public RestorableDroppedManagedDatabaseData() { }
+        public RestorableDroppedManagedDatabaseData(Azure.Core.AzureLocation location) : base(location) { }
+    }
 
     [CodeGenSuppress("SqlInstancePoolOperationData")]
     public partial class SqlInstancePoolOperationData { public SqlInstancePoolOperationData() { } }

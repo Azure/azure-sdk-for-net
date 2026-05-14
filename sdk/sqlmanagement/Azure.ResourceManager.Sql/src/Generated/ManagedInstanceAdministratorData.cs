@@ -13,43 +13,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the ManagedInstanceAdministrator data model.
-    /// An Azure SQL managed instance administrator.
-    /// </summary>
+    /// <summary> An Azure SQL managed instance administrator. </summary>
     public partial class ManagedInstanceAdministratorData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceAdministratorData"/>. </summary>
         public ManagedInstanceAdministratorData()
@@ -57,35 +25,98 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceAdministratorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="administratorType"> Type of the managed instance administrator. </param>
-        /// <param name="login"> Login name of the managed instance administrator. </param>
-        /// <param name="sid"> SID (object ID) of the managed instance administrator. </param>
-        /// <param name="tenantId"> Tenant ID of the managed instance administrator. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedInstanceAdministratorType? administratorType, string login, Guid? sid, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
+        internal ManagedInstanceAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedInstanceAdministratorProperties properties) : base(id, name, resourceType, systemData)
         {
-            AdministratorType = administratorType;
-            Login = login;
-            Sid = sid;
-            TenantId = tenantId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal ManagedInstanceAdministratorProperties Properties { get; set; }
 
         /// <summary> Type of the managed instance administrator. </summary>
         [WirePath("properties.administratorType")]
-        public ManagedInstanceAdministratorType? AdministratorType { get; set; }
+        public ManagedInstanceAdministratorType? AdministratorType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministratorType;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ManagedInstanceAdministratorProperties();
+                    }
+                    Properties.AdministratorType = value.Value;
+                }
+            }
+        }
+
         /// <summary> Login name of the managed instance administrator. </summary>
         [WirePath("properties.login")]
-        public string Login { get; set; }
+        public string Login
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Login;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceAdministratorProperties();
+                }
+                Properties.Login = value;
+            }
+        }
+
         /// <summary> SID (object ID) of the managed instance administrator. </summary>
         [WirePath("properties.sid")]
-        public Guid? Sid { get; set; }
+        public Guid? Sid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sid;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ManagedInstanceAdministratorProperties();
+                    }
+                    Properties.Sid = value.Value;
+                }
+            }
+        }
+
         /// <summary> Tenant ID of the managed instance administrator. </summary>
         [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
+        public Guid? TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceAdministratorProperties();
+                }
+                Properties.TenantId = value;
+            }
+        }
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class OutboundFirewallRuleOperationSource : IOperationSource<OutboundFirewallRuleResource>
+    /// <summary></summary>
+    internal partial class OutboundFirewallRuleOperationSource : IOperationSource<OutboundFirewallRuleResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal OutboundFirewallRuleOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         OutboundFirewallRuleResource IOperationSource<OutboundFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OutboundFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            OutboundFirewallRuleData data = OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new OutboundFirewallRuleResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<OutboundFirewallRuleResource> IOperationSource<OutboundFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OutboundFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
-            return await Task.FromResult(new OutboundFirewallRuleResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            OutboundFirewallRuleData data = OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new OutboundFirewallRuleResource(_client, data);
         }
     }
 }

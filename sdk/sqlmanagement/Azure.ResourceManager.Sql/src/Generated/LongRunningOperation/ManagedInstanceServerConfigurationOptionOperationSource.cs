@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedInstanceServerConfigurationOptionOperationSource : IOperationSource<ManagedInstanceServerConfigurationOptionResource>
+    /// <summary></summary>
+    internal partial class ManagedInstanceServerConfigurationOptionOperationSource : IOperationSource<ManagedInstanceServerConfigurationOptionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ManagedInstanceServerConfigurationOptionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ManagedInstanceServerConfigurationOptionResource IOperationSource<ManagedInstanceServerConfigurationOptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedInstanceServerConfigurationOptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ManagedInstanceServerConfigurationOptionData data = ManagedInstanceServerConfigurationOptionData.DeserializeManagedInstanceServerConfigurationOptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ManagedInstanceServerConfigurationOptionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ManagedInstanceServerConfigurationOptionResource> IOperationSource<ManagedInstanceServerConfigurationOptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedInstanceServerConfigurationOptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
-            return await Task.FromResult(new ManagedInstanceServerConfigurationOptionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ManagedInstanceServerConfigurationOptionData data = ManagedInstanceServerConfigurationOptionData.DeserializeManagedInstanceServerConfigurationOptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ManagedInstanceServerConfigurationOptionResource(_client, data);
         }
     }
 }

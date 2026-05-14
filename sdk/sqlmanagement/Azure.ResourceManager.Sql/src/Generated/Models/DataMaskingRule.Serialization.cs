@@ -10,15 +10,75 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class DataMaskingRule : IUtf8JsonSerializable, IJsonModel<DataMaskingRule>
+    /// <summary> A database data masking rule. </summary>
+    public partial class DataMaskingRule : ResourceData, IJsonModel<DataMaskingRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataMaskingRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataMaskingRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataMaskingRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataMaskingRule)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataMaskingRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataMaskingRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataMaskingRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataMaskingRule IPersistableModel<DataMaskingRule>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataMaskingRule)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataMaskingRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dataMaskingRule"> The <see cref="DataMaskingRule"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DataMaskingRule dataMaskingRule)
+        {
+            if (dataMaskingRule == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(dataMaskingRule, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataMaskingRule"/> from. </param>
+        internal static DataMaskingRule FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDataMaskingRule(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataMaskingRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +90,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMaskingRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataMaskingRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataMaskingRule)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
@@ -47,659 +106,117 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RuleId))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(RuleId);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(RuleState))
-            {
-                writer.WritePropertyName("ruleState"u8);
-                writer.WriteStringValue(RuleState.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(SchemaName))
-            {
-                writer.WritePropertyName("schemaName"u8);
-                writer.WriteStringValue(SchemaName);
-            }
-            if (Optional.IsDefined(TableName))
-            {
-                writer.WritePropertyName("tableName"u8);
-                writer.WriteStringValue(TableName);
-            }
-            if (Optional.IsDefined(ColumnName))
-            {
-                writer.WritePropertyName("columnName"u8);
-                writer.WriteStringValue(ColumnName);
-            }
-            if (Optional.IsDefined(AliasName))
-            {
-                writer.WritePropertyName("aliasName"u8);
-                writer.WriteStringValue(AliasName);
-            }
-            if (Optional.IsDefined(MaskingFunction))
-            {
-                writer.WritePropertyName("maskingFunction"u8);
-                writer.WriteStringValue(MaskingFunction.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(NumberFrom))
-            {
-                writer.WritePropertyName("numberFrom"u8);
-                writer.WriteStringValue(NumberFrom);
-            }
-            if (Optional.IsDefined(NumberTo))
-            {
-                writer.WritePropertyName("numberTo"u8);
-                writer.WriteStringValue(NumberTo);
-            }
-            if (Optional.IsDefined(PrefixSize))
-            {
-                writer.WritePropertyName("prefixSize"u8);
-                writer.WriteStringValue(PrefixSize);
-            }
-            if (Optional.IsDefined(SuffixSize))
-            {
-                writer.WritePropertyName("suffixSize"u8);
-                writer.WriteStringValue(SuffixSize);
-            }
-            if (Optional.IsDefined(ReplacementString))
-            {
-                writer.WritePropertyName("replacementString"u8);
-                writer.WriteStringValue(ReplacementString);
-            }
-            writer.WriteEndObject();
         }
 
-        DataMaskingRule IJsonModel<DataMaskingRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataMaskingRule IJsonModel<DataMaskingRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataMaskingRule)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMaskingRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataMaskingRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataMaskingRule)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataMaskingRule(document.RootElement, options);
         }
 
-        internal static DataMaskingRule DeserializeDataMaskingRule(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataMaskingRule DeserializeDataMaskingRule(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AzureLocation? location = default;
-            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string id0 = default;
-            DataMaskingRuleState? ruleState = default;
-            string schemaName = default;
-            string tableName = default;
-            string columnName = default;
-            string aliasName = default;
-            DataMaskingFunction? maskingFunction = default;
-            string numberFrom = default;
-            string numberTo = default;
-            string prefixSize = default;
-            string suffixSize = default;
-            string replacementString = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureLocation? location = default;
+            string kind = default;
+            DataMaskingRuleProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    location = new AzureLocation(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    kind = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("id"u8))
-                        {
-                            id0 = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ruleState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ruleState = property0.Value.GetString().ToDataMaskingRuleState();
-                            continue;
-                        }
-                        if (property0.NameEquals("schemaName"u8))
-                        {
-                            schemaName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("tableName"u8))
-                        {
-                            tableName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("columnName"u8))
-                        {
-                            columnName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("aliasName"u8))
-                        {
-                            aliasName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("maskingFunction"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maskingFunction = property0.Value.GetString().ToDataMaskingFunction();
-                            continue;
-                        }
-                        if (property0.NameEquals("numberFrom"u8))
-                        {
-                            numberFrom = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("numberTo"u8))
-                        {
-                            numberTo = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("prefixSize"u8))
-                        {
-                            prefixSize = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("suffixSize"u8))
-                        {
-                            suffixSize = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("replacementString"u8))
-                        {
-                            replacementString = property0.Value.GetString();
-                            continue;
-                        }
+                        continue;
                     }
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = DataMaskingRuleProperties.DeserializeDataMaskingRuleProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataMaskingRule(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 location,
                 kind,
-                id0,
-                ruleState,
-                schemaName,
-                tableName,
-                columnName,
-                aliasName,
-                maskingFunction,
-                numberFrom,
-                numberTo,
-                prefixSize,
-                suffixSize,
-                replacementString,
-                serializedAdditionalRawData);
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Location))
-                {
-                    builder.Append("  location: ");
-                    builder.AppendLine($"'{Location.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Kind))
-                {
-                    builder.Append("  kind: ");
-                    if (Kind.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Kind}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Kind}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RuleId))
-                {
-                    builder.Append("    id: ");
-                    if (RuleId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RuleId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RuleId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ruleState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RuleState))
-                {
-                    builder.Append("    ruleState: ");
-                    builder.AppendLine($"'{RuleState.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SchemaName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    schemaName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SchemaName))
-                {
-                    builder.Append("    schemaName: ");
-                    if (SchemaName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SchemaName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SchemaName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    tableName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TableName))
-                {
-                    builder.Append("    tableName: ");
-                    if (TableName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TableName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TableName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ColumnName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    columnName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ColumnName))
-                {
-                    builder.Append("    columnName: ");
-                    if (ColumnName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ColumnName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ColumnName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AliasName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    aliasName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AliasName))
-                {
-                    builder.Append("    aliasName: ");
-                    if (AliasName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AliasName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AliasName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaskingFunction), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    maskingFunction: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaskingFunction))
-                {
-                    builder.Append("    maskingFunction: ");
-                    builder.AppendLine($"'{MaskingFunction.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberFrom), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    numberFrom: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NumberFrom))
-                {
-                    builder.Append("    numberFrom: ");
-                    if (NumberFrom.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NumberFrom}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NumberFrom}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberTo), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    numberTo: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NumberTo))
-                {
-                    builder.Append("    numberTo: ");
-                    if (NumberTo.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NumberTo}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NumberTo}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrefixSize), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    prefixSize: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrefixSize))
-                {
-                    builder.Append("    prefixSize: ");
-                    if (PrefixSize.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrefixSize}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrefixSize}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuffixSize), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    suffixSize: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SuffixSize))
-                {
-                    builder.Append("    suffixSize: ");
-                    if (SuffixSize.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SuffixSize}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SuffixSize}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplacementString), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    replacementString: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ReplacementString))
-                {
-                    builder.Append("    replacementString: ");
-                    if (ReplacementString.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ReplacementString}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ReplacementString}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<DataMaskingRule>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMaskingRule>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(DataMaskingRule)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataMaskingRule IPersistableModel<DataMaskingRule>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMaskingRule>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataMaskingRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataMaskingRule)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataMaskingRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

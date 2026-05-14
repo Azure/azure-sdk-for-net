@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SqlAvailabilityZoneType : IEquatable<SqlAvailabilityZoneType>
     {
         private readonly string _value;
+        /// <summary> NoPreference. </summary>
+        private const string NoPreferenceValue = "NoPreference";
+        /// <summary> 1. </summary>
+        private const string _1Value = "1";
+        /// <summary> 2. </summary>
+        private const string _2Value = "2";
+        /// <summary> 3. </summary>
+        private const string _3Value = "3";
 
         /// <summary> Initializes a new instance of <see cref="SqlAvailabilityZoneType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlAvailabilityZoneType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoPreferenceValue = "NoPreference";
-        private const string OneValue = "1";
-        private const string TwoValue = "2";
-        private const string ThreeValue = "3";
+            _value = value;
+        }
 
         /// <summary> NoPreference. </summary>
         public static SqlAvailabilityZoneType NoPreference { get; } = new SqlAvailabilityZoneType(NoPreferenceValue);
+
         /// <summary> 1. </summary>
-        public static SqlAvailabilityZoneType One { get; } = new SqlAvailabilityZoneType(OneValue);
+        public static SqlAvailabilityZoneType _1 { get; } = new SqlAvailabilityZoneType(_1Value);
+
         /// <summary> 2. </summary>
-        public static SqlAvailabilityZoneType Two { get; } = new SqlAvailabilityZoneType(TwoValue);
+        public static SqlAvailabilityZoneType _2 { get; } = new SqlAvailabilityZoneType(_2Value);
+
         /// <summary> 3. </summary>
-        public static SqlAvailabilityZoneType Three { get; } = new SqlAvailabilityZoneType(ThreeValue);
+        public static SqlAvailabilityZoneType _3 { get; } = new SqlAvailabilityZoneType(_3Value);
+
         /// <summary> Determines if two <see cref="SqlAvailabilityZoneType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlAvailabilityZoneType left, SqlAvailabilityZoneType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlAvailabilityZoneType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlAvailabilityZoneType left, SqlAvailabilityZoneType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlAvailabilityZoneType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlAvailabilityZoneType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlAvailabilityZoneType(string value) => new SqlAvailabilityZoneType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlAvailabilityZoneType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlAvailabilityZoneType?(string value) => value == null ? null : new SqlAvailabilityZoneType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlAvailabilityZoneType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlAvailabilityZoneType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

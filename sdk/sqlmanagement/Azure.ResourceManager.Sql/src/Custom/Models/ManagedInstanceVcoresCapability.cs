@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Memory limit MB ranges. </summary>
         [WirePath("supportedMemoryLimitsMB")]
-        [Obsolete("This property is obsolete and will be removed in a future release.", false)]
+        [Obsolete("This property is deprecated and will be removed in a future release.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public MaxLimitRangeCapability SupportedMemoryLimitsMB => SupportedMemoryLimitsInMB;
     }

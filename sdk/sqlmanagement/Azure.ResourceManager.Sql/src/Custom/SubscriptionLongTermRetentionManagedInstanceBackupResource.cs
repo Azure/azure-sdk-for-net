@@ -9,6 +9,8 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SubscriptionLongTermRetentionManagedInstanceBackupResource : LongTermRetentionManagedInstanceBackupResource
     {
+        public static new readonly ResourceType ResourceType = LongTermRetentionManagedInstanceBackupResource.ResourceType;
+
         protected SubscriptionLongTermRetentionManagedInstanceBackupResource()
         {
         }
