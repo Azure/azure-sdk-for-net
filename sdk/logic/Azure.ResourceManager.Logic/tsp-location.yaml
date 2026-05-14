@@ -1,0 +1,4 @@
+directory: specification/logic/resource-manager/Microsoft.Logic/Logic
+commit: 7089f3d2a4ed7e765d66f5f5e3be0b8b1eed6c1a
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

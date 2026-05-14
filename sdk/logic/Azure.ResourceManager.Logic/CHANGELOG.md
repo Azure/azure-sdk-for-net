@@ -4,7 +4,11 @@
 
 ### Features Added
 
+- Started migration to TypeSpec-based code generation. Initial generation covers the `AutomationProject` resource introduced in API version `2026-04-01-preview`.
+
 ### Breaking Changes
+
+- Migration is in progress and the public API surface is incomplete. See the linked draft PR for the current migration status.
 
 ### Bugs Fixed
 
