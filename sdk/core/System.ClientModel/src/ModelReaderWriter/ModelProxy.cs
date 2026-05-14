@@ -9,13 +9,13 @@ namespace System.ClientModel.Primitives;
 internal interface IModelProxy
 {
     bool CanHandleData(BinaryData data, ModelReaderWriterOptions options);
-    bool CanHandleObject(object model);
+    bool CanHandleObject(object model, ModelReaderWriterOptions options);
     object CreateFromData(BinaryData data, ModelReaderWriterOptions options);
 }
 
 /// <summary>
 /// Abstract base class for model proxies that participate in the chain-of-responsibility
-/// pattern for reading and writing models. Override <see cref="CanHandle(T)"/> or
+/// pattern for reading and writing models. Override <see cref="CanHandle(T, ModelReaderWriterOptions)"/> or
 /// <see cref="CanHandle(BinaryData, ModelReaderWriterOptions)"/> to selectively decline
 /// handling specific instances or data.
 /// </summary>
@@ -29,8 +29,9 @@ public abstract class ModelProxy<T> : IModelProxy, IPersistableModel<T>
     /// Default returns true.
     /// </summary>
     /// <param name="model">The model instance to check.</param>
+    /// <param name="options">The options for writing.</param>
     /// <returns>True if this proxy can handle the model; otherwise, false.</returns>
-    public virtual bool CanHandle(T model) => true;
+    public virtual bool CanHandle(T model, ModelReaderWriterOptions options) => true;
 
     /// <summary>
     /// Determines whether this proxy can handle reading from the specified data.
@@ -54,8 +55,8 @@ public abstract class ModelProxy<T> : IModelProxy, IPersistableModel<T>
     bool IModelProxy.CanHandleData(BinaryData data, ModelReaderWriterOptions options)
         => CanHandle(data, options);
 
-    bool IModelProxy.CanHandleObject(object model)
-        => model is T typed && CanHandle(typed);
+    bool IModelProxy.CanHandleObject(object model, ModelReaderWriterOptions options)
+        => model is T typed && CanHandle(typed, options);
 
     object IModelProxy.CreateFromData(BinaryData data, ModelReaderWriterOptions options)
         => Create(data, options)!;

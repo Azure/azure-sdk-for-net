@@ -462,7 +462,7 @@ namespace System.ClientModel.Primitives
     {
         protected ModelProxy() { }
         public virtual bool CanHandle(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public abstract bool CanHandle(T model);
+        public virtual bool CanHandle(T model, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public abstract T Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
         public abstract string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
         public abstract System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
@@ -507,10 +507,10 @@ namespace System.ClientModel.Primitives
         public object? ProxiedModel { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
         public void AddProxy<T>(System.ClientModel.Primitives.ModelProxy<T> proxy) { }
+        public bool HasProxy(System.Type modelType) { throw null; }
+        public bool HasProxy<T>() { throw null; }
         public System.ClientModel.Primitives.IJsonModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IJsonModel<T> model) { throw null; }
         public System.ClientModel.Primitives.IPersistableModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> model) { throw null; }
-        public bool HasProxy<T>() { throw null; }
-        public bool HasProxy(System.Type modelType) { throw null; }
     }
     public abstract partial class ModelReaderWriterTypeBuilder
     {

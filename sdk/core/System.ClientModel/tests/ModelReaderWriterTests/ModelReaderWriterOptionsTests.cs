@@ -1085,7 +1085,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 _canWrite = canWrite;
             }
 
-            public override bool CanHandle(SimpleModel model) => _canWrite;
+            public override bool CanHandle(SimpleModel model, ModelReaderWriterOptions options) => _canWrite;
 
             void IJsonModel<SimpleModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             {

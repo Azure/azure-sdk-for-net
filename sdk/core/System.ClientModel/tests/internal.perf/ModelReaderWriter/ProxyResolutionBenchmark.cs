@@ -155,7 +155,7 @@ namespace System.ClientModel.Tests.Internal.Perf
                 _canHandle = canHandle;
             }
 
-            public override bool CanHandle(BenchmarkModel model) => _canHandle;
+            public override bool CanHandle(BenchmarkModel model, ModelReaderWriterOptions options) => _canHandle;
             public override bool CanHandle(BinaryData data, ModelReaderWriterOptions options) => _canHandle;
 
             void IJsonModel<BenchmarkModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

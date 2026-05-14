@@ -103,7 +103,7 @@ public class ModelReaderWriterOptions
 
     /// <summary>
     /// Resolves the proxy chain for the specified model type on the write path, walking the chain
-    /// in FIFO order (first registered is consulted first), calling <see cref="ModelProxy{T}.CanHandle(T)"/> on each.
+    /// in FIFO order (first registered is consulted first), calling <see cref="ModelProxy{T}.CanHandle(T, ModelReaderWriterOptions)"/> on each.
     /// The first proxy that can handle the model is returned.
     /// If no proxy is registered or none can handle the model, returns the model itself.
     /// </summary>
@@ -119,7 +119,7 @@ public class ModelReaderWriterOptions
         // Write path: walk chain first-to-last (FIFO), return the first that CanHandle.
         for (int i = 0; i < chain.Count; i++)
         {
-            if (chain[i] is IModelProxy proxyBase && proxyBase.CanHandleObject(model) && chain[i] is IPersistableModel<T> typedProxy)
+            if (chain[i] is IModelProxy proxyBase && proxyBase.CanHandleObject(model, this) && chain[i] is IPersistableModel<T> typedProxy)
             {
                 ProxiedModel = model;
                 return typedProxy;
@@ -131,7 +131,7 @@ public class ModelReaderWriterOptions
 
     /// <summary>
     /// Resolves the proxy chain for the specified model type on the write path, walking the chain
-    /// in FIFO order (first registered is consulted first), calling <see cref="ModelProxy{T}.CanHandle(T)"/> on each
+    /// in FIFO order (first registered is consulted first), calling <see cref="ModelProxy{T}.CanHandle(T, ModelReaderWriterOptions)"/> on each
     /// proxy that also implements <see cref="IJsonModel{T}"/>.
     /// If no proxy is registered or none can handle the model, returns the model itself.
     /// </summary>
@@ -147,7 +147,7 @@ public class ModelReaderWriterOptions
         // Write path: walk chain first-to-last (FIFO), return the first IJsonModel<T> that CanHandle.
         for (int i = 0; i < chain.Count; i++)
         {
-            if (chain[i] is IModelProxy proxyBase && proxyBase.CanHandleObject(model) && chain[i] is IJsonModel<T> jsonProxy)
+            if (chain[i] is IModelProxy proxyBase && proxyBase.CanHandleObject(model, this) && chain[i] is IJsonModel<T> jsonProxy)
             {
                 ProxiedModel = model;
                 return jsonProxy;
