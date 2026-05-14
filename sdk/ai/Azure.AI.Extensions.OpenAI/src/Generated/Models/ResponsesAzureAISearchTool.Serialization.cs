@@ -76,8 +76,18 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(ResponsesAzureAISearchTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
             writer.WritePropertyName("azure_ai_search"u8);
-            writer.WriteObjectValue(AzureAiSearch, options);
+            writer.WriteObjectValue(AzureAISearch, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -107,7 +117,9 @@ namespace Azure.AI.Extensions.OpenAI
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResponsesAzureAISearchToolResource azureAiSearch = default;
+            string name = default;
+            string description = default;
+            ResponsesAzureAISearchToolResource azureAISearch = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -115,9 +127,19 @@ namespace Azure.AI.Extensions.OpenAI
                     @type = new ToolType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("azure_ai_search"u8))
                 {
-                    azureAiSearch = ResponsesAzureAISearchToolResource.DeserializeResponsesAzureAISearchToolResource(prop.Value, options);
+                    azureAISearch = ResponsesAzureAISearchToolResource.DeserializeResponsesAzureAISearchToolResource(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,7 +147,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesAzureAISearchTool(@type, additionalBinaryDataProperties, azureAiSearch);
+            return new ResponsesAzureAISearchTool(@type, additionalBinaryDataProperties, name, description, azureAISearch);
         }
     }
 }

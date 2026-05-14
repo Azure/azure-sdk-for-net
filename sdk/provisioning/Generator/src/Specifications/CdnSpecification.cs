@@ -17,6 +17,60 @@ public class CdnSpecification() :
             r.Name = "CdnProfile";
         });
 
+        // Resource name requirements (see issue #58181). Only resources with
+        // validated constraints (Bicep API reference or Azure portal) are listed
+        // here so that we don't pin down limits we haven't verified.
+        AddNameRequirements<ProfileResource>(
+            max: 260,
+            min: 1,
+            lower: true,
+            upper: true,
+            digits: true,
+            hyphen: true,
+            underscore: false,
+            period: false,
+            parens: false);
+        AddNameRequirements<FrontDoorEndpointResource>(
+            max: 46,
+            min: 1,
+            lower: true,
+            upper: true,
+            digits: true,
+            hyphen: true,
+            underscore: false,
+            period: false,
+            parens: false);
+        AddNameRequirements<FrontDoorOriginGroupResource>(
+            max: 90,
+            min: 1,
+            lower: true,
+            upper: true,
+            digits: true,
+            hyphen: true,
+            underscore: false,
+            period: false,
+            parens: false);
+        AddNameRequirements<FrontDoorOriginResource>(
+            max: 90,
+            min: 1,
+            lower: true,
+            upper: true,
+            digits: true,
+            hyphen: true,
+            underscore: false,
+            period: false,
+            parens: false);
+        AddNameRequirements<FrontDoorRouteResource>(
+            max: 90,
+            min: 1,
+            lower: true,
+            upper: true,
+            digits: true,
+            hyphen: true,
+            underscore: false,
+            period: false,
+            parens: false);
+
         // DeliveryRuleAction subtypes (discriminator: "name")
         CustomizeSimpleModel<DeliveryRuleCacheExpirationAction>(m => { m.DiscriminatorName = "name"; m.DiscriminatorValue = "CacheExpiration"; });
         CustomizeSimpleModel<DeliveryRuleCacheKeyQueryStringAction>(m => { m.DiscriminatorName = "name"; m.DiscriminatorValue = "CacheKeyQueryString"; });

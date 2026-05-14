@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
@@ -122,6 +123,11 @@ namespace Azure.Core.Tests.Identity.Mock
         internal ValueTask<IConfidentialClientApplication> CallBaseGetClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
             return GetClientAsync(enableCae, async, cancellationToken);
+        }
+
+        internal IReadOnlyDictionary<string, (string Value, bool IncludeInCacheKey)> GetAdditionalQueryParameters()
+        {
+            return AdditionalQueryParameters;
         }
 
         protected override ValueTask<IConfidentialClientApplication> CreateClientCoreAsync(bool enableCae, bool async, CancellationToken cancellationToken)

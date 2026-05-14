@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct MultiAdStatus : IEquatable<MultiAdStatus>
     {
         private readonly string _value;
+        /// <summary> Account is MultiAD disabled, Means its a SharedAD or SingleAD account. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Account is MultiAD enabled. </summary>
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="MultiAdStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MultiAdStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
+            _value = value;
+        }
 
         /// <summary> Account is MultiAD disabled, Means its a SharedAD or SingleAD account. </summary>
         public static MultiAdStatus Disabled { get; } = new MultiAdStatus(DisabledValue);
+
         /// <summary> Account is MultiAD enabled. </summary>
         public static MultiAdStatus Enabled { get; } = new MultiAdStatus(EnabledValue);
+
         /// <summary> Determines if two <see cref="MultiAdStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MultiAdStatus left, MultiAdStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MultiAdStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MultiAdStatus left, MultiAdStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MultiAdStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MultiAdStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MultiAdStatus(string value) => new MultiAdStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MultiAdStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MultiAdStatus?(string value) => value == null ? null : new MultiAdStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MultiAdStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MultiAdStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

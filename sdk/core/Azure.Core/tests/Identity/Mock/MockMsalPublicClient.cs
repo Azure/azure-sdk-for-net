@@ -156,6 +156,11 @@ namespace Azure.Core.Tests.Identity.Mock
             return CreateClientAsync(enableCae, async, cancellationToken);
         }
 
+        internal IReadOnlyDictionary<string, (string Value, bool IncludeInCacheKey)> GetAdditionalQueryParameters()
+        {
+            return AdditionalQueryParameters;
+        }
+
         protected override ValueTask<IPublicClientApplication> CreateClientCoreAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
             if (ClientAppFactory == null)
