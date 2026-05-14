@@ -114,7 +114,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SettingProperties properties = default;
             SettingKind kind = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,15 +149,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = SettingProperties.DeserializeSettingProperties(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("kind"u8))
                 {
                     kind = new SettingKind(prop.Value.GetString());
@@ -175,7 +165,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties,
                 kind);
         }
     }

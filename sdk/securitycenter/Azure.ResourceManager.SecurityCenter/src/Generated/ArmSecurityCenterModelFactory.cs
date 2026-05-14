@@ -2473,10 +2473,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="kind"> The kind of the server vulnerability assessments setting. </param>
         /// <returns> A new <see cref="SecurityCenter.ServerVulnerabilityAssessmentsSettingData"/> instance for mocking. </returns>
-        public static ServerVulnerabilityAssessmentsSettingData ServerVulnerabilityAssessmentsSettingData(Core.ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServerVulnerabilityAssessmentsSettingProperties properties = default, string kind = default)
+        public static ServerVulnerabilityAssessmentsSettingData ServerVulnerabilityAssessmentsSettingData(Core.ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default)
         {
             return new UnknownServerVulnerabilityAssessmentsSetting(
                 id,
@@ -2484,18 +2483,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                properties,
                 new ServerVulnerabilityAssessmentsSettingKind(kind));
         }
 
-        /// <summary> A vulnerability assessments setting on Azure servers in the defined scope. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="selectedProvider"> The selected vulnerability assessments provider on Azure servers in the defined scope. </param>
         /// <returns> A new <see cref="Models.AzureServersSetting"/> instance for mocking. </returns>
-        public static AzureServersSetting AzureServersSetting(Core.ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServerVulnerabilityAssessmentsSettingProperties properties = default)
+        public static AzureServersSetting AzureServersSetting(Core.ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServerVulnerabilityAssessmentsAzureSettingSelectedProvider? selectedProvider = default)
         {
             return new AzureServersSetting(
                 id,
@@ -2503,8 +2500,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                properties,
-                ServerVulnerabilityAssessmentsSettingKind.AzureServersSetting);
+                ServerVulnerabilityAssessmentsSettingKind.AzureServersSetting,
+                selectedProvider is null ? default : new ServerVulnerabilityAssessmentsAzureSettingProperties(selectedProvider.GetValueOrDefault(), null));
         }
 
         /// <summary> The kind of the security setting. </summary>
@@ -2512,10 +2509,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="kind"> the kind of the settings string. </param>
         /// <returns> A new <see cref="SecurityCenter.SecuritySettingData"/> instance for mocking. </returns>
-        public static SecuritySettingData SecuritySettingData(Core.ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SettingProperties properties = default, string kind = default)
+        public static SecuritySettingData SecuritySettingData(Core.ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default)
         {
             return new SecuritySettingData(
                 id,
@@ -2523,18 +2519,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                properties,
                 new SettingKind(kind));
         }
 
-        /// <summary> Represents a data export setting. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="enabled"> Is the data export setting enabled. </param>
         /// <returns> A new <see cref="Models.DataExportSettings"/> instance for mocking. </returns>
-        public static DataExportSettings DataExportSettings(Core.ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SettingProperties properties = default)
+        public static DataExportSettings DataExportSettings(Core.ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? enabled = default)
         {
             return new DataExportSettings(
                 id,
@@ -2542,18 +2536,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                properties,
-                SettingKind.DataExportSettings);
+                SettingKind.DataExportSettings,
+                enabled is null ? default : new DataExportSettingProperties(enabled.GetValueOrDefault(), null));
         }
 
-        /// <summary> Represents an alert sync setting. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="enabled"> Is the alert sync setting enabled. </param>
         /// <returns> A new <see cref="Models.AlertSyncSettings"/> instance for mocking. </returns>
-        public static AlertSyncSettings AlertSyncSettings(Core.ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SettingProperties properties = default)
+        public static AlertSyncSettings AlertSyncSettings(Core.ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? enabled = default)
         {
             return new AlertSyncSettings(
                 id,
@@ -2561,8 +2554,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                properties,
-                SettingKind.AlertSyncSettings);
+                SettingKind.AlertSyncSettings,
+                enabled is null ? default : new AlertSyncSettingProperties(enabled.GetValueOrDefault(), null));
         }
 
         /// <summary> Rule results. </summary>

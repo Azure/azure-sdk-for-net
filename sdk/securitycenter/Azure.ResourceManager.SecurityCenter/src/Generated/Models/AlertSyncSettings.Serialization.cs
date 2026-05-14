@@ -78,6 +78,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 throw new FormatException($"The model {nameof(AlertSyncSettings)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -110,8 +115,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SettingProperties properties = default;
             SettingKind kind = default;
+            AlertSyncSettingProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -146,18 +151,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = new SettingKind(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    properties = SettingProperties.DeserializeSettingProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("kind"u8))
-                {
-                    kind = new SettingKind(prop.Value.GetString());
+                    properties = AlertSyncSettingProperties.DeserializeAlertSyncSettingProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -171,8 +176,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties,
-                kind);
+                kind,
+                properties);
         }
     }
 }

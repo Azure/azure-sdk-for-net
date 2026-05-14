@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary> The kind of the security setting. </summary>
     public partial class SecuritySettingData : ResourceData
     {
-        private protected SettingProperties _properties;
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
@@ -33,17 +32,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="kind"> the kind of the settings string. </param>
-        internal SecuritySettingData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SettingProperties properties, SettingKind kind) : base(id, name, resourceType, systemData)
+        internal SecuritySettingData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SettingKind kind) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
             Kind = kind;
         }
-
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public SettingProperties Properties { get; set; }
 
         /// <summary> the kind of the settings string. </summary>
         internal SettingKind Kind { get; set; }
