@@ -119,6 +119,32 @@ namespace Azure.Generator.Management.Utilities
         };
 
         /// <summary>
+        /// Builds an XML doc description for a <c>scope</c> parameter (a <see cref="Azure.Core.ResourceIdentifier"/>)
+        /// that explains the expected shape of the scope value based on the provided <see cref="ArmScopeInfo"/>.
+        /// </summary>
+        /// <param name="scope">The scope information used to describe the expected shape of the resource id.</param>
+        /// <param name="lead">The leading sentence to prepend before the shape description (e.g., "The scope that the resource will apply against.").</param>
+        /// <returns>A <see cref="FormattableString"/> describing the parameter, including an example resource id shape.</returns>
+        public static FormattableString GetScopeParameterDescription(ArmScopeInfo scope, string lead)
+        {
+            // Provide a canonical example for each well-known ARM scope so users know what
+            // kind of resource id to pass in. For extension scopes that target a specific
+            // resource type, surface the resource type and an example path. For generic
+            // extension scopes (no specific resource type), explain that the scope can be
+            // any valid Azure resource id.
+            return scope.Kind switch
+            {
+                ResourceScope.Tenant => $"{lead} The scope must be a tenant resource id, e.g. \"/\".",
+                ResourceScope.Subscription => $"{lead} The scope must be a subscription resource id, e.g. \"/subscriptions/{{subscriptionId}}\".",
+                ResourceScope.ResourceGroup => $"{lead} The scope must be a resource group resource id, e.g. \"/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}\".",
+                ResourceScope.ManagementGroup => $"{lead} The scope must be a management group resource id, e.g. \"/providers/Microsoft.Management/managementGroups/{{managementGroupId}}\".",
+                ResourceScope.Extension when !string.IsNullOrEmpty(scope.ScopeResourceType) => $"{lead} The scope must be a resource id of type \"{scope.ScopeResourceType}\".",
+                ResourceScope.Extension => $"{lead} The scope can be any valid Azure resource id, e.g. a subscription (\"/subscriptions/{{subscriptionId}}\"), a resource group (\"/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}\"), a management group (\"/providers/Microsoft.Management/managementGroups/{{managementGroupId}}\"), or a specific Azure resource (\"/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/{{resourceProviderNamespace}}/{{resourceType}}/{{resourceName}}\").",
+                _ => $"{lead}",
+            };
+        }
+
+        /// <summary>
         /// Constructs an operation ID from an InputServiceMethod.
         /// Uses CrossLanguageDefinitionId for accurate operation IDs.
         /// For resource operations, the format is: Namespace.ResourceClient.OperationName (e.g., "MgmtTypeSpec.Bars.get")

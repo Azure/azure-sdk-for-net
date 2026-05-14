@@ -82,6 +82,7 @@ namespace Azure.Generator.Management.Providers
         }
 
         internal ResourceScope ResourceScope => _resourceMetadata.Scope.Kind;
+        internal ArmScopeInfo Scope => _resourceMetadata.Scope;
         internal RequestPathPattern? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
         internal RequestPathPattern ResourceIdPattern => _resourceMetadata.ResourceIdPattern;
 
