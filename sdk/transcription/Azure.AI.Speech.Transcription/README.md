@@ -26,7 +26,7 @@ Use the client library to:
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.AI.Speech.Transcription --prerelease
+dotnet add package Azure.AI.Speech.Transcription
 ```
 
 ### Authenticate the client

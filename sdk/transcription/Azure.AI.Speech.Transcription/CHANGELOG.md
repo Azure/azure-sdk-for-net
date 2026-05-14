@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0 (2026-05-14)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- First stable release of the Azure.AI.Speech.Transcription client library.
 
 ## 1.0.0-beta.2 (2026-04-20)
 
