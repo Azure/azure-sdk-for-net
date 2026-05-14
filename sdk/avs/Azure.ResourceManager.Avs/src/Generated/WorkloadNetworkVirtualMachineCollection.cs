@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkVirtualMachineData, WorkloadNetworkVirtualMachineResource>(new WorkloadNetworksGetVirtualMachinesAsyncCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkVirtualMachineResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadNetworkVirtualMachineData, WorkloadNetworkVirtualMachineResource>(new WorkloadNetworksGetVirtualMachinesAsyncCollectionResultOfT(
+                _workloadNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                context,
+                "WorkloadNetworkVirtualMachineCollection.GetAll"), data => new WorkloadNetworkVirtualMachineResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkVirtualMachineData, WorkloadNetworkVirtualMachineResource>(new WorkloadNetworksGetVirtualMachinesCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkVirtualMachineResource(Client, data));
+            return new PageableWrapper<WorkloadNetworkVirtualMachineData, WorkloadNetworkVirtualMachineResource>(new WorkloadNetworksGetVirtualMachinesCollectionResultOfT(
+                _workloadNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                context,
+                "WorkloadNetworkVirtualMachineCollection.GetAll"), data => new WorkloadNetworkVirtualMachineResource(Client, data));
         }
 
         /// <summary>

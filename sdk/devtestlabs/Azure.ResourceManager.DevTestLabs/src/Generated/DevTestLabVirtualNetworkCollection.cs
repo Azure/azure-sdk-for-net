@@ -308,7 +308,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabVirtualNetworkResource(Client, data));
+                context,
+                "DevTestLabVirtualNetworkCollection.GetAll"), data => new DevTestLabVirtualNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -349,7 +350,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabVirtualNetworkResource(Client, data));
+                context,
+                "DevTestLabVirtualNetworkCollection.GetAll"), data => new DevTestLabVirtualNetworkResource(Client, data));
         }
 
         /// <summary>

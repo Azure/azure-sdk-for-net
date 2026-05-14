@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Advisor
         private readonly int? _top;
         private readonly int? _skip;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of TriageRecommendationsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The TriageRecommendations client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="skip"> The number of items to skip before starting to collect the result set. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public TriageRecommendationsGetAllCollectionResultOfT(TriageRecommendations client, Guid subscriptionId, string reviewId, int? top, int? skip, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public TriageRecommendationsGetAllCollectionResultOfT(TriageRecommendations client, Guid subscriptionId, string reviewId, int? top, int? skip, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Advisor
             _top = top;
             _skip = skip;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of TriageRecommendationsGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.Advisor
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _reviewId, _top, _skip, _context) : _client.CreateGetAllRequest(_subscriptionId, _reviewId, _top, _skip, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AdvisorTriageRecommendationCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

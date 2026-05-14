@@ -209,7 +209,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudAccessBridgeData, NetworkCloudAccessBridgeResource>(new AccessBridgesGetBySubscriptionAsyncCollectionResultOfT(AccessBridgesRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudAccessBridgeResource(Client, data));
+            return new AsyncPageableWrapper<NetworkCloudAccessBridgeData, NetworkCloudAccessBridgeResource>(new AccessBridgesGetBySubscriptionAsyncCollectionResultOfT(
+                AccessBridgesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudAccessBridges"), data => new NetworkCloudAccessBridgeResource(Client, data));
         }
 
         /// <summary>
@@ -239,7 +245,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudAccessBridgeData, NetworkCloudAccessBridgeResource>(new AccessBridgesGetBySubscriptionCollectionResultOfT(AccessBridgesRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudAccessBridgeResource(Client, data));
+            return new PageableWrapper<NetworkCloudAccessBridgeData, NetworkCloudAccessBridgeResource>(new AccessBridgesGetBySubscriptionCollectionResultOfT(
+                AccessBridgesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudAccessBridges"), data => new NetworkCloudAccessBridgeResource(Client, data));
         }
 
         /// <summary>
@@ -269,7 +281,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudBareMetalMachineData, NetworkCloudBareMetalMachineResource>(new BareMetalMachinesGetBySubscriptionAsyncCollectionResultOfT(BareMetalMachinesRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudBareMetalMachineResource(Client, data));
+            return new AsyncPageableWrapper<NetworkCloudBareMetalMachineData, NetworkCloudBareMetalMachineResource>(new BareMetalMachinesGetBySubscriptionAsyncCollectionResultOfT(
+                BareMetalMachinesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudBareMetalMachines"), data => new NetworkCloudBareMetalMachineResource(Client, data));
         }
 
         /// <summary>
@@ -299,7 +317,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudBareMetalMachineData, NetworkCloudBareMetalMachineResource>(new BareMetalMachinesGetBySubscriptionCollectionResultOfT(BareMetalMachinesRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudBareMetalMachineResource(Client, data));
+            return new PageableWrapper<NetworkCloudBareMetalMachineData, NetworkCloudBareMetalMachineResource>(new BareMetalMachinesGetBySubscriptionCollectionResultOfT(
+                BareMetalMachinesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudBareMetalMachines"), data => new NetworkCloudBareMetalMachineResource(Client, data));
         }
 
         /// <summary>
@@ -329,7 +353,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudCloudServicesNetworkData, NetworkCloudCloudServicesNetworkResource>(new CloudServicesNetworksGetBySubscriptionAsyncCollectionResultOfT(CloudServicesNetworksRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudCloudServicesNetworkResource(Client, data));
+            return new AsyncPageableWrapper<NetworkCloudCloudServicesNetworkData, NetworkCloudCloudServicesNetworkResource>(new CloudServicesNetworksGetBySubscriptionAsyncCollectionResultOfT(
+                CloudServicesNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudCloudServicesNetworks"), data => new NetworkCloudCloudServicesNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -359,7 +389,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudCloudServicesNetworkData, NetworkCloudCloudServicesNetworkResource>(new CloudServicesNetworksGetBySubscriptionCollectionResultOfT(CloudServicesNetworksRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudCloudServicesNetworkResource(Client, data));
+            return new PageableWrapper<NetworkCloudCloudServicesNetworkData, NetworkCloudCloudServicesNetworkResource>(new CloudServicesNetworksGetBySubscriptionCollectionResultOfT(
+                CloudServicesNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudCloudServicesNetworks"), data => new NetworkCloudCloudServicesNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -389,7 +425,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudClusterManagerData, NetworkCloudClusterManagerResource>(new ClusterManagersGetBySubscriptionAsyncCollectionResultOfT(ClusterManagersRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudClusterManagerResource(Client, data));
+            return new AsyncPageableWrapper<NetworkCloudClusterManagerData, NetworkCloudClusterManagerResource>(new ClusterManagersGetBySubscriptionAsyncCollectionResultOfT(
+                ClusterManagersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusterManagers"), data => new NetworkCloudClusterManagerResource(Client, data));
         }
 
         /// <summary>
@@ -419,7 +461,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudClusterManagerData, NetworkCloudClusterManagerResource>(new ClusterManagersGetBySubscriptionCollectionResultOfT(ClusterManagersRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudClusterManagerResource(Client, data));
+            return new PageableWrapper<NetworkCloudClusterManagerData, NetworkCloudClusterManagerResource>(new ClusterManagersGetBySubscriptionCollectionResultOfT(
+                ClusterManagersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusterManagers"), data => new NetworkCloudClusterManagerResource(Client, data));
         }
 
         /// <summary>
@@ -449,7 +497,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudClusterData, NetworkCloudClusterResource>(new ClustersGetBySubscriptionAsyncCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudClusterResource(Client, data));
+            return new AsyncPageableWrapper<NetworkCloudClusterData, NetworkCloudClusterResource>(new ClustersGetBySubscriptionAsyncCollectionResultOfT(
+                ClustersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusters"), data => new NetworkCloudClusterResource(Client, data));
         }
 
         /// <summary>
@@ -479,7 +533,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudClusterData, NetworkCloudClusterResource>(new ClustersGetBySubscriptionCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudClusterResource(Client, data));
+            return new PageableWrapper<NetworkCloudClusterData, NetworkCloudClusterResource>(new ClustersGetBySubscriptionCollectionResultOfT(
+                ClustersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusters"), data => new NetworkCloudClusterResource(Client, data));
         }
 
         /// <summary>
@@ -509,7 +569,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudKubernetesClusterData, NetworkCloudKubernetesClusterResource>(new KubernetesClustersGetBySubscriptionAsyncCollectionResultOfT(KubernetesClustersRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudKubernetesClusterResource(Client, data));
+            return new AsyncPageableWrapper<NetworkCloudKubernetesClusterData, NetworkCloudKubernetesClusterResource>(new KubernetesClustersGetBySubscriptionAsyncCollectionResultOfT(
+                KubernetesClustersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudKubernetesClusters"), data => new NetworkCloudKubernetesClusterResource(Client, data));
         }
 
         /// <summary>
@@ -539,7 +605,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudKubernetesClusterData, NetworkCloudKubernetesClusterResource>(new KubernetesClustersGetBySubscriptionCollectionResultOfT(KubernetesClustersRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudKubernetesClusterResource(Client, data));
+            return new PageableWrapper<NetworkCloudKubernetesClusterData, NetworkCloudKubernetesClusterResource>(new KubernetesClustersGetBySubscriptionCollectionResultOfT(
+                KubernetesClustersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudKubernetesClusters"), data => new NetworkCloudKubernetesClusterResource(Client, data));
         }
 
         /// <summary>
@@ -569,7 +641,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new KubernetesVersionsGetBySubscriptionAsyncCollectionResultOfT(KubernetesVersionsRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudKubernetesVersionResource(Client, data));
+            return new AsyncPageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new KubernetesVersionsGetBySubscriptionAsyncCollectionResultOfT(
+                KubernetesVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudKubernetesVersions"), data => new NetworkCloudKubernetesVersionResource(Client, data));
         }
 
         /// <summary>
@@ -599,7 +677,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new KubernetesVersionsGetBySubscriptionCollectionResultOfT(KubernetesVersionsRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudKubernetesVersionResource(Client, data));
+            return new PageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new KubernetesVersionsGetBySubscriptionCollectionResultOfT(
+                KubernetesVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudKubernetesVersions"), data => new NetworkCloudKubernetesVersionResource(Client, data));
         }
 
         /// <summary>
@@ -629,7 +713,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudL2NetworkData, NetworkCloudL2NetworkResource>(new L2NetworksGetBySubscriptionAsyncCollectionResultOfT(L2NetworksRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudL2NetworkResource(Client, data));
+            return new AsyncPageableWrapper<NetworkCloudL2NetworkData, NetworkCloudL2NetworkResource>(new L2NetworksGetBySubscriptionAsyncCollectionResultOfT(
+                L2NetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudL2Networks"), data => new NetworkCloudL2NetworkResource(Client, data));
         }
 
         /// <summary>
@@ -659,7 +749,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudL2NetworkData, NetworkCloudL2NetworkResource>(new L2NetworksGetBySubscriptionCollectionResultOfT(L2NetworksRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudL2NetworkResource(Client, data));
+            return new PageableWrapper<NetworkCloudL2NetworkData, NetworkCloudL2NetworkResource>(new L2NetworksGetBySubscriptionCollectionResultOfT(
+                L2NetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudL2Networks"), data => new NetworkCloudL2NetworkResource(Client, data));
         }
 
         /// <summary>
@@ -689,7 +785,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudL3NetworkData, NetworkCloudL3NetworkResource>(new L3NetworksGetBySubscriptionAsyncCollectionResultOfT(L3NetworksRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudL3NetworkResource(Client, data));
+            return new AsyncPageableWrapper<NetworkCloudL3NetworkData, NetworkCloudL3NetworkResource>(new L3NetworksGetBySubscriptionAsyncCollectionResultOfT(
+                L3NetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudL3Networks"), data => new NetworkCloudL3NetworkResource(Client, data));
         }
 
         /// <summary>
@@ -719,7 +821,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudL3NetworkData, NetworkCloudL3NetworkResource>(new L3NetworksGetBySubscriptionCollectionResultOfT(L3NetworksRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudL3NetworkResource(Client, data));
+            return new PageableWrapper<NetworkCloudL3NetworkData, NetworkCloudL3NetworkResource>(new L3NetworksGetBySubscriptionCollectionResultOfT(
+                L3NetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudL3Networks"), data => new NetworkCloudL3NetworkResource(Client, data));
         }
 
         /// <summary>
@@ -749,7 +857,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudRackData, NetworkCloudRackResource>(new RacksGetBySubscriptionAsyncCollectionResultOfT(RacksRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudRackResource(Client, data));
+            return new AsyncPageableWrapper<NetworkCloudRackData, NetworkCloudRackResource>(new RacksGetBySubscriptionAsyncCollectionResultOfT(
+                RacksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudRacks"), data => new NetworkCloudRackResource(Client, data));
         }
 
         /// <summary>
@@ -779,7 +893,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudRackData, NetworkCloudRackResource>(new RacksGetBySubscriptionCollectionResultOfT(RacksRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudRackResource(Client, data));
+            return new PageableWrapper<NetworkCloudRackData, NetworkCloudRackResource>(new RacksGetBySubscriptionCollectionResultOfT(
+                RacksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudRacks"), data => new NetworkCloudRackResource(Client, data));
         }
 
         /// <summary>
@@ -809,7 +929,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudStorageApplianceData, NetworkCloudStorageApplianceResource>(new StorageAppliancesGetBySubscriptionAsyncCollectionResultOfT(StorageAppliancesRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudStorageApplianceResource(Client, data));
+            return new AsyncPageableWrapper<NetworkCloudStorageApplianceData, NetworkCloudStorageApplianceResource>(new StorageAppliancesGetBySubscriptionAsyncCollectionResultOfT(
+                StorageAppliancesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudStorageAppliances"), data => new NetworkCloudStorageApplianceResource(Client, data));
         }
 
         /// <summary>
@@ -839,7 +965,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudStorageApplianceData, NetworkCloudStorageApplianceResource>(new StorageAppliancesGetBySubscriptionCollectionResultOfT(StorageAppliancesRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudStorageApplianceResource(Client, data));
+            return new PageableWrapper<NetworkCloudStorageApplianceData, NetworkCloudStorageApplianceResource>(new StorageAppliancesGetBySubscriptionCollectionResultOfT(
+                StorageAppliancesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudStorageAppliances"), data => new NetworkCloudStorageApplianceResource(Client, data));
         }
 
         /// <summary>
@@ -869,7 +1001,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudTrunkedNetworkData, NetworkCloudTrunkedNetworkResource>(new TrunkedNetworksGetBySubscriptionAsyncCollectionResultOfT(TrunkedNetworksRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudTrunkedNetworkResource(Client, data));
+            return new AsyncPageableWrapper<NetworkCloudTrunkedNetworkData, NetworkCloudTrunkedNetworkResource>(new TrunkedNetworksGetBySubscriptionAsyncCollectionResultOfT(
+                TrunkedNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudTrunkedNetworks"), data => new NetworkCloudTrunkedNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -899,7 +1037,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudTrunkedNetworkData, NetworkCloudTrunkedNetworkResource>(new TrunkedNetworksGetBySubscriptionCollectionResultOfT(TrunkedNetworksRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudTrunkedNetworkResource(Client, data));
+            return new PageableWrapper<NetworkCloudTrunkedNetworkData, NetworkCloudTrunkedNetworkResource>(new TrunkedNetworksGetBySubscriptionCollectionResultOfT(
+                TrunkedNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudTrunkedNetworks"), data => new NetworkCloudTrunkedNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -929,7 +1073,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudVirtualMachineData, NetworkCloudVirtualMachineResource>(new VirtualMachinesGetBySubscriptionAsyncCollectionResultOfT(VirtualMachinesRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudVirtualMachineResource(Client, data));
+            return new AsyncPageableWrapper<NetworkCloudVirtualMachineData, NetworkCloudVirtualMachineResource>(new VirtualMachinesGetBySubscriptionAsyncCollectionResultOfT(
+                VirtualMachinesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudVirtualMachines"), data => new NetworkCloudVirtualMachineResource(Client, data));
         }
 
         /// <summary>
@@ -959,7 +1109,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudVirtualMachineData, NetworkCloudVirtualMachineResource>(new VirtualMachinesGetBySubscriptionCollectionResultOfT(VirtualMachinesRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudVirtualMachineResource(Client, data));
+            return new PageableWrapper<NetworkCloudVirtualMachineData, NetworkCloudVirtualMachineResource>(new VirtualMachinesGetBySubscriptionCollectionResultOfT(
+                VirtualMachinesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudVirtualMachines"), data => new NetworkCloudVirtualMachineResource(Client, data));
         }
 
         /// <summary>
@@ -989,7 +1145,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudVolumeData, NetworkCloudVolumeResource>(new VolumesGetBySubscriptionAsyncCollectionResultOfT(VolumesRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudVolumeResource(Client, data));
+            return new AsyncPageableWrapper<NetworkCloudVolumeData, NetworkCloudVolumeResource>(new VolumesGetBySubscriptionAsyncCollectionResultOfT(
+                VolumesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudVolumes"), data => new NetworkCloudVolumeResource(Client, data));
         }
 
         /// <summary>
@@ -1019,7 +1181,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudVolumeData, NetworkCloudVolumeResource>(new VolumesGetBySubscriptionCollectionResultOfT(VolumesRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudVolumeResource(Client, data));
+            return new PageableWrapper<NetworkCloudVolumeData, NetworkCloudVolumeResource>(new VolumesGetBySubscriptionCollectionResultOfT(
+                VolumesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkCloudSubscriptionResource.GetNetworkCloudVolumes"), data => new NetworkCloudVolumeResource(Client, data));
         }
     }
 }

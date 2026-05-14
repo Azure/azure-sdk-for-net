@@ -276,7 +276,13 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NewRelicMonitoredSubscriptionData, NewRelicMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllAsyncCollectionResultOfT(_monitoredSubscriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new NewRelicMonitoredSubscriptionResource(Client, data));
+            return new AsyncPageableWrapper<NewRelicMonitoredSubscriptionData, NewRelicMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllAsyncCollectionResultOfT(
+                _monitoredSubscriptionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NewRelicMonitoredSubscriptionCollection.GetAll"), data => new NewRelicMonitoredSubscriptionResource(Client, data));
         }
 
         /// <summary>
@@ -304,7 +310,13 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NewRelicMonitoredSubscriptionData, NewRelicMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllCollectionResultOfT(_monitoredSubscriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new NewRelicMonitoredSubscriptionResource(Client, data));
+            return new PageableWrapper<NewRelicMonitoredSubscriptionData, NewRelicMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllCollectionResultOfT(
+                _monitoredSubscriptionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NewRelicMonitoredSubscriptionCollection.GetAll"), data => new NewRelicMonitoredSubscriptionResource(Client, data));
         }
 
         /// <summary>

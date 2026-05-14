@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of SKU information. </summary>
+    /// <summary>
+    /// Collection of SKU information.
+    /// Serialized Name: SkuInfos
+    /// </summary>
     public partial class AppServiceSkuResult
     {
         /// <summary>
@@ -53,8 +56,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceSkuResult"/>. </summary>
-        /// <param name="resourceType"> Resource type that this SKU applies to. </param>
-        /// <param name="skus"> List of SKUs the subscription is able to use. </param>
+        /// <param name="resourceType">
+        /// Resource type that this SKU applies to.
+        /// Serialized Name: SkuInfos.resourceType
+        /// </param>
+        /// <param name="skus">
+        /// List of SKUs the subscription is able to use.
+        /// Serialized Name: SkuInfos.skus
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceSkuResult(ResourceType? resourceType, IReadOnlyList<GlobalCsmSkuDescription> skus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,10 +72,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource type that this SKU applies to. </summary>
+        /// <summary>
+        /// Resource type that this SKU applies to.
+        /// Serialized Name: SkuInfos.resourceType
+        /// </summary>
         [WirePath("resourceType")]
         public ResourceType? ResourceType { get; }
-        /// <summary> List of SKUs the subscription is able to use. </summary>
+        /// <summary>
+        /// List of SKUs the subscription is able to use.
+        /// Serialized Name: SkuInfos.skus
+        /// </summary>
         [WirePath("skus")]
         public IReadOnlyList<GlobalCsmSkuDescription> Skus { get; }
     }

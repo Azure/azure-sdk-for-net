@@ -17,7 +17,7 @@ namespace Azure.Developer.LoadTesting
     {
         private readonly LoadTestRunClient _client;
         private readonly string _testRunId;
-        private readonly string _metricname;
+        private readonly string _metricName;
         private readonly string _metricNamespace;
         private readonly string _timespan;
         private readonly RequestContent _content;
@@ -32,7 +32,7 @@ namespace Azure.Developer.LoadTesting
         /// Unique name for the load test run, must contain only lower-case alphabetic,
         /// numeric, underscore or hyphen characters.
         /// </param>
-        /// <param name="metricname"> Metric name. </param>
+        /// <param name="metricName"> Metric name. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -40,11 +40,11 @@ namespace Azure.Developer.LoadTesting
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LoadTestRunClientGetMetricsCollectionResultOfT(LoadTestRunClient client, string testRunId, string metricname, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LoadTestRunClientGetMetricsCollectionResultOfT(LoadTestRunClient client, string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _testRunId = testRunId;
-            _metricname = metricname;
+            _metricName = metricName;
             _metricNamespace = metricNamespace;
             _timespan = timespan;
             _content = content;
@@ -83,7 +83,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetMetricsRequest(nextLink, _testRunId, _metricname, _metricNamespace, _timespan, _content, _aggregation, _interval, _context) : _client.CreateGetMetricsRequest(_testRunId, _metricname, _metricNamespace, _timespan, _content, _aggregation, _interval, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetMetricsRequest(nextLink, _testRunId, _metricName, _metricNamespace, _timespan, _content, _aggregation, _interval, _context) : _client.CreateGetMetricsRequest(_testRunId, _metricName, _metricNamespace, _timespan, _content, _aggregation, _interval, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.TrustedSigning
         public bool? IncludePostalCode { get { throw null; } set { } }
         public bool? IncludeState { get { throw null; } set { } }
         public bool? IncludeStreetAddress { get { throw null; } set { } }
-        public Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType ProfileType { get { throw null; } set { } }
+        public Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType? ProfileType { get { throw null; } set { } }
         public Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus? Status { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -186,7 +186,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudBareMetalMachineResource(Client, data));
+                context,
+                "NetworkCloudBareMetalMachineCollection.GetAll"), data => new NetworkCloudBareMetalMachineResource(Client, data));
         }
 
         /// <summary>
@@ -222,7 +223,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudBareMetalMachineResource(Client, data));
+                context,
+                "NetworkCloudBareMetalMachineCollection.GetAll"), data => new NetworkCloudBareMetalMachineResource(Client, data));
         }
 
         /// <summary>

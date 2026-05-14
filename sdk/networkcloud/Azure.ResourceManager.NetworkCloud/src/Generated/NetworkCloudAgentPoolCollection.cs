@@ -304,7 +304,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.Name,
                 top,
                 skipToken,
-                context), data => new NetworkCloudAgentPoolResource(Client, data));
+                context,
+                "NetworkCloudAgentPoolCollection.GetAll"), data => new NetworkCloudAgentPoolResource(Client, data));
         }
 
         /// <summary>
@@ -341,7 +342,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.Name,
                 top,
                 skipToken,
-                context), data => new NetworkCloudAgentPoolResource(Client, data));
+                context,
+                "NetworkCloudAgentPoolCollection.GetAll"), data => new NetworkCloudAgentPoolResource(Client, data));
         }
 
         /// <summary>

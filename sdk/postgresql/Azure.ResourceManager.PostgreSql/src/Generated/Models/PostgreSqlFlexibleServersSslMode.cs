@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServersSslMode : IEquatable<PostgreSqlFlexibleServersSslMode>
     {
         private readonly string _value;
+        /// <summary> Prefer SSL connection. If the server does not support SSL, the connection will be established without SSL. </summary>
+        private const string PreferValue = "Prefer";
+        /// <summary> Require SSL connection. If the server does not support SSL, the connection will fail. </summary>
+        private const string RequireValue = "Require";
+        /// <summary> Require SSL connection and verify the server certificate against the CA certificate. </summary>
+        private const string VerifyCAValue = "VerifyCA";
+        /// <summary> Require SSL connection, verify the server certificate against the CA certificate, and verify that the server hostname matches the certificate. </summary>
+        private const string VerifyFullValue = "VerifyFull";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersSslMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlFlexibleServersSslMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PreferValue = "Prefer";
-        private const string RequireValue = "Require";
-        private const string VerifyCAValue = "VerifyCA";
-        private const string VerifyFullValue = "VerifyFull";
-
-        /// <summary> Prefer. </summary>
+        /// <summary> Prefer SSL connection. If the server does not support SSL, the connection will be established without SSL. </summary>
         public static PostgreSqlFlexibleServersSslMode Prefer { get; } = new PostgreSqlFlexibleServersSslMode(PreferValue);
-        /// <summary> Require. </summary>
+
+        /// <summary> Require SSL connection. If the server does not support SSL, the connection will fail. </summary>
         public static PostgreSqlFlexibleServersSslMode Require { get; } = new PostgreSqlFlexibleServersSslMode(RequireValue);
-        /// <summary> VerifyCA. </summary>
+
+        /// <summary> Require SSL connection and verify the server certificate against the CA certificate. </summary>
         public static PostgreSqlFlexibleServersSslMode VerifyCA { get; } = new PostgreSqlFlexibleServersSslMode(VerifyCAValue);
-        /// <summary> VerifyFull. </summary>
+
+        /// <summary> Require SSL connection, verify the server certificate against the CA certificate, and verify that the server hostname matches the certificate. </summary>
         public static PostgreSqlFlexibleServersSslMode VerifyFull { get; } = new PostgreSqlFlexibleServersSslMode(VerifyFullValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersSslMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServersSslMode left, PostgreSqlFlexibleServersSslMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersSslMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServersSslMode left, PostgreSqlFlexibleServersSslMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServersSslMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServersSslMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServersSslMode(string value) => new PostgreSqlFlexibleServersSslMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServersSslMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServersSslMode?(string value) => value == null ? null : new PostgreSqlFlexibleServersSslMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServersSslMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServersSslMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

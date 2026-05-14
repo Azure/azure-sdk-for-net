@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppLinkData, AppLinkResource>(new AppLinksGetBySubscriptionAsyncCollectionResultOfT(AppLinksRestClient, Guid.Parse(Id.SubscriptionId), context), data => new AppLinkResource(Client, data));
+            return new AsyncPageableWrapper<AppLinkData, AppLinkResource>(new AppLinksGetBySubscriptionAsyncCollectionResultOfT(AppLinksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppNetworkSubscriptionResource.GetAppLinks"), data => new AppLinkResource(Client, data));
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppLinkData, AppLinkResource>(new AppLinksGetBySubscriptionCollectionResultOfT(AppLinksRestClient, Guid.Parse(Id.SubscriptionId), context), data => new AppLinkResource(Client, data));
+            return new PageableWrapper<AppLinkData, AppLinkResource>(new AppLinksGetBySubscriptionCollectionResultOfT(AppLinksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppNetworkSubscriptionResource.GetAppLinks"), data => new AppLinkResource(Client, data));
         }
 
         /// <summary>
@@ -128,7 +128,13 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableVersionsGetAppLinkAvailableVersionsByLocationAsyncCollectionResultOfT(AvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), location, kubernetesVersion, context);
+            return new AvailableVersionsGetAppLinkAvailableVersionsByLocationAsyncCollectionResultOfT(
+                AvailableVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                location,
+                kubernetesVersion,
+                context,
+                "MockableAppNetworkSubscriptionResource.GetAppLinkAvailableVersionsByLocation");
         }
 
         /// <summary>
@@ -158,7 +164,13 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableVersionsGetAppLinkAvailableVersionsByLocationCollectionResultOfT(AvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), location, kubernetesVersion, context);
+            return new AvailableVersionsGetAppLinkAvailableVersionsByLocationCollectionResultOfT(
+                AvailableVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                location,
+                kubernetesVersion,
+                context,
+                "MockableAppNetworkSubscriptionResource.GetAppLinkAvailableVersionsByLocation");
         }
     }
 }

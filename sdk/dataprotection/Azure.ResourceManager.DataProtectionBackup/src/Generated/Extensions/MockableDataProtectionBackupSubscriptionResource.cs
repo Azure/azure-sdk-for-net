@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
 
         private ClientDiagnostics BackupVaultResourcesClientDiagnostics => _backupVaultResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupVaultResources BackupVaultResourcesRestClient => _backupVaultResourcesRestClient ??= new BackupVaultResources(BackupVaultResourcesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private BackupVaultResources BackupVaultResourcesRestClient => _backupVaultResourcesRestClient ??= new BackupVaultResources(BackupVaultResourcesClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics ResourceGuardResourcesClientDiagnostics => _resourceGuardResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceGuardResources ResourceGuardResourcesRestClient => _resourceGuardResourcesRestClient ??= new ResourceGuardResources(ResourceGuardResourcesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private ResourceGuardResources ResourceGuardResourcesRestClient => _resourceGuardResourcesRestClient ??= new ResourceGuardResources(ResourceGuardResourcesClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics DataProtectionOperationGroupClientDiagnostics => _dataProtectionOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DataProtectionOperationGroup DataProtectionOperationGroupRestClient => _dataProtectionOperationGroupRestClient ??= new DataProtectionOperationGroup(DataProtectionOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private DataProtectionOperationGroup DataProtectionOperationGroupRestClient => _dataProtectionOperationGroupRestClient ??= new DataProtectionOperationGroup(DataProtectionOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         /// <summary> Gets a collection of DataProtectionDeletedBackupVaults in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultResourcesGetInSubscriptionAsyncCollectionResultOfT(BackupVaultResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DataProtectionBackupVaultResource(Client, data));
+            return new AsyncPageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultResourcesGetInSubscriptionAsyncCollectionResultOfT(BackupVaultResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataProtectionBackupSubscriptionResource.GetDataProtectionBackupVaults"), data => new DataProtectionBackupVaultResource(Client, data));
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultResourcesGetInSubscriptionCollectionResultOfT(BackupVaultResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DataProtectionBackupVaultResource(Client, data));
+            return new PageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultResourcesGetInSubscriptionCollectionResultOfT(BackupVaultResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataProtectionBackupSubscriptionResource.GetDataProtectionBackupVaults"), data => new DataProtectionBackupVaultResource(Client, data));
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardResourcesGetResourcesInSubscriptionAsyncCollectionResultOfT(ResourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ResourceGuardResource(Client, data));
+            return new AsyncPageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardResourcesGetResourcesInSubscriptionAsyncCollectionResultOfT(ResourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataProtectionBackupSubscriptionResource.GetResourceGuards"), data => new ResourceGuardResource(Client, data));
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardResourcesGetResourcesInSubscriptionCollectionResultOfT(ResourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ResourceGuardResource(Client, data));
+            return new PageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardResourcesGetResourcesInSubscriptionCollectionResultOfT(ResourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataProtectionBackupSubscriptionResource.GetResourceGuards"), data => new ResourceGuardResource(Client, data));
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>

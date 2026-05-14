@@ -3,6 +3,7 @@
 ## 1.3.0-beta.2 (Unreleased)
 
 ### Features Added
+- Migrated from Swagger/AutoRest to TypeSpec-based generation.
 
 ### Breaking Changes
 

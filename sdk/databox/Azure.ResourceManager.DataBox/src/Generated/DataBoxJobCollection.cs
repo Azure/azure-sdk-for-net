@@ -301,7 +301,13 @@ namespace Azure.ResourceManager.DataBox
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxJobData, DataBoxJobResource>(new JobResourcesGetByResourceGroupAsyncCollectionResultOfT(_jobResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, skipToken, context), data => new DataBoxJobResource(Client, data));
+            return new AsyncPageableWrapper<DataBoxJobData, DataBoxJobResource>(new JobResourcesGetByResourceGroupAsyncCollectionResultOfT(
+                _jobResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                skipToken,
+                context,
+                "DataBoxJobCollection.GetAll"), data => new DataBoxJobResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +336,13 @@ namespace Azure.ResourceManager.DataBox
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxJobData, DataBoxJobResource>(new JobResourcesGetByResourceGroupCollectionResultOfT(_jobResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, skipToken, context), data => new DataBoxJobResource(Client, data));
+            return new PageableWrapper<DataBoxJobData, DataBoxJobResource>(new JobResourcesGetByResourceGroupCollectionResultOfT(
+                _jobResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                skipToken,
+                context,
+                "DataBoxJobCollection.GetAll"), data => new DataBoxJobResource(Client, data));
         }
 
         /// <summary>

@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventHubsNamespaceData, EventHubsNamespaceResource>(new NamespacesGetByResourceGroupAsyncCollectionResultOfT(_namespacesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new EventHubsNamespaceResource(Client, data));
+            return new AsyncPageableWrapper<EventHubsNamespaceData, EventHubsNamespaceResource>(new NamespacesGetByResourceGroupAsyncCollectionResultOfT(_namespacesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "EventHubsNamespaceCollection.GetAll"), data => new EventHubsNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventHubsNamespaceData, EventHubsNamespaceResource>(new NamespacesGetByResourceGroupCollectionResultOfT(_namespacesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new EventHubsNamespaceResource(Client, data));
+            return new PageableWrapper<EventHubsNamespaceData, EventHubsNamespaceResource>(new NamespacesGetByResourceGroupCollectionResultOfT(_namespacesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "EventHubsNamespaceCollection.GetAll"), data => new EventHubsNamespaceResource(Client, data));
         }
 
         /// <summary>

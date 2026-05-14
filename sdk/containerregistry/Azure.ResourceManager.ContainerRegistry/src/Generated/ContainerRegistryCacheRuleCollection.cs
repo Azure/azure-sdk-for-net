@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerRegistryCacheRuleData, ContainerRegistryCacheRuleResource>(new CacheRulesGetAllAsyncCollectionResultOfT(_cacheRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerRegistryCacheRuleResource(Client, data));
+            return new AsyncPageableWrapper<ContainerRegistryCacheRuleData, ContainerRegistryCacheRuleResource>(new CacheRulesGetAllAsyncCollectionResultOfT(
+                _cacheRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerRegistryCacheRuleCollection.GetAll"), data => new ContainerRegistryCacheRuleResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerRegistryCacheRuleData, ContainerRegistryCacheRuleResource>(new CacheRulesGetAllCollectionResultOfT(_cacheRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerRegistryCacheRuleResource(Client, data));
+            return new PageableWrapper<ContainerRegistryCacheRuleData, ContainerRegistryCacheRuleResource>(new CacheRulesGetAllCollectionResultOfT(
+                _cacheRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerRegistryCacheRuleCollection.GetAll"), data => new ContainerRegistryCacheRuleResource(Client, data));
         }
 
         /// <summary>

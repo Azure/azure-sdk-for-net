@@ -31,26 +31,25 @@ namespace Azure.Search.Documents.Indexes
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateCreateOrUpdateDataSourceConnectionRequest(string name, RequestContent content, MatchConditions matchConditions, bool? skipIndexerResetRequirementForCache, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateDataSourceConnectionRequest(string dataSourceConnectionName, RequestContent content, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/datasources('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(dataSourceConnectionName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (skipIndexerResetRequirementForCache != null)
-            {
-                uri.AppendQuery("ignoreResetRequirements", TypeFormatters.ConvertToString(skipIndexerResetRequirementForCache), true);
-            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -61,12 +60,12 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateDeleteDataSourceConnectionRequest(string name, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateDeleteDataSourceConnectionRequest(string dataSourceConnectionName, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/datasources('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(dataSourceConnectionName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -76,7 +75,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -84,12 +86,12 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetDataSourceConnectionRequest(string name, RequestContext context)
+        internal HttpMessage CreateGetDataSourceConnectionRequest(string dataSourceConnectionName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/datasources('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(dataSourceConnectionName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -99,7 +101,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -120,7 +125,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -137,18 +145,21 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateResetIndexerRequest(string name, RequestContext context)
+        internal HttpMessage CreateResetIndexerRequest(string indexerName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/indexers('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(indexerName, true);
             uri.AppendPath("')/search.reset", false);
             if (_apiVersion != null)
             {
@@ -158,65 +169,19 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
-        internal HttpMessage CreateResyncRequest(string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateRunIndexerRequest(string indexerName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/indexers('", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("')/search.resync", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateResetDocumentsRequest(string name, RequestContent content, bool? overwrite, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/indexers('", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("')/search.resetdocs", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (overwrite != null)
-            {
-                uri.AppendQuery("overwrite", TypeFormatters.ConvertToString(overwrite), true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
-            if (content != null)
-            {
-                request.Headers.SetValue("Content-Type", "application/json");
-            }
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateRunIndexerRequest(string name, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/indexers('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(indexerName, true);
             uri.AppendPath("')/search.run", false);
             if (_apiVersion != null)
             {
@@ -226,34 +191,32 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateIndexerRequest(string name, RequestContent content, MatchConditions matchConditions, bool? skipIndexerResetRequirementForCache, bool? disableCacheReprocessingChangeDetection, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateIndexerRequest(string indexerName, RequestContent content, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/indexers('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(indexerName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (skipIndexerResetRequirementForCache != null)
-            {
-                uri.AppendQuery("ignoreResetRequirements", TypeFormatters.ConvertToString(skipIndexerResetRequirementForCache), true);
-            }
-            if (disableCacheReprocessingChangeDetection != null)
-            {
-                uri.AppendQuery("disableCacheReprocessingChangeDetection", TypeFormatters.ConvertToString(disableCacheReprocessingChangeDetection), true);
-            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -264,12 +227,12 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateDeleteIndexerRequest(string name, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateDeleteIndexerRequest(string indexerName, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/indexers('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(indexerName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -279,7 +242,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -287,12 +253,12 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetIndexerRequest(string name, RequestContext context)
+        internal HttpMessage CreateGetIndexerRequest(string indexerName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/indexers('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(indexerName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -302,7 +268,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -323,7 +292,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -340,18 +312,21 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetIndexerStatusRequest(string name, RequestContext context)
+        internal HttpMessage CreateGetIndexerStatusRequest(string indexerName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/indexers('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(indexerName, true);
             uri.AppendPath("')/search.status", false);
             if (_apiVersion != null)
             {
@@ -361,34 +336,32 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateSkillsetRequest(string name, RequestContent content, MatchConditions matchConditions, bool? skipIndexerResetRequirementForCache, bool? disableCacheReprocessingChangeDetection, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateSkillsetRequest(string skillsetName, RequestContent content, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/skillsets('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(skillsetName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (skipIndexerResetRequirementForCache != null)
-            {
-                uri.AppendQuery("ignoreResetRequirements", TypeFormatters.ConvertToString(skipIndexerResetRequirementForCache), true);
-            }
-            if (disableCacheReprocessingChangeDetection != null)
-            {
-                uri.AppendQuery("disableCacheReprocessingChangeDetection", TypeFormatters.ConvertToString(disableCacheReprocessingChangeDetection), true);
-            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -399,12 +372,12 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateDeleteSkillsetRequest(string name, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateDeleteSkillsetRequest(string skillsetName, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/skillsets('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(skillsetName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -414,7 +387,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -422,12 +398,12 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetSkillsetRequest(string name, RequestContext context)
+        internal HttpMessage CreateGetSkillsetRequest(string skillsetName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/skillsets('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(skillsetName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -437,7 +413,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -458,7 +437,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -475,28 +457,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateResetSkillsRequest(string name, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/skillsets('", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("')/search.resetskills", false);
-            if (_apiVersion != null)
+            if ("application/json;odata.metadata=minimal" != null)
             {
-                uri.AppendQuery("api-version", _apiVersion, true);
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;

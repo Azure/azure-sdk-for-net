@@ -71,6 +71,16 @@ namespace OpenAI
                 throw new FormatException($"The model {nameof(InternalLocalShellTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -100,6 +110,8 @@ namespace OpenAI
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string name = default;
+            string description = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -107,12 +119,22 @@ namespace OpenAI
                     @type = new ToolType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalLocalShellTool(@type, additionalBinaryDataProperties);
+            return new InternalLocalShellTool(@type, additionalBinaryDataProperties, name, description);
         }
     }
 }

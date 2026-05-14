@@ -302,7 +302,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabNotificationChannelResource(Client, data));
+                context,
+                "DevTestLabNotificationChannelCollection.GetAll"), data => new DevTestLabNotificationChannelResource(Client, data));
         }
 
         /// <summary>
@@ -343,7 +344,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabNotificationChannelResource(Client, data));
+                context,
+                "DevTestLabNotificationChannelCollection.GetAll"), data => new DevTestLabNotificationChannelResource(Client, data));
         }
 
         /// <summary>

@@ -286,7 +286,13 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NginxDeploymentApiKeyData, NginxDeploymentApiKeyResource>(new NginxDeploymentApiKeyResponsesGetAllAsyncCollectionResultOfT(_nginxDeploymentApiKeyResponsesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NginxDeploymentApiKeyResource(Client, data));
+            return new AsyncPageableWrapper<NginxDeploymentApiKeyData, NginxDeploymentApiKeyResource>(new NginxDeploymentApiKeyResponsesGetAllAsyncCollectionResultOfT(
+                _nginxDeploymentApiKeyResponsesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NginxDeploymentApiKeyCollection.GetAll"), data => new NginxDeploymentApiKeyResource(Client, data));
         }
 
         /// <summary>
@@ -314,7 +320,13 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NginxDeploymentApiKeyData, NginxDeploymentApiKeyResource>(new NginxDeploymentApiKeyResponsesGetAllCollectionResultOfT(_nginxDeploymentApiKeyResponsesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NginxDeploymentApiKeyResource(Client, data));
+            return new PageableWrapper<NginxDeploymentApiKeyData, NginxDeploymentApiKeyResource>(new NginxDeploymentApiKeyResponsesGetAllCollectionResultOfT(
+                _nginxDeploymentApiKeyResponsesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NginxDeploymentApiKeyCollection.GetAll"), data => new NginxDeploymentApiKeyResource(Client, data));
         }
 
         /// <summary>

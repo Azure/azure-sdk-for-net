@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.IotOperations
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new IotOperationsAkriConnectorResource(Client, data));
+                context,
+                "IotOperationsAkriConnectorCollection.GetAll"), data => new IotOperationsAkriConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.IotOperations
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new IotOperationsAkriConnectorResource(Client, data));
+                context,
+                "IotOperationsAkriConnectorCollection.GetAll"), data => new IotOperationsAkriConnectorResource(Client, data));
         }
 
         /// <summary>

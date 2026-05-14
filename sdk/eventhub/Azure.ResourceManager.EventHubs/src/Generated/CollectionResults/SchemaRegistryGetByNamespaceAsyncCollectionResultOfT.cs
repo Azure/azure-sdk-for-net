@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.EventHubs
         private readonly int? _skip;
         private readonly int? _top;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SchemaRegistryGetByNamespaceAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SchemaRegistry client used to send requests. </param>
@@ -33,7 +34,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SchemaRegistryGetByNamespaceAsyncCollectionResultOfT(SchemaRegistry client, string subscriptionId, string resourceGroupName, string namespaceName, int? skip, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SchemaRegistryGetByNamespaceAsyncCollectionResultOfT(SchemaRegistry client, string subscriptionId, string resourceGroupName, string namespaceName, int? skip, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.EventHubs
             _skip = skip;
             _top = top;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SchemaRegistryGetByNamespaceAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.EventHubs
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByNamespaceRequest(nextLink, _subscriptionId, _resourceGroupName, _namespaceName, _skip, _top, _context) : _client.CreateGetByNamespaceRequest(_subscriptionId, _resourceGroupName, _namespaceName, _skip, _top, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EventHubsSchemaGroupCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

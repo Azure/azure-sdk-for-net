@@ -297,7 +297,8 @@ namespace Azure.ResourceManager.ApiCenter
                 Id.Parent.Name,
                 Id.Name,
                 filter,
-                context), data => new ApiCenterApiDefinitionResource(Client, data));
+                context,
+                "ApiCenterApiDefinitionCollection.GetAll"), data => new ApiCenterApiDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.ApiCenter
                 Id.Parent.Name,
                 Id.Name,
                 filter,
-                context), data => new ApiCenterApiDefinitionResource(Client, data));
+                context,
+                "ApiCenterApiDefinitionCollection.GetAll"), data => new ApiCenterApiDefinitionResource(Client, data));
         }
 
         /// <summary>

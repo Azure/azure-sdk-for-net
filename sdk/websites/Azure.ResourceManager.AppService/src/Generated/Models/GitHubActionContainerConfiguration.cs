@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The GitHub action container configuration. </summary>
+    /// <summary>
+    /// The GitHub action container configuration.
+    /// Serialized Name: GitHubActionContainerConfiguration
+    /// </summary>
     public partial class GitHubActionContainerConfiguration
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GitHubActionContainerConfiguration"/>. </summary>
-        /// <param name="serverUri"> The server URL for the container registry where the build will be hosted. </param>
-        /// <param name="imageName"> The image name for the build. </param>
-        /// <param name="username"> The username used to upload the image to the container registry. </param>
-        /// <param name="password"> The password used to upload the image to the container registry. </param>
+        /// <param name="serverUri">
+        /// The server URL for the container registry where the build will be hosted.
+        /// Serialized Name: GitHubActionContainerConfiguration.serverUrl
+        /// </param>
+        /// <param name="imageName">
+        /// The image name for the build.
+        /// Serialized Name: GitHubActionContainerConfiguration.imageName
+        /// </param>
+        /// <param name="username">
+        /// The username used to upload the image to the container registry.
+        /// Serialized Name: GitHubActionContainerConfiguration.username
+        /// </param>
+        /// <param name="password">
+        /// The password used to upload the image to the container registry.
+        /// Serialized Name: GitHubActionContainerConfiguration.password
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GitHubActionContainerConfiguration(Uri serverUri, string imageName, string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,16 +80,28 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The server URL for the container registry where the build will be hosted. </summary>
+        /// <summary>
+        /// The server URL for the container registry where the build will be hosted.
+        /// Serialized Name: GitHubActionContainerConfiguration.serverUrl
+        /// </summary>
         [WirePath("serverUrl")]
         public Uri ServerUri { get; set; }
-        /// <summary> The image name for the build. </summary>
+        /// <summary>
+        /// The image name for the build.
+        /// Serialized Name: GitHubActionContainerConfiguration.imageName
+        /// </summary>
         [WirePath("imageName")]
         public string ImageName { get; set; }
-        /// <summary> The username used to upload the image to the container registry. </summary>
+        /// <summary>
+        /// The username used to upload the image to the container registry.
+        /// Serialized Name: GitHubActionContainerConfiguration.username
+        /// </summary>
         [WirePath("username")]
         public string Username { get; set; }
-        /// <summary> The password used to upload the image to the container registry. </summary>
+        /// <summary>
+        /// The password used to upload the image to the container registry.
+        /// Serialized Name: GitHubActionContainerConfiguration.password
+        /// </summary>
         [WirePath("password")]
         public string Password { get; set; }
     }

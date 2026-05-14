@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ObjectReplicationPolicyData, ObjectReplicationPolicyResource>(new ObjectReplicationPoliciesGetAllAsyncCollectionResultOfT(_objectReplicationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ObjectReplicationPolicyResource(Client, data));
+            return new AsyncPageableWrapper<ObjectReplicationPolicyData, ObjectReplicationPolicyResource>(new ObjectReplicationPoliciesGetAllAsyncCollectionResultOfT(
+                _objectReplicationPoliciesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ObjectReplicationPolicyCollection.GetAll"), data => new ObjectReplicationPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ObjectReplicationPolicyData, ObjectReplicationPolicyResource>(new ObjectReplicationPoliciesGetAllCollectionResultOfT(_objectReplicationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ObjectReplicationPolicyResource(Client, data));
+            return new PageableWrapper<ObjectReplicationPolicyData, ObjectReplicationPolicyResource>(new ObjectReplicationPoliciesGetAllCollectionResultOfT(
+                _objectReplicationPoliciesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ObjectReplicationPolicyCollection.GetAll"), data => new ObjectReplicationPolicyResource(Client, data));
         }
 
         /// <summary>

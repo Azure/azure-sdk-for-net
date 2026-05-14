@@ -38,6 +38,9 @@ public static class InvocationsServerServiceCollectionExtensions
         // Register endpoint handler as scoped (per-request)
         services.AddScoped<InvocationEndpointHandler>();
 
+        // Log startup configuration when the host starts
+        services.AddHostedService<InvocationsStartupLogger>();
+
         return services;
     }
 }

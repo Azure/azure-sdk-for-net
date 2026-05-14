@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         {
             get
             {
-                return LoadBalancerDetails.Id;
+                return LoadBalancerDetails is null ? default : LoadBalancerDetails.Id;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         {
             get
             {
-                return Errors.Properties;
+                return Errors is null ? default : Errors.Properties;
             }
         }
     }

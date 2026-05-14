@@ -4,11 +4,20 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added `ResourceSyncRuleCollection`, `ResourceSyncRuleResource`, and `ResourceSyncRuleData` for managing Resource Sync Rules.
+- Added `FindTargetResourceGroup` and `FindTargetResourceGroupAsync` methods to `CustomLocationResource`.
+- Added `GetOperations` and `GetOperationsAsync` extension methods on `TenantResource`.
 
 ### Other Changes
+
+- Migrated SDK generation from AutoRest/Swagger to TypeSpec.
+
+## 1.1.2 (2026-04-24)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.53.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
 
 ## 1.1.1 (2025-03-11)
 

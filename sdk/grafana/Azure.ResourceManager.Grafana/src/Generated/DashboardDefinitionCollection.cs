@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DashboardDefinitionData, DashboardDefinitionResource>(new DashboardDefinitionsGetAllAsyncCollectionResultOfT(_dashboardDefinitionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DashboardDefinitionResource(Client, data));
+            return new AsyncPageableWrapper<DashboardDefinitionData, DashboardDefinitionResource>(new DashboardDefinitionsGetAllAsyncCollectionResultOfT(
+                _dashboardDefinitionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DashboardDefinitionCollection.GetAll"), data => new DashboardDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DashboardDefinitionData, DashboardDefinitionResource>(new DashboardDefinitionsGetAllCollectionResultOfT(_dashboardDefinitionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DashboardDefinitionResource(Client, data));
+            return new PageableWrapper<DashboardDefinitionData, DashboardDefinitionResource>(new DashboardDefinitionsGetAllCollectionResultOfT(
+                _dashboardDefinitionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DashboardDefinitionCollection.GetAll"), data => new DashboardDefinitionResource(Client, data));
         }
 
         /// <summary>

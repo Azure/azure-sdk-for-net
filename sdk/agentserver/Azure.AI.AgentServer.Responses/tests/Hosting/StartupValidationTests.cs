@@ -10,7 +10,7 @@ using Microsoft.Extensions.Hosting;
 namespace Azure.AI.AgentServer.Responses.Tests.Hosting;
 
 /// <summary>
-/// Tests for MapResponsesServer() startup validation (US5 / FR-016..017).
+/// Tests for MapResponsesServer() startup validation (S-004).
 /// Verifies fail-fast behaviour when ResponseHandler is not registered.
 /// </summary>
 public sealed class StartupValidationTests
@@ -18,7 +18,7 @@ public sealed class StartupValidationTests
     [Test]
     public void MapResponsesServer_Throws_WhenHandlerNotRegistered()
     {
-        // T036 / FR-016, FR-017: missing ResponseHandler → InvalidOperationException
+        // T036 / S-004: missing ResponseHandler → InvalidOperationException
         var ex = Assert.Throws<InvalidOperationException>(() =>
         {
             var builder = new HostBuilder()

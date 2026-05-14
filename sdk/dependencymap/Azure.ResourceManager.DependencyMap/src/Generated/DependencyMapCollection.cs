@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DependencyMap
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetByResourceGroupAsyncCollectionResultOfT(_mapsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DependencyMapResource(Client, data));
+            return new AsyncPageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetByResourceGroupAsyncCollectionResultOfT(_mapsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DependencyMapCollection.GetAll"), data => new DependencyMapResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DependencyMap
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetByResourceGroupCollectionResultOfT(_mapsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DependencyMapResource(Client, data));
+            return new PageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetByResourceGroupCollectionResultOfT(_mapsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DependencyMapCollection.GetAll"), data => new DependencyMapResource(Client, data));
         }
 
         /// <summary>

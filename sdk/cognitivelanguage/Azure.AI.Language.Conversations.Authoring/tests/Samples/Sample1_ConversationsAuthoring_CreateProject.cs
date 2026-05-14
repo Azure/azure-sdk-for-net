@@ -23,6 +23,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample1_ConversationsAuthoring_CreateProject
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string projectName = "{projectName}";
             ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
                   projectKind: "Conversation",
@@ -35,7 +37,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             };
 
             using RequestContent content = RequestContent.Create(projectData);
-            Response response = client.CreateProject(projectName, content);
+            Response response = projectClient.CreateProject(projectName, content);
 
             Console.WriteLine($"Project created with status: {response.Status}");
             #endregion
@@ -50,6 +52,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample1_ConversationsAuthoring_CreateProjectAsync
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string projectName = "{projectName}";
             ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
                   projectKind: "Conversation",
@@ -62,7 +66,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             };
 
             using RequestContent content = RequestContent.Create(projectData);
-            Response response = await client.CreateProjectAsync(projectName, content);
+            Response response = await projectClient.CreateProjectAsync(projectName, content);
 
             Console.WriteLine($"Project created with status: {response.Status}");
             #endregion

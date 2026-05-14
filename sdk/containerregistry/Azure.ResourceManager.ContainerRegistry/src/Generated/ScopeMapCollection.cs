@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScopeMapData, ScopeMapResource>(new ScopeMapsGetAllAsyncCollectionResultOfT(_scopeMapsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ScopeMapResource(Client, data));
+            return new AsyncPageableWrapper<ScopeMapData, ScopeMapResource>(new ScopeMapsGetAllAsyncCollectionResultOfT(
+                _scopeMapsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ScopeMapCollection.GetAll"), data => new ScopeMapResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScopeMapData, ScopeMapResource>(new ScopeMapsGetAllCollectionResultOfT(_scopeMapsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ScopeMapResource(Client, data));
+            return new PageableWrapper<ScopeMapData, ScopeMapResource>(new ScopeMapsGetAllCollectionResultOfT(
+                _scopeMapsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ScopeMapCollection.GetAll"), data => new ScopeMapResource(Client, data));
         }
 
         /// <summary>

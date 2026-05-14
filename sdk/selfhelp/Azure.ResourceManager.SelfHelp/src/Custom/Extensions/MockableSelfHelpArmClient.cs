@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DiscoverySolutionDiscoverSolutionsCollectionResultOfT(DiscoverySolutionRestClient, filter, skiptoken, context);
+            return new DiscoverySolutionDiscoverSolutionsCollectionResultOfT(DiscoverySolutionRestClient, filter, skiptoken, context, "MockableSelfHelpArmClient.GetSelfHelpDiscoverySolutions");
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DiscoverySolutionDiscoverSolutionsAsyncCollectionResultOfT(DiscoverySolutionRestClient, filter, skiptoken, context);
+            return new DiscoverySolutionDiscoverSolutionsAsyncCollectionResultOfT(DiscoverySolutionRestClient, filter, skiptoken, context, "MockableSelfHelpArmClient.GetSelfHelpDiscoverySolutions");
         }
     }
 }

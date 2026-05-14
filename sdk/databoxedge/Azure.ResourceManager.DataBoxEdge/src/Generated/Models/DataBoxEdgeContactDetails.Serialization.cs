@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeContactDetails : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeContactDetails>
+    /// <summary> Contains all the contact details of the customer. </summary>
+    public partial class DataBoxEdgeContactDetails : IJsonModel<DataBoxEdgeContactDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeContactDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeContactDetails"/> for deserialization. </summary>
+        internal DataBoxEdgeContactDetails()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxEdgeContactDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeContactDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataBoxEdgeContactDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeContactDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeContactDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeContactDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataBoxEdgeContactDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxEdgeContactDetails IPersistableModel<DataBoxEdgeContactDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataBoxEdgeContactDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxEdgeContactDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeContactDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeContactDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxEdgeContactDetails)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("contactPerson"u8);
             writer.WriteStringValue(ContactPerson);
             writer.WritePropertyName("companyName"u8);
@@ -42,20 +87,25 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStringValue(Phone);
             writer.WritePropertyName("emailList"u8);
             writer.WriteStartArray();
-            foreach (var item in EmailList)
+            foreach (string item in EmailList)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -64,22 +114,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
         }
 
-        DataBoxEdgeContactDetails IJsonModel<DataBoxEdgeContactDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxEdgeContactDetails IJsonModel<DataBoxEdgeContactDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxEdgeContactDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeContactDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeContactDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxEdgeContactDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataBoxEdgeContactDetails(document.RootElement, options);
         }
 
-        internal static DataBoxEdgeContactDetails DeserializeDataBoxEdgeContactDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataBoxEdgeContactDetails DeserializeDataBoxEdgeContactDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -88,73 +143,47 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             string companyName = default;
             string phone = default;
             IList<string> emailList = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("contactPerson"u8))
+                if (prop.NameEquals("contactPerson"u8))
                 {
-                    contactPerson = property.Value.GetString();
+                    contactPerson = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("companyName"u8))
+                if (prop.NameEquals("companyName"u8))
                 {
-                    companyName = property.Value.GetString();
+                    companyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phone"u8))
+                if (prop.NameEquals("phone"u8))
                 {
-                    phone = property.Value.GetString();
+                    phone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("emailList"u8))
+                if (prop.NameEquals("emailList"u8))
                 {
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     emailList = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DataBoxEdgeContactDetails(contactPerson, companyName, phone, emailList, serializedAdditionalRawData);
+            return new DataBoxEdgeContactDetails(contactPerson, companyName, phone, emailList, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DataBoxEdgeContactDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeContactDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeContactDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataBoxEdgeContactDetails IPersistableModel<DataBoxEdgeContactDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeContactDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataBoxEdgeContactDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeContactDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataBoxEdgeContactDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

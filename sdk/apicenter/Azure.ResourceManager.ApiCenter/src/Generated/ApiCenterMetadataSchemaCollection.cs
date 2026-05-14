@@ -294,7 +294,8 @@ namespace Azure.ResourceManager.ApiCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
-                context), data => new ApiCenterMetadataSchemaResource(Client, data));
+                context,
+                "ApiCenterMetadataSchemaCollection.GetAll"), data => new ApiCenterMetadataSchemaResource(Client, data));
         }
 
         /// <summary>
@@ -329,7 +330,8 @@ namespace Azure.ResourceManager.ApiCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
-                context), data => new ApiCenterMetadataSchemaResource(Client, data));
+                context,
+                "ApiCenterMetadataSchemaCollection.GetAll"), data => new ApiCenterMetadataSchemaResource(Client, data));
         }
 
         /// <summary>

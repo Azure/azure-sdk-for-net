@@ -24,16 +24,16 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="type"> The type of the input item. Always `input_file`. </param>
         /// <param name="fileId"></param>
         /// <param name="filename"> The name of the file to be sent to the model. </param>
-        /// <param name="fileUrl"> The URL of the file to be sent to the model. </param>
         /// <param name="fileData"> The content of the file to be sent to the model. </param>
+        /// <param name="fileUrl"> The URL of the file to be sent to the model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InputFileContent(string @type, string fileId, string filename, Uri fileUrl, string fileData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InputFileContent(string @type, string fileId, string filename, string fileData, Uri fileUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             FileId = fileId;
             Filename = filename;
-            FileUrl = fileUrl;
             FileData = fileData;
+            FileUrl = fileUrl;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,10 +46,10 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> The name of the file to be sent to the model. </summary>
         public string Filename { get; set; }
 
-        /// <summary> The URL of the file to be sent to the model. </summary>
-        public Uri FileUrl { get; set; }
-
         /// <summary> The content of the file to be sent to the model. </summary>
         public string FileData { get; set; }
+
+        /// <summary> The URL of the file to be sent to the model. </summary>
+        public Uri FileUrl { get; set; }
     }
 }

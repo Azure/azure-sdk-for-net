@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupAsyncCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WeightsAndBiasesInstanceResource(Client, data));
+            return new AsyncPageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupAsyncCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WeightsAndBiasesInstanceCollection.GetAll"), data => new WeightsAndBiasesInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WeightsAndBiasesInstanceResource(Client, data));
+            return new PageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WeightsAndBiasesInstanceCollection.GetAll"), data => new WeightsAndBiasesInstanceResource(Client, data));
         }
 
         /// <summary>

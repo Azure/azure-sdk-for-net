@@ -304,7 +304,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.Name,
                 top,
                 skipToken,
-                context), data => new NetworkCloudKubernetesClusterFeatureResource(Client, data));
+                context,
+                "NetworkCloudKubernetesClusterFeatureCollection.GetAll"), data => new NetworkCloudKubernetesClusterFeatureResource(Client, data));
         }
 
         /// <summary>
@@ -341,7 +342,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.Name,
                 top,
                 skipToken,
-                context), data => new NetworkCloudKubernetesClusterFeatureResource(Client, data));
+                context,
+                "NetworkCloudKubernetesClusterFeatureCollection.GetAll"), data => new NetworkCloudKubernetesClusterFeatureResource(Client, data));
         }
 
         /// <summary>

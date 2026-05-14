@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRouteAuthorizationData, ExpressRouteAuthorizationResource>(new AuthorizationsGetAllAsyncCollectionResultOfT(_authorizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ExpressRouteAuthorizationResource(Client, data));
+            return new AsyncPageableWrapper<ExpressRouteAuthorizationData, ExpressRouteAuthorizationResource>(new AuthorizationsGetAllAsyncCollectionResultOfT(
+                _authorizationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ExpressRouteAuthorizationCollection.GetAll"), data => new ExpressRouteAuthorizationResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRouteAuthorizationData, ExpressRouteAuthorizationResource>(new AuthorizationsGetAllCollectionResultOfT(_authorizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ExpressRouteAuthorizationResource(Client, data));
+            return new PageableWrapper<ExpressRouteAuthorizationData, ExpressRouteAuthorizationResource>(new AuthorizationsGetAllCollectionResultOfT(
+                _authorizationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ExpressRouteAuthorizationCollection.GetAll"), data => new ExpressRouteAuthorizationResource(Client, data));
         }
 
         /// <summary>

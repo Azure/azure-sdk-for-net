@@ -28,7 +28,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public virtual ClientResult CreateAgent(BinaryContent content, string foundryFeatures=default, RequestOptions options = null)
+    public virtual ClientResult CreateAgent(BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartCreateAgent(_endpoint, content, options);
         Argument.AssertNotNull(content, nameof(content));
@@ -62,7 +62,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public virtual async Task<ClientResult> CreateAgentAsync(BinaryContent content, string foundryFeatures=default, RequestOptions options = null)
+    public virtual async Task<ClientResult> CreateAgentAsync(BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartCreateAgent(_endpoint, content, options);
         Argument.AssertNotNull(content, nameof(content));
@@ -98,7 +98,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public virtual ClientResult CreateAgentVersion(string agentName, BinaryContent content, string foundryFeatures=default, RequestOptions options = null)
+    public virtual ClientResult CreateAgentVersion(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartCreateAgentVersion(_endpoint, agentName, content, options);
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -135,7 +135,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public virtual async Task<ClientResult> CreateAgentVersionAsync(string agentName, BinaryContent content, string foundryFeatures=default, RequestOptions options = null)
+    public virtual async Task<ClientResult> CreateAgentVersionAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartCreateAgentVersion(_endpoint, agentName, content, options);
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -347,7 +347,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public virtual ClientResult UpdateAgent(string agentName, BinaryContent content, string foundryFeatures=default, RequestOptions options = null)
+    public virtual ClientResult UpdateAgent(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartUpdateAgent(_endpoint, agentName, content, options);
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -385,7 +385,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public virtual async Task<ClientResult> UpdateAgentAsync(string agentName, BinaryContent content, string foundryFeatures=default, RequestOptions options = null)
+    public virtual async Task<ClientResult> UpdateAgentAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartUpdateAgent(_endpoint, agentName, content, options);
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));

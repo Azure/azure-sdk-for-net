@@ -91,6 +91,23 @@ internal sealed class SseReplayResult : IResult
             _logger.LogInformation(
                 "SSE replay completed for response {ResponseId}", _responseId);
         }
+        catch (BadRequestException ex)
+        {
+            // Stream provider signalled that no event stream is available for this
+            // response (e.g., non-streaming background response, or stream TTL expired).
+            // Since SSE headers have not been flushed yet, we can still write a JSON error.
+            _logger.LogWarning(ex, "SSE replay unavailable for response {ResponseId}", _responseId);
+            httpContext.Response.Headers.Remove("Cache-Control");
+            httpContext.Response.Headers.Remove("Connection");
+            httpContext.Response.Headers.Remove("X-Accel-Buffering");
+            // TODO: The container spec prescribes distinct error messages for "not created
+            // with stream=true" vs "stream TTL expired", but the BadRequestException from the
+            // stream provider does not carry enough context to distinguish the two cases.
+            // Until the provider surfaces the reason, we use a combined message.
+            await ApiErrorFactory.InvalidRequest(
+                "This response cannot be streamed because it was not created with stream=true or the stream TTL has expired.",
+                param: "stream").ExecuteAsync(httpContext);
+        }
         catch (OperationCanceledException)
         {
             _logger.LogInformation(

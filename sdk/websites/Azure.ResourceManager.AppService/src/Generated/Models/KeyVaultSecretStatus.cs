@@ -7,30 +7,66 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Status of the Key Vault secret. </summary>
+    /// <summary>
+    /// Status of the Key Vault secret.
+    /// Serialized Name: KeyVaultSecretStatus
+    /// </summary>
     public enum KeyVaultSecretStatus
     {
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: KeyVaultSecretStatus.Unknown
+        /// </summary>
         Unknown,
-        /// <summary> Initialized. </summary>
+        /// <summary>
+        /// Initialized
+        /// Serialized Name: KeyVaultSecretStatus.Initialized
+        /// </summary>
         Initialized,
-        /// <summary> WaitingOnCertificateOrder. </summary>
+        /// <summary>
+        /// WaitingOnCertificateOrder
+        /// Serialized Name: KeyVaultSecretStatus.WaitingOnCertificateOrder
+        /// </summary>
         WaitingOnCertificateOrder,
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: KeyVaultSecretStatus.Succeeded
+        /// </summary>
         Succeeded,
-        /// <summary> CertificateOrderFailed. </summary>
+        /// <summary>
+        /// CertificateOrderFailed
+        /// Serialized Name: KeyVaultSecretStatus.CertificateOrderFailed
+        /// </summary>
         CertificateOrderFailed,
-        /// <summary> OperationNotPermittedOnKeyVault. </summary>
+        /// <summary>
+        /// OperationNotPermittedOnKeyVault
+        /// Serialized Name: KeyVaultSecretStatus.OperationNotPermittedOnKeyVault
+        /// </summary>
         OperationNotPermittedOnKeyVault,
-        /// <summary> AzureServiceUnauthorizedToAccessKeyVault. </summary>
+        /// <summary>
+        /// AzureServiceUnauthorizedToAccessKeyVault
+        /// Serialized Name: KeyVaultSecretStatus.AzureServiceUnauthorizedToAccessKeyVault
+        /// </summary>
         AzureServiceUnauthorizedToAccessKeyVault,
-        /// <summary> KeyVaultDoesNotExist. </summary>
+        /// <summary>
+        /// KeyVaultDoesNotExist
+        /// Serialized Name: KeyVaultSecretStatus.KeyVaultDoesNotExist
+        /// </summary>
         KeyVaultDoesNotExist,
-        /// <summary> KeyVaultSecretDoesNotExist. </summary>
+        /// <summary>
+        /// KeyVaultSecretDoesNotExist
+        /// Serialized Name: KeyVaultSecretStatus.KeyVaultSecretDoesNotExist
+        /// </summary>
         KeyVaultSecretDoesNotExist,
-        /// <summary> UnknownError. </summary>
+        /// <summary>
+        /// UnknownError
+        /// Serialized Name: KeyVaultSecretStatus.UnknownError
+        /// </summary>
         UnknownError,
-        /// <summary> ExternalPrivateKey. </summary>
+        /// <summary>
+        /// ExternalPrivateKey
+        /// Serialized Name: KeyVaultSecretStatus.ExternalPrivateKey
+        /// </summary>
         ExternalPrivateKey
     }
 }

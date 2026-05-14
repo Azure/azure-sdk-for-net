@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedClusterNamespaceData, ManagedClusterNamespaceResource>(new ManagedNamespacesGetByManagedClusterAsyncCollectionResultOfT(_managedNamespacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ManagedClusterNamespaceResource(Client, data));
+            return new AsyncPageableWrapper<ManagedClusterNamespaceData, ManagedClusterNamespaceResource>(new ManagedNamespacesGetByManagedClusterAsyncCollectionResultOfT(
+                _managedNamespacesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedClusterNamespaceCollection.GetAll"), data => new ManagedClusterNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedClusterNamespaceData, ManagedClusterNamespaceResource>(new ManagedNamespacesGetByManagedClusterCollectionResultOfT(_managedNamespacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ManagedClusterNamespaceResource(Client, data));
+            return new PageableWrapper<ManagedClusterNamespaceData, ManagedClusterNamespaceResource>(new ManagedNamespacesGetByManagedClusterCollectionResultOfT(
+                _managedNamespacesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedClusterNamespaceCollection.GetAll"), data => new ManagedClusterNamespaceResource(Client, data));
         }
 
         /// <summary>

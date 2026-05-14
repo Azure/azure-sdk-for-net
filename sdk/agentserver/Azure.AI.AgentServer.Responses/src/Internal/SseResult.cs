@@ -20,8 +20,8 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// Takes ownership of the <see cref="Activity"/> created by
 /// <see cref="ResponsesActivitySource.StartCreateResponseActivity"/> so that the
 /// tracing span covers the full SSE streaming duration. The activity is disposed
-/// in the <c>finally</c> block of <see cref="ExecuteAsync"/>, matching Python's
-/// <c>trace_stream</c> / <c>end_span</c> pattern.
+/// in the <c>finally</c> block of <see cref="ExecuteAsync"/>, matching the
+/// cross-language <c>trace_stream</c> / <c>end_span</c> pattern.
 /// </remarks>
 internal sealed class SseResult : IResult
 {

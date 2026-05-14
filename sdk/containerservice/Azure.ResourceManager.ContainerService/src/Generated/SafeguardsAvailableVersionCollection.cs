@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SafeguardsAvailableVersionData, SafeguardsAvailableVersionResource>(new SafeguardsAvailableVersionsGetSafeguardsVersionsAsyncCollectionResultOfT(_safeguardsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new SafeguardsAvailableVersionResource(Client, data));
+            return new AsyncPageableWrapper<SafeguardsAvailableVersionData, SafeguardsAvailableVersionResource>(new SafeguardsAvailableVersionsGetSafeguardsVersionsAsyncCollectionResultOfT(_safeguardsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "SafeguardsAvailableVersionCollection.GetAll"), data => new SafeguardsAvailableVersionResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SafeguardsAvailableVersionData, SafeguardsAvailableVersionResource>(new SafeguardsAvailableVersionsGetSafeguardsVersionsCollectionResultOfT(_safeguardsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new SafeguardsAvailableVersionResource(Client, data));
+            return new PageableWrapper<SafeguardsAvailableVersionData, SafeguardsAvailableVersionResource>(new SafeguardsAvailableVersionsGetSafeguardsVersionsCollectionResultOfT(_safeguardsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "SafeguardsAvailableVersionCollection.GetAll"), data => new SafeguardsAvailableVersionResource(Client, data));
         }
 
         /// <summary>

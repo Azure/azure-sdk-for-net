@@ -441,7 +441,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context);
+                context,
+                "DevCenterNetworkConnectionResource.GetOutboundEnvironmentEndpoints");
         }
 
         /// <summary>
@@ -480,7 +481,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context);
+                context,
+                "DevCenterNetworkConnectionResource.GetOutboundEnvironmentEndpoints");
         }
 
         /// <summary>

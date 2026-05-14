@@ -445,7 +445,8 @@ namespace Azure.ResourceManager.AppNetwork
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "AppLinkMemberResource.GetAppLinkUpgradeHistories");
         }
 
         /// <summary>
@@ -483,7 +484,8 @@ namespace Azure.ResourceManager.AppNetwork
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "AppLinkMemberResource.GetAppLinkUpgradeHistories");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

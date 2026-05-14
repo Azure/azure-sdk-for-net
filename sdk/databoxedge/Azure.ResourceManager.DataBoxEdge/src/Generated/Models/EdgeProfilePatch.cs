@@ -8,44 +8,14 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> The Data Box Edge/Gateway Edge Profile patch. </summary>
     internal partial class EdgeProfilePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EdgeProfilePatch"/>. </summary>
         public EdgeProfilePatch()
@@ -54,23 +24,29 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Initializes a new instance of <see cref="EdgeProfilePatch"/>. </summary>
         /// <param name="subscription"> The Data Box Edge/Gateway Edge Profile Subscription patch. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeProfilePatch(WritableSubResource subscription, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeProfilePatch(EdgeProfileSubscriptionPatch subscription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subscription = subscription;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Data Box Edge/Gateway Edge Profile Subscription patch. </summary>
-        internal WritableSubResource Subscription { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+        internal EdgeProfileSubscriptionPatch Subscription { get; set; }
+
+        /// <summary> The path ID that uniquely identifies the subscription of the edge profile. </summary>
         public ResourceIdentifier SubscriptionId
         {
-            get => Subscription is null ? default : Subscription.Id;
+            get
+            {
+                return Subscription is null ? default : Subscription.Id;
+            }
             set
             {
                 if (Subscription is null)
-                    Subscription = new WritableSubResource();
+                {
+                    Subscription = new EdgeProfileSubscriptionPatch();
+                }
                 Subscription.Id = value;
             }
         }

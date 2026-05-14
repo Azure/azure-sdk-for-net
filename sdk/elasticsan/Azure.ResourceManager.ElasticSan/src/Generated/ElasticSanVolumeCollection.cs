@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.ElasticSan
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ElasticSanVolumeResource(Client, data));
+                context,
+                "ElasticSanVolumeCollection.GetAll"), data => new ElasticSanVolumeResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.ElasticSan
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ElasticSanVolumeResource(Client, data));
+                context,
+                "ElasticSanVolumeCollection.GetAll"), data => new ElasticSanVolumeResource(Client, data));
         }
 
         /// <summary>

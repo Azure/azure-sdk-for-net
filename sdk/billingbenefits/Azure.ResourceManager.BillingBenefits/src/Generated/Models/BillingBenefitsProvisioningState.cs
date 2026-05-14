@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     public readonly partial struct BillingBenefitsProvisioningState : IEquatable<BillingBenefitsProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BillingBenefitsProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BillingBenefitsProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CreatingValue = "Creating";
         private const string PendingBillingValue = "PendingBilling";
         private const string ConfirmedBillingValue = "ConfirmedBilling";
@@ -31,39 +24,70 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         private const string ExpiredValue = "Expired";
         private const string FailedValue = "Failed";
 
-        /// <summary> Creating. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BillingBenefitsProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Creating. </summary>
         public static BillingBenefitsProvisioningState Creating { get; } = new BillingBenefitsProvisioningState(CreatingValue);
-        /// <summary> PendingBilling. </summary>
+
+        /// <summary> Gets the PendingBilling. </summary>
         public static BillingBenefitsProvisioningState PendingBilling { get; } = new BillingBenefitsProvisioningState(PendingBillingValue);
-        /// <summary> ConfirmedBilling. </summary>
+
+        /// <summary> Gets the ConfirmedBilling. </summary>
         public static BillingBenefitsProvisioningState ConfirmedBilling { get; } = new BillingBenefitsProvisioningState(ConfirmedBillingValue);
-        /// <summary> Created. </summary>
+
+        /// <summary> Gets the Created. </summary>
         public static BillingBenefitsProvisioningState Created { get; } = new BillingBenefitsProvisioningState(CreatedValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static BillingBenefitsProvisioningState Succeeded { get; } = new BillingBenefitsProvisioningState(SucceededValue);
-        /// <summary> Cancelled. </summary>
+
+        /// <summary> Gets the Cancelled. </summary>
         public static BillingBenefitsProvisioningState Cancelled { get; } = new BillingBenefitsProvisioningState(CancelledValue);
-        /// <summary> Expired. </summary>
+
+        /// <summary> Gets the Expired. </summary>
         public static BillingBenefitsProvisioningState Expired { get; } = new BillingBenefitsProvisioningState(ExpiredValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static BillingBenefitsProvisioningState Failed { get; } = new BillingBenefitsProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="BillingBenefitsProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingBenefitsProvisioningState left, BillingBenefitsProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingBenefitsProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingBenefitsProvisioningState left, BillingBenefitsProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingBenefitsProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingBenefitsProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingBenefitsProvisioningState(string value) => new BillingBenefitsProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingBenefitsProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingBenefitsProvisioningState?(string value) => value == null ? null : new BillingBenefitsProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingBenefitsProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingBenefitsProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

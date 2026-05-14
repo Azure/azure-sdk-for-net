@@ -86,6 +86,16 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("appOffline"u8);
                 writer.WriteBooleanValue(IsAppOffline.Value);
             }
+            if (Optional.IsCollectionDefined(AddOnPackages))
+            {
+                writer.WritePropertyName("addOnPackages"u8);
+                writer.WriteStartArray();
+                foreach (var item in AddOnPackages)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -121,6 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
             IDictionary<string, string> setParameters = default;
             bool? skipAppData = default;
             bool? appOffline = default;
+            IList<MSDeployCore> addOnPackages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,6 +234,20 @@ namespace Azure.ResourceManager.AppService.Models
                             appOffline = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("addOnPackages"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<MSDeployCore> array = new List<MSDeployCore>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(MSDeployCore.DeserializeMSDeployCore(item, options));
+                            }
+                            addOnPackages = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -244,6 +269,7 @@ namespace Azure.ResourceManager.AppService.Models
                 setParameters ?? new ChangeTrackingDictionary<string, string>(),
                 skipAppData,
                 appOffline,
+                addOnPackages ?? new ChangeTrackingList<MSDeployCore>(),
                 kind,
                 serializedAdditionalRawData);
         }
@@ -479,6 +505,29 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("    appOffline: ");
                     var boolValue = IsAppOffline.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AddOnPackages), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    addOnPackages: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AddOnPackages))
+                {
+                    if (AddOnPackages.Any())
+                    {
+                        builder.Append("    addOnPackages: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AddOnPackages)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    addOnPackages: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
                 }
             }
 

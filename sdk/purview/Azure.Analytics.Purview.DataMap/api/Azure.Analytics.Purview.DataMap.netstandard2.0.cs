@@ -1258,6 +1258,13 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Azure.Analytics.Purview.DataMap.Relationship GetRelationshipClient() { throw null; }
         public virtual Azure.Analytics.Purview.DataMap.TypeDefinition GetTypeDefinitionClient() { throw null; }
     }
+    public static partial class DataMapClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddDataMapClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddDataMapClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Analytics.Purview.DataMap.DataMapClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDataMapClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDataMapClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Analytics.Purview.DataMap.DataMapClientSettings> configureSettings) { throw null; }
+    }
     public partial class DataMapClientOptions : Azure.Core.ClientOptions
     {
         public DataMapClientOptions(Azure.Analytics.Purview.DataMap.DataMapClientOptions.ServiceVersion version = Azure.Analytics.Purview.DataMap.DataMapClientOptions.ServiceVersion.V2023_09_01) { }

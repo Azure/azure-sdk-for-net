@@ -26,7 +26,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new DevCenterImageResource(Client, data));
+                context,
+                "DevCenterResource.GetImages"), data => new DevCenterImageResource(Client, data));
         }
 
         /// <summary> Lists images for a devcenter. </summary>
@@ -45,7 +46,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new DevCenterImageResource(Client, data));
+                context,
+                "DevCenterResource.GetImages"), data => new DevCenterImageResource(Client, data));
         }
     }
 }

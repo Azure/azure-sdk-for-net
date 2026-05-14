@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceFabricManagedClusters;
@@ -88,6 +89,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (WritableSubResource item in ApplicationGatewayBackendAddressPools)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
@@ -98,6 +104,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (WritableSubResource item in LoadBalancerBackendAddressPools)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
@@ -108,6 +119,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (WritableSubResource item in LoadBalancerInboundNatPools)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
@@ -186,17 +202,65 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (prop.NameEquals("applicationGatewayBackendAddressPools"u8))
                 {
-                    DeserializeApplicationGatewayBackendAddressPools(prop, ref applicationGatewayBackendAddressPools);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricManagedClustersContext.Default));
+                        }
+                    }
+                    applicationGatewayBackendAddressPools = array;
                     continue;
                 }
                 if (prop.NameEquals("loadBalancerBackendAddressPools"u8))
                 {
-                    DeserializeLoadBalancerBackendAddressPools(prop, ref loadBalancerBackendAddressPools);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricManagedClustersContext.Default));
+                        }
+                    }
+                    loadBalancerBackendAddressPools = array;
                     continue;
                 }
                 if (prop.NameEquals("loadBalancerInboundNatPools"u8))
                 {
-                    DeserializeLoadBalancerInboundNatPools(prop, ref loadBalancerInboundNatPools);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricManagedClustersContext.Default));
+                        }
+                    }
+                    loadBalancerInboundNatPools = array;
                     continue;
                 }
                 if (prop.NameEquals("subnet"u8))

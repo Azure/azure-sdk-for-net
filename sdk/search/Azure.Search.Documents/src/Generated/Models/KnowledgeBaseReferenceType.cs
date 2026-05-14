@@ -19,14 +19,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         private const string SearchIndexValue = "searchIndex";
         /// <summary> Azure Blob document reference. </summary>
         private const string AzureBlobValue = "azureBlob";
-        /// <summary> Indexed SharePoint document reference. </summary>
-        private const string IndexedSharePointValue = "indexedSharePoint";
         /// <summary> Indexed OneLake document reference. </summary>
         private const string IndexedOneLakeValue = "indexedOneLake";
         /// <summary> Web document reference. </summary>
         private const string WebValue = "web";
-        /// <summary> Remote SharePoint document reference. </summary>
-        private const string RemoteSharePointValue = "remoteSharePoint";
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseReferenceType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -44,17 +40,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Azure Blob document reference. </summary>
         public static KnowledgeBaseReferenceType AzureBlob { get; } = new KnowledgeBaseReferenceType(AzureBlobValue);
 
-        /// <summary> Indexed SharePoint document reference. </summary>
-        public static KnowledgeBaseReferenceType IndexedSharePoint { get; } = new KnowledgeBaseReferenceType(IndexedSharePointValue);
-
         /// <summary> Indexed OneLake document reference. </summary>
         public static KnowledgeBaseReferenceType IndexedOneLake { get; } = new KnowledgeBaseReferenceType(IndexedOneLakeValue);
 
         /// <summary> Web document reference. </summary>
         public static KnowledgeBaseReferenceType Web { get; } = new KnowledgeBaseReferenceType(WebValue);
-
-        /// <summary> Remote SharePoint document reference. </summary>
-        public static KnowledgeBaseReferenceType RemoteSharePoint { get; } = new KnowledgeBaseReferenceType(RemoteSharePointValue);
 
         /// <summary> Determines if two <see cref="KnowledgeBaseReferenceType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

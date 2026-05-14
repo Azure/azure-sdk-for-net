@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistryNamespaceAssetData, DeviceRegistryNamespaceAssetResource>(new NamespaceAssetsGetByResourceGroupAsyncCollectionResultOfT(_namespaceAssetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DeviceRegistryNamespaceAssetResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistryNamespaceAssetData, DeviceRegistryNamespaceAssetResource>(new NamespaceAssetsGetByResourceGroupAsyncCollectionResultOfT(
+                _namespaceAssetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DeviceRegistryNamespaceAssetCollection.GetAll"), data => new DeviceRegistryNamespaceAssetResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistryNamespaceAssetData, DeviceRegistryNamespaceAssetResource>(new NamespaceAssetsGetByResourceGroupCollectionResultOfT(_namespaceAssetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DeviceRegistryNamespaceAssetResource(Client, data));
+            return new PageableWrapper<DeviceRegistryNamespaceAssetData, DeviceRegistryNamespaceAssetResource>(new NamespaceAssetsGetByResourceGroupCollectionResultOfT(
+                _namespaceAssetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DeviceRegistryNamespaceAssetCollection.GetAll"), data => new DeviceRegistryNamespaceAssetResource(Client, data));
         }
 
         /// <summary>

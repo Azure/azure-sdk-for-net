@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutonomousDatabaseNationalCharacterSetData, AutonomousDatabaseNationalCharacterSetResource>(new AutonomousDatabaseNationalCharacterSetsGetByLocationAsyncCollectionResultOfT(_autonomousDatabaseNationalCharacterSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new AutonomousDatabaseNationalCharacterSetResource(Client, data));
+            return new AsyncPageableWrapper<AutonomousDatabaseNationalCharacterSetData, AutonomousDatabaseNationalCharacterSetResource>(new AutonomousDatabaseNationalCharacterSetsGetByLocationAsyncCollectionResultOfT(_autonomousDatabaseNationalCharacterSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "AutonomousDatabaseNationalCharacterSetCollection.GetAll"), data => new AutonomousDatabaseNationalCharacterSetResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutonomousDatabaseNationalCharacterSetData, AutonomousDatabaseNationalCharacterSetResource>(new AutonomousDatabaseNationalCharacterSetsGetByLocationCollectionResultOfT(_autonomousDatabaseNationalCharacterSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new AutonomousDatabaseNationalCharacterSetResource(Client, data));
+            return new PageableWrapper<AutonomousDatabaseNationalCharacterSetData, AutonomousDatabaseNationalCharacterSetResource>(new AutonomousDatabaseNationalCharacterSetsGetByLocationCollectionResultOfT(_autonomousDatabaseNationalCharacterSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "AutonomousDatabaseNationalCharacterSetCollection.GetAll"), data => new AutonomousDatabaseNationalCharacterSetResource(Client, data));
         }
 
         /// <summary>

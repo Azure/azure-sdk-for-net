@@ -434,7 +434,13 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new LoadTestsGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(_loadTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new LoadTestsGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+                _loadTestsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "LoadTestingResource.GetOutboundNetworkDependenciesEndpoints");
         }
 
         /// <summary>
@@ -466,7 +472,13 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new LoadTestsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(_loadTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new LoadTestsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
+                _loadTestsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "LoadTestingResource.GetOutboundNetworkDependenciesEndpoints");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

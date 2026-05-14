@@ -44,7 +44,9 @@ namespace OpenAI
         /// </param>
         /// <param name="partialImages"> Number of partial images to generate in streaming mode, from 0 (default value) to 3. </param>
         /// <param name="action"> Whether to generate a new image or edit an existing image. Default: `auto`. </param>
-        internal InternalImageGenTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageGenToolModel? model, ImageGenToolQuality? quality, ImageGenToolSize? size, ImageGenToolOutputFormat? outputFormat, long? outputCompression, ImageGenToolModeration? moderation, ImageGenToolBackground? background, InputFidelity? inputFidelity, InternalImageGenToolInputImageMask inputImageMask, long? partialImages, ImageGenActionEnum? action) : base(@type, additionalBinaryDataProperties)
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        internal InternalImageGenTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageGenToolModel? model, ImageGenToolQuality? quality, ImageGenToolSize? size, ImageGenToolOutputFormat? outputFormat, long? outputCompression, ImageGenToolModeration? moderation, ImageGenToolBackground? background, InputFidelity? inputFidelity, InternalImageGenToolInputImageMask inputImageMask, long? partialImages, ImageGenActionEnum? action, string name, string description) : base(@type, additionalBinaryDataProperties)
         {
             Model = model;
             Quality = quality;
@@ -57,6 +59,8 @@ namespace OpenAI
             InputImageMask = inputImageMask;
             PartialImages = partialImages;
             Action = action;
+            Name = name;
+            Description = description;
         }
 
         /// <summary> Gets or sets the Model. </summary>
@@ -106,5 +110,11 @@ namespace OpenAI
 
         /// <summary> Whether to generate a new image or edit an existing image. Default: `auto`. </summary>
         public ImageGenActionEnum? Action { get; set; }
+
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
     }
 }

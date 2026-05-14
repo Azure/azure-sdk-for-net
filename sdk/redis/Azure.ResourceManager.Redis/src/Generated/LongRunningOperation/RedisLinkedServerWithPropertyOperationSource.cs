@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Redis
 {
-    internal class RedisLinkedServerWithPropertyOperationSource : IOperationSource<RedisLinkedServerWithPropertyResource>
+    /// <summary></summary>
+    internal partial class RedisLinkedServerWithPropertyOperationSource : IOperationSource<RedisLinkedServerWithPropertyResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal RedisLinkedServerWithPropertyOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         RedisLinkedServerWithPropertyResource IOperationSource<RedisLinkedServerWithPropertyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RedisLinkedServerWithPropertyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            RedisLinkedServerWithPropertyData data = RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new RedisLinkedServerWithPropertyResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<RedisLinkedServerWithPropertyResource> IOperationSource<RedisLinkedServerWithPropertyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RedisLinkedServerWithPropertyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
-            return await Task.FromResult(new RedisLinkedServerWithPropertyResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            RedisLinkedServerWithPropertyData data = RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new RedisLinkedServerWithPropertyResource(_client, data);
         }
     }
 }

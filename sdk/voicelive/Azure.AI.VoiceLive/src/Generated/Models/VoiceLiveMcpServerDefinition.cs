@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
@@ -45,7 +44,7 @@ namespace Azure.AI.VoiceLive
             Authorization = authorization;
             Headers = headers;
             AllowedTools = allowedTools;
-            RequireApproval = requireApproval;
+            _requireApproval = requireApproval;
         }
 
         /// <summary> Gets or sets the ServerLabel. </summary>
@@ -62,46 +61,5 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the AllowedTools. </summary>
         public IList<string> AllowedTools { get; }
-
-        /// <summary>
-        /// Gets or sets the RequireApproval.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="MCPApprovalType"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="IDictionary{TKey,TValue}"/> where <c>TKey</c> is of type <see cref="string"/>, where <c>TValue</c> is of type <c>IList{string}</c>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData RequireApproval { get; set; }
     }
 }

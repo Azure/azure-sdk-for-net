@@ -296,7 +296,8 @@ namespace Azure.ResourceManager.EventHubs
                 Id.Name,
                 skip,
                 top,
-                context), data => new EventHubResource(Client, data));
+                context,
+                "EventHubCollection.GetAll"), data => new EventHubResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.EventHubs
                 Id.Name,
                 skip,
                 top,
-                context), data => new EventHubResource(Client, data));
+                context,
+                "EventHubCollection.GetAll"), data => new EventHubResource(Client, data));
         }
 
         /// <summary>

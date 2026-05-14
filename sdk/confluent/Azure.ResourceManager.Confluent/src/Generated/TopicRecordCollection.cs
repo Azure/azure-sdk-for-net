@@ -296,7 +296,8 @@ namespace Azure.ResourceManager.Confluent
                 Id.Name,
                 pageSize,
                 pageToken,
-                context), data => new TopicRecordResource(Client, data));
+                context,
+                "TopicRecordCollection.GetAll"), data => new TopicRecordResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.Confluent
                 Id.Name,
                 pageSize,
                 pageToken,
-                context), data => new TopicRecordResource(Client, data));
+                context,
+                "TopicRecordCollection.GetAll"), data => new TopicRecordResource(Client, data));
         }
 
         /// <summary>

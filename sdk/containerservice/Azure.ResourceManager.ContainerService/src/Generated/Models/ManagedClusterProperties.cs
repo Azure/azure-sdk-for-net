@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             get
             {
-                return PowerState.Code;
+                return PowerState is null ? default : PowerState.Code;
             }
         }
 

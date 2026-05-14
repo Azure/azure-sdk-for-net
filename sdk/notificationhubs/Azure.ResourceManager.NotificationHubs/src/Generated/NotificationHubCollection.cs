@@ -296,7 +296,8 @@ namespace Azure.ResourceManager.NotificationHubs
                 Id.Name,
                 skipToken,
                 top,
-                context), data => new NotificationHubResource(Client, data));
+                context,
+                "NotificationHubCollection.GetAll"), data => new NotificationHubResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.NotificationHubs
                 Id.Name,
                 skipToken,
                 top,
-                context), data => new NotificationHubResource(Client, data));
+                context,
+                "NotificationHubCollection.GetAll"), data => new NotificationHubResource(Client, data));
         }
 
         /// <summary>

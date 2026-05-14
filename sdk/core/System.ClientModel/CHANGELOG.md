@@ -1,16 +1,39 @@
 # Release History
 
-## 1.11.0-beta.1 (Unreleased)
+## 1.13.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-- `IClientBuilder` no longer inherits from `IHostApplicationBuilder`. The internal `ClientBuilder` implementation now uses composition instead of inheritance. `PostConfigure` return type changed from `IHostApplicationBuilder` to `IClientBuilder`. `AddClient` and `AddKeyedClient` continue to return `IClientBuilder`.
-
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.12.0 (2026-05-12)
+
+### Features Added
+
+- Added `CredentialSettings.this[string key]` indexer for reading custom properties from the credential configuration section.
+
+### Other Changes
+
+- `AuthenticationPolicy.Create` no longer throws when an ApiKey credential section carries a `Scope` value; `Scope` is ignored for ApiKey auth.
+
+## 1.11.0 (2026-05-05)
+
+### Features Added
+
+- Added `CredentialResolver` abstract class — an extensibility hook that lets credential providers participate in the configuration-driven credential resolution pipeline. Resolvers are invoked in registration order until one produces an `AuthenticationTokenProvider` for a given configuration section.
+- Added `IConfiguration.GetCredential(...)` extension overloads on `ConfigurationExtensions` that walk a chain of `CredentialResolver` instances against a named credential section, with optional `configureOverrides` to mutate the section in-flight.
+- Added `IConfiguration.GetClientSettings<T>(...)` extension overloads that bind a `ClientSettings`-derived type and resolve its `Credential` via the resolver chain.
+- Added `AddCredentialResolver<T>` extension methods on `IServiceCollection` and `IHostApplicationBuilder` that register a `CredentialResolver` once per implementation type (idempotent).
+- The DI `AddClient<TClient, TSettings>` / `AddKeyedClient<TClient, TSettings>` paths now auto-resolve credentials from the registered resolver chain, so callers no longer need to wire up provider-specific helpers like `WithAzureCredential` explicitly when a resolver is registered.
+- Resolving the same credential section more than once returns the same `AuthenticationTokenProvider` instance.
+
+### Breaking Changes
+
+- `IClientBuilder` no longer inherits from `IHostApplicationBuilder`. The internal `ClientBuilder` implementation now uses composition instead of inheritance. `PostConfigure` return type changed from `IHostApplicationBuilder` to `IClientBuilder`. `AddClient` and `AddKeyedClient` continue to return `IClientBuilder`.
 
 ## 1.10.0 (2026-03-16)
 

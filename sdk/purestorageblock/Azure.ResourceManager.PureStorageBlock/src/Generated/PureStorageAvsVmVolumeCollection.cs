@@ -183,7 +183,8 @@ namespace Azure.ResourceManager.PureStorageBlock
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new PureStorageAvsVmVolumeResource(Client, data));
+                context,
+                "PureStorageAvsVmVolumeCollection.GetAll"), data => new PureStorageAvsVmVolumeResource(Client, data));
         }
 
         /// <summary>
@@ -217,7 +218,8 @@ namespace Azure.ResourceManager.PureStorageBlock
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new PureStorageAvsVmVolumeResource(Client, data));
+                context,
+                "PureStorageAvsVmVolumeCollection.GetAll"), data => new PureStorageAvsVmVolumeResource(Client, data));
         }
 
         /// <summary>

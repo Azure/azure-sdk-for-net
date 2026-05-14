@@ -438,7 +438,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceDetailsGetResourceDetailsAsyncCollectionResultOfT(_resourceDetailsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ResourceDetailsGetResourceDetailsAsyncCollectionResultOfT(
+                _resourceDetailsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DevOpsPoolResource.GetResourceDetails");
         }
 
         /// <summary>
@@ -470,7 +476,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceDetailsGetResourceDetailsCollectionResultOfT(_resourceDetailsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ResourceDetailsGetResourceDetailsCollectionResultOfT(
+                _resourceDetailsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DevOpsPoolResource.GetResourceDetails");
         }
 
         /// <summary>

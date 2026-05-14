@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationVaultData, DataReplicationVaultResource>(new VaultGetBySubscriptionAsyncCollectionResultOfT(VaultRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DataReplicationVaultResource(Client, data));
+            return new AsyncPageableWrapper<DataReplicationVaultData, DataReplicationVaultResource>(new VaultGetBySubscriptionAsyncCollectionResultOfT(VaultRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRecoveryServicesDataReplicationSubscriptionResource.GetDataReplicationVaults"), data => new DataReplicationVaultResource(Client, data));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationVaultData, DataReplicationVaultResource>(new VaultGetBySubscriptionCollectionResultOfT(VaultRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DataReplicationVaultResource(Client, data));
+            return new PageableWrapper<DataReplicationVaultData, DataReplicationVaultResource>(new VaultGetBySubscriptionCollectionResultOfT(VaultRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRecoveryServicesDataReplicationSubscriptionResource.GetDataReplicationVaults"), data => new DataReplicationVaultResource(Client, data));
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationFabricData, DataReplicationFabricResource>(new FabricGetBySubscriptionAsyncCollectionResultOfT(FabricRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DataReplicationFabricResource(Client, data));
+            return new AsyncPageableWrapper<DataReplicationFabricData, DataReplicationFabricResource>(new FabricGetBySubscriptionAsyncCollectionResultOfT(FabricRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRecoveryServicesDataReplicationSubscriptionResource.GetDataReplicationFabrics"), data => new DataReplicationFabricResource(Client, data));
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationFabricData, DataReplicationFabricResource>(new FabricGetBySubscriptionCollectionResultOfT(FabricRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DataReplicationFabricResource(Client, data));
+            return new PageableWrapper<DataReplicationFabricData, DataReplicationFabricResource>(new FabricGetBySubscriptionCollectionResultOfT(FabricRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRecoveryServicesDataReplicationSubscriptionResource.GetDataReplicationFabrics"), data => new DataReplicationFabricResource(Client, data));
         }
 
         /// <summary>

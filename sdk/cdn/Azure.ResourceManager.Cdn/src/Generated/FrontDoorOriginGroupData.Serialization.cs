@@ -10,16 +10,75 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class FrontDoorOriginGroupData : IUtf8JsonSerializable, IJsonModel<FrontDoorOriginGroupData>
+    /// <summary> AFDOrigin group comprising of origins is used for load balancing to origins when the content cannot be served from Azure Front Door. </summary>
+    public partial class FrontDoorOriginGroupData : ResourceData, IJsonModel<FrontDoorOriginGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorOriginGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFrontDoorOriginGroupData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorOriginGroupData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorOriginGroupData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FrontDoorOriginGroupData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FrontDoorOriginGroupData IPersistableModel<FrontDoorOriginGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => (FrontDoorOriginGroupData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FrontDoorOriginGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="frontDoorOriginGroupData"> The <see cref="FrontDoorOriginGroupData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(FrontDoorOriginGroupData frontDoorOriginGroupData)
+        {
+            if (frontDoorOriginGroupData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(frontDoorOriginGroupData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FrontDoorOriginGroupData"/> from. </param>
+        internal static FrontDoorOriginGroupData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeFrontDoorOriginGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FrontDoorOriginGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,458 +90,105 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FrontDoorOriginGroupData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProfileName))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("profileName"u8);
-                writer.WriteStringValue(ProfileName);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(LoadBalancingSettings))
-            {
-                writer.WritePropertyName("loadBalancingSettings"u8);
-                writer.WriteObjectValue(LoadBalancingSettings, options);
-            }
-            if (Optional.IsDefined(HealthProbeSettings))
-            {
-                writer.WritePropertyName("healthProbeSettings"u8);
-                writer.WriteObjectValue(HealthProbeSettings, options);
-            }
-            if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
-            {
-                if (TrafficRestorationTimeInMinutes != null)
-                {
-                    writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"u8);
-                    writer.WriteNumberValue(TrafficRestorationTimeInMinutes.Value);
-                }
-                else
-                {
-                    writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
-                }
-            }
-            if (Optional.IsDefined(SessionAffinityState))
-            {
-                writer.WritePropertyName("sessionAffinityState"u8);
-                writer.WriteStringValue(SessionAffinityState.Value.ToString());
-            }
-            if (Optional.IsDefined(Authentication))
-            {
-                writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
-            {
-                writer.WritePropertyName("deploymentStatus"u8);
-                writer.WriteStringValue(DeploymentStatus.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        FrontDoorOriginGroupData IJsonModel<FrontDoorOriginGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FrontDoorOriginGroupData IJsonModel<FrontDoorOriginGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FrontDoorOriginGroupData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FrontDoorOriginGroupData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFrontDoorOriginGroupData(document.RootElement, options);
         }
 
-        internal static FrontDoorOriginGroupData DeserializeFrontDoorOriginGroupData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FrontDoorOriginGroupData DeserializeFrontDoorOriginGroupData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string profileName = default;
-            LoadBalancingSettings loadBalancingSettings = default;
-            HealthProbeSettings healthProbeSettings = default;
-            int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
-            EnabledState? sessionAffinityState = default;
-            OriginAuthenticationProperties authentication = default;
-            FrontDoorProvisioningState? provisioningState = default;
-            FrontDoorDeploymentStatus? deploymentStatus = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            FrontDoorOriginGroupProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("profileName"u8))
-                        {
-                            profileName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("loadBalancingSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            loadBalancingSettings = LoadBalancingSettings.DeserializeLoadBalancingSettings(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("healthProbeSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                trafficRestorationTimeToHealedOrNewEndpointsInMinutes = null;
-                                continue;
-                            }
-                            trafficRestorationTimeToHealedOrNewEndpointsInMinutes = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("sessionAffinityState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sessionAffinityState = new EnabledState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("authentication"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            authentication = OriginAuthenticationProperties.DeserializeOriginAuthenticationProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new FrontDoorProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("deploymentStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            deploymentStatus = new FrontDoorDeploymentStatus(property0.Value.GetString());
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = FrontDoorOriginGroupProperties.DeserializeFrontDoorOriginGroupProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new FrontDoorOriginGroupData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                profileName,
-                loadBalancingSettings,
-                healthProbeSettings,
-                trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
-                sessionAffinityState,
-                authentication,
-                provisioningState,
-                deploymentStatus,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProfileName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    profileName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProfileName))
-                {
-                    builder.Append("    profileName: ");
-                    if (ProfileName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ProfileName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ProfileName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LoadBalancingSettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    loadBalancingSettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LoadBalancingSettings))
-                {
-                    builder.Append("    loadBalancingSettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, LoadBalancingSettings, options, 4, false, "    loadBalancingSettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HealthProbeSettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    healthProbeSettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HealthProbeSettings))
-                {
-                    builder.Append("    healthProbeSettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, HealthProbeSettings, options, 4, false, "    healthProbeSettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrafficRestorationTimeInMinutes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    trafficRestorationTimeToHealedOrNewEndpointsInMinutes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
-                {
-                    builder.Append("    trafficRestorationTimeToHealedOrNewEndpointsInMinutes: ");
-                    builder.AppendLine($"{TrafficRestorationTimeInMinutes.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SessionAffinityState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sessionAffinityState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SessionAffinityState))
-                {
-                    builder.Append("    sessionAffinityState: ");
-                    builder.AppendLine($"'{SessionAffinityState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Authentication), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    authentication: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Authentication))
-                {
-                    builder.Append("    authentication: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Authentication, options, 4, false, "    authentication: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    deploymentStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DeploymentStatus))
-                {
-                    builder.Append("    deploymentStatus: ");
-                    builder.AppendLine($"'{DeploymentStatus.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<FrontDoorOriginGroupData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginGroupData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(FrontDoorOriginGroupData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FrontDoorOriginGroupData IPersistableModel<FrontDoorOriginGroupData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginGroupData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFrontDoorOriginGroupData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FrontDoorOriginGroupData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FrontDoorOriginGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

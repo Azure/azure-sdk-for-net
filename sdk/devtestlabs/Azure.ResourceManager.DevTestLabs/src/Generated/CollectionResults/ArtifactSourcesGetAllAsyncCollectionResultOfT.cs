@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly int? _top;
         private readonly string _orderby;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ArtifactSourcesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ArtifactSources client used to send requests. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ArtifactSourcesGetAllAsyncCollectionResultOfT(ArtifactSources client, string subscriptionId, string resourceGroupName, string labName, string expand, string filter, int? top, string @orderby, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ArtifactSourcesGetAllAsyncCollectionResultOfT(ArtifactSources client, string subscriptionId, string resourceGroupName, string labName, string expand, string filter, int? top, string @orderby, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -48,6 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs
             _top = top;
             _orderby = @orderby;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ArtifactSourcesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -80,7 +83,7 @@ namespace Azure.ResourceManager.DevTestLabs
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _labName, _expand, _filter, _top, _orderby, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _labName, _expand, _filter, _top, _orderby, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DevTestLabArtifactSourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

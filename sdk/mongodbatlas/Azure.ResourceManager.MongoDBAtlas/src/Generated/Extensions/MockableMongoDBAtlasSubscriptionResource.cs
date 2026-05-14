@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoDBAtlasOrganizationData, MongoDBAtlasOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new MongoDBAtlasOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<MongoDBAtlasOrganizationData, MongoDBAtlasOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMongoDBAtlasSubscriptionResource.GetMongoDBAtlasOrganizations"), data => new MongoDBAtlasOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoDBAtlasOrganizationData, MongoDBAtlasOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new MongoDBAtlasOrganizationResource(Client, data));
+            return new PageableWrapper<MongoDBAtlasOrganizationData, MongoDBAtlasOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMongoDBAtlasSubscriptionResource.GetMongoDBAtlasOrganizations"), data => new MongoDBAtlasOrganizationResource(Client, data));
         }
     }
 }

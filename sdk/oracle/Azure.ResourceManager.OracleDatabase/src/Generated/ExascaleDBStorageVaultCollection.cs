@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDbStorageVaultsGetByResourceGroupAsyncCollectionResultOfT(_exascaleDbStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ExascaleDBStorageVaultResource(Client, data));
+            return new AsyncPageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDbStorageVaultsGetByResourceGroupAsyncCollectionResultOfT(_exascaleDbStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExascaleDBStorageVaultCollection.GetAll"), data => new ExascaleDBStorageVaultResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDbStorageVaultsGetByResourceGroupCollectionResultOfT(_exascaleDbStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ExascaleDBStorageVaultResource(Client, data));
+            return new PageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDbStorageVaultsGetByResourceGroupCollectionResultOfT(_exascaleDbStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExascaleDBStorageVaultCollection.GetAll"), data => new ExascaleDBStorageVaultResource(Client, data));
         }
 
         /// <summary>

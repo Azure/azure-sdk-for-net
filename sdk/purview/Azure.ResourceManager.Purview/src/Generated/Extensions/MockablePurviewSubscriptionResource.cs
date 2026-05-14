@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Purview.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PurviewAccountData, PurviewAccountResource>(new AccountsGetBySubscriptionAsyncCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, skipToken, context), data => new PurviewAccountResource(Client, data));
+            return new AsyncPageableWrapper<PurviewAccountData, PurviewAccountResource>(new AccountsGetBySubscriptionAsyncCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, skipToken, context, "MockablePurviewSubscriptionResource.GetPurviewAccounts"), data => new PurviewAccountResource(Client, data));
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Purview.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PurviewAccountData, PurviewAccountResource>(new AccountsGetBySubscriptionCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, skipToken, context), data => new PurviewAccountResource(Client, data));
+            return new PageableWrapper<PurviewAccountData, PurviewAccountResource>(new AccountsGetBySubscriptionCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, skipToken, context, "MockablePurviewSubscriptionResource.GetPurviewAccounts"), data => new PurviewAccountResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +335,13 @@ namespace Azure.ResourceManager.Purview.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesAsyncCollectionResultOfT(UsagesRestClient, Id.SubscriptionId, location, filter, context);
+            return new UsagesGetUsagesAsyncCollectionResultOfT(
+                UsagesRestClient,
+                Id.SubscriptionId,
+                location,
+                filter,
+                context,
+                "MockablePurviewSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -365,7 +371,13 @@ namespace Azure.ResourceManager.Purview.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesCollectionResultOfT(UsagesRestClient, Id.SubscriptionId, location, filter, context);
+            return new UsagesGetUsagesCollectionResultOfT(
+                UsagesRestClient,
+                Id.SubscriptionId,
+                location,
+                filter,
+                context,
+                "MockablePurviewSubscriptionResource.GetUsages");
         }
     }
 }

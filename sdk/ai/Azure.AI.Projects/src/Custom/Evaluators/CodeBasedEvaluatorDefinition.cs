@@ -9,6 +9,13 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("CodeBasedEvaluatorDefinition")]
 public partial class CodeBasedEvaluatorDefinition
 {
+    public CodeBasedEvaluatorDefinition(string codeText) : this()
+    {
+        Argument.AssertNotNull(codeText, nameof(codeText));
+
+        CodeText = codeText;
+    }
+
     /// <summary> Initializes a new instance of <see cref="CodeBasedEvaluatorDefinition"/>. </summary>
     /// <param name="initParameters"> The JSON schema (Draft 2020-12) for the evaluator's input parameters. This includes parameters like type, properties, required. </param>
     /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>

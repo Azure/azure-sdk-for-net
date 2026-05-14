@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImpactConnectorData, ImpactConnectorResource>(new ConnectorsGetBySubscriptionAsyncCollectionResultOfT(_connectorsRestClient, Id.SubscriptionId, context), data => new ImpactConnectorResource(Client, data));
+            return new AsyncPageableWrapper<ImpactConnectorData, ImpactConnectorResource>(new ConnectorsGetBySubscriptionAsyncCollectionResultOfT(_connectorsRestClient, Id.SubscriptionId, context, "ImpactConnectorCollection.GetAll"), data => new ImpactConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImpactConnectorData, ImpactConnectorResource>(new ConnectorsGetBySubscriptionCollectionResultOfT(_connectorsRestClient, Id.SubscriptionId, context), data => new ImpactConnectorResource(Client, data));
+            return new PageableWrapper<ImpactConnectorData, ImpactConnectorResource>(new ConnectorsGetBySubscriptionCollectionResultOfT(_connectorsRestClient, Id.SubscriptionId, context, "ImpactConnectorCollection.GetAll"), data => new ImpactConnectorResource(Client, data));
         }
 
         /// <summary>

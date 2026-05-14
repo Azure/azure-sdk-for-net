@@ -181,7 +181,13 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventHubsNetworkSecurityPerimeterConfigurationData, EventHubsNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationGetAllAsyncCollectionResultOfT(_networkSecurityPerimeterConfigurationRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new EventHubsNetworkSecurityPerimeterConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<EventHubsNetworkSecurityPerimeterConfigurationData, EventHubsNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationGetAllAsyncCollectionResultOfT(
+                _networkSecurityPerimeterConfigurationRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EventHubsNetworkSecurityPerimeterConfigurationCollection.GetAll"), data => new EventHubsNetworkSecurityPerimeterConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -209,7 +215,13 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventHubsNetworkSecurityPerimeterConfigurationData, EventHubsNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationGetAllCollectionResultOfT(_networkSecurityPerimeterConfigurationRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new EventHubsNetworkSecurityPerimeterConfigurationResource(Client, data));
+            return new PageableWrapper<EventHubsNetworkSecurityPerimeterConfigurationData, EventHubsNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationGetAllCollectionResultOfT(
+                _networkSecurityPerimeterConfigurationRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EventHubsNetworkSecurityPerimeterConfigurationCollection.GetAll"), data => new EventHubsNetworkSecurityPerimeterConfigurationResource(Client, data));
         }
 
         /// <summary>

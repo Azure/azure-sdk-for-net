@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeConfigTemplateVersionData, EdgeConfigTemplateVersionResource>(new ConfigTemplateVersionsGetByConfigTemplateAsyncCollectionResultOfT(_configTemplateVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeConfigTemplateVersionResource(Client, data));
+            return new AsyncPageableWrapper<EdgeConfigTemplateVersionData, EdgeConfigTemplateVersionResource>(new ConfigTemplateVersionsGetByConfigTemplateAsyncCollectionResultOfT(
+                _configTemplateVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeConfigTemplateVersionCollection.GetAll"), data => new EdgeConfigTemplateVersionResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeConfigTemplateVersionData, EdgeConfigTemplateVersionResource>(new ConfigTemplateVersionsGetByConfigTemplateCollectionResultOfT(_configTemplateVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeConfigTemplateVersionResource(Client, data));
+            return new PageableWrapper<EdgeConfigTemplateVersionData, EdgeConfigTemplateVersionResource>(new ConfigTemplateVersionsGetByConfigTemplateCollectionResultOfT(
+                _configTemplateVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeConfigTemplateVersionCollection.GetAll"), data => new EdgeConfigTemplateVersionResource(Client, data));
         }
 
         /// <summary>

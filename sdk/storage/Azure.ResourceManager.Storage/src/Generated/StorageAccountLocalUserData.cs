@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     Properties = new LocalUserProperties();
                 }
-                Properties.HasSharedKey = value.Value;
+                Properties.HasSharedKey = value;
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     Properties = new LocalUserProperties();
                 }
-                Properties.HasSshKey = value.Value;
+                Properties.HasSshKey = value;
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     Properties = new LocalUserProperties();
                 }
-                Properties.HasSshPassword = value.Value;
+                Properties.HasSshPassword = value;
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     Properties = new LocalUserProperties();
                 }
-                Properties.GroupId = value.Value;
+                Properties.GroupId = value;
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     Properties = new LocalUserProperties();
                 }
-                Properties.IsAclAuthorizationAllowed = value.Value;
+                Properties.IsAclAuthorizationAllowed = value;
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     Properties = new LocalUserProperties();
                 }
-                Properties.IsNfsV3Enabled = value.Value;
+                Properties.IsNfsV3Enabled = value;
             }
         }
     }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
@@ -22,81 +21,30 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resourceCount"> Number of VMs to be created. </param>
         public ResourceProvisionPayload(int resourceCount)
         {
-            BaseProfile = new ChangeTrackingDictionary<string, BinaryData>();
-            ResourceOverrides = new ChangeTrackingList<IDictionary<string, BinaryData>>();
+            VirtualMachineOverrides = new ChangeTrackingList<BulkVmConfiguration>();
             ResourceCount = resourceCount;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceProvisionPayload"/>. </summary>
-        /// <param name="baseProfile"> JSON object that contains VM properties that are common across all VMs in this batch (if you want to create 100 VMs in this request, and they all have same vmSize, then include vmSize in baseProfile). </param>
-        /// <param name="resourceOverrides"> JSON array, that contains VM properties that should to be overridden for each VM in the batch (if you want to create 100 VMs, they all need a distinct computerName property, you pass computerNames for each VM in batch in this array), service will merge baseProfile with VM specific overrides and create a merged VMProfile. </param>
+        /// <param name="virtualMachineBaseProfile"> Virtual machine profile object that contains VM properties that are common across all VMs in this batch  (if you want to create 100 VMs in this request, and they all have same vmSize, then include vmSize in baseProfile). </param>
+        /// <param name="virtualMachineOverrides"> Virtual machine profile array that contains VM properties that needs to be overridden for each VM in the batch (if you want to create 100 VMs, they all need a distinct computerName property, you pass computerNames for each VM in batch in this array), service will merge baseProfile with VM specific overrides and create a merged VMProfile. </param>
         /// <param name="resourceCount"> Number of VMs to be created. </param>
         /// <param name="resourcePrefix"> if resourceOverrides doesn't contain "name", service will create name based of prefix and ResourceCount e.g. resourceprefix-0,resourceprefix-1.. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProvisionPayload(IDictionary<string, BinaryData> baseProfile, IList<IDictionary<string, BinaryData>> resourceOverrides, int resourceCount, string resourcePrefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProvisionPayload(BulkVmConfiguration virtualMachineBaseProfile, IList<BulkVmConfiguration> virtualMachineOverrides, int resourceCount, string resourcePrefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BaseProfile = baseProfile;
-            ResourceOverrides = resourceOverrides;
+            VirtualMachineBaseProfile = virtualMachineBaseProfile;
+            VirtualMachineOverrides = virtualMachineOverrides;
             ResourceCount = resourceCount;
             ResourcePrefix = resourcePrefix;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// JSON object that contains VM properties that are common across all VMs in this batch (if you want to create 100 VMs in this request, and they all have same vmSize, then include vmSize in baseProfile)
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> BaseProfile { get; }
+        /// <summary> Virtual machine profile object that contains VM properties that are common across all VMs in this batch  (if you want to create 100 VMs in this request, and they all have same vmSize, then include vmSize in baseProfile). </summary>
+        public BulkVmConfiguration VirtualMachineBaseProfile { get; set; }
 
-        /// <summary>
-        /// JSON array, that contains VM properties that should to be overridden for each VM in the batch (if you want to create 100 VMs, they all need a distinct computerName property, you pass computerNames for each VM in batch in this array), service will merge baseProfile with VM specific overrides and create a merged VMProfile.
-        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IList<IDictionary<string, BinaryData>> ResourceOverrides { get; }
+        /// <summary> Virtual machine profile array that contains VM properties that needs to be overridden for each VM in the batch (if you want to create 100 VMs, they all need a distinct computerName property, you pass computerNames for each VM in batch in this array), service will merge baseProfile with VM specific overrides and create a merged VMProfile. </summary>
+        public IList<BulkVmConfiguration> VirtualMachineOverrides { get; }
 
         /// <summary> Number of VMs to be created. </summary>
         public int ResourceCount { get; }

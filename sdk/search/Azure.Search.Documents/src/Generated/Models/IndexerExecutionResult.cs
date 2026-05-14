@@ -26,8 +26,6 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of <see cref="IndexerExecutionResult"/>. </summary>
         /// <param name="status"> The outcome of this indexer execution. </param>
-        /// <param name="statusDetail"> The outcome of this indexer execution. </param>
-        /// <param name="mode"> The mode the indexer is running in. </param>
         /// <param name="errorMessage"> The error message indicating the top-level error, if any. </param>
         /// <param name="startTime"> The start time of this indexer execution. </param>
         /// <param name="endTime"> The end time of this indexer execution, if the execution has already completed. </param>
@@ -38,11 +36,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="initialTrackingState"> Change tracking state with which an indexer execution started. </param>
         /// <param name="finalTrackingState"> Change tracking state with which an indexer execution finished. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexerExecutionResult(IndexerExecutionStatus status, IndexerExecutionStatusDetail? statusDetail, IndexingMode? mode, string errorMessage, DateTimeOffset? startTime, DateTimeOffset? endTime, IReadOnlyList<SearchIndexerError> errors, IReadOnlyList<SearchIndexerWarning> warnings, int itemCount, int failedItemCount, string initialTrackingState, string finalTrackingState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexerExecutionResult(IndexerExecutionStatus status, string errorMessage, DateTimeOffset? startTime, DateTimeOffset? endTime, IReadOnlyList<SearchIndexerError> errors, IReadOnlyList<SearchIndexerWarning> warnings, int itemCount, int failedItemCount, string initialTrackingState, string finalTrackingState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
-            StatusDetail = statusDetail;
-            Mode = mode;
             ErrorMessage = errorMessage;
             StartTime = startTime;
             EndTime = endTime;
@@ -57,12 +53,6 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> The outcome of this indexer execution. </summary>
         public IndexerExecutionStatus Status { get; }
-
-        /// <summary> The outcome of this indexer execution. </summary>
-        public IndexerExecutionStatusDetail? StatusDetail { get; }
-
-        /// <summary> The mode the indexer is running in. </summary>
-        public IndexingMode? Mode { get; }
 
         /// <summary> The error message indicating the top-level error, if any. </summary>
         public string ErrorMessage { get; }

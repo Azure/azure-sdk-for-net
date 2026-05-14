@@ -292,7 +292,8 @@ namespace Azure.ResourceManager.Batch
                 Id.ResourceGroupName,
                 Id.Name,
                 maxresults,
-                context), data => new BatchApplicationResource(Client, data));
+                context,
+                "BatchApplicationCollection.GetAll"), data => new BatchApplicationResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +328,8 @@ namespace Azure.ResourceManager.Batch
                 Id.ResourceGroupName,
                 Id.Name,
                 maxresults,
-                context), data => new BatchApplicationResource(Client, data));
+                context,
+                "BatchApplicationCollection.GetAll"), data => new BatchApplicationResource(Client, data));
         }
 
         /// <summary>

@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerRegistryImportPipelineData, ContainerRegistryImportPipelineResource>(new ImportPipelinesGetAllAsyncCollectionResultOfT(_importPipelinesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerRegistryImportPipelineResource(Client, data));
+            return new AsyncPageableWrapper<ContainerRegistryImportPipelineData, ContainerRegistryImportPipelineResource>(new ImportPipelinesGetAllAsyncCollectionResultOfT(
+                _importPipelinesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerRegistryImportPipelineCollection.GetAll"), data => new ContainerRegistryImportPipelineResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerRegistryImportPipelineData, ContainerRegistryImportPipelineResource>(new ImportPipelinesGetAllCollectionResultOfT(_importPipelinesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerRegistryImportPipelineResource(Client, data));
+            return new PageableWrapper<ContainerRegistryImportPipelineData, ContainerRegistryImportPipelineResource>(new ImportPipelinesGetAllCollectionResultOfT(
+                _importPipelinesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerRegistryImportPipelineCollection.GetAll"), data => new ContainerRegistryImportPipelineResource(Client, data));
         }
 
         /// <summary>

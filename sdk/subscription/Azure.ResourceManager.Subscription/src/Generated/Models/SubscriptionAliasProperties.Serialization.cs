@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    public partial class SubscriptionAliasProperties : IUtf8JsonSerializable, IJsonModel<SubscriptionAliasProperties>
+    /// <summary> Put subscription creation result properties. </summary>
+    public partial class SubscriptionAliasProperties : IJsonModel<SubscriptionAliasProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionAliasProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SubscriptionAliasProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionAliasProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSubscriptionAliasProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SubscriptionAliasProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionAliasProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSubscriptionContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SubscriptionAliasProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SubscriptionAliasProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SubscriptionAliasProperties IPersistableModel<SubscriptionAliasProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SubscriptionAliasProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SubscriptionAliasProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionAliasProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionAliasProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SubscriptionAliasProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
@@ -44,7 +84,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -96,19 +136,24 @@ namespace Azure.ResourceManager.Subscription.Models
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -117,22 +162,27 @@ namespace Azure.ResourceManager.Subscription.Models
             }
         }
 
-        SubscriptionAliasProperties IJsonModel<SubscriptionAliasProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SubscriptionAliasProperties IJsonModel<SubscriptionAliasProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SubscriptionAliasProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionAliasProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionAliasProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SubscriptionAliasProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSubscriptionAliasProperties(document.RootElement, options);
         }
 
-        internal static SubscriptionAliasProperties DeserializeSubscriptionAliasProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SubscriptionAliasProperties DeserializeSubscriptionAliasProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -140,159 +190,133 @@ namespace Azure.ResourceManager.Subscription.Models
             string subscriptionId = default;
             string displayName = default;
             SubscriptionProvisioningState? provisioningState = default;
-            Uri acceptOwnershipUrl = default;
+            Uri acceptOwnershipUri = default;
             AcceptOwnershipState? acceptOwnershipState = default;
             string billingScope = default;
             SubscriptionWorkload? workload = default;
             string resellerId = default;
             string subscriptionOwnerId = default;
             string managementGroupId = default;
-            DateTimeOffset? createdTime = default;
+            DateTimeOffset? createdOn = default;
             IReadOnlyDictionary<string, string> tags = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("subscriptionId"u8))
+                if (prop.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = property.Value.GetString();
+                    subscriptionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    displayName = property.Value.GetString();
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new SubscriptionProvisioningState(property.Value.GetString());
+                    provisioningState = new SubscriptionProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("acceptOwnershipUrl"u8))
+                if (prop.NameEquals("acceptOwnershipUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    acceptOwnershipUrl = new Uri(property.Value.GetString());
+                    acceptOwnershipUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (property.NameEquals("acceptOwnershipState"u8))
+                if (prop.NameEquals("acceptOwnershipState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    acceptOwnershipState = new AcceptOwnershipState(property.Value.GetString());
+                    acceptOwnershipState = new AcceptOwnershipState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("billingScope"u8))
+                if (prop.NameEquals("billingScope"u8))
                 {
-                    billingScope = property.Value.GetString();
+                    billingScope = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workload"u8))
+                if (prop.NameEquals("workload"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    workload = new SubscriptionWorkload(property.Value.GetString());
+                    workload = new SubscriptionWorkload(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resellerId"u8))
+                if (prop.NameEquals("resellerId"u8))
                 {
-                    resellerId = property.Value.GetString();
+                    resellerId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionOwnerId"u8))
+                if (prop.NameEquals("subscriptionOwnerId"u8))
                 {
-                    subscriptionOwnerId = property.Value.GetString();
+                    subscriptionOwnerId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managementGroupId"u8))
+                if (prop.NameEquals("managementGroupId"u8))
                 {
-                    managementGroupId = property.Value.GetString();
+                    managementGroupId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdTime"u8))
+                if (prop.NameEquals("createdTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createdTime = property.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SubscriptionAliasProperties(
                 subscriptionId,
                 displayName,
                 provisioningState,
-                acceptOwnershipUrl,
+                acceptOwnershipUri,
                 acceptOwnershipState,
                 billingScope,
                 workload,
                 resellerId,
                 subscriptionOwnerId,
                 managementGroupId,
-                createdTime,
+                createdOn,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<SubscriptionAliasProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionAliasProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSubscriptionContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SubscriptionAliasProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SubscriptionAliasProperties IPersistableModel<SubscriptionAliasProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionAliasProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSubscriptionAliasProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SubscriptionAliasProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SubscriptionAliasProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

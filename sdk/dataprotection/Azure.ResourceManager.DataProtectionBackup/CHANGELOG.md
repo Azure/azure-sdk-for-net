@@ -1,14 +1,10 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.8.0 (2026-05-11)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded the api-version to 2026-03-01.
 
 ## 1.7.1 (2026-03-20)
 

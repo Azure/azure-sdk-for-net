@@ -20,11 +20,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BackupInstanceProtectionStatusDetails BackupInstanceProtectionStatusDetails(ResponseError errorDetails, BackupInstanceProtectionStatus? status)
         {
-            return new BackupInstanceProtectionStatusDetails
-            {
-                ProtectionStatusErrorDetails = Models.DataProtectionBackupUserFacingError.ToUserFacingError(errorDetails),
-                Status = status
-            };
+            return new BackupInstanceProtectionStatusDetails(
+                Models.DataProtectionBackupUserFacingError.ToUserFacingError(errorDetails),
+                status,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.BackupRestoreContent" />. </summary>
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.BackupRestoreContent" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BackupRestoreContent BackupRestoreContent(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, DataProtectionIdentityDetails identityDetails)
-            => BackupRestoreContent(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId , null, identityDetails);
+            => BackupRestoreContent(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId, null, identityDetails);
     }
 }
 

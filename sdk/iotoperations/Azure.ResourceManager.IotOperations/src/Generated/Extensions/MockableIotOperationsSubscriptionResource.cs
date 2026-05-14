@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.IotOperations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotOperationsInstanceData, IotOperationsInstanceResource>(new InstanceGetBySubscriptionAsyncCollectionResultOfT(InstanceRestClient, Guid.Parse(Id.SubscriptionId), context), data => new IotOperationsInstanceResource(Client, data));
+            return new AsyncPageableWrapper<IotOperationsInstanceData, IotOperationsInstanceResource>(new InstanceGetBySubscriptionAsyncCollectionResultOfT(InstanceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotOperationsSubscriptionResource.GetIotOperationsInstances"), data => new IotOperationsInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.IotOperations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotOperationsInstanceData, IotOperationsInstanceResource>(new InstanceGetBySubscriptionCollectionResultOfT(InstanceRestClient, Guid.Parse(Id.SubscriptionId), context), data => new IotOperationsInstanceResource(Client, data));
+            return new PageableWrapper<IotOperationsInstanceData, IotOperationsInstanceResource>(new InstanceGetBySubscriptionCollectionResultOfT(InstanceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotOperationsSubscriptionResource.GetIotOperationsInstances"), data => new IotOperationsInstanceResource(Client, data));
         }
     }
 }

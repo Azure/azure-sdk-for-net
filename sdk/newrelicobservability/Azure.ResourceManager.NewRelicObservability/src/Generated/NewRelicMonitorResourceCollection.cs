@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NewRelicMonitorResourceData, NewRelicMonitorResource>(new MonitorsGetByResourceGroupAsyncCollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new NewRelicMonitorResource(Client, data));
+            return new AsyncPageableWrapper<NewRelicMonitorResourceData, NewRelicMonitorResource>(new MonitorsGetByResourceGroupAsyncCollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "NewRelicMonitorResourceCollection.GetAll"), data => new NewRelicMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NewRelicMonitorResourceData, NewRelicMonitorResource>(new MonitorsGetByResourceGroupCollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new NewRelicMonitorResource(Client, data));
+            return new PageableWrapper<NewRelicMonitorResourceData, NewRelicMonitorResource>(new MonitorsGetByResourceGroupCollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "NewRelicMonitorResourceCollection.GetAll"), data => new NewRelicMonitorResource(Client, data));
         }
 
         /// <summary>

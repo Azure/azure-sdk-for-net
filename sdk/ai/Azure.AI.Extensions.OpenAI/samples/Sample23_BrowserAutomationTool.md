@@ -68,7 +68,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are an Agent helping with browser automation tasks.\n" +
     "You can answer questions, provide information, and assist with various tasks\n" +
     "related to web browsing using the Browser Automation tool available to you.",
-    Tools = {playwrightTool}
+    Tools = { playwrightTool }
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",

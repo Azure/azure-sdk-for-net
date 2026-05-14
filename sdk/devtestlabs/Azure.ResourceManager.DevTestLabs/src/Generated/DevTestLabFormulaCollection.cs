@@ -308,7 +308,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabFormulaResource(Client, data));
+                context,
+                "DevTestLabFormulaCollection.GetAll"), data => new DevTestLabFormulaResource(Client, data));
         }
 
         /// <summary>
@@ -349,7 +350,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabFormulaResource(Client, data));
+                context,
+                "DevTestLabFormulaCollection.GetAll"), data => new DevTestLabFormulaResource(Client, data));
         }
 
         /// <summary>

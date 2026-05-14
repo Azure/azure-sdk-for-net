@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SignalRCustomCertificateData, SignalRCustomCertificateResource>(new CustomCertificatesGetAllAsyncCollectionResultOfT(_customCertificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SignalRCustomCertificateResource(Client, data));
+            return new AsyncPageableWrapper<SignalRCustomCertificateData, SignalRCustomCertificateResource>(new CustomCertificatesGetAllAsyncCollectionResultOfT(
+                _customCertificatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRCustomCertificateCollection.GetAll"), data => new SignalRCustomCertificateResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SignalRCustomCertificateData, SignalRCustomCertificateResource>(new CustomCertificatesGetAllCollectionResultOfT(_customCertificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SignalRCustomCertificateResource(Client, data));
+            return new PageableWrapper<SignalRCustomCertificateData, SignalRCustomCertificateResource>(new CustomCertificatesGetAllCollectionResultOfT(
+                _customCertificatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRCustomCertificateCollection.GetAll"), data => new SignalRCustomCertificateResource(Client, data));
         }
 
         /// <summary>

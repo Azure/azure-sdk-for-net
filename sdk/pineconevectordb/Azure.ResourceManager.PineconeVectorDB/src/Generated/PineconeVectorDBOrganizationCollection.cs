@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PineconeVectorDBOrganizationData, PineconeVectorDBOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PineconeVectorDBOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<PineconeVectorDBOrganizationData, PineconeVectorDBOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PineconeVectorDBOrganizationCollection.GetAll"), data => new PineconeVectorDBOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PineconeVectorDBOrganizationData, PineconeVectorDBOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PineconeVectorDBOrganizationResource(Client, data));
+            return new PageableWrapper<PineconeVectorDBOrganizationData, PineconeVectorDBOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PineconeVectorDBOrganizationCollection.GetAll"), data => new PineconeVectorDBOrganizationResource(Client, data));
         }
 
         /// <summary>

@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StandbyContainerGroupPoolRuntimeViewData, StandbyContainerGroupPoolRuntimeViewResource>(new StandbyContainerGroupPoolRuntimeViewsGetByStandbyPoolAsyncCollectionResultOfT(_standbyContainerGroupPoolRuntimeViewsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new StandbyContainerGroupPoolRuntimeViewResource(Client, data));
+            return new AsyncPageableWrapper<StandbyContainerGroupPoolRuntimeViewData, StandbyContainerGroupPoolRuntimeViewResource>(new StandbyContainerGroupPoolRuntimeViewsGetByStandbyPoolAsyncCollectionResultOfT(
+                _standbyContainerGroupPoolRuntimeViewsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StandbyContainerGroupPoolRuntimeViewCollection.GetAll"), data => new StandbyContainerGroupPoolRuntimeViewResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StandbyContainerGroupPoolRuntimeViewData, StandbyContainerGroupPoolRuntimeViewResource>(new StandbyContainerGroupPoolRuntimeViewsGetByStandbyPoolCollectionResultOfT(_standbyContainerGroupPoolRuntimeViewsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new StandbyContainerGroupPoolRuntimeViewResource(Client, data));
+            return new PageableWrapper<StandbyContainerGroupPoolRuntimeViewData, StandbyContainerGroupPoolRuntimeViewResource>(new StandbyContainerGroupPoolRuntimeViewsGetByStandbyPoolCollectionResultOfT(
+                _standbyContainerGroupPoolRuntimeViewsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StandbyContainerGroupPoolRuntimeViewCollection.GetAll"), data => new StandbyContainerGroupPoolRuntimeViewResource(Client, data));
         }
 
         /// <summary>

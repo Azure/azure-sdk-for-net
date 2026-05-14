@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistrySchemaData, DeviceRegistrySchemaResource>(new SchemasGetBySchemaRegistryAsyncCollectionResultOfT(_schemasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DeviceRegistrySchemaResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistrySchemaData, DeviceRegistrySchemaResource>(new SchemasGetBySchemaRegistryAsyncCollectionResultOfT(
+                _schemasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DeviceRegistrySchemaCollection.GetAll"), data => new DeviceRegistrySchemaResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistrySchemaData, DeviceRegistrySchemaResource>(new SchemasGetBySchemaRegistryCollectionResultOfT(_schemasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DeviceRegistrySchemaResource(Client, data));
+            return new PageableWrapper<DeviceRegistrySchemaData, DeviceRegistrySchemaResource>(new SchemasGetBySchemaRegistryCollectionResultOfT(
+                _schemasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DeviceRegistrySchemaCollection.GetAll"), data => new DeviceRegistrySchemaResource(Client, data));
         }
 
         /// <summary>

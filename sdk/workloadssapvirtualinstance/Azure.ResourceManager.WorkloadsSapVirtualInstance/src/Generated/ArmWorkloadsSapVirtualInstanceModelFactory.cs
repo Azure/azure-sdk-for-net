@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 tags,
                 location,
                 environment is null && sapProduct is null && managedResourcesNetworkAccessType is null && configuration is null && status is null && health is null && state is null && provisioningState is null && managedResourceGroupName is null && errorsProperties is null ? default : new SapVirtualInstanceProperties(
-                    environment.Value,
-                    sapProduct.Value,
+                    environment.GetValueOrDefault(),
+                    sapProduct.GetValueOrDefault(),
                     managedResourcesNetworkAccessType,
                     configuration,
                     new ManagedRGConfiguration(managedResourceGroupName, null),

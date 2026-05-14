@@ -24,6 +24,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(sampleEndpoint, sampleCredential);
 
             #region Snippet:Sample18_ConversationsAuthoring_UnassignProjectResources
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             // Set project name and create client for the project
             string sampleProjectName = "{projectName}";
             // Define assigned resource ID to be unassigned
@@ -36,7 +38,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             };
 
             // Start the operation
-            Operation sampleOperation = client.UnassignProjectResources(
+            Operation sampleOperation = projectClient.UnassignProjectResources(
                 WaitUntil.Started,
                 sampleProjectName,
                 sampleUnassignIds
@@ -66,6 +68,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(sampleEndpoint, sampleCredential);
 
             #region Snippet:Sample18_ConversationsAuthoring_UnassignProjectResourcesAsync
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             // Set project name and create client for the project
             string sampleProjectName = "{projectName}";
             // Define assigned resource ID to be unassigned
@@ -78,7 +82,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             };
 
             // Call the operation
-            Operation sampleOperation = await client.UnassignProjectResourcesAsync(
+            Operation sampleOperation = await projectClient.UnassignProjectResourcesAsync(
                 WaitUntil.Started,
                 sampleProjectName,
                 sampleUnassignIds

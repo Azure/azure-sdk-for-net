@@ -285,7 +285,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticOpenAIIntegrationData, ElasticOpenAIIntegrationResource>(new OpenAIIntegrationRPModelsGetAllAsyncCollectionResultOfT(_openAIIntegrationRPModelsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ElasticOpenAIIntegrationResource(Client, data));
+            return new AsyncPageableWrapper<ElasticOpenAIIntegrationData, ElasticOpenAIIntegrationResource>(new OpenAIIntegrationRPModelsGetAllAsyncCollectionResultOfT(
+                _openAIIntegrationRPModelsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticOpenAIIntegrationCollection.GetAll"), data => new ElasticOpenAIIntegrationResource(Client, data));
         }
 
         /// <summary>
@@ -313,7 +319,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticOpenAIIntegrationData, ElasticOpenAIIntegrationResource>(new OpenAIIntegrationRPModelsGetAllCollectionResultOfT(_openAIIntegrationRPModelsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ElasticOpenAIIntegrationResource(Client, data));
+            return new PageableWrapper<ElasticOpenAIIntegrationData, ElasticOpenAIIntegrationResource>(new OpenAIIntegrationRPModelsGetAllCollectionResultOfT(
+                _openAIIntegrationRPModelsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticOpenAIIntegrationCollection.GetAll"), data => new ElasticOpenAIIntegrationResource(Client, data));
         }
 
         /// <summary>

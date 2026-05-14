@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.KubernetesConfiguration.Extensions.Mocking;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
 {
@@ -23,12 +22,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
         private static MockableKubernetesConfigurationExtensionsArmClient GetMockableKubernetesConfigurationExtensionsArmClient(ArmClient client)
         {
             return client.GetCachedClient(client0 => new MockableKubernetesConfigurationExtensionsArmClient(client0, ResourceIdentifier.Root));
-        }
-
-        /// <param name="resourceGroupResource"></param>
-        private static MockableKubernetesConfigurationExtensionsResourceGroupResource GetMockableKubernetesConfigurationExtensionsResourceGroupResource(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient(client => new MockableKubernetesConfigurationExtensionsResourceGroupResource(client, resourceGroupResource.Id));
         }
 
         /// <summary>
@@ -50,67 +43,61 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
         }
 
         /// <summary>
-        /// Gets a collection of KubernetesClusterExtensions in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of <see cref="KubernetesClusterExtensionCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionsResourceGroupResource.GetKubernetesClusterExtensions(string, string, string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionsArmClient.GetKubernetesClusterExtensions(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="clusterRp"> The clusterRp for the resource. </param>
-        /// <param name="clusterResourceName"> The clusterResourceName for the resource. </param>
-        /// <param name="clusterName"> The clusterName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of KubernetesClusterExtensions and their operations over a KubernetesClusterExtensionResource. </returns>
-        public static KubernetesClusterExtensionCollection GetKubernetesClusterExtensions(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="KubernetesClusterExtensionResource"/> objects. </returns>
+        public static KubernetesClusterExtensionCollection GetKubernetesClusterExtensions(this ArmClient client, ResourceIdentifier scope)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableKubernetesConfigurationExtensionsResourceGroupResource(resourceGroupResource).GetKubernetesClusterExtensions(clusterRp, clusterResourceName, clusterName);
+            return GetMockableKubernetesConfigurationExtensionsArmClient(client).GetKubernetesClusterExtensions(scope);
         }
 
         /// <summary>
         /// Gets Kubernetes Cluster Extension.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionsResourceGroupResource.GetKubernetesClusterExtensionAsync(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionsArmClient.GetKubernetesClusterExtension(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="clusterRp"> The clusterRp for the resource. </param>
-        /// <param name="clusterResourceName"> The clusterResourceName for the resource. </param>
-        /// <param name="clusterName"> The clusterName for the resource. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="extensionName"> Name of the Extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<KubernetesClusterExtensionResource>> GetKubernetesClusterExtensionAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string extensionName, CancellationToken cancellationToken = default)
+        public static Response<KubernetesClusterExtensionResource> GetKubernetesClusterExtension(this ArmClient client, ResourceIdentifier scope, string extensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableKubernetesConfigurationExtensionsResourceGroupResource(resourceGroupResource).GetKubernetesClusterExtensionAsync(clusterRp, clusterResourceName, clusterName, extensionName, cancellationToken).ConfigureAwait(false);
+            return GetMockableKubernetesConfigurationExtensionsArmClient(client).GetKubernetesClusterExtension(scope, extensionName, cancellationToken);
         }
 
         /// <summary>
         /// Gets Kubernetes Cluster Extension.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionsResourceGroupResource.GetKubernetesClusterExtension(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionsArmClient.GetKubernetesClusterExtensionAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="clusterRp"> The clusterRp for the resource. </param>
-        /// <param name="clusterResourceName"> The clusterResourceName for the resource. </param>
-        /// <param name="clusterName"> The clusterName for the resource. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="extensionName"> Name of the Extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<KubernetesClusterExtensionResource> GetKubernetesClusterExtension(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string extensionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<KubernetesClusterExtensionResource>> GetKubernetesClusterExtensionAsync(this ArmClient client, ResourceIdentifier scope, string extensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableKubernetesConfigurationExtensionsResourceGroupResource(resourceGroupResource).GetKubernetesClusterExtension(clusterRp, clusterResourceName, clusterName, extensionName, cancellationToken);
+            return await GetMockableKubernetesConfigurationExtensionsArmClient(client).GetKubernetesClusterExtensionAsync(scope, extensionName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

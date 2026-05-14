@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KeyVaultPrivateEndpointConnectionData, KeyVaultPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByResourceAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new KeyVaultPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<KeyVaultPrivateEndpointConnectionData, KeyVaultPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByResourceAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "KeyVaultPrivateEndpointConnectionCollection.GetAll"), data => new KeyVaultPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KeyVaultPrivateEndpointConnectionData, KeyVaultPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByResourceCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new KeyVaultPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<KeyVaultPrivateEndpointConnectionData, KeyVaultPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByResourceCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "KeyVaultPrivateEndpointConnectionCollection.GetAll"), data => new KeyVaultPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

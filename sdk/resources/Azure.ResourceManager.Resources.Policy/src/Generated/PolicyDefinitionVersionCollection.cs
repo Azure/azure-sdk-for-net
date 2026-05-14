@@ -288,7 +288,13 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyDefinitionVersionData, PolicyDefinitionVersionResource>(new PolicyDefinitionVersionsGetAllAsyncCollectionResultOfT(_policyDefinitionVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, top, context), data => new PolicyDefinitionVersionResource(Client, data));
+            return new AsyncPageableWrapper<PolicyDefinitionVersionData, PolicyDefinitionVersionResource>(new PolicyDefinitionVersionsGetAllAsyncCollectionResultOfT(
+                _policyDefinitionVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.Name,
+                top,
+                context,
+                "PolicyDefinitionVersionCollection.GetAll"), data => new PolicyDefinitionVersionResource(Client, data));
         }
 
         /// <summary>
@@ -317,7 +323,13 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyDefinitionVersionData, PolicyDefinitionVersionResource>(new PolicyDefinitionVersionsGetAllCollectionResultOfT(_policyDefinitionVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, top, context), data => new PolicyDefinitionVersionResource(Client, data));
+            return new PageableWrapper<PolicyDefinitionVersionData, PolicyDefinitionVersionResource>(new PolicyDefinitionVersionsGetAllCollectionResultOfT(
+                _policyDefinitionVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.Name,
+                top,
+                context,
+                "PolicyDefinitionVersionCollection.GetAll"), data => new PolicyDefinitionVersionResource(Client, data));
         }
 
         /// <summary>

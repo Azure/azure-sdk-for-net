@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new HostPoolPrivateEndpointConnectionResource(Client, data));
+                context,
+                "HostPoolPrivateEndpointConnectionCollection.GetAll"), data => new HostPoolPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +339,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new HostPoolPrivateEndpointConnectionResource(Client, data));
+                context,
+                "HostPoolPrivateEndpointConnectionCollection.GetAll"), data => new HostPoolPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

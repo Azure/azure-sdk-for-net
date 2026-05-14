@@ -82,6 +82,8 @@ internal static partial class ToolChoiceParamValidator
         "allowed_tools" => ToolChoiceAllowedValidator.Validate(element),
         "apply_patch" => SpecificApplyPatchParamValidator.Validate(element),
         "code_interpreter" => ToolChoiceCodeInterpreterValidator.Validate(element),
+        "computer" => ToolChoiceComputerValidator.Validate(element),
+        "computer_use" => ToolChoiceComputerUseValidator.Validate(element),
         "computer_use_preview" => ToolChoiceComputerUsePreviewValidator.Validate(element),
         "custom" => ToolChoiceCustomValidator.Validate(element),
         "file_search" => ToolChoiceFileSearchValidator.Validate(element),

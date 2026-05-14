@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.Storage
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new StorageTaskAssignmentResource(Client, data));
+                context,
+                "StorageTaskAssignmentCollection.GetAll"), data => new StorageTaskAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.Storage
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new StorageTaskAssignmentResource(Client, data));
+                context,
+                "StorageTaskAssignmentCollection.GetAll"), data => new StorageTaskAssignmentResource(Client, data));
         }
 
         /// <summary>

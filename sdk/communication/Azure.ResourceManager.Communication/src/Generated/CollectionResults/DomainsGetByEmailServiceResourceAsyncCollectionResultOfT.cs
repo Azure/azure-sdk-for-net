@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Communication
         private readonly string _resourceGroupName;
         private readonly string _emailServiceName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DomainsGetByEmailServiceResourceAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Domains client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.Communication
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DomainsGetByEmailServiceResourceAsyncCollectionResultOfT(Domains client, Guid subscriptionId, string resourceGroupName, string emailServiceName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DomainsGetByEmailServiceResourceAsyncCollectionResultOfT(Domains client, Guid subscriptionId, string resourceGroupName, string emailServiceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _emailServiceName = emailServiceName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DomainsGetByEmailServiceResourceAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.Communication
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByEmailServiceResourceRequest(nextLink, _subscriptionId, _resourceGroupName, _emailServiceName, _context) : _client.CreateGetByEmailServiceResourceRequest(_subscriptionId, _resourceGroupName, _emailServiceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CommunicationDomainResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

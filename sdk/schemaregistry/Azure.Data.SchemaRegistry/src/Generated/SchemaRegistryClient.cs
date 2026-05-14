@@ -333,18 +333,18 @@ namespace Azure.Data.SchemaRegistry
         /// </summary>
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="contentType"> The content type for given schema. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The content type for given schema. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetSchemaPropertiesByContent(string groupName, string schemaName, string contentType, RequestContent content, RequestContext context = null)
+        internal virtual Response GetSchemaPropertiesByContent(string groupName, string schemaName, RequestContent content, string contentType, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaPropertiesByContent");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSchemaPropertiesByContentRequest(groupName, schemaName, contentType, content, context);
+                using HttpMessage message = CreateGetSchemaPropertiesByContentRequest(groupName, schemaName, content, contentType, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -364,18 +364,18 @@ namespace Azure.Data.SchemaRegistry
         /// </summary>
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="contentType"> The content type for given schema. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The content type for given schema. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSchemaPropertiesByContentAsync(string groupName, string schemaName, string contentType, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> GetSchemaPropertiesByContentAsync(string groupName, string schemaName, RequestContent content, string contentType, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaPropertiesByContent");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSchemaPropertiesByContentRequest(groupName, schemaName, contentType, content, context);
+                using HttpMessage message = CreateGetSchemaPropertiesByContentRequest(groupName, schemaName, content, contentType, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -394,7 +394,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response GetSchemaPropertiesByContent(string groupName, string schemaName, SchemaContentTypeValues contentType, BinaryData schemaContent, CancellationToken cancellationToken = default)
         {
-            return GetSchemaPropertiesByContent(groupName, schemaName, contentType.ToSerialString(), RequestContent.Create(schemaContent), cancellationToken.ToRequestContext());
+            return GetSchemaPropertiesByContent(groupName, schemaName, RequestContent.Create(schemaContent), contentType.ToSerialString(), cancellationToken.ToRequestContext());
         }
 
         /// <summary> Gets the properties referencing an existing schema within the specified schema group, as matched by schema content comparison. </summary>
@@ -406,7 +406,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> GetSchemaPropertiesByContentAsync(string groupName, string schemaName, SchemaContentTypeValues contentType, BinaryData schemaContent, CancellationToken cancellationToken = default)
         {
-            return await GetSchemaPropertiesByContentAsync(groupName, schemaName, contentType.ToSerialString(), RequestContent.Create(schemaContent), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await GetSchemaPropertiesByContentAsync(groupName, schemaName, RequestContent.Create(schemaContent), contentType.ToSerialString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -419,18 +419,18 @@ namespace Azure.Data.SchemaRegistry
         /// </summary>
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="contentType"> The content type for given schema. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The content type for given schema. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response RegisterSchema(string groupName, string schemaName, string contentType, RequestContent content, RequestContext context = null)
+        internal virtual Response RegisterSchema(string groupName, string schemaName, RequestContent content, string contentType, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.RegisterSchema");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRegisterSchemaRequest(groupName, schemaName, contentType, content, context);
+                using HttpMessage message = CreateRegisterSchemaRequest(groupName, schemaName, content, contentType, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -450,18 +450,18 @@ namespace Azure.Data.SchemaRegistry
         /// </summary>
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="contentType"> The content type for given schema. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The content type for given schema. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> RegisterSchemaAsync(string groupName, string schemaName, string contentType, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> RegisterSchemaAsync(string groupName, string schemaName, RequestContent content, string contentType, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.RegisterSchema");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRegisterSchemaRequest(groupName, schemaName, contentType, content, context);
+                using HttpMessage message = CreateRegisterSchemaRequest(groupName, schemaName, content, contentType, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -480,7 +480,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response RegisterSchema(string groupName, string schemaName, SchemaContentTypeValues contentType, BinaryData schemaContent, CancellationToken cancellationToken = default)
         {
-            return RegisterSchema(groupName, schemaName, contentType.ToSerialString(), RequestContent.Create(schemaContent), cancellationToken.ToRequestContext());
+            return RegisterSchema(groupName, schemaName, RequestContent.Create(schemaContent), contentType.ToSerialString(), cancellationToken.ToRequestContext());
         }
 
         /// <summary> Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1. </summary>
@@ -492,7 +492,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> RegisterSchemaAsync(string groupName, string schemaName, SchemaContentTypeValues contentType, BinaryData schemaContent, CancellationToken cancellationToken = default)
         {
-            return await RegisterSchemaAsync(groupName, schemaName, contentType.ToSerialString(), RequestContent.Create(schemaContent), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await RegisterSchemaAsync(groupName, schemaName, RequestContent.Create(schemaContent), contentType.ToSerialString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

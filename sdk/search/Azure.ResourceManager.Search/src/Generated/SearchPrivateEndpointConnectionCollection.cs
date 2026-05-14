@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context), data => new SearchPrivateEndpointConnectionResource(Client, data));
+                context,
+                "SearchPrivateEndpointConnectionCollection.GetAll"), data => new SearchPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -334,7 +335,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context), data => new SearchPrivateEndpointConnectionResource(Client, data));
+                context,
+                "SearchPrivateEndpointConnectionCollection.GetAll"), data => new SearchPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
