@@ -98,7 +98,7 @@
 //            Console.WriteLine($"Create Succeeded on id: {result.Data.Id}");
 
 //            // get the created resource
-//            NetAppCacheResource netAppCache = Client.GetNetAppCacheResource(result.Data.Id);
+//            NetAppCacheResource netAppCache = Client.GetCacheResource(result.Data.Id);
 //            // invoke the operation
 //            NetAppCacheResource cacheResult = await netAppCache.GetAsync();
 //            string cacheResourceName = cacheResult.Data.Name;
@@ -175,7 +175,7 @@
 //            Console.WriteLine($"Create Succeeded on id: {result.Data.Id}");
 
 //            // get the created resource
-//            NetAppCacheResource netAppCache = Client.GetNetAppCacheResource(result.Data.Id);
+//            NetAppCacheResource netAppCache = Client.GetCacheResource(result.Data.Id);
 //            // invoke the operation
 //            NetAppCacheResource cacheResult = await netAppCache.GetAsync();
 //            Assert.IsNotNull(cacheResult.Data);
@@ -183,7 +183,7 @@
 //            Console.WriteLine($"GET Succeeded on id: {cacheResult.Data.Id}");
 
 //            // invoke the operation
-//            NetAppCachePatch patch = new NetAppCachePatch
+//            CachePatch patch = new CachePatch
 //            {
 //                Tags =
 //                {
@@ -199,7 +199,7 @@
 //            updateResultData.Id.Should().Be(cacheResult.Data.Id);
 //            updateResult.Data.Name.Should().Be(cacheResult.Data.Name);
 //            updateResult.Data.Properties.ProvisioningState.Should().Be(NetAppProvisioningState.Succeeded);
-//            //updateResultData.Data.Permissions.Should().Be(NetAppBucketPatchPermission.ReadWrite);
+//            //updateResultData.Data.Permissions.Should().Be(BucketPatchPermissions.ReadWrite);
 //        }
 //    }
 //}

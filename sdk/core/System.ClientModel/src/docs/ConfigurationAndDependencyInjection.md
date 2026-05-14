@@ -12,7 +12,7 @@ features in `System.ClientModel`.
 - [Advanced Configuration Example](#advanced-configuration-example)
 - [Simple Dependency Injection Example](#simple-dependency-injection-example)
 - [Keyed Services Example](#keyed-services-example)
-- [Overriding Credentials Example](#overriding-credentials-example)
+- [Overriding Credential Configuration](#overriding-credential-configuration)
 - [Custom Credential Resolver Example](#custom-credential-resolver-example)
 - [Dependency Injection with a Credential Resolver](#dependency-injection-with-a-credential-resolver)
 - [Configuration Reference Syntax](#configuration-reference-syntax)
@@ -141,9 +141,14 @@ MyClient client1 = provider.GetRequiredKeyedService<MyClient>("client1");
 MyClient client2 = provider.GetRequiredKeyedService<MyClient>("client2");
 ```
 
-## Overriding Credentials Example
+## Overriding Credential Configuration
 
-Override credentials from configuration programmatically using the `PostConfigure` method.
+Override individual values on the credential section at registration time
+with `ConfigureCredential`. The supplied callback receives a writable view
+of the credential section before it is handed to the registered
+`CredentialResolver` chain — useful for pulling values such as the API
+`Key` from a secret store or environment variable rather than committing
+them to your `appsettings.json`.
 
 **appsettings.json:**
 ```json
@@ -151,10 +156,8 @@ Override credentials from configuration programmatically using the `PostConfigur
   "MyClient": {
     "Endpoint": "https://api.example.com",
     "Credential": {
-      "CredentialSource": "TokenCredential",
-      "AdditionalProperties": {
-        "Scope": "https://api.example.com/.default"
-      }
+      "CredentialSource": "ApiKey"
+      // Key is injected at registration time from an environment variable
     }
   }
 }
@@ -163,7 +166,8 @@ Override credentials from configuration programmatically using the `PostConfigur
 ```C# Snippet:OverridingCredentialsExample
 HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 builder.AddClient<MyClient, MyClientSettings>("MyClient")
-    .PostConfigure(settings => settings.CredentialProvider = new MyTokenProvider());
+    .ConfigureCredential(credential =>
+        credential["Key"] = Environment.GetEnvironmentVariable("MY_API_KEY"));
 
 IServiceProvider provider = builder.Services.BuildServiceProvider();
 
@@ -229,7 +233,7 @@ AuthenticationTokenProvider? credential = configuration.GetCredential(
 
 When using DI, register the resolver once with `AddCredentialResolver<T>`.
 `AddClient` and `AddKeyedClient` then auto-resolve credentials from the
-registered resolver chain — no `PostConfigure` callback required.
+registered resolver chain.
 
 `AddCredentialResolver<T>` is idempotent by implementation type: calling it
 twice with the same `T` registers a single instance.
@@ -250,8 +254,7 @@ twice with the same `T` registers a single instance.
 HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 
 // Register the resolver once. AddClient/AddKeyedClient will then
-// auto-resolve credentials from the registered resolver chain — no
-// PostConfigure(settings => settings.CredentialProvider = ...) needed.
+// auto-resolve credentials from the registered resolver chain.
 builder.AddCredentialResolver<MyCredentialResolver>();
 builder.AddClient<MyClient, MyClientSettings>("MyClient");
 
