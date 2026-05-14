@@ -18,40 +18,40 @@ using Azure.ResourceManager.PureStorageBlock.Models;
 namespace Azure.ResourceManager.PureStorageBlock
 {
     /// <summary>
-    /// A class representing a PureStorageAvsStorageContainerVolume along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PureStorageAvsStorageContainerVolumeResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PureStorageAvsStorageContainerResource"/> using the GetPureStorageAvsStorageContainerVolumes method.
+    /// A class representing a Volume along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VolumeResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VolumeGroupResource"/> using the GetVolumes method.
     /// </summary>
-    public partial class PureStorageAvsStorageContainerVolumeResource : ArmResource
+    public partial class VolumeResource : ArmResource
     {
-        private readonly ClientDiagnostics _avsStorageContainerVolumesClientDiagnostics;
-        private readonly AvsStorageContainerVolumes _avsStorageContainerVolumesRestClient;
-        private readonly PureStorageAvsStorageContainerVolumeData _data;
+        private readonly ClientDiagnostics _volumesClientDiagnostics;
+        private readonly Volumes _volumesRestClient;
+        private readonly VolumeData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "PureStorage.Block/storagePools/avsStorageContainers/volumes";
+        public static readonly ResourceType ResourceType = "PureStorage.Block/storagePools/volumeGroups/volumes";
 
-        /// <summary> Initializes a new instance of PureStorageAvsStorageContainerVolumeResource for mocking. </summary>
-        protected PureStorageAvsStorageContainerVolumeResource()
+        /// <summary> Initializes a new instance of VolumeResource for mocking. </summary>
+        protected VolumeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PureStorageAvsStorageContainerVolumeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PureStorageAvsStorageContainerVolumeResource(ArmClient client, PureStorageAvsStorageContainerVolumeData data) : this(client, data.Id)
+        internal VolumeResource(ArmClient client, VolumeData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PureStorageAvsStorageContainerVolumeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PureStorageAvsStorageContainerVolumeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal VolumeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string pureStorageAvsStorageContainerVolumeApiVersion);
-            _avsStorageContainerVolumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", ResourceType.Namespace, Diagnostics);
-            _avsStorageContainerVolumesRestClient = new AvsStorageContainerVolumes(_avsStorageContainerVolumesClientDiagnostics, Pipeline, Endpoint, pureStorageAvsStorageContainerVolumeApiVersion ?? "2026-01-01-preview");
+            TryGetApiVersion(ResourceType, out string volumeApiVersion);
+            _volumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", ResourceType.Namespace, Diagnostics);
+            _volumesRestClient = new Volumes(_volumesClientDiagnostics, Pipeline, Endpoint, volumeApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual PureStorageAvsStorageContainerVolumeData Data
+        public virtual VolumeData Data
         {
             get
             {
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="storagePoolName"> The storagePoolName. </param>
-        /// <param name="storageContainerName"> The storageContainerName. </param>
-        /// <param name="volumeId"> The volumeId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storagePoolName, string storageContainerName, string volumeId)
+        /// <param name="volumeGroupName"> The volumeGroupName. </param>
+        /// <param name="volumeName"> The volumeName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storagePoolName, string volumeGroupName, string volumeName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}/volumes/{volumeId}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/volumeGroups/{volumeGroupName}/volumes/{volumeName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Get a volume in an AVS storage container
+        /// Get a volume
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}/volumes/{volumeId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/volumeGroups/{volumeGroupName}/volumes/{volumeName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AvsStorageContainerVolumes_Get. </description>
+        /// <description> Volumes_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PureStorageAvsStorageContainerVolumeResource"/>. </description>
+        /// <description> <see cref="VolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PureStorageAvsStorageContainerVolumeResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VolumeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _avsStorageContainerVolumesClientDiagnostics.CreateScope("PureStorageAvsStorageContainerVolumeResource.Get");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.Get");
             scope.Start();
             try
             {
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _avsStorageContainerVolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PureStorageAvsStorageContainerVolumeData> response = Response.FromValue(PureStorageAvsStorageContainerVolumeData.FromResponse(result), result);
+                Response<VolumeData> response = Response.FromValue(VolumeData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PureStorageAvsStorageContainerVolumeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VolumeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,15 +142,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Get a volume in an AVS storage container
+        /// Get a volume
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}/volumes/{volumeId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/volumeGroups/{volumeGroupName}/volumes/{volumeName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AvsStorageContainerVolumes_Get. </description>
+        /// <description> Volumes_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PureStorageAvsStorageContainerVolumeResource"/>. </description>
+        /// <description> <see cref="VolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PureStorageAvsStorageContainerVolumeResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<VolumeResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _avsStorageContainerVolumesClientDiagnostics.CreateScope("PureStorageAvsStorageContainerVolumeResource.Get");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.Get");
             scope.Start();
             try
             {
@@ -173,14 +173,14 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _avsStorageContainerVolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PureStorageAvsStorageContainerVolumeData> response = Response.FromValue(PureStorageAvsStorageContainerVolumeData.FromResponse(result), result);
+                Response<VolumeData> response = Response.FromValue(VolumeData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PureStorageAvsStorageContainerVolumeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VolumeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,15 +190,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Update a volume in an AVS storage container
+        /// Update a volume
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}/volumes/{volumeId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/volumeGroups/{volumeGroupName}/volumes/{volumeName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AvsStorageContainerVolumes_Update. </description>
+        /// <description> Volumes_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PureStorageAvsStorageContainerVolumeResource"/>. </description>
+        /// <description> <see cref="VolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<PureStorageAvsStorageContainerVolumeResource>> UpdateAsync(WaitUntil waitUntil, PureStorageAvsStorageContainerVolumePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VolumeResource>> UpdateAsync(WaitUntil waitUntil, VolumePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _avsStorageContainerVolumesClientDiagnostics.CreateScope("PureStorageAvsStorageContainerVolumeResource.Update");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.Update");
             scope.Start();
             try
             {
@@ -226,11 +226,11 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _avsStorageContainerVolumesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PureStorageAvsStorageContainerVolumePatch.ToRequestContent(patch), context);
+                HttpMessage message = _volumesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, VolumePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                PureStorageBlockArmOperation<PureStorageAvsStorageContainerVolumeResource> operation = new PureStorageBlockArmOperation<PureStorageAvsStorageContainerVolumeResource>(
-                    new PureStorageAvsStorageContainerVolumeOperationSource(Client),
-                    _avsStorageContainerVolumesClientDiagnostics,
+                PureStorageBlockArmOperation<VolumeResource> operation = new PureStorageBlockArmOperation<VolumeResource>(
+                    new VolumeOperationSource(Client),
+                    _volumesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -249,15 +249,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Update a volume in an AVS storage container
+        /// Update a volume
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}/volumes/{volumeId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/volumeGroups/{volumeGroupName}/volumes/{volumeName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AvsStorageContainerVolumes_Update. </description>
+        /// <description> Volumes_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PureStorageAvsStorageContainerVolumeResource"/>. </description>
+        /// <description> <see cref="VolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<PureStorageAvsStorageContainerVolumeResource> Update(WaitUntil waitUntil, PureStorageAvsStorageContainerVolumePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VolumeResource> Update(WaitUntil waitUntil, VolumePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _avsStorageContainerVolumesClientDiagnostics.CreateScope("PureStorageAvsStorageContainerVolumeResource.Update");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.Update");
             scope.Start();
             try
             {
@@ -285,11 +285,11 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _avsStorageContainerVolumesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PureStorageAvsStorageContainerVolumePatch.ToRequestContent(patch), context);
+                HttpMessage message = _volumesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, VolumePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                PureStorageBlockArmOperation<PureStorageAvsStorageContainerVolumeResource> operation = new PureStorageBlockArmOperation<PureStorageAvsStorageContainerVolumeResource>(
-                    new PureStorageAvsStorageContainerVolumeOperationSource(Client),
-                    _avsStorageContainerVolumesClientDiagnostics,
+                PureStorageBlockArmOperation<VolumeResource> operation = new PureStorageBlockArmOperation<VolumeResource>(
+                    new VolumeOperationSource(Client),
+                    _volumesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -308,15 +308,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Delete a volume in an AVS storage container
+        /// Delete a volume
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}/volumes/{volumeId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/volumeGroups/{volumeGroupName}/volumes/{volumeName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AvsStorageContainerVolumes_Delete. </description>
+        /// <description> Volumes_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PureStorageAvsStorageContainerVolumeResource"/>. </description>
+        /// <description> <see cref="VolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _avsStorageContainerVolumesClientDiagnostics.CreateScope("PureStorageAvsStorageContainerVolumeResource.Delete");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.Delete");
             scope.Start();
             try
             {
@@ -340,9 +340,9 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _avsStorageContainerVolumesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _volumesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_avsStorageContainerVolumesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_volumesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -357,15 +357,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Delete a volume in an AVS storage container
+        /// Delete a volume
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}/volumes/{volumeId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/volumeGroups/{volumeGroupName}/volumes/{volumeName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AvsStorageContainerVolumes_Delete. </description>
+        /// <description> Volumes_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PureStorageAvsStorageContainerVolumeResource"/>. </description>
+        /// <description> <see cref="VolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _avsStorageContainerVolumesClientDiagnostics.CreateScope("PureStorageAvsStorageContainerVolumeResource.Delete");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.Delete");
             scope.Start();
             try
             {
@@ -389,9 +389,9 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _avsStorageContainerVolumesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _volumesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_avsStorageContainerVolumesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_volumesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

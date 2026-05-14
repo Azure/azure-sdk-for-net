@@ -562,5 +562,126 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 additionalBinaryDataProperties: null,
                 properties);
         }
+
+        /// <summary> Volume Group resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="PureStorageBlock.VolumeGroupData"/> instance for mocking. </returns>
+        public static VolumeGroupData VolumeGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VolumeGroupProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VolumeGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties);
+        }
+
+        /// <summary> Properties of a volume group. </summary>
+        /// <param name="storagePoolInternalId"> Pure Storage's internal ID of the storage pool. </param>
+        /// <param name="volumeGroupInternalId"> Pure Storage's internal ID of the volume group. </param>
+        /// <param name="sourceVolumeGroupResourceId"> Azure resource ID of the source volume group for cloning. </param>
+        /// <param name="performanceParameters"> Performance parameters for the volume group. </param>
+        /// <param name="protectionParameters"> Protection parameters for the volume group. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.VolumeGroupProperties"/> instance for mocking. </returns>
+        public static VolumeGroupProperties VolumeGroupProperties(string storagePoolInternalId = default, string volumeGroupInternalId = default, ResourceIdentifier sourceVolumeGroupResourceId = default, PerformanceParameters performanceParameters = default, ProtectionParameters protectionParameters = default, PureStorageProvisioningState? provisioningState = default)
+        {
+            return new VolumeGroupProperties(
+                storagePoolInternalId,
+                volumeGroupInternalId,
+                sourceVolumeGroupResourceId,
+                performanceParameters,
+                protectionParameters,
+                provisioningState,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for update operations of the VolumeGroup. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.VolumeGroupPatch"/> instance for mocking. </returns>
+        public static VolumeGroupPatch VolumeGroupPatch(IDictionary<string, string> tags = default, VolumeGroupUpdateProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VolumeGroupPatch(tags, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="iscsiEndpoints"> List of ISCSI endpoints for connection. </param>
+        /// <returns> A new <see cref="Models.ConnectionParametersResponse"/> instance for mocking. </returns>
+        public static ConnectionParametersResponse ConnectionParametersResponse(IEnumerable<IscsiEndpoint> iscsiEndpoints = default)
+        {
+            return new ConnectionParametersResponse(new IscsiConnectionParameters((iscsiEndpoints ?? new ChangeTrackingList<IscsiEndpoint>()).ToList(), null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> ISCSI connection endpoint details. </summary>
+        /// <param name="ip"> IP address of the endpoint. </param>
+        /// <param name="port"> Port number of the endpoint. </param>
+        /// <param name="iqn"> IQN (iSCSI Qualified Name) of the endpoint. </param>
+        /// <returns> A new <see cref="Models.IscsiEndpoint"/> instance for mocking. </returns>
+        public static IscsiEndpoint IscsiEndpoint(string ip = default, int port = default, string iqn = default)
+        {
+            return new IscsiEndpoint(ip, port, iqn, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Volume group status information. </summary>
+        /// <param name="space"> Storage space usage for the volume group. </param>
+        /// <param name="connectedHostCount"> Number of hosts currently connected to the volume group. </param>
+        /// <returns> A new <see cref="Models.VolumeGroupStatus"/> instance for mocking. </returns>
+        public static VolumeGroupStatus VolumeGroupStatus(PureStorageSpaceUsage space = default, int connectedHostCount = default)
+        {
+            return new VolumeGroupStatus(space, connectedHostCount, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Azure Volume resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="PureStorageBlock.VolumeData"/> instance for mocking. </returns>
+        public static VolumeData VolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureVolumeProperties properties = default)
+        {
+            return new VolumeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Properties of an Azure volume. </summary>
+        /// <param name="space"> Storage space usage for the volume. </param>
+        /// <param name="provisionedSize"> Currently provisioned size of the volume, in bytes. </param>
+        /// <param name="serialNumber"> Serial number of the volume. </param>
+        /// <param name="createdOn"> Volume creation date, as an RFC 3339 timestamp. </param>
+        /// <param name="sourceVolumeResourceId"> Azure resource ID of the source volume for cloning. </param>
+        /// <param name="sourceVolumeGroupResourceId"> Azure Resource ID of the source volume group to clone from. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.AzureVolumeProperties"/> instance for mocking. </returns>
+        public static AzureVolumeProperties AzureVolumeProperties(PureStorageSpaceUsage space = default, long? provisionedSize = default, string serialNumber = default, DateTimeOffset? createdOn = default, ResourceIdentifier sourceVolumeResourceId = default, ResourceIdentifier sourceVolumeGroupResourceId = default, PureStorageProvisioningState? provisioningState = default)
+        {
+            return new AzureVolumeProperties(
+                space,
+                provisionedSize,
+                serialNumber,
+                createdOn,
+                sourceVolumeResourceId,
+                sourceVolumeGroupResourceId,
+                provisioningState,
+                additionalBinaryDataProperties: null);
+        }
     }
 }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             TryGetApiVersion(ResourceType, out string pureStorageAvsStorageContainerApiVersion);
             _avsStorageContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", ResourceType.Namespace, Diagnostics);
-            _avsStorageContainersRestClient = new AvsStorageContainers(_avsStorageContainersClientDiagnostics, Pipeline, Endpoint, pureStorageAvsStorageContainerApiVersion ?? "2024-11-01");
+            _avsStorageContainersRestClient = new AvsStorageContainers(_avsStorageContainersClientDiagnostics, Pipeline, Endpoint, pureStorageAvsStorageContainerApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             TryGetApiVersion(ResourceType, out string pureStorageAvsVmVolumeApiVersion);
             _avsVmVolumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", ResourceType.Namespace, Diagnostics);
-            _avsVmVolumesRestClient = new AvsVmVolumes(_avsVmVolumesClientDiagnostics, Pipeline, Endpoint, pureStorageAvsVmVolumeApiVersion ?? "2024-11-01");
+            _avsVmVolumesRestClient = new AvsVmVolumes(_avsVmVolumesClientDiagnostics, Pipeline, Endpoint, pureStorageAvsVmVolumeApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

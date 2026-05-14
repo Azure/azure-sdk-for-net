@@ -20,40 +20,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.PureStorageBlock
 {
     /// <summary>
-    /// A class representing a PureStorageReservation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PureStorageReservationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPureStorageReservations method.
+    /// A class representing a VolumeGroup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VolumeGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PureStoragePoolResource"/> using the GetVolumeGroups method.
     /// </summary>
-    public partial class PureStorageReservationResource : ArmResource
+    public partial class VolumeGroupResource : ArmResource
     {
-        private readonly ClientDiagnostics _reservationsClientDiagnostics;
-        private readonly Reservations _reservationsRestClient;
-        private readonly PureStorageReservationData _data;
+        private readonly ClientDiagnostics _volumeGroupsClientDiagnostics;
+        private readonly VolumeGroups _volumeGroupsRestClient;
+        private readonly VolumeGroupData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "PureStorage.Block/reservations";
+        public static readonly ResourceType ResourceType = "PureStorage.Block/storagePools/volumeGroups";
 
-        /// <summary> Initializes a new instance of PureStorageReservationResource for mocking. </summary>
-        protected PureStorageReservationResource()
+        /// <summary> Initializes a new instance of VolumeGroupResource for mocking. </summary>
+        protected VolumeGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PureStorageReservationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PureStorageReservationResource(ArmClient client, PureStorageReservationData data) : this(client, data.Id)
+        internal VolumeGroupResource(ArmClient client, VolumeGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PureStorageReservationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PureStorageReservationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal VolumeGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string pureStorageReservationApiVersion);
-            _reservationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", ResourceType.Namespace, Diagnostics);
-            _reservationsRestClient = new Reservations(_reservationsClientDiagnostics, Pipeline, Endpoint, pureStorageReservationApiVersion ?? "2026-01-01-preview");
+            TryGetApiVersion(ResourceType, out string volumeGroupApiVersion);
+            _volumeGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", ResourceType.Namespace, Diagnostics);
+            _volumeGroupsRestClient = new VolumeGroups(_volumeGroupsClientDiagnostics, Pipeline, Endpoint, volumeGroupApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual PureStorageReservationData Data
+        public virtual VolumeGroupData Data
         {
             get
             {
@@ -76,10 +76,11 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="reservationName"> The reservationName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string reservationName)
+        /// <param name="storagePoolName"> The storagePoolName. </param>
+        /// <param name="volumeGroupName"> The volumeGroupName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storagePoolName, string volumeGroupName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/volumeGroups/{volumeGroupName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -94,15 +95,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Get a reservation
+        /// Get a volume group
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/volumeGroups/{volumeGroupName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Reservations_Get. </description>
+        /// <description> VolumeGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -110,14 +111,14 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PureStorageReservationResource"/>. </description>
+        /// <description> <see cref="VolumeGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PureStorageReservationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VolumeGroupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.Get");
+            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("VolumeGroupResource.Get");
             scope.Start();
             try
             {
@@ -125,14 +126,14 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _volumeGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PureStorageReservationData> response = Response.FromValue(PureStorageReservationData.FromResponse(result), result);
+                Response<VolumeGroupData> response = Response.FromValue(VolumeGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PureStorageReservationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VolumeGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,15 +143,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Get a reservation
+        /// Get a volume group
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/volumeGroups/{volumeGroupName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Reservations_Get. </description>
+        /// <description> VolumeGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -158,14 +159,14 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PureStorageReservationResource"/>. </description>
+        /// <description> <see cref="VolumeGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PureStorageReservationResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<VolumeGroupResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.Get");
+            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("VolumeGroupResource.Get");
             scope.Start();
             try
             {
@@ -173,14 +174,14 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _volumeGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PureStorageReservationData> response = Response.FromValue(PureStorageReservationData.FromResponse(result), result);
+                Response<VolumeGroupData> response = Response.FromValue(VolumeGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PureStorageReservationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VolumeGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,15 +191,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Update a reservation
+        /// Update a volume group
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/volumeGroups/{volumeGroupName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Reservations_Update. </description>
+        /// <description> VolumeGroups_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PureStorageReservationResource"/>. </description>
+        /// <description> <see cref="VolumeGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,11 +215,11 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<PureStorageReservationResource>> UpdateAsync(WaitUntil waitUntil, PureStorageReservationPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VolumeGroupResource>> UpdateAsync(WaitUntil waitUntil, VolumeGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.Update");
+            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("VolumeGroupResource.Update");
             scope.Start();
             try
             {
@@ -226,11 +227,11 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PureStorageReservationPatch.ToRequestContent(patch), context);
+                HttpMessage message = _volumeGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VolumeGroupPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                PureStorageBlockArmOperation<PureStorageReservationResource> operation = new PureStorageBlockArmOperation<PureStorageReservationResource>(
-                    new PureStorageReservationOperationSource(Client),
-                    _reservationsClientDiagnostics,
+                PureStorageBlockArmOperation<VolumeGroupResource> operation = new PureStorageBlockArmOperation<VolumeGroupResource>(
+                    new VolumeGroupOperationSource(Client),
+                    _volumeGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -249,15 +250,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Update a reservation
+        /// Update a volume group
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/volumeGroups/{volumeGroupName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Reservations_Update. </description>
+        /// <description> VolumeGroups_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -265,7 +266,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PureStorageReservationResource"/>. </description>
+        /// <description> <see cref="VolumeGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,11 +274,11 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<PureStorageReservationResource> Update(WaitUntil waitUntil, PureStorageReservationPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VolumeGroupResource> Update(WaitUntil waitUntil, VolumeGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.Update");
+            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("VolumeGroupResource.Update");
             scope.Start();
             try
             {
@@ -285,11 +286,11 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PureStorageReservationPatch.ToRequestContent(patch), context);
+                HttpMessage message = _volumeGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VolumeGroupPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                PureStorageBlockArmOperation<PureStorageReservationResource> operation = new PureStorageBlockArmOperation<PureStorageReservationResource>(
-                    new PureStorageReservationOperationSource(Client),
-                    _reservationsClientDiagnostics,
+                PureStorageBlockArmOperation<VolumeGroupResource> operation = new PureStorageBlockArmOperation<VolumeGroupResource>(
+                    new VolumeGroupOperationSource(Client),
+                    _volumeGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -308,15 +309,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Delete a reservation
+        /// Delete a volume group
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/volumeGroups/{volumeGroupName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Reservations_Delete. </description>
+        /// <description> VolumeGroups_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -324,7 +325,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PureStorageReservationResource"/>. </description>
+        /// <description> <see cref="VolumeGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,7 +333,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.Delete");
+            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("VolumeGroupResource.Delete");
             scope.Start();
             try
             {
@@ -340,9 +341,9 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _volumeGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_reservationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_volumeGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -357,15 +358,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Delete a reservation
+        /// Delete a volume group
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/volumeGroups/{volumeGroupName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Reservations_Delete. </description>
+        /// <description> VolumeGroups_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -373,7 +374,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PureStorageReservationResource"/>. </description>
+        /// <description> <see cref="VolumeGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,7 +382,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.Delete");
+            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("VolumeGroupResource.Delete");
             scope.Start();
             try
             {
@@ -389,9 +390,9 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _volumeGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_reservationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_volumeGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -406,15 +407,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Provides a summarized report along with actions for resources billed via given reservation
+        /// Get current status and space information of the volume group
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getBillingReport. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/volumeGroups/{volumeGroupName}/getStatus. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Reservations_GetBillingReport. </description>
+        /// <description> VolumeGroups_GetStatus. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -422,14 +423,14 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PureStorageReservationResource"/>. </description>
+        /// <description> <see cref="VolumeGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReservationBillingUsageReport>> GetBillingReportAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VolumeGroupStatus>> GetStatusAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.GetBillingReport");
+            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("VolumeGroupResource.GetStatus");
             scope.Start();
             try
             {
@@ -437,9 +438,9 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateGetBillingReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _volumeGroupsRestClient.CreateGetStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ReservationBillingUsageReport> response = Response.FromValue(ReservationBillingUsageReport.FromResponse(result), result);
+                Response<VolumeGroupStatus> response = Response.FromValue(VolumeGroupStatus.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -454,15 +455,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Provides a summarized report along with actions for resources billed via given reservation
+        /// Get current status and space information of the volume group
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getBillingReport. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/volumeGroups/{volumeGroupName}/getStatus. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Reservations_GetBillingReport. </description>
+        /// <description> VolumeGroups_GetStatus. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -470,14 +471,14 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PureStorageReservationResource"/>. </description>
+        /// <description> <see cref="VolumeGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReservationBillingUsageReport> GetBillingReport(CancellationToken cancellationToken = default)
+        public virtual Response<VolumeGroupStatus> GetStatus(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.GetBillingReport");
+            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("VolumeGroupResource.GetStatus");
             scope.Start();
             try
             {
@@ -485,9 +486,9 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateGetBillingReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _volumeGroupsRestClient.CreateGetStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ReservationBillingUsageReport> response = Response.FromValue(ReservationBillingUsageReport.FromResponse(result), result);
+                Response<VolumeGroupStatus> response = Response.FromValue(VolumeGroupStatus.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -502,15 +503,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Provides various statistics about resources billed via given reservation.
+        /// Get connection parameters for ISCSI connection to the volume group
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getBillingStatus. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/volumeGroups/{volumeGroupName}/listConnectionParameters. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Reservations_GetBillingStatus. </description>
+        /// <description> VolumeGroups_ListConnectionParameters. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -518,14 +519,14 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PureStorageReservationResource"/>. </description>
+        /// <description> <see cref="VolumeGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReservationBillingStatus>> GetBillingStatusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectionParametersResponse>> GetConnectionParametersAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.GetBillingStatus");
+            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("VolumeGroupResource.GetConnectionParameters");
             scope.Start();
             try
             {
@@ -533,9 +534,9 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateGetBillingStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _volumeGroupsRestClient.CreateGetConnectionParametersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ReservationBillingStatus> response = Response.FromValue(ReservationBillingStatus.FromResponse(result), result);
+                Response<ConnectionParametersResponse> response = Response.FromValue(ConnectionParametersResponse.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -550,15 +551,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Provides various statistics about resources billed via given reservation.
+        /// Get connection parameters for ISCSI connection to the volume group
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getBillingStatus. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/volumeGroups/{volumeGroupName}/listConnectionParameters. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Reservations_GetBillingStatus. </description>
+        /// <description> VolumeGroups_ListConnectionParameters. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -566,14 +567,14 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PureStorageReservationResource"/>. </description>
+        /// <description> <see cref="VolumeGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReservationBillingStatus> GetBillingStatus(CancellationToken cancellationToken = default)
+        public virtual Response<ConnectionParametersResponse> GetConnectionParameters(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.GetBillingStatus");
+            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("VolumeGroupResource.GetConnectionParameters");
             scope.Start();
             try
             {
@@ -581,105 +582,9 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateGetBillingStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _volumeGroupsRestClient.CreateGetConnectionParametersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ReservationBillingStatus> response = Response.FromValue(ReservationBillingStatus.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Limits constraining certain resource properties.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getResourceLimits. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Reservations_GetResourceLimits. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStorageReservationResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PureStorageResourceLimitDetails>> GetResourceLimitsAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.GetResourceLimits");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _reservationsRestClient.CreateGetResourceLimitsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PureStorageResourceLimitDetails> response = Response.FromValue(PureStorageResourceLimitDetails.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Limits constraining certain resource properties.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getResourceLimits. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Reservations_GetResourceLimits. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStorageReservationResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PureStorageResourceLimitDetails> GetResourceLimits(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.GetResourceLimits");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _reservationsRestClient.CreateGetResourceLimitsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PureStorageResourceLimitDetails> response = Response.FromValue(PureStorageResourceLimitDetails.FromResponse(result), result);
+                Response<ConnectionParametersResponse> response = Response.FromValue(ConnectionParametersResponse.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -698,12 +603,12 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<PureStorageReservationResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VolumeGroupResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.AddTag");
+            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("VolumeGroupResource.AddTag");
             scope.Start();
             try
             {
@@ -716,21 +621,21 @@ namespace Azure.ResourceManager.PureStorageBlock
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _volumeGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<PureStorageReservationData> response = Response.FromValue(PureStorageReservationData.FromResponse(result), result);
-                    return Response.FromValue(new PureStorageReservationResource(Client, response.Value), response.GetRawResponse());
+                    Response<VolumeGroupData> response = Response.FromValue(VolumeGroupData.FromResponse(result), result);
+                    return Response.FromValue(new VolumeGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    PureStorageReservationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    PureStorageReservationPatch patch = new PureStorageReservationPatch();
+                    VolumeGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    VolumeGroupPatch patch = new VolumeGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<PureStorageReservationResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<VolumeGroupResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -746,12 +651,12 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<PureStorageReservationResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<VolumeGroupResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.AddTag");
+            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("VolumeGroupResource.AddTag");
             scope.Start();
             try
             {
@@ -764,21 +669,21 @@ namespace Azure.ResourceManager.PureStorageBlock
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _volumeGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<PureStorageReservationData> response = Response.FromValue(PureStorageReservationData.FromResponse(result), result);
-                    return Response.FromValue(new PureStorageReservationResource(Client, response.Value), response.GetRawResponse());
+                    Response<VolumeGroupData> response = Response.FromValue(VolumeGroupData.FromResponse(result), result);
+                    return Response.FromValue(new VolumeGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    PureStorageReservationData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    PureStorageReservationPatch patch = new PureStorageReservationPatch();
+                    VolumeGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    VolumeGroupPatch patch = new VolumeGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<PureStorageReservationResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<VolumeGroupResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -793,11 +698,11 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<PureStorageReservationResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VolumeGroupResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.SetTags");
+            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("VolumeGroupResource.SetTags");
             scope.Start();
             try
             {
@@ -811,17 +716,17 @@ namespace Azure.ResourceManager.PureStorageBlock
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _volumeGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<PureStorageReservationData> response = Response.FromValue(PureStorageReservationData.FromResponse(result), result);
-                    return Response.FromValue(new PureStorageReservationResource(Client, response.Value), response.GetRawResponse());
+                    Response<VolumeGroupData> response = Response.FromValue(VolumeGroupData.FromResponse(result), result);
+                    return Response.FromValue(new VolumeGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    PureStorageReservationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    PureStorageReservationPatch patch = new PureStorageReservationPatch();
+                    VolumeGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    VolumeGroupPatch patch = new VolumeGroupPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<PureStorageReservationResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<VolumeGroupResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -836,11 +741,11 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<PureStorageReservationResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<VolumeGroupResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.SetTags");
+            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("VolumeGroupResource.SetTags");
             scope.Start();
             try
             {
@@ -854,17 +759,17 @@ namespace Azure.ResourceManager.PureStorageBlock
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _volumeGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<PureStorageReservationData> response = Response.FromValue(PureStorageReservationData.FromResponse(result), result);
-                    return Response.FromValue(new PureStorageReservationResource(Client, response.Value), response.GetRawResponse());
+                    Response<VolumeGroupData> response = Response.FromValue(VolumeGroupData.FromResponse(result), result);
+                    return Response.FromValue(new VolumeGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    PureStorageReservationData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    PureStorageReservationPatch patch = new PureStorageReservationPatch();
+                    VolumeGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    VolumeGroupPatch patch = new VolumeGroupPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<PureStorageReservationResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<VolumeGroupResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -879,11 +784,11 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<PureStorageReservationResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VolumeGroupResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.RemoveTag");
+            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("VolumeGroupResource.RemoveTag");
             scope.Start();
             try
             {
@@ -896,21 +801,21 @@ namespace Azure.ResourceManager.PureStorageBlock
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _volumeGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<PureStorageReservationData> response = Response.FromValue(PureStorageReservationData.FromResponse(result), result);
-                    return Response.FromValue(new PureStorageReservationResource(Client, response.Value), response.GetRawResponse());
+                    Response<VolumeGroupData> response = Response.FromValue(VolumeGroupData.FromResponse(result), result);
+                    return Response.FromValue(new VolumeGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    PureStorageReservationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    PureStorageReservationPatch patch = new PureStorageReservationPatch();
+                    VolumeGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    VolumeGroupPatch patch = new VolumeGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<PureStorageReservationResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<VolumeGroupResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -925,11 +830,11 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<PureStorageReservationResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<VolumeGroupResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.RemoveTag");
+            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("VolumeGroupResource.RemoveTag");
             scope.Start();
             try
             {
@@ -942,21 +847,21 @@ namespace Azure.ResourceManager.PureStorageBlock
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _volumeGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<PureStorageReservationData> response = Response.FromValue(PureStorageReservationData.FromResponse(result), result);
-                    return Response.FromValue(new PureStorageReservationResource(Client, response.Value), response.GetRawResponse());
+                    Response<VolumeGroupData> response = Response.FromValue(VolumeGroupData.FromResponse(result), result);
+                    return Response.FromValue(new VolumeGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    PureStorageReservationData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    PureStorageReservationPatch patch = new PureStorageReservationPatch();
+                    VolumeGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    VolumeGroupPatch patch = new VolumeGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<PureStorageReservationResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<VolumeGroupResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -965,6 +870,39 @@ namespace Azure.ResourceManager.PureStorageBlock
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of Volumes in the <see cref="VolumeGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Volumes and their operations over a VolumeResource. </returns>
+        public virtual VolumeCollection GetVolumes()
+        {
+            return GetCachedClient(client => new VolumeCollection(client, Id));
+        }
+
+        /// <summary> Get a volume. </summary>
+        /// <param name="volumeName"> Name of the volume. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<VolumeResource>> GetVolumeAsync(string volumeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+
+            return await GetVolumes().GetAsync(volumeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a volume. </summary>
+        /// <param name="volumeName"> Name of the volume. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<VolumeResource> GetVolume(string volumeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+
+            return GetVolumes().Get(volumeName, cancellationToken);
         }
     }
 }
