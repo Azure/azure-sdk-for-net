@@ -93,6 +93,18 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
+        /// Unconditionally resets <see cref="State"/> to <see cref="TransferState.Queued"/>,
+        /// bypassing the normal state-machine guards. This is only used during transfer
+        /// resume to requeue parts that may have been checkpointed in a transient state
+        /// (e.g. process was interupted without pausing/stopping/completing gracefully)
+        /// if the process exited before the state could settle.
+        /// </summary>
+        internal void ResetToQueued()
+        {
+            Volatile.Write(ref _stateValue, (int)TransferState.Queued);
+        }
+
+        /// <summary>
         /// Accordingly update the <see cref="State"/>. If the current State is the same as the parameter,
         /// then nothing will happen.
         ///

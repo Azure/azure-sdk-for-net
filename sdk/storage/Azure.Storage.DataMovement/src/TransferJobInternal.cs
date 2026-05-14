@@ -114,17 +114,6 @@ namespace Azure.Storage.DataMovement
         private int _pendingJobParts;
         private bool _jobPartPaused;
 
-        /// <summary>
-        /// Test-only: sets <see cref="_pendingJobParts"/> directly, bypassing the
-        /// normal <see cref="Interlocked"/> increment/decrement path.
-        /// </summary>
-        internal void SetPendingJobPartsForTest(int value) => _pendingJobParts = value;
-
-        /// <summary>
-        /// Test-only: sets <see cref="_jobPartPaused"/> directly.
-        /// </summary>
-        internal void SetJobPartPausedForTest(bool value) => _jobPartPaused = value;
-
         public CancellationToken _cancellationToken { get; internal set; }
 
         /// <summary>
@@ -245,7 +234,10 @@ namespace Azure.Storage.DataMovement
                 {
                     if (!part.JobPartStatus.HasCompletedSuccessfully)
                     {
-                        part.JobPartStatus.SetTransferStateChange(TransferState.Queued);
+                        // Use ResetToQueued to bypass the state-machine guard.
+                        // Parts may be in transient states (Pausing, Stopping)
+                        // if the process exited mid-pause/stop.
+                        part.JobPartStatus.ResetToQueued();
                         yield return part;
                     }
                 }

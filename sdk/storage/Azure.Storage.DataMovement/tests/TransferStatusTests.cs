@@ -198,6 +198,27 @@ public class TransferStatusTests
 
     #endregion
 
+    #region ResetToQueued Tests
+
+    [Test]
+    [TestCase(TransferState.Pausing)]
+    [TestCase(TransferState.Stopping)]
+    [TestCase(TransferState.InProgress)]
+    [TestCase(TransferState.Paused)]
+    [TestCase(TransferState.Completed)]
+    public void ResetToQueued_FromAnyState_Succeeds(TransferState initialState)
+    {
+        // ResetToQueued bypasses the state machine guard, used during resume
+        // when parts may have been checkpointed in transient states.
+        TransferStatus status = new(initialState, false, false);
+
+        status.ResetToQueued();
+
+        Assert.That(status.State, Is.EqualTo(TransferState.Queued));
+    }
+
+    #endregion
+
     #region Stress Tests - Concurrent State Transitions
 
     [Test]
@@ -387,11 +408,11 @@ public class TransferStatusTests
     [Test]
     public async Task CheckAndUpdateStatusAsync_PausingJob_CompletedPartsOnly_CompletesNormally()
     {
-        // Build a TransferJobInternal in Pausing state with 2 parts, both "completed"
-        // and _jobPartPaused still false — the exact interleaving from the bug.
+        // Build a TransferJobInternal in Pausing state with 2 parts.
+        // Both parts report Completed (none report Paused), so _jobPartPaused
+        // stays false. The job should transition Pausing -> Completed.
         TransferJobInternal job = CreateMinimalJob(TransferState.Pausing);
 
-        // Add 2 dummy job parts (InProgress so AppendJobPart increments _pendingJobParts)
         Mock<JobPartInternal> part1 = new();
         part1.Object.JobPartStatus = new TransferStatus(TransferState.InProgress, false, false);
         Mock<JobPartInternal> part2 = new();
@@ -401,19 +422,17 @@ public class TransferStatusTests
         job.AppendJobPart(part2.Object);
         // _pendingJobParts is now 2
 
-        // Simulate: both parts finished. Set _pendingJobParts to 0
-        // (normally this happens in JobPartStatusEventAsync, but we're isolating
-        //  CheckAndUpdateStatusAsync to test just the decision logic)
-        job.SetPendingJobPartsForTest(0);
+        string transferId = job._transferOperation.Id;
 
-        // _jobPartPaused is still false — this is the crux of the race.
-        // In the real race, Thread B hasn't set _jobPartPaused = true yet
-        // when Thread A calls CheckAndUpdateStatusAsync.
-
-        // Call CheckAndUpdateStatusAsync — all parts completed before pause took effect.
-        // Pausing -> Completed is now allowed to prevent the transfer from getting
-        // stuck in Pausing state when no paused-part signal will ever arrive.
-        await job.CheckAndUpdateStatusAsync();
+        // Both parts completed before the pause took effect.
+        await job.JobPartStatusEventAsync(new JobPartStatusEventArgs(
+            transferId, 0,
+            new TransferStatus(TransferState.Completed, false, false),
+            false, CancellationToken.None));
+        await job.JobPartStatusEventAsync(new JobPartStatusEventArgs(
+            transferId, 1,
+            new TransferStatus(TransferState.Completed, false, false),
+            false, CancellationToken.None));
 
         // The job should complete normally since all parts finished.
         Assert.That(job._transferOperation.Status.State, Is.EqualTo(TransferState.Completed),
@@ -434,20 +453,24 @@ public class TransferStatusTests
         Mock<JobPartInternal> part1 = new();
         part1.Object.JobPartStatus = new TransferStatus(TransferState.InProgress, false, false);
         job.AppendJobPart(part1.Object);
+        // _pendingJobParts is now 1
 
-        // Simulate: part finished and was paused
-        job.SetPendingJobPartsForTest(0);
-        job.SetJobPartPausedForTest(true);
+        string transferId = job._transferOperation.Id;
 
-        await job.CheckAndUpdateStatusAsync();
+        // Part reports Paused, which sets _jobPartPaused = true and decrements
+        // _pendingJobParts to 0, triggering CheckAndUpdateStatusAsync.
+        await job.JobPartStatusEventAsync(new JobPartStatusEventArgs(
+            transferId, 0,
+            new TransferStatus(TransferState.Paused, false, false),
+            false, CancellationToken.None));
 
         Assert.That(job._transferOperation.Status.State, Is.EqualTo(TransferState.Paused),
-            "Job should transition from Pausing to Paused when _jobPartPaused is true");
+            "Job should transition from Pausing to Paused when a part reports Paused");
     }
 
     /// <summary>
     /// Concurrent version: fires `JobPartStatusEventAsync` from multiple
-    /// threads simultaneously — one with Completed status, one with Paused status —
+    /// threads simultaneously, one with Completed status, one with Paused status,
     /// while the job is in Pausing state. This is the closest reproduction of
     /// the production race where serialized processing does not occur.
     /// </summary>
