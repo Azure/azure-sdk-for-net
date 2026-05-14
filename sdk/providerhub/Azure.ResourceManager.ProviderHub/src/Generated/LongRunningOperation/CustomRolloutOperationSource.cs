@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    internal class CustomRolloutOperationSource : IOperationSource<CustomRolloutResource>
+    /// <summary></summary>
+    internal partial class CustomRolloutOperationSource : IOperationSource<CustomRolloutResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal CustomRolloutOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         CustomRolloutResource IOperationSource<CustomRolloutResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CustomRolloutData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerProviderHubContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            CustomRolloutData data = CustomRolloutData.DeserializeCustomRolloutData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new CustomRolloutResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<CustomRolloutResource> IOperationSource<CustomRolloutResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CustomRolloutData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerProviderHubContext.Default);
-            return await Task.FromResult(new CustomRolloutResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            CustomRolloutData data = CustomRolloutData.DeserializeCustomRolloutData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new CustomRolloutResource(_client, data);
         }
     }
 }

@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadTestingResourceData, LoadTestingResource>(new LoadTestsGetBySubscriptionAsyncCollectionResultOfT(LoadTestsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new LoadTestingResource(Client, data));
+            return new AsyncPageableWrapper<LoadTestingResourceData, LoadTestingResource>(new LoadTestsGetBySubscriptionAsyncCollectionResultOfT(LoadTestsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableLoadTestingSubscriptionResource.GetLoadTestingResources"), data => new LoadTestingResource(Client, data));
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadTestingResourceData, LoadTestingResource>(new LoadTestsGetBySubscriptionCollectionResultOfT(LoadTestsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new LoadTestingResource(Client, data));
+            return new PageableWrapper<LoadTestingResourceData, LoadTestingResource>(new LoadTestsGetBySubscriptionCollectionResultOfT(LoadTestsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableLoadTestingSubscriptionResource.GetLoadTestingResources"), data => new LoadTestingResource(Client, data));
         }
     }
 }

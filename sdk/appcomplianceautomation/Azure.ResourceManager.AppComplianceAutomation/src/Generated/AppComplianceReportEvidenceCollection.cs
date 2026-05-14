@@ -308,7 +308,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 @orderby,
                 offerGuid,
                 reportCreatorTenantId,
-                context), data => new AppComplianceReportEvidenceResource(Client, data));
+                context,
+                "AppComplianceReportEvidenceCollection.GetAll"), data => new AppComplianceReportEvidenceResource(Client, data));
         }
 
         /// <summary>
@@ -353,7 +354,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 @orderby,
                 offerGuid,
                 reportCreatorTenantId,
-                context), data => new AppComplianceReportEvidenceResource(Client, data));
+                context,
+                "AppComplianceReportEvidenceCollection.GetAll"), data => new AppComplianceReportEvidenceResource(Client, data));
         }
 
         /// <summary>

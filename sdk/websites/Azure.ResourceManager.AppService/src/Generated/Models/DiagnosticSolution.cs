@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Class Representing Solution for problems detected. </summary>
+    /// <summary>
+    /// Class Representing Solution for problems detected.
+    /// Serialized Name: Solution
+    /// </summary>
     public partial class DiagnosticSolution
     {
         /// <summary>
@@ -53,13 +56,34 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticSolution"/>. </summary>
-        /// <param name="id"> Solution Id. </param>
-        /// <param name="displayName"> Display Name of the solution. </param>
-        /// <param name="order"> Order of the solution. </param>
-        /// <param name="description"> Description of the solution. </param>
-        /// <param name="solutionType"> Type of Solution. </param>
-        /// <param name="data"> Solution Data. </param>
-        /// <param name="metadata"> Solution Metadata. </param>
+        /// <param name="id">
+        /// Solution Id.
+        /// Serialized Name: Solution.id
+        /// </param>
+        /// <param name="displayName">
+        /// Display Name of the solution
+        /// Serialized Name: Solution.displayName
+        /// </param>
+        /// <param name="order">
+        /// Order of the solution.
+        /// Serialized Name: Solution.order
+        /// </param>
+        /// <param name="description">
+        /// Description of the solution
+        /// Serialized Name: Solution.description
+        /// </param>
+        /// <param name="solutionType">
+        /// Type of Solution
+        /// Serialized Name: Solution.type
+        /// </param>
+        /// <param name="data">
+        /// Solution Data.
+        /// Serialized Name: Solution.data
+        /// </param>
+        /// <param name="metadata">
+        /// Solution Metadata.
+        /// Serialized Name: Solution.metadata
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DiagnosticSolution(double? id, string displayName, double? order, string description, DiagnosticSolutionType? solutionType, IList<IList<AppServiceNameValuePair>> data, IList<IList<AppServiceNameValuePair>> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,25 +97,46 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Solution Id. </summary>
+        /// <summary>
+        /// Solution Id.
+        /// Serialized Name: Solution.id
+        /// </summary>
         [WirePath("id")]
         public double? Id { get; set; }
-        /// <summary> Display Name of the solution. </summary>
+        /// <summary>
+        /// Display Name of the solution
+        /// Serialized Name: Solution.displayName
+        /// </summary>
         [WirePath("displayName")]
         public string DisplayName { get; set; }
-        /// <summary> Order of the solution. </summary>
+        /// <summary>
+        /// Order of the solution.
+        /// Serialized Name: Solution.order
+        /// </summary>
         [WirePath("order")]
         public double? Order { get; set; }
-        /// <summary> Description of the solution. </summary>
+        /// <summary>
+        /// Description of the solution
+        /// Serialized Name: Solution.description
+        /// </summary>
         [WirePath("description")]
         public string Description { get; set; }
-        /// <summary> Type of Solution. </summary>
+        /// <summary>
+        /// Type of Solution
+        /// Serialized Name: Solution.type
+        /// </summary>
         [WirePath("type")]
         public DiagnosticSolutionType? SolutionType { get; set; }
-        /// <summary> Solution Data. </summary>
+        /// <summary>
+        /// Solution Data.
+        /// Serialized Name: Solution.data
+        /// </summary>
         [WirePath("data")]
         public IList<IList<AppServiceNameValuePair>> Data { get; }
-        /// <summary> Solution Metadata. </summary>
+        /// <summary>
+        /// Solution Metadata.
+        /// Serialized Name: Solution.metadata
+        /// </summary>
         [WirePath("metadata")]
         public IList<IList<AppServiceNameValuePair>> Metadata { get; }
     }

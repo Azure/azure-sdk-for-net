@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.ClientModel.TestFramework;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Files;
 using OpenAI.VectorStores;
-using Azure.AI.Projects;
-using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 

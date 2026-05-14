@@ -301,7 +301,8 @@ namespace Azure.ResourceManager.Support
                 Id.Name,
                 top,
                 filter,
-                context), data => new SupportTicketCommunicationResource(Client, data));
+                context,
+                "SupportTicketCommunicationCollection.GetAll"), data => new SupportTicketCommunicationResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +338,8 @@ namespace Azure.ResourceManager.Support
                 Id.Name,
                 top,
                 filter,
-                context), data => new SupportTicketCommunicationResource(Client, data));
+                context,
+                "SupportTicketCommunicationCollection.GetAll"), data => new SupportTicketCommunicationResource(Client, data));
         }
 
         /// <summary>

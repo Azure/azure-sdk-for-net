@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationPolicyData, DataReplicationPolicyResource>(new PolicyGetAllAsyncCollectionResultOfT(_policyRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationPolicyResource(Client, data));
+            return new AsyncPageableWrapper<DataReplicationPolicyData, DataReplicationPolicyResource>(new PolicyGetAllAsyncCollectionResultOfT(
+                _policyRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationPolicyCollection.GetAll"), data => new DataReplicationPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationPolicyData, DataReplicationPolicyResource>(new PolicyGetAllCollectionResultOfT(_policyRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationPolicyResource(Client, data));
+            return new PageableWrapper<DataReplicationPolicyData, DataReplicationPolicyResource>(new PolicyGetAllCollectionResultOfT(
+                _policyRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationPolicyCollection.GetAll"), data => new DataReplicationPolicyResource(Client, data));
         }
 
         /// <summary>

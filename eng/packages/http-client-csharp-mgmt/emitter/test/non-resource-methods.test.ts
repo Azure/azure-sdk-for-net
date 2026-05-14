@@ -12,7 +12,7 @@ import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
 import {
-  ResourceScope,
+  ResourceScopeKind,
   ResourceOperationKind,
   assignNonResourceMethodsToResources
 } from "../src/resource-metadata.js";
@@ -20,6 +20,7 @@ import type {
   ArmResourceSchema,
   NonResourceMethod
 } from "../src/resource-metadata.js";
+import { RequestPath } from "../src/resource-metadata.js";
 
 describe("Non-Resource Methods Detection", () => {
   let runner: TestHost;
@@ -83,10 +84,10 @@ model ValidationResponse {
     const method = nonResourceMethods[0];
     // The path should be generated from the ARM template
     strictEqual(
-      method.operationPath,
+      method.operationPath.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/validateConfiguration"
     );
-    strictEqual(method.operationScope, ResourceScope.Subscription);
+    strictEqual(method.scope.kind, ResourceScopeKind.Subscription);
     ok(method.methodId, "Method should have an ID");
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
@@ -170,23 +171,23 @@ model GlobalSettings {
     // All tenant-scope methods should have Tenant scope
     nonResourceMethods.forEach((method: any) => {
       strictEqual(
-        method.operationScope,
-        ResourceScope.Tenant,
-        `Method ${method.operationPath} should have Tenant scope`
+        method.scope.kind,
+        ResourceScopeKind.Tenant,
+        `Method ${method.operationPath.path} should have Tenant scope`
       );
     });
 
     // Verify specific paths
     const tenantInfoMethod = nonResourceMethods.find(
       (m: any) =>
-        m.operationPath ===
+        m.operationPath.path ===
         "/providers/Microsoft.ContosoProviderHub/getTenantInfo"
     );
     ok(tenantInfoMethod, "Should find tenantInfo method");
 
     const globalSettingsMethod = nonResourceMethods.find(
       (m: any) =>
-        m.operationPath ===
+        m.operationPath.path ===
         "/providers/Microsoft.ContosoProviderHub/updateGlobalSettings"
     );
     ok(globalSettingsMethod, "Should find globalSettings method");
@@ -364,19 +365,19 @@ model MigrationResponse {
     // Check that we have the expected non-resource methods
     const bulkImportMethod = nonResourceMethods.find(
       (m: any) =>
-        m.operationPath ===
+        m.operationPath.path ===
         "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/bulkImportEmployees"
     );
     ok(bulkImportMethod, "Should find bulk import method");
-    strictEqual(bulkImportMethod.operationScope, ResourceScope.Subscription);
+    strictEqual(bulkImportMethod.scope.kind, ResourceScopeKind.Subscription);
 
     const migrateMethod = nonResourceMethods.find(
       (m: any) =>
-        m.operationPath ===
+        m.operationPath.path ===
         "/providers/Microsoft.ContosoProviderHub/migrateEmployees"
     );
     ok(migrateMethod, "Should find migrate method");
-    strictEqual(migrateMethod.operationScope, ResourceScope.Tenant);
+    strictEqual(migrateMethod.scope.kind, ResourceScopeKind.Tenant);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -448,10 +449,10 @@ model WorkspaceValidationResponse {
     const method = nonResourceMethods[0];
     // The path should be generated from the ARM template with nested segments
     strictEqual(
-      method.operationPath,
+      method.operationPath.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/workspaces/{workspaceName}/validateWorkspace"
     );
-    strictEqual(method.operationScope, ResourceScope.Subscription);
+    strictEqual(method.scope.kind, ResourceScopeKind.Subscription);
     ok(method.methodId, "Method should have an ID");
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
@@ -533,10 +534,10 @@ model SearchResult {
 
     const method = nonResourceMethods[0];
     strictEqual(
-      method.operationPath,
+      method.operationPath.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/search/{action}/searchResources"
     );
-    strictEqual(method.operationScope, ResourceScope.Subscription);
+    strictEqual(method.scope.kind, ResourceScopeKind.Subscription);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -601,10 +602,10 @@ model FooPreviewAction {
 
     const method = nonResourceMethods[0];
     strictEqual(
-      method.operationPath,
+      method.operationPath.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/locations/{location}/previewActions"
     );
-    strictEqual(method.operationScope, ResourceScope.Subscription);
+    strictEqual(method.scope.kind, ResourceScopeKind.Subscription);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -829,9 +830,15 @@ interface ChildResources {
         metadata: {
           resourceName: "ConfigurationAssignment",
           resourceType: "Microsoft.Maintenance/configurationAssignments",
-          resourceIdPattern:
-            "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
-          resourceScope: ResourceScope.Extension,
+          resourceIdPattern: new RequestPath(
+            "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
+          ),
+          scope: {
+            kind: ResourceScopeKind.Extension,
+            scopeIdPattern: new RequestPath(
+              "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}"
+            )
+          },
           singletonResourceName: undefined,
           parentResourceId: undefined,
           parentResourceModelId: undefined,
@@ -842,11 +849,15 @@ interface ChildResources {
             {
               methodId: "Microsoft.Maintenance.ConfigurationAssignment.get",
               kind: ResourceOperationKind.Read,
-              operationPath:
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
-              operationScope: ResourceScope.ResourceGroup,
-              resourceScope:
+              operationPath: new RequestPath(
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
+              ),
+              scope: {
+                kind: ResourceScopeKind.ResourceGroup,
+                scopeIdPattern: new RequestPath(
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
+                )
+              }
             }
           ]
         }
@@ -860,16 +871,24 @@ interface ChildResources {
       {
         methodId:
           "Microsoft.Maintenance.ConfigurationAssignmentForResourceGroupOperationGroup.list",
-        operationPath:
-          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments",
-        operationScope: ResourceScope.ResourceGroup,
+        operationPath: new RequestPath(
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments"
+        ),
+        scope: {
+          kind: ResourceScopeKind.ResourceGroup,
+          scopeIdPattern: RequestPath.empty
+        },
         resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment"
       },
       {
         methodId: "Microsoft.Maintenance.UpdatesOperationGroup.list",
-        operationPath:
-          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/updates",
-        operationScope: ResourceScope.ResourceGroup,
+        operationPath: new RequestPath(
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/updates"
+        ),
+        scope: {
+          kind: ResourceScopeKind.ResourceGroup,
+          scopeIdPattern: RequestPath.empty
+        },
         resourceModelId: "Microsoft.Maintenance.Update"
       }
     ];
@@ -913,9 +932,15 @@ interface ChildResources {
         metadata: {
           resourceName: "ConfigurationAssignment",
           resourceType: "Microsoft.Maintenance/configurationAssignments",
-          resourceIdPattern:
-            "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
-          resourceScope: ResourceScope.Extension,
+          resourceIdPattern: new RequestPath(
+            "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
+          ),
+          scope: {
+            kind: ResourceScopeKind.Extension,
+            scopeIdPattern: new RequestPath(
+              "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}"
+            )
+          },
           singletonResourceName: undefined,
           parentResourceId: undefined,
           parentResourceModelId: undefined,
@@ -926,11 +951,15 @@ interface ChildResources {
             {
               methodId: "Microsoft.Maintenance.ConfigurationAssignment.get",
               kind: ResourceOperationKind.Read,
-              operationPath:
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
-              operationScope: ResourceScope.ResourceGroup,
-              resourceScope:
+              operationPath: new RequestPath(
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
+              ),
+              scope: {
+                kind: ResourceScopeKind.ResourceGroup,
+                scopeIdPattern: new RequestPath(
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
+                )
+              }
             }
           ]
         }
@@ -946,16 +975,24 @@ interface ChildResources {
       {
         methodId:
           "Microsoft.Maintenance.ConfigurationAssignmentForResourceGroupOperationGroup.list",
-        operationPath:
-          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments",
-        operationScope: ResourceScope.ResourceGroup
+        operationPath: new RequestPath(
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments"
+        ),
+        scope: {
+          kind: ResourceScopeKind.ResourceGroup,
+          scopeIdPattern: RequestPath.empty
+        }
         // resourceModelId intentionally NOT set
       },
       {
         methodId: "Microsoft.Maintenance.UpdatesOperationGroup.list",
-        operationPath:
-          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/updates",
-        operationScope: ResourceScope.ResourceGroup
+        operationPath: new RequestPath(
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/updates"
+        ),
+        scope: {
+          kind: ResourceScopeKind.ResourceGroup,
+          scopeIdPattern: RequestPath.empty
+        }
         // resourceModelId intentionally NOT set
       }
     ];
@@ -1002,9 +1039,15 @@ interface ChildResources {
           resourceName: "GuestConfigurationVmAssignment",
           resourceType:
             "Microsoft.GuestConfiguration/guestConfigurationAssignments",
-          resourceIdPattern:
-            "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}",
-          resourceScope: ResourceScope.ResourceGroup,
+          resourceIdPattern: new RequestPath(
+            "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}"
+          ),
+          scope: {
+            kind: ResourceScopeKind.ResourceGroup,
+            scopeIdPattern: new RequestPath(
+              "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
+            )
+          },
           singletonResourceName: undefined,
           parentResourceId: undefined,
           parentResourceModelId: undefined,
@@ -1016,20 +1059,27 @@ interface ChildResources {
               methodId:
                 "Microsoft.GuestConfiguration.GuestConfigurationAssignment.get",
               kind: ResourceOperationKind.Read,
-              operationPath:
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}",
-              operationScope: ResourceScope.ResourceGroup,
-              resourceScope:
+              operationPath: new RequestPath(
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}"
+              ),
+              scope: {
+                kind: ResourceScopeKind.ResourceGroup,
+                scopeIdPattern: new RequestPath(
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}"
+                )
+              }
             },
             {
               methodId:
                 "Microsoft.GuestConfiguration.GuestConfigurationAssignment.list",
               kind: ResourceOperationKind.List,
-              operationPath:
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments",
-              operationScope: ResourceScope.ResourceGroup,
-              resourceScope: undefined
+              operationPath: new RequestPath(
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments"
+              ),
+              scope: {
+                kind: ResourceScopeKind.ResourceGroup,
+                scopeIdPattern: RequestPath.empty
+              }
             }
           ]
         }
@@ -1043,9 +1093,13 @@ interface ChildResources {
       {
         methodId:
           "Microsoft.GuestConfiguration.GuestConfigurationAssignmentsOperationGroup.RGList",
-        operationPath:
-          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments",
-        operationScope: ResourceScope.ResourceGroup
+        operationPath: new RequestPath(
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments"
+        ),
+        scope: {
+          kind: ResourceScopeKind.ResourceGroup,
+          scopeIdPattern: RequestPath.empty
+        }
         // resourceModelId intentionally NOT set — the list path uses a different model
       }
     ];
@@ -1086,9 +1140,13 @@ interface ChildResources {
         metadata: {
           resourceName: "DeletedVault",
           resourceType: "Microsoft.KeyVault/locations/deletedVaults",
-          resourceIdPattern:
-            "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}",
-          resourceScope: ResourceScope.Subscription,
+          resourceIdPattern: new RequestPath(
+            "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}"
+          ),
+          scope: {
+            kind: ResourceScopeKind.Subscription,
+            scopeIdPattern: new RequestPath("/subscriptions/{subscriptionId}")
+          },
           singletonResourceName: undefined,
           parentResourceId: undefined,
           parentResourceModelId: undefined,
@@ -1099,11 +1157,15 @@ interface ChildResources {
             {
               methodId: "Microsoft.KeyVault.DeletedVault.get",
               kind: ResourceOperationKind.Read,
-              operationPath:
-                "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}",
-              operationScope: ResourceScope.Subscription,
-              resourceScope:
+              operationPath: new RequestPath(
                 "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}"
+              ),
+              scope: {
+                kind: ResourceScopeKind.Subscription,
+                scopeIdPattern: new RequestPath(
+                  "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}"
+                )
+              }
             }
           ]
         }
@@ -1117,9 +1179,13 @@ interface ChildResources {
     const nonResourceMethods: NonResourceMethod[] = [
       {
         methodId: "Microsoft.KeyVault.VaultsOperationGroup.listDeleted",
-        operationPath:
-          "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults",
-        operationScope: ResourceScope.Subscription
+        operationPath: new RequestPath(
+          "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults"
+        ),
+        scope: {
+          kind: ResourceScopeKind.Subscription,
+          scopeIdPattern: RequestPath.empty
+        }
       }
     ];
 
@@ -1140,6 +1206,217 @@ interface ChildResources {
       listMethods.length,
       0,
       "DeletedVault resource should have no List methods"
+    );
+  });
+
+  it("should NOT match collection-level action to resource by type segment when operation ends with action name", () => {
+    const resources: ArmResourceSchema[] = [
+      {
+        resourceModelId:
+          "Microsoft.CostManagement.CostAllocationRuleDefinition",
+        metadata: {
+          resourceName: "CostAllocationRuleDefinition",
+          resourceType: "Microsoft.CostManagement/costAllocationRules",
+          resourceIdPattern: new RequestPath(
+            "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}"
+          ),
+          scope: {
+            kind: ResourceScopeKind.Extension,
+            scopeIdPattern: new RequestPath(
+              "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}"
+            )
+          },
+          singletonResourceName: undefined,
+          parentResourceId: undefined,
+          parentResourceModelId: undefined,
+          nameConstraints: {},
+          apiVersions: [],
+          rbacRoles: [],
+          methods: [
+            {
+              methodId:
+                "Microsoft.CostManagement.CostAllocationRuleDefinition.get",
+              kind: ResourceOperationKind.Read,
+              operationPath: new RequestPath(
+                "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}"
+              ),
+              scope: {
+                kind: ResourceScopeKind.Extension,
+                scopeIdPattern: new RequestPath(
+                  "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}"
+                )
+              }
+            }
+          ]
+        }
+      }
+    ];
+
+    const nonResourceMethods: NonResourceMethod[] = [
+      {
+        methodId:
+          "Microsoft.CostManagement.CostAllocationRulesOperationGroup.checkNameAvailability",
+        operationPath: new RequestPath(
+          "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/checkNameAvailability"
+        ),
+        scope: {
+          kind: ResourceScopeKind.Extension,
+          scopeIdPattern: RequestPath.empty
+        }
+      }
+    ];
+
+    assignNonResourceMethodsToResources(resources, nonResourceMethods);
+
+    strictEqual(
+      nonResourceMethods.length,
+      1,
+      "checkNameAvailability should remain as a non-resource method"
+    );
+    strictEqual(
+      nonResourceMethods[0].methodId,
+      "Microsoft.CostManagement.CostAllocationRulesOperationGroup.checkNameAvailability",
+      "The remaining non-resource method should be checkNameAvailability"
+    );
+
+    const recoveredMethods = resources[0].metadata.methods.filter(
+      (m) =>
+        m.methodId ===
+        "Microsoft.CostManagement.CostAllocationRulesOperationGroup.checkNameAvailability"
+    );
+    strictEqual(
+      recoveredMethods.length,
+      0,
+      "CostAllocationRuleDefinition should not gain the collection-level action"
+    );
+  });
+
+  it("should assign nested collection-level action to parent resource when action replaces child name segment", () => {
+    const resources: ArmResourceSchema[] = [
+      {
+        resourceModelId:
+          "Microsoft.CostManagement.CostAllocationRuleDefinition",
+        metadata: {
+          resourceName: "CostAllocationRuleDefinition",
+          resourceType: "Microsoft.CostManagement/costAllocationRules",
+          resourceIdPattern: new RequestPath(
+            "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}"
+          ),
+          scope: {
+            kind: ResourceScopeKind.Extension,
+            scopeIdPattern: new RequestPath(
+              "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}"
+            )
+          },
+          singletonResourceName: undefined,
+          parentResourceId: undefined,
+          parentResourceModelId: undefined,
+          nameConstraints: {},
+          apiVersions: [],
+          rbacRoles: [],
+          methods: [
+            {
+              methodId:
+                "Microsoft.CostManagement.CostAllocationRuleDefinition.get",
+              kind: ResourceOperationKind.Read,
+              operationPath: new RequestPath(
+                "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}"
+              ),
+              scope: {
+                kind: ResourceScopeKind.Extension,
+                scopeIdPattern: new RequestPath(
+                  "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}"
+                )
+              }
+            }
+          ]
+        }
+      },
+      {
+        resourceModelId: "Microsoft.CostManagement.CostAllocationRuleAlert",
+        metadata: {
+          resourceName: "CostAllocationRuleAlert",
+          resourceType: "Microsoft.CostManagement/costAllocationRules/alerts",
+          resourceIdPattern: new RequestPath(
+            "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}/alerts/{alertName}"
+          ),
+          scope: {
+            kind: ResourceScopeKind.Extension,
+            scopeIdPattern: new RequestPath(
+              "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}"
+            )
+          },
+          singletonResourceName: undefined,
+          parentResourceId: new RequestPath(
+            "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}"
+          ),
+          parentResourceModelId:
+            "Microsoft.CostManagement.CostAllocationRuleDefinition",
+          nameConstraints: {},
+          apiVersions: [],
+          rbacRoles: [],
+          methods: [
+            {
+              methodId: "Microsoft.CostManagement.CostAllocationRuleAlert.get",
+              kind: ResourceOperationKind.Read,
+              operationPath: new RequestPath(
+                "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}/alerts/{alertName}"
+              ),
+              scope: {
+                kind: ResourceScopeKind.Extension,
+                scopeIdPattern: new RequestPath(
+                  "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}"
+                )
+              }
+            }
+          ]
+        }
+      }
+    ];
+
+    const nonResourceMethods: NonResourceMethod[] = [
+      {
+        methodId:
+          "Microsoft.CostManagement.CostAllocationRuleAlertsOperationGroup.checkNameAvailability",
+        operationPath: new RequestPath(
+          "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}/alerts/checkNameAvailability"
+        ),
+        scope: {
+          kind: ResourceScopeKind.Extension,
+          scopeIdPattern: RequestPath.empty
+        }
+      }
+    ];
+
+    assignNonResourceMethodsToResources(resources, nonResourceMethods);
+
+    strictEqual(
+      nonResourceMethods.length,
+      0,
+      "checkNameAvailability should be assigned to the parent cost allocation rule resource"
+    );
+
+    const parentActionMethods = resources[0].metadata.methods.filter(
+      (m) =>
+        m.kind === ResourceOperationKind.Action &&
+        m.methodId ===
+          "Microsoft.CostManagement.CostAllocationRuleAlertsOperationGroup.checkNameAvailability"
+    );
+    strictEqual(
+      parentActionMethods.length,
+      1,
+      "CostAllocationRuleDefinition should gain the checkNameAvailability action"
+    );
+
+    const childActionMethods = resources[1].metadata.methods.filter(
+      (m) =>
+        m.methodId ===
+        "Microsoft.CostManagement.CostAllocationRuleAlertsOperationGroup.checkNameAvailability"
+    );
+    strictEqual(
+      childActionMethods.length,
+      0,
+      "CostAllocationRuleAlert should not treat checkNameAvailability as an alert name"
     );
   });
 });

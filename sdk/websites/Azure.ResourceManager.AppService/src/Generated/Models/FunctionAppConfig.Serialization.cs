@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("scaleAndConcurrency"u8);
                 writer.WriteObjectValue(ScaleAndConcurrency, options);
             }
+            if (Optional.IsDefined(SiteUpdateStrategy))
+            {
+                writer.WritePropertyName("siteUpdateStrategy"u8);
+                writer.WriteObjectValue(SiteUpdateStrategy, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -90,6 +95,7 @@ namespace Azure.ResourceManager.AppService.Models
             FunctionsDeployment deployment = default;
             FunctionAppRuntime runtime = default;
             FunctionAppScaleAndConcurrency scaleAndConcurrency = default;
+            FunctionsSiteUpdateStrategy siteUpdateStrategy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,13 +127,22 @@ namespace Azure.ResourceManager.AppService.Models
                     scaleAndConcurrency = FunctionAppScaleAndConcurrency.DeserializeFunctionAppScaleAndConcurrency(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("siteUpdateStrategy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    siteUpdateStrategy = FunctionsSiteUpdateStrategy.DeserializeFunctionsSiteUpdateStrategy(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FunctionAppConfig(deployment, runtime, scaleAndConcurrency, serializedAdditionalRawData);
+            return new FunctionAppConfig(deployment, runtime, scaleAndConcurrency, siteUpdateStrategy, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -186,6 +201,24 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     builder.Append("  scaleAndConcurrency: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ScaleAndConcurrency, options, 2, false, "  scaleAndConcurrency: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SiteUpdateStrategyType", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  siteUpdateStrategy: ");
+                builder.AppendLine("{");
+                builder.Append("    type: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(SiteUpdateStrategy))
+                {
+                    builder.Append("  siteUpdateStrategy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SiteUpdateStrategy, options, 2, false, "  siteUpdateStrategy: ");
                 }
             }
 

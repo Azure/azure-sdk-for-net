@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KubernetesConfigurationPrivateLinkScopeData, KubernetesConfigurationPrivateLinkScopeResource>(new KubernetesConfigurationPrivateLinkScopesGetByResourceGroupAsyncCollectionResultOfT(_kubernetesConfigurationPrivateLinkScopesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new KubernetesConfigurationPrivateLinkScopeResource(Client, data));
+            return new AsyncPageableWrapper<KubernetesConfigurationPrivateLinkScopeData, KubernetesConfigurationPrivateLinkScopeResource>(new KubernetesConfigurationPrivateLinkScopesGetByResourceGroupAsyncCollectionResultOfT(_kubernetesConfigurationPrivateLinkScopesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "KubernetesConfigurationPrivateLinkScopeCollection.GetAll"), data => new KubernetesConfigurationPrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KubernetesConfigurationPrivateLinkScopeData, KubernetesConfigurationPrivateLinkScopeResource>(new KubernetesConfigurationPrivateLinkScopesGetByResourceGroupCollectionResultOfT(_kubernetesConfigurationPrivateLinkScopesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new KubernetesConfigurationPrivateLinkScopeResource(Client, data));
+            return new PageableWrapper<KubernetesConfigurationPrivateLinkScopeData, KubernetesConfigurationPrivateLinkScopeResource>(new KubernetesConfigurationPrivateLinkScopesGetByResourceGroupCollectionResultOfT(_kubernetesConfigurationPrivateLinkScopesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "KubernetesConfigurationPrivateLinkScopeCollection.GetAll"), data => new KubernetesConfigurationPrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>

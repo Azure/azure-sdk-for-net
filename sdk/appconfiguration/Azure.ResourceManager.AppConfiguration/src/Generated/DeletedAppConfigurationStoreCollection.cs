@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new ConfigurationStoresGetDeletedAsyncCollectionResultOfT(_configurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeletedAppConfigurationStoreResource(Client, data));
+            return new AsyncPageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new ConfigurationStoresGetDeletedAsyncCollectionResultOfT(_configurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context, "DeletedAppConfigurationStoreCollection.GetAll"), data => new DeletedAppConfigurationStoreResource(Client, data));
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new ConfigurationStoresGetDeletedCollectionResultOfT(_configurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeletedAppConfigurationStoreResource(Client, data));
+            return new PageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new ConfigurationStoresGetDeletedCollectionResultOfT(_configurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context, "DeletedAppConfigurationStoreCollection.GetAll"), data => new DeletedAppConfigurationStoreResource(Client, data));
         }
 
         /// <summary>

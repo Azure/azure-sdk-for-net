@@ -7,11 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
-using Azure.AI.Projects;
-using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
 
@@ -194,7 +194,7 @@ public partial class ResponsesTelemetryTests
             var span = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"invoke_agent {agentName}");
             Assert.That(span, Is.Not.Null, $"Expected span 'invoke_agent {agentName}'");
 
-                var expectedAttributes = new Dictionary<string, object>
+            var expectedAttributes = new Dictionary<string, object>
             {
                 { "gen_ai.provider.name", "microsoft.foundry" },
                 { "gen_ai.operation.name", "invoke_agent" },

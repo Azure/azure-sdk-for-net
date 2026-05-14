@@ -261,16 +261,34 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
                         OpenAIContext.Default).ToString());
 
                 var root = doc.RootElement;
-                if (root.TryGetProperty("type", out var typeProp) &&
-                    typeProp.GetString() == "function_call_output")
+                if (!root.TryGetProperty("type", out var typeProp))
                 {
-                    string callId = root.TryGetProperty("call_id", out var callIdProp)
-                        ? callIdProp.GetString()
-                        : null;
-                    string output = root.TryGetProperty("output", out var outputProp)
+                    return null;
+                }
+
+                string type = typeProp.GetString();
+                if (type == null)
+                {
+                    return null;
+                }
+
+                // function_call_output: simple format (backward compatible)
+                if (type == "function_call_output")
+                {
+                    string callId = GetStringProp(root, "call_id");
+                    // Only extract tool output content when content recording is enabled.
+                    string output = s_traceContent && root.TryGetProperty("output", out var outputProp)
                         ? outputProp.GetString()
                         : null;
                     return new ToolCallOutputInfo(callId, output);
+                }
+
+                // All other *_output types: nested format
+                if (type.EndsWith("_output", StringComparison.Ordinal))
+                {
+                    string callId = GetCallIdFromElement(root);
+                    string contentJson = BuildToolOutputContentJson(root, type, callId);
+                    return new ToolCallOutputInfo(type, callId, contentJson);
                 }
             }
             catch
@@ -281,34 +299,75 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
         }
 
         /// <summary>
-        /// Represents a function call tool invocation from the model's response output.
+        /// Represents a tool call invocation from the model's response output.
+        /// For function_call: uses CallId/FunctionName/Arguments (simple format).
+        /// For all other tool types: uses Type/CallId/ContentJson (nested format).
         /// </summary>
         internal readonly struct ToolCallInfo
         {
+            public string Type { get; }
             public string CallId { get; }
             public string FunctionName { get; }
             public string Arguments { get; }
+            /// <summary>
+            /// For non-function tool types, contains the JSON content object
+            /// (including type and id) to be written inside the "content" wrapper.
+            /// </summary>
+            public string ContentJson { get; }
 
+            /// <summary>Constructor for function_call tool type (backward compatible).</summary>
             public ToolCallInfo(string callId, string functionName, string arguments)
             {
+                Type = "function_call";
                 CallId = callId;
                 FunctionName = functionName;
                 Arguments = arguments;
+                ContentJson = null;
+            }
+
+            /// <summary>Constructor for all other tool types (nested format).</summary>
+            public ToolCallInfo(string type, string callId, string functionName, string arguments, string contentJson)
+            {
+                Type = type;
+                CallId = callId;
+                FunctionName = functionName;
+                Arguments = arguments;
+                ContentJson = contentJson;
             }
         }
 
         /// <summary>
-        /// Represents a function call output provided as input to the model.
+        /// Represents a tool call output provided as input to the model.
+        /// For function_call_output: uses CallId/Output (simple format).
+        /// For all other tool output types: uses Type/CallId/ContentJson (nested format).
         /// </summary>
         internal readonly struct ToolCallOutputInfo
         {
+            public string Type { get; }
             public string CallId { get; }
             public string Output { get; }
+            /// <summary>
+            /// For non-function tool output types, contains the JSON content object
+            /// (including type and id) to be written inside the "content" wrapper.
+            /// </summary>
+            public string ContentJson { get; }
 
+            /// <summary>Constructor for function_call_output (backward compatible).</summary>
             public ToolCallOutputInfo(string callId, string output)
             {
+                Type = "function_call_output";
                 CallId = callId;
                 Output = output;
+                ContentJson = null;
+            }
+
+            /// <summary>Constructor for all other tool output types (nested format).</summary>
+            public ToolCallOutputInfo(string type, string callId, string contentJson)
+            {
+                Type = type;
+                CallId = callId;
+                Output = null;
+                ContentJson = contentJson;
             }
         }
 
@@ -358,12 +417,34 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
 
             string finishReason = response.Status.HasValue ? GetFinishReason(response.Status.Value) : null;
 
+            // Defense-in-depth: strip output text when content recording is off.
+            // WriteMessagesJson also guards on s_traceContent, but we avoid passing
+            // the raw text through multiple layers when it should not be recorded.
+            string outputText;
+            if (s_traceContent)
+            {
+                outputText = response.GetOutputText();
+            }
+            else
+            {
+                // Use empty string as a non-null sentinel so the message envelope
+                // (with finish_reason) is still emitted without any content.
+                if (response.GetOutputText() != null)
+                {
+                    outputText = string.Empty;
+                }
+                else
+                {
+                    outputText = null;
+                }
+            }
+
             RecordResponse(
                 responseModel: response.Model,
                 responseId: response.Id,
                 inputTokens: inputTokens,
                 outputTokens: outputTokens,
-                outputText: response.GetOutputText(),
+                outputText: outputText,
                 toolCalls: ExtractToolCallsFromResponse(response),
                 finishReason: finishReason);
         }
@@ -386,6 +467,10 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
             {
                 if (update is StreamingResponseOutputTextDeltaUpdate textDelta)
                 {
+                    // Always accumulate text regardless of content recording setting.
+                    // We need to know whether text output exists to emit the output message
+                    // envelope with finish_reason. The actual text content is only written
+                    // to the trace when s_traceContent is true (see WriteMessagesJson).
                     _streamedTextBuilder.Append(textDelta.Delta);
                 }
                 else if (update is StreamingResponseCompletedUpdate completedUpdate)
@@ -422,7 +507,8 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
                     if (_streamedTextBuilder.Length > 0)
                     {
                         string finishReason = _streamedStatus.HasValue ? GetFinishReason(_streamedStatus.Value) : null;
-                        string json = WriteMessagesJson(new[] { _streamedTextBuilder.ToString() }, "assistant", finishReason);
+                        string outputText = s_traceContent ? _streamedTextBuilder.ToString() : null;
+                        string json = WriteMessagesJson(new[] { outputText }, "assistant", finishReason);
                         AppendToAttribute("gen_ai.output.messages", json);
                     }
 
@@ -497,21 +583,44 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
 
                 foreach (var outputItem in outputProp.EnumerateArray())
                 {
-                    if (outputItem.TryGetProperty("type", out var typeProp) &&
-                        typeProp.GetString() == "function_call")
+                    if (!outputItem.TryGetProperty("type", out var typeProp))
                     {
-                        string callId = outputItem.TryGetProperty("call_id", out var callIdProp)
-                            ? callIdProp.GetString()
-                            : null;
-                        string name = outputItem.TryGetProperty("name", out var nameProp)
-                            ? nameProp.GetString()
-                            : null;
-                        string arguments = outputItem.TryGetProperty("arguments", out var argsProp)
+                        continue;
+                    }
+
+                    string type = typeProp.GetString();
+                    if (type == null)
+                    {
+                        continue;
+                    }
+
+                    if (type == "function_call")
+                    {
+                        string callId = GetStringProp(outputItem, "call_id");
+                        // Only extract function name and arguments when content recording is enabled.
+                        string name = s_traceContent ? GetStringProp(outputItem, "name") : null;
+                        string arguments = s_traceContent && outputItem.TryGetProperty("arguments", out var argsProp)
                             ? argsProp.GetRawText()
                             : null;
 
                         toolCalls ??= new List<ToolCallInfo>();
                         toolCalls.Add(new ToolCallInfo(callId, name, arguments));
+                    }
+                    else if (type == "file_search_call" ||
+                             type == "code_interpreter_call" ||
+                             type == "web_search_call" ||
+                             type == "computer_call" ||
+                             type == "image_generation_call" ||
+                             type == "mcp_call" ||
+                             type == "azure_ai_search_call" ||
+                             (type.StartsWith("mcp_", StringComparison.Ordinal) && !type.EndsWith("_output", StringComparison.Ordinal)) ||
+                             (type.Contains("_call") && !type.EndsWith("_output", StringComparison.Ordinal)))
+                    {
+                        string callId = GetCallIdFromElement(outputItem);
+                        string contentJson = BuildToolContentJson(outputItem, type, callId);
+
+                        toolCalls ??= new List<ToolCallInfo>();
+                        toolCalls.Add(new ToolCallInfo(type, callId, null, null, contentJson));
                     }
                 }
             }
@@ -520,6 +629,234 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
                 // Telemetry extraction should never break the user's call.
             }
             return toolCalls;
+        }
+
+        /// <summary>Extracts id or call_id from a JSON element.</summary>
+        private static string GetCallIdFromElement(JsonElement element)
+        {
+            return GetStringProp(element, "call_id") ?? GetStringProp(element, "id");
+        }
+
+        /// <summary>Gets a string property value from a JSON element, or null.</summary>
+        private static string GetStringProp(JsonElement element, string propertyName)
+        {
+            return element.TryGetProperty(propertyName, out var prop) && prop.ValueKind == JsonValueKind.String
+                ? prop.GetString()
+                : null;
+        }
+
+        /// <summary>
+        /// Builds the JSON content object for a non-function tool call.
+        /// Always includes type and id (safe, non-PII).
+        /// Includes type-specific details only when content recording is enabled.
+        /// Never includes binary data (images, files).
+        /// </summary>
+        private static string BuildToolContentJson(JsonElement outputItem, string type, string callId)
+        {
+            using var ms = new MemoryStream();
+            using (var w = new Utf8JsonWriter(ms, new JsonWriterOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            }))
+            {
+                w.WriteStartObject();
+                w.WriteString("type", type);
+                if (callId != null)
+                {
+                    w.WriteString("id", callId);
+                }
+
+                if (s_traceContent)
+                {
+                    WriteToolSpecificDetails(w, outputItem, type);
+                }
+
+                w.WriteEndObject();
+            }
+            return Encoding.UTF8.GetString(ms.ToArray());
+        }
+
+        /// <summary>
+        /// Writes type-specific detail properties for each recognized tool type.
+        /// Only called when content recording is enabled.
+        /// </summary>
+        private static void WriteToolSpecificDetails(Utf8JsonWriter w, JsonElement item, string type)
+        {
+            switch (type)
+            {
+                case "file_search_call":
+                    CopyJsonProp(w, item, "queries");
+                    CopyJsonProp(w, item, "results");
+                    CopyJsonProp(w, item, "status");
+                    break;
+
+                case "code_interpreter_call":
+                    CopyJsonProp(w, item, "code");
+                    CopyJsonProp(w, item, "outputs");
+                    CopyJsonProp(w, item, "status");
+                    break;
+
+                case "web_search_call":
+                    CopyJsonProp(w, item, "action");
+                    CopyJsonProp(w, item, "status");
+                    break;
+
+                case "computer_call":
+                    CopyJsonProp(w, item, "action");
+                    CopyJsonProp(w, item, "status");
+                    break;
+
+                case "image_generation_call":
+                    // Include metadata but never binary image data (result)
+                    CopyJsonProp(w, item, "prompt");
+                    CopyJsonProp(w, item, "quality");
+                    CopyJsonProp(w, item, "size");
+                    CopyJsonProp(w, item, "style");
+                    CopyJsonProp(w, item, "status");
+                    break;
+
+                case "mcp_call":
+                    CopyJsonProp(w, item, "name");
+                    CopyJsonProp(w, item, "arguments");
+                    CopyJsonProp(w, item, "server_label");
+                    CopyJsonProp(w, item, "status");
+                    break;
+
+                case "azure_ai_search_call":
+                    CopyJsonProp(w, item, "input");
+                    CopyJsonProp(w, item, "results");
+                    CopyJsonProp(w, item, "status");
+                    break;
+
+                case "local_shell_call":
+                case "shell_call":
+                    CopyJsonProp(w, item, "command");
+                    CopyJsonProp(w, item, "output");
+                    CopyJsonProp(w, item, "status");
+                    break;
+
+                case "apply_patch_call":
+                    CopyJsonProp(w, item, "patch");
+                    CopyJsonProp(w, item, "status");
+                    break;
+
+                case "custom_tool_call":
+                    CopyJsonProp(w, item, "name");
+                    CopyJsonProp(w, item, "arguments");
+                    CopyJsonProp(w, item, "status");
+                    break;
+
+                default:
+                    // Generic handler for mcp_* types and unknown *_call types:
+                    // copy common fields that may be present.
+                    CopyJsonProp(w, item, "name");
+                    CopyJsonProp(w, item, "arguments");
+                    CopyJsonProp(w, item, "server_label");
+                    CopyJsonProp(w, item, "input");
+                    CopyJsonProp(w, item, "output");
+                    CopyJsonProp(w, item, "query");
+                    CopyJsonProp(w, item, "status");
+                    CopyJsonProp(w, item, "approve");
+                    CopyJsonProp(w, item, "approval_request_id");
+                    break;
+            }
+        }
+
+        /// <summary>Copies a JSON property from source to writer if present.</summary>
+        private static void CopyJsonProp(Utf8JsonWriter writer, JsonElement source, string propertyName)
+        {
+            if (source.TryGetProperty(propertyName, out var prop) &&
+                prop.ValueKind != JsonValueKind.Null)
+            {
+                writer.WritePropertyName(propertyName);
+                prop.WriteTo(writer);
+            }
+        }
+
+        /// <summary>
+        /// Builds the JSON content object for a non-function tool output item.
+        /// Always includes type and id (safe, non-PII).
+        /// Includes type-specific output details only when content recording is enabled.
+        /// Never includes binary data (images, screenshots).
+        /// </summary>
+        private static string BuildToolOutputContentJson(JsonElement outputItem, string type, string callId)
+        {
+            using var ms = new MemoryStream();
+            using (var w = new Utf8JsonWriter(ms, new JsonWriterOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            }))
+            {
+                w.WriteStartObject();
+                w.WriteString("type", type);
+                if (callId != null)
+                {
+                    w.WriteString("id", callId);
+                }
+
+                if (s_traceContent)
+                {
+                    WriteToolOutputSpecificDetails(w, outputItem, type);
+                }
+
+                w.WriteEndObject();
+            }
+            return Encoding.UTF8.GetString(ms.ToArray());
+        }
+
+        /// <summary>
+        /// Writes type-specific detail properties for each recognized tool output type.
+        /// Only called when content recording is enabled.
+        /// Binary data (screenshots, images) is never included.
+        /// </summary>
+        private static void WriteToolOutputSpecificDetails(Utf8JsonWriter w, JsonElement item, string type)
+        {
+            switch (type)
+            {
+                case "computer_call_output":
+                    // Include output but strip binary data (image_url from computer screenshots).
+                    if (item.TryGetProperty("output", out var computerOutput) &&
+                        computerOutput.ValueKind == JsonValueKind.Object)
+                    {
+                        w.WritePropertyName("output");
+                        w.WriteStartObject();
+                        foreach (var prop in computerOutput.EnumerateObject())
+                        {
+                            // Skip image_url - binary screenshot data, potential PII/large payload.
+                            if (prop.Name == "image_url")
+                            {
+                                continue;
+                            }
+                            prop.WriteTo(w);
+                        }
+                        w.WriteEndObject();
+                    }
+                    CopyJsonProp(w, item, "status");
+                    break;
+
+                case "local_shell_call_output":
+                case "shell_call_output":
+                    CopyJsonProp(w, item, "output");
+                    CopyJsonProp(w, item, "status");
+                    break;
+
+                case "apply_patch_call_output":
+                    CopyJsonProp(w, item, "output");
+                    CopyJsonProp(w, item, "status");
+                    break;
+
+                case "custom_tool_call_output":
+                    CopyJsonProp(w, item, "output");
+                    CopyJsonProp(w, item, "status");
+                    break;
+
+                default:
+                    // Generic handler for any future *_output types.
+                    CopyJsonProp(w, item, "output");
+                    CopyJsonProp(w, item, "result");
+                    CopyJsonProp(w, item, "status");
+                    break;
+            }
         }
 
         public void Dispose()
@@ -631,7 +968,8 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
 
         /// <summary>
         /// Writes tool call items (from model response output) as JSON.
-        /// Uses simple OTEL-compliant format: {"type": "tool_call", "id": "...", "name": "...", "arguments": ...}
+        /// function_call uses simple format: {"type": "tool_call", "id": "...", "name": "...", "arguments": ...}
+        /// All other tool types use nested format: {"type": "tool_call", "content": {"type": "web_search_call", ...}}
         /// </summary>
         private static string WriteToolCallsJson(IReadOnlyList<ToolCallInfo> toolCalls)
         {
@@ -649,31 +987,50 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
                 {
                     writer.WriteStartObject();
                     writer.WriteString("type", "tool_call");
-                    if (tc.CallId != null)
+
+                    if (tc.Type == "function_call")
                     {
-                        writer.WriteString("id", tc.CallId);
+                        // Simple format for function_call
+                        if (tc.CallId != null)
+                        {
+                            writer.WriteString("id", tc.CallId);
+                        }
+                        if (s_traceContent)
+                        {
+                            if (tc.FunctionName != null)
+                            {
+                                writer.WriteString("name", tc.FunctionName);
+                            }
+                            if (tc.Arguments != null)
+                            {
+                                writer.WritePropertyName("arguments");
+                                try
+                                {
+                                    using var argDoc = JsonDocument.Parse(tc.Arguments);
+                                    argDoc.RootElement.WriteTo(writer);
+                                }
+                                catch
+                                {
+                                    writer.WriteStringValue(tc.Arguments);
+                                }
+                            }
+                        }
                     }
-                    if (s_traceContent)
+                    else if (tc.ContentJson != null)
                     {
-                        if (tc.FunctionName != null)
+                        // Nested format for all other tool types
+                        writer.WritePropertyName("content");
+                        try
                         {
-                            writer.WriteString("name", tc.FunctionName);
+                            using var contentDoc = JsonDocument.Parse(tc.ContentJson);
+                            contentDoc.RootElement.WriteTo(writer);
                         }
-                        if (tc.Arguments != null)
+                        catch
                         {
-                            writer.WritePropertyName("arguments");
-                            // Write arguments as raw JSON if valid, otherwise as string
-                            try
-                            {
-                                using var argDoc = JsonDocument.Parse(tc.Arguments);
-                                argDoc.RootElement.WriteTo(writer);
-                            }
-                            catch
-                            {
-                                writer.WriteStringValue(tc.Arguments);
-                            }
+                            writer.WriteStringValue(tc.ContentJson);
                         }
                     }
+
                     writer.WriteEndObject();
                 }
                 writer.WriteEndArray();
@@ -685,7 +1042,8 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
 
         /// <summary>
         /// Writes tool call output items (from user input) as JSON.
-        /// Uses simple OTEL-compliant format: {"type": "tool_call_response", "id": "...", "result": "..."}
+        /// function_call_output uses simple format: {"type": "tool_call_response", "id": "...", "result": "..."}
+        /// All other tool output types use nested format: {"type": "tool_call_output", "content": {"type": "...", ...}}
         /// </summary>
         private static string WriteToolCallOutputsJson(IReadOnlyList<ToolCallOutputInfo> toolOutputs)
         {
@@ -702,25 +1060,45 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
                 foreach (var to in toolOutputs)
                 {
                     writer.WriteStartObject();
-                    writer.WriteString("type", "tool_call_response");
-                    if (to.CallId != null)
+
+                    if (to.Type == "function_call_output")
                     {
-                        writer.WriteString("id", to.CallId);
+                        // Simple format for function_call_output
+                        writer.WriteString("type", "tool_call_response");
+                        if (to.CallId != null)
+                        {
+                            writer.WriteString("id", to.CallId);
+                        }
+                        if (s_traceContent && to.Output != null)
+                        {
+                            writer.WritePropertyName("result");
+                            try
+                            {
+                                using var resultDoc = JsonDocument.Parse(to.Output);
+                                resultDoc.RootElement.WriteTo(writer);
+                            }
+                            catch
+                            {
+                                writer.WriteStringValue(to.Output);
+                            }
+                        }
                     }
-                    if (s_traceContent && to.Output != null)
+                    else if (to.ContentJson != null)
                     {
-                        writer.WritePropertyName("result");
-                        // Write result as raw JSON if valid, otherwise as string
+                        // Nested format for all other tool output types
+                        writer.WriteString("type", "tool_call_output");
+                        writer.WritePropertyName("content");
                         try
                         {
-                            using var resultDoc = JsonDocument.Parse(to.Output);
-                            resultDoc.RootElement.WriteTo(writer);
+                            using var contentDoc = JsonDocument.Parse(to.ContentJson);
+                            contentDoc.RootElement.WriteTo(writer);
                         }
                         catch
                         {
-                            writer.WriteStringValue(to.Output);
+                            writer.WriteStringValue(to.ContentJson);
                         }
                     }
+
                     writer.WriteEndObject();
                 }
                 writer.WriteEndArray();

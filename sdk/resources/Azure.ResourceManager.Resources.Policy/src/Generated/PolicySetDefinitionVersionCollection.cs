@@ -297,7 +297,8 @@ namespace Azure.ResourceManager.Resources.Policy
                 Id.Name,
                 expand,
                 top,
-                context), data => new PolicySetDefinitionVersionResource(Client, data));
+                context,
+                "PolicySetDefinitionVersionCollection.GetAll"), data => new PolicySetDefinitionVersionResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.Resources.Policy
                 Id.Name,
                 expand,
                 top,
-                context), data => new PolicySetDefinitionVersionResource(Client, data));
+                context,
+                "PolicySetDefinitionVersionCollection.GetAll"), data => new PolicySetDefinitionVersionResource(Client, data));
         }
 
         /// <summary>

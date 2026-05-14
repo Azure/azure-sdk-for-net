@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for knowledge source runtime parameters.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSourceParams"/>, <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="WebKnowledgeSourceParams"/>, and <see cref="RemoteSharePointKnowledgeSourceParams"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSourceParams"/>, <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, and <see cref="WebKnowledgeSourceParams"/>.
     /// </summary>
     public abstract partial class KnowledgeSourceParams
     {
@@ -33,16 +33,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
-        /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, float? rerankerThreshold, KnowledgeSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, float? rerankerThreshold, KnowledgeSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KnowledgeSourceName = knowledgeSourceName;
             IncludeReferences = includeReferences;
             IncludeReferenceSourceData = includeReferenceSourceData;
-            AlwaysQuerySource = alwaysQuerySource;
             RerankerThreshold = rerankerThreshold;
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -56,9 +54,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Indicates whether references should include the structured data obtained during retrieval in their payload. </summary>
         public bool? IncludeReferenceSourceData { get; set; }
-
-        /// <summary> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </summary>
-        public bool? AlwaysQuerySource { get; set; }
 
         /// <summary> The reranker threshold all retrieved documents must meet to be included in the response. </summary>
         public float? RerankerThreshold { get; set; }

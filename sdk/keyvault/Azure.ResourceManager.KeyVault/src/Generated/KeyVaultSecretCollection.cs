@@ -295,7 +295,8 @@ namespace Azure.ResourceManager.KeyVault
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new KeyVaultSecretResource(Client, data));
+                context,
+                "KeyVaultSecretCollection.GetAll"), data => new KeyVaultSecretResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +331,8 @@ namespace Azure.ResourceManager.KeyVault
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new KeyVaultSecretResource(Client, data));
+                context,
+                "KeyVaultSecretCollection.GetAll"), data => new KeyVaultSecretResource(Client, data));
         }
 
         /// <summary>

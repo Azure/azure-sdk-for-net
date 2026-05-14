@@ -293,7 +293,8 @@ namespace Azure.ResourceManager.DeviceRegistry
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new DeviceRegistrySchemaVersionResource(Client, data));
+                context,
+                "DeviceRegistrySchemaVersionCollection.GetAll"), data => new DeviceRegistrySchemaVersionResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +328,8 @@ namespace Azure.ResourceManager.DeviceRegistry
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new DeviceRegistrySchemaVersionResource(Client, data));
+                context,
+                "DeviceRegistrySchemaVersionCollection.GetAll"), data => new DeviceRegistrySchemaVersionResource(Client, data));
         }
 
         /// <summary>

@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseWatcherSharedPrivateLinkResourceData, DatabaseWatcherSharedPrivateLinkResource>(new SharedPrivateLinkResourcesGetByWatcherAsyncCollectionResultOfT(_sharedPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DatabaseWatcherSharedPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<DatabaseWatcherSharedPrivateLinkResourceData, DatabaseWatcherSharedPrivateLinkResource>(new SharedPrivateLinkResourcesGetByWatcherAsyncCollectionResultOfT(
+                _sharedPrivateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatabaseWatcherSharedPrivateLinkResourceCollection.GetAll"), data => new DatabaseWatcherSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseWatcherSharedPrivateLinkResourceData, DatabaseWatcherSharedPrivateLinkResource>(new SharedPrivateLinkResourcesGetByWatcherCollectionResultOfT(_sharedPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DatabaseWatcherSharedPrivateLinkResource(Client, data));
+            return new PageableWrapper<DatabaseWatcherSharedPrivateLinkResourceData, DatabaseWatcherSharedPrivateLinkResource>(new SharedPrivateLinkResourcesGetByWatcherCollectionResultOfT(
+                _sharedPrivateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatabaseWatcherSharedPrivateLinkResourceCollection.GetAll"), data => new DatabaseWatcherSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>

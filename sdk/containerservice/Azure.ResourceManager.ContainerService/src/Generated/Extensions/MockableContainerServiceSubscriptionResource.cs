@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ManagedClustersGetContainerServiceManagedClustersAsyncCollectionResultOfT(ManagedClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ContainerServiceManagedClusterResource(Client, data));
+            return new AsyncPageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ManagedClustersGetContainerServiceManagedClustersAsyncCollectionResultOfT(ManagedClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetContainerServiceManagedClusters"), data => new ContainerServiceManagedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ManagedClustersGetContainerServiceManagedClustersCollectionResultOfT(ManagedClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ContainerServiceManagedClusterResource(Client, data));
+            return new PageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ManagedClustersGetContainerServiceManagedClustersCollectionResultOfT(ManagedClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetContainerServiceManagedClusters"), data => new ContainerServiceManagedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new SnapshotsGetAllAsyncCollectionResultOfT(SnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new AgentPoolSnapshotResource(Client, data));
+            return new AsyncPageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new SnapshotsGetAllAsyncCollectionResultOfT(SnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetAgentPoolSnapshots"), data => new AgentPoolSnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new SnapshotsGetAllCollectionResultOfT(SnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new AgentPoolSnapshotResource(Client, data));
+            return new PageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new SnapshotsGetAllCollectionResultOfT(SnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetAgentPoolSnapshots"), data => new AgentPoolSnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedClusterSnapshotData, ManagedClusterSnapshotResource>(new ManagedClusterSnapshotsGetAllAsyncCollectionResultOfT(ManagedClusterSnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ManagedClusterSnapshotResource(Client, data));
+            return new AsyncPageableWrapper<ManagedClusterSnapshotData, ManagedClusterSnapshotResource>(new ManagedClusterSnapshotsGetAllAsyncCollectionResultOfT(ManagedClusterSnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetManagedClusterSnapshots"), data => new ManagedClusterSnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedClusterSnapshotData, ManagedClusterSnapshotResource>(new ManagedClusterSnapshotsGetAllCollectionResultOfT(ManagedClusterSnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ManagedClusterSnapshotResource(Client, data));
+            return new PageableWrapper<ManagedClusterSnapshotData, ManagedClusterSnapshotResource>(new ManagedClusterSnapshotsGetAllCollectionResultOfT(ManagedClusterSnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetManagedClusterSnapshots"), data => new ManagedClusterSnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new TrustedAccessRolesOperationGroupGetTrustedAccessRolesAsyncCollectionResultOfT(TrustedAccessRolesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new TrustedAccessRolesOperationGroupGetTrustedAccessRolesAsyncCollectionResultOfT(TrustedAccessRolesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles");
         }
 
         /// <summary>
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new TrustedAccessRolesOperationGroupGetTrustedAccessRolesCollectionResultOfT(TrustedAccessRolesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new TrustedAccessRolesOperationGroupGetTrustedAccessRolesCollectionResultOfT(TrustedAccessRolesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles");
         }
 
         /// <summary>
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerServiceOperationGroupGetNodeImageVersionsAsyncCollectionResultOfT(ContainerServiceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new ContainerServiceOperationGroupGetNodeImageVersionsAsyncCollectionResultOfT(ContainerServiceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerServiceSubscriptionResource.GetNodeImageVersions");
         }
 
         /// <summary>
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerServiceOperationGroupGetNodeImageVersionsCollectionResultOfT(ContainerServiceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new ContainerServiceOperationGroupGetNodeImageVersionsCollectionResultOfT(ContainerServiceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerServiceSubscriptionResource.GetNodeImageVersions");
         }
 
         /// <summary>
@@ -681,7 +681,13 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new VmSkusOperationGroupGetVmSkusAsyncCollectionResultOfT(VmSkusOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, includeExtendedLocations, context);
+            return new VmSkusOperationGroupGetVmSkusAsyncCollectionResultOfT(
+                VmSkusOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                location,
+                includeExtendedLocations,
+                context,
+                "MockableContainerServiceSubscriptionResource.GetVmSkus");
         }
 
         /// <summary>
@@ -711,7 +717,13 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new VmSkusOperationGroupGetVmSkusCollectionResultOfT(VmSkusOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, includeExtendedLocations, context);
+            return new VmSkusOperationGroupGetVmSkusCollectionResultOfT(
+                VmSkusOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                location,
+                includeExtendedLocations,
+                context,
+                "MockableContainerServiceSubscriptionResource.GetVmSkus");
         }
     }
 }

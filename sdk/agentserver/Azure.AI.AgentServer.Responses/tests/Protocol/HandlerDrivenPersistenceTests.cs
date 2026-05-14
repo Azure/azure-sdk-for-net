@@ -16,9 +16,9 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// Protocol tests for User Story 1 — Handler-Driven Persistence.
-/// Verifies FR-001 (no persistence before handler runs),
-/// FR-002 (bg=true: Create at response.created, Update at terminal),
-/// FR-003 (bg=false: single Create at terminal state).
+/// Verifies S-035/B36 (no persistence before handler runs),
+/// S-035 (bg=true: Create at response.created, Update at terminal),
+/// S-035 (bg=false: single Create at terminal state).
 /// </summary>
 public class HandlerDrivenPersistenceTests : IDisposable
 {
@@ -155,6 +155,10 @@ public class HandlerDrivenPersistenceTests : IDisposable
         // Wait for bg task to complete
         await WaitForBackgroundCompletionAsync(responseId);
 
+        // GET returning a terminal status does not guarantee finalization
+        // (persistence) has completed — poll until UpdateResponseAsync appears.
+        await WaitForSpyCallAsync("UpdateResponseAsync");
+
         // Provider should have exactly 1 Create and 1 Update
         var calls = _spy.Calls.ToArray();
         Assert.That(calls.Count(c => c == "CreateResponseAsync"), Is.EqualTo(1));
@@ -230,6 +234,20 @@ public class HandlerDrivenPersistenceTests : IDisposable
                 if (status is "completed" or "failed" or "incomplete" or "cancelled")
                     return;
             }
+            await Task.Delay(50);
+        }
+    }
+
+    /// <summary>
+    /// Polls the spy's call log until the expected method name appears or timeout.
+    /// </summary>
+    private async Task WaitForSpyCallAsync(string methodName, TimeSpan? timeout = null)
+    {
+        var deadline = DateTimeOffset.UtcNow + (timeout ?? TimeSpan.FromSeconds(5));
+        while (DateTimeOffset.UtcNow < deadline)
+        {
+            if (_spy.Calls.Contains(methodName))
+                return;
             await Task.Delay(50);
         }
     }

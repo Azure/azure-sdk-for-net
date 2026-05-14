@@ -220,6 +220,18 @@ internal static class IdGenerator
     public static string NewOutputMessageItemId(string? partitionKeyHint = "")
         => NewId("om", partitionKeyHint);
 
+    /// <summary>Generates a new structured output item ID with the <c>fco</c> prefix.</summary>
+    /// <param name="partitionKeyHint">Optional existing ID for partition key propagation.</param>
+    /// <returns>A structured output item ID in the format <c>fco_{partitionKey}{entropy}</c>.</returns>
+    public static string NewStructuredOutputItemId(string? partitionKeyHint = "")
+        => NewId("fco", partitionKeyHint);
+
+    /// <summary>Generates a new generic item ID with the <c>item</c> prefix.</summary>
+    /// <param name="partitionKeyHint">Optional existing ID for partition key propagation.</param>
+    /// <returns>A generic item ID in the format <c>item_{partitionKey}{entropy}</c>.</returns>
+    public static string NewGenericItemId(string? partitionKeyHint = "")
+        => NewId("item", partitionKeyHint);
+
     // ─── Item dispatch ──────────────────────────────────────────────
 
     /// <summary>

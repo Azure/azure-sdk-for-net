@@ -6,12 +6,13 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ServiceGroups
@@ -23,51 +24,53 @@ namespace Azure.ResourceManager.ServiceGroups
     /// </summary>
     public partial class ServiceGroupCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _serviceGroupClientDiagnostics;
-        private readonly ServiceGroupsRestOperations _serviceGroupRestClient;
+        private readonly ClientDiagnostics _managementClientClientDiagnostics;
+        private readonly ManagementClient _managementClientRestClient;
+        private readonly ClientDiagnostics _serviceGroupsOperationGroupClientDiagnostics;
+        private readonly ServiceGroupsOperationGroup _serviceGroupsOperationGroupRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceGroupCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ServiceGroupCollection for mocking. </summary>
         protected ServiceGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceGroupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceGroupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceGroups", ServiceGroupResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ServiceGroupResource.ResourceType, out string serviceGroupApiVersion);
-            _serviceGroupRestClient = new ServiceGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGroupApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _managementClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceGroups", ServiceGroupResource.ResourceType.Namespace, Diagnostics);
+            _managementClientRestClient = new ManagementClient(_managementClientClientDiagnostics, Pipeline, Endpoint, serviceGroupApiVersion ?? "2024-02-01-preview");
+            _serviceGroupsOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceGroups", ServiceGroupResource.ResourceType.Namespace, Diagnostics);
+            _serviceGroupsOperationGroupRestClient = new ServiceGroupsOperationGroup(_serviceGroupsOperationGroupClientDiagnostics, Pipeline, Endpoint, serviceGroupApiVersion ?? "2024-02-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != TenantResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or Update a serviceGroup
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/serviceGroups/{serviceGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/serviceGroups/{serviceGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGroups_CreateOrUpdateServiceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,21 +78,34 @@ namespace Azure.ResourceManager.ServiceGroups
         /// <param name="serviceGroupName"> ServiceGroup Name. </param>
         /// <param name="data"> ServiceGroup creation parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ServiceGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceGroupName, ServiceGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceGroupName, nameof(serviceGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceGroupClientDiagnostics.CreateScope("ServiceGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _managementClientClientDiagnostics.CreateScope("ServiceGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serviceGroupRestClient.CreateOrUpdateAsync(serviceGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceGroupsArmOperation<ServiceGroupResource>(new ServiceGroupOperationSource(Client), _serviceGroupClientDiagnostics, Pipeline, _serviceGroupRestClient.CreateCreateOrUpdateRequest(serviceGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managementClientRestClient.CreateCreateOrUpdateServiceGroupRequest(serviceGroupName, ServiceGroupData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ServiceGroupsArmOperation<ServiceGroupResource> operation = new ServiceGroupsArmOperation<ServiceGroupResource>(
+                    new ServiceGroupOperationSource(Client),
+                    _managementClientClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -103,20 +119,16 @@ namespace Azure.ResourceManager.ServiceGroups
         /// Create or Update a serviceGroup
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/serviceGroups/{serviceGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/serviceGroups/{serviceGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGroups_CreateOrUpdateServiceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,21 +136,34 @@ namespace Azure.ResourceManager.ServiceGroups
         /// <param name="serviceGroupName"> ServiceGroup Name. </param>
         /// <param name="data"> ServiceGroup creation parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ServiceGroupResource> CreateOrUpdate(WaitUntil waitUntil, string serviceGroupName, ServiceGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceGroupName, nameof(serviceGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceGroupClientDiagnostics.CreateScope("ServiceGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _managementClientClientDiagnostics.CreateScope("ServiceGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serviceGroupRestClient.CreateOrUpdate(serviceGroupName, data, cancellationToken);
-                var operation = new ServiceGroupsArmOperation<ServiceGroupResource>(new ServiceGroupOperationSource(Client), _serviceGroupClientDiagnostics, Pipeline, _serviceGroupRestClient.CreateCreateOrUpdateRequest(serviceGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managementClientRestClient.CreateCreateOrUpdateServiceGroupRequest(serviceGroupName, ServiceGroupData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ServiceGroupsArmOperation<ServiceGroupResource> operation = new ServiceGroupsArmOperation<ServiceGroupResource>(
+                    new ServiceGroupOperationSource(Client),
+                    _managementClientClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -152,38 +177,42 @@ namespace Azure.ResourceManager.ServiceGroups
         /// Get the details of the serviceGroup
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/serviceGroups/{serviceGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/serviceGroups/{serviceGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceGroupName"> ServiceGroup Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ServiceGroupResource>> GetAsync(string serviceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceGroupName, nameof(serviceGroupName));
 
-            using var scope = _serviceGroupClientDiagnostics.CreateScope("ServiceGroupCollection.Get");
+            using DiagnosticScope scope = _serviceGroupsOperationGroupClientDiagnostics.CreateScope("ServiceGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serviceGroupRestClient.GetAsync(serviceGroupName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceGroupsOperationGroupRestClient.CreateGetRequest(serviceGroupName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ServiceGroupData> response = Response.FromValue(ServiceGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -197,38 +226,42 @@ namespace Azure.ResourceManager.ServiceGroups
         /// Get the details of the serviceGroup
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/serviceGroups/{serviceGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/serviceGroups/{serviceGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceGroupName"> ServiceGroup Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ServiceGroupResource> Get(string serviceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceGroupName, nameof(serviceGroupName));
 
-            using var scope = _serviceGroupClientDiagnostics.CreateScope("ServiceGroupCollection.Get");
+            using DiagnosticScope scope = _serviceGroupsOperationGroupClientDiagnostics.CreateScope("ServiceGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = _serviceGroupRestClient.Get(serviceGroupName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceGroupsOperationGroupRestClient.CreateGetRequest(serviceGroupName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ServiceGroupData> response = Response.FromValue(ServiceGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,107 +272,53 @@ namespace Azure.ResourceManager.ServiceGroups
         }
 
         /// <summary>
-        /// Get the details of the serviceGroup's ancestors
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/listAncestors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroups_ListAncestors</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="serviceGroupName"> ServiceGroup Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceGroupName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ServiceGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceGroupResource> GetAncestorsAsync(string serviceGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(serviceGroupName, nameof(serviceGroupName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceGroupRestClient.CreateListAncestorsRequest(serviceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceGroupResource(Client, ServiceGroupData.DeserializeServiceGroupData(e)), _serviceGroupClientDiagnostics, Pipeline, "ServiceGroupCollection.GetAncestors", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the details of the serviceGroup's ancestors
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/listAncestors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroups_ListAncestors</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="serviceGroupName"> ServiceGroup Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceGroupName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ServiceGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceGroupResource> GetAncestors(string serviceGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(serviceGroupName, nameof(serviceGroupName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceGroupRestClient.CreateListAncestorsRequest(serviceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceGroupResource(Client, ServiceGroupData.DeserializeServiceGroupData(e)), _serviceGroupClientDiagnostics, Pipeline, "ServiceGroupCollection.GetAncestors", "value", null, cancellationToken);
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/serviceGroups/{serviceGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/serviceGroups/{serviceGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceGroupName"> ServiceGroup Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serviceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceGroupName, nameof(serviceGroupName));
 
-            using var scope = _serviceGroupClientDiagnostics.CreateScope("ServiceGroupCollection.Exists");
+            using DiagnosticScope scope = _serviceGroupsOperationGroupClientDiagnostics.CreateScope("ServiceGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _serviceGroupRestClient.GetAsync(serviceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceGroupsOperationGroupRestClient.CreateGetRequest(serviceGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ServiceGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ServiceGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ServiceGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -353,36 +332,50 @@ namespace Azure.ResourceManager.ServiceGroups
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/serviceGroups/{serviceGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/serviceGroups/{serviceGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceGroupName"> ServiceGroup Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string serviceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceGroupName, nameof(serviceGroupName));
 
-            using var scope = _serviceGroupClientDiagnostics.CreateScope("ServiceGroupCollection.Exists");
+            using DiagnosticScope scope = _serviceGroupsOperationGroupClientDiagnostics.CreateScope("ServiceGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _serviceGroupRestClient.Get(serviceGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceGroupsOperationGroupRestClient.CreateGetRequest(serviceGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ServiceGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ServiceGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ServiceGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -396,38 +389,54 @@ namespace Azure.ResourceManager.ServiceGroups
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/serviceGroups/{serviceGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/serviceGroups/{serviceGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceGroupName"> ServiceGroup Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ServiceGroupResource>> GetIfExistsAsync(string serviceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceGroupName, nameof(serviceGroupName));
 
-            using var scope = _serviceGroupClientDiagnostics.CreateScope("ServiceGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _serviceGroupsOperationGroupClientDiagnostics.CreateScope("ServiceGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serviceGroupRestClient.GetAsync(serviceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceGroupsOperationGroupRestClient.CreateGetRequest(serviceGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ServiceGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ServiceGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ServiceGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ServiceGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -441,38 +450,54 @@ namespace Azure.ResourceManager.ServiceGroups
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/serviceGroups/{serviceGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/serviceGroups/{serviceGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceGroupName"> ServiceGroup Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ServiceGroupResource> GetIfExists(string serviceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceGroupName, nameof(serviceGroupName));
 
-            using var scope = _serviceGroupClientDiagnostics.CreateScope("ServiceGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _serviceGroupsOperationGroupClientDiagnostics.CreateScope("ServiceGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serviceGroupRestClient.Get(serviceGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceGroupsOperationGroupRestClient.CreateGetRequest(serviceGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ServiceGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ServiceGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ServiceGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ServiceGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

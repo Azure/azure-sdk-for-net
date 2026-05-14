@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.EdgeOrder
         private readonly string _skipToken;
         private readonly int? _top;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of OrderItemResourcesGetByResourceGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The OrderItemResources client used to send requests. </param>
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public OrderItemResourcesGetByResourceGroupAsyncCollectionResultOfT(OrderItemResources client, Guid subscriptionId, string resourceGroupName, string filter, string expand, string skipToken, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public OrderItemResourcesGetByResourceGroupAsyncCollectionResultOfT(OrderItemResources client, Guid subscriptionId, string resourceGroupName, string filter, string expand, string skipToken, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.EdgeOrder
             _skipToken = skipToken;
             _top = top;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of OrderItemResourcesGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -77,7 +80,7 @@ namespace Azure.ResourceManager.EdgeOrder
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _filter, _expand, _skipToken, _top, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _filter, _expand, _skipToken, _top, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EdgeOrderItemCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

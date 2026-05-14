@@ -6,13 +6,14 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.Communication.Messages.Models.Channels;
 
 namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ActionBindings))]
     [ModelReaderWriterBuildable(typeof(ActionGroup))]
@@ -32,7 +33,7 @@ namespace Azure.Communication.Messages
     [ModelReaderWriterBuildable(typeof(ConversationMessageContent))]
     [ModelReaderWriterBuildable(typeof(ConversationMessageItem))]
     [ModelReaderWriterBuildable(typeof(ConversationParticipant))]
-    [ModelReaderWriterBuildable(typeof(CreateConversationRequest1))]
+    [ModelReaderWriterBuildable(typeof(CreateConversationRequest))]
     [ModelReaderWriterBuildable(typeof(DocumentConversationMessageContent))]
     [ModelReaderWriterBuildable(typeof(DocumentMessageContent))]
     [ModelReaderWriterBuildable(typeof(DocumentNotificationContent))]
@@ -45,9 +46,9 @@ namespace Azure.Communication.Messages
     [ModelReaderWriterBuildable(typeof(InteractiveNotificationContent))]
     [ModelReaderWriterBuildable(typeof(InternalConversationParticipant))]
     [ModelReaderWriterBuildable(typeof(LinkContent))]
-#pragma warning disable CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // global::Azure.Communication.Messages.MediaNotificationContent is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(MediaNotificationContent))]
-#pragma warning disable CS0618 // Type or member is obsolete
+#pragma warning restore CS0618 // global::Azure.Communication.Messages.MediaNotificationContent is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(MessageContent))]
     [ModelReaderWriterBuildable(typeof(MessageReceipt))]
     [ModelReaderWriterBuildable(typeof(MessageTemplate))]
@@ -61,6 +62,9 @@ namespace Azure.Communication.Messages
     [ModelReaderWriterBuildable(typeof(MessageTemplateValue))]
     [ModelReaderWriterBuildable(typeof(MessageTemplateVideo))]
     [ModelReaderWriterBuildable(typeof(NotificationContent))]
+    [ModelReaderWriterBuildable(typeof(PagedConversation))]
+    [ModelReaderWriterBuildable(typeof(PagedConversationMessageItem))]
+    [ModelReaderWriterBuildable(typeof(PagedMessageTemplateItem))]
     [ModelReaderWriterBuildable(typeof(ReactionNotificationContent))]
     [ModelReaderWriterBuildable(typeof(ReadReceiptContent))]
     [ModelReaderWriterBuildable(typeof(RemoveParticipantsOptions))]

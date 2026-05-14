@@ -76,6 +76,16 @@ namespace OpenAI
                 writer.WritePropertyName("environment"u8);
                 writer.WriteObjectValue(Environment, options);
             }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -106,6 +116,8 @@ namespace OpenAI
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             FunctionShellToolParamEnvironment environment = default;
+            string name = default;
+            string description = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -123,12 +135,22 @@ namespace OpenAI
                     environment = FunctionShellToolParamEnvironment.DeserializeFunctionShellToolParamEnvironment(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalFunctionShellToolParam(@type, additionalBinaryDataProperties, environment);
+            return new InternalFunctionShellToolParam(@type, additionalBinaryDataProperties, environment, name, description);
         }
     }
 }

@@ -978,7 +978,8 @@ namespace Azure.ResourceManager.NewRelicObservability
                 Id.ResourceGroupName,
                 Id.Name,
                 body != null ? RequestContent.Create(body) : null,
-                context);
+                context,
+                "NewRelicMonitorResource.GetConnectedPartnerResources");
         }
 
         /// <summary>
@@ -1017,7 +1018,8 @@ namespace Azure.ResourceManager.NewRelicObservability
                 Id.ResourceGroupName,
                 Id.Name,
                 body != null ? RequestContent.Create(body) : null,
-                context);
+                context,
+                "NewRelicMonitorResource.GetConnectedPartnerResources");
         }
 
         /// <summary>
@@ -1059,7 +1061,8 @@ namespace Azure.ResourceManager.NewRelicObservability
                 Id.ResourceGroupName,
                 Id.Name,
                 NewRelicAppServicesGetContent.ToRequestContent(content),
-                context);
+                context,
+                "NewRelicMonitorResource.GetAppServices");
         }
 
         /// <summary>
@@ -1101,7 +1104,8 @@ namespace Azure.ResourceManager.NewRelicObservability
                 Id.ResourceGroupName,
                 Id.Name,
                 NewRelicAppServicesGetContent.ToRequestContent(content),
-                context);
+                context,
+                "NewRelicMonitorResource.GetAppServices");
         }
 
         /// <summary>
@@ -1143,7 +1147,8 @@ namespace Azure.ResourceManager.NewRelicObservability
                 Id.ResourceGroupName,
                 Id.Name,
                 NewRelicHostsGetContent.ToRequestContent(content),
-                context);
+                context,
+                "NewRelicMonitorResource.GetHosts");
         }
 
         /// <summary>
@@ -1185,7 +1190,8 @@ namespace Azure.ResourceManager.NewRelicObservability
                 Id.ResourceGroupName,
                 Id.Name,
                 NewRelicHostsGetContent.ToRequestContent(content),
-                context);
+                context,
+                "NewRelicMonitorResource.GetHosts");
         }
 
         /// <summary>
@@ -1217,7 +1223,13 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetLinkedResourcesAsyncCollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new MonitorsGetLinkedResourcesAsyncCollectionResultOfT(
+                _monitorsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NewRelicMonitorResource.GetLinkedResources");
         }
 
         /// <summary>
@@ -1249,7 +1261,13 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetLinkedResourcesCollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new MonitorsGetLinkedResourcesCollectionResultOfT(
+                _monitorsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NewRelicMonitorResource.GetLinkedResources");
         }
 
         /// <summary>
@@ -1281,7 +1299,13 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetMonitoredResourcesAsyncCollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new MonitorsGetMonitoredResourcesAsyncCollectionResultOfT(
+                _monitorsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NewRelicMonitorResource.GetMonitoredResources");
         }
 
         /// <summary>
@@ -1313,7 +1337,13 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetMonitoredResourcesCollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new MonitorsGetMonitoredResourcesCollectionResultOfT(
+                _monitorsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NewRelicMonitorResource.GetMonitoredResources");
         }
 
         /// <summary>

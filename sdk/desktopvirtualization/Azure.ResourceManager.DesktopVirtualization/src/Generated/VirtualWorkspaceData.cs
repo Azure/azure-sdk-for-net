@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new WorkspaceProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new WorkspaceProperties();
                 }
-                Properties.DeploymentScope = value.Value;
+                Properties.DeploymentScope = value;
             }
         }
     }

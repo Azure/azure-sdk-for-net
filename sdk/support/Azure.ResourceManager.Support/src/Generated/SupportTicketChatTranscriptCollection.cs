@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChatTranscriptDetailData, SupportTicketChatTranscriptResource>(new SupportTicketChatTranscriptGetAllAsyncCollectionResultOfT(_supportTicketChatTranscriptRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new SupportTicketChatTranscriptResource(Client, data));
+            return new AsyncPageableWrapper<ChatTranscriptDetailData, SupportTicketChatTranscriptResource>(new SupportTicketChatTranscriptGetAllAsyncCollectionResultOfT(_supportTicketChatTranscriptRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SupportTicketChatTranscriptCollection.GetAll"), data => new SupportTicketChatTranscriptResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChatTranscriptDetailData, SupportTicketChatTranscriptResource>(new SupportTicketChatTranscriptGetAllCollectionResultOfT(_supportTicketChatTranscriptRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new SupportTicketChatTranscriptResource(Client, data));
+            return new PageableWrapper<ChatTranscriptDetailData, SupportTicketChatTranscriptResource>(new SupportTicketChatTranscriptGetAllCollectionResultOfT(_supportTicketChatTranscriptRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SupportTicketChatTranscriptCollection.GetAll"), data => new SupportTicketChatTranscriptResource(Client, data));
         }
 
         /// <summary>

@@ -309,7 +309,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabDiskResource(Client, data));
+                context,
+                "DevTestLabDiskCollection.GetAll"), data => new DevTestLabDiskResource(Client, data));
         }
 
         /// <summary>
@@ -351,7 +352,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabDiskResource(Client, data));
+                context,
+                "DevTestLabDiskCollection.GetAll"), data => new DevTestLabDiskResource(Client, data));
         }
 
         /// <summary>

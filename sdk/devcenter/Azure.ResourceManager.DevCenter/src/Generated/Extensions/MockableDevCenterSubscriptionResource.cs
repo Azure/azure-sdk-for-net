@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevCenterData, DevCenterResource>(new DevCentersGetBySubscriptionAsyncCollectionResultOfT(DevCentersRestClient, Guid.Parse(Id.SubscriptionId), top, context), data => new DevCenterResource(Client, data));
+            return new AsyncPageableWrapper<DevCenterData, DevCenterResource>(new DevCentersGetBySubscriptionAsyncCollectionResultOfT(DevCentersRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDevCenterSubscriptionResource.GetDevCenters"), data => new DevCenterResource(Client, data));
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevCenterData, DevCenterResource>(new DevCentersGetBySubscriptionCollectionResultOfT(DevCentersRestClient, Guid.Parse(Id.SubscriptionId), top, context), data => new DevCenterResource(Client, data));
+            return new PageableWrapper<DevCenterData, DevCenterResource>(new DevCentersGetBySubscriptionCollectionResultOfT(DevCentersRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDevCenterSubscriptionResource.GetDevCenters"), data => new DevCenterResource(Client, data));
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevCenterProjectData, DevCenterProjectResource>(new ProjectsGetBySubscriptionAsyncCollectionResultOfT(ProjectsRestClient, Guid.Parse(Id.SubscriptionId), top, context), data => new DevCenterProjectResource(Client, data));
+            return new AsyncPageableWrapper<DevCenterProjectData, DevCenterProjectResource>(new ProjectsGetBySubscriptionAsyncCollectionResultOfT(ProjectsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDevCenterSubscriptionResource.GetDevCenterProjects"), data => new DevCenterProjectResource(Client, data));
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevCenterProjectData, DevCenterProjectResource>(new ProjectsGetBySubscriptionCollectionResultOfT(ProjectsRestClient, Guid.Parse(Id.SubscriptionId), top, context), data => new DevCenterProjectResource(Client, data));
+            return new PageableWrapper<DevCenterProjectData, DevCenterProjectResource>(new ProjectsGetBySubscriptionCollectionResultOfT(ProjectsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDevCenterSubscriptionResource.GetDevCenterProjects"), data => new DevCenterProjectResource(Client, data));
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevCenterNetworkConnectionData, DevCenterNetworkConnectionResource>(new NetworkConnectionsGetBySubscriptionAsyncCollectionResultOfT(NetworkConnectionsRestClient, Guid.Parse(Id.SubscriptionId), top, context), data => new DevCenterNetworkConnectionResource(Client, data));
+            return new AsyncPageableWrapper<DevCenterNetworkConnectionData, DevCenterNetworkConnectionResource>(new NetworkConnectionsGetBySubscriptionAsyncCollectionResultOfT(NetworkConnectionsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDevCenterSubscriptionResource.GetDevCenterNetworkConnections"), data => new DevCenterNetworkConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevCenterNetworkConnectionData, DevCenterNetworkConnectionResource>(new NetworkConnectionsGetBySubscriptionCollectionResultOfT(NetworkConnectionsRestClient, Guid.Parse(Id.SubscriptionId), top, context), data => new DevCenterNetworkConnectionResource(Client, data));
+            return new PageableWrapper<DevCenterNetworkConnectionData, DevCenterNetworkConnectionResource>(new NetworkConnectionsGetBySubscriptionCollectionResultOfT(NetworkConnectionsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDevCenterSubscriptionResource.GetDevCenterNetworkConnections"), data => new DevCenterNetworkConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetDevCenterSkusBySubscriptionAsyncCollectionResultOfT(SkusRestClient, Guid.Parse(Id.SubscriptionId), top, context);
+            return new SkusGetDevCenterSkusBySubscriptionAsyncCollectionResultOfT(SkusRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDevCenterSubscriptionResource.GetDevCenterSkusBySubscription");
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetDevCenterSkusBySubscriptionCollectionResultOfT(SkusRestClient, Guid.Parse(Id.SubscriptionId), top, context);
+            return new SkusGetDevCenterSkusBySubscriptionCollectionResultOfT(SkusRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDevCenterSubscriptionResource.GetDevCenterSkusBySubscription");
         }
 
         /// <summary>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetDevCenterUsagesByLocationAsyncCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new UsagesGetDevCenterUsagesByLocationAsyncCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableDevCenterSubscriptionResource.GetDevCenterUsagesByLocation");
         }
 
         /// <summary>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetDevCenterUsagesByLocationCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new UsagesGetDevCenterUsagesByLocationCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableDevCenterSubscriptionResource.GetDevCenterUsagesByLocation");
         }
 
         /// <summary>

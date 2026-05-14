@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppConfigurationPrivateEndpointConnectionData, AppConfigurationPrivateEndpointConnectionResource>(new AppConfigurationPrivateEndpointConnectionGetByConfigurationStoreAsyncCollectionResultOfT(_appConfigurationPrivateEndpointConnectionRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AppConfigurationPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<AppConfigurationPrivateEndpointConnectionData, AppConfigurationPrivateEndpointConnectionResource>(new AppConfigurationPrivateEndpointConnectionGetByConfigurationStoreAsyncCollectionResultOfT(
+                _appConfigurationPrivateEndpointConnectionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AppConfigurationPrivateEndpointConnectionCollection.GetAll"), data => new AppConfigurationPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppConfigurationPrivateEndpointConnectionData, AppConfigurationPrivateEndpointConnectionResource>(new AppConfigurationPrivateEndpointConnectionGetByConfigurationStoreCollectionResultOfT(_appConfigurationPrivateEndpointConnectionRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AppConfigurationPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<AppConfigurationPrivateEndpointConnectionData, AppConfigurationPrivateEndpointConnectionResource>(new AppConfigurationPrivateEndpointConnectionGetByConfigurationStoreCollectionResultOfT(
+                _appConfigurationPrivateEndpointConnectionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AppConfigurationPrivateEndpointConnectionCollection.GetAll"), data => new AppConfigurationPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new MonitorsGetByResourceGroupAsyncCollectionResultOfT(_monitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DynatraceMonitorResource(Client, data));
+            return new AsyncPageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new MonitorsGetByResourceGroupAsyncCollectionResultOfT(_monitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DynatraceMonitorCollection.GetAll"), data => new DynatraceMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new MonitorsGetByResourceGroupCollectionResultOfT(_monitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DynatraceMonitorResource(Client, data));
+            return new PageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new MonitorsGetByResourceGroupCollectionResultOfT(_monitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DynatraceMonitorCollection.GetAll"), data => new DynatraceMonitorResource(Client, data));
         }
 
         /// <summary>

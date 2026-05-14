@@ -150,7 +150,7 @@ namespace Azure.AI.Projects.Tests
             return instrument ? InstrumentClientOptions(options) : options;
         }
 
-        private AuthenticationTokenProvider GetTestTokenProvider()
+        protected AuthenticationTokenProvider GetTestTokenProvider()
         {
             // For local testing if you are using non default account
             // add USE_CLI_CREDENTIAL into the .runsettings and set it to true,

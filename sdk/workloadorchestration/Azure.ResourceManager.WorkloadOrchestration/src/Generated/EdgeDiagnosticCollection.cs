@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeDiagnosticData, EdgeDiagnosticResource>(new DiagnosticsGetByResourceGroupAsyncCollectionResultOfT(_diagnosticsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EdgeDiagnosticResource(Client, data));
+            return new AsyncPageableWrapper<EdgeDiagnosticData, EdgeDiagnosticResource>(new DiagnosticsGetByResourceGroupAsyncCollectionResultOfT(_diagnosticsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeDiagnosticCollection.GetAll"), data => new EdgeDiagnosticResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeDiagnosticData, EdgeDiagnosticResource>(new DiagnosticsGetByResourceGroupCollectionResultOfT(_diagnosticsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EdgeDiagnosticResource(Client, data));
+            return new PageableWrapper<EdgeDiagnosticData, EdgeDiagnosticResource>(new DiagnosticsGetByResourceGroupCollectionResultOfT(_diagnosticsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeDiagnosticCollection.GetAll"), data => new EdgeDiagnosticResource(Client, data));
         }
 
         /// <summary>

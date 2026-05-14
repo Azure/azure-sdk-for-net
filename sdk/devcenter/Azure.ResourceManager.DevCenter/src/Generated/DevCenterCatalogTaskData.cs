@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.Inputs;
+                return Properties is null ? default : Properties.Inputs;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.Timeout;
+                return Properties is null ? default : Properties.Timeout;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.ValidationStatus;
+                return Properties is null ? default : Properties.ValidationStatus;
             }
         }
     }

@@ -185,7 +185,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.Parent.Name,
                 Id.Name,
                 top,
-                context), data => new DevCenterCatalogImageDefinitionResource(Client, data));
+                context,
+                "DevCenterCatalogImageDefinitionCollection.GetAll"), data => new DevCenterCatalogImageDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -221,7 +222,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.Parent.Name,
                 Id.Name,
                 top,
-                context), data => new DevCenterCatalogImageDefinitionResource(Client, data));
+                context,
+                "DevCenterCatalogImageDefinitionCollection.GetAll"), data => new DevCenterCatalogImageDefinitionResource(Client, data));
         }
 
         /// <summary>

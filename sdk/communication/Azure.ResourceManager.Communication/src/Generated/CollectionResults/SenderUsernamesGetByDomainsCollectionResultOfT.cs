@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Communication
         private readonly string _emailServiceName;
         private readonly string _domainName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SenderUsernamesGetByDomainsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SenderUsernames client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.Communication
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
         /// <param name="domainName"> The name of the Domains resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SenderUsernamesGetByDomainsCollectionResultOfT(SenderUsernames client, Guid subscriptionId, string resourceGroupName, string emailServiceName, string domainName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SenderUsernamesGetByDomainsCollectionResultOfT(SenderUsernames client, Guid subscriptionId, string resourceGroupName, string emailServiceName, string domainName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Communication
             _emailServiceName = emailServiceName;
             _domainName = domainName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SenderUsernamesGetByDomainsCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.Communication
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByDomainsRequest(nextLink, _subscriptionId, _resourceGroupName, _emailServiceName, _domainName, _context) : _client.CreateGetByDomainsRequest(_subscriptionId, _resourceGroupName, _emailServiceName, _domainName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SenderUsernameResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

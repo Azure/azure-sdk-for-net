@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Web App stack. </summary>
+    /// <summary>
+    /// Web App stack.
+    /// Serialized Name: WebAppStack
+    /// </summary>
     public partial class WebAppStack : ResourceData
     {
         /// <summary>
@@ -58,12 +61,30 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Web App stack location. </param>
-        /// <param name="displayText"> Web App stack (display only). </param>
-        /// <param name="value"> Web App stack name. </param>
-        /// <param name="majorVersions"> List of major versions available. </param>
-        /// <param name="preferredOS"> Web App stack preferred OS. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="location">
+        /// Web App stack location.
+        /// Serialized Name: WebAppStack.location
+        /// </param>
+        /// <param name="displayText">
+        /// Web App stack (display only).
+        /// Serialized Name: WebAppStack.properties.displayText
+        /// </param>
+        /// <param name="value">
+        /// Web App stack name.
+        /// Serialized Name: WebAppStack.properties.value
+        /// </param>
+        /// <param name="majorVersions">
+        /// List of major versions available.
+        /// Serialized Name: WebAppStack.properties.majorVersions
+        /// </param>
+        /// <param name="preferredOS">
+        /// Web App stack preferred OS.
+        /// Serialized Name: WebAppStack.properties.preferredOs
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppStack(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string displayText, string value, IReadOnlyList<WebAppMajorVersion> majorVersions, StackPreferredOS? preferredOS, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -76,22 +97,40 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Web App stack location. </summary>
+        /// <summary>
+        /// Web App stack location.
+        /// Serialized Name: WebAppStack.location
+        /// </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
-        /// <summary> Web App stack (display only). </summary>
+        /// <summary>
+        /// Web App stack (display only).
+        /// Serialized Name: WebAppStack.properties.displayText
+        /// </summary>
         [WirePath("properties.displayText")]
         public string DisplayText { get; }
-        /// <summary> Web App stack name. </summary>
+        /// <summary>
+        /// Web App stack name.
+        /// Serialized Name: WebAppStack.properties.value
+        /// </summary>
         [WirePath("properties.value")]
         public string Value { get; }
-        /// <summary> List of major versions available. </summary>
+        /// <summary>
+        /// List of major versions available.
+        /// Serialized Name: WebAppStack.properties.majorVersions
+        /// </summary>
         [WirePath("properties.majorVersions")]
         public IReadOnlyList<WebAppMajorVersion> MajorVersions { get; }
-        /// <summary> Web App stack preferred OS. </summary>
+        /// <summary>
+        /// Web App stack preferred OS.
+        /// Serialized Name: WebAppStack.properties.preferredOs
+        /// </summary>
         [WirePath("properties.preferredOs")]
         public StackPreferredOS? PreferredOS { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

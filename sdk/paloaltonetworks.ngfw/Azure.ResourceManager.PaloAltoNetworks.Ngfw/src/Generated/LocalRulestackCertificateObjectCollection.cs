@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LocalRulestackCertificateObjectData, LocalRulestackCertificateObjectResource>(new CertificateObjectLocalRulestackGetByLocalRulestacksAsyncCollectionResultOfT(_certificateObjectLocalRulestackRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new LocalRulestackCertificateObjectResource(Client, data));
+            return new AsyncPageableWrapper<LocalRulestackCertificateObjectData, LocalRulestackCertificateObjectResource>(new CertificateObjectLocalRulestackGetByLocalRulestacksAsyncCollectionResultOfT(
+                _certificateObjectLocalRulestackRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "LocalRulestackCertificateObjectCollection.GetAll"), data => new LocalRulestackCertificateObjectResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LocalRulestackCertificateObjectData, LocalRulestackCertificateObjectResource>(new CertificateObjectLocalRulestackGetByLocalRulestacksCollectionResultOfT(_certificateObjectLocalRulestackRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new LocalRulestackCertificateObjectResource(Client, data));
+            return new PageableWrapper<LocalRulestackCertificateObjectData, LocalRulestackCertificateObjectResource>(new CertificateObjectLocalRulestackGetByLocalRulestacksCollectionResultOfT(
+                _certificateObjectLocalRulestackRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "LocalRulestackCertificateObjectCollection.GetAll"), data => new LocalRulestackCertificateObjectResource(Client, data));
         }
 
         /// <summary>

@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Attestation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AttestationPrivateEndpointConnectionData, AttestationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new AttestationPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<AttestationPrivateEndpointConnectionData, AttestationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AttestationPrivateEndpointConnectionCollection.GetAll"), data => new AttestationPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Attestation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AttestationPrivateEndpointConnectionData, AttestationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(_privateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new AttestationPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<AttestationPrivateEndpointConnectionData, AttestationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AttestationPrivateEndpointConnectionCollection.GetAll"), data => new AttestationPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

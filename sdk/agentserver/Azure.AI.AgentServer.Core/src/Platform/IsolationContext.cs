@@ -39,16 +39,6 @@ namespace Azure.AI.AgentServer.Core;
 public class IsolationContext
 {
     /// <summary>
-    /// The HTTP header name for the user isolation key: <c>x-agent-user-isolation-key</c>.
-    /// </summary>
-    public const string UserIsolationKeyHeaderName = "x-agent-user-isolation-key";
-
-    /// <summary>
-    /// The HTTP header name for the chat isolation key: <c>x-agent-chat-isolation-key</c>.
-    /// </summary>
-    public const string ChatIsolationKeyHeaderName = "x-agent-chat-isolation-key";
-
-    /// <summary>
     /// An empty <see cref="IsolationContext"/> with both keys <see langword="null"/>.
     /// Used when the platform headers are absent (e.g., local development).
     /// </summary>
@@ -63,11 +53,11 @@ public class IsolationContext
     /// <returns>An <see cref="IsolationContext"/> with the extracted keys.</returns>
     public static IsolationContext FromRequest(HttpRequest request)
     {
-        string? userKey = request.Headers.TryGetValue(UserIsolationKeyHeaderName, out var userValue)
+        string? userKey = request.Headers.TryGetValue(PlatformHeaders.UserIsolationKey, out var userValue)
             ? NormalizeHeaderValue(userValue)
             : null;
 
-        string? chatKey = request.Headers.TryGetValue(ChatIsolationKeyHeaderName, out var chatValue)
+        string? chatKey = request.Headers.TryGetValue(PlatformHeaders.ChatIsolationKey, out var chatValue)
             ? NormalizeHeaderValue(chatValue)
             : null;
 

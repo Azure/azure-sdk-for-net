@@ -22,6 +22,7 @@ namespace Azure.AI.Projects
             Y = y;
             ScrollX = scrollX;
             ScrollY = scrollY;
+            Keys = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScrollParam"/>. </summary>
@@ -31,12 +32,14 @@ namespace Azure.AI.Projects
         /// <param name="y"> The y-coordinate where the scroll occurred. </param>
         /// <param name="scrollX"> The horizontal scroll distance. </param>
         /// <param name="scrollY"> The vertical scroll distance. </param>
-        internal ScrollParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long x, long y, long scrollX, long scrollY) : base(@type, additionalBinaryDataProperties)
+        /// <param name="keys"></param>
+        internal ScrollParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long x, long y, long scrollX, long scrollY, IList<string> keys) : base(@type, additionalBinaryDataProperties)
         {
             X = x;
             Y = y;
             ScrollX = scrollX;
             ScrollY = scrollY;
+            Keys = keys;
         }
 
         /// <summary> The x-coordinate where the scroll occurred. </summary>
@@ -50,5 +53,8 @@ namespace Azure.AI.Projects
 
         /// <summary> The vertical scroll distance. </summary>
         public long ScrollY { get; }
+
+        /// <summary> Gets or sets the Keys. </summary>
+        public IList<string> Keys { get; set; }
     }
 }

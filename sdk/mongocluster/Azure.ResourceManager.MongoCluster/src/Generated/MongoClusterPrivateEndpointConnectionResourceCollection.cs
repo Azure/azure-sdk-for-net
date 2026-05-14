@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoClusterPrivateEndpointConnectionResourceData, MongoClusterPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByMongoClusterAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MongoClusterPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<MongoClusterPrivateEndpointConnectionResourceData, MongoClusterPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByMongoClusterAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MongoClusterPrivateEndpointConnectionResourceCollection.GetAll"), data => new MongoClusterPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoClusterPrivateEndpointConnectionResourceData, MongoClusterPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByMongoClusterCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MongoClusterPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<MongoClusterPrivateEndpointConnectionResourceData, MongoClusterPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByMongoClusterCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MongoClusterPrivateEndpointConnectionResourceCollection.GetAll"), data => new MongoClusterPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

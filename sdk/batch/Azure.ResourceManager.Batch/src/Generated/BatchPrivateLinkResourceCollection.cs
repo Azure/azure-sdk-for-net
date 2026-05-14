@@ -184,7 +184,8 @@ namespace Azure.ResourceManager.Batch
                 Id.ResourceGroupName,
                 Id.Name,
                 maxresults,
-                context), data => new BatchPrivateLinkResource(Client, data));
+                context,
+                "BatchPrivateLinkResourceCollection.GetAll"), data => new BatchPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -219,7 +220,8 @@ namespace Azure.ResourceManager.Batch
                 Id.ResourceGroupName,
                 Id.Name,
                 maxresults,
-                context), data => new BatchPrivateLinkResource(Client, data));
+                context,
+                "BatchPrivateLinkResourceCollection.GetAll"), data => new BatchPrivateLinkResource(Client, data));
         }
 
         /// <summary>

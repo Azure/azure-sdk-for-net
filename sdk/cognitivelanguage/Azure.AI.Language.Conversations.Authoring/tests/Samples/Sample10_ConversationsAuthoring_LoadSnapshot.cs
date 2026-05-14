@@ -22,9 +22,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample10_ConversationsAuthoring_LoadSnapshot
+            ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
+
             string projectName = "{projectName}";
             string trainedModelLabel = "{trainedModelLabel}";
-            Operation operation = client.LoadSnapshot(WaitUntil.Completed, projectName, trainedModelLabel);
+            Operation operation = trainedModelClient.LoadSnapshot(WaitUntil.Completed, projectName, trainedModelLabel);
 
             // Extract the operation-location header
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
@@ -43,9 +45,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample10_ConversationsAuthoring_LoadSnapshotAsync
+            ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
+
             string projectName = "{projectName}";
             string trainedModelLabel = "{trainedModelLabel}";
-            Operation operation = await client.LoadSnapshotAsync(WaitUntil.Completed, projectName, trainedModelLabel);
+            Operation operation = await trainedModelClient.LoadSnapshotAsync(WaitUntil.Completed, projectName, trainedModelLabel);
 
             // Extract the operation-location header
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;

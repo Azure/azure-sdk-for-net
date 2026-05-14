@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     Properties = new PrivateCloudProperties();
                 }
-                Properties.Internet = value.Value;
+                Properties.Internet = value;
             }
         }
 
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     Properties = new PrivateCloudProperties();
                 }
-                Properties.DnsZoneType = value.Value;
+                Properties.DnsZoneType = value;
             }
         }
 

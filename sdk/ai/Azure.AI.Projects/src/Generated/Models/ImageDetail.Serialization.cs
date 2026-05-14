@@ -14,6 +14,7 @@ namespace Azure.AI.Projects
             ImageDetail.Low => "low",
             ImageDetail.High => "high",
             ImageDetail.Auto => "auto",
+            ImageDetail.Original => "original",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ImageDetail value.")
         };
 
@@ -31,6 +32,10 @@ namespace Azure.AI.Projects
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
             {
                 return ImageDetail.Auto;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "original"))
+            {
+                return ImageDetail.Original;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ImageDetail value.");
         }

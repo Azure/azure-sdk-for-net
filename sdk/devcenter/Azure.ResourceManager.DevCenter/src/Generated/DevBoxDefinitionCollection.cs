@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new DevBoxDefinitionResource(Client, data));
+                context,
+                "DevBoxDefinitionCollection.GetAll"), data => new DevBoxDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new DevBoxDefinitionResource(Client, data));
+                context,
+                "DevBoxDefinitionCollection.GetAll"), data => new DevBoxDefinitionResource(Client, data));
         }
 
         /// <summary>

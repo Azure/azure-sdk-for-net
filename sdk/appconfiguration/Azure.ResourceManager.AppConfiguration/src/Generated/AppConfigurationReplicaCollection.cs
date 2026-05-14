@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.AppConfiguration
                 Id.ResourceGroupName,
                 Id.Name,
                 skipToken,
-                context), data => new AppConfigurationReplicaResource(Client, data));
+                context,
+                "AppConfigurationReplicaCollection.GetAll"), data => new AppConfigurationReplicaResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.AppConfiguration
                 Id.ResourceGroupName,
                 Id.Name,
                 skipToken,
-                context), data => new AppConfigurationReplicaResource(Client, data));
+                context,
+                "AppConfigurationReplicaCollection.GetAll"), data => new AppConfigurationReplicaResource(Client, data));
         }
 
         /// <summary>

@@ -1203,7 +1203,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     provisioningState,
                     healthCheckStatus,
                     networkingResourceGroupName,
-                    domainJoinType.Value));
+                    domainJoinType.GetValueOrDefault()));
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -1446,7 +1446,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DevCenterData DevCenterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, DevCenterProvisioningState? provisioningState, Uri devCenterUri)
         {
-            return DevCenterData(id, name, resourceType, systemData, tags, location, displayName: default, customerManagedKeyEncryption: default, catalogItemSyncEnableStatus: default, microsoftHostedNetworkEnableStatus: default, devBoxProvisioningInstallAzureMonitorAgentEnableStatus: default, provisioningState, devCenterUri, identity);
+            return DevCenterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, displayName: default, customerManagedKeyEncryption: default, catalogItemSyncEnableStatus: default, microsoftHostedNetworkEnableStatus: default, devBoxProvisioningInstallAzureMonitorAgentEnableStatus: default, provisioningState: provisioningState, devCenterUri: devCenterUri, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterProjectData"/>. </summary>
@@ -1465,7 +1465,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DevCenterProjectData DevCenterProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier devCenterId, string description, int? maxDevBoxesPerUser, DevCenterProvisioningState? provisioningState, Uri devCenterUri)
         {
-            return DevCenterProjectData(id, name, resourceType, systemData, tags, location, devCenterId, description, maxDevBoxesPerUser, displayName: default, customizationSettings: default, devBoxScheduleDeleteSettings: default, serverlessGpuSessionsSettings: default, assignedGroups: default, catalogItemSyncTypes: default, azureAiServicesMode: default, workspaceStorageMode: default, provisioningState, devCenterUri, identity: default);
+            return DevCenterProjectData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, devCenterId: devCenterId, description: description, maxDevBoxesPerUser: maxDevBoxesPerUser, displayName: default, customizationSettings: default, devBoxScheduleDeleteSettings: default, serverlessGpuSessionsSettings: default, assignedGroups: default, catalogItemSyncTypes: default, azureAiServicesMode: default, workspaceStorageMode: default, provisioningState: provisioningState, devCenterUri: devCenterUri, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterImageData"/>. </summary>
@@ -1484,7 +1484,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DevCenterImageData DevCenterImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string publisher, string offer, string sku, RecommendedMachineConfiguration recommendedMachineConfiguration, DevCenterProvisioningState? provisioningState, DevCenterHibernateSupport? hibernateSupport)
         {
-            return DevCenterImageData(id, name, resourceType, systemData, description, publisher, offer, sku, recommendedMachineConfiguration, provisioningState, hibernateSupport, architecture: default);
+            return DevCenterImageData(id: id, name: name, resourceType: resourceType, systemData: systemData, description: description, publisher: publisher, offer: offer, sku: sku, recommendedMachineConfiguration: recommendedMachineConfiguration, provisioningState: provisioningState, hibernateSupport: hibernateSupport, architecture: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterCatalogData"/>. </summary>
@@ -1501,7 +1501,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DevCenterCatalogData DevCenterCatalogData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterGitCatalog gitHub, DevCenterGitCatalog adoGit, DevCenterProvisioningState? provisioningState, DevCenterCatalogSyncState? syncState, DateTimeOffset? lastSyncOn)
         {
-            return DevCenterCatalogData(id, name, resourceType, systemData, gitHub, adoGit, syncType: default, autoImageBuildEnableStatus: default, tags: default, provisioningState, syncState, lastSyncStats: default, connectionState: default, lastConnectionOn: default, lastSyncOn);
+            return DevCenterCatalogData(id: id, name: name, resourceType: resourceType, systemData: systemData, gitHub: gitHub, adoGit: adoGit, syncType: default, autoImageBuildEnableStatus: default, tags: default, provisioningState: provisioningState, syncState: syncState, lastSyncStats: default, connectionState: default, lastConnectionOn: default, lastSyncOn: lastSyncOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterEnvironmentTypeData"/>. </summary>
@@ -1515,7 +1515,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DevCenterEnvironmentTypeData DevCenterEnvironmentTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, DevCenterProvisioningState? provisioningState)
         {
-            return DevCenterEnvironmentTypeData(id, name, resourceType, systemData, displayName: default, provisioningState, tags);
+            return DevCenterEnvironmentTypeData(id: id, name: name, resourceType: resourceType, systemData: systemData, displayName: default, provisioningState: provisioningState, tags: tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.AllowedEnvironmentTypeData"/>. </summary>
@@ -1528,7 +1528,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AllowedEnvironmentTypeData AllowedEnvironmentTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterProvisioningState? provisioningState)
         {
-            return AllowedEnvironmentTypeData(id, name, resourceType, systemData, provisioningState, displayName: default);
+            return AllowedEnvironmentTypeData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: provisioningState, displayName: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterProjectEnvironmentData"/>. </summary>
@@ -1548,7 +1548,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DevCenterProjectEnvironmentData DevCenterProjectEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier deploymentTargetId, EnvironmentTypeEnableStatus? status, IDictionary<string, DevCenterEnvironmentRole> roles, IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments, DevCenterProvisioningState? provisioningState)
         {
-            return DevCenterProjectEnvironmentData(id, name, resourceType, systemData, tags, location, deploymentTargetId, displayName: default, status, userRoleAssignments, roles, provisioningState, environmentCount: default, identity);
+            return DevCenterProjectEnvironmentData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, deploymentTargetId: deploymentTargetId, displayName: default, status: status, userRoleAssignments: userRoleAssignments, roles: roles, provisioningState: provisioningState, environmentCount: default, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.DevBoxDefinitionData"/>. </summary>
@@ -1570,7 +1570,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DevBoxDefinitionData DevBoxDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevCenterImageReference imageReference, DevCenterSku sku, string osStorageType, DevCenterHibernateSupport? hibernateSupport, DevCenterProvisioningState? provisioningState, ImageValidationStatus? imageValidationStatus, ImageValidationErrorDetails imageValidationErrorDetails, DevCenterImageReference activeImageReference)
         {
-            return DevBoxDefinitionData(id, name, resourceType, systemData, tags, location, imageReference, sku, osStorageType, hibernateSupport, provisioningState, imageValidationStatus, imageValidationErrorDetails, validationStatus: default, activeImageReference);
+            return DevBoxDefinitionData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, imageReference: imageReference, sku: sku, osStorageType: osStorageType, hibernateSupport: hibernateSupport, provisioningState: provisioningState, imageValidationStatus: imageValidationStatus, imageValidationErrorDetails: imageValidationErrorDetails, validationStatus: default, activeImageReference: activeImageReference);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevCenterUsage"/>. </summary>
@@ -1582,7 +1582,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DevCenterUsage DevCenterUsage(long? currentValue, long? limit, DevCenterUsageUnit? unit, DevCenterUsageName name)
         {
-            return DevCenterUsage(currentValue, limit, unit, name, id: default);
+            return DevCenterUsage(currentValue: currentValue, limit: limit, unit: unit, name: name, id: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterPoolData"/>. </summary>
@@ -1604,7 +1604,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DevCenterPoolData DevCenterPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string devBoxDefinitionName, string networkConnectionName, DevCenterLicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, DevCenterHealthStatus? healthStatus, IEnumerable<DevCenterHealthStatusDetail> healthStatusDetails, DevCenterProvisioningState? provisioningState)
         {
-            return DevCenterPoolData(id, name, resourceType, systemData, tags, location, devBoxDefinitionType: default, devBoxDefinitionName, devBoxDefinition: default, networkConnectionName, licenseType, localAdministrator, stopOnDisconnect, stopOnNoConnect: default, singleSignOnStatus: default, displayName: default, virtualNetworkType: default, managedVirtualNetworkRegions: default, activeHoursConfiguration: default, devBoxTunnelEnableStatus: default, healthStatus, healthStatusDetails, devBoxCount: default, provisioningState);
+            return DevCenterPoolData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, devBoxDefinitionType: default, devBoxDefinitionName: devBoxDefinitionName, devBoxDefinition: default, networkConnectionName: networkConnectionName, licenseType: licenseType, localAdministrator: localAdministrator, stopOnDisconnect: stopOnDisconnect, stopOnNoConnect: default, singleSignOnStatus: default, displayName: default, virtualNetworkType: default, managedVirtualNetworkRegions: default, activeHoursConfiguration: default, devBoxTunnelEnableStatus: default, healthStatus: healthStatus, healthStatusDetails: healthStatusDetails, devBoxCount: default, provisioningState: provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterScheduleData"/>. </summary>
@@ -1622,7 +1622,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DevCenterScheduleData DevCenterScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterScheduledType? scheduledType, DevCenterScheduledFrequency? frequency, string time, string timeZone, DevCenterScheduleEnableStatus? state, DevCenterProvisioningState? provisioningState)
         {
-            return DevCenterScheduleData(id, name, resourceType, systemData, tags: default, location: default, scheduledType, frequency, time, timeZone, state, provisioningState);
+            return DevCenterScheduleData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: default, location: default, scheduledType: scheduledType, frequency: frequency, time: time, timeZone: timeZone, state: state, provisioningState: provisioningState);
         }
     }
 }

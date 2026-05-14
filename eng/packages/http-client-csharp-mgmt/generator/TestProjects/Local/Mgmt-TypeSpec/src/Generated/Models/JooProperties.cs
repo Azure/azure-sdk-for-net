@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         {
             get
             {
-                return Prediction.PredictionInputHistoricalData;
+                return Prediction is null ? default : Prediction.PredictionInputHistoricalData;
             }
         }
     }

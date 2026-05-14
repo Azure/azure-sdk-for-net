@@ -193,7 +193,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabArtifactResource(Client, data));
+                context,
+                "DevTestLabArtifactCollection.GetAll"), data => new DevTestLabArtifactResource(Client, data));
         }
 
         /// <summary>
@@ -235,7 +236,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabArtifactResource(Client, data));
+                context,
+                "DevTestLabArtifactCollection.GetAll"), data => new DevTestLabArtifactResource(Client, data));
         }
 
         /// <summary>

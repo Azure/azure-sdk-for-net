@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.OracleDatabase
         private readonly bool? _isDatabaseSoftwareImageSupported;
         private readonly string _shapeFamily;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DbVersionsGetByLocationAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DbVersions client used to send requests. </param>
@@ -39,7 +40,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="isDatabaseSoftwareImageSupported"> If true, filters the results to the set of Oracle Database versions that are supported for the database software images. </param>
         /// <param name="shapeFamily"> If provided, filters the results to the set of database versions which are supported for the given shape family. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DbVersionsGetByLocationAsyncCollectionResultOfT(DbVersions client, Guid subscriptionId, AzureLocation location, string dbSystemShape, ResourceIdentifier dbSystemId, string storageManagement, bool? isUpgradeSupported, bool? isDatabaseSoftwareImageSupported, string shapeFamily, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DbVersionsGetByLocationAsyncCollectionResultOfT(DbVersions client, Guid subscriptionId, AzureLocation location, string dbSystemShape, ResourceIdentifier dbSystemId, string storageManagement, bool? isUpgradeSupported, bool? isDatabaseSoftwareImageSupported, string shapeFamily, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -51,6 +53,7 @@ namespace Azure.ResourceManager.OracleDatabase
             _isDatabaseSoftwareImageSupported = isDatabaseSoftwareImageSupported;
             _shapeFamily = shapeFamily;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DbVersionsGetByLocationAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -83,7 +86,7 @@ namespace Azure.ResourceManager.OracleDatabase
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByLocationRequest(nextLink, _subscriptionId, _location, _dbSystemShape, _dbSystemId, _storageManagement, _isUpgradeSupported, _isDatabaseSoftwareImageSupported, _shapeFamily, _context) : _client.CreateGetByLocationRequest(_subscriptionId, _location, _dbSystemShape, _dbSystemId, _storageManagement, _isUpgradeSupported, _isDatabaseSoftwareImageSupported, _shapeFamily, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("OracleDBVersionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

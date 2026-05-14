@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SignalRReplicaData, SignalRReplicaResource>(new ReplicasGetAllAsyncCollectionResultOfT(_replicasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SignalRReplicaResource(Client, data));
+            return new AsyncPageableWrapper<SignalRReplicaData, SignalRReplicaResource>(new ReplicasGetAllAsyncCollectionResultOfT(
+                _replicasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRReplicaCollection.GetAll"), data => new SignalRReplicaResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SignalRReplicaData, SignalRReplicaResource>(new ReplicasGetAllCollectionResultOfT(_replicasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SignalRReplicaResource(Client, data));
+            return new PageableWrapper<SignalRReplicaData, SignalRReplicaResource>(new ReplicasGetAllCollectionResultOfT(
+                _replicasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRReplicaCollection.GetAll"), data => new SignalRReplicaResource(Client, data));
         }
 
         /// <summary>

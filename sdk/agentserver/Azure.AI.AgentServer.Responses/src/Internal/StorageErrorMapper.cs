@@ -14,65 +14,89 @@ internal static class StorageErrorMapper
     /// <summary>
     /// Reads the HTTP status code of <paramref name="response"/> and throws the appropriate
     /// SDK exception if the response indicates an error condition.
+    /// Structured upstream error information is preserved in the thrown exception where
+    /// supported by the exception type. For 400, 404, and 409 responses, the thrown
+    /// exception preserves the upstream message, code, and param values. For other
+    /// non-success responses, the thrown <see cref="ResponsesApiException"/> also includes
+    /// the upstream error type when present.
     /// </summary>
-    /// <param name="response">The HTTP response to check.</param>
-    /// <param name="cancellationToken">A token to cancel the operation.</param>
+    /// <param name="response">The Azure.Core HTTP response to check.</param>
     /// <exception cref="ResourceNotFoundException">Thrown for 404 responses.</exception>
     /// <exception cref="BadRequestException">Thrown for 400 and 409 responses.</exception>
     /// <exception cref="ResponsesApiException">Thrown for all other non-success responses (5xx, etc.).</exception>
-    public static async Task ThrowIfErrorAsync(HttpResponseMessage response, CancellationToken cancellationToken = default)
+    public static void ThrowIfError(Response response)
     {
-        if (response.IsSuccessStatusCode)
+        if (!response.IsError)
             return;
 
-        var status = (int)response.StatusCode;
-        var message = await ExtractMessageAsync(response, cancellationToken);
+        var status = response.Status;
+        var errorInfo = ExtractErrorInfo(response);
 
         switch (status)
         {
             case 404:
-                throw new ResourceNotFoundException(message);
+                throw new ResourceNotFoundException(errorInfo.Message, errorInfo.Code, errorInfo.Param);
             case 400:
             case 409:
-                throw new BadRequestException(message);
+                throw new BadRequestException(errorInfo.Message, errorInfo.Code, errorInfo.Param);
             default:
-                throw new ResponsesApiException(new Error("storage_error", message), status);
+                var error = new Error(errorInfo.Code ?? "storage_error", errorInfo.Message)
+                {
+                    Param = errorInfo.Param,
+                    Type = errorInfo.Type ?? "server_error",
+                };
+                throw new ResponsesApiException(error, 500);
         }
     }
 
     /// <summary>
-    /// Extracts an error message from the response body.
+    /// Extracts structured error information from the response body.
     /// Falls back to a generic message including the HTTP status code if parsing fails.
     /// Authorization header values are never included in error messages.
     /// </summary>
-    private static async Task<string> ExtractMessageAsync(HttpResponseMessage response, CancellationToken cancellationToken)
+    private static (string Message, string? Code, string? Param, string? Type) ExtractErrorInfo(Response response)
     {
         try
         {
-            var body = await response.Content.ReadAsStringAsync(cancellationToken);
-            if (!string.IsNullOrEmpty(body))
+            var content = response.Content;
+            if (content != null && content.ToMemory().Length > 0)
             {
-                using var doc = JsonDocument.Parse(body);
-                if (doc.RootElement.TryGetProperty("error", out var errorElement))
+                var body = content.ToString();
+                if (!string.IsNullOrEmpty(body))
                 {
-                    if (errorElement.TryGetProperty("message", out var msgElement))
+                    using var doc = JsonDocument.Parse(body);
+                    if (doc.RootElement.TryGetProperty("error", out var errorElement))
                     {
-                        var msg = msgElement.GetString();
-                        if (!string.IsNullOrEmpty(msg))
-                            return msg;
+                        string? message = null;
+                        string? code = null;
+                        string? param = null;
+                        string? type = null;
+
+                        if (errorElement.TryGetProperty("message", out var msgElement))
+                            message = msgElement.GetString();
+
+                        if (errorElement.TryGetProperty("code", out var codeElement))
+                            code = codeElement.GetString();
+
+                        if (errorElement.TryGetProperty("param", out var paramElement) && paramElement.ValueKind != JsonValueKind.Null)
+                            param = paramElement.GetString();
+
+                        if (errorElement.TryGetProperty("type", out var typeElement))
+                            type = typeElement.GetString();
+
+                        if (!string.IsNullOrEmpty(message) || !string.IsNullOrEmpty(code) || !string.IsNullOrEmpty(param) || !string.IsNullOrEmpty(type))
+                        {
+                            return (message ?? $"Foundry storage request failed with HTTP {response.Status}.", code, param, type);
+                        }
                     }
                 }
             }
-        }
-        catch (OperationCanceledException)
-        {
-            throw;
         }
         catch
         {
             // Parsing failed — fall through to generic message
         }
 
-        return $"Foundry storage request failed with HTTP {(int)response.StatusCode}.";
+        return ($"Foundry storage request failed with HTTP {response.Status}.", null, null, null);
     }
 }

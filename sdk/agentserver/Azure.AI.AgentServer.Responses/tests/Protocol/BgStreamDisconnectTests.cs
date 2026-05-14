@@ -12,8 +12,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// Protocol tests for User Story 3 — Background Streaming Handler Survives Disconnect.
-/// Verifies FR-012 (handler continues after SSE disconnect for bg+stream),
-/// FR-013 (SSE write failure does NOT cancel handler CT).
+/// Verifies B18 (handler continues after SSE disconnect for bg+stream),
+/// B18 (SSE write failure does NOT cancel handler CT).
 /// </summary>
 public class BgStreamDisconnectTests : ProtocolTestBase
 {

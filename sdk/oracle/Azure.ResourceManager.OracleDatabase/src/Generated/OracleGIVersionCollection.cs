@@ -193,7 +193,8 @@ namespace Azure.ResourceManager.OracleDatabase
                 shape?.ToString(),
                 zone,
                 shapeAttribute,
-                context), data => new OracleGIVersionResource(Client, data));
+                context,
+                "OracleGIVersionCollection.GetAll"), data => new OracleGIVersionResource(Client, data));
         }
 
         /// <summary>
@@ -231,7 +232,8 @@ namespace Azure.ResourceManager.OracleDatabase
                 shape?.ToString(),
                 zone,
                 shapeAttribute,
-                context), data => new OracleGIVersionResource(Client, data));
+                context,
+                "OracleGIVersionCollection.GetAll"), data => new OracleGIVersionResource(Client, data));
         }
 
         /// <summary>

@@ -133,12 +133,17 @@ public class ServiceRegistrationTests
             });
         using var client = factory.CreateClient();
 
-        // POST /responses — triggers CreateResponseAsync (state), CreateEventPublisherAsync (stream),
-        // GetResponseCancellationTokenAsync (cancel)
-        var body = JsonSerializer.Serialize(new { model = "test" });
+        // POST /responses with bg+streaming — triggers CreateResponseAsync (state),
+        // CreateEventPublisherAsync (stream), GetResponseCancellationTokenAsync (cancel).
+        // Only bg+streaming mode exercises all three providers because non-replay modes
+        // use NullPublisher internally and skip the stream provider.
+        var body = JsonSerializer.Serialize(new { model = "test", background = true, stream = true });
         var response = await client.PostAsync("/responses",
             new StringContent(body, Encoding.UTF8, "application/json"));
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        // Consume the SSE stream so the handler completes
+        await response.Content.ReadAsStringAsync();
 
         // Verify state provider got state calls
         XAssert.Contains("CreateResponseAsync", stateProvider.Calls);

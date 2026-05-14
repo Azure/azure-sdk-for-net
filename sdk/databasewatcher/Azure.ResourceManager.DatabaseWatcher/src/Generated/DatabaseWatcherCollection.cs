@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetByResourceGroupAsyncCollectionResultOfT(_watchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DatabaseWatcherResource(Client, data));
+            return new AsyncPageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetByResourceGroupAsyncCollectionResultOfT(_watchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DatabaseWatcherCollection.GetAll"), data => new DatabaseWatcherResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetByResourceGroupCollectionResultOfT(_watchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DatabaseWatcherResource(Client, data));
+            return new PageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetByResourceGroupCollectionResultOfT(_watchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DatabaseWatcherCollection.GetAll"), data => new DatabaseWatcherResource(Client, data));
         }
 
         /// <summary>

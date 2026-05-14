@@ -49,8 +49,10 @@ internal static partial class OutputItemFunctionToolCallValidator
                 errors.Add(new ValidationError("$.call_id", $"Expected string, got {callIdProp.ValueKind}"));
         }
 
-        // Optional: id
-        if (element.TryGetProperty("id", out var idProp))
+        // Required: id
+        if (!element.TryGetProperty("id", out var idProp))
+            errors.Add(new ValidationError("$.id", "Required property 'id' is missing"));
+        else
         {
             if (idProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.id", $"Expected string, got {idProp.ValueKind}"));
@@ -63,6 +65,13 @@ internal static partial class OutputItemFunctionToolCallValidator
         {
             if (nameProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
+        }
+
+        // Optional: namespace
+        if (element.TryGetProperty("namespace", out var namespaceProp))
+        {
+            if (namespaceProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.namespace", $"Expected string, got {namespaceProp.ValueKind}"));
         }
 
         // Optional: status

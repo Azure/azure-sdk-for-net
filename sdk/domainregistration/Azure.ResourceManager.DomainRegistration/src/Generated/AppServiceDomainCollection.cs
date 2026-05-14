@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceDomainData, AppServiceDomainResource>(new DomainsGetByResourceGroupAsyncCollectionResultOfT(_domainsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AppServiceDomainResource(Client, data));
+            return new AsyncPageableWrapper<AppServiceDomainData, AppServiceDomainResource>(new DomainsGetByResourceGroupAsyncCollectionResultOfT(_domainsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AppServiceDomainCollection.GetAll"), data => new AppServiceDomainResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceDomainData, AppServiceDomainResource>(new DomainsGetByResourceGroupCollectionResultOfT(_domainsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AppServiceDomainResource(Client, data));
+            return new PageableWrapper<AppServiceDomainData, AppServiceDomainResource>(new DomainsGetByResourceGroupCollectionResultOfT(_domainsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AppServiceDomainCollection.GetAll"), data => new AppServiceDomainResource(Client, data));
         }
 
         /// <summary>

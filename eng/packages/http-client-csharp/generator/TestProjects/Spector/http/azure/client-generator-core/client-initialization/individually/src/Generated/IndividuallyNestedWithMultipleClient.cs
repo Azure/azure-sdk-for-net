@@ -18,13 +18,13 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClie
     {
         protected IndividuallyNestedWithMultipleClient() => throw null;
 
-        public IndividuallyNestedWithMultipleClient(string name, string region) : this(new Uri("http://localhost:3000"), name, region, new IndividuallyNestedWithMultipleClientOptions()) => throw null;
+        public IndividuallyNestedWithMultipleClient(string name, string region) : this(new Uri("http://localhost:3000"), name, region, new SpecsAzureTcgcClientInitIndividuallyClientOptions()) => throw null;
 
-        public IndividuallyNestedWithMultipleClient(string name, string region, IndividuallyNestedWithMultipleClientOptions options) : this(new Uri("http://localhost:3000"), name, region, options) => throw null;
+        public IndividuallyNestedWithMultipleClient(string name, string region, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(new Uri("http://localhost:3000"), name, region, options) => throw null;
 
-        internal IndividuallyNestedWithMultipleClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, string region, IndividuallyNestedWithMultipleClientOptions options) => throw null;
+        internal IndividuallyNestedWithMultipleClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, string region, SpecsAzureTcgcClientInitIndividuallyClientOptions options) => throw null;
 
-        public IndividuallyNestedWithMultipleClient(Uri endpoint, string name, string region, IndividuallyNestedWithMultipleClientOptions options) : this(null, endpoint, name, region, options) => throw null;
+        public IndividuallyNestedWithMultipleClient(Uri endpoint, string name, string region, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(null, endpoint, name, region, options) => throw null;
 
         [Experimental("SCME0002")]
         public IndividuallyNestedWithMultipleClient(IndividuallyNestedWithMultipleClientSettings settings) : this(null, settings?.Endpoint, settings?.Name, settings?.Region, settings?.Options) => throw null;

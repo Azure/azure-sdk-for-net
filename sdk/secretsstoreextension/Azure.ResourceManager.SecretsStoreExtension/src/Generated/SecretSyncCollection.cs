@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecretSyncData, SecretSyncResource>(new SecretSyncsGetByResourceGroupAsyncCollectionResultOfT(_secretSyncsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new SecretSyncResource(Client, data));
+            return new AsyncPageableWrapper<SecretSyncData, SecretSyncResource>(new SecretSyncsGetByResourceGroupAsyncCollectionResultOfT(_secretSyncsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecretSyncCollection.GetAll"), data => new SecretSyncResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecretSyncData, SecretSyncResource>(new SecretSyncsGetByResourceGroupCollectionResultOfT(_secretSyncsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new SecretSyncResource(Client, data));
+            return new PageableWrapper<SecretSyncData, SecretSyncResource>(new SecretSyncsGetByResourceGroupCollectionResultOfT(_secretSyncsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecretSyncCollection.GetAll"), data => new SecretSyncResource(Client, data));
         }
 
         /// <summary>

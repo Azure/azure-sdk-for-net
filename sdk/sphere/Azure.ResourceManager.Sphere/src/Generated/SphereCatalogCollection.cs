@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Sphere
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SphereCatalogData, SphereCatalogResource>(new CatalogsGetByResourceGroupAsyncCollectionResultOfT(_catalogsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new SphereCatalogResource(Client, data));
+            return new AsyncPageableWrapper<SphereCatalogData, SphereCatalogResource>(new CatalogsGetByResourceGroupAsyncCollectionResultOfT(_catalogsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SphereCatalogCollection.GetAll"), data => new SphereCatalogResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Sphere
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SphereCatalogData, SphereCatalogResource>(new CatalogsGetByResourceGroupCollectionResultOfT(_catalogsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new SphereCatalogResource(Client, data));
+            return new PageableWrapper<SphereCatalogData, SphereCatalogResource>(new CatalogsGetByResourceGroupCollectionResultOfT(_catalogsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SphereCatalogCollection.GetAll"), data => new SphereCatalogResource(Client, data));
         }
 
         /// <summary>

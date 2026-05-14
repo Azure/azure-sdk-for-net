@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct WebApplicationRuleType : IEquatable<WebApplicationRuleType>
     {
         private readonly string _value;
+        /// <summary> MatchRule. </summary>
+        private const string MatchRuleValue = "MatchRule";
+        /// <summary> RateLimitRule. </summary>
+        private const string RateLimitRuleValue = "RateLimitRule";
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WebApplicationRuleType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MatchRuleValue = "MatchRule";
-        private const string RateLimitRuleValue = "RateLimitRule";
+            _value = value;
+        }
 
         /// <summary> MatchRule. </summary>
         public static WebApplicationRuleType MatchRule { get; } = new WebApplicationRuleType(MatchRuleValue);
+
         /// <summary> RateLimitRule. </summary>
         public static WebApplicationRuleType RateLimitRule { get; } = new WebApplicationRuleType(RateLimitRuleValue);
+
         /// <summary> Determines if two <see cref="WebApplicationRuleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebApplicationRuleType left, WebApplicationRuleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebApplicationRuleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebApplicationRuleType left, WebApplicationRuleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebApplicationRuleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebApplicationRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebApplicationRuleType(string value) => new WebApplicationRuleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebApplicationRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebApplicationRuleType?(string value) => value == null ? null : new WebApplicationRuleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebApplicationRuleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebApplicationRuleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

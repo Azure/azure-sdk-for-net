@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.LargeInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LargeInstanceData, LargeInstanceResource>(new AzureLargeInstanceGetByResourceGroupAsyncCollectionResultOfT(_azureLargeInstanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new LargeInstanceResource(Client, data));
+            return new AsyncPageableWrapper<LargeInstanceData, LargeInstanceResource>(new AzureLargeInstanceGetByResourceGroupAsyncCollectionResultOfT(_azureLargeInstanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LargeInstanceCollection.GetAll"), data => new LargeInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.LargeInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LargeInstanceData, LargeInstanceResource>(new AzureLargeInstanceGetByResourceGroupCollectionResultOfT(_azureLargeInstanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new LargeInstanceResource(Client, data));
+            return new PageableWrapper<LargeInstanceData, LargeInstanceResource>(new AzureLargeInstanceGetByResourceGroupCollectionResultOfT(_azureLargeInstanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LargeInstanceCollection.GetAll"), data => new LargeInstanceResource(Client, data));
         }
 
         /// <summary>

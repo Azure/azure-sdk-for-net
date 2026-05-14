@@ -313,7 +313,8 @@ namespace Azure.ResourceManager.Batch
                 maxresults,
                 @select,
                 filter,
-                context), data => new BatchAccountPoolResource(Client, data));
+                context,
+                "BatchAccountPoolCollection.GetAll"), data => new BatchAccountPoolResource(Client, data));
         }
 
         /// <summary>
@@ -365,7 +366,8 @@ namespace Azure.ResourceManager.Batch
                 maxresults,
                 @select,
                 filter,
-                context), data => new BatchAccountPoolResource(Client, data));
+                context,
+                "BatchAccountPoolCollection.GetAll"), data => new BatchAccountPoolResource(Client, data));
         }
 
         /// <summary>

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             get
             {
-                return ScheduleAvailabilityResponse.AvailableDates;
+                return ScheduleAvailabilityResponse is null ? default : ScheduleAvailabilityResponse.AvailableDates;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             get
             {
-                return TransportAvailabilityResponse.TransportAvailabilityDetails;
+                return TransportAvailabilityResponse is null ? default : TransportAvailabilityResponse.TransportAvailabilityDetails;
             }
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             get
             {
-                return DeviceCapabilityResponse.DeviceCapabilityDetails;
+                return DeviceCapabilityResponse is null ? default : DeviceCapabilityResponse.DeviceCapabilityDetails;
             }
         }
     }

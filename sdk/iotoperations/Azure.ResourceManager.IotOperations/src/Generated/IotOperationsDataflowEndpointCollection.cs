@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotOperationsDataflowEndpointData, IotOperationsDataflowEndpointResource>(new DataflowEndpointGetByResourceGroupAsyncCollectionResultOfT(_dataflowEndpointRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IotOperationsDataflowEndpointResource(Client, data));
+            return new AsyncPageableWrapper<IotOperationsDataflowEndpointData, IotOperationsDataflowEndpointResource>(new DataflowEndpointGetByResourceGroupAsyncCollectionResultOfT(
+                _dataflowEndpointRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IotOperationsDataflowEndpointCollection.GetAll"), data => new IotOperationsDataflowEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotOperationsDataflowEndpointData, IotOperationsDataflowEndpointResource>(new DataflowEndpointGetByResourceGroupCollectionResultOfT(_dataflowEndpointRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IotOperationsDataflowEndpointResource(Client, data));
+            return new PageableWrapper<IotOperationsDataflowEndpointData, IotOperationsDataflowEndpointResource>(new DataflowEndpointGetByResourceGroupCollectionResultOfT(
+                _dataflowEndpointRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IotOperationsDataflowEndpointCollection.GetAll"), data => new IotOperationsDataflowEndpointResource(Client, data));
         }
 
         /// <summary>

@@ -304,7 +304,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 @orderby,
                 offerGuid,
                 reportCreatorTenantId,
-                context), data => new AppComplianceReportWebhookResource(Client, data));
+                context,
+                "AppComplianceReportWebhookCollection.GetAll"), data => new AppComplianceReportWebhookResource(Client, data));
         }
 
         /// <summary>
@@ -349,7 +350,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 @orderby,
                 offerGuid,
                 reportCreatorTenantId,
-                context), data => new AppComplianceReportWebhookResource(Client, data));
+                context,
+                "AppComplianceReportWebhookCollection.GetAll"), data => new AppComplianceReportWebhookResource(Client, data));
         }
 
         /// <summary>

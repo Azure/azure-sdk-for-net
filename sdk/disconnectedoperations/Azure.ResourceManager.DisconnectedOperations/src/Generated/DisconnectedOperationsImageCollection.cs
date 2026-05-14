@@ -188,7 +188,8 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 filter,
                 maxCount,
                 skip,
-                context), data => new DisconnectedOperationsImageResource(Client, data));
+                context,
+                "DisconnectedOperationsImageCollection.GetAll"), data => new DisconnectedOperationsImageResource(Client, data));
         }
 
         /// <summary>
@@ -227,7 +228,8 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 filter,
                 maxCount,
                 skip,
-                context), data => new DisconnectedOperationsImageResource(Client, data));
+                context,
+                "DisconnectedOperationsImageCollection.GetAll"), data => new DisconnectedOperationsImageResource(Client, data));
         }
 
         /// <summary>

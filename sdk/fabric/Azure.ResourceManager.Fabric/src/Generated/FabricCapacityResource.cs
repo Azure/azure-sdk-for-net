@@ -434,7 +434,13 @@ namespace Azure.ResourceManager.Fabric
             {
                 CancellationToken = cancellationToken
             };
-            return new FabricCapacitiesGetSkusForCapacityAsyncCollectionResultOfT(_fabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new FabricCapacitiesGetSkusForCapacityAsyncCollectionResultOfT(
+                _fabricCapacitiesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FabricCapacityResource.GetSkusForCapacity");
         }
 
         /// <summary>
@@ -466,7 +472,13 @@ namespace Azure.ResourceManager.Fabric
             {
                 CancellationToken = cancellationToken
             };
-            return new FabricCapacitiesGetSkusForCapacityCollectionResultOfT(_fabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new FabricCapacitiesGetSkusForCapacityCollectionResultOfT(
+                _fabricCapacitiesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FabricCapacityResource.GetSkusForCapacity");
         }
 
         /// <summary>

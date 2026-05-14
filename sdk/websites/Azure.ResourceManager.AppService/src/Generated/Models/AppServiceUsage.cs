@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Usage of the quota resource. </summary>
+    /// <summary>
+    /// Usage of the quota resource.
+    /// Serialized Name: Usage
+    /// </summary>
     public partial class AppServiceUsage : ResourceData
     {
         /// <summary>
@@ -57,15 +60,42 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Friendly name shown in the UI. </param>
-        /// <param name="resourceName"> Name of the quota resource. </param>
-        /// <param name="unit"> Units of measurement for the quota resource. </param>
-        /// <param name="currentValue"> The current value of the resource counter. </param>
-        /// <param name="limit"> The resource limit. </param>
-        /// <param name="nextResetOn"> Next reset time for the resource counter. </param>
-        /// <param name="computeMode"> Compute mode used for this usage. </param>
-        /// <param name="siteMode"> Site mode used for this usage. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="displayName">
+        /// Friendly name shown in the UI.
+        /// Serialized Name: Usage.properties.displayName
+        /// </param>
+        /// <param name="resourceName">
+        /// Name of the quota resource.
+        /// Serialized Name: Usage.properties.resourceName
+        /// </param>
+        /// <param name="unit">
+        /// Units of measurement for the quota resource.
+        /// Serialized Name: Usage.properties.unit
+        /// </param>
+        /// <param name="currentValue">
+        /// The current value of the resource counter.
+        /// Serialized Name: Usage.properties.currentValue
+        /// </param>
+        /// <param name="limit">
+        /// The resource limit.
+        /// Serialized Name: Usage.properties.limit
+        /// </param>
+        /// <param name="nextResetOn">
+        /// Next reset time for the resource counter.
+        /// Serialized Name: Usage.properties.nextResetTime
+        /// </param>
+        /// <param name="computeMode">
+        /// Compute mode used for this usage.
+        /// Serialized Name: Usage.properties.computeMode
+        /// </param>
+        /// <param name="siteMode">
+        /// Site mode used for this usage.
+        /// Serialized Name: Usage.properties.siteMode
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceUsage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string resourceName, string unit, long? currentValue, long? limit, DateTimeOffset? nextResetOn, ComputeModeOption? computeMode, string siteMode, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -81,31 +111,58 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Friendly name shown in the UI. </summary>
+        /// <summary>
+        /// Friendly name shown in the UI.
+        /// Serialized Name: Usage.properties.displayName
+        /// </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; }
-        /// <summary> Name of the quota resource. </summary>
+        /// <summary>
+        /// Name of the quota resource.
+        /// Serialized Name: Usage.properties.resourceName
+        /// </summary>
         [WirePath("properties.resourceName")]
         public string ResourceName { get; }
-        /// <summary> Units of measurement for the quota resource. </summary>
+        /// <summary>
+        /// Units of measurement for the quota resource.
+        /// Serialized Name: Usage.properties.unit
+        /// </summary>
         [WirePath("properties.unit")]
         public string Unit { get; }
-        /// <summary> The current value of the resource counter. </summary>
+        /// <summary>
+        /// The current value of the resource counter.
+        /// Serialized Name: Usage.properties.currentValue
+        /// </summary>
         [WirePath("properties.currentValue")]
         public long? CurrentValue { get; }
-        /// <summary> The resource limit. </summary>
+        /// <summary>
+        /// The resource limit.
+        /// Serialized Name: Usage.properties.limit
+        /// </summary>
         [WirePath("properties.limit")]
         public long? Limit { get; }
-        /// <summary> Next reset time for the resource counter. </summary>
+        /// <summary>
+        /// Next reset time for the resource counter.
+        /// Serialized Name: Usage.properties.nextResetTime
+        /// </summary>
         [WirePath("properties.nextResetTime")]
         public DateTimeOffset? NextResetOn { get; }
-        /// <summary> Compute mode used for this usage. </summary>
+        /// <summary>
+        /// Compute mode used for this usage.
+        /// Serialized Name: Usage.properties.computeMode
+        /// </summary>
         [WirePath("properties.computeMode")]
         public ComputeModeOption? ComputeMode { get; }
-        /// <summary> Site mode used for this usage. </summary>
+        /// <summary>
+        /// Site mode used for this usage.
+        /// Serialized Name: Usage.properties.siteMode
+        /// </summary>
         [WirePath("properties.siteMode")]
         public string SiteMode { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

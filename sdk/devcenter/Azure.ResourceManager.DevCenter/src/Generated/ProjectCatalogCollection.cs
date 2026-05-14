@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new ProjectCatalogResource(Client, data));
+                context,
+                "ProjectCatalogCollection.GetAll"), data => new ProjectCatalogResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new ProjectCatalogResource(Client, data));
+                context,
+                "ProjectCatalogCollection.GetAll"), data => new ProjectCatalogResource(Client, data));
         }
 
         /// <summary>

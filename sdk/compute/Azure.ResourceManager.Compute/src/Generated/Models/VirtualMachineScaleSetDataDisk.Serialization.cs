@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
+            if (Optional.IsDefined(StorageFaultDomainAlignment))
+            {
+                writer.WritePropertyName("storageFaultDomainAlignment"u8);
+                writer.WriteStringValue(StorageFaultDomainAlignment.Value.ToString());
+            }
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
@@ -121,6 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? writeAcceleratorEnabled = default;
             DiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
+            StorageFaultDomainAlignmentType? storageFaultDomainAlignment = default;
             VirtualMachineScaleSetManagedDisk managedDisk = default;
             long? diskIOPSReadWrite = default;
             long? diskMBpsReadWrite = default;
@@ -169,6 +175,15 @@ namespace Azure.ResourceManager.Compute.Models
                         continue;
                     }
                     diskSizeGB = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("storageFaultDomainAlignment"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageFaultDomainAlignment = new StorageFaultDomainAlignmentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("managedDisk"u8))
@@ -220,6 +235,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writeAcceleratorEnabled,
                 createOption,
                 diskSizeGB,
+                storageFaultDomainAlignment,
                 managedDisk,
                 diskIOPSReadWrite,
                 diskMBpsReadWrite,

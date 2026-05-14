@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PaloAltoNetworksFirewallData, PaloAltoNetworksFirewallResource>(new FirewallsGetByResourceGroupAsyncCollectionResultOfT(_firewallsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new PaloAltoNetworksFirewallResource(Client, data));
+            return new AsyncPageableWrapper<PaloAltoNetworksFirewallData, PaloAltoNetworksFirewallResource>(new FirewallsGetByResourceGroupAsyncCollectionResultOfT(_firewallsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PaloAltoNetworksFirewallCollection.GetAll"), data => new PaloAltoNetworksFirewallResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PaloAltoNetworksFirewallData, PaloAltoNetworksFirewallResource>(new FirewallsGetByResourceGroupCollectionResultOfT(_firewallsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new PaloAltoNetworksFirewallResource(Client, data));
+            return new PageableWrapper<PaloAltoNetworksFirewallData, PaloAltoNetworksFirewallResource>(new FirewallsGetByResourceGroupCollectionResultOfT(_firewallsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PaloAltoNetworksFirewallCollection.GetAll"), data => new PaloAltoNetworksFirewallResource(Client, data));
         }
 
         /// <summary>

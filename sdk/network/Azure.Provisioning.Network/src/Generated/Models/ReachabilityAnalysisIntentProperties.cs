@@ -23,7 +23,6 @@ public partial class ReachabilityAnalysisIntentProperties : ProvisionableConstru
     public BicepValue<NetworkProvisioningState> ProvisioningState 
     {
         get { Initialize(); return _provisioningState!; }
-        set { Initialize(); _provisioningState!.Assign(value); }
     }
     private BicepValue<NetworkProvisioningState>? _provisioningState;
 
@@ -81,7 +80,7 @@ public partial class ReachabilityAnalysisIntentProperties : ProvisionableConstru
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["provisioningState"]);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["provisioningState"], isOutput: true);
         _description = DefineProperty<string>("Description", ["description"]);
         _sourceResourceId = DefineProperty<ResourceIdentifier>("SourceResourceId", ["sourceResourceId"]);
         _destinationResourceId = DefineProperty<ResourceIdentifier>("DestinationResourceId", ["destinationResourceId"]);

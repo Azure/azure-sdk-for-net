@@ -18,13 +18,13 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
     {
         protected QueryParamClient() => throw null;
 
-        public QueryParamClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new QueryParamClientOptions()) => throw null;
+        public QueryParamClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new SpecsAzureTcgcClientInitDefaultClientOptions()) => throw null;
 
-        public QueryParamClient(string blobName, QueryParamClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
+        public QueryParamClient(string blobName, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
 
-        internal QueryParamClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, QueryParamClientOptions options) => throw null;
+        internal QueryParamClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, SpecsAzureTcgcClientInitDefaultClientOptions options) => throw null;
 
-        public QueryParamClient(Uri endpoint, string blobName, QueryParamClientOptions options) : this(null, endpoint, blobName, options) => throw null;
+        public QueryParamClient(Uri endpoint, string blobName, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(null, endpoint, blobName, options) => throw null;
 
         [Experimental("SCME0002")]
         public QueryParamClient(QueryParamClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;

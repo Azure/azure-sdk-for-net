@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Class representing Abnormal Time Period identified in diagnosis. </summary>
+    /// <summary>
+    /// Class representing Abnormal Time Period identified in diagnosis
+    /// Serialized Name: AbnormalTimePeriod
+    /// </summary>
     public partial class AbnormalTimePeriod
     {
         /// <summary>
@@ -53,10 +56,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AbnormalTimePeriod"/>. </summary>
-        /// <param name="startOn"> Start time of the downtime. </param>
-        /// <param name="endOn"> End time of the downtime. </param>
-        /// <param name="events"> List of Possible Cause of downtime. </param>
-        /// <param name="solutions"> List of proposed solutions. </param>
+        /// <param name="startOn">
+        /// Start time of the downtime
+        /// Serialized Name: AbnormalTimePeriod.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// End time of the downtime
+        /// Serialized Name: AbnormalTimePeriod.endTime
+        /// </param>
+        /// <param name="events">
+        /// List of Possible Cause of downtime
+        /// Serialized Name: AbnormalTimePeriod.events
+        /// </param>
+        /// <param name="solutions">
+        /// List of proposed solutions
+        /// Serialized Name: AbnormalTimePeriod.solutions
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, IList<DetectorAbnormalTimePeriod> events, IList<DiagnosticSolution> solutions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,16 +82,28 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Start time of the downtime. </summary>
+        /// <summary>
+        /// Start time of the downtime
+        /// Serialized Name: AbnormalTimePeriod.startTime
+        /// </summary>
         [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary> End time of the downtime. </summary>
+        /// <summary>
+        /// End time of the downtime
+        /// Serialized Name: AbnormalTimePeriod.endTime
+        /// </summary>
         [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary> List of Possible Cause of downtime. </summary>
+        /// <summary>
+        /// List of Possible Cause of downtime
+        /// Serialized Name: AbnormalTimePeriod.events
+        /// </summary>
         [WirePath("events")]
         public IList<DetectorAbnormalTimePeriod> Events { get; }
-        /// <summary> List of proposed solutions. </summary>
+        /// <summary>
+        /// List of proposed solutions
+        /// Serialized Name: AbnormalTimePeriod.solutions
+        /// </summary>
         [WirePath("solutions")]
         public IList<DiagnosticSolution> Solutions { get; }
     }

@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmVirtualNetworkSubnetData, HciVmVirtualNetworkSubnetResource>(new VirtualNetworkSubnetsGetByVirtualNetworkAsyncCollectionResultOfT(_virtualNetworkSubnetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HciVmVirtualNetworkSubnetResource(Client, data));
+            return new AsyncPageableWrapper<HciVmVirtualNetworkSubnetData, HciVmVirtualNetworkSubnetResource>(new VirtualNetworkSubnetsGetByVirtualNetworkAsyncCollectionResultOfT(
+                _virtualNetworkSubnetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HciVmVirtualNetworkSubnetCollection.GetAll"), data => new HciVmVirtualNetworkSubnetResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmVirtualNetworkSubnetData, HciVmVirtualNetworkSubnetResource>(new VirtualNetworkSubnetsGetByVirtualNetworkCollectionResultOfT(_virtualNetworkSubnetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HciVmVirtualNetworkSubnetResource(Client, data));
+            return new PageableWrapper<HciVmVirtualNetworkSubnetData, HciVmVirtualNetworkSubnetResource>(new VirtualNetworkSubnetsGetByVirtualNetworkCollectionResultOfT(
+                _virtualNetworkSubnetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HciVmVirtualNetworkSubnetCollection.GetAll"), data => new HciVmVirtualNetworkSubnetResource(Client, data));
         }
 
         /// <summary>

@@ -29,11 +29,11 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
         var groupPrefix = string.IsNullOrEmpty(prefix) ? string.Empty : prefix.TrimEnd('/');
         var group = endpoints.MapGroup(groupPrefix);
 
-        // Register Invocations protocol identity with the user-agent registry (if available)
-        var registry = endpoints.ServiceProvider.GetService<ServerUserAgentRegistry>();
+        // Register Invocations protocol identity with the version registry (if available)
+        var registry = endpoints.ServiceProvider.GetService<ServerVersionRegistry>();
         if (registry is not null)
         {
-            registry.Register(ServerUserAgentRegistry.BuildIdentityString(
+            registry.Register(ServerVersionRegistry.BuildIdentityString(
                 "azure-ai-agentserver-invocations",
                 typeof(InvocationsServerEndpointRouteBuilderExtensions).Assembly));
         }

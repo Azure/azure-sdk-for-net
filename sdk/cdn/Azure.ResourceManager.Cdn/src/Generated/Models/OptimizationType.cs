@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct OptimizationType : IEquatable<OptimizationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="OptimizationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OptimizationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string GeneralWebDeliveryValue = "GeneralWebDelivery";
         private const string GeneralMediaStreamingValue = "GeneralMediaStreaming";
         private const string VideoOnDemandMediaStreamingValue = "VideoOnDemandMediaStreaming";
         private const string LargeFileDownloadValue = "LargeFileDownload";
         private const string DynamicSiteAccelerationValue = "DynamicSiteAcceleration";
 
-        /// <summary> GeneralWebDelivery. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptimizationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public OptimizationType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the GeneralWebDelivery. </summary>
         public static OptimizationType GeneralWebDelivery { get; } = new OptimizationType(GeneralWebDeliveryValue);
-        /// <summary> GeneralMediaStreaming. </summary>
+
+        /// <summary> Gets the GeneralMediaStreaming. </summary>
         public static OptimizationType GeneralMediaStreaming { get; } = new OptimizationType(GeneralMediaStreamingValue);
-        /// <summary> VideoOnDemandMediaStreaming. </summary>
+
+        /// <summary> Gets the VideoOnDemandMediaStreaming. </summary>
         public static OptimizationType VideoOnDemandMediaStreaming { get; } = new OptimizationType(VideoOnDemandMediaStreamingValue);
-        /// <summary> LargeFileDownload. </summary>
+
+        /// <summary> Gets the LargeFileDownload. </summary>
         public static OptimizationType LargeFileDownload { get; } = new OptimizationType(LargeFileDownloadValue);
-        /// <summary> DynamicSiteAcceleration. </summary>
+
+        /// <summary> Gets the DynamicSiteAcceleration. </summary>
         public static OptimizationType DynamicSiteAcceleration { get; } = new OptimizationType(DynamicSiteAccelerationValue);
+
         /// <summary> Determines if two <see cref="OptimizationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OptimizationType left, OptimizationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OptimizationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OptimizationType left, OptimizationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OptimizationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OptimizationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OptimizationType(string value) => new OptimizationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OptimizationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OptimizationType?(string value) => value == null ? null : new OptimizationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OptimizationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OptimizationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

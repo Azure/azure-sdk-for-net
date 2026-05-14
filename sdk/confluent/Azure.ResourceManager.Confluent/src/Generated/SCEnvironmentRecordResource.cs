@@ -435,7 +435,8 @@ namespace Azure.ResourceManager.Confluent
                 Id.Name,
                 pageSize,
                 pageToken,
-                context);
+                context,
+                "SCEnvironmentRecordResource.GetSchemaRegistryClusters");
         }
 
         /// <summary>
@@ -477,7 +478,8 @@ namespace Azure.ResourceManager.Confluent
                 Id.Name,
                 pageSize,
                 pageToken,
-                context);
+                context,
+                "SCEnvironmentRecordResource.GetSchemaRegistryClusters");
         }
 
         /// <summary>

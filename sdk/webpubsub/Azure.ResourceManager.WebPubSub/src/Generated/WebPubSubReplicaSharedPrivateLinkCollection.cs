@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.WebPubSub
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new WebPubSubReplicaSharedPrivateLinkResource(Client, data));
+                context,
+                "WebPubSubReplicaSharedPrivateLinkCollection.GetAll"), data => new WebPubSubReplicaSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.WebPubSub
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new WebPubSubReplicaSharedPrivateLinkResource(Client, data));
+                context,
+                "WebPubSubReplicaSharedPrivateLinkCollection.GetAll"), data => new WebPubSubReplicaSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>

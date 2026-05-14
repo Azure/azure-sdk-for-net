@@ -7,7 +7,7 @@ and add Azure-specific credential handling.
 
 > [!NOTE]
 > These APIs are experimental and marked with diagnostic ID `SCME0002`.
-> See the [Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/src/docs/ExperimentalFeatures.md) documentation for suppression guidance.
+> See the [Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/docs/ExperimentalFeatures.md) documentation for suppression guidance.
 
 > [!IMPORTANT]
 > Not all Azure SDK clients support this feature yet. Support is being rolled out incrementally. A client supports configuration and dependency injection if it has a constructor that accepts a single parameter inheriting from `System.ClientModel.Primitives.ClientSettings`.
@@ -471,4 +471,4 @@ builder.AddKeyedAzureClient<MyClient, MyClientSettings>("svc2", "Client2");
 
 - [System.ClientModel Configuration and Dependency Injection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ConfigurationAndDependencyInjection.md) — Base configuration patterns
 - [System.ClientModel Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ExperimentalFeatures.md) — SCME0002 diagnostic details
-- [Azure.Identity Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/src/docs/ExperimentalFeatures.md) — Identity-specific experimental APIs
+- [Azure.Core Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/docs/ExperimentalFeatures.md) — Identity-specific experimental APIs

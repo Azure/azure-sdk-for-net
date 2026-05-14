@@ -187,7 +187,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ProjectCatalogEnvironmentDefinitionResource(Client, data));
+                context,
+                "ProjectCatalogEnvironmentDefinitionCollection.GetAll"), data => new ProjectCatalogEnvironmentDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -221,7 +222,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ProjectCatalogEnvironmentDefinitionResource(Client, data));
+                context,
+                "ProjectCatalogEnvironmentDefinitionCollection.GetAll"), data => new ProjectCatalogEnvironmentDefinitionResource(Client, data));
         }
 
         /// <summary>

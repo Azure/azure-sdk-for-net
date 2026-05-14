@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleDnsPrivateZoneData, OracleDnsPrivateZoneResource>(new DnsPrivateZonesGetByLocationAsyncCollectionResultOfT(_dnsPrivateZonesRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new OracleDnsPrivateZoneResource(Client, data));
+            return new AsyncPageableWrapper<OracleDnsPrivateZoneData, OracleDnsPrivateZoneResource>(new DnsPrivateZonesGetByLocationAsyncCollectionResultOfT(_dnsPrivateZonesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OracleDnsPrivateZoneCollection.GetAll"), data => new OracleDnsPrivateZoneResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleDnsPrivateZoneData, OracleDnsPrivateZoneResource>(new DnsPrivateZonesGetByLocationCollectionResultOfT(_dnsPrivateZonesRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new OracleDnsPrivateZoneResource(Client, data));
+            return new PageableWrapper<OracleDnsPrivateZoneData, OracleDnsPrivateZoneResource>(new DnsPrivateZonesGetByLocationCollectionResultOfT(_dnsPrivateZonesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OracleDnsPrivateZoneCollection.GetAll"), data => new OracleDnsPrivateZoneResource(Client, data));
         }
 
         /// <summary>

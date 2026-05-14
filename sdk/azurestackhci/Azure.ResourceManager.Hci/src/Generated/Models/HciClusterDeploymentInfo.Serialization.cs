@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciClusterDeploymentInfo : IUtf8JsonSerializable, IJsonModel<HciClusterDeploymentInfo>
+    /// <summary> The Deployment data of AzureStackHCI Cluster. </summary>
+    public partial class HciClusterDeploymentInfo : IJsonModel<HciClusterDeploymentInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciClusterDeploymentInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciClusterDeploymentInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciClusterDeploymentInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciClusterDeploymentInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciClusterDeploymentInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciClusterDeploymentInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HciClusterDeploymentInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HciClusterDeploymentInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciClusterDeploymentInfo IPersistableModel<HciClusterDeploymentInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciClusterDeploymentInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciClusterDeploymentInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HciClusterDeploymentInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciClusterDeploymentInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciClusterDeploymentInfo)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
@@ -50,6 +88,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("cluster"u8);
                 writer.WriteObjectValue(Cluster, options);
+            }
+            if (Optional.IsDefined(IdentityProvider))
+            {
+                writer.WritePropertyName("identityProvider"u8);
+                writer.WriteStringValue(IdentityProvider.Value.ToString());
             }
             if (Optional.IsDefined(Storage))
             {
@@ -70,7 +113,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("infrastructureNetwork"u8);
                 writer.WriteStartArray();
-                foreach (var item in InfrastructureNetwork)
+                foreach (DeploymentSettingInfrastructureNetwork item in InfrastructureNetwork)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -80,7 +123,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("physicalNodes"u8);
                 writer.WriteStartArray();
-                foreach (var item in PhysicalNodes)
+                foreach (DeploymentSettingPhysicalNodes item in PhysicalNodes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -96,6 +139,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("sdnIntegration"u8);
                 writer.WriteObjectValue(SdnIntegration, options);
             }
+            if (Optional.IsDefined(IsManagementCluster))
+            {
+                writer.WritePropertyName("isManagementCluster"u8);
+                writer.WriteBooleanValue(IsManagementCluster.Value);
+            }
             if (Optional.IsDefined(AdouPath))
             {
                 writer.WritePropertyName("adouPath"u8);
@@ -110,7 +158,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
-                foreach (var item in Secrets)
+                foreach (EceDeploymentSecrets item in Secrets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -121,15 +169,30 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("optionalServices"u8);
                 writer.WriteObjectValue(OptionalServices, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsCollectionDefined(LocalAvailabilityZones))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("localAvailabilityZones"u8);
+                writer.WriteStartArray();
+                foreach (LocalAvailabilityZones item in LocalAvailabilityZones)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AssemblyInfo))
+            {
+                writer.WritePropertyName("assemblyInfo"u8);
+                writer.WriteObjectValue(AssemblyInfo, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -138,22 +201,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        HciClusterDeploymentInfo IJsonModel<HciClusterDeploymentInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciClusterDeploymentInfo IJsonModel<HciClusterDeploymentInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciClusterDeploymentInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HciClusterDeploymentInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciClusterDeploymentInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciClusterDeploymentInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHciClusterDeploymentInfo(document.RootElement, options);
         }
 
-        internal static HciClusterDeploymentInfo DeserializeHciClusterDeploymentInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HciClusterDeploymentInfo DeserializeHciClusterDeploymentInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -161,6 +229,7 @@ namespace Azure.ResourceManager.Hci.Models
             HciClusterDeploymentSecuritySettings securitySettings = default;
             DeploymentSettingObservability observability = default;
             HciDeploymentCluster cluster = default;
+            HciIdentityProvider? identityProvider = default;
             DeploymentSettingStorage storage = default;
             string namingPrefix = default;
             string domainFqdn = default;
@@ -168,149 +237,192 @@ namespace Azure.ResourceManager.Hci.Models
             IList<DeploymentSettingPhysicalNodes> physicalNodes = default;
             DeploymentSettingHostNetwork hostNetwork = default;
             SdnIntegration sdnIntegration = default;
+            bool? isManagementCluster = default;
             string adouPath = default;
             string secretsLocation = default;
             IList<EceDeploymentSecrets> secrets = default;
             OptionalServices optionalServices = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<LocalAvailabilityZones> localAvailabilityZones = default;
+            HciAssemblyInfo assemblyInfo = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("securitySettings"u8))
+                if (prop.NameEquals("securitySettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    securitySettings = HciClusterDeploymentSecuritySettings.DeserializeHciClusterDeploymentSecuritySettings(property.Value, options);
+                    securitySettings = HciClusterDeploymentSecuritySettings.DeserializeHciClusterDeploymentSecuritySettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("observability"u8))
+                if (prop.NameEquals("observability"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    observability = DeploymentSettingObservability.DeserializeDeploymentSettingObservability(property.Value, options);
+                    observability = DeploymentSettingObservability.DeserializeDeploymentSettingObservability(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("cluster"u8))
+                if (prop.NameEquals("cluster"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cluster = HciDeploymentCluster.DeserializeHciDeploymentCluster(property.Value, options);
+                    cluster = HciDeploymentCluster.DeserializeHciDeploymentCluster(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("storage"u8))
+                if (prop.NameEquals("identityProvider"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storage = DeploymentSettingStorage.DeserializeDeploymentSettingStorage(property.Value, options);
+                    identityProvider = new HciIdentityProvider(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("namingPrefix"u8))
+                if (prop.NameEquals("storage"u8))
                 {
-                    namingPrefix = property.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storage = DeploymentSettingStorage.DeserializeDeploymentSettingStorage(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("domainFqdn"u8))
+                if (prop.NameEquals("namingPrefix"u8))
                 {
-                    domainFqdn = property.Value.GetString();
+                    namingPrefix = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("infrastructureNetwork"u8))
+                if (prop.NameEquals("domainFqdn"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    domainFqdn = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("infrastructureNetwork"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DeploymentSettingInfrastructureNetwork> array = new List<DeploymentSettingInfrastructureNetwork>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DeploymentSettingInfrastructureNetwork.DeserializeDeploymentSettingInfrastructureNetwork(item, options));
                     }
                     infrastructureNetwork = array;
                     continue;
                 }
-                if (property.NameEquals("physicalNodes"u8))
+                if (prop.NameEquals("physicalNodes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DeploymentSettingPhysicalNodes> array = new List<DeploymentSettingPhysicalNodes>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DeploymentSettingPhysicalNodes.DeserializeDeploymentSettingPhysicalNodes(item, options));
                     }
                     physicalNodes = array;
                     continue;
                 }
-                if (property.NameEquals("hostNetwork"u8))
+                if (prop.NameEquals("hostNetwork"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hostNetwork = DeploymentSettingHostNetwork.DeserializeDeploymentSettingHostNetwork(property.Value, options);
+                    hostNetwork = DeploymentSettingHostNetwork.DeserializeDeploymentSettingHostNetwork(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("sdnIntegration"u8))
+                if (prop.NameEquals("sdnIntegration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sdnIntegration = SdnIntegration.DeserializeSdnIntegration(property.Value, options);
+                    sdnIntegration = SdnIntegration.DeserializeSdnIntegration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("adouPath"u8))
+                if (prop.NameEquals("isManagementCluster"u8))
                 {
-                    adouPath = property.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isManagementCluster = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("secretsLocation"u8))
+                if (prop.NameEquals("adouPath"u8))
                 {
-                    secretsLocation = property.Value.GetString();
+                    adouPath = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secrets"u8))
+                if (prop.NameEquals("secretsLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    secretsLocation = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("secrets"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<EceDeploymentSecrets> array = new List<EceDeploymentSecrets>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(EceDeploymentSecrets.DeserializeEceDeploymentSecrets(item, options));
                     }
                     secrets = array;
                     continue;
                 }
-                if (property.NameEquals("optionalServices"u8))
+                if (prop.NameEquals("optionalServices"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    optionalServices = OptionalServices.DeserializeOptionalServices(property.Value, options);
+                    optionalServices = OptionalServices.DeserializeOptionalServices(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("localAvailabilityZones"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<LocalAvailabilityZones> array = new List<LocalAvailabilityZones>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(Models.LocalAvailabilityZones.DeserializeLocalAvailabilityZones(item, options));
+                    }
+                    localAvailabilityZones = array;
+                    continue;
+                }
+                if (prop.NameEquals("assemblyInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    assemblyInfo = HciAssemblyInfo.DeserializeHciAssemblyInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HciClusterDeploymentInfo(
                 securitySettings,
                 observability,
                 cluster,
+                identityProvider,
                 storage,
                 namingPrefix,
                 domainFqdn,
@@ -318,334 +430,14 @@ namespace Azure.ResourceManager.Hci.Models
                 physicalNodes ?? new ChangeTrackingList<DeploymentSettingPhysicalNodes>(),
                 hostNetwork,
                 sdnIntegration,
+                isManagementCluster,
                 adouPath,
                 secretsLocation,
                 secrets ?? new ChangeTrackingList<EceDeploymentSecrets>(),
                 optionalServices,
-                serializedAdditionalRawData);
+                localAvailabilityZones ?? new ChangeTrackingList<LocalAvailabilityZones>(),
+                assemblyInfo,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecuritySettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  securitySettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SecuritySettings))
-                {
-                    builder.Append("  securitySettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, SecuritySettings, options, 2, false, "  securitySettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Observability), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  observability: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Observability))
-                {
-                    builder.Append("  observability: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Observability, options, 2, false, "  observability: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cluster), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cluster: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Cluster))
-                {
-                    builder.Append("  cluster: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Cluster, options, 2, false, "  cluster: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("StorageConfigurationMode", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  storage: ");
-                builder.AppendLine("{");
-                builder.Append("    configurationMode: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Storage))
-                {
-                    builder.Append("  storage: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Storage, options, 2, false, "  storage: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NamingPrefix), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  namingPrefix: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NamingPrefix))
-                {
-                    builder.Append("  namingPrefix: ");
-                    if (NamingPrefix.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NamingPrefix}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NamingPrefix}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainFqdn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  domainFqdn: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DomainFqdn))
-                {
-                    builder.Append("  domainFqdn: ");
-                    if (DomainFqdn.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DomainFqdn}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DomainFqdn}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InfrastructureNetwork), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  infrastructureNetwork: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(InfrastructureNetwork))
-                {
-                    if (InfrastructureNetwork.Any())
-                    {
-                        builder.Append("  infrastructureNetwork: ");
-                        builder.AppendLine("[");
-                        foreach (var item in InfrastructureNetwork)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  infrastructureNetwork: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhysicalNodes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  physicalNodes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(PhysicalNodes))
-                {
-                    if (PhysicalNodes.Any())
-                    {
-                        builder.Append("  physicalNodes: ");
-                        builder.AppendLine("[");
-                        foreach (var item in PhysicalNodes)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  physicalNodes: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostNetwork), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  hostNetwork: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HostNetwork))
-                {
-                    builder.Append("  hostNetwork: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, HostNetwork, options, 2, false, "  hostNetwork: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SdnIntegrationNetworkController", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sdnIntegration: ");
-                builder.AppendLine("{");
-                builder.Append("    networkController: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(SdnIntegration))
-                {
-                    builder.Append("  sdnIntegration: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, SdnIntegration, options, 2, false, "  sdnIntegration: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdouPath), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  adouPath: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AdouPath))
-                {
-                    builder.Append("  adouPath: ");
-                    if (AdouPath.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AdouPath}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AdouPath}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretsLocation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  secretsLocation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SecretsLocation))
-                {
-                    builder.Append("  secretsLocation: ");
-                    if (SecretsLocation.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SecretsLocation}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SecretsLocation}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Secrets), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  secrets: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Secrets))
-                {
-                    if (Secrets.Any())
-                    {
-                        builder.Append("  secrets: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Secrets)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  secrets: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("OptionalServicesCustomLocation", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  optionalServices: ");
-                builder.AppendLine("{");
-                builder.Append("    customLocation: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(OptionalServices))
-                {
-                    builder.Append("  optionalServices: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, OptionalServices, options, 2, false, "  optionalServices: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<HciClusterDeploymentInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HciClusterDeploymentInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(HciClusterDeploymentInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HciClusterDeploymentInfo IPersistableModel<HciClusterDeploymentInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HciClusterDeploymentInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHciClusterDeploymentInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciClusterDeploymentInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HciClusterDeploymentInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

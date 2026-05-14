@@ -84,13 +84,13 @@ namespace Azure.Generator.Mgmt.Tests
             var type = plugin.Object.TypeFactory.CreateModel(model);
             var resourceProviderName = ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName;
             var updatedSkuModelName = $"{resourceProviderName}{skuModelName}";
-            Assert.AreEqual(type?.Name, updatedSkuModelName);
-            Assert.AreEqual(type!.Constructors[0].Signature.Name, $"{resourceProviderName}{skuModelName}");
+            Assert.That(updatedSkuModelName, Is.EqualTo(type?.Name));
+            Assert.That($"{resourceProviderName}{skuModelName}", Is.EqualTo(type!.Constructors[0].Signature.Name));
             var serializationProvider = type?.SerializationProviders.SingleOrDefault();
-            Assert.NotNull(serializationProvider);
-            Assert.AreEqual(serializationProvider!.Name, updatedSkuModelName);
+            Assert.That(serializationProvider, Is.Not.Null);
+            Assert.That(updatedSkuModelName, Is.EqualTo(serializationProvider!.Name));
             var deserializationMethod = serializationProvider.Methods.SingleOrDefault(m => m.Signature.Name.StartsWith("Deserialize"));
-            Assert.AreEqual("DeserializeSamplesSku", deserializationMethod!.Signature.Name);
+            Assert.That(deserializationMethod!.Signature.Name, Is.EqualTo("DeserializeSamplesSku"));
         }
 
         [Test]
@@ -114,7 +114,7 @@ namespace Azure.Generator.Mgmt.Tests
             var type = plugin.Object.TypeFactory.CreateEnum(stringEnum);
             var resourceProviderName = ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName;
             var updatedSkuModelName = $"{resourceProviderName}{enumName}";
-            Assert.AreEqual(type?.Name, updatedSkuModelName);
+            Assert.That(updatedSkuModelName, Is.EqualTo(type?.Name));
         }
 
         [Test]

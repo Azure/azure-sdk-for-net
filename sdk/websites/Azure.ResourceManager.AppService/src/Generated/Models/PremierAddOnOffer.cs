@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Premier add-on offer. </summary>
+    /// <summary>
+    /// Premier add-on offer.
+    /// Serialized Name: PremierAddOnOffer
+    /// </summary>
     public partial class PremierAddOnOffer : ResourceData
     {
         /// <summary>
@@ -57,17 +60,50 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="sku"> Premier add on SKU. </param>
-        /// <param name="product"> Premier add on offer Product. </param>
-        /// <param name="vendor"> Premier add on offer Vendor. </param>
-        /// <param name="isPromoCodeRequired"> &lt;code&gt;true&lt;/code&gt; if promotion code is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="quota"> Premier add on offer Quota. </param>
-        /// <param name="webHostingPlanRestrictions"> App Service plans this offer is restricted to. </param>
-        /// <param name="privacyPolicyUri"> Privacy policy URL. </param>
-        /// <param name="legalTermsUri"> Legal terms URL. </param>
-        /// <param name="marketplacePublisher"> Marketplace publisher. </param>
-        /// <param name="marketplaceOffer"> Marketplace offer. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="sku">
+        /// Premier add on SKU.
+        /// Serialized Name: PremierAddOnOffer.properties.sku
+        /// </param>
+        /// <param name="product">
+        /// Premier add on offer Product.
+        /// Serialized Name: PremierAddOnOffer.properties.product
+        /// </param>
+        /// <param name="vendor">
+        /// Premier add on offer Vendor.
+        /// Serialized Name: PremierAddOnOffer.properties.vendor
+        /// </param>
+        /// <param name="isPromoCodeRequired">
+        /// &lt;code&gt;true&lt;/code&gt; if promotion code is required; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: PremierAddOnOffer.properties.promoCodeRequired
+        /// </param>
+        /// <param name="quota">
+        /// Premier add on offer Quota.
+        /// Serialized Name: PremierAddOnOffer.properties.quota
+        /// </param>
+        /// <param name="webHostingPlanRestrictions">
+        /// App Service plans this offer is restricted to.
+        /// Serialized Name: PremierAddOnOffer.properties.webHostingPlanRestrictions
+        /// </param>
+        /// <param name="privacyPolicyUri">
+        /// Privacy policy URL.
+        /// Serialized Name: PremierAddOnOffer.properties.privacyPolicyUrl
+        /// </param>
+        /// <param name="legalTermsUri">
+        /// Legal terms URL.
+        /// Serialized Name: PremierAddOnOffer.properties.legalTermsUrl
+        /// </param>
+        /// <param name="marketplacePublisher">
+        /// Marketplace publisher.
+        /// Serialized Name: PremierAddOnOffer.properties.marketplacePublisher
+        /// </param>
+        /// <param name="marketplaceOffer">
+        /// Marketplace offer.
+        /// Serialized Name: PremierAddOnOffer.properties.marketplaceOffer
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PremierAddOnOffer(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sku, string product, string vendor, bool? isPromoCodeRequired, int? quota, AppServicePlanRestriction? webHostingPlanRestrictions, Uri privacyPolicyUri, Uri legalTermsUri, string marketplacePublisher, string marketplaceOffer, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -85,37 +121,70 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Premier add on SKU. </summary>
+        /// <summary>
+        /// Premier add on SKU.
+        /// Serialized Name: PremierAddOnOffer.properties.sku
+        /// </summary>
         [WirePath("properties.sku")]
         public string Sku { get; set; }
-        /// <summary> Premier add on offer Product. </summary>
+        /// <summary>
+        /// Premier add on offer Product.
+        /// Serialized Name: PremierAddOnOffer.properties.product
+        /// </summary>
         [WirePath("properties.product")]
         public string Product { get; set; }
-        /// <summary> Premier add on offer Vendor. </summary>
+        /// <summary>
+        /// Premier add on offer Vendor.
+        /// Serialized Name: PremierAddOnOffer.properties.vendor
+        /// </summary>
         [WirePath("properties.vendor")]
         public string Vendor { get; set; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if promotion code is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if promotion code is required; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: PremierAddOnOffer.properties.promoCodeRequired
+        /// </summary>
         [WirePath("properties.promoCodeRequired")]
         public bool? IsPromoCodeRequired { get; set; }
-        /// <summary> Premier add on offer Quota. </summary>
+        /// <summary>
+        /// Premier add on offer Quota.
+        /// Serialized Name: PremierAddOnOffer.properties.quota
+        /// </summary>
         [WirePath("properties.quota")]
         public int? Quota { get; set; }
-        /// <summary> App Service plans this offer is restricted to. </summary>
+        /// <summary>
+        /// App Service plans this offer is restricted to.
+        /// Serialized Name: PremierAddOnOffer.properties.webHostingPlanRestrictions
+        /// </summary>
         [WirePath("properties.webHostingPlanRestrictions")]
         public AppServicePlanRestriction? WebHostingPlanRestrictions { get; set; }
-        /// <summary> Privacy policy URL. </summary>
+        /// <summary>
+        /// Privacy policy URL.
+        /// Serialized Name: PremierAddOnOffer.properties.privacyPolicyUrl
+        /// </summary>
         [WirePath("properties.privacyPolicyUrl")]
         public Uri PrivacyPolicyUri { get; set; }
-        /// <summary> Legal terms URL. </summary>
+        /// <summary>
+        /// Legal terms URL.
+        /// Serialized Name: PremierAddOnOffer.properties.legalTermsUrl
+        /// </summary>
         [WirePath("properties.legalTermsUrl")]
         public Uri LegalTermsUri { get; set; }
-        /// <summary> Marketplace publisher. </summary>
+        /// <summary>
+        /// Marketplace publisher.
+        /// Serialized Name: PremierAddOnOffer.properties.marketplacePublisher
+        /// </summary>
         [WirePath("properties.marketplacePublisher")]
         public string MarketplacePublisher { get; set; }
-        /// <summary> Marketplace offer. </summary>
+        /// <summary>
+        /// Marketplace offer.
+        /// Serialized Name: PremierAddOnOffer.properties.marketplaceOffer
+        /// </summary>
         [WirePath("properties.marketplaceOffer")]
         public string MarketplaceOffer { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WcfRelayData, WcfRelayResource>(new WCFRelaysGetByNamespaceAsyncCollectionResultOfT(_wcfRelaysRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new WcfRelayResource(Client, data));
+            return new AsyncPageableWrapper<WcfRelayData, WcfRelayResource>(new WCFRelaysGetByNamespaceAsyncCollectionResultOfT(
+                _wcfRelaysRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "WcfRelayCollection.GetAll"), data => new WcfRelayResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WcfRelayData, WcfRelayResource>(new WCFRelaysGetByNamespaceCollectionResultOfT(_wcfRelaysRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new WcfRelayResource(Client, data));
+            return new PageableWrapper<WcfRelayData, WcfRelayResource>(new WCFRelaysGetByNamespaceCollectionResultOfT(
+                _wcfRelaysRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "WcfRelayCollection.GetAll"), data => new WcfRelayResource(Client, data));
         }
 
         /// <summary>

@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.ApiCenter
         private readonly string _apiName;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ApiVersionsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ApiVersions client used to send requests. </param>
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="apiName"> The name of the API. </param>
         /// <param name="filter"> OData filter parameter. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ApiVersionsGetAllCollectionResultOfT(ApiVersions client, Guid subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ApiVersionsGetAllCollectionResultOfT(ApiVersions client, Guid subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.ApiCenter
             _apiName = apiName;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ApiVersionsGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -76,7 +79,7 @@ namespace Azure.ResourceManager.ApiCenter
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _serviceName, _workspaceName, _apiName, _filter, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _serviceName, _workspaceName, _apiName, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ApiCenterApiVersionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

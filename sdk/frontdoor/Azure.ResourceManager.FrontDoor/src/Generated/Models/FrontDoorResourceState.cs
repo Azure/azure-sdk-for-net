@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct FrontDoorResourceState : IEquatable<FrontDoorResourceState>
     {
         private readonly string _value;
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Enabling. </summary>
+        private const string EnablingValue = "Enabling";
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disabling. </summary>
+        private const string DisablingValue = "Disabling";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Migrating. </summary>
+        private const string MigratingValue = "Migrating";
+        /// <summary> Migrated. </summary>
+        private const string MigratedValue = "Migrated";
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FrontDoorResourceState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string EnablingValue = "Enabling";
-        private const string EnabledValue = "Enabled";
-        private const string DisablingValue = "Disabling";
-        private const string DisabledValue = "Disabled";
-        private const string DeletingValue = "Deleting";
-        private const string MigratingValue = "Migrating";
-        private const string MigratedValue = "Migrated";
+            _value = value;
+        }
 
         /// <summary> Creating. </summary>
         public static FrontDoorResourceState Creating { get; } = new FrontDoorResourceState(CreatingValue);
+
         /// <summary> Enabling. </summary>
         public static FrontDoorResourceState Enabling { get; } = new FrontDoorResourceState(EnablingValue);
+
         /// <summary> Enabled. </summary>
         public static FrontDoorResourceState Enabled { get; } = new FrontDoorResourceState(EnabledValue);
+
         /// <summary> Disabling. </summary>
         public static FrontDoorResourceState Disabling { get; } = new FrontDoorResourceState(DisablingValue);
+
         /// <summary> Disabled. </summary>
         public static FrontDoorResourceState Disabled { get; } = new FrontDoorResourceState(DisabledValue);
+
         /// <summary> Deleting. </summary>
         public static FrontDoorResourceState Deleting { get; } = new FrontDoorResourceState(DeletingValue);
+
         /// <summary> Migrating. </summary>
         public static FrontDoorResourceState Migrating { get; } = new FrontDoorResourceState(MigratingValue);
+
         /// <summary> Migrated. </summary>
         public static FrontDoorResourceState Migrated { get; } = new FrontDoorResourceState(MigratedValue);
+
         /// <summary> Determines if two <see cref="FrontDoorResourceState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorResourceState left, FrontDoorResourceState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontDoorResourceState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorResourceState left, FrontDoorResourceState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorResourceState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontDoorResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontDoorResourceState(string value) => new FrontDoorResourceState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontDoorResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontDoorResourceState?(string value) => value == null ? null : new FrontDoorResourceState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorResourceState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontDoorResourceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

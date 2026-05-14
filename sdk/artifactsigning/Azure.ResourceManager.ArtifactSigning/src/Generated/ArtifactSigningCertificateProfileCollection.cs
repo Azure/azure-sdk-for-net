@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ArtifactSigning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArtifactSigningCertificateProfileData, ArtifactSigningCertificateProfileResource>(new CertificateProfilesGetByCodeSigningAccountAsyncCollectionResultOfT(_certificateProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ArtifactSigningCertificateProfileResource(Client, data));
+            return new AsyncPageableWrapper<ArtifactSigningCertificateProfileData, ArtifactSigningCertificateProfileResource>(new CertificateProfilesGetByCodeSigningAccountAsyncCollectionResultOfT(
+                _certificateProfilesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ArtifactSigningCertificateProfileCollection.GetAll"), data => new ArtifactSigningCertificateProfileResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ArtifactSigning
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArtifactSigningCertificateProfileData, ArtifactSigningCertificateProfileResource>(new CertificateProfilesGetByCodeSigningAccountCollectionResultOfT(_certificateProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ArtifactSigningCertificateProfileResource(Client, data));
+            return new PageableWrapper<ArtifactSigningCertificateProfileData, ArtifactSigningCertificateProfileResource>(new CertificateProfilesGetByCodeSigningAccountCollectionResultOfT(
+                _certificateProfilesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ArtifactSigningCertificateProfileCollection.GetAll"), data => new ArtifactSigningCertificateProfileResource(Client, data));
         }
 
         /// <summary>

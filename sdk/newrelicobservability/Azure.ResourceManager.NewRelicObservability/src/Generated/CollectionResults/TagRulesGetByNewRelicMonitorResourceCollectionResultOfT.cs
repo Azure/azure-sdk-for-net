@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         private readonly string _resourceGroupName;
         private readonly string _monitorName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of TagRulesGetByNewRelicMonitorResourceCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The TagRules client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public TagRulesGetByNewRelicMonitorResourceCollectionResultOfT(TagRules client, string subscriptionId, string resourceGroupName, string monitorName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public TagRulesGetByNewRelicMonitorResourceCollectionResultOfT(TagRules client, string subscriptionId, string resourceGroupName, string monitorName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _monitorName = monitorName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of TagRulesGetByNewRelicMonitorResourceCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByNewRelicMonitorResourceRequest(nextLink, _subscriptionId, _resourceGroupName, _monitorName, _context) : _client.CreateGetByNewRelicMonitorResourceRequest(_subscriptionId, _resourceGroupName, _monitorName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NewRelicObservabilityTagRuleCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

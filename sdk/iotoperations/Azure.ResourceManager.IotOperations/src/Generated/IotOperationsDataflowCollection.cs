@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.IotOperations
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new IotOperationsDataflowResource(Client, data));
+                context,
+                "IotOperationsDataflowCollection.GetAll"), data => new IotOperationsDataflowResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.IotOperations
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new IotOperationsDataflowResource(Client, data));
+                context,
+                "IotOperationsDataflowCollection.GetAll"), data => new IotOperationsDataflowResource(Client, data));
         }
 
         /// <summary>
