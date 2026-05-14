@@ -181,10 +181,6 @@ Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
 
 Synchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Sync
-ProjectOpenAIClientOptions responsesOptions = new()
-{
-    AgentName = agentVersion.Name
-};
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
 ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
 Console.WriteLine(response.GetOutputText());

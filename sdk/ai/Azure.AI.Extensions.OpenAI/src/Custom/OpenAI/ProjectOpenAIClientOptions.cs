@@ -26,5 +26,5 @@ public partial class ProjectOpenAIClientOptions : OpenAIClientOptions
     }
 
     public string AgentName { get; set; } = null;
-    public AuthenticationTokenProvider TokenProvider { get; set; }
+    internal AuthenticationTokenProvider TokenProvider { get; set; }
 }

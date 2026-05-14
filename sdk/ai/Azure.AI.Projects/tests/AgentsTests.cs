@@ -1453,9 +1453,10 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    [TestCase(true)]
-    [TestCase(false)]
-    public async Task TestHostedAgentEndpoint(bool useNewClient)
+    [TestCase(true, false)]
+    [TestCase(true, true)]
+    [TestCase(false, false)]
+    public async Task TestHostedAgentEndpoint(bool useNewClient, bool useGetMethod)
     {
         AIProjectClient projectClient = GetTestProjectClient();
         Uri uriEndpoint = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
@@ -1498,7 +1499,20 @@ public class AgentsTests : AgentsTestBase
         if (useNewClient)
         {
             ProjectOpenAIClient openAIClient = CreateProxyFromClient(new ProjectOpenAIClient(uriEndpoint, GetTestTokenProvider(), responsesOptions));
-            responseClient = openAIClient.GetProjectResponsesClient();
+            if (useGetMethod)
+            {
+                // We have to create options one more time as once the pipeline is created, it
+                // becomes frozen.
+                responsesOptions = CreateTestProjectOpenAIClientOptions(
+                    apiVersion: "v1"
+                );
+                responsesOptions.AgentName = agentVersion.Name;
+                responseClient = CreateProxyFromClient(openAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
+            }
+            else
+            {
+                responseClient = openAIClient.GetProjectResponsesClient();
+            }
         }
         else
         {

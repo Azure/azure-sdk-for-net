@@ -975,7 +975,6 @@ namespace Azure.AI.Extensions.OpenAI
         public ProjectOpenAIClientOptions() { }
         public string AgentName { get { throw null; } set { } }
         public string ApiVersion { get { throw null; } set { } }
-        public System.ClientModel.AuthenticationTokenProvider TokenProvider { get { throw null; } set { } }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public partial class ProjectOpenAIClientSettings : System.ClientModel.Primitives.ClientSettings
