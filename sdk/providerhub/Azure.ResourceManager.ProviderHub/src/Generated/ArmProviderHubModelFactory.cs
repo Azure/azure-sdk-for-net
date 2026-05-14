@@ -1411,6 +1411,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             loggingRules ??= new ChangeTrackingList<LoggingRule>();
             throttlingRules ??= new ChangeTrackingList<ThrottlingRule>();
             endpoints ??= new ChangeTrackingList<ResourceProviderEndpoint>();
+            requiredFeatures ??= new ChangeTrackingList<string>();
             subscriptionStateRules ??= new ChangeTrackingList<ProviderSubscriptionStateRule>();
             serviceTreeInfos ??= new ChangeTrackingList<ServiceTreeInfo>();
             disallowedActionVerbs ??= new ChangeTrackingList<string>();
@@ -1445,7 +1446,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 extendedLocations.ToList(),
                 linkedOperationRules.ToList(),
                 resourceDeletionPolicy,
-                requiredFeatures is null ? default : new ProviderQuotaRule(default, default, (requiredFeatures ?? new ChangeTrackingList<string>()).ToList(), default),
+                default,
                 default,
                 default,
                 default,

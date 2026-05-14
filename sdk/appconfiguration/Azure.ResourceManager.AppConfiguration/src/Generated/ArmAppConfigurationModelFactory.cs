@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     retentionPeriod,
                     size,
                     itemsCount,
-                    tags,
+                    tags ?? new ChangeTrackingDictionary<string, string>(),
                     eTag,
                     default));
         }

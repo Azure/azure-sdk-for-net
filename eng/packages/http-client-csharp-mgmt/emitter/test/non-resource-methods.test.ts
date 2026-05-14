@@ -1212,7 +1212,8 @@ interface ChildResources {
   it("should NOT match collection-level action to resource by type segment when operation ends with action name", () => {
     const resources: ArmResourceSchema[] = [
       {
-        resourceModelId: "Microsoft.CostManagement.CostAllocationRuleDefinition",
+        resourceModelId:
+          "Microsoft.CostManagement.CostAllocationRuleDefinition",
         metadata: {
           resourceName: "CostAllocationRuleDefinition",
           resourceType: "Microsoft.CostManagement/costAllocationRules",
@@ -1293,7 +1294,8 @@ interface ChildResources {
   it("should assign nested collection-level action to parent resource when action replaces child name segment", () => {
     const resources: ArmResourceSchema[] = [
       {
-        resourceModelId: "Microsoft.CostManagement.CostAllocationRuleDefinition",
+        resourceModelId:
+          "Microsoft.CostManagement.CostAllocationRuleDefinition",
         metadata: {
           resourceName: "CostAllocationRuleDefinition",
           resourceType: "Microsoft.CostManagement/costAllocationRules",
